@@ -3,6 +3,26 @@
     "name": "Supernova",
     "tagline": "Panduan numerologi harian kamu."
   },
+  "nav": {
+    "home": "Beranda",
+    "journey": "Perjalanan",
+    "chat": "Curhat",
+    "people": "Orang",
+    "me": "Saya"
+  },
+  "me": {
+    "title": "Saya",
+    "subtitle": "Profil, bahasa, pola, dan pengaturan lainnya.",
+    "profile": "Profil",
+    "editProfile": "Ubah profil",
+    "language": "Bahasa",
+    "languageHint": "Ganti bahasa interface — chat tetap ngikutin bahasa yang kamu tulis.",
+    "patterns": "Pola harianmu",
+    "patternsHint": "Lihat tren mood dan tema setelah ≥14 hari catatan.",
+    "signOut": "Keluar dari akun",
+    "signOutCta": "Keluar",
+    "appVersion": "Supernova MVP"
+  },
   "home": {
     "title": "Selamat datang di Supernova",
     "subtitle": "Bacaan numerologi harian yang dipersonalisasi.",

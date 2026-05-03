@@ -34,7 +34,7 @@ export default async function PatternsPage({ params }: { params: { locale: strin
   const enoughData = summary.totalEntries >= MIN_ENTRIES;
 
   return (
-    <main className="container max-w-3xl space-y-10 py-10">
+    <main className="container max-w-3xl space-y-8 px-4 py-6 sm:px-6 sm:py-10">
       <header className="space-y-2">
         <Link
           href={`/${locale}/dashboard`}

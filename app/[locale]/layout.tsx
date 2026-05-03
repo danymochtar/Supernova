@@ -1,8 +1,9 @@
 import type { Metadata, Viewport } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
+import { getMessages, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { isLocale } from '@/lib/i18n/config';
+import { isLocale, type Locale } from '@/lib/i18n/config';
+import { BottomNav } from '@/components/layout/BottomNav';
 import '../globals.css';
 
 export const metadata: Metadata = {
@@ -49,12 +50,24 @@ export default async function LocaleLayout({
 }) {
   if (!isLocale(locale)) notFound();
   const messages = await getMessages();
+  const t = await getTranslations({ locale, namespace: 'nav' });
+
+  const navLabels = {
+    home: t('home'),
+    journey: t('journey'),
+    chat: t('chat'),
+    people: t('people'),
+    me: t('me'),
+  };
 
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className="bg-background text-foreground min-h-screen antialiased">
         <NextIntlClientProvider locale={locale} messages={messages}>
-          {children}
+          <div className="pb-[calc(theme(spacing.20)+env(safe-area-inset-bottom))]">
+            {children}
+          </div>
+          <BottomNav locale={locale as Locale} labels={navLabels} />
         </NextIntlClientProvider>
       </body>
     </html>

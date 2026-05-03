@@ -173,7 +173,10 @@ export function ChatThread({ initialTurns, priorDays, emptyHint }: Props) {
   }
 
   return (
-    <div className="flex h-[calc(100vh-12rem)] flex-col">
+    <div
+      className="flex flex-col"
+      style={{ minHeight: 'calc(100dvh - 8rem - env(safe-area-inset-bottom))' }}
+    >
       <div className="flex-1 overflow-y-auto pb-4">
         {priorDays.length > 0 ? (
           <div className="mb-6">

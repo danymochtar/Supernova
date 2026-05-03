@@ -47,7 +47,7 @@ export default async function PersonDetailPage({
 
 
   return (
-    <main className="container max-w-4xl space-y-10 py-10">
+    <main className="container max-w-3xl space-y-8 px-4 py-6 sm:px-6 sm:py-10">
       <header className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <Link

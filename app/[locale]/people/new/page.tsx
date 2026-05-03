@@ -22,7 +22,7 @@ export default async function NewPersonPage({ params }: { params: { locale: stri
   if (count >= PEOPLE_LIMIT) redirect(`/${locale}/people`);
 
   return (
-    <main className="container max-w-xl space-y-8 py-10">
+    <main className="container max-w-xl space-y-6 px-4 py-6 sm:px-6 sm:py-10">
       <header className="space-y-2">
         <Link
           href={`/${locale}/people`}

@@ -120,21 +120,15 @@ export default async function DashboardPage({ params }: { params: { locale: stri
   const localGreeting = greetingFor(localHour, locale);
 
   return (
-    <main className="container max-w-4xl space-y-10 py-10">
+    <main className="container max-w-3xl space-y-8 px-4 py-6 sm:px-6 sm:py-10">
       <AppHeader
         locale={locale}
-        active="dashboard"
         todayLabel={`${formatToday(ctx, locale)} · ${profile.timezone}`}
         labels={{
           greeting: localGreeting.greeting,
           greetingTimeOfDay: localGreeting.word,
           fullName: profile.fullName,
           editProfile: t('editProfile'),
-          journey: t('journeyCta'),
-          patterns: t('patternsCta'),
-          people: t('peopleCta'),
-          chat: t('askCta'),
-          signOut: t('signOut'),
         }}
       />
 

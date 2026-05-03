@@ -70,7 +70,7 @@ export default async function AskPage({ params }: { params: { locale: string } }
   ];
 
   return (
-    <main className="container max-w-3xl py-6">
+    <main className="container max-w-3xl px-4 py-4 sm:px-6 sm:py-6">
       <header className="mb-4 space-y-2">
         <Link
           href={`/${locale}/dashboard`}

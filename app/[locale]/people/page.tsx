@@ -22,7 +22,7 @@ export default async function PeoplePage({ params }: { params: { locale: string 
   const atLimit = people.length >= PEOPLE_LIMIT;
 
   return (
-    <main className="container max-w-3xl space-y-8 py-10">
+    <main className="container max-w-3xl space-y-6 px-4 py-6 sm:px-6 sm:py-10">
       <header className="flex items-end justify-between gap-4">
         <div>
           <Link

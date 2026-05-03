@@ -3,6 +3,26 @@
     "name": "Supernova",
     "tagline": "Your daily numerology companion."
   },
+  "nav": {
+    "home": "Home",
+    "journey": "Journey",
+    "chat": "Chat",
+    "people": "People",
+    "me": "Me"
+  },
+  "me": {
+    "title": "Me",
+    "subtitle": "Profile, language, patterns, and other settings.",
+    "profile": "Profile",
+    "editProfile": "Edit profile",
+    "language": "Language",
+    "languageHint": "Change interface language — chat always follows what you write.",
+    "patterns": "Your daily patterns",
+    "patternsHint": "See mood + theme trends after ≥14 days of logging.",
+    "signOut": "Sign out of your account",
+    "signOutCta": "Sign out",
+    "appVersion": "Supernova MVP"
+  },
   "home": {
     "title": "Welcome to Supernova",
     "subtitle": "Personalized daily numerology readings.",

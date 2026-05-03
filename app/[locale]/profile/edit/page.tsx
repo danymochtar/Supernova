@@ -19,7 +19,7 @@ export default async function EditProfilePage({ params }: { params: { locale: st
   if (!profile) redirect(`/${locale}/welcome`);
 
   return (
-    <main className="container max-w-xl space-y-6 py-10">
+    <main className="container max-w-xl space-y-6 px-4 py-6 sm:px-6 sm:py-10">
       <header className="space-y-2">
         <Link
           href={`/${locale}/dashboard`}
