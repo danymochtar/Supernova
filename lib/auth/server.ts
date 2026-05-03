@@ -2,17 +2,27 @@ import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { prisma } from '@/lib/db/prisma';
 
-const baseURL = process.env.BETTER_AUTH_URL ?? 'http://localhost:3000';
+const vercelUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null;
+const vercelProjectUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
+  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  : null;
 
-// Accept both localhost and 127.0.0.1 in dev so the browser's chosen host
-// always matches Better Auth's CSRF check.
+const baseURL =
+  process.env.BETTER_AUTH_URL ?? vercelProjectUrl ?? vercelUrl ?? 'http://localhost:3000';
+
+// Trust the configured baseURL plus common dev hosts and any Vercel-injected
+// URL (preview deploys get a unique vercelUrl per build).
 const trustedOrigins = Array.from(
-  new Set([
-    baseURL,
-    'http://localhost:3000',
-    'http://127.0.0.1:3000',
-    ...(process.env.BETTER_AUTH_TRUSTED_ORIGINS?.split(',').map((s) => s.trim()).filter(Boolean) ?? []),
-  ]),
+  new Set(
+    [
+      baseURL,
+      vercelUrl,
+      vercelProjectUrl,
+      'http://localhost:3000',
+      'http://127.0.0.1:3000',
+      ...(process.env.BETTER_AUTH_TRUSTED_ORIGINS?.split(',').map((s) => s.trim()).filter(Boolean) ?? []),
+    ].filter((s): s is string => Boolean(s)),
+  ),
 );
 
 export const auth = betterAuth({
