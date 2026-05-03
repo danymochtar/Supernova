@@ -50,7 +50,7 @@ async function generateSummary(
   body: string,
 ): Promise<string | null> {
   if (!body.trim()) return null;
-  const modelId = model();
+  const modelId = model('rollup');
   try {
     const response = await anthropic().messages.create({
       model: modelId,

@@ -61,7 +61,7 @@ export async function POST(req: Request) {
   ]);
 
   const userId = session.user.id;
-  const modelId = model();
+  const modelId = model('chat');
 
   // Build the message array. Cache the static context block so follow-up
   // turns within the same 5-minute window pay ~10% input on the prefix.
@@ -103,7 +103,17 @@ export async function POST(req: Request) {
         const sdkStream = anthropic().messages.stream({
           model: modelId,
           max_tokens: 900,
-          system: chatSystemPrompt(),
+          // Cache the system prompt too — it's ~750 tokens of stable
+          // instructions that don't change between users or messages, so
+          // every request after the first within the 5-min window pays
+          // ~10% input cost on it.
+          system: [
+            {
+              type: 'text',
+              text: chatSystemPrompt(),
+              cache_control: { type: 'ephemeral' },
+            } as Anthropic.TextBlockParam,
+          ],
           messages,
         });
 

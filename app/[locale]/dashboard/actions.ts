@@ -87,7 +87,7 @@ export async function generateDailyReading(): Promise<GenerateResult> {
     recentPatterns,
   };
 
-  const modelId = model();
+  const modelId = model('daily');
 
   let body: string;
   let inputTokens = 0;

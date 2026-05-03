@@ -99,6 +99,24 @@ After editing, deploy. Cached `aboutMe-v2` rows in `NumerologyCache` will
 NOT auto-regenerate — bump the cache key (e.g. `aboutMe-v3`) in
 `lib/ai/aboutMe.ts` to force fresh generations across all users.
 
+### Model routing & cost
+Each AI surface picks its model via `model(feature)` in `lib/ai/client.ts`:
+
+| Surface              | Default model         | Why                                              |
+|----------------------|-----------------------|--------------------------------------------------|
+| Chat (`/api/qa/stream`) | `claude-sonnet-4-6` | High quality — most-used user-facing feature     |
+| Daily reading        | `claude-sonnet-4-6`   | User reads it every day; nuance + warm voice     |
+| About Me synthesis   | `claude-sonnet-4-6`   | Anchors user identity on dashboard               |
+| Daily/weekly/monthly rollup | `claude-haiku-4-5` | Internal; just compresses turns into context     |
+
+Override either default via env: `ANTHROPIC_MODEL` (user-facing) or
+`ANTHROPIC_ROLLUP_MODEL` (rollups). Prompt caching is enabled on the
+chat path — both the system prompt and the per-turn smart-context
+block carry `cache_control: ephemeral`, so subsequent messages within
+the 5-min window pay ~10% input cost on the cached prefix. Inspect
+`AiUsage` rows or `/admin/usage` to verify cache hit rate via the
+`cache_read_input_tokens` field.
+
 ### Updating the meanings or compatibility packs
 JSON files in `content/meanings/{id,en}.json` and
 `content/compatibility/{id,en}.json` are imported at build time. Edit

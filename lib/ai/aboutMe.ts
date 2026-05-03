@@ -25,7 +25,7 @@ export async function getOrGenerateAboutMe(
   const cached = await getCachedText(userId, CACHE_KEY);
   if (cached) return cached;
 
-  const modelId = model();
+  const modelId = model('aboutMe');
   try {
     const response = await anthropic().messages.create({
       model: modelId,
