@@ -22,18 +22,22 @@ import { AppHeader } from '@/components/layout/AppHeader';
 import { Widget } from '@/components/layout/Widget';
 import { DailyReadingView } from '@/components/reading/DailyReadingView';
 import { FeedbackPrompt } from '@/components/feedback/FeedbackPrompt';
-import { getReadingForLocalDay } from '@/lib/db/repositories/reading';
 import { getFeedbackForLocalDay } from '@/lib/db/repositories/feedback';
 import { getTurnsBetween } from '@/lib/db/repositories/qa';
 import { meaningFor } from '@/lib/numerology/meanings';
 import { getOrGenerateAboutMe } from '@/lib/ai/aboutMe';
+import { getOrGenerateDailyReading } from '@/lib/ai/dailyReading';
 import { greetingFor } from '@/lib/greeting';
 import { parseLayout, type WidgetId } from '@/lib/dashboard/layout';
-import { generateDailyReading } from './actions';
 import { submitFeedback } from './feedbackActions';
 
 const SHORT_DAY_ID = ['MIN', 'SEN', 'SEL', 'RAB', 'KAM', 'JUM', 'SAB'];
 const SHORT_MONTH_ID = ['JAN', 'FEB', 'MAR', 'APR', 'MEI', 'JUN', 'JUL', 'AGU', 'SEP', 'OKT', 'NOV', 'DES'];
+const LONG_DAY_ID = ['MINGGU', 'SENIN', 'SELASA', 'RABU', 'KAMIS', 'JUMAT', 'SABTU'];
+const LONG_MONTH_ID = [
+  'JANUARI', 'FEBRUARI', 'MARET', 'APRIL', 'MEI', 'JUNI',
+  'JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER', 'DESEMBER',
+];
 
 function formatTodayShort(ctx: { year: number; month: number; day: number }, locale: Locale): string {
   const d = new Date(Date.UTC(ctx.year, ctx.month - 1, ctx.day));
@@ -43,10 +47,21 @@ function formatTodayShort(ctx: { year: number; month: number; day: number }, loc
   return d.toLocaleDateString('en-US', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' }).toUpperCase();
 }
 
+function formatDateLong(ctx: { year: number; month: number; day: number }, locale: Locale): string {
+  const d = new Date(Date.UTC(ctx.year, ctx.month - 1, ctx.day));
+  if (locale === 'id') {
+    return `${LONG_DAY_ID[d.getUTCDay()]}, ${ctx.day} ${LONG_MONTH_ID[ctx.month - 1]}`;
+  }
+  return d.toLocaleDateString('en-US', {
+    weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC',
+  }).toUpperCase();
+}
+
 
 export default async function DashboardPage({ params }: { params: { locale: string } }) {
   const locale: Locale = isLocale(params.locale) ? params.locale : 'id';
   const t = await getTranslations({ locale, namespace: 'dashboard' });
+  const tReading = await getTranslations({ locale, namespace: 'reading' });
 
   const session = await getSession();
   if (!session) redirect(`/${locale}/login`);
@@ -74,9 +89,9 @@ export default async function DashboardPage({ params }: { params: { locale: stri
   // Lazy fetch — only data for widgets the user has visible. Reading + About
   // Me are the slow ones; if hidden, we skip them entirely (saving a DB call
   // and a cold-start AI call respectively).
-  const [cachedReading, todayFeedback, todaysChatTurns, aboutMeText] = await Promise.all([
+  const [readingBody, todayFeedback, todaysChatTurns, aboutMeText] = await Promise.all([
     visible.has('reading')
-      ? getReadingForLocalDay(session.user.id, ctx.year, ctx.month, ctx.day)
+      ? getOrGenerateDailyReading(session.user.id, profile)
       : Promise.resolve(null),
     visible.has('feedback')
       ? getFeedbackForLocalDay(session.user.id, ctx.year, ctx.month, ctx.day)
@@ -121,8 +136,14 @@ export default async function DashboardPage({ params }: { params: { locale: stri
         return (
           <DailyReadingView
             key={id}
-            initialBody={cachedReading?.body ?? null}
-            generate={generateDailyReading}
+            body={readingBody}
+            dateLabel={formatDateLong(ctx, locale)}
+            dayTitle={meaningFor('personalDayTitle', cycles.personalDay, locale) ?? ''}
+            labels={{
+              todaysTheme: tReading('todaysTheme'),
+              affirmation: tReading('affirmation'),
+              fallback: tReading('fallback'),
+            }}
           />
         );
       case 'feedback':

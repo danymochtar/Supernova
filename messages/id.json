@@ -201,14 +201,10 @@
   "reading": {
     "title": "Bacaan harian",
     "subtitle": "Sintesis singkat dari angka-angka kamu untuk hari ini, ditulis oleh asisten AI Supernova.",
-    "generateCta": "Buat bacaan hari ini",
-    "generating": "Membuat bacaan…",
-    "oncePerDay": "Satu bacaan per hari",
-    "theme": "Tema",
-    "energy": "Energi yang mendukung",
-    "watch": "Hati-hati",
-    "errorAi": "AI sedang sibuk. Coba lagi sebentar.",
-    "errorGeneric": "Terjadi kesalahan. Coba lagi sebentar."
+    "todaysTheme": "Tema hari ini",
+    "affirmation": "Afirmasi",
+    "fallback": "Bacaan hari ini belum bisa dibuat. Coba refresh sebentar lagi.",
+    "oncePerDay": "Satu bacaan per hari"
   },
   "chat": {
     "title": "Curhat ke Supernova",

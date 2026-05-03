@@ -1,93 +1,82 @@
-'use client';
-
-import { useState, useTransition } from 'react';
-import { useTranslations } from 'next-intl';
 import { Sparkles } from 'lucide-react';
 import { parseReading } from '@/lib/ai/prompts/daily';
-import type { GenerateResult } from '@/app/[locale]/dashboard/actions';
 
 interface Props {
-  initialBody: string | null;
-  generate: () => Promise<GenerateResult>;
+  body: string | null;
+  /** Pre-localized "TUESDAY, MAY 4" style date label. */
+  dateLabel: string;
+  /** Pre-localized day theme name, e.g. "Change & Versatility". */
+  dayTitle: string;
+  /** UI strings (already translated). */
+  labels: {
+    todaysTheme: string;
+    affirmation: string;
+    fallback: string;
+  };
 }
 
-export function DailyReadingView({ initialBody, generate }: Props) {
-  const t = useTranslations('reading');
-  const [body, setBody] = useState<string | null>(initialBody);
-  const [error, setError] = useState<string | null>(null);
-  const [pending, startTransition] = useTransition();
-
-  function onGenerate() {
-    setError(null);
-    startTransition(async () => {
-      const result = await generate();
-      if (result.ok) {
-        setBody(result.body);
-      } else {
-        setError(t(result.error === 'ai_failed' ? 'errorAi' : 'errorGeneric'));
-      }
-    });
-  }
-
+/**
+ * Hero card for today's reading. Auto-generated server-side — there is no
+ * manual generate button. When the AI call fails we show a graceful fallback
+ * so the page still renders.
+ */
+export function DailyReadingView({ body, dateLabel, dayTitle, labels }: Props) {
   if (!body) {
     return (
-      <section className="border-border flex flex-col items-center gap-4 rounded-2xl border bg-gradient-to-br from-primary/5 to-accent/5 p-7 text-center dark:from-primary/15 dark:to-accent/15">
-        <div className="from-primary/30 to-accent/30 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br">
-          <Sparkles className="text-primary h-6 w-6" aria-hidden />
-        </div>
-        <div className="space-y-1">
-          <h2 className="text-lg font-semibold">{t('title')}</h2>
-          <p className="text-muted-foreground mx-auto max-w-sm text-sm">{t('subtitle')}</p>
-        </div>
-        <button
-          type="button"
-          onClick={onGenerate}
-          disabled={pending}
-          className="bg-primary text-primary-foreground press rounded-full px-6 py-3 text-sm font-medium shadow-md shadow-primary/20 disabled:opacity-50"
-        >
-          {pending ? t('generating') : t('generateCta')}
-        </button>
-        {error ? <p className="text-sm text-red-600">{error}</p> : null}
+      <section className="border-border rounded-3xl border bg-gradient-to-br from-primary/10 to-accent/10 p-6 text-center dark:from-primary/20 dark:to-accent/20">
+        <Sparkles className="text-primary mx-auto mb-3 h-6 w-6" aria-hidden />
+        <p className="text-muted-foreground text-sm">{labels.fallback}</p>
       </section>
     );
   }
 
   const parsed = parseReading(body);
-  const hasStructured = parsed.theme || parsed.energy || parsed.watch || parsed.affirmation;
+  const paragraphs = parsed.body
+    .split(/\n\s*\n/)
+    .map((p) => p.trim())
+    .filter(Boolean);
 
   return (
-    <section className="border-border space-y-5 rounded-2xl border bg-gradient-to-br from-primary/5 to-accent/5 p-6 dark:from-primary/15 dark:to-accent/15">
-      <header className="flex items-center justify-between gap-3">
-        <h2 className="text-lg font-semibold">{t('title')}</h2>
-        <span className="text-muted-foreground text-xs">{t('oncePerDay')}</span>
-      </header>
+    <section className="border-border overflow-hidden rounded-3xl border bg-white shadow-sm dark:bg-neutral-900">
+      <div className="bg-gradient-to-r from-accent via-accent to-amber-300 px-5 py-3 text-amber-950">
+        <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em]">
+          <Sparkles className="h-3.5 w-3.5" aria-hidden />
+          {dateLabel}
+        </p>
+      </div>
 
-      {hasStructured ? (
-        <div className="space-y-5">
-          <Block label={t('theme')} text={parsed.theme} />
-          <Block label={t('energy')} text={parsed.energy} />
-          <Block label={t('watch')} text={parsed.watch} />
-          {parsed.affirmation ? (
-            <blockquote className="border-primary border-l-4 pl-4 italic text-neutral-700 dark:text-neutral-300">
-              {parsed.affirmation}
-            </blockquote>
+      <div className="space-y-5 px-6 py-6 sm:px-7">
+        {dayTitle ? (
+          <div className="space-y-1">
+            <p className="text-muted-foreground text-[11px] font-medium uppercase tracking-[0.18em]">
+              {labels.todaysTheme}
+            </p>
+            <h2 className="font-serif text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
+              {dayTitle}
+            </h2>
+          </div>
+        ) : null}
+
+        <div className="space-y-3 text-[15px] leading-relaxed text-neutral-800 dark:text-neutral-200">
+          {parsed.greeting ? (
+            <p className="text-foreground font-medium">{parsed.greeting}</p>
           ) : null}
+          {paragraphs.map((p, i) => (
+            <p key={i}>{p}</p>
+          ))}
         </div>
-      ) : (
-        <div className="prose prose-sm max-w-none whitespace-pre-wrap text-neutral-800 dark:text-neutral-200">
-          {body}
-        </div>
-      )}
-    </section>
-  );
-}
 
-function Block({ label, text }: { label: string; text: string }) {
-  if (!text) return null;
-  return (
-    <div className="space-y-1">
-      <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider">{label}</p>
-      <p className="text-sm leading-relaxed text-neutral-800 dark:text-neutral-200">{text}</p>
-    </div>
+        {parsed.affirmation ? (
+          <div className="border-accent/60 border-l-[3px] bg-accent/5 px-4 py-3 dark:bg-accent/10">
+            <p className="text-muted-foreground mb-1 text-[10px] font-semibold uppercase tracking-[0.18em]">
+              {labels.affirmation}
+            </p>
+            <p className="font-serif text-base italic leading-snug text-neutral-800 dark:text-neutral-100">
+              {parsed.affirmation}
+            </p>
+          </div>
+        ) : null}
+      </div>
+    </section>
   );
 }
