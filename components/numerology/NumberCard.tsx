@@ -49,7 +49,7 @@ export function NumberCard({
 
   return (
     <div
-      className={`border-border rounded-xl border bg-white/50 transition dark:bg-neutral-900/50 ${
+      className={`border-border press-soft overflow-hidden rounded-xl border bg-white/50 transition-colors dark:bg-neutral-900/50 ${
         open ? 'ring-primary/30 ring-1' : 'hover:bg-white/70 dark:hover:bg-neutral-900/70'
       }`}
     >

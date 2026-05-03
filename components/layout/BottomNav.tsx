@@ -46,7 +46,7 @@ export function BottomNav({ locale, labels }: { locale: Locale; labels: Record<T
               <Link
                 href={tab.href(locale)}
                 aria-current={active ? 'page' : undefined}
-                className={`flex w-full flex-col items-center gap-0.5 py-2.5 text-[10px] font-medium transition ${
+                className={`press flex w-full flex-col items-center gap-0.5 py-2.5 text-[10px] font-medium transition-colors ${
                   active ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
                 }`}
               >

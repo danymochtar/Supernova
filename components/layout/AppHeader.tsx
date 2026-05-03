@@ -29,14 +29,7 @@ export function AppHeader({
         {labels.greetingTimeOfDay}
       </p>
       <h1 className="text-2xl font-semibold tracking-tight">
-        {labels.greeting},{' '}
-        <Link
-          href={`/${locale}/profile/edit`}
-          className="font-serif italic underline-offset-4 hover:underline"
-          title={labels.editProfile}
-        >
-          {labels.fullName}
-        </Link>
+        {labels.greeting}, <span className="font-serif italic">{labels.fullName}</span>
       </h1>
       {todayLabel ? (
         <p className="text-muted-foreground flex items-center gap-2 text-sm">
@@ -44,7 +37,7 @@ export function AppHeader({
           <Link
             href={`/${locale}/profile/edit`}
             aria-label={labels.editProfile}
-            className="hover:bg-muted/40 flex h-6 w-6 items-center justify-center rounded-full"
+            className="press hover:bg-muted/40 flex h-6 w-6 items-center justify-center rounded-full"
           >
             <Pencil className="h-3 w-3" aria-hidden />
           </Link>

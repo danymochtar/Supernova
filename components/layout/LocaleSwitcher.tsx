@@ -30,7 +30,7 @@ export function LocaleSwitcher({ active }: { active: Locale }) {
                 setLocale(l.code);
               })
             }
-            className={`px-3 py-1.5 font-medium transition ${
+            className={`press px-3 py-1.5 font-medium transition-colors ${
               isActive ? 'bg-primary text-primary-foreground' : 'hover:bg-muted/40'
             }`}
             aria-pressed={isActive}

@@ -263,7 +263,7 @@ export function ChatThread({ initialTurns, priorDays, emptyHint }: Props) {
           <button
             type="submit"
             disabled={input.trim().length < 1}
-            className="bg-primary text-primary-foreground rounded-lg px-4 py-2 text-sm font-medium disabled:opacity-50"
+            className="bg-primary text-primary-foreground press rounded-lg px-4 py-2 text-sm font-medium disabled:opacity-50"
           >
             {t('send')}
           </button>

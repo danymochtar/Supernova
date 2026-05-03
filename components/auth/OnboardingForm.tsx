@@ -152,7 +152,7 @@ export function OnboardingForm({ locale, defaultTimezone, timezones, action }: P
       <button
         type="submit"
         disabled={isPending}
-        className="bg-primary text-primary-foreground w-full rounded-lg px-4 py-2.5 text-sm font-medium disabled:opacity-50"
+        className="bg-primary text-primary-foreground press w-full rounded-lg px-4 py-2.5 text-sm font-medium disabled:opacity-50"
       >
         {isPending ? t('submitting') : t('submit')}
       </button>

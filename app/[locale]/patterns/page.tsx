@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
+import { LineChart } from 'lucide-react';
 import { TopBar } from '@/components/layout/TopBar';
 import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
@@ -44,9 +45,12 @@ export default async function PatternsPage({ params }: { params: { locale: strin
         </p>
 
       {!enoughData ? (
-        <section className="border-border rounded-2xl border-2 border-dashed p-10 text-center">
+        <section className="border-border flex flex-col items-center gap-3 rounded-2xl border-2 border-dashed p-10 text-center">
+          <div className="bg-primary/10 text-primary flex h-14 w-14 items-center justify-center rounded-full">
+            <LineChart className="h-6 w-6" aria-hidden />
+          </div>
           <h2 className="font-medium">{t('emptyTitle')}</h2>
-          <p className="text-muted-foreground mx-auto mt-2 max-w-md text-sm">{t('emptyBody')}</p>
+          <p className="text-muted-foreground mx-auto max-w-md text-sm">{t('emptyBody')}</p>
         </section>
       ) : (
         <>

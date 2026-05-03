@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 import { signIn, signUp } from '@/lib/auth/client';
 import type { Locale } from '@/lib/i18n/config';
 
@@ -45,14 +46,24 @@ export function LoginForm({ locale }: { locale: Locale }) {
   }
 
   return (
-    <form onSubmit={onSubmit} className="w-full max-w-md space-y-6">
-      <div className="space-y-2 text-center">
-        <h1 className="text-2xl font-semibold tracking-tight">
-          {mode === 'signIn' ? t('signInTitle') : t('signUpTitle')}
-        </h1>
-        <p className="text-muted-foreground text-sm">
-          {mode === 'signIn' ? t('signInSubtitle') : t('signUpSubtitle')}
-        </p>
+    <form onSubmit={onSubmit} className="w-full max-w-sm space-y-6">
+      <div className="flex flex-col items-center gap-3 text-center">
+        <Image
+          src="/icons/icon.svg"
+          alt="Supernova"
+          width={64}
+          height={64}
+          className="rounded-2xl shadow-md shadow-primary/20"
+          priority
+        />
+        <div className="space-y-1">
+          <h1 className="text-2xl font-semibold tracking-tight">
+            {mode === 'signIn' ? t('signInTitle') : t('signUpTitle')}
+          </h1>
+          <p className="text-muted-foreground text-sm">
+            {mode === 'signIn' ? t('signInSubtitle') : t('signUpSubtitle')}
+          </p>
+        </div>
       </div>
 
       <div className="space-y-2">
@@ -94,7 +105,7 @@ export function LoginForm({ locale }: { locale: Locale }) {
       <button
         type="submit"
         disabled={submitting}
-        className="bg-primary text-primary-foreground w-full rounded-lg px-4 py-2.5 text-sm font-medium disabled:opacity-50"
+        className="bg-primary text-primary-foreground press w-full rounded-full px-4 py-3 text-sm font-medium shadow-md shadow-primary/20 disabled:opacity-50"
       >
         {submitting ? t('submitting') : mode === 'signIn' ? t('signInSubmit') : t('signUpSubmit')}
       </button>

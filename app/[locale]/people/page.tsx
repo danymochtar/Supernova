@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-import { Plus } from 'lucide-react';
+import { Plus, HeartHandshake, ChevronRight } from 'lucide-react';
 import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { listPeople } from '@/lib/db/repositories/person';
@@ -39,9 +39,12 @@ export default async function PeoplePage({ params }: { params: { locale: string 
       </header>
 
       {people.length === 0 ? (
-        <section className="border-border rounded-2xl border-2 border-dashed p-10 text-center">
+        <section className="border-border flex flex-col items-center gap-3 rounded-2xl border-2 border-dashed p-10 text-center">
+          <div className="bg-primary/10 text-primary flex h-14 w-14 items-center justify-center rounded-full">
+            <HeartHandshake className="h-6 w-6" aria-hidden />
+          </div>
           <h2 className="font-medium">{t('emptyTitle')}</h2>
-          <p className="text-muted-foreground mt-2 text-sm">{t('emptyBody')}</p>
+          <p className="text-muted-foreground max-w-xs text-sm">{t('emptyBody')}</p>
         </section>
       ) : (
         <section className="space-y-3">
@@ -49,7 +52,7 @@ export default async function PeoplePage({ params }: { params: { locale: string 
             <Link
               key={p.id}
               href={`/${locale}/people/${p.id}`}
-              className="border-border hover:bg-muted/30 block rounded-xl border p-4 transition"
+              className="border-border press-soft hover:bg-muted/30 block rounded-xl border p-4 transition-colors"
             >
               <div className="flex items-baseline justify-between gap-3">
                 <div>
@@ -62,7 +65,7 @@ export default async function PeoplePage({ params }: { params: { locale: string 
                     </span>
                   </p>
                 </div>
-                <span className="text-muted-foreground text-sm">→</span>
+                <ChevronRight className="text-muted-foreground h-4 w-4" aria-hidden />
               </div>
             </Link>
           ))}

@@ -37,7 +37,7 @@ export function DailyReadingView({ initialBody, generate }: Props) {
           type="button"
           onClick={onGenerate}
           disabled={pending}
-          className="bg-primary text-primary-foreground rounded-lg px-5 py-2.5 text-sm font-medium disabled:opacity-50"
+          className="bg-primary text-primary-foreground press rounded-lg px-5 py-2.5 text-sm font-medium disabled:opacity-50"
         >
           {pending ? t('generating') : t('generateCta')}
         </button>

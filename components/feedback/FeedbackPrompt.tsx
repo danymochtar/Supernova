@@ -71,7 +71,7 @@ export function FeedbackPrompt({ locale, initial, action }: Props) {
           <button
             type="submit"
             disabled={!note.trim() || isPending}
-            className="bg-primary text-primary-foreground rounded-lg px-4 py-2 text-sm font-medium disabled:opacity-50"
+            className="bg-primary text-primary-foreground press rounded-lg px-4 py-2 text-sm font-medium disabled:opacity-50"
           >
             {isPending ? t('saving') : savedAt ? t('updateCta') : t('submitCta')}
           </button>
