@@ -9,10 +9,22 @@ import { saveOnboardingProfile } from './actions';
 export default async function WelcomePage({ params }: { params: { locale: string } }) {
   const locale: Locale = isLocale(params.locale) ? params.locale : 'id';
 
-  const session = await getSession();
+  let session;
+  try {
+    session = await getSession();
+  } catch (err) {
+    console.error('[welcome] getSession threw', err);
+    throw err;
+  }
   if (!session) redirect(`/${locale}/login`);
 
-  const existing = await getProfileByUserId(session.user.id);
+  let existing;
+  try {
+    existing = await getProfileByUserId(session.user.id);
+  } catch (err) {
+    console.error('[welcome] getProfileByUserId threw', { userId: session.user.id, err });
+    throw err;
+  }
   if (existing) redirect(`/${locale}/dashboard`);
 
   return (
