@@ -47,43 +47,54 @@ export default async function PersonDetailPage({
   const slots = activeSlots(person.dob, age);
 
 
+  const initials = `${person.firstName.charAt(0)}${person.lastName.charAt(0)}`.toUpperCase();
+
   return (
     <main className="container max-w-3xl px-4 sm:px-6">
       <TopBar title={person.fullName} backHref={`/${locale}/people`} />
       <div className="space-y-8 pb-6 sm:pb-10">
-        <section className="border-border space-y-3 rounded-2xl border bg-white/40 p-5 dark:bg-neutral-900/40">
-          <p className="text-muted-foreground text-sm">
-            {t(`relationship.${person.relationship}`)} ·{' '}
-            <span className="tabular-nums">
-              {person.dob.year}-{String(person.dob.month).padStart(2, '0')}-
-              {String(person.dob.day).padStart(2, '0')}
-            </span>{' '}
-            · {t('age', { age })}
-          </p>
-          <div className="flex flex-wrap items-center gap-2 pt-1">
+        <section className="border-border flex flex-col items-center gap-3 rounded-2xl border bg-white/40 p-6 text-center dark:bg-neutral-900/40">
+          <div
+            className="from-primary/30 to-amber-300/30 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br font-serif text-3xl font-semibold tracking-tight"
+            aria-hidden
+          >
+            {initials}
+          </div>
+          <div className="space-y-0.5">
+            <p className="text-lg font-semibold">{person.fullName}</p>
+            <p className="text-muted-foreground text-sm">
+              {t(`relationship.${person.relationship}`)} · {t('age', { age })}
+              {' · '}
+              <span className="tabular-nums">
+                {person.dob.year}-{String(person.dob.month).padStart(2, '0')}-
+                {String(person.dob.day).padStart(2, '0')}
+              </span>
+            </p>
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
             <Link
               href={`/${locale}/people/${person.id}/compatibility`}
-              className="bg-primary text-primary-foreground rounded-full px-4 py-2 text-sm font-medium"
+              className="bg-primary text-primary-foreground press rounded-full px-4 py-2 text-sm font-medium"
             >
               {t('compatibilityCta')}
             </Link>
             <Link
               href={`/${locale}/people/${person.id}/edit`}
-              className="border-border rounded-full border px-4 py-2 text-sm font-medium"
+              className="border-border press rounded-full border px-4 py-2 text-sm font-medium"
             >
               {t('edit')}
             </Link>
-            <form action={deletePersonAction} className="ml-auto">
-              <input type="hidden" name="id" value={person.id} />
-              <input type="hidden" name="locale" value={locale} />
-              <button
-                type="submit"
-                className="text-muted-foreground hover:text-red-700 px-2 py-2 text-sm underline-offset-4 hover:underline"
-              >
-                {t('delete')}
-              </button>
-            </form>
           </div>
+          <form action={deletePersonAction} className="pt-1">
+            <input type="hidden" name="id" value={person.id} />
+            <input type="hidden" name="locale" value={locale} />
+            <button
+              type="submit"
+              className="text-muted-foreground hover:text-red-700 text-xs underline-offset-4 hover:underline"
+            >
+              {t('delete')}
+            </button>
+          </form>
         </section>
 
       {person.notes ? (

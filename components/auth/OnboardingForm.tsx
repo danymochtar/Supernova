@@ -38,16 +38,11 @@ export function OnboardingForm({ locale, defaultTimezone, timezones, action }: P
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-8">
+    <form onSubmit={onSubmit} className="space-y-7">
       <header className="space-y-2">
         <h1 className="text-2xl font-semibold tracking-tight">{t('title')}</h1>
-        <p className="text-muted-foreground text-sm">{t('subtitle')}</p>
+        <p className="text-muted-foreground text-sm">{t('warningBody')}</p>
       </header>
-
-      <aside className="bg-muted text-muted-foreground rounded-lg p-4 text-sm">
-        <p className="text-foreground mb-1 font-medium">{t('warningTitle')}</p>
-        <p>{t('warningBody')}</p>
-      </aside>
 
       <fieldset className="space-y-3">
         <legend className="text-sm font-medium">{t('nameLabel')}</legend>

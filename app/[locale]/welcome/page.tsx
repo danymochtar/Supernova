@@ -16,7 +16,7 @@ export default async function WelcomePage({ params }: { params: { locale: string
   if (existing) redirect(`/${locale}/dashboard`);
 
   return (
-    <main className="container max-w-xl py-12">
+    <main className="container max-w-xl px-4 py-8 sm:px-6 sm:py-12">
       <OnboardingForm
         locale={locale}
         defaultTimezone="Asia/Jakarta"
