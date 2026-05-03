@@ -7,7 +7,7 @@ import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { listPeople } from '@/lib/db/repositories/person';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 
-const PEOPLE_LIMIT = 1;
+const PEOPLE_LIMIT = 999;
 
 export default async function PeoplePage({ params }: { params: { locale: string } }) {
   const locale: Locale = isLocale(params.locale) ? params.locale : 'id';

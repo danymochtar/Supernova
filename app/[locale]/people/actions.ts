@@ -14,8 +14,9 @@ import {
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { profileFormSchema, type ProfileFormError } from '@/lib/profile/validate';
 
-// Per Decision #4: 1 person for everyone in MVP. Branch on profile.tier later.
-const PEOPLE_LIMIT = 1;
+// Per-user cap on the number of Person rows. Was 1 in the locked plan as a
+// soft gate on free tier; user removed it for the MVP.
+const PEOPLE_LIMIT = 999;
 
 const RELATIONSHIPS = ['PARTNER', 'FAMILY', 'FRIEND', 'COLLEAGUE', 'OTHER'] as const;
 

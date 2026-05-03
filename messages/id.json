@@ -21,6 +21,13 @@
     "patternsHint": "Lihat tren mood dan tema setelah ≥14 hari catatan.",
     "signOut": "Keluar dari akun",
     "signOutCta": "Keluar",
+    "notesTitle": "Catatan personal",
+    "notesHint": "Konteks tentang kamu yang AI bakal inget — preferensi, situasi hidup, hal yang lagi diproses. Disuntik ke setiap obrolan curhat.",
+    "notesPlaceholder": "Contoh: aku lagi pertimbangin pindah kerja, anak pertama lagi MPASI, lebih suka direct daripada basa-basi...",
+    "notesSubmit": "Simpan catatan",
+    "notesSaving": "Menyimpan…",
+    "notesSavedAt": "Tersimpan {time}",
+    "notesError": "Gagal menyimpan. Coba lagi.",
     "appVersion": "Supernova MVP"
   },
   "home": {
@@ -193,6 +200,9 @@
     "forecastTitle": "Ramalan Personal Year",
     "forecastSubtitle": "Siklus 9 tahun kamu mulai dari tahun ini. Tiap angka membawa tema utama selama 12 bulan.",
     "thisYear": "Tahun ini",
+    "cyclePosition": "Tahun {current} dari {total}",
+    "cyclePositionShort": "Tahun {pos}/9",
+    "upcomingTitle": "Tahun-tahun ke depan",
     "stagesTitle": "Babak hidup",
     "stagesSubtitle": "Empat Pinnacle dan Challenge yang menentukan tema besar setiap fase hidup kamu.",
     "cyclesTitle": "Period Cycles",
@@ -207,7 +217,7 @@
     "addCta": "+ Tambah orang",
     "emptyTitle": "Belum ada orang",
     "emptyBody": "Tambahkan pasangan, keluarga, teman, atau rekan untuk melihat numerologi mereka.",
-    "limitNote": "MVP: maksimal {limit} orang. Hapus dulu untuk menambah yang lain.",
+    "limitNote": "Maksimal {limit} orang.",
     "relationship": {
       "PARTNER": "Pasangan",
       "FAMILY": "Keluarga",

@@ -196,8 +196,11 @@ function formatHistory(
 }
 
 /** Compose the smart context into a single user-turn string for the model. */
-export function composeContextBlock(c: SmartContext): string {
+export function composeContextBlock(c: SmartContext, personalNotes?: string | null): string {
   const parts: string[] = [c.base];
+  if (personalNotes && personalNotes.trim()) {
+    parts.push(`<personal_notes>\n${personalNotes.trim()}\n</personal_notes>`);
+  }
   if (c.history) {
     parts.push(`<conversation_history>\n${c.history}\n</conversation_history>`);
   }

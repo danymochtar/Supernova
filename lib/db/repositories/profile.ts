@@ -22,6 +22,7 @@ export interface ProfileView {
   dob: BirthDate;
   timezone: string;
   locale: 'id' | 'en';
+  personalNotes: string | null;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -91,7 +92,16 @@ function toView(row: ProfileRow): ProfileView {
     dob: toBirthDate(row.dob),
     timezone: row.timezone,
     locale,
+    personalNotes: row.personalNotes,
     createdAt: row.createdAt,
     updatedAt: row.updatedAt,
   };
+}
+
+/** Update only the free-form personal notes; doesn't touch name/DOB. */
+export async function updatePersonalNotes(userId: string, notes: string | null): Promise<void> {
+  await prisma.profile.update({
+    where: { userId },
+    data: { personalNotes: notes && notes.trim() ? notes.trim() : null },
+  });
 }

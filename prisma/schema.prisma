@@ -119,17 +119,21 @@ enum SummaryKind {
 }
 
 model Profile {
-  id         String   @id @default(cuid())
-  userId     String   @unique
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  firstName  String
-  middleName String?
-  lastName   String
-  dob        DateTime @db.Date
-  timezone   String   @default("Asia/Jakarta")
-  locale     String   @default("id")
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id            String   @id @default(cuid())
+  userId        String   @unique
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  firstName     String
+  middleName    String?
+  lastName      String
+  dob           DateTime @db.Date
+  timezone      String   @default("Asia/Jakarta")
+  locale        String   @default("id")
+  // Free-form notes the user wants the AI to remember about them — life
+  // context, preferences, goals, inside jokes. Injected into chat as the
+  // <personal_notes> block when present. Up to ~4000 chars.
+  personalNotes String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   @@map("profile")
 }

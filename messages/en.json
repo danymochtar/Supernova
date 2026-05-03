@@ -21,6 +21,13 @@
     "patternsHint": "See mood + theme trends after ≥14 days of logging.",
     "signOut": "Sign out of your account",
     "signOutCta": "Sign out",
+    "notesTitle": "Personal notes",
+    "notesHint": "Context about you that the AI will remember — preferences, life situation, what you're processing. Injected into every chat.",
+    "notesPlaceholder": "Example: I'm thinking about a job change, first kid started solids, prefer direct over small talk...",
+    "notesSubmit": "Save notes",
+    "notesSaving": "Saving…",
+    "notesSavedAt": "Saved {time}",
+    "notesError": "Failed to save. Please try again.",
     "appVersion": "Supernova MVP"
   },
   "home": {
@@ -193,6 +200,9 @@
     "forecastTitle": "Personal Year forecast",
     "forecastSubtitle": "Your 9-year cycle starting this year. Each number carries the main theme for 12 months.",
     "thisYear": "This year",
+    "cyclePosition": "Year {current} of {total}",
+    "cyclePositionShort": "Year {pos}/9",
+    "upcomingTitle": "Upcoming years",
     "stagesTitle": "Life chapters",
     "stagesSubtitle": "Four Pinnacles and Challenges that set the major theme of each life phase.",
     "cyclesTitle": "Period Cycles",
@@ -207,7 +217,7 @@
     "addCta": "+ Add person",
     "emptyTitle": "No people yet",
     "emptyBody": "Add a partner, family member, friend, or colleague to see their numerology.",
-    "limitNote": "MVP: up to {limit} person. Delete to add another.",
+    "limitNote": "Up to {limit} people.",
     "relationship": {
       "PARTNER": "Partner",
       "FAMILY": "Family",

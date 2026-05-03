@@ -8,7 +8,7 @@ import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { createPersonAction } from '../actions';
 
-const PEOPLE_LIMIT = 1;
+const PEOPLE_LIMIT = 999;
 
 export default async function NewPersonPage({ params }: { params: { locale: string } }) {
   const locale: Locale = isLocale(params.locale) ? params.locale : 'id';

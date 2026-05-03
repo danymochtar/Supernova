@@ -67,7 +67,7 @@ export async function POST(req: Request) {
   // turns within the same 5-minute window pay ~10% input on the prefix.
   // (The SDK's TextBlockParam type in v0.32 doesn't yet expose cache_control,
   // so we cast — the API accepts and uses it correctly.)
-  const contextBlock = composeContextBlock(smart);
+  const contextBlock = composeContextBlock(smart, profile.personalNotes);
   const messages: Anthropic.MessageParam[] = [
     {
       role: 'user',
@@ -110,7 +110,7 @@ export async function POST(req: Request) {
           system: [
             {
               type: 'text',
-              text: chatSystemPrompt(),
+              text: chatSystemPrompt(locale),
               cache_control: { type: 'ephemeral' },
             } as Anthropic.TextBlockParam,
           ],

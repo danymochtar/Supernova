@@ -1,13 +1,15 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-import { ChevronRight, BarChart3, Pencil, LogOut, Globe, ShieldCheck } from 'lucide-react';
+import { ChevronRight, BarChart3, Pencil, LogOut, Globe, ShieldCheck, NotebookPen } from 'lucide-react';
 import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { isAdminEmail } from '@/lib/auth/admin';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { LocaleSwitcher } from '@/components/layout/LocaleSwitcher';
 import { SignOutButton } from '@/components/auth/SignOutButton';
+import { PersonalNotesForm } from '@/components/auth/PersonalNotesForm';
+import { savePersonalNotes } from './actions';
 
 export default async function MePage({ params }: { params: { locale: string } }) {
   const locale: Locale = isLocale(params.locale) ? params.locale : 'id';
@@ -45,6 +47,18 @@ export default async function MePage({ params }: { params: { locale: string } })
           <Pencil className="h-4 w-4" aria-hidden />
           {t('editProfile')}
         </Link>
+      </section>
+
+      {/* Personal notes — long-term context the chat assistant remembers */}
+      <section className="border-border space-y-3 rounded-2xl border bg-white/40 p-5 dark:bg-neutral-900/40">
+        <div className="flex items-start gap-3">
+          <NotebookPen className="text-muted-foreground mt-0.5 h-5 w-5 shrink-0" aria-hidden />
+          <div className="space-y-0.5">
+            <p className="text-sm font-medium">{t('notesTitle')}</p>
+            <p className="text-muted-foreground text-xs">{t('notesHint')}</p>
+          </div>
+        </div>
+        <PersonalNotesForm locale={locale} initial={profile.personalNotes} action={savePersonalNotes} />
       </section>
 
       {/* Settings list */}
