@@ -66,12 +66,18 @@ export default async function PersonDetailPage({
             · {t('age', { age })}
           </p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <Link
             href={`/${locale}/people/${person.id}/compatibility`}
             className="bg-primary text-primary-foreground rounded-lg px-4 py-2 text-sm font-medium"
           >
             {t('compatibilityCta')}
+          </Link>
+          <Link
+            href={`/${locale}/people/${person.id}/edit`}
+            className="border-border rounded-lg border px-4 py-2 text-sm font-medium"
+          >
+            {t('edit')}
           </Link>
           <form action={deletePersonAction}>
             <input type="hidden" name="id" value={person.id} />

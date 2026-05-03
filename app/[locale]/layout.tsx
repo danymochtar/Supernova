@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -6,8 +6,38 @@ import { isLocale } from '@/lib/i18n/config';
 import '../globals.css';
 
 export const metadata: Metadata = {
-  title: 'Supernova',
-  description: 'Personalized daily numerology readings.',
+  applicationName: 'Supernova',
+  title: {
+    default: 'Supernova — Numerology Companion',
+    template: '%s · Supernova',
+  },
+  description:
+    'Personalized daily numerology readings and a reflective AI companion grounded in your numbers.',
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    title: 'Supernova',
+    statusBarStyle: 'black-translucent',
+  },
+  icons: {
+    icon: [
+      { url: '/icons/icon.svg', type: 'image/svg+xml' },
+      { url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: [{ url: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' }],
+  },
+  formatDetection: { telephone: false },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#fdfaf3' },
+    { media: '(prefers-color-scheme: dark)', color: '#0b0a14' },
+  ],
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
 };
 
 export default async function LocaleLayout({
@@ -21,8 +51,8 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
-      <body className="min-h-screen antialiased">
+    <html lang={locale} suppressHydrationWarning>
+      <body className="bg-background text-foreground min-h-screen antialiased">
         <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
         </NextIntlClientProvider>

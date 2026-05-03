@@ -119,15 +119,17 @@ enum SummaryKind {
 }
 
 model Profile {
-  id        String   @id @default(cuid())
-  userId    String   @unique
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  fullName  String
-  dob       DateTime @db.Date
-  timezone  String   @default("Asia/Jakarta")
-  locale    String   @default("id")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         String   @id @default(cuid())
+  userId     String   @unique
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  firstName  String
+  middleName String?
+  lastName   String
+  dob        DateTime @db.Date
+  timezone   String   @default("Asia/Jakarta")
+  locale     String   @default("id")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   @@map("profile")
 }
@@ -154,7 +156,9 @@ model Person {
   id           String       @id @default(cuid())
   userId       String
   user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  fullName     String
+  firstName    String
+  middleName   String?
+  lastName     String
   dob          DateTime     @db.Date
   relationship Relationship
   notes        String?

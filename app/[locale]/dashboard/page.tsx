@@ -17,7 +17,7 @@ import {
 import { NumberCard } from '@/components/numerology/NumberCard';
 import { AboutMe } from '@/components/numerology/AboutMe';
 import { KarmicLessonsList } from '@/components/numerology/KarmicLessonsList';
-import { SignOutButton } from '@/components/auth/SignOutButton';
+import { AppHeader } from '@/components/layout/AppHeader';
 import { DailyReadingView } from '@/components/reading/DailyReadingView';
 import { FeedbackPrompt } from '@/components/feedback/FeedbackPrompt';
 import { getReadingForLocalDay } from '@/lib/db/repositories/reading';
@@ -25,6 +25,7 @@ import { getFeedbackForLocalDay } from '@/lib/db/repositories/feedback';
 import { getTurnsBetween } from '@/lib/db/repositories/qa';
 import { meaningFor } from '@/lib/numerology/meanings';
 import { getOrGenerateAboutMe } from '@/lib/ai/aboutMe';
+import { greetingFor } from '@/lib/greeting';
 import { generateDailyReading } from './actions';
 import { submitFeedback } from './feedbackActions';
 
@@ -106,47 +107,36 @@ export default async function DashboardPage({ params }: { params: { locale: stri
     karmicLessons: core.karmicLessons,
   });
 
+  // Local hour in the user's timezone for time-of-day greeting.
+  const localHour = (() => {
+    const fmt = new Intl.DateTimeFormat('en-US', {
+      timeZone: profile.timezone,
+      hour: 'numeric',
+      hour12: false,
+    });
+    const part = fmt.formatToParts(new Date()).find((p) => p.type === 'hour');
+    return part ? Number(part.value) : new Date().getHours();
+  })();
+  const localGreeting = greetingFor(localHour, locale);
+
   return (
     <main className="container max-w-4xl space-y-10 py-10">
-      {/* Header */}
-      <header className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider">
-            {t('greeting')}
-          </p>
-          <h1 className="text-2xl font-semibold tracking-tight">{profile.fullName}</h1>
-          <p className="text-muted-foreground mt-1 text-sm">
-            {formatToday(ctx, locale)} · {profile.timezone}
-          </p>
-        </div>
-        <div className="flex flex-wrap items-center gap-3">
-          <Link
-            href={`/${locale}/journey`}
-            className="border-border rounded-lg border px-4 py-2 text-sm font-medium"
-          >
-            {t('journeyCta')}
-          </Link>
-          <Link
-            href={`/${locale}/patterns`}
-            className="border-border rounded-lg border px-4 py-2 text-sm font-medium"
-          >
-            {t('patternsCta')}
-          </Link>
-          <Link
-            href={`/${locale}/people`}
-            className="border-border rounded-lg border px-4 py-2 text-sm font-medium"
-          >
-            {t('peopleCta')}
-          </Link>
-          <Link
-            href={`/${locale}/ask`}
-            className="bg-primary text-primary-foreground rounded-lg px-4 py-2 text-sm font-medium"
-          >
-            {t('askCta')}
-          </Link>
-          <SignOutButton label={t('signOut')} locale={locale} />
-        </div>
-      </header>
+      <AppHeader
+        locale={locale}
+        active="dashboard"
+        todayLabel={`${formatToday(ctx, locale)} · ${profile.timezone}`}
+        labels={{
+          greeting: localGreeting.greeting,
+          greetingTimeOfDay: localGreeting.word,
+          fullName: profile.fullName,
+          editProfile: t('editProfile'),
+          journey: t('journeyCta'),
+          patterns: t('patternsCta'),
+          people: t('peopleCta'),
+          chat: t('askCta'),
+          signOut: t('signOut'),
+        }}
+      />
 
       {/* Daily AI reading */}
       <DailyReadingView initialBody={cachedReading?.body ?? null} generate={generateDailyReading} />

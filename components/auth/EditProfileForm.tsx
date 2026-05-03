@@ -3,29 +3,39 @@
 import { useState, useTransition } from 'react';
 import { useTranslations } from 'next-intl';
 import type { Locale } from '@/lib/i18n/config';
-import type { OnboardingActionResult } from '@/app/[locale]/welcome/actions';
+import type { UpdateProfileResult, updateProfileAction } from '@/app/[locale]/profile/edit/actions';
 
 interface Props {
   locale: Locale;
-  defaultTimezone: string;
+  initial: {
+    firstName: string;
+    middleName: string | null;
+    lastName: string;
+    dob: { year: number; month: number; day: number };
+    timezone: string;
+    locale: Locale;
+  };
   timezones: { value: string; label: string }[];
-  action: (formData: FormData) => Promise<OnboardingActionResult>;
+  action: typeof updateProfileAction;
 }
 
-const ERROR_KEY: Record<Exclude<OnboardingActionResult, { ok: true }>['error'], string> = {
+const ERROR_KEY: Record<Exclude<UpdateProfileResult, { ok: true }>['error'], string> = {
   unauth: 'errorGeneric',
+  no_profile: 'errorGeneric',
   invalid_name: 'errorInvalidName',
   invalid_dob: 'errorInvalidDob',
   future_dob: 'errorFutureDob',
   invalid_timezone: 'errorInvalidTimezone',
-  profile_exists: 'errorGeneric',
   generic: 'errorGeneric',
 };
 
-export function OnboardingForm({ locale, defaultTimezone, timezones, action }: Props) {
-  const t = useTranslations('welcome');
+export function EditProfileForm({ locale, initial, timezones, action }: Props) {
+  const t = useTranslations('editProfile');
+  const tWelcome = useTranslations('welcome');
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+
+  const dobStr = `${initial.dob.year}-${String(initial.dob.month).padStart(2, '0')}-${String(initial.dob.day).padStart(2, '0')}`;
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -33,29 +43,24 @@ export function OnboardingForm({ locale, defaultTimezone, timezones, action }: P
     const formData = new FormData(e.currentTarget);
     startTransition(async () => {
       const result = await action(formData);
-      if (!result.ok) setError(t(ERROR_KEY[result.error]));
+      if (!result.ok) setError(tWelcome(ERROR_KEY[result.error]));
     });
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-8">
-      <header className="space-y-2">
-        <h1 className="text-2xl font-semibold tracking-tight">{t('title')}</h1>
-        <p className="text-muted-foreground text-sm">{t('subtitle')}</p>
-      </header>
-
-      <aside className="bg-muted text-muted-foreground rounded-lg p-4 text-sm">
+    <form onSubmit={onSubmit} className="space-y-7">
+      <aside className="rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm dark:border-amber-900/40 dark:bg-amber-950/20">
         <p className="text-foreground mb-1 font-medium">{t('warningTitle')}</p>
-        <p>{t('warningBody')}</p>
+        <p className="text-muted-foreground">{t('warningBody')}</p>
       </aside>
 
       <fieldset className="space-y-3">
-        <legend className="text-sm font-medium">{t('nameLabel')}</legend>
-        <p className="text-muted-foreground text-xs">{t('nameHint')}</p>
+        <legend className="text-sm font-medium">{tWelcome('nameLabel')}</legend>
+        <p className="text-muted-foreground text-xs">{tWelcome('nameHint')}</p>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           <div className="space-y-1">
             <label htmlFor="firstName" className="text-muted-foreground text-xs uppercase tracking-wider">
-              {t('firstNameLabel')}
+              {tWelcome('firstNameLabel')}
             </label>
             <input
               id="firstName"
@@ -64,28 +69,28 @@ export function OnboardingForm({ locale, defaultTimezone, timezones, action }: P
               required
               minLength={1}
               maxLength={60}
+              defaultValue={initial.firstName}
               autoComplete="given-name"
-              placeholder={t('firstNamePlaceholder')}
               className="border-border focus:ring-primary w-full rounded-lg border bg-transparent px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
             />
           </div>
           <div className="space-y-1">
             <label htmlFor="middleName" className="text-muted-foreground text-xs uppercase tracking-wider">
-              {t('middleNameLabel')}
+              {tWelcome('middleNameLabel')}
             </label>
             <input
               id="middleName"
               name="middleName"
               type="text"
               maxLength={60}
+              defaultValue={initial.middleName ?? ''}
               autoComplete="additional-name"
-              placeholder={t('middleNamePlaceholder')}
               className="border-border focus:ring-primary w-full rounded-lg border bg-transparent px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
             />
           </div>
           <div className="space-y-1">
             <label htmlFor="lastName" className="text-muted-foreground text-xs uppercase tracking-wider">
-              {t('lastNameLabel')}
+              {tWelcome('lastNameLabel')}
             </label>
             <input
               id="lastName"
@@ -94,8 +99,8 @@ export function OnboardingForm({ locale, defaultTimezone, timezones, action }: P
               required
               minLength={1}
               maxLength={60}
+              defaultValue={initial.lastName}
               autoComplete="family-name"
-              placeholder={t('lastNamePlaceholder')}
               className="border-border focus:ring-primary w-full rounded-lg border bg-transparent px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
             />
           </div>
@@ -104,13 +109,14 @@ export function OnboardingForm({ locale, defaultTimezone, timezones, action }: P
 
       <div className="space-y-2">
         <label htmlFor="dob" className="text-sm font-medium">
-          {t('dobLabel')}
+          {tWelcome('dobLabel')}
         </label>
         <input
           id="dob"
           name="dob"
           type="date"
           required
+          defaultValue={dobStr}
           max={new Date().toISOString().slice(0, 10)}
           className="border-border focus:ring-primary w-full rounded-lg border bg-transparent px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
         />
@@ -118,12 +124,12 @@ export function OnboardingForm({ locale, defaultTimezone, timezones, action }: P
 
       <div className="space-y-2">
         <label htmlFor="timezone" className="text-sm font-medium">
-          {t('timezoneLabel')}
+          {tWelcome('timezoneLabel')}
         </label>
         <select
           id="timezone"
           name="timezone"
-          defaultValue={defaultTimezone}
+          defaultValue={initial.timezone}
           className="border-border focus:ring-primary w-full rounded-lg border bg-transparent px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
         >
           {timezones.map((tz) => (
@@ -136,7 +142,7 @@ export function OnboardingForm({ locale, defaultTimezone, timezones, action }: P
 
       <div className="space-y-2">
         <label htmlFor="locale" className="text-sm font-medium">
-          {t('localeLabel')}
+          {tWelcome('localeLabel')}
         </label>
         <select
           id="locale"

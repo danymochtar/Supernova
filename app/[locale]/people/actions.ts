@@ -8,54 +8,29 @@ import {
   countPeople,
   createPerson,
   deletePerson,
+  getPerson,
+  updatePerson,
 } from '@/lib/db/repositories/person';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { profileFormSchema, type ProfileFormError } from '@/lib/profile/validate';
 
 // Per Decision #4: 1 person for everyone in MVP. Branch on profile.tier later.
 const PEOPLE_LIMIT = 1;
 
 const RELATIONSHIPS = ['PARTNER', 'FAMILY', 'FRIEND', 'COLLEAGUE', 'OTHER'] as const;
 
-const createSchema = z.object({
-  fullName: z
-    .string()
-    .min(2)
-    .max(120)
-    .regex(/[A-Za-zÀ-ÿ]/, 'name_must_contain_letters'),
-  dob: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+const personSchema = profileFormSchema.extend({
   relationship: z.enum(RELATIONSHIPS),
   notes: z.string().max(500).optional(),
-  locale: z.string().min(2),
 });
 
-export type CreatePersonResult =
+export type PersonActionResult =
   | { ok: true }
-  | { ok: false; error: 'unauth' | 'limit_reached' | 'invalid_name' | 'invalid_dob' | 'future_dob' | 'generic' };
+  | { ok: false; error: ProfileFormError | 'unauth' | 'limit_reached' | 'not_found' };
 
-export async function createPersonAction(formData: FormData): Promise<CreatePersonResult> {
-  const session = await getSession();
-  if (!session) return { ok: false, error: 'unauth' };
-
-  const existing = await countPeople(session.user.id);
-  if (existing >= PEOPLE_LIMIT) return { ok: false, error: 'limit_reached' };
-
-  const parsed = createSchema.safeParse({
-    fullName: formData.get('fullName'),
-    dob: formData.get('dob'),
-    relationship: formData.get('relationship'),
-    notes: formData.get('notes') || undefined,
-    locale: formData.get('locale'),
-  });
-  if (!parsed.success) {
-    const path = parsed.error.issues[0]?.path[0];
-    if (path === 'fullName') return { ok: false, error: 'invalid_name' };
-    if (path === 'dob') return { ok: false, error: 'invalid_dob' };
-    return { ok: false, error: 'generic' };
-  }
-
-  const { fullName, dob, relationship, notes, locale } = parsed.data;
-  const localeChecked: Locale = isLocale(locale) ? locale : 'id';
-
+function parseDob(dob: string):
+  | { ok: true; year: number; month: number; day: number }
+  | { ok: false; error: 'invalid_dob' | 'future_dob' } {
   const [yStr, mStr, dStr] = dob.split('-');
   const year = Number(yStr);
   const month = Number(mStr);
@@ -69,16 +44,96 @@ export async function createPersonAction(formData: FormData): Promise<CreatePers
     return { ok: false, error: 'invalid_dob' };
   }
   if (validate.getTime() > Date.now()) return { ok: false, error: 'future_dob' };
+  return { ok: true, year, month, day };
+}
+
+export async function createPersonAction(formData: FormData): Promise<PersonActionResult> {
+  const session = await getSession();
+  if (!session) return { ok: false, error: 'unauth' };
+
+  const existing = await countPeople(session.user.id);
+  if (existing >= PEOPLE_LIMIT) return { ok: false, error: 'limit_reached' };
+
+  const parsed = personSchema.safeParse({
+    firstName: formData.get('firstName'),
+    middleName: formData.get('middleName') ?? '',
+    lastName: formData.get('lastName'),
+    dob: formData.get('dob'),
+    timezone: 'UTC', // person doesn't carry a tz; satisfy schema
+    locale: String(formData.get('locale') ?? 'id'),
+    relationship: formData.get('relationship'),
+    notes: formData.get('notes') || undefined,
+  });
+  if (!parsed.success) {
+    const path = parsed.error.issues[0]?.path[0];
+    if (path === 'firstName' || path === 'lastName' || path === 'middleName') {
+      return { ok: false, error: 'invalid_name' };
+    }
+    if (path === 'dob') return { ok: false, error: 'invalid_dob' };
+    return { ok: false, error: 'generic' };
+  }
+  const dob = parseDob(parsed.data.dob);
+  if (!dob.ok) return { ok: false, error: dob.error };
+
+  const localeChecked: Locale = isLocale(parsed.data.locale) ? parsed.data.locale : 'id';
 
   await createPerson(session.user.id, {
-    fullName: fullName.trim(),
-    dob: { year, month, day },
-    relationship,
-    notes: notes?.trim() || null,
+    firstName: parsed.data.firstName,
+    middleName: parsed.data.middleName || null,
+    lastName: parsed.data.lastName,
+    dob: { year: dob.year, month: dob.month, day: dob.day },
+    relationship: parsed.data.relationship,
+    notes: parsed.data.notes?.trim() || null,
   });
 
   revalidatePath(`/${localeChecked}/people`);
   redirect(`/${localeChecked}/people`);
+}
+
+export async function updatePersonAction(formData: FormData): Promise<PersonActionResult> {
+  const session = await getSession();
+  if (!session) return { ok: false, error: 'unauth' };
+
+  const id = String(formData.get('id') ?? '');
+  if (!id) return { ok: false, error: 'not_found' };
+
+  const target = await getPerson(session.user.id, id);
+  if (!target) return { ok: false, error: 'not_found' };
+
+  const parsed = personSchema.safeParse({
+    firstName: formData.get('firstName'),
+    middleName: formData.get('middleName') ?? '',
+    lastName: formData.get('lastName'),
+    dob: formData.get('dob'),
+    timezone: 'UTC',
+    locale: String(formData.get('locale') ?? 'id'),
+    relationship: formData.get('relationship'),
+    notes: formData.get('notes') || undefined,
+  });
+  if (!parsed.success) {
+    const path = parsed.error.issues[0]?.path[0];
+    if (path === 'firstName' || path === 'lastName' || path === 'middleName') {
+      return { ok: false, error: 'invalid_name' };
+    }
+    if (path === 'dob') return { ok: false, error: 'invalid_dob' };
+    return { ok: false, error: 'generic' };
+  }
+  const dob = parseDob(parsed.data.dob);
+  if (!dob.ok) return { ok: false, error: dob.error };
+
+  const localeChecked: Locale = isLocale(parsed.data.locale) ? parsed.data.locale : 'id';
+
+  await updatePerson(session.user.id, id, {
+    firstName: parsed.data.firstName,
+    middleName: parsed.data.middleName || null,
+    lastName: parsed.data.lastName,
+    dob: { year: dob.year, month: dob.month, day: dob.day },
+    relationship: parsed.data.relationship,
+    notes: parsed.data.notes?.trim() || null,
+  });
+
+  revalidatePath(`/${localeChecked}/people`);
+  redirect(`/${localeChecked}/people/${id}`);
 }
 
 export async function deletePersonAction(formData: FormData): Promise<void> {

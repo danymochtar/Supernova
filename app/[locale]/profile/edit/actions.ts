@@ -1,19 +1,26 @@
 'use server';
 
 import { redirect } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
 import { getSession } from '@/lib/auth/requireSession';
-import { createProfile, getProfileByUserId } from '@/lib/db/repositories/profile';
+import {
+  getProfileByUserId,
+  updateProfile,
+} from '@/lib/db/repositories/profile';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { isValidTimezone } from '@/lib/timezones';
 import { parseProfileForm, type ProfileFormError } from '@/lib/profile/validate';
 
-export type OnboardingActionResult =
+export type UpdateProfileResult =
   | { ok: true }
-  | { ok: false; error: ProfileFormError | 'unauth' | 'profile_exists' };
+  | { ok: false; error: ProfileFormError | 'unauth' | 'no_profile' };
 
-export async function saveOnboardingProfile(formData: FormData): Promise<OnboardingActionResult> {
+export async function updateProfileAction(formData: FormData): Promise<UpdateProfileResult> {
   const session = await getSession();
   if (!session) return { ok: false, error: 'unauth' };
+
+  const existing = await getProfileByUserId(session.user.id);
+  if (!existing) return { ok: false, error: 'no_profile' };
 
   const parsed = parseProfileForm({
     firstName: formData.get('firstName'),
@@ -27,12 +34,9 @@ export async function saveOnboardingProfile(formData: FormData): Promise<Onboard
 
   if (!isValidTimezone(parsed.data.timezone)) return { ok: false, error: 'invalid_timezone' };
 
-  const existing = await getProfileByUserId(session.user.id);
-  if (existing) return { ok: false, error: 'profile_exists' };
-
   const localeChecked: Locale = isLocale(parsed.data.locale) ? parsed.data.locale : 'id';
 
-  await createProfile(session.user.id, {
+  await updateProfile(session.user.id, {
     firstName: parsed.data.firstName,
     middleName: parsed.data.middleName,
     lastName: parsed.data.lastName,
@@ -41,5 +45,6 @@ export async function saveOnboardingProfile(formData: FormData): Promise<Onboard
     locale: localeChecked,
   });
 
+  revalidatePath(`/${localeChecked}/dashboard`);
   redirect(`/${localeChecked}/dashboard`);
 }
