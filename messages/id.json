@@ -72,16 +72,15 @@
     "errorInvalidTimezone": "Zona waktu tidak dikenali."
   },
   "editProfile": {
-    "title": "Ubah profil kamu",
-    "subtitle": "Perbaiki ejaan nama atau tanggal kalau ada yang salah ketik. Setelah disimpan, semua angka dan ringkasan AI akan dihitung ulang otomatis.",
+    "title": "Ubah profil",
     "warningTitle": "Perubahan ini menyeluruh",
-    "warningBody": "Mengubah nama atau tanggal lahir akan menghitung ulang seluruh profil numerologi kamu — termasuk Life Path, Expression, hingga ringkasan About You. Pastikan benar.",
-    "back": "Kembali ke dashboard",
+    "warningBody": "Ngubah nama atau tanggal lahir bakal hitung ulang seluruh profil — Life Path, Expression, sampai ringkasan About You. Pastiin udah bener.",
+    "back": "Kembali",
     "submit": "Simpan perubahan",
     "submitting": "Menyimpan…"
   },
   "dashboard": {
-    "greeting": "Halo,",
+    "greeting": "Halo",
     "askCta": "Curhat",
     "peopleCta": "Orang",
     "journeyCta": "Perjalanan",
@@ -185,7 +184,7 @@
   },
   "journey": {
     "title": "Perjalanan kamu",
-    "subtitle": "Sekarang kamu berusia {age} tahun. Lihat ramalan Personal Year 9 tahun ke depan dan babak-babak besar dalam hidup kamu.",
+    "subtitle": "Sekarang kamu {age} tahun.",
     "backToDashboard": "Kembali ke dashboard",
     "forecastTitle": "Ramalan Personal Year",
     "forecastSubtitle": "Siklus 9 tahun kamu mulai dari tahun ini. Tiap angka membawa tema utama selama 12 bulan.",
@@ -199,7 +198,7 @@
   },
   "people": {
     "title": "Orang-orang",
-    "subtitle": "Tambahkan orang penting di hidup kamu untuk melihat profil dan kompatibilitas mereka.",
+    "subtitle": "Lihat profil & kompatibilitas orang penting di hidup kamu.",
     "backToDashboard": "Kembali ke dashboard",
     "addCta": "+ Tambah orang",
     "emptyTitle": "Belum ada orang",
@@ -254,7 +253,7 @@
   },
   "compatibility": {
     "title": "Kompatibilitas dengan {name}",
-    "subtitle": "Skor terhitung deterministik dari kombinasi 4 angka inti, plus pola lintas-komponen yang terdeteksi otomatis.",
+    "subtitle": "Skor + pola lintas-komponen, dihitung dari angka kalian berdua.",
     "back": "Kembali ke profil",
     "scoreTitle": "Skor kompatibilitas",
     "band": {

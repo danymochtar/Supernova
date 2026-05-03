@@ -22,7 +22,6 @@ export default async function EditProfilePage({ params }: { params: { locale: st
     <main className="container max-w-xl px-4 sm:px-6">
       <TopBar title={t('title')} backHref={`/${locale}/me`} />
       <div className="space-y-6 pb-6 sm:pb-10">
-        <p className="text-muted-foreground text-sm">{t('subtitle')}</p>
         <EditProfileForm
           locale={locale}
           initial={{

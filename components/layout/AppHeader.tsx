@@ -1,48 +1,28 @@
-import Link from 'next/link';
-import { Pencil } from 'lucide-react';
-import type { Locale } from '@/lib/i18n/config';
-
 interface Labels {
+  /** Casual short greeting like "Halo" / "Hi". */
   greeting: string;
-  greetingTimeOfDay: string;
-  fullName: string;
-  editProfile: string;
+  /** Combined date + time-of-day cue, e.g. "PAGI · SEN, 4 MEI". */
+  contextLine: string;
+  /** First name only — feels more like a friend than a form. */
+  firstName: string;
 }
 
 /**
- * Compact mobile-app-style greeting header for the dashboard. Primary
- * navigation lives in the BottomNav now — this just sets the personal,
- * time-aware greeting that opens the user's day.
+ * Single greeting strip for the dashboard. One context line on top
+ * (uppercase tracker — date + time-of-day) and a short personal
+ * greeting using the user's first name. No date/timezone duplication
+ * underneath; profile editing lives in the Me tab.
  */
-export function AppHeader({
-  locale,
-  todayLabel,
-  labels,
-}: {
-  locale: Locale;
-  todayLabel?: string;
-  labels: Labels;
-}) {
+export function AppHeader({ labels }: { labels: Labels }) {
   return (
     <header className="space-y-1 pt-2">
       <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider">
-        {labels.greetingTimeOfDay}
+        {labels.contextLine}
       </p>
       <h1 className="text-2xl font-semibold tracking-tight">
-        {labels.greeting}, <span className="font-serif italic">{labels.fullName}</span>
+        {labels.greeting},{' '}
+        <span className="font-serif italic">{labels.firstName}</span>
       </h1>
-      {todayLabel ? (
-        <p className="text-muted-foreground flex items-center gap-2 text-sm">
-          <span>{todayLabel}</span>
-          <Link
-            href={`/${locale}/profile/edit`}
-            aria-label={labels.editProfile}
-            className="press hover:bg-muted/40 flex h-6 w-6 items-center justify-center rounded-full"
-          >
-            <Pencil className="h-3 w-3" aria-hidden />
-          </Link>
-        </p>
-      ) : null}
     </header>
   );
 }

@@ -29,25 +29,17 @@ import { greetingFor } from '@/lib/greeting';
 import { generateDailyReading } from './actions';
 import { submitFeedback } from './feedbackActions';
 
-const DAY_NAMES_ID = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-const MONTH_NAMES_ID = [
-  'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-  'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',
-];
+const SHORT_DAY_ID = ['MIN', 'SEN', 'SEL', 'RAB', 'KAM', 'JUM', 'SAB'];
+const SHORT_MONTH_ID = ['JAN', 'FEB', 'MAR', 'APR', 'MEI', 'JUN', 'JUL', 'AGU', 'SEP', 'OKT', 'NOV', 'DES'];
 
-function formatToday(ctx: { year: number; month: number; day: number }, locale: Locale) {
+function formatTodayShort(ctx: { year: number; month: number; day: number }, locale: Locale): string {
   const d = new Date(Date.UTC(ctx.year, ctx.month - 1, ctx.day));
   if (locale === 'id') {
-    return `${DAY_NAMES_ID[d.getUTCDay()]}, ${ctx.day} ${MONTH_NAMES_ID[ctx.month - 1]} ${ctx.year}`;
+    return `${SHORT_DAY_ID[d.getUTCDay()]}, ${ctx.day} ${SHORT_MONTH_ID[ctx.month - 1]}`;
   }
-  return d.toLocaleDateString('en-US', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    timeZone: 'UTC',
-  });
+  return d.toLocaleDateString('en-US', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' }).toUpperCase();
 }
+
 
 export default async function DashboardPage({ params }: { params: { locale: string } }) {
   const locale: Locale = isLocale(params.locale) ? params.locale : 'id';
@@ -122,13 +114,10 @@ export default async function DashboardPage({ params }: { params: { locale: stri
   return (
     <main className="container max-w-3xl space-y-8 px-4 py-6 sm:px-6 sm:py-10">
       <AppHeader
-        locale={locale}
-        todayLabel={`${formatToday(ctx, locale)} · ${profile.timezone}`}
         labels={{
-          greeting: localGreeting.greeting,
-          greetingTimeOfDay: localGreeting.word,
-          fullName: profile.fullName,
-          editProfile: t('editProfile'),
+          greeting: t('greeting'),
+          contextLine: `${localGreeting.word.toUpperCase()} · ${formatTodayShort(ctx, locale)}`,
+          firstName: profile.firstName,
         }}
       />
 

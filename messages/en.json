@@ -72,11 +72,10 @@
     "errorInvalidTimezone": "Unknown time zone."
   },
   "editProfile": {
-    "title": "Edit your profile",
-    "subtitle": "Fix typos in the name or date if needed. Once saved, all numbers and the AI summary recompute automatically.",
+    "title": "Edit profile",
     "warningTitle": "This is a deep change",
-    "warningBody": "Changing your name or date of birth recomputes your entire numerology profile — Life Path, Expression, all the way through your About You summary. Double-check before saving.",
-    "back": "Back to dashboard",
+    "warningBody": "Changing your name or date of birth recomputes your entire profile — Life Path, Expression, all the way through your About You summary. Double-check before saving.",
+    "back": "Back",
     "submit": "Save changes",
     "submitting": "Saving…"
   },
@@ -185,7 +184,7 @@
   },
   "journey": {
     "title": "Your journey",
-    "subtitle": "You're {age}. See your Personal Year forecast for the next 9 years and the major chapters of your life.",
+    "subtitle": "You're {age}.",
     "backToDashboard": "Back to dashboard",
     "forecastTitle": "Personal Year forecast",
     "forecastSubtitle": "Your 9-year cycle starting this year. Each number carries the main theme for 12 months.",
@@ -199,7 +198,7 @@
   },
   "people": {
     "title": "People",
-    "subtitle": "Add important people in your life to view their profiles and compatibility.",
+    "subtitle": "View profiles & compatibility for the important people in your life.",
     "backToDashboard": "Back to dashboard",
     "addCta": "+ Add person",
     "emptyTitle": "No people yet",
@@ -254,7 +253,7 @@
   },
   "compatibility": {
     "title": "Compatibility with {name}",
-    "subtitle": "Deterministic score from your 4 core number pairs, plus cross-component patterns detected automatically.",
+    "subtitle": "Score + cross-component patterns, computed from both your numbers.",
     "back": "Back to profile",
     "scoreTitle": "Compatibility score",
     "band": {
