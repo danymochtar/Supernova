@@ -17,6 +17,7 @@ import {
 } from '@/lib/numerology';
 import { NumberCard } from '@/components/numerology/NumberCard';
 import { CompoundReduced } from '@/components/numerology/CompoundReduced';
+import { meaningFor } from '@/lib/numerology/meanings';
 import { deletePersonAction } from '../actions';
 
 export default async function PersonDetailPage({
@@ -42,6 +43,12 @@ export default async function PersonDetailPage({
   const cycles = personalCycles(person.dob, ctx);
   const age = ageAt(person.dob, ctx);
   const slots = activeSlots(person.dob, age);
+
+  const meaningProps = {
+    expandLabel: tDash('whatDoesThisMean'),
+    collapseLabel: tDash('hide'),
+    comingSoonLabel: tDash('meaningComingSoon'),
+  };
 
   return (
     <main className="container max-w-4xl space-y-10 py-10">
@@ -96,9 +103,30 @@ export default async function PersonDetailPage({
       <section className="space-y-4">
         <h2 className="text-lg font-semibold">{tDash('todayTitle')}</h2>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-          <NumberCard label={tDash('personalDay')} result={cycles.personalDay} locale={locale} />
-          <NumberCard label={tDash('personalMonth')} result={cycles.personalMonth} locale={locale} />
-          <NumberCard label={tDash('personalYear')} result={cycles.personalYear} locale={locale} />
+          <NumberCard
+            label={tDash('personalDay')}
+            result={cycles.personalDay}
+            locale={locale}
+            type="personalDay"
+            meaning={meaningFor('personalDay', cycles.personalDay, locale)}
+            {...meaningProps}
+          />
+          <NumberCard
+            label={tDash('personalMonth')}
+            result={cycles.personalMonth}
+            locale={locale}
+            type="personalMonth"
+            meaning={meaningFor('personalMonth', cycles.personalMonth, locale)}
+            {...meaningProps}
+          />
+          <NumberCard
+            label={tDash('personalYear')}
+            result={cycles.personalYear}
+            locale={locale}
+            type="personalYear"
+            meaning={meaningFor('personalYear', cycles.personalYear, locale)}
+            {...meaningProps}
+          />
         </div>
       </section>
 
@@ -106,11 +134,51 @@ export default async function PersonDetailPage({
       <section className="space-y-4">
         <h2 className="text-lg font-semibold">{tDash('coreTitle')}</h2>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          <NumberCard label={tDash('lifePath')} hint={tDash('lifePathHint')} result={core.lifePath} locale={locale} />
-          <NumberCard label={tDash('expression')} hint={tDash('expressionHint')} result={core.expression} locale={locale} />
-          <NumberCard label={tDash('soulUrge')} hint={tDash('soulUrgeHint')} result={core.soulUrge} locale={locale} />
-          <NumberCard label={tDash('personality')} hint={tDash('personalityHint')} result={core.personality} locale={locale} />
-          <NumberCard label={tDash('birthday')} hint={tDash('birthdayHint')} result={core.birthday} locale={locale} />
+          <NumberCard
+            label={tDash('lifePath')}
+            hint={tDash('lifePathHint')}
+            result={core.lifePath}
+            locale={locale}
+            type="lifePath"
+            meaning={meaningFor('lifePath', core.lifePath, locale)}
+            {...meaningProps}
+          />
+          <NumberCard
+            label={tDash('expression')}
+            hint={tDash('expressionHint')}
+            result={core.expression}
+            locale={locale}
+            type="expression"
+            meaning={meaningFor('expression', core.expression, locale)}
+            {...meaningProps}
+          />
+          <NumberCard
+            label={tDash('soulUrge')}
+            hint={tDash('soulUrgeHint')}
+            result={core.soulUrge}
+            locale={locale}
+            type="soulUrge"
+            meaning={meaningFor('soulUrge', core.soulUrge, locale)}
+            {...meaningProps}
+          />
+          <NumberCard
+            label={tDash('personality')}
+            hint={tDash('personalityHint')}
+            result={core.personality}
+            locale={locale}
+            type="personality"
+            meaning={meaningFor('personality', core.personality, locale)}
+            {...meaningProps}
+          />
+          <NumberCard
+            label={tDash('birthday')}
+            hint={tDash('birthdayHint')}
+            result={core.birthday}
+            locale={locale}
+            type="birthday"
+            meaning={meaningFor('birthday', core.birthday, locale)}
+            {...meaningProps}
+          />
         </div>
       </section>
 
@@ -122,16 +190,25 @@ export default async function PersonDetailPage({
             label={`${tDash('pinnacle')} ${slots.pinnacle}`}
             result={pinnacleAt(core.pinnacles, slots.pinnacle)}
             locale={locale}
+            type="pinnacle"
+            meaning={meaningFor('pinnacle', pinnacleAt(core.pinnacles, slots.pinnacle), locale)}
+            {...meaningProps}
           />
           <NumberCard
             label={`${tDash('challenge')} ${slots.challenge}`}
             result={challengeAt(core.challenges, slots.challenge)}
             locale={locale}
+            type="challenge"
+            meaning={meaningFor('challenge', challengeAt(core.challenges, slots.challenge), locale)}
+            {...meaningProps}
           />
           <NumberCard
             label={`${tDash('cycle')} ${slots.cycle}`}
             result={cycleAt(core.periodCycles, slots.cycle)}
             locale={locale}
+            type="cycle"
+            meaning={meaningFor('cycle', cycleAt(core.periodCycles, slots.cycle), locale)}
+            {...meaningProps}
           />
         </div>
       </section>

@@ -81,7 +81,10 @@
     "stage": "Babak",
     "ageRange": "Rentang usia",
     "number": "Angka",
-    "now": "Saat ini"
+    "now": "Saat ini",
+    "whatDoesThisMean": "Apa artinya angka ini?",
+    "hide": "Sembunyikan",
+    "meaningComingSoon": "Penjelasan untuk angka ini sedang kami siapkan. Sementara, angka di kartu adalah perhitungan deterministik — Anda bisa tanya AI di halaman \"Tanya AI\" untuk konteks lebih dalam."
   },
   "reading": {
     "title": "Bacaan harian",

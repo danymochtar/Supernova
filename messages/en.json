@@ -81,7 +81,10 @@
     "stage": "Stage",
     "ageRange": "Age range",
     "number": "Number",
-    "now": "Now"
+    "now": "Now",
+    "whatDoesThisMean": "What does this number mean?",
+    "hide": "Hide",
+    "meaningComingSoon": "We're still curating the description for this number. Meanwhile the number on the card is a deterministic calculation — you can ask the AI on \"Ask AI\" for deeper context."
   },
   "reading": {
     "title": "Daily reading",

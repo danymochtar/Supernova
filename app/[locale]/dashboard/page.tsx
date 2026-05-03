@@ -19,6 +19,7 @@ import { CompoundReduced } from '@/components/numerology/CompoundReduced';
 import { SignOutButton } from '@/components/auth/SignOutButton';
 import { DailyReadingView } from '@/components/reading/DailyReadingView';
 import { getReadingForLocalDay } from '@/lib/db/repositories/reading';
+import { meaningFor } from '@/lib/numerology/meanings';
 import { generateDailyReading } from './actions';
 
 const DAY_NAMES_ID = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
@@ -68,6 +69,12 @@ export default async function DashboardPage({ params }: { params: { locale: stri
     ctx.day,
   );
 
+  const meaningProps = {
+    expandLabel: t('whatDoesThisMean'),
+    collapseLabel: t('hide'),
+    comingSoonLabel: t('meaningComingSoon'),
+  };
+
   return (
     <main className="container max-w-4xl space-y-10 py-10">
       {/* Header */}
@@ -105,9 +112,30 @@ export default async function DashboardPage({ params }: { params: { locale: stri
       <section className="space-y-4">
         <h2 className="text-lg font-semibold">{t('todayTitle')}</h2>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-          <NumberCard label={t('personalDay')} result={cycles.personalDay} locale={locale} />
-          <NumberCard label={t('personalMonth')} result={cycles.personalMonth} locale={locale} />
-          <NumberCard label={t('personalYear')} result={cycles.personalYear} locale={locale} />
+          <NumberCard
+            label={t('personalDay')}
+            result={cycles.personalDay}
+            locale={locale}
+            type="personalDay"
+            meaning={meaningFor('personalDay', cycles.personalDay, locale)}
+            {...meaningProps}
+          />
+          <NumberCard
+            label={t('personalMonth')}
+            result={cycles.personalMonth}
+            locale={locale}
+            type="personalMonth"
+            meaning={meaningFor('personalMonth', cycles.personalMonth, locale)}
+            {...meaningProps}
+          />
+          <NumberCard
+            label={t('personalYear')}
+            result={cycles.personalYear}
+            locale={locale}
+            type="personalYear"
+            meaning={meaningFor('personalYear', cycles.personalYear, locale)}
+            {...meaningProps}
+          />
         </div>
       </section>
 
@@ -120,30 +148,45 @@ export default async function DashboardPage({ params }: { params: { locale: stri
             hint={t('lifePathHint')}
             result={core.lifePath}
             locale={locale}
+            type="lifePath"
+            meaning={meaningFor('lifePath', core.lifePath, locale)}
+            {...meaningProps}
           />
           <NumberCard
             label={t('expression')}
             hint={t('expressionHint')}
             result={core.expression}
             locale={locale}
+            type="expression"
+            meaning={meaningFor('expression', core.expression, locale)}
+            {...meaningProps}
           />
           <NumberCard
             label={t('soulUrge')}
             hint={t('soulUrgeHint')}
             result={core.soulUrge}
             locale={locale}
+            type="soulUrge"
+            meaning={meaningFor('soulUrge', core.soulUrge, locale)}
+            {...meaningProps}
           />
           <NumberCard
             label={t('personality')}
             hint={t('personalityHint')}
             result={core.personality}
             locale={locale}
+            type="personality"
+            meaning={meaningFor('personality', core.personality, locale)}
+            {...meaningProps}
           />
           <NumberCard
             label={t('birthday')}
             hint={t('birthdayHint')}
             result={core.birthday}
             locale={locale}
+            type="birthday"
+            meaning={meaningFor('birthday', core.birthday, locale)}
+            {...meaningProps}
           />
         </div>
       </section>
@@ -158,18 +201,27 @@ export default async function DashboardPage({ params }: { params: { locale: stri
             hint={t('pinnacleHint')}
             result={activePinnacle}
             locale={locale}
+            type="pinnacle"
+            meaning={meaningFor('pinnacle', activePinnacle, locale)}
+            {...meaningProps}
           />
           <NumberCard
             label={`${t('challenge')} ${slots.challenge}`}
             hint={t('challengeHint')}
             result={activeChallenge}
             locale={locale}
+            type="challenge"
+            meaning={meaningFor('challenge', activeChallenge, locale)}
+            {...meaningProps}
           />
           <NumberCard
             label={`${t('cycle')} ${slots.cycle}`}
             hint={t('cycleHint')}
             result={activeCycle}
             locale={locale}
+            type="cycle"
+            meaning={meaningFor('cycle', activeCycle, locale)}
+            {...meaningProps}
           />
         </div>
       </section>
