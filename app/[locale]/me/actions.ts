@@ -5,8 +5,13 @@ import { redirect } from 'next/navigation';
 import { z } from 'zod';
 import { getSession } from '@/lib/auth/requireSession';
 import { prisma } from '@/lib/db/prisma';
-import { updatePersonalNotes, updatePreferences } from '@/lib/db/repositories/profile';
+import {
+  updateDashboardLayout,
+  updatePersonalNotes,
+  updatePreferences,
+} from '@/lib/db/repositories/profile';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { serializeLayout, type WidgetState, WIDGET_IDS } from '@/lib/dashboard/layout';
 
 const schema = z.object({
   notes: z.string().max(4000).optional(),
@@ -85,6 +90,26 @@ export async function setReminder(input: { enabled: boolean; time: string | null
     reminderEnabled: parsed.data.enabled,
     reminderTime: parsed.data.time ?? null,
   });
+}
+
+// ───────────────────────────────────────────────────────────────────────
+// Dashboard layout (reorder + hide widgets)
+// ───────────────────────────────────────────────────────────────────────
+
+const layoutSchema = z.array(
+  z.object({
+    id: z.enum(WIDGET_IDS),
+    hidden: z.boolean(),
+  }),
+);
+
+export async function saveDashboardLayout(layout: WidgetState[]): Promise<void> {
+  const session = await getSession();
+  if (!session) return;
+  const parsed = layoutSchema.safeParse(layout);
+  if (!parsed.success) return;
+  await updateDashboardLayout(session.user.id, serializeLayout(parsed.data));
+  revalidatePath('/', 'layout');
 }
 
 // ───────────────────────────────────────────────────────────────────────

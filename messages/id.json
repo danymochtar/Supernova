@@ -70,7 +70,29 @@
     "deleteConfirmCopy": "Ketik DELETE (huruf kapital) untuk konfirmasi. Akun dan semua data akan langsung dihapus.",
     "deleteCancel": "Batal",
     "deleteConfirm": "Hapus selamanya",
+    "dashboardLayoutTitle": "Susun beranda",
+    "dashboardLayoutHint": "Atur urutan & sembunyikan widget di Beranda.",
     "appVersion": "Supernova MVP"
+  },
+  "layoutEditor": {
+    "title": "Susun beranda",
+    "subtitle": "Atur urutan widget di Beranda. Sembunyikan yang nggak kepake — datanya juga gak di-load.",
+    "save": "Simpan",
+    "saving": "Menyimpan…",
+    "savedAt": "Tersimpan {time}",
+    "hint": "↑ ↓ untuk pindah, mata untuk sembunyi/tampil.",
+    "show": "Tampilkan",
+    "hide": "Sembunyikan"
+  },
+  "widgets": {
+    "reading": "Bacaan harian",
+    "feedback": "Catatan harian",
+    "aboutMe": "Tentang kamu",
+    "today": "Hari ini (PD/PM/PY)",
+    "core": "Profil inti",
+    "chapter": "Babak saat ini",
+    "karmic": "Karmic Lessons",
+    "journey": "Link Perjalanan"
   },
   "home": {
     "title": "Selamat datang di Supernova",
@@ -173,6 +195,7 @@
     "ageRange": "Rentang usia",
     "number": "Angka",
     "now": "Saat ini",
+    "customizeDashboard": "Susun widget di Beranda",
     "meaningComingSoon": "Penjelasan untuk angka ini sedang kami siapkan. Sementara, angka di kartu adalah perhitungan deterministik — kamu bisa tanya AI di halaman \"Tanya AI\" untuk konteks lebih dalam."
   },
   "reading": {

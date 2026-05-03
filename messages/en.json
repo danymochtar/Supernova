@@ -70,7 +70,29 @@
     "deleteConfirmCopy": "Type DELETE (uppercase) to confirm. Your account and all data will be removed immediately.",
     "deleteCancel": "Cancel",
     "deleteConfirm": "Delete forever",
+    "dashboardLayoutTitle": "Customize home",
+    "dashboardLayoutHint": "Reorder & hide widgets on the Home tab.",
     "appVersion": "Supernova MVP"
+  },
+  "layoutEditor": {
+    "title": "Customize home",
+    "subtitle": "Set the widget order on Home. Hide what you don't use — its data won't load either.",
+    "save": "Save",
+    "saving": "Saving…",
+    "savedAt": "Saved {time}",
+    "hint": "Use ↑ ↓ to reorder, eye icon to hide/show.",
+    "show": "Show",
+    "hide": "Hide"
+  },
+  "widgets": {
+    "reading": "Daily reading",
+    "feedback": "Daily check-in",
+    "aboutMe": "About you",
+    "today": "Today (PD/PM/PY)",
+    "core": "Core profile",
+    "chapter": "Current chapter",
+    "karmic": "Karmic Lessons",
+    "journey": "Journey link"
   },
   "home": {
     "title": "Welcome to Supernova",
@@ -173,6 +195,7 @@
     "ageRange": "Age range",
     "number": "Number",
     "now": "Now",
+    "customizeDashboard": "Customize home widgets",
     "meaningComingSoon": "We're still curating the description for this number. Meanwhile the number on the card is a deterministic calculation — you can ask the AI on \"Ask AI\" for deeper context."
   },
   "reading": {

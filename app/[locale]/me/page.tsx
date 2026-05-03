@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-import { ChevronRight, BarChart3, Pencil, LogOut, Globe, ShieldCheck, NotebookPen } from 'lucide-react';
+import { ChevronRight, BarChart3, Pencil, LogOut, Globe, ShieldCheck, NotebookPen, LayoutGrid } from 'lucide-react';
 import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { isAdminEmail } from '@/lib/auth/admin';
@@ -84,6 +84,20 @@ export default async function MePage({ params }: { params: { locale: string } })
             <div>
               <p className="text-sm font-medium">{t('patterns')}</p>
               <p className="text-muted-foreground text-xs">{t('patternsHint')}</p>
+            </div>
+          </div>
+          <ChevronRight className="text-muted-foreground h-4 w-4" aria-hidden />
+        </Link>
+
+        <Link
+          href={`/${locale}/me/layout`}
+          className="hover:bg-muted/30 flex items-center justify-between gap-3 border-t border-border px-5 py-4 transition"
+        >
+          <div className="flex items-center gap-3">
+            <LayoutGrid className="text-muted-foreground h-5 w-5" aria-hidden />
+            <div>
+              <p className="text-sm font-medium">{t('dashboardLayoutTitle')}</p>
+              <p className="text-muted-foreground text-xs">{t('dashboardLayoutHint')}</p>
             </div>
           </div>
           <ChevronRight className="text-muted-foreground h-4 w-4" aria-hidden />
