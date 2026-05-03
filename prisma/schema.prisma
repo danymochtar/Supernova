@@ -1,15 +1,15 @@
 // Supernova — Prisma schema
-// Postgres + Prisma Accelerate at runtime; direct connection used for `prisma migrate`.
+// Prisma Postgres (single connection string, Edge-compatible via the
+// Accelerate-style protocol). Same DATABASE_URL works for runtime and
+// `prisma migrate`.
 
 generator client {
   provider = "prisma-client-js"
-  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 // ─── Better Auth ────────────────────────────────────────────────────────────

@@ -4,11 +4,12 @@ import { withAccelerate } from '@prisma/extension-accelerate';
 /**
  * Prisma singleton.
  *
- * At runtime we connect via Prisma Accelerate (`PRISMA_ACCELERATE_URL`) so the
- * same client works in both Node and Edge runtimes.
+ * We use Prisma Postgres, which speaks the Accelerate-style HTTP protocol
+ * over a single `prisma+postgres://...` URL. The same client works in both
+ * Node and Edge runtimes; no separate pooler URL needed.
  *
- * For local dev or migrations the env can fall back to the direct
- * `DATABASE_URL`.
+ * The `withAccelerate` extension is included free with Prisma Postgres and
+ * is what enables the Edge-compatible HTTP transport.
  */
 
 declare global {
@@ -17,7 +18,10 @@ declare global {
 }
 
 function makeClient() {
-  const url = process.env.PRISMA_ACCELERATE_URL ?? process.env.DATABASE_URL;
+  const url = process.env.DATABASE_URL;
+  if (!url && process.env.NODE_ENV === 'production') {
+    throw new Error('DATABASE_URL is not set');
+  }
   return new PrismaClient({
     datasourceUrl: url,
     log: process.env.NODE_ENV === 'development' ? ['warn', 'error'] : ['error'],

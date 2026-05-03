@@ -5,7 +5,8 @@ Personalized daily numerology PWA for Southeast Asia. Bahasa Indonesia + English
 ## Stack
 - Next.js 14 App Router, TypeScript strict
 - Tailwind + shadcn/ui
-- Prisma + Postgres + Prisma Accelerate
+- Prisma ORM on **Prisma Postgres** (single Edge-compatible connection string,
+  no Accelerate add-on needed)
 - Better Auth (magic link) + Resend
 - Anthropic Claude (Sonnet 4.6)
 - next-intl, Zustand, react-hook-form + zod
@@ -17,7 +18,9 @@ Personalized daily numerology PWA for Southeast Asia. Bahasa Indonesia + English
 ```bash
 pnpm install
 cp .env.example .env.local
-# Fill in DATABASE_URL, BETTER_AUTH_SECRET, RESEND_API_KEY, DATA_ENCRYPTION_KEY, ANTHROPIC_API_KEY
+# Fill in DATABASE_URL (from console.prisma.io), BETTER_AUTH_SECRET,
+# RESEND_API_KEY, DATA_ENCRYPTION_KEY, ANTHROPIC_API_KEY
+pnpm prisma migrate dev --name init
 pnpm dev
 ```
 
