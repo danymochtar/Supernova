@@ -124,10 +124,19 @@ visible from the Me tab for those users.
 
 ## PWA
 
-Manifest at `/public/manifest.json` with an SVG icon. Installable on
-Android Chrome and desktop Chrome out of the box. iOS Safari needs PNG
-icons (`icons/icon-192.png`, `icons/icon-512.png`,
-`icons/icon-maskable-512.png`) — TODO: render from `icon.svg`.
+Manifest at `/public/manifest.json` with both the source SVG and pre-
+rendered PNGs (192, 512, maskable 512, plus an iOS apple-touch-icon at
+180). Installable on Android Chrome, desktop Chrome, and iOS Safari
+("Add to Home Screen") out of the box.
+
+PNG variants are rendered from `public/icons/icon.svg` via `@resvg/
+resvg-js`:
+
+```sh
+pnpm icons:gen   # writes icon-192.png, icon-512.png, icon-maskable-512.png, apple-touch-icon.png
+```
+
+Run after editing the SVG and commit the resulting PNGs.
 
 Service-worker offline caching is deferred. The cached `last DailyReading`
 + static profile shell is the minimum useful offline read; can be added
