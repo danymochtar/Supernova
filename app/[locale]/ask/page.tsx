@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { ChatThread } from '@/components/qa/ChatThread';
@@ -71,13 +70,7 @@ export default async function AskPage({ params }: { params: { locale: string } }
 
   return (
     <main className="container max-w-3xl px-4 py-4 sm:px-6 sm:py-6">
-      <header className="mb-4 space-y-2">
-        <Link
-          href={`/${locale}/dashboard`}
-          className="text-muted-foreground hover:text-foreground text-sm underline-offset-4 hover:underline"
-        >
-          ← {t('back')}
-        </Link>
+      <header className="mb-4 space-y-1 pt-2">
         <h1 className="text-2xl font-semibold tracking-tight">{t('title')}</h1>
         <p className="text-muted-foreground text-sm">{t('subtitle')}</p>
       </header>

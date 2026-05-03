@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
+import { Plus } from 'lucide-react';
 import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { listPeople } from '@/lib/db/repositories/person';
@@ -23,22 +24,15 @@ export default async function PeoplePage({ params }: { params: { locale: string 
 
   return (
     <main className="container max-w-3xl space-y-6 px-4 py-6 sm:px-6 sm:py-10">
-      <header className="flex items-end justify-between gap-4">
-        <div>
-          <Link
-            href={`/${locale}/dashboard`}
-            className="text-muted-foreground hover:text-foreground text-sm underline-offset-4 hover:underline"
-          >
-            ← {t('backToDashboard')}
-          </Link>
-          <h1 className="mt-1 text-2xl font-semibold tracking-tight">{t('title')}</h1>
-          <p className="text-muted-foreground mt-1 text-sm">{t('subtitle')}</p>
-        </div>
+      <header className="space-y-1 pt-2">
+        <h1 className="text-2xl font-semibold tracking-tight">{t('title')}</h1>
+        <p className="text-muted-foreground text-sm">{t('subtitle')}</p>
         {!atLimit ? (
           <Link
             href={`/${locale}/people/new`}
-            className="bg-primary text-primary-foreground rounded-lg px-4 py-2 text-sm font-medium"
+            className="bg-primary text-primary-foreground mt-3 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium"
           >
+            <Plus className="h-4 w-4" aria-hidden />
             {t('addCta')}
           </Link>
         ) : null}

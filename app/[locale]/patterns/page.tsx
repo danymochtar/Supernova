@@ -1,6 +1,6 @@
-import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
+import { TopBar } from '@/components/layout/TopBar';
 import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { getRecentFeedback } from '@/lib/db/repositories/feedback';
@@ -34,21 +34,14 @@ export default async function PatternsPage({ params }: { params: { locale: strin
   const enoughData = summary.totalEntries >= MIN_ENTRIES;
 
   return (
-    <main className="container max-w-3xl space-y-8 px-4 py-6 sm:px-6 sm:py-10">
-      <header className="space-y-2">
-        <Link
-          href={`/${locale}/dashboard`}
-          className="text-muted-foreground hover:text-foreground text-sm underline-offset-4 hover:underline"
-        >
-          ← {t('backToDashboard')}
-        </Link>
-        <h1 className="text-2xl font-semibold tracking-tight">{t('title')}</h1>
+    <main className="container max-w-3xl px-4 sm:px-6">
+      <TopBar title={t('title')} backHref={`/${locale}/me`} />
+      <div className="space-y-8 pb-6 sm:pb-10">
         <p className="text-muted-foreground text-sm">
           {enoughData
             ? t('subtitle', { count: summary.totalEntries, days: WINDOW_DAYS })
             : t('subtitleEmpty', { count: summary.totalEntries, min: MIN_ENTRIES })}
         </p>
-      </header>
 
       {!enoughData ? (
         <section className="border-border rounded-2xl border-2 border-dashed p-10 text-center">
@@ -75,6 +68,7 @@ export default async function PatternsPage({ params }: { params: { locale: strin
           <BucketSection title={t('byTag')} buckets={summary.byTag.slice(0, 12)} hint={t('byTagHint')} />
         </>
       )}
+      </div>
     </main>
   );
 }

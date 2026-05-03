@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { redirect, notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { getSession } from '@/lib/auth/requireSession';
@@ -10,6 +9,7 @@ import { compatibilityNarrative } from '@/lib/compatibility/lookup';
 import { compatibilityScore } from '@/lib/compatibility/score';
 import { detectPatterns } from '@/lib/compatibility/patterns';
 import { CompoundReduced } from '@/components/numerology/CompoundReduced';
+import { TopBar } from '@/components/layout/TopBar';
 
 interface Pairing {
   labelKey: 'lifePath' | 'expression' | 'soulUrge' | 'birthday';
@@ -56,19 +56,10 @@ export default async function CompatibilityPage({
   ];
 
   return (
-    <main className="container max-w-3xl space-y-8 px-4 py-6 sm:px-6 sm:py-10">
-      <header className="space-y-2">
-        <Link
-          href={`/${locale}/people/${person.id}`}
-          className="text-muted-foreground hover:text-foreground text-sm underline-offset-4 hover:underline"
-        >
-          ← {t('back')}
-        </Link>
-        <h1 className="text-2xl font-semibold tracking-tight">
-          {t('title', { name: person.fullName })}
-        </h1>
+    <main className="container max-w-3xl px-4 sm:px-6">
+      <TopBar title={t('title', { name: person.fullName })} backHref={`/${locale}/people/${person.id}`} />
+      <div className="space-y-8 pb-6 sm:pb-10">
         <p className="text-muted-foreground text-sm">{t('subtitle')}</p>
-      </header>
 
       {/* Score */}
       <section className="border-border space-y-4 rounded-2xl border bg-gradient-to-br from-purple-50 to-amber-50 p-6 dark:from-purple-950/30 dark:to-amber-950/30">
@@ -163,6 +154,7 @@ export default async function CompatibilityPage({
       </section>
 
       <p className="text-muted-foreground text-xs">{t('disclaimer')}</p>
+      </div>
     </main>
   );
 }

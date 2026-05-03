@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-import { ChevronRight, BarChart3, Pencil, LogOut, Globe } from 'lucide-react';
+import { ChevronRight, BarChart3, Pencil, LogOut, Globe, ShieldCheck } from 'lucide-react';
 import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
+import { isAdminEmail } from '@/lib/auth/admin';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { LocaleSwitcher } from '@/components/layout/LocaleSwitcher';
 import { SignOutButton } from '@/components/auth/SignOutButton';
@@ -19,6 +20,7 @@ export default async function MePage({ params }: { params: { locale: string } })
   if (!profile) redirect(`/${locale}/welcome`);
 
   const dobStr = `${profile.dob.year}-${String(profile.dob.month).padStart(2, '0')}-${String(profile.dob.day).padStart(2, '0')}`;
+  const isAdmin = isAdminEmail(session.user.email);
 
   return (
     <main className="container max-w-xl space-y-6 px-4 py-6 sm:px-6">
@@ -71,6 +73,22 @@ export default async function MePage({ params }: { params: { locale: string } })
           </div>
           <ChevronRight className="text-muted-foreground h-4 w-4" aria-hidden />
         </Link>
+
+        {isAdmin ? (
+          <Link
+            href={`/${locale}/admin/usage`}
+            className="hover:bg-muted/30 flex items-center justify-between gap-3 border-t border-border px-5 py-4 transition"
+          >
+            <div className="flex items-center gap-3">
+              <ShieldCheck className="text-muted-foreground h-5 w-5" aria-hidden />
+              <div>
+                <p className="text-sm font-medium">Admin · Usage</p>
+                <p className="text-muted-foreground text-xs">AI cost & token breakdown</p>
+              </div>
+            </div>
+            <ChevronRight className="text-muted-foreground h-4 w-4" aria-hidden />
+          </Link>
+        ) : null}
       </section>
 
       {/* Sign out */}

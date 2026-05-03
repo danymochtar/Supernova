@@ -1,7 +1,7 @@
-import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { AddPersonForm } from '@/components/people/AddPersonForm';
+import { TopBar } from '@/components/layout/TopBar';
 import { getSession } from '@/lib/auth/requireSession';
 import { countPeople } from '@/lib/db/repositories/person';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
@@ -22,19 +22,12 @@ export default async function NewPersonPage({ params }: { params: { locale: stri
   if (count >= PEOPLE_LIMIT) redirect(`/${locale}/people`);
 
   return (
-    <main className="container max-w-xl space-y-6 px-4 py-6 sm:px-6 sm:py-10">
-      <header className="space-y-2">
-        <Link
-          href={`/${locale}/people`}
-          className="text-muted-foreground hover:text-foreground text-sm underline-offset-4 hover:underline"
-        >
-          ← {t('back')}
-        </Link>
-        <h1 className="text-2xl font-semibold tracking-tight">{t('title')}</h1>
+    <main className="container max-w-xl px-4 sm:px-6">
+      <TopBar title={t('title')} backHref={`/${locale}/people`} />
+      <div className="space-y-6 pb-6 sm:pb-10">
         <p className="text-muted-foreground text-sm">{t('subtitle')}</p>
-      </header>
-
-      <AddPersonForm locale={locale} action={createPersonAction} />
+        <AddPersonForm locale={locale} action={createPersonAction} />
+      </div>
     </main>
   );
 }

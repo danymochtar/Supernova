@@ -1,7 +1,7 @@
-import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { EditProfileForm } from '@/components/auth/EditProfileForm';
+import { TopBar } from '@/components/layout/TopBar';
 import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { isLocale, type Locale } from '@/lib/i18n/config';
@@ -19,31 +19,24 @@ export default async function EditProfilePage({ params }: { params: { locale: st
   if (!profile) redirect(`/${locale}/welcome`);
 
   return (
-    <main className="container max-w-xl space-y-6 px-4 py-6 sm:px-6 sm:py-10">
-      <header className="space-y-2">
-        <Link
-          href={`/${locale}/dashboard`}
-          className="text-muted-foreground hover:text-foreground text-sm underline-offset-4 hover:underline"
-        >
-          ← {t('back')}
-        </Link>
-        <h1 className="text-2xl font-semibold tracking-tight">{t('title')}</h1>
+    <main className="container max-w-xl px-4 sm:px-6">
+      <TopBar title={t('title')} backHref={`/${locale}/me`} />
+      <div className="space-y-6 pb-6 sm:pb-10">
         <p className="text-muted-foreground text-sm">{t('subtitle')}</p>
-      </header>
-
-      <EditProfileForm
-        locale={locale}
-        initial={{
-          firstName: profile.firstName,
-          middleName: profile.middleName,
-          lastName: profile.lastName,
-          dob: profile.dob,
-          timezone: profile.timezone,
-          locale: profile.locale,
-        }}
-        timezones={TIMEZONES}
-        action={updateProfileAction}
-      />
+        <EditProfileForm
+          locale={locale}
+          initial={{
+            firstName: profile.firstName,
+            middleName: profile.middleName,
+            lastName: profile.lastName,
+            dob: profile.dob,
+            timezone: profile.timezone,
+            locale: profile.locale,
+          }}
+          timezones={TIMEZONES}
+          action={updateProfileAction}
+        />
+      </div>
     </main>
   );
 }

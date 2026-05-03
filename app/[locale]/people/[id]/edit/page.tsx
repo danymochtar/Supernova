@@ -1,7 +1,7 @@
-import Link from 'next/link';
 import { redirect, notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { AddPersonForm } from '@/components/people/AddPersonForm';
+import { TopBar } from '@/components/layout/TopBar';
 import { getSession } from '@/lib/auth/requireSession';
 import { getPerson } from '@/lib/db/repositories/person';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
@@ -25,31 +25,24 @@ export default async function EditPersonPage({
   if (!person) notFound();
 
   return (
-    <main className="container max-w-xl space-y-6 px-4 py-6 sm:px-6 sm:py-10">
-      <header className="space-y-2">
-        <Link
-          href={`/${locale}/people/${person.id}`}
-          className="text-muted-foreground hover:text-foreground text-sm underline-offset-4 hover:underline"
-        >
-          ← {t('back')}
-        </Link>
-        <h1 className="text-2xl font-semibold tracking-tight">{t('editTitle')}</h1>
+    <main className="container max-w-xl px-4 sm:px-6">
+      <TopBar title={t('editTitle')} backHref={`/${locale}/people/${person.id}`} />
+      <div className="space-y-6 pb-6 sm:pb-10">
         <p className="text-muted-foreground text-sm">{t('editSubtitle')}</p>
-      </header>
-
-      <AddPersonForm
-        locale={locale}
-        action={updatePersonAction}
-        edit={{
-          id: person.id,
-          firstName: person.firstName,
-          middleName: person.middleName,
-          lastName: person.lastName,
-          dob: person.dob,
-          relationship: person.relationship,
-          notes: person.notes,
-        }}
-      />
+        <AddPersonForm
+          locale={locale}
+          action={updatePersonAction}
+          edit={{
+            id: person.id,
+            firstName: person.firstName,
+            middleName: person.middleName,
+            lastName: person.lastName,
+            dob: person.dob,
+            relationship: person.relationship,
+            notes: person.notes,
+          }}
+        />
+      </div>
     </main>
   );
 }

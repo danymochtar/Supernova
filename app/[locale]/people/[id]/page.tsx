@@ -18,6 +18,7 @@ import {
 import { NumberCard } from '@/components/numerology/NumberCard';
 import { CompoundReduced } from '@/components/numerology/CompoundReduced';
 import { KarmicLessonsList } from '@/components/numerology/KarmicLessonsList';
+import { TopBar } from '@/components/layout/TopBar';
 import { meaningFor } from '@/lib/numerology/meanings';
 import { deletePersonAction } from '../actions';
 
@@ -47,17 +48,11 @@ export default async function PersonDetailPage({
 
 
   return (
-    <main className="container max-w-3xl space-y-8 px-4 py-6 sm:px-6 sm:py-10">
-      <header className="flex flex-wrap items-start justify-between gap-4">
-        <div>
-          <Link
-            href={`/${locale}/people`}
-            className="text-muted-foreground hover:text-foreground text-sm underline-offset-4 hover:underline"
-          >
-            ← {t('back')}
-          </Link>
-          <h1 className="mt-1 text-2xl font-semibold tracking-tight">{person.fullName}</h1>
-          <p className="text-muted-foreground mt-1 text-sm">
+    <main className="container max-w-3xl px-4 sm:px-6">
+      <TopBar title={person.fullName} backHref={`/${locale}/people`} />
+      <div className="space-y-8 pb-6 sm:pb-10">
+        <section className="border-border space-y-3 rounded-2xl border bg-white/40 p-5 dark:bg-neutral-900/40">
+          <p className="text-muted-foreground text-sm">
             {t(`relationship.${person.relationship}`)} ·{' '}
             <span className="tabular-nums">
               {person.dob.year}-{String(person.dob.month).padStart(2, '0')}-
@@ -65,32 +60,31 @@ export default async function PersonDetailPage({
             </span>{' '}
             · {t('age', { age })}
           </p>
-        </div>
-        <div className="flex flex-wrap items-center gap-3">
-          <Link
-            href={`/${locale}/people/${person.id}/compatibility`}
-            className="bg-primary text-primary-foreground rounded-lg px-4 py-2 text-sm font-medium"
-          >
-            {t('compatibilityCta')}
-          </Link>
-          <Link
-            href={`/${locale}/people/${person.id}/edit`}
-            className="border-border rounded-lg border px-4 py-2 text-sm font-medium"
-          >
-            {t('edit')}
-          </Link>
-          <form action={deletePersonAction}>
-            <input type="hidden" name="id" value={person.id} />
-            <input type="hidden" name="locale" value={locale} />
-            <button
-              type="submit"
-              className="text-muted-foreground hover:text-red-700 text-sm underline-offset-4 hover:underline"
+          <div className="flex flex-wrap items-center gap-2 pt-1">
+            <Link
+              href={`/${locale}/people/${person.id}/compatibility`}
+              className="bg-primary text-primary-foreground rounded-full px-4 py-2 text-sm font-medium"
             >
-              {t('delete')}
-            </button>
-          </form>
-        </div>
-      </header>
+              {t('compatibilityCta')}
+            </Link>
+            <Link
+              href={`/${locale}/people/${person.id}/edit`}
+              className="border-border rounded-full border px-4 py-2 text-sm font-medium"
+            >
+              {t('edit')}
+            </Link>
+            <form action={deletePersonAction} className="ml-auto">
+              <input type="hidden" name="id" value={person.id} />
+              <input type="hidden" name="locale" value={locale} />
+              <button
+                type="submit"
+                className="text-muted-foreground hover:text-red-700 px-2 py-2 text-sm underline-offset-4 hover:underline"
+              >
+                {t('delete')}
+              </button>
+            </form>
+          </div>
+        </section>
 
       {person.notes ? (
         <section className="border-border rounded-xl border bg-amber-50/50 p-4 text-sm dark:bg-amber-950/20">
@@ -246,6 +240,7 @@ export default async function PersonDetailPage({
           </span>
         </div>
       </section>
+      </div>
     </main>
   );
 }
