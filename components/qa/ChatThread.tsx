@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { ArrowUp, Square, Sparkles } from 'lucide-react';
 
 export interface ChatTurn {
   id: string;
@@ -28,9 +29,11 @@ interface Props {
   initialTurns: ChatTurn[];
   priorDays: PriorPeriod[];
   emptyHint: string;
+  /** Short example prompts shown as tappable chips when the thread is empty. */
+  starterPrompts?: string[];
 }
 
-export function ChatThread({ initialTurns, priorDays, emptyHint }: Props) {
+export function ChatThread({ initialTurns, priorDays, emptyHint, starterPrompts = [] }: Props) {
   const t = useTranslations('chat');
   const [turns, setTurns] = useState<ChatTurn[]>(initialTurns);
   const [pending, setPending] = useState<{ question: string; answer: string } | null>(null);
@@ -209,7 +212,26 @@ export function ChatThread({ initialTurns, priorDays, emptyHint }: Props) {
         ) : null}
 
         {turns.length === 0 && !pending ? (
-          <div className="text-muted-foreground py-10 text-center text-sm">{emptyHint}</div>
+          <div className="flex flex-col items-center gap-5 py-10 text-center">
+            <div className="bg-primary/10 text-primary flex h-14 w-14 items-center justify-center rounded-full">
+              <Sparkles className="h-6 w-6" aria-hidden />
+            </div>
+            <p className="text-muted-foreground max-w-sm text-sm">{emptyHint}</p>
+            {starterPrompts.length > 0 ? (
+              <div className="flex w-full max-w-md flex-col gap-2">
+                {starterPrompts.map((p) => (
+                  <button
+                    key={p}
+                    type="button"
+                    onClick={() => setInput(p)}
+                    className="border-border press hover:bg-muted/40 rounded-xl border bg-white/40 px-4 py-3 text-left text-sm dark:bg-neutral-900/40"
+                  >
+                    {p}
+                  </button>
+                ))}
+              </div>
+            ) : null}
+          </div>
         ) : (
           <div className="space-y-4">
             {turns.map((tn) => (
@@ -239,33 +261,35 @@ export function ChatThread({ initialTurns, priorDays, emptyHint }: Props) {
           e.preventDefault();
           send();
         }}
-        className="border-border bg-background flex items-end gap-2 border-t pt-4"
+        className="border-border bg-background/95 flex items-end gap-2 border-t pt-3 supports-[backdrop-filter]:bg-background/80 supports-[backdrop-filter]:backdrop-blur"
       >
         <textarea
-          rows={2}
+          rows={1}
           maxLength={4000}
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={onKey}
           placeholder={t('placeholder')}
           disabled={streaming}
-          className="border-border focus:ring-primary flex-1 resize-none rounded-lg border bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 disabled:opacity-50"
+          className="border-border focus:ring-primary max-h-32 min-h-[2.5rem] flex-1 resize-none rounded-2xl border bg-transparent px-4 py-2 text-sm focus:outline-none focus:ring-2 disabled:opacity-50"
         />
         {streaming ? (
           <button
             type="button"
             onClick={abort}
-            className="border-border rounded-lg border px-4 py-2 text-sm font-medium"
+            aria-label={t('stop')}
+            className="press bg-muted text-foreground flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
           >
-            {t('stop')}
+            <Square className="h-4 w-4 fill-current" aria-hidden />
           </button>
         ) : (
           <button
             type="submit"
             disabled={input.trim().length < 1}
-            className="bg-primary text-primary-foreground press rounded-lg px-4 py-2 text-sm font-medium disabled:opacity-50"
+            aria-label={t('send')}
+            className="bg-primary text-primary-foreground press flex h-10 w-10 shrink-0 items-center justify-center rounded-full disabled:opacity-30"
           >
-            {t('send')}
+            <ArrowUp className="h-5 w-5" aria-hidden />
           </button>
         )}
       </form>

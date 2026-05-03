@@ -84,6 +84,7 @@ export default async function AskPage({ params }: { params: { locale: string } }
         }))}
         priorDays={priorDays}
         emptyHint={t('emptyHint')}
+        starterPrompts={[t('starter1'), t('starter2'), t('starter3'), t('starter4')]}
       />
     </main>
   );

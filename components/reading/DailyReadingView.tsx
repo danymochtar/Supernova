@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import { useTranslations } from 'next-intl';
+import { Sparkles } from 'lucide-react';
 import { parseReading } from '@/lib/ai/prompts/daily';
 import type { GenerateResult } from '@/app/[locale]/dashboard/actions';
 
@@ -30,14 +31,19 @@ export function DailyReadingView({ initialBody, generate }: Props) {
 
   if (!body) {
     return (
-      <section className="border-border space-y-3 rounded-2xl border bg-gradient-to-br from-purple-50 to-amber-50 p-6 dark:from-purple-950/30 dark:to-amber-950/30">
-        <h2 className="text-lg font-semibold">{t('title')}</h2>
-        <p className="text-muted-foreground text-sm">{t('subtitle')}</p>
+      <section className="border-border flex flex-col items-center gap-4 rounded-2xl border bg-gradient-to-br from-purple-50 to-amber-50 p-7 text-center dark:from-purple-950/30 dark:to-amber-950/30">
+        <div className="from-primary/30 to-amber-300/30 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br">
+          <Sparkles className="text-primary h-6 w-6" aria-hidden />
+        </div>
+        <div className="space-y-1">
+          <h2 className="text-lg font-semibold">{t('title')}</h2>
+          <p className="text-muted-foreground mx-auto max-w-sm text-sm">{t('subtitle')}</p>
+        </div>
         <button
           type="button"
           onClick={onGenerate}
           disabled={pending}
-          className="bg-primary text-primary-foreground press rounded-lg px-5 py-2.5 text-sm font-medium disabled:opacity-50"
+          className="bg-primary text-primary-foreground press rounded-full px-6 py-3 text-sm font-medium shadow-md shadow-primary/20 disabled:opacity-50"
         >
           {pending ? t('generating') : t('generateCta')}
         </button>
