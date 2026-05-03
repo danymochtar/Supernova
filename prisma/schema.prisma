@@ -35,6 +35,7 @@ model User {
   rate     RateLimit[]
   usage    AiUsage[]
   cache    NumerologyCache[]
+  summaries ConversationSummary[]
 
   @@map("user")
 }
@@ -109,6 +110,12 @@ enum AiFeature {
   QA
   RELATIONSHIP
   RECAP
+}
+
+enum SummaryKind {
+  DAILY
+  WEEKLY
+  MONTHLY
 }
 
 model Profile {
@@ -247,4 +254,26 @@ model AiUsage {
   @@index([userId, createdAt])
   @@index([createdAt])
   @@map("ai_usage")
+}
+
+// Hierarchical conversation summaries — daily roll up to weekly, weekly to
+// monthly. Created lazily by the chat endpoint when a period boundary is
+// crossed. Lets the chatbot stay context-aware over months without re-reading
+// every turn.
+model ConversationSummary {
+  id          String      @id @default(cuid())
+  userId      String
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kind        SummaryKind
+  // UTC-anchored day marker: start of the period (Mon for weekly, 1st for monthly).
+  periodStart DateTime    @db.Date
+  // Inclusive last day of the period.
+  periodEnd   DateTime    @db.Date
+  summary     String
+  turnCount   Int         @default(0)
+  createdAt   DateTime    @default(now())
+
+  @@unique([userId, kind, periodStart])
+  @@index([userId, kind, periodStart])
+  @@map("conversation_summary")
 }
