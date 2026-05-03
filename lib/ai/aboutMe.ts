@@ -7,7 +7,9 @@ import {
 import { logUsage } from '@/lib/db/repositories/usage';
 import { getCachedText, setCachedText } from '@/lib/db/repositories/numerologyCache';
 
-const CACHE_KEY = 'aboutMe';
+// v2: longer, multi-paragraph elaboration. Old 'aboutMe' rows stay in the DB
+// but are no longer referenced — the new key forces a regeneration.
+const CACHE_KEY = 'aboutMe-v2';
 
 /**
  * Cache-first About Me text. Profile name + DOB never change so the cached
@@ -27,7 +29,7 @@ export async function getOrGenerateAboutMe(
   try {
     const response = await anthropic().messages.create({
       model: modelId,
-      max_tokens: 350,
+      max_tokens: 700,
       system: buildAboutMeSystem(input.locale),
       messages: [{ role: 'user', content: buildAboutMeUser(input) }],
     });

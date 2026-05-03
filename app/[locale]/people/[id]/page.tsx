@@ -17,6 +17,7 @@ import {
 } from '@/lib/numerology';
 import { NumberCard } from '@/components/numerology/NumberCard';
 import { CompoundReduced } from '@/components/numerology/CompoundReduced';
+import { KarmicLessonsList } from '@/components/numerology/KarmicLessonsList';
 import { meaningFor } from '@/lib/numerology/meanings';
 import { deletePersonAction } from '../actions';
 
@@ -211,20 +212,15 @@ export default async function PersonDetailPage({
       {/* Karmic */}
       <section className="space-y-3">
         <h2 className="text-lg font-semibold">{tDash('karmicLessonsTitle')}</h2>
-        {core.karmicLessons.length > 0 ? (
-          <div className="flex flex-wrap gap-2">
-            {core.karmicLessons.map((n) => (
-              <span
-                key={n}
-                className="border-border rounded-full border px-3 py-1 font-mono text-sm tabular-nums"
-              >
-                {n}
-              </span>
-            ))}
-          </div>
-        ) : (
-          <p className="text-muted-foreground text-sm">{tDash('karmicLessonsNone')}</p>
-        )}
+        <p className="text-muted-foreground text-sm">{tDash('karmicLessonsHint')}</p>
+        <KarmicLessonsList
+          lessons={core.karmicLessons.map((n) => ({
+            number: n,
+            meaning: meaningFor('karmicLesson', { compound: n, reduced: n, isMaster: false }, locale),
+          }))}
+          emptyLabel={tDash('karmicLessonsNone')}
+          comingSoonLabel={tDash('meaningComingSoon')}
+        />
       </section>
 
       <section className="space-y-2">

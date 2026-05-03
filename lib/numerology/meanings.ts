@@ -20,7 +20,8 @@ export type MeaningType =
   | 'personalDay'
   | 'pinnacle'
   | 'challenge'
-  | 'cycle';
+  | 'cycle'
+  | 'karmicLesson';
 
 /**
  * Look up a deterministic meaning string for a given (type, reduced number)

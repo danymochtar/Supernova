@@ -13,7 +13,15 @@ export function AboutMe({ title, subtitle, text, fallback }: Props) {
         <p className="text-muted-foreground text-sm">{subtitle}</p>
       </header>
       {text ? (
-        <p className="text-sm leading-relaxed text-neutral-800 dark:text-neutral-200">{text}</p>
+        <div className="space-y-3 text-sm leading-relaxed text-neutral-800 dark:text-neutral-200">
+          {text
+            .split(/\n{2,}/)
+            .map((p) => p.trim())
+            .filter((p) => p.length > 0)
+            .map((p, i) => (
+              <p key={i}>{p}</p>
+            ))}
+        </div>
       ) : (
         <p className="text-muted-foreground text-sm italic">{fallback}</p>
       )}

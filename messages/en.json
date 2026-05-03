@@ -83,7 +83,7 @@
     "cycle": "Cycle",
     "cycleHint": "The overarching theme of this life period.",
     "karmicLessonsTitle": "Karmic Lessons",
-    "karmicLessonsHint": "Energies absent from your name — areas to grow into.",
+    "karmicLessonsHint": "Energies absent from your name — areas to grow into. Tap each number to see why and how.",
     "karmicLessonsNone": "None — every energy 1–9 is present in your name.",
     "fullJourneyTitle": "Full journey",
     "stage": "Stage",
@@ -124,19 +124,8 @@
   },
   "feedback": {
     "title": "How was your day?",
-    "subtitle": "Log a quick check-in. After ≥14 entries you'll see patterns in the Patterns view.",
-    "rating": {
-      "GREAT": "Great",
-      "GOOD": "Good",
-      "NEUTRAL": "Neutral",
-      "OFF": "Off",
-      "HARD": "Hard"
-    },
-    "noteLabel": "Note (optional)",
-    "notePlaceholder": "What stood out today?",
-    "tagsLabel": "Tags",
-    "addTagPlaceholder": "Add a tag…",
-    "addTag": "Add",
+    "subtitle": "A quick check-in. Or open Chat for a deeper conversation.",
+    "notePlaceholder": "What happened today? How are you feeling?",
     "submitCta": "Save",
     "updateCta": "Update",
     "saving": "Saving…",
@@ -225,11 +214,26 @@
   },
   "compatibility": {
     "title": "Compatibility with {name}",
-    "subtitle": "Your core numbers paired with theirs, with brief Hans Decoz / Dan Millman style narratives.",
+    "subtitle": "Deterministic score from your 4 core number pairs, plus cross-component patterns detected automatically.",
     "back": "Back to profile",
-    "you": "You",
-    "them": "Them",
+    "scoreTitle": "Compatibility score",
+    "band": {
+      "low": "Tough",
+      "fair": "Fair",
+      "good": "Good",
+      "strong": "Strong",
+      "rare": "Rare"
+    },
+    "patternsTitle": "Detected patterns",
+    "patternsSubtitle": "{count} patterns surface from your number combination.",
+    "tone": {
+      "harmony": "harmony",
+      "tension": "tension",
+      "neutral": "neutral"
+    },
+    "pairsTitle": "Per-pair detail",
+    "pairsSubtitle": "Short narratives for each core pair.",
     "noNarrative": "No narrative available for this pairing yet.",
-    "disclaimer": "Narratives above are from a curated content pack (deterministic, not AI-generated). Numerology is a tool for reflection, not prediction."
+    "disclaimer": "Score & patterns are deterministically computed from your numbers (Pythagorean tradition — Decoz, Millman). Numerology is a tool for reflection, not prediction."
   }
 }

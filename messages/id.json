@@ -83,7 +83,7 @@
     "cycle": "Cycle",
     "cycleHint": "Tema besar periode hidup ini.",
     "karmicLessonsTitle": "Karmic Lessons",
-    "karmicLessonsHint": "Energi yang absen dari nama Anda — area untuk dikembangkan.",
+    "karmicLessonsHint": "Energi yang absen dari nama Anda — area untuk dikembangkan. Klik tiap angka buat liat kenapa & gimana caranya.",
     "karmicLessonsNone": "Tidak ada — semua energi 1–9 hadir di nama Anda.",
     "fullJourneyTitle": "Perjalanan lengkap",
     "stage": "Babak",
@@ -124,19 +124,8 @@
   },
   "feedback": {
     "title": "Bagaimana hari Anda?",
-    "subtitle": "Catat singkat hari ini. Setelah ≥14 entri, Anda bisa lihat pola di halaman Pola.",
-    "rating": {
-      "GREAT": "Luar biasa",
-      "GOOD": "Bagus",
-      "NEUTRAL": "Biasa",
-      "OFF": "Kurang",
-      "HARD": "Berat"
-    },
-    "noteLabel": "Catatan (opsional)",
-    "notePlaceholder": "Apa yang menonjol hari ini?",
-    "tagsLabel": "Tag",
-    "addTagPlaceholder": "Tambah tag…",
-    "addTag": "Tambah",
+    "subtitle": "Catat singkat tentang hari ini. Atau buka Curhat untuk percakapan lebih dalam.",
+    "notePlaceholder": "Apa yang terjadi hari ini? Apa yang Anda rasakan?",
     "submitCta": "Simpan",
     "updateCta": "Perbarui",
     "saving": "Menyimpan…",
@@ -225,11 +214,26 @@
   },
   "compatibility": {
     "title": "Kompatibilitas dengan {name}",
-    "subtitle": "Pasangan angka inti Anda dengan mereka, dengan narasi singkat dari Hans Decoz / Dan Millman.",
+    "subtitle": "Skor terhitung deterministik dari kombinasi 4 angka inti, plus pola lintas-komponen yang terdeteksi otomatis.",
     "back": "Kembali ke profil",
-    "you": "Anda",
-    "them": "Mereka",
+    "scoreTitle": "Skor kompatibilitas",
+    "band": {
+      "low": "Berat",
+      "fair": "Cukup",
+      "good": "Baik",
+      "strong": "Kuat",
+      "rare": "Langka"
+    },
+    "patternsTitle": "Pola yang terdeteksi",
+    "patternsSubtitle": "{count} pola muncul dari kombinasi angka kalian.",
+    "tone": {
+      "harmony": "harmoni",
+      "tension": "tegangan",
+      "neutral": "netral"
+    },
+    "pairsTitle": "Detail per pasangan angka",
+    "pairsSubtitle": "Narasi pendek untuk masing-masing pasangan inti.",
     "noNarrative": "Narasi untuk pasangan ini belum tersedia.",
-    "disclaimer": "Narasi di atas dari konten kurasi (deterministik, bukan AI). Numerologi adalah alat refleksi, bukan ramalan."
+    "disclaimer": "Skor & pola dihitung deterministik dari angka kalian (tradisi Pythagorean — Decoz, Millman). Numerologi adalah alat refleksi, bukan ramalan."
   }
 }

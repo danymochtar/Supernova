@@ -16,11 +16,13 @@ import {
 } from '@/lib/numerology';
 import { NumberCard } from '@/components/numerology/NumberCard';
 import { AboutMe } from '@/components/numerology/AboutMe';
+import { KarmicLessonsList } from '@/components/numerology/KarmicLessonsList';
 import { SignOutButton } from '@/components/auth/SignOutButton';
 import { DailyReadingView } from '@/components/reading/DailyReadingView';
 import { FeedbackPrompt } from '@/components/feedback/FeedbackPrompt';
 import { getReadingForLocalDay } from '@/lib/db/repositories/reading';
 import { getFeedbackForLocalDay } from '@/lib/db/repositories/feedback';
+import { getTurnsBetween } from '@/lib/db/repositories/qa';
 import { meaningFor } from '@/lib/numerology/meanings';
 import { getOrGenerateAboutMe } from '@/lib/ai/aboutMe';
 import { generateDailyReading } from './actions';
@@ -80,9 +82,13 @@ export default async function DashboardPage({ params }: { params: { locale: stri
     ctx.day,
   );
 
-  const SUGGESTED_TAGS_ID = ['kerja', 'keluarga', 'kesehatan', 'energi', 'fokus', 'mood', 'uang', 'hubungan'];
-  const SUGGESTED_TAGS_EN = ['work', 'family', 'health', 'energy', 'focus', 'mood', 'money', 'relationships'];
-  const suggestedTags = locale === 'id' ? SUGGESTED_TAGS_ID : SUGGESTED_TAGS_EN;
+  // Skip the journal prompt entirely when the user has already chatted today —
+  // the chat thread is the day's journal.
+  const todayStart = new Date(Date.UTC(ctx.year, ctx.month - 1, ctx.day));
+  const todayEnd = new Date(todayStart);
+  todayEnd.setUTCDate(todayEnd.getUTCDate() + 1);
+  const todaysChatTurns = await getTurnsBetween(session.user.id, todayStart, todayEnd);
+  const showFeedbackPrompt = todaysChatTurns.length === 0;
 
   // AI-synthesized one-paragraph profile summary, cached forever (profile is
   // immutable). First dashboard visit pays a ~3s synthesis call; every visit
@@ -145,17 +151,14 @@ export default async function DashboardPage({ params }: { params: { locale: stri
       {/* Daily AI reading */}
       <DailyReadingView initialBody={cachedReading?.body ?? null} generate={generateDailyReading} />
 
-      {/* End-of-day feedback */}
-      <FeedbackPrompt
-        locale={locale}
-        action={submitFeedback}
-        suggestedTags={suggestedTags}
-        initial={
-          todayFeedback
-            ? { rating: todayFeedback.rating, note: todayFeedback.note, tags: todayFeedback.tags }
-            : null
-        }
-      />
+      {/* End-of-day journal prompt — hidden when the chat thread has activity today */}
+      {showFeedbackPrompt ? (
+        <FeedbackPrompt
+          locale={locale}
+          action={submitFeedback}
+          initial={todayFeedback ? { note: todayFeedback.note } : null}
+        />
+      ) : null}
 
       {/* About Me — AI-synthesized holistic summary (cached per user) */}
       <AboutMe
@@ -286,21 +289,15 @@ export default async function DashboardPage({ params }: { params: { locale: stri
       {/* Karmic lessons */}
       <section className="space-y-3">
         <h2 className="text-lg font-semibold">{t('karmicLessonsTitle')}</h2>
-        {core.karmicLessons.length > 0 ? (
-          <div className="flex flex-wrap gap-2">
-            {core.karmicLessons.map((n) => (
-              <span
-                key={n}
-                className="border-border rounded-full border px-3 py-1 font-mono text-sm tabular-nums"
-                title={t('karmicLessonsHint')}
-              >
-                {n}
-              </span>
-            ))}
-          </div>
-        ) : (
-          <p className="text-muted-foreground text-sm">{t('karmicLessonsNone')}</p>
-        )}
+        <p className="text-muted-foreground text-sm">{t('karmicLessonsHint')}</p>
+        <KarmicLessonsList
+          lessons={core.karmicLessons.map((n) => ({
+            number: n,
+            meaning: meaningFor('karmicLesson', { compound: n, reduced: n, isMaster: false }, locale),
+          }))}
+          emptyLabel={t('karmicLessonsNone')}
+          comingSoonLabel={t('meaningComingSoon')}
+        />
       </section>
 
       <Link
