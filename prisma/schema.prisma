@@ -1,0 +1,252 @@
+// Supernova — Prisma schema
+// Postgres + Prisma Accelerate at runtime; direct connection used for `prisma migrate`.
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_URL")
+}
+
+// ─── Better Auth ────────────────────────────────────────────────────────────
+// Schema follows the Better Auth 1.1.x Prisma adapter convention.
+
+model User {
+  id            String    @id
+  email         String    @unique
+  emailVerified Boolean   @default(false)
+  name          String?
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  sessions Session[]
+  accounts Account[]
+  profile  Profile?
+  people   Person[]
+  readings DailyReading[]
+  qa       QaHistory[]
+  feedback DailyFeedback[]
+  push     PushSubscription[]
+  rate     RateLimit[]
+  usage    AiUsage[]
+  cache    NumerologyCache[]
+
+  @@map("user")
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String   @unique
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String    @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
+}
+
+// ─── App tables ─────────────────────────────────────────────────────────────
+
+enum Relationship {
+  PARTNER
+  FAMILY
+  FRIEND
+  COLLEAGUE
+  OTHER
+}
+
+enum FeedbackRating {
+  GREAT
+  GOOD
+  NEUTRAL
+  OFF
+  HARD
+}
+
+enum AiFeature {
+  DAILY
+  QA
+  RELATIONSHIP
+  RECAP
+}
+
+model Profile {
+  id             String   @id @default(cuid())
+  userId         String   @unique
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // Encrypted: AES-256-GCM, format "v1:iv_b64:tag_b64:ciphertext_b64"
+  nameEncrypted  String
+  // Encrypted JSON of { year, month, day }
+  dobEncrypted   String
+  timezone       String   @default("Asia/Jakarta")
+  locale         String   @default("id")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("profile")
+}
+
+model NumerologyCache {
+  id          String  @id @default(cuid())
+  userId      String
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  key         String
+  compound    Int
+  reduced     Int
+  isMaster    Boolean @default(false)
+  karmicDebt  Int?
+  meta        Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([userId, key])
+  @@index([userId])
+  @@map("numerology_cache")
+}
+
+model Person {
+  id             String       @id @default(cuid())
+  userId         String
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  nameEncrypted  String
+  dobEncrypted   String
+  relationship   Relationship
+  notes          String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@index([userId])
+  @@map("person")
+}
+
+model DailyReading {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // The "day" anchored in the user's timezone, stored as a date-only marker.
+  date            DateTime @db.Date
+  locale          String
+  contextSnapshot Json
+  body            String
+  inputTokens     Int      @default(0)
+  outputTokens    Int      @default(0)
+  createdAt       DateTime @default(now())
+
+  @@unique([userId, date])
+  @@index([userId])
+  @@map("daily_reading")
+}
+
+model QaHistory {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  personId        String?
+  question        String
+  answer          String
+  contextSnapshot Json
+  createdAt       DateTime @default(now())
+
+  @@index([userId, createdAt])
+  @@map("qa_history")
+}
+
+model DailyFeedback {
+  id        String         @id @default(cuid())
+  userId    String
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date      DateTime       @db.Date
+  rating    FeedbackRating
+  note      String?
+  tags      String[]
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  @@unique([userId, date])
+  @@index([userId])
+  @@map("daily_feedback")
+}
+
+model PushSubscription {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  endpoint     String   @unique
+  p256dh       String
+  auth         String
+  enabledKinds String[] @default([])
+  createdAt    DateTime @default(now())
+
+  @@index([userId])
+  @@map("push_subscription")
+}
+
+model RateLimit {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bucket      String
+  windowStart DateTime
+  count       Int      @default(0)
+
+  @@unique([userId, bucket, windowStart])
+  @@index([userId])
+  @@map("rate_limit")
+}
+
+model AiUsage {
+  id           String    @id @default(cuid())
+  userId       String
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  feature      AiFeature
+  model        String
+  inputTokens  Int
+  outputTokens Int
+  costUsd      Decimal   @db.Decimal(10, 6)
+  createdAt    DateTime  @default(now())
+
+  @@index([userId, createdAt])
+  @@index([createdAt])
+  @@map("ai_usage")
+}

@@ -7,5 +7,35 @@
     "title": "Welcome to Supernova",
     "subtitle": "Personalized daily numerology readings.",
     "cta": "Sign in with email"
+  },
+  "login": {
+    "title": "Sign in to Supernova",
+    "subtitle": "Enter your email. We'll send a magic link — no password required.",
+    "emailLabel": "Email address",
+    "emailPlaceholder": "you@email.com",
+    "submit": "Send magic link",
+    "submitting": "Sending…",
+    "checkEmailTitle": "Check your email",
+    "checkEmailBody": "We just sent a sign-in link to {email}. The link expires in 10 minutes.",
+    "errorGeneric": "Something went wrong. Please try again."
+  },
+  "welcome": {
+    "title": "Get started with Supernova",
+    "subtitle": "A few basics so we can compute your numerology profile.",
+    "warningTitle": "Important",
+    "warningBody": "Your full birth name and date of birth cannot be edited later — they define your entire numerology profile. Please double-check before saving.",
+    "nameLabel": "Full birth name (as on your birth certificate)",
+    "nameHint": "Not a nickname. Use the name printed on your birth certificate.",
+    "namePlaceholder": "e.g. Dany Pratama",
+    "dobLabel": "Date of birth",
+    "timezoneLabel": "Time zone",
+    "localeLabel": "Language",
+    "submit": "Save and continue",
+    "submitting": "Saving…",
+    "errorGeneric": "Failed to save profile. Please try again.",
+    "errorInvalidName": "Name can't be empty and must contain letters.",
+    "errorInvalidDob": "Invalid date of birth.",
+    "errorFutureDob": "Date of birth can't be in the future.",
+    "errorInvalidTimezone": "Unknown time zone."
   }
 }

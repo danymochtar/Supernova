@@ -7,5 +7,35 @@
     "title": "Selamat datang di Supernova",
     "subtitle": "Bacaan numerologi harian yang dipersonalisasi.",
     "cta": "Masuk dengan email"
+  },
+  "login": {
+    "title": "Masuk ke Supernova",
+    "subtitle": "Masukkan email Anda. Kami akan mengirim tautan ajaib untuk masuk — tanpa kata sandi.",
+    "emailLabel": "Alamat email",
+    "emailPlaceholder": "kamu@email.com",
+    "submit": "Kirim tautan ajaib",
+    "submitting": "Mengirim…",
+    "checkEmailTitle": "Cek email Anda",
+    "checkEmailBody": "Kami baru saja mengirim tautan masuk ke {email}. Tautan ini berlaku 10 menit.",
+    "errorGeneric": "Terjadi kesalahan. Coba lagi sebentar."
+  },
+  "welcome": {
+    "title": "Mulai dengan Supernova",
+    "subtitle": "Beberapa info dasar agar kami bisa hitung profil numerologi Anda.",
+    "warningTitle": "Penting",
+    "warningBody": "Nama lengkap dan tanggal lahir tidak dapat diubah setelah disimpan — keduanya menentukan seluruh profil numerologi Anda. Pastikan informasi sudah benar.",
+    "nameLabel": "Nama lengkap (sesuai akta lahir)",
+    "nameHint": "Bukan nama panggilan. Gunakan nama yang tertulis di akta kelahiran Anda.",
+    "namePlaceholder": "Contoh: Dany Pratama",
+    "dobLabel": "Tanggal lahir",
+    "timezoneLabel": "Zona waktu",
+    "localeLabel": "Bahasa",
+    "submit": "Simpan dan lanjut",
+    "submitting": "Menyimpan…",
+    "errorGeneric": "Gagal menyimpan profil. Coba lagi.",
+    "errorInvalidName": "Nama tidak boleh kosong dan harus mengandung huruf.",
+    "errorInvalidDob": "Tanggal lahir tidak valid.",
+    "errorFutureDob": "Tanggal lahir tidak boleh di masa depan.",
+    "errorInvalidTimezone": "Zona waktu tidak dikenali."
   }
 }
