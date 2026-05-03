@@ -32,15 +32,15 @@ interface T {
 const COPY_ID: T = {
   bothMasters: {
     title: 'Sama-sama membawa angka master',
-    body: 'Anda berdua punya energi master di profil inti. Koneksi seperti ini cenderung intens dan transformatif — keduanya hadir dengan misi yang lebih besar dari diri sendiri.',
+    body: 'Kalian punya energi master di profil inti. Koneksi seperti ini cenderung intens dan transformatif — keduanya hadir dengan misi yang lebih besar dari diri sendiri.',
   },
   sharedKarmicDebt: {
     title: 'Sama-sama membawa karmic debt',
-    body: 'Keduanya menjalani pelajaran berat yang serupa. Bisa jadi pemahaman yang dalam — atau saling memicu kalau lukanya belum disadari. Jujurlah pada apa yang sedang Anda berdua proses.',
+    body: 'Keduanya menjalani pelajaran berat yang serupa. Bisa jadi pemahaman yang dalam — atau saling memicu kalau lukanya belum disadari. Jujurlah pada apa yang sedang kalian proses.',
   },
   sharedKarmicLessons: (lessons) => ({
     title: 'Karmic lesson yang sama',
-    body: `Anda berdua sama-sama perlu mengembangkan energi ${lessons}. Bisa jadi area pertumbuhan bersama, atau bisa jadi titik buta yang dua-duanya tidak lihat.`,
+    body: `Kalian sama-sama perlu mengembangkan energi ${lessons}. Bisa jadi area pertumbuhan bersama, atau bisa jadi titik buta yang dua-duanya tidak lihat.`,
   }),
   sameLifePath: {
     title: 'Life Path mirror',
@@ -55,20 +55,20 @@ const COPY_ID: T = {
     body: 'Cara kalian membawa diri ke dunia mirip. Bisa jadi tim yang efektif, tapi juga bisa rebutan ranah yang sama. Diferensiasi peran membantu.',
   },
   myLpTheirExpr: {
-    title: 'Misi Anda = bakat alami mereka',
-    body: 'Apa yang Anda jalani sebagai misi, mereka memiliki bakat untuk membantunya. Mereka secara intuitif mendukung arah hidup Anda.',
+    title: 'Misi kamu = bakat alami mereka',
+    body: 'Apa yang kamu jalani sebagai misi, mereka memiliki bakat untuk membantunya. Mereka secara intuitif mendukung arah hidup kamu.',
   },
   theirLpMyExpr: {
-    title: 'Misi mereka = bakat alami Anda',
-    body: 'Apa yang menjadi misi mereka adalah area di mana Anda secara alami kuat. Anda bisa jadi pendukung yang sangat nyata di jalan mereka.',
+    title: 'Misi mereka = bakat alami kamu',
+    body: 'Apa yang menjadi misi mereka adalah area di mana kamu secara alami kuat. Kamu bisa jadi pendukung yang sangat nyata di jalan mereka.',
   },
   myLpTheirSu: {
-    title: 'Misi Anda = yang mereka rindukan',
-    body: 'Mereka mendambakan apa yang Anda jalani sehari-hari. Anda bisa jadi inspirasi dan refleksi langsung untuk mereka.',
+    title: 'Misi kamu = yang mereka rindukan',
+    body: 'Mereka mendambakan apa yang kamu jalani sehari-hari. Kamu bisa jadi inspirasi dan refleksi langsung untuk mereka.',
   },
   theirLpMySu: {
-    title: 'Misi mereka = yang Anda rindukan',
-    body: 'Anda mendambakan apa yang menjadi jalan mereka. Risiko: hidup melalui mereka alih-alih melalui diri sendiri. Pelajaran besarnya: jalankan misi Anda sendiri.',
+    title: 'Misi mereka = yang kamu rindukan',
+    body: 'Kamu mendambakan apa yang menjadi jalan mereka. Risiko: hidup melalui mereka alih-alih melalui diri sendiri. Pelajaran besarnya: jalankan misi kamu sendiri.',
   },
   cycleBookends: {
     title: '1 dan 9 — siklus bookend',
@@ -83,8 +83,8 @@ const COPY_ID: T = {
     body: 'Kombinasi dengan total reduksi 9 — angka pelayanan & penyelesaian. Sering jadi pasangan yang melayani sesuatu yang lebih besar dari mereka berdua.',
   },
   myExprTheirSu: {
-    title: 'Bakat Anda = yang mereka rindukan',
-    body: 'Cara Anda muncul ke dunia adalah persis yang mereka idamkan. Anda mungkin terlihat seperti versi ideal dari yang sedang mereka cari.',
+    title: 'Bakat kamu = yang mereka rindukan',
+    body: 'Cara kamu muncul ke dunia adalah persis yang mereka idamkan. Kamu mungkin terlihat seperti versi ideal dari yang sedang mereka cari.',
   },
 };
 

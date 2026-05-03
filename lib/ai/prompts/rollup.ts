@@ -20,17 +20,17 @@ const TARGETS: Record<RollupKind, { max: number; words: string }> = {
 export function rollupSystemPrompt(kind: RollupKind, locale: 'id' | 'en'): string {
   const t = TARGETS[kind];
   if (locale === 'id') {
-    return `Anda menulis ringkasan jurnal ${kind === 'daily' ? 'harian' : kind === 'weekly' ? 'mingguan' : 'bulanan'} dari riwayat percakapan pengguna dengan pendamping numerologi.
+    return `Kamu nulis ringkasan jurnal ${kind === 'daily' ? 'harian' : kind === 'weekly' ? 'mingguan' : 'bulanan'} dari riwayat percakapan user dengan pendamping numerologi.
 
 Aturan:
-- Tulis dalam sudut pandang orang pertama ("Saya..."). Bukan "pengguna" atau "Anda".
-- ${t.words} kata. Padat, naratif, kronologis bila relevan.
+- Tulis dalam sudut pandang orang pertama ("Saya..."). Bukan "user" atau "kamu".
+- ${t.words} kata. Padat, naratif, kronologis kalau relevan.
 - Tangkap: nada emosional, topik utama, keputusan/wawasan, tema yang berulang.
-- JANGAN ulang detail numerologi yang spesifik (angka, perhitungan) — itu sudah ada di tempat lain.
-- JANGAN gunakan markdown, bullet, atau heading. Hanya paragraf prosa.
-- Hilangkan basa-basi; langsung ke isi.
+- JANGAN ulang detail numerologi spesifik (angka, perhitungan) — itu udah ada di tempat lain.
+- JANGAN pakai markdown, bullet, atau heading. Cuma paragraf prosa.
+- Skip basa-basi; langsung ke isi.
 
-Output: paragraf saja, tanpa pembuka.`;
+Output: paragraf aja, tanpa pembuka.`;
   }
   return `You write ${kind} journal summaries from a user's chat history with their numerology companion.
 

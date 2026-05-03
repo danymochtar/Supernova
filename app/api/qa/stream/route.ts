@@ -102,7 +102,7 @@ export async function POST(req: Request) {
         const sdkStream = anthropic().messages.stream({
           model: modelId,
           max_tokens: 1500,
-          system: chatSystemPrompt(locale),
+          system: chatSystemPrompt(),
           messages,
         });
 

@@ -1,7 +1,7 @@
 {
   "app": {
     "name": "Supernova",
-    "tagline": "Panduan numerologi harian Anda."
+    "tagline": "Panduan numerologi harian kamu."
   },
   "home": {
     "title": "Selamat datang di Supernova",
@@ -10,7 +10,7 @@
   },
   "login": {
     "signInTitle": "Masuk ke Supernova",
-    "signInSubtitle": "Masukkan email dan kata sandi Anda.",
+    "signInSubtitle": "Masukkan email dan kata sandi kamu.",
     "signUpTitle": "Buat akun Supernova",
     "signUpSubtitle": "Daftar dengan email dan kata sandi.",
     "emailLabel": "Alamat email",
@@ -29,11 +29,11 @@
   },
   "welcome": {
     "title": "Mulai dengan Supernova",
-    "subtitle": "Beberapa info dasar agar kami bisa hitung profil numerologi Anda.",
+    "subtitle": "Beberapa info dasar agar kami bisa hitung profil numerologi kamu.",
     "warningTitle": "Penting",
-    "warningBody": "Nama lengkap dan tanggal lahir tidak dapat diubah setelah disimpan — keduanya menentukan seluruh profil numerologi Anda. Pastikan informasi sudah benar.",
+    "warningBody": "Nama lengkap dan tanggal lahir nentuin seluruh profil numerologi kamu. Pastiin udah bener — kalau ada salah ketik, masih bisa diperbaiki nanti dari halaman Ubah Profil.",
     "nameLabel": "Nama lengkap (sesuai akta lahir)",
-    "nameHint": "Pakai nama yang tertulis di akta lahir Anda — bukan panggilan. Tiga komponen (depan, tengah, belakang) penting buat perhitungan.",
+    "nameHint": "Pakai nama yang tertulis di akta lahir kamu — bukan panggilan. Tiga komponen (depan, tengah, belakang) penting buat perhitungan.",
     "firstNameLabel": "Nama depan",
     "firstNamePlaceholder": "Dany",
     "middleNameLabel": "Nama tengah (opsional)",
@@ -52,10 +52,10 @@
     "errorInvalidTimezone": "Zona waktu tidak dikenali."
   },
   "editProfile": {
-    "title": "Ubah profil Anda",
+    "title": "Ubah profil kamu",
     "subtitle": "Perbaiki ejaan nama atau tanggal kalau ada yang salah ketik. Setelah disimpan, semua angka dan ringkasan AI akan dihitung ulang otomatis.",
     "warningTitle": "Perubahan ini menyeluruh",
-    "warningBody": "Mengubah nama atau tanggal lahir akan menghitung ulang seluruh profil numerologi Anda — termasuk Life Path, Expression, hingga ringkasan About You. Pastikan benar.",
+    "warningBody": "Mengubah nama atau tanggal lahir akan menghitung ulang seluruh profil numerologi kamu — termasuk Life Path, Expression, hingga ringkasan About You. Pastikan benar.",
     "back": "Kembali ke dashboard",
     "submit": "Simpan perubahan",
     "submitting": "Menyimpan…"
@@ -68,10 +68,10 @@
     "patternsCta": "Pola",
     "editProfile": "Ubah profil",
     "signOut": "Keluar",
-    "aboutMeTitle": "Tentang Anda",
-    "aboutMeSubtitle": "Sintesis profil numerologi Anda. Detail tiap angka ada di kartu di bawah.",
+    "aboutMeTitle": "Tentang kamu",
+    "aboutMeSubtitle": "Sintesis profil numerologi kamu. Detail tiap angka ada di kartu di bawah.",
     "aboutMeFallback": "Belum bisa membuat ringkasan saat ini. Coba muat ulang halaman beberapa saat lagi.",
-    "karmicLessonsBody": "Energi {lessons} tidak muncul di nama Anda — area ini perlu Anda kembangkan secara sadar dalam hidup.",
+    "karmicLessonsBody": "Energi {lessons} tidak muncul di nama kamu — area ini perlu kamu kembangkan secara sadar dalam hidup.",
     "seeFullJourney": "Perjalanan lengkap",
     "seeFullJourneyHint": "Lihat ramalan Personal Year 9 tahun ke depan + Pinnacle, Challenge, dan Cycle setiap babak hidup.",
     "todayTitle": "Hari ini",
@@ -80,7 +80,7 @@
     "personalYear": "Personal Year",
     "coreTitle": "Profil inti",
     "lifePath": "Life Path",
-    "lifePathHint": "Misi hidup Anda — diturunkan dari tanggal lahir.",
+    "lifePathHint": "Misi hidup kamu — diturunkan dari tanggal lahir.",
     "expression": "Expression",
     "expressionHint": "Bakat dan potensi total — dari semua huruf di nama.",
     "soulUrge": "Soul Urge",
@@ -92,24 +92,24 @@
     "currentChapterTitle": "Babak saat ini",
     "currentChapterSubtitle": "Berdasarkan usia {age} tahun.",
     "pinnacle": "Pinnacle",
-    "pinnacleHint": "Energi puncak yang sedang Anda jalani.",
+    "pinnacleHint": "Energi puncak yang sedang kamu jalani.",
     "challenge": "Challenge",
     "challengeHint": "Pelajaran utama untuk dikuasai pada babak ini.",
     "cycle": "Cycle",
     "cycleHint": "Tema besar periode hidup ini.",
     "karmicLessonsTitle": "Karmic Lessons",
-    "karmicLessonsHint": "Energi yang absen dari nama Anda — area untuk dikembangkan. Klik tiap angka buat liat kenapa & gimana caranya.",
-    "karmicLessonsNone": "Tidak ada — semua energi 1–9 hadir di nama Anda.",
+    "karmicLessonsHint": "Energi yang absen dari nama kamu — area untuk dikembangkan. Klik tiap angka buat liat kenapa & gimana caranya.",
+    "karmicLessonsNone": "Tidak ada — semua energi 1–9 hadir di nama kamu.",
     "fullJourneyTitle": "Perjalanan lengkap",
     "stage": "Babak",
     "ageRange": "Rentang usia",
     "number": "Angka",
     "now": "Saat ini",
-    "meaningComingSoon": "Penjelasan untuk angka ini sedang kami siapkan. Sementara, angka di kartu adalah perhitungan deterministik — Anda bisa tanya AI di halaman \"Tanya AI\" untuk konteks lebih dalam."
+    "meaningComingSoon": "Penjelasan untuk angka ini sedang kami siapkan. Sementara, angka di kartu adalah perhitungan deterministik — kamu bisa tanya AI di halaman \"Tanya AI\" untuk konteks lebih dalam."
   },
   "reading": {
     "title": "Bacaan harian",
-    "subtitle": "Sintesis singkat dari angka-angka Anda untuk hari ini, ditulis oleh asisten AI Supernova.",
+    "subtitle": "Sintesis singkat dari angka-angka kamu untuk hari ini, ditulis oleh asisten AI Supernova.",
     "generateCta": "Buat bacaan hari ini",
     "generating": "Membuat bacaan…",
     "oncePerDay": "Satu bacaan per hari",
@@ -121,7 +121,7 @@
   },
   "chat": {
     "title": "Curhat ke Supernova",
-    "subtitle": "Tempat bercerita, mikir keras, dan minta perspektif. Saya ingat percakapan kita — harian, mingguan, sampai bulanan.",
+    "subtitle": "Tempat cerita, mikir keras, atau minta perspektif. Aku inget obrolan kita — harian, mingguan, sampai bulanan.",
     "back": "Kembali ke dashboard",
     "placeholder": "Tulis apa pun. Tekan Enter untuk kirim, Shift+Enter untuk baris baru.",
     "send": "Kirim",
@@ -138,9 +138,9 @@
     "errorGeneric": "Terjadi kesalahan. Coba lagi sebentar."
   },
   "feedback": {
-    "title": "Bagaimana hari Anda?",
+    "title": "Bagaimana hari kamu?",
     "subtitle": "Catat singkat tentang hari ini. Atau buka Curhat untuk percakapan lebih dalam.",
-    "notePlaceholder": "Apa yang terjadi hari ini? Apa yang Anda rasakan?",
+    "notePlaceholder": "Apa yang terjadi hari ini? Apa yang kamu rasakan?",
     "submitCta": "Simpan",
     "updateCta": "Perbarui",
     "saving": "Menyimpan…",
@@ -148,30 +148,30 @@
     "errorGeneric": "Gagal menyimpan. Coba lagi."
   },
   "patterns": {
-    "title": "Pola Anda",
+    "title": "Pola kamu",
     "subtitle": "Berdasarkan {count} entri di {days} hari terakhir.",
-    "subtitleEmpty": "Anda baru punya {count} entri. Pola akan tampil setelah ≥{min} hari data.",
+    "subtitleEmpty": "Kamu baru punya {count} entri. Pola akan tampil setelah ≥{min} hari data.",
     "backToDashboard": "Kembali ke dashboard",
     "emptyTitle": "Belum cukup data",
-    "emptyBody": "Catat perasaan Anda setiap hari di dashboard. Setelah 14 hari, kami tampilkan pola — angka mana yang membawa hari terbaik, hari kerja yang paling kuat, dan tema yang paling sering muncul.",
+    "emptyBody": "Catat perasaan kamu setiap hari di dashboard. Setelah 14 hari, kami tampilkan pola — angka mana yang membawa hari terbaik, hari kerja yang paling kuat, dan tema yang paling sering muncul.",
     "overallTitle": "Rata-rata keseluruhan",
     "overallSubtitle": "Dari {count} entri.",
     "byPersonalDay": "Berdasarkan Personal Day",
-    "byPersonalDayHint": "Rata-rata rating Anda untuk setiap angka Personal Day.",
+    "byPersonalDayHint": "Rata-rata rating kamu untuk setiap angka Personal Day.",
     "byWeekday": "Berdasarkan hari",
     "byWeekdayHint": "Hari mana yang biasanya terasa terbaik atau terberat.",
     "byTag": "Berdasarkan tag",
-    "byTagHint": "Tema yang paling sering muncul di catatan Anda."
+    "byTagHint": "Tema yang paling sering muncul di catatan kamu."
   },
   "journey": {
-    "title": "Perjalanan Anda",
-    "subtitle": "Sekarang Anda berusia {age} tahun. Lihat ramalan Personal Year 9 tahun ke depan dan babak-babak besar dalam hidup Anda.",
+    "title": "Perjalanan kamu",
+    "subtitle": "Sekarang kamu berusia {age} tahun. Lihat ramalan Personal Year 9 tahun ke depan dan babak-babak besar dalam hidup kamu.",
     "backToDashboard": "Kembali ke dashboard",
     "forecastTitle": "Ramalan Personal Year",
-    "forecastSubtitle": "Siklus 9 tahun Anda mulai dari tahun ini. Tiap angka membawa tema utama selama 12 bulan.",
+    "forecastSubtitle": "Siklus 9 tahun kamu mulai dari tahun ini. Tiap angka membawa tema utama selama 12 bulan.",
     "thisYear": "Tahun ini",
     "stagesTitle": "Babak hidup",
-    "stagesSubtitle": "Empat Pinnacle dan Challenge yang menentukan tema besar setiap fase hidup Anda.",
+    "stagesSubtitle": "Empat Pinnacle dan Challenge yang menentukan tema besar setiap fase hidup kamu.",
     "cyclesTitle": "Period Cycles",
     "cyclesSubtitle": "Tiga siklus besar — masa muda, kedewasaan, dan masa matang.",
     "age": "Usia",
@@ -179,7 +179,7 @@
   },
   "people": {
     "title": "Orang-orang",
-    "subtitle": "Tambahkan orang penting di hidup Anda untuk melihat profil dan kompatibilitas mereka.",
+    "subtitle": "Tambahkan orang penting di hidup kamu untuk melihat profil dan kompatibilitas mereka.",
     "backToDashboard": "Kembali ke dashboard",
     "addCta": "+ Tambah orang",
     "emptyTitle": "Belum ada orang",
@@ -213,7 +213,7 @@
     "errorInvalidName": "Nama tidak boleh kosong dan harus mengandung huruf.",
     "errorInvalidDob": "Tanggal lahir tidak valid.",
     "errorFutureDob": "Tanggal lahir tidak boleh di masa depan.",
-    "errorLimit": "Anda sudah mencapai batas. Hapus salah satu untuk menambah yang lain.",
+    "errorLimit": "Kamu sudah mencapai batas. Hapus salah satu untuk menambah yang lain.",
     "errorGeneric": "Gagal menyimpan. Coba lagi."
   },
   "personDetail": {

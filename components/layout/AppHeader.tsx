@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { SignOutButton } from '@/components/auth/SignOutButton';
+import { LocaleSwitcher } from '@/components/layout/LocaleSwitcher';
 import type { Locale } from '@/lib/i18n/config';
 
 interface NavLabels {
@@ -60,7 +61,8 @@ export function AppHeader({
             </p>
           ) : null}
         </div>
-        <div className="hidden sm:block">
+        <div className="hidden items-center gap-3 sm:flex">
+          <LocaleSwitcher active={locale} />
           <SignOutButton label={labels.signOut} locale={locale} />
         </div>
       </div>
@@ -83,7 +85,8 @@ export function AppHeader({
               </Link>
             );
           })}
-          <span className="ml-auto sm:hidden">
+          <span className="ml-auto flex items-center gap-3 sm:hidden">
+            <LocaleSwitcher active={locale} />
             <SignOutButton label={labels.signOut} locale={locale} />
           </span>
         </div>
