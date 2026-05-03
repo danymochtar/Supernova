@@ -4,7 +4,6 @@ import { z } from 'zod';
 import type { Prisma } from '@prisma/client';
 import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
-import { checkAndIncrement } from '@/lib/db/repositories/rateLimit';
 import { getRecentTurns, saveTurn } from '@/lib/db/repositories/qa';
 import { logUsage } from '@/lib/db/repositories/usage';
 import { anthropic, model } from '@/lib/ai/client';
@@ -27,8 +26,8 @@ import {
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-// Per Decision #4 in the plan: 1/day for everyone in MVP.
-const DAILY_QA_LIMIT = 1;
+// Q&A is unmetered for now. The RateLimit table + checkAndIncrement helper
+// remain in the codebase for when we need abuse protection or per-tier gating.
 const HISTORY_TURNS = 5;
 
 const bodySchema = z.object({
@@ -55,15 +54,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'invalid_question' }, { status: 400 });
   }
   const { question } = parsed.data;
-
-  const limit = await checkAndIncrement({
-    userId: session.user.id,
-    bucket: 'qa',
-    limit: DAILY_QA_LIMIT,
-  });
-  if (!limit.allowed) {
-    return NextResponse.json({ error: 'rate_limited', limit: DAILY_QA_LIMIT }, { status: 429 });
-  }
 
   const ctx = contextFromInstant(new Date(), profile.timezone);
   const core = buildCoreProfile(profile.fullName, profile.dob);
