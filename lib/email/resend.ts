@@ -31,7 +31,7 @@ export async function sendMagicLinkEmail({ to, url, locale }: MagicLinkEmailOpts
       ? 'Atau salin tautan ini ke peramban Anda:'
       : 'Or copy this link into your browser:';
 
-  return client().emails.send({
+  const res = await client().emails.send({
     from,
     to,
     subject,
@@ -47,4 +47,19 @@ export async function sendMagicLinkEmail({ to, url, locale }: MagicLinkEmailOpts
       </div>
     `,
   });
+
+  if (res.error) {
+    // Surface Resend rejection (e.g. sandbox sender can only deliver to the account
+    // owner's email until a real domain is verified) so it lands in dev logs.
+    console.error('[resend] send failed', { from, to, error: res.error });
+    throw new Error(`Resend rejected email: ${res.error.message ?? 'unknown'}`);
+  }
+
+  // Dev-only convenience: also log the magic link so you can sign in even when
+  // Resend can't deliver to the recipient.
+  if (process.env.NODE_ENV !== 'production') {
+    console.log(`[magic-link] for ${to}: ${url}`);
+  }
+
+  return res;
 }

@@ -19,14 +19,16 @@ export function LoginForm({ locale }: { locale: Locale }) {
       const callbackURL = `/${locale}/welcome`;
       const result = await signIn.magicLink({ email, callbackURL });
       if (result?.error) {
+        console.error('[login] signIn.magicLink error', result.error);
         setStatus('error');
-        setErrorMsg(t('errorGeneric'));
+        setErrorMsg(result.error.message ?? t('errorGeneric'));
         return;
       }
       setStatus('sent');
-    } catch {
+    } catch (err) {
+      console.error('[login] signIn.magicLink threw', err);
       setStatus('error');
-      setErrorMsg(t('errorGeneric'));
+      setErrorMsg(err instanceof Error ? err.message : t('errorGeneric'));
     }
   }
 

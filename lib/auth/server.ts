@@ -26,11 +26,16 @@ export const auth = betterAuth({
     magicLink({
       expiresIn: 60 * 10, // 10 minutes
       sendMagicLink: async ({ email, url }) => {
-        await sendMagicLinkEmail({
-          to: email,
-          url,
-          locale: pickLocaleFromUrl(url),
-        });
+        try {
+          await sendMagicLinkEmail({
+            to: email,
+            url,
+            locale: pickLocaleFromUrl(url),
+          });
+        } catch (err) {
+          console.error('[auth] sendMagicLink failed', { email, err });
+          throw err;
+        }
       },
     }),
   ],
