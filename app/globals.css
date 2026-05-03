@@ -4,24 +4,30 @@
 
 @layer base {
   :root {
-    --background: 36 30% 97%;
-    --foreground: 240 10% 8%;
-    --muted: 36 18% 92%;
-    --muted-foreground: 240 4% 42%;
-    --primary: 262 78% 56%;
+    /* Light theme — Supernova brand: midnight blue primary, warm amber accent. */
+    --background: 220 28% 98%;
+    --foreground: 230 30% 10%;
+    --muted: 220 20% 92%;
+    --muted-foreground: 230 12% 38%;
+    --primary: 230 65% 35%;       /* midnight blue */
     --primary-foreground: 0 0% 100%;
-    --border: 36 15% 88%;
+    --accent: 38 90% 55%;          /* warm amber/gold */
+    --accent-foreground: 230 30% 10%;
+    --border: 220 15% 86%;
     --radius: 0.75rem;
   }
 
   .dark {
-    --background: 252 22% 6%;
-    --foreground: 36 20% 96%;
-    --muted: 252 12% 14%;
-    --muted-foreground: 240 5% 68%;
-    --primary: 262 80% 68%;
-    --primary-foreground: 252 22% 6%;
-    --border: 252 10% 20%;
+    /* Dark theme — deep midnight base with vibrant blue primary. */
+    --background: 230 35% 6%;
+    --foreground: 220 20% 96%;
+    --muted: 230 18% 14%;
+    --muted-foreground: 220 12% 68%;
+    --primary: 220 80% 65%;
+    --primary-foreground: 230 35% 6%;
+    --accent: 38 90% 60%;
+    --accent-foreground: 230 35% 6%;
+    --border: 230 14% 20%;
   }
 
   * {
@@ -31,10 +37,10 @@
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
-    /* Soft warm gradient base — feels less utilitarian, more "personal app". */
+    /* Brand backdrop — midnight glow at top, warm amber spark bottom-right. */
     background-image:
-      radial-gradient(ellipse 80% 50% at 50% -10%, hsl(262 80% 56% / 0.08), transparent 70%),
-      radial-gradient(ellipse 60% 40% at 90% 110%, hsl(36 80% 60% / 0.06), transparent 70%);
+      radial-gradient(ellipse 80% 50% at 50% -10%, hsl(230 65% 35% / 0.10), transparent 70%),
+      radial-gradient(ellipse 70% 50% at 100% 110%, hsl(38 90% 55% / 0.08), transparent 70%);
     background-attachment: fixed;
     -webkit-tap-highlight-color: transparent;
   }

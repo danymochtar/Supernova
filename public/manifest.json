@@ -7,8 +7,8 @@
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#0b0a14",
-  "theme_color": "#7c3aed",
+  "background_color": "#0a1335",
+  "theme_color": "#1e3a8a",
   "categories": ["lifestyle", "personalization"],
   "icons": [
     {

@@ -82,7 +82,7 @@ export default async function JourneyPage({ params }: { params: { locale: string
           <p className="text-muted-foreground text-sm">{t('forecastSubtitle')}</p>
         </div>
 
-        <article className="border-primary/40 from-primary/10 ring-primary/20 relative overflow-hidden rounded-2xl border-2 bg-gradient-to-br to-amber-100/40 p-6 ring-1 dark:to-amber-950/30">
+        <article className="border-primary/40 from-primary/10 ring-primary/20 relative overflow-hidden rounded-2xl border-2 bg-gradient-to-br to-accent/20 p-6 ring-1 dark:to-accent/15">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <p className="text-primary text-xs font-semibold uppercase tracking-wider">
               {t('thisYear')} · {thisYear.year}

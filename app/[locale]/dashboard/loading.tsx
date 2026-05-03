@@ -9,7 +9,7 @@ export default function DashboardLoading() {
       </div>
 
       {/* Daily reading skeleton */}
-      <div className="border-border space-y-3 rounded-2xl border bg-gradient-to-br from-purple-50 to-amber-50 p-6 dark:from-purple-950/30 dark:to-amber-950/30">
+      <div className="border-border space-y-3 rounded-2xl border bg-gradient-to-br from-primary/5 to-accent/5 p-6 dark:from-primary/15 dark:to-accent/15">
         <div className="bg-muted/60 h-5 w-1/3 animate-pulse rounded" />
         <div className="bg-muted/60 h-4 w-full animate-pulse rounded" />
         <div className="bg-muted/60 h-4 w-5/6 animate-pulse rounded" />

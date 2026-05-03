@@ -31,8 +31,8 @@ export function DailyReadingView({ initialBody, generate }: Props) {
 
   if (!body) {
     return (
-      <section className="border-border flex flex-col items-center gap-4 rounded-2xl border bg-gradient-to-br from-purple-50 to-amber-50 p-7 text-center dark:from-purple-950/30 dark:to-amber-950/30">
-        <div className="from-primary/30 to-amber-300/30 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br">
+      <section className="border-border flex flex-col items-center gap-4 rounded-2xl border bg-gradient-to-br from-primary/5 to-accent/5 p-7 text-center dark:from-primary/15 dark:to-accent/15">
+        <div className="from-primary/30 to-accent/30 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br">
           <Sparkles className="text-primary h-6 w-6" aria-hidden />
         </div>
         <div className="space-y-1">
@@ -56,7 +56,7 @@ export function DailyReadingView({ initialBody, generate }: Props) {
   const hasStructured = parsed.theme || parsed.energy || parsed.watch || parsed.affirmation;
 
   return (
-    <section className="border-border space-y-5 rounded-2xl border bg-gradient-to-br from-purple-50 to-amber-50 p-6 dark:from-purple-950/30 dark:to-amber-950/30">
+    <section className="border-border space-y-5 rounded-2xl border bg-gradient-to-br from-primary/5 to-accent/5 p-6 dark:from-primary/15 dark:to-accent/15">
       <header className="flex items-center justify-between gap-3">
         <h2 className="text-lg font-semibold">{t('title')}</h2>
         <span className="text-muted-foreground text-xs">{t('oncePerDay')}</span>

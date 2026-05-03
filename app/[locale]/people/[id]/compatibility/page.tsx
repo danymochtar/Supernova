@@ -62,7 +62,7 @@ export default async function CompatibilityPage({
         <p className="text-muted-foreground text-sm">{t('subtitle')}</p>
 
       {/* Score */}
-      <section className="border-border space-y-4 rounded-2xl border bg-gradient-to-br from-purple-50 to-amber-50 p-6 dark:from-purple-950/30 dark:to-amber-950/30">
+      <section className="border-border space-y-4 rounded-2xl border bg-gradient-to-br from-primary/5 to-accent/5 p-6 dark:from-primary/15 dark:to-accent/15">
         <div className="flex flex-wrap items-baseline justify-between gap-3">
           <div>
             <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider">

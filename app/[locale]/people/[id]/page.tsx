@@ -55,7 +55,7 @@ export default async function PersonDetailPage({
       <div className="space-y-8 pb-6 sm:pb-10">
         <section className="border-border flex flex-col items-center gap-3 rounded-2xl border bg-white/40 p-6 text-center dark:bg-neutral-900/40">
           <div
-            className="from-primary/30 to-amber-300/30 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br font-serif text-3xl font-semibold tracking-tight"
+            className="from-primary/30 to-accent/30 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br font-serif text-3xl font-semibold tracking-tight"
             aria-hidden
           >
             {initials}

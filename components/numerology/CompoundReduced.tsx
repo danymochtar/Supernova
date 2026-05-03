@@ -24,13 +24,13 @@ export function CompoundReduced({
   return (
     <span className="inline-flex items-baseline gap-1.5">
       <span
-        className={`font-mono font-semibold tabular-nums ${sizeClass} ${result.isMaster ? 'text-purple-700' : ''}`}
+        className={`font-mono font-semibold tabular-nums ${sizeClass} ${result.isMaster ? 'text-primary' : ''}`}
         title={tooltip ?? undefined}
       >
         {text}
       </span>
       {result.isMaster ? (
-        <span className="text-[10px] font-medium uppercase tracking-wider text-purple-700">
+        <span className="text-[10px] font-medium uppercase tracking-wider text-primary">
           master
         </span>
       ) : null}
