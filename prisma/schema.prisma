@@ -112,17 +112,15 @@ enum AiFeature {
 }
 
 model Profile {
-  id             String   @id @default(cuid())
-  userId         String   @unique
-  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  // Encrypted: AES-256-GCM, format "v1:iv_b64:tag_b64:ciphertext_b64"
-  nameEncrypted  String
-  // Encrypted JSON of { year, month, day }
-  dobEncrypted   String
-  timezone       String   @default("Asia/Jakarta")
-  locale         String   @default("id")
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fullName  String
+  dob       DateTime @db.Date
+  timezone  String   @default("Asia/Jakarta")
+  locale    String   @default("id")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("profile")
 }
@@ -146,15 +144,15 @@ model NumerologyCache {
 }
 
 model Person {
-  id             String       @id @default(cuid())
-  userId         String
-  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  nameEncrypted  String
-  dobEncrypted   String
-  relationship   Relationship
-  notes          String?
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
+  id           String       @id @default(cuid())
+  userId       String
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fullName     String
+  dob          DateTime     @db.Date
+  relationship Relationship
+  notes        String?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
 
   @@index([userId])
   @@map("person")

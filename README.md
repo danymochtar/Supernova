@@ -9,7 +9,6 @@ Personalized daily numerology PWA for Southeast Asia. Bahasa Indonesia + English
 - Better Auth (email + password)
 - Anthropic Claude (Sonnet 4.6)
 - next-intl, Zustand, react-hook-form + zod
-- AES-256-GCM for PII at rest
 - next-pwa + web-push
 
 ## Setup
@@ -17,13 +16,13 @@ Personalized daily numerology PWA for Southeast Asia. Bahasa Indonesia + English
 ```bash
 pnpm install
 cp .env.example .env.local
-# Fill in DATABASE_URL, BETTER_AUTH_SECRET,
-# DATA_ENCRYPTION_KEY, ANTHROPIC_API_KEY (RESEND_API_KEY only needed for M7+)
+# Fill in DATABASE_URL, BETTER_AUTH_SECRET, ANTHROPIC_API_KEY
+# (RESEND_API_KEY only needed for M7+)
 pnpm prisma migrate dev --name init
 pnpm dev
 ```
 
-Generate `BETTER_AUTH_SECRET` and `DATA_ENCRYPTION_KEY`:
+Generate `BETTER_AUTH_SECRET`:
 
 ```bash
 openssl rand -base64 32

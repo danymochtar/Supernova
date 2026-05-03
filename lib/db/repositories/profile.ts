@@ -1,5 +1,4 @@
 import type { Profile as ProfileRow } from '@prisma/client';
-import { decrypt, decryptJson, encrypt, encryptJson } from '@/lib/crypto/aes';
 import { prisma } from '@/lib/db/prisma';
 import type { BirthDate } from '@/lib/numerology/types';
 
@@ -10,7 +9,7 @@ export interface ProfileInput {
   locale: 'id' | 'en';
 }
 
-export interface DecryptedProfile {
+export interface ProfileView {
   id: string;
   userId: string;
   fullName: string;
@@ -21,31 +20,39 @@ export interface DecryptedProfile {
   updatedAt: Date;
 }
 
-export async function createProfile(userId: string, input: ProfileInput): Promise<DecryptedProfile> {
+function toBirthDate(d: Date): BirthDate {
+  return { year: d.getUTCFullYear(), month: d.getUTCMonth() + 1, day: d.getUTCDate() };
+}
+
+function toDateUTC({ year, month, day }: BirthDate): Date {
+  return new Date(Date.UTC(year, month - 1, day));
+}
+
+export async function createProfile(userId: string, input: ProfileInput): Promise<ProfileView> {
   const row = await prisma.profile.create({
     data: {
       userId,
-      nameEncrypted: encrypt(input.fullName),
-      dobEncrypted: encryptJson(input.dob),
+      fullName: input.fullName,
+      dob: toDateUTC(input.dob),
       timezone: input.timezone,
       locale: input.locale,
     },
   });
-  return decryptRow(row);
+  return toView(row);
 }
 
-export async function getProfileByUserId(userId: string): Promise<DecryptedProfile | null> {
+export async function getProfileByUserId(userId: string): Promise<ProfileView | null> {
   const row = await prisma.profile.findUnique({ where: { userId } });
-  return row ? decryptRow(row) : null;
+  return row ? toView(row) : null;
 }
 
-function decryptRow(row: ProfileRow): DecryptedProfile {
+function toView(row: ProfileRow): ProfileView {
   const locale = row.locale === 'en' ? 'en' : 'id';
   return {
     id: row.id,
     userId: row.userId,
-    fullName: decrypt(row.nameEncrypted),
-    dob: decryptJson<BirthDate>(row.dobEncrypted),
+    fullName: row.fullName,
+    dob: toBirthDate(row.dob),
     timezone: row.timezone,
     locale,
     createdAt: row.createdAt,
