@@ -13,6 +13,7 @@ import {
   getSummary,
   listSummaries,
 } from '@/lib/db/repositories/conversationSummary';
+import { prisma } from '@/lib/db/prisma';
 
 /** Find the Monday of the ISO week (UTC) containing the given date. */
 function startOfWeekUTC(d: Date): Date {
@@ -209,11 +210,29 @@ export async function rollupMonthlyIfNeeded(
   }
 }
 
+/**
+ * Cheap precheck: is any rollup work potentially needed?
+ *
+ * Skips the full 14-day / 8-week / 12-month walks when there are no past
+ * turns to summarize. ~1 indexed query instead of 30+ when the user is
+ * up-to-date.
+ */
+async function hasPotentialRollup(userId: string, today: Date): Promise<boolean> {
+  const todayStart = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
+  const oldest = await prisma.qaHistory.findFirst({
+    where: { userId, personId: null, createdAt: { lt: todayStart } },
+    orderBy: { createdAt: 'asc' },
+    select: { createdAt: true },
+  });
+  return Boolean(oldest);
+}
+
 export async function rollupAll(
   userId: string,
   locale: Locale,
   today: Date,
 ): Promise<void> {
+  if (!(await hasPotentialRollup(userId, today))) return;
   await rollupDailyIfNeeded(userId, locale, today);
   await rollupWeeklyIfNeeded(userId, locale, today);
   await rollupMonthlyIfNeeded(userId, locale, today);

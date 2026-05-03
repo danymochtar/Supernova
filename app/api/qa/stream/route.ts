@@ -44,20 +44,21 @@ export async function POST(req: Request) {
   const todayEnd = new Date(todayStart);
   todayEnd.setUTCDate(todayEnd.getUTCDate() + 1);
 
-  // Lazy rollup: catch up any past day/week/month boundaries crossed since
-  // last visit. Awaited so the resulting summaries are available in the
-  // context we build below.
-  await rollupAll(session.user.id, locale, new Date());
-
-  const todaysTurns = await getTurnsBetween(session.user.id, todayStart, todayEnd);
-  const smart = await loadSmartContext({
-    userId: session.user.id,
-    locale,
-    profile,
-    question,
-    ctx,
-    dob: profile.dob,
-  });
+  // Run the rollup catch-up in parallel with fetching today's turns + smart
+  // context. The rollup hits the Anthropic API only when a past period has
+  // unprocessed turns; usually it's just one cheap precheck.
+  const [, todaysTurns, smart] = await Promise.all([
+    rollupAll(session.user.id, locale, new Date()),
+    getTurnsBetween(session.user.id, todayStart, todayEnd),
+    loadSmartContext({
+      userId: session.user.id,
+      locale,
+      profile,
+      question,
+      ctx,
+      dob: profile.dob,
+    }),
+  ]);
 
   const userId = session.user.id;
   const modelId = model();
@@ -101,7 +102,7 @@ export async function POST(req: Request) {
       try {
         const sdkStream = anthropic().messages.stream({
           model: modelId,
-          max_tokens: 1500,
+          max_tokens: 900,
           system: chatSystemPrompt(),
           messages,
         });

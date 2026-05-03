@@ -5,7 +5,6 @@ import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { getTurnsBetween } from '@/lib/db/repositories/qa';
 import { listSummaries } from '@/lib/db/repositories/conversationSummary';
-import { rollupAll } from '@/lib/conversation/rollup';
 import { contextFromInstant } from '@/lib/numerology';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 
@@ -26,9 +25,8 @@ export default async function AskPage({ params }: { params: { locale: string } }
   const todayEnd = new Date(todayStart);
   todayEnd.setUTCDate(todayEnd.getUTCDate() + 1);
 
-  // Trigger any rollups so summaries are fresh before the user starts chatting.
-  await rollupAll(session.user.id, locale, new Date());
-
+  // Note: rollups run lazily inside POST /api/qa/stream when a new period
+  // boundary is crossed — no need to block this page render on them.
   const [todaysTurns, dailies, weeklies, monthlies] = await Promise.all([
     getTurnsBetween(session.user.id, todayStart, todayEnd),
     listSummaries(session.user.id, 'DAILY', 7),

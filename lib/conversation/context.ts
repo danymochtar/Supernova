@@ -88,45 +88,47 @@ karmic lessons: ${core.karmicLessons.length ? core.karmicLessons.join(', ') : 'n
 
   const result: SmartContext = { base, loaded };
 
-  // ---- History cascade (always include — small + most important for continuity) ----
-  const [dailies, weeklies, monthlies] = await Promise.all([
+  // Decide which conditional sources to fetch up-front so we can fan them
+  // out in parallel with the always-on history cascade.
+  const wantPeople = matches(question, KEYWORDS.people);
+  const wantReading = matches(question, KEYWORDS.reading);
+  const wantPatterns = matches(question, KEYWORDS.patterns);
+
+  const since = new Date(Date.UTC(ctx.year, ctx.month - 1, ctx.day));
+  since.setUTCDate(since.getUTCDate() - 30);
+
+  const [dailies, weeklies, monthlies, people, reading, feedback] = await Promise.all([
     listSummaries(userId, 'DAILY', 7),
     listSummaries(userId, 'WEEKLY', 4),
     listSummaries(userId, 'MONTHLY', 6),
+    wantPeople ? listPeople(userId) : Promise.resolve([] as Awaited<ReturnType<typeof listPeople>>),
+    wantReading ? getReadingForLocalDay(userId, ctx.year, ctx.month, ctx.day) : Promise.resolve(null),
+    wantPatterns
+      ? getRecentFeedback(userId, since)
+      : Promise.resolve([] as Awaited<ReturnType<typeof getRecentFeedback>>),
   ]);
+
   if (dailies.length || weeklies.length || monthlies.length) {
     result.history = formatHistory(dailies, weeklies, monthlies, locale);
     loaded.push('history');
   }
 
-  // ---- People (conditional) ---------------------------------------------
-  if (matches(question, KEYWORDS.people)) {
-    const people = await listPeople(userId);
-    if (people.length > 0) {
-      result.people = people
-        .map((p) => {
-          const c = buildCoreProfile(p.fullName, p.dob);
-          return `- ${p.fullName} (${p.relationship.toLowerCase()}, born ${p.dob.year}-${String(p.dob.month).padStart(2, '0')}-${String(p.dob.day).padStart(2, '0')}): LP=${r(c.lifePath)}, Expr=${r(c.expression)}, SU=${r(c.soulUrge)}`;
-        })
-        .join('\n');
-      loaded.push('people');
-    }
+  if (wantPeople && people.length > 0) {
+    result.people = people
+      .map((p) => {
+        const c = buildCoreProfile(p.fullName, p.dob);
+        return `- ${p.fullName} (${p.relationship.toLowerCase()}, born ${p.dob.year}-${String(p.dob.month).padStart(2, '0')}-${String(p.dob.day).padStart(2, '0')}): LP=${r(c.lifePath)}, Expr=${r(c.expression)}, SU=${r(c.soulUrge)}`;
+      })
+      .join('\n');
+    loaded.push('people');
   }
 
-  // ---- Today's reading (conditional) ------------------------------------
-  if (matches(question, KEYWORDS.reading)) {
-    const reading = await getReadingForLocalDay(userId, ctx.year, ctx.month, ctx.day);
-    if (reading) {
-      result.reading = `Today's daily reading body:\n${reading.body}`;
-      loaded.push('reading');
-    }
+  if (wantReading && reading) {
+    result.reading = `Today's daily reading body:\n${reading.body}`;
+    loaded.push('reading');
   }
 
-  // ---- Patterns (conditional) -------------------------------------------
-  if (matches(question, KEYWORDS.patterns)) {
-    const since = new Date(Date.UTC(ctx.year, ctx.month - 1, ctx.day));
-    since.setUTCDate(since.getUTCDate() - 30);
-    const feedback = await getRecentFeedback(userId, since);
+  if (wantPatterns) {
     const summary = aggregate(
       feedback.map((f) => ({ date: f.date, rating: f.rating, tags: f.tags })),
       dob,

@@ -61,43 +61,33 @@ export default async function DashboardPage({ params }: { params: { locale: stri
   const activeChallenge = challengeAt(core.challenges, slots.challenge);
   const activeCycle = cycleAt(core.periodCycles, slots.cycle);
 
-  const cachedReading = await getReadingForLocalDay(
-    session.user.id,
-    ctx.year,
-    ctx.month,
-    ctx.day,
-  );
-
-  const todayFeedback = await getFeedbackForLocalDay(
-    session.user.id,
-    ctx.year,
-    ctx.month,
-    ctx.day,
-  );
-
-  // Skip the journal prompt entirely when the user has already chatted today —
-  // the chat thread is the day's journal.
   const todayStart = new Date(Date.UTC(ctx.year, ctx.month - 1, ctx.day));
   const todayEnd = new Date(todayStart);
   todayEnd.setUTCDate(todayEnd.getUTCDate() + 1);
-  const todaysChatTurns = await getTurnsBetween(session.user.id, todayStart, todayEnd);
-  const showFeedbackPrompt = todaysChatTurns.length === 0;
 
-  // AI-synthesized one-paragraph profile summary, cached forever (profile is
-  // immutable). First dashboard visit pays a ~3s synthesis call; every visit
-  // after is instant from the cache.
-  const aboutMeText = await getOrGenerateAboutMe(session.user.id, {
-    locale,
-    fullName: profile.fullName,
-    core: {
-      lifePath: core.lifePath,
-      expression: core.expression,
-      soulUrge: core.soulUrge,
-      personality: core.personality,
-      birthday: core.birthday,
-    },
-    karmicLessons: core.karmicLessons,
-  });
+  // Fan everything out in parallel — these don't depend on each other and
+  // were sequential awaits before, adding ~4 round-trip latencies on the
+  // critical path. The About Me cold-start AI call is by far the slowest;
+  // doing it alongside the DB queries hides their latency under it.
+  const [cachedReading, todayFeedback, todaysChatTurns, aboutMeText] = await Promise.all([
+    getReadingForLocalDay(session.user.id, ctx.year, ctx.month, ctx.day),
+    getFeedbackForLocalDay(session.user.id, ctx.year, ctx.month, ctx.day),
+    getTurnsBetween(session.user.id, todayStart, todayEnd),
+    getOrGenerateAboutMe(session.user.id, {
+      locale,
+      fullName: profile.fullName,
+      core: {
+        lifePath: core.lifePath,
+        expression: core.expression,
+        soulUrge: core.soulUrge,
+        personality: core.personality,
+        birthday: core.birthday,
+      },
+      karmicLessons: core.karmicLessons,
+    }),
+  ]);
+
+  const showFeedbackPrompt = todaysChatTurns.length === 0;
 
   // Local hour in the user's timezone for time-of-day greeting.
   const localHour = (() => {
