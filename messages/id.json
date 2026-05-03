@@ -1,0 +1,11 @@
+{
+  "app": {
+    "name": "Supernova",
+    "tagline": "Panduan numerologi harian Anda."
+  },
+  "home": {
+    "title": "Selamat datang di Supernova",
+    "subtitle": "Bacaan numerologi harian yang dipersonalisasi.",
+    "cta": "Masuk dengan email"
+  }
+}
