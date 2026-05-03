@@ -78,7 +78,7 @@ export default async function DashboardPage({ params }: { params: { locale: stri
   // Lazy fetch — only data for widgets the user has visible. Reading + About
   // Me are the slow ones; if hidden, we skip them entirely (saving a DB call
   // and a cold-start AI call respectively).
-  const [readingBody, todayFeedback, todaysChatTurns, aboutMeText] = await Promise.all([
+  const [readingBody, todayFeedback, todaysChatTurns, aboutMeData] = await Promise.all([
     visible.has('reading')
       ? getOrGenerateDailyReading(session.user.id, profile)
       : Promise.resolve(null),
@@ -116,6 +116,7 @@ export default async function DashboardPage({ params }: { params: { locale: stri
             body={readingBody}
             dateLabel={formatDateLong(ctx, locale)}
             dayTitle={meaningFor('personalDayTitle', cycles.personalDay, locale) ?? ''}
+            daySuffix={tReading('daySuffix', { n: cycles.personalDay.reduced })}
             labels={{
               todaysTheme: tReading('todaysTheme'),
               affirmation: tReading('affirmation'),
@@ -138,8 +139,17 @@ export default async function DashboardPage({ params }: { params: { locale: stri
             key={id}
             title={t('aboutMeTitle')}
             subtitle={t('aboutMeSubtitle')}
-            text={aboutMeText}
+            data={aboutMeData}
             fallback={t('aboutMeFallback')}
+            aboutLabel={t('aboutMeCardLabel')}
+            cardLabels={{
+              lifePath: t('lifePath'),
+              expression: t('expression'),
+              soulUrge: t('soulUrge'),
+              personality: t('personality'),
+              birthday: t('birthday'),
+              karmicLessons: t('karmicLessonsTitle'),
+            }}
           />
         );
       case 'today':

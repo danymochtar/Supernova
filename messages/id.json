@@ -159,8 +159,9 @@
     "editProfile": "Ubah profil",
     "signOut": "Keluar",
     "aboutMeTitle": "Tentang kamu",
-    "aboutMeSubtitle": "Sintesis profil numerologi kamu. Detail tiap angka ada di kartu di bawah.",
+    "aboutMeSubtitle": "Geser kartu untuk lihat tiap aspek diri kamu — sintesis di atas, detail di sampingnya.",
     "aboutMeFallback": "Belum bisa membuat ringkasan saat ini. Coba muat ulang halaman beberapa saat lagi.",
+    "aboutMeCardLabel": "Tentang kamu",
     "karmicLessonsBody": "Energi {lessons} tidak muncul di nama kamu — area ini perlu kamu kembangkan secara sadar dalam hidup.",
     "seeFullJourney": "Perjalanan lengkap",
     "seeFullJourneyHint": "Lihat ramalan Personal Year 9 tahun ke depan + Pinnacle, Challenge, dan Cycle setiap babak hidup.",
@@ -202,6 +203,7 @@
     "title": "Bacaan harian",
     "subtitle": "Sintesis singkat dari angka-angka kamu untuk hari ini, ditulis oleh asisten AI Supernova.",
     "todaysTheme": "Tema hari ini",
+    "daySuffix": "HARI {n}",
     "affirmation": "Afirmasi",
     "fallback": "Bacaan hari ini belum bisa dibuat. Coba refresh sebentar lagi.",
     "oncePerDay": "Satu bacaan per hari"
@@ -349,10 +351,11 @@
     },
     "modifiersTitle": "Pengubah",
     "modifier": {
-      "masters": "Sama-sama membawa angka master",
+      "masters": "Sama-sama membawa master number",
+      "asymmetricMasters": "Salah satu membawa master number",
       "soulUrgeMatch": "Soul Urge sama",
       "lifePathMirror": "Life Path mirror",
-      "sharedKarmicDebt": "Sama-sama membawa karmic debt"
+      "sharedKarmicDebt": "Beban karmic debt"
     },
     "crossLabel": "{me} kamu × {them} mereka",
     "band": {

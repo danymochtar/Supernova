@@ -2,60 +2,62 @@ import { anthropic, model } from '@/lib/ai/client';
 import {
   buildAboutMeSystem,
   buildAboutMeUser,
+  parseAboutMe,
   type AboutMeInput,
+  type ParsedAboutMe,
 } from '@/lib/ai/prompts/aboutMe';
 import { logUsage } from '@/lib/db/repositories/usage';
-import { getCachedText, setCachedText } from '@/lib/db/repositories/numerologyCache';
+import { getCachedJson, setCachedJson } from '@/lib/db/repositories/numerologyCache';
 
-// v2: longer, multi-paragraph elaboration. Old 'aboutMe' rows stay in the DB
-// but are no longer referenced — the new key forces a regeneration.
-const CACHE_KEY = 'aboutMe-v2';
+// v3: structured carousel — synthesis + per-component cards. Bumping the
+// key invalidates v2 prose-only blobs without needing a migration.
+const CACHE_KEY = 'aboutMe-v3';
 
 /**
- * Cache-first About Me text. Profile name + DOB never change so the cached
- * row is good for the lifetime of the account.
- *
- * Returns `null` only if the model call fails on a cold cache — caller
- * should fall back to a graceful UI (or a manual retry button).
+ * Cache-first structured About Me. Profile name + DOB never change so the
+ * cached row is good for the lifetime of the account. Returns `null` only
+ * when generation fails on a cold cache — caller should render a graceful
+ * fallback.
  */
 export async function getOrGenerateAboutMe(
   userId: string,
   input: AboutMeInput,
-): Promise<string | null> {
-  const cached = await getCachedText(userId, CACHE_KEY);
+): Promise<ParsedAboutMe | null> {
+  const cached = await getCachedJson<ParsedAboutMe>(userId, CACHE_KEY);
   if (cached) return cached;
 
   const modelId = model('aboutMe', input.preferredModel);
   try {
     const response = await anthropic().messages.create({
       model: modelId,
-      max_tokens: 700,
+      max_tokens: 1500,
       system: buildAboutMeSystem(input.locale),
       messages: [{ role: 'user', content: buildAboutMeUser(input) }],
     });
 
-    const text = response.content
+    const raw = response.content
       .filter((b): b is typeof b & { type: 'text'; text: string } => b.type === 'text')
       .map((b) => b.text)
       .join('\n')
       .trim();
 
-    if (!text) return null;
+    const parsed = parseAboutMe(raw);
+    if (!parsed) return null;
 
-    await setCachedText(userId, CACHE_KEY, text, {
+    await setCachedJson(userId, CACHE_KEY, parsed, {
       model: modelId,
       inputTokens: response.usage.input_tokens,
       outputTokens: response.usage.output_tokens,
     });
     await logUsage({
       userId,
-      feature: 'DAILY', // AiFeature enum has no ABOUT yet — log under DAILY for cost tracking
+      feature: 'DAILY',
       model: modelId,
       inputTokens: response.usage.input_tokens,
       outputTokens: response.usage.output_tokens,
     });
 
-    return text;
+    return parsed;
   } catch (err) {
     console.error('[aboutMe] generation failed', err);
     return null;

@@ -11,7 +11,6 @@ export interface AboutMeInput {
     birthday: NumerologyResult;
   };
   karmicLessons: number[];
-  /** Optional per-user model override (forwarded to model('aboutMe', ...)). */
   preferredModel?: string | null;
 }
 
@@ -24,48 +23,66 @@ function r(x: NumerologyResult): string {
 
 export function buildAboutMeSystem(locale: 'id' | 'en'): string {
   if (locale === 'id') {
-    return `Kamu adalah pendamping numerologi Supernova. Tugas kamu nulis profil holistik yang elaboratif tapi padat dalam Bahasa Indonesia santai.
+    return `Kamu adalah pendamping numerologi Supernova. Tugas: tulis profil holistik dalam bentuk JSON terstruktur — satu sintesis pembuka + satu kartu pendek per komponen inti.
+
+Bahasa: Bahasa Indonesia santai (pakai "kamu", BUKAN "Anda"). Boleh code-mix — istilah numerologi seperti "Life Path", "Expression", "Soul Urge", "Personality", "Birthday", "Karmic Lessons", "master number", "karmic debt" TETAP dalam Bahasa Inggris supaya maknanya tidak hilang. Sisanya Indonesia.
+
+Konten:
+- "synthesis": 2-3 kalimat sintesis identitas inti — siapa orang ini secara keseluruhan. Sebut nama depannya sekali. JANGAN sebut angka spesifik.
+- Tiap kartu: 2-3 kalimat. Hangat, reflektif, langsung. Jelaskan MAKNA komponennya — bukan angkanya. Boleh sebut nama komponen ("Life Path-mu mendorong…", "Soul Urge-mu rindu…"), tapi jangan tulis angka mentah.
+- Kartu "karmicLessons" hanya muncul kalau ada karmic lessons.
 
 Aturan:
-- Tulis 3-4 paragraf pendek, total sekitar 180-260 kata.
-- Paragraf 1: Identitas inti — siapa orang ini, esensi karakter mereka. Sintesis Life Path + Expression.
-- Paragraf 2: Motivasi dan cara muncul ke dunia — sintesis Soul Urge + Personality.
-- Paragraf 3: Talenta bawaan dan area tumbuh — Birthday + Karmic Lessons (kalau ada).
-- Paragraf 4 (opsional): Pesan singkat tentang misi atau tema besar hidup mereka.
+- JANGAN sebut angka apa pun (mis. "Life Path 5", "Expression 22").
+- JANGAN markdown, bullet, heading, emoji.
+- JANGAN nasihat medis/hukum/finansial. JANGAN janji masa depan.
+- Selalu grounded di angka di <profile>.
 
-Gaya:
-- Sapa user dengan "kamu", BUKAN "Anda". Nada hangat dan personal kayak teman.
-- Sintesis, bukan daftar. JANGAN sebut angkanya satu per satu kayak "Life Path kamu 5". Lebih ke "Kamu hadir dengan dorongan kebebasan dan rasa ingin tahu yang dalam…"
-- Reflektif tapi langsung, nggak bertele-tele.
-- JANGAN markdown, heading, bullet, atau emoji.
-- JANGAN nasihat medis, hukum, atau finansial.
-- JANGAN janjikan kepastian masa depan.
-- Selalu berdasarkan angka di <profile>; jangan ngarang.
-
-Output: paragraf-paragraf aja dipisah baris kosong, tanpa pembuka.`;
+Output WAJIB JSON valid, tanpa teks lain:
+{
+  "synthesis": "...",
+  "cards": {
+    "lifePath": "...",
+    "expression": "...",
+    "soulUrge": "...",
+    "personality": "...",
+    "birthday": "...",
+    "karmicLessons": "..."
   }
-  return `You are Supernova's numerology companion. Write an elaborate but tight holistic profile summary in clear English.
+}`;
+  }
+  return `You are Supernova's numerology companion. Task: write a holistic profile as structured JSON — one opening synthesis + one short card per core component.
+
+Style: warm, personal ("You…"), reflective but direct.
+
+Content:
+- "synthesis": 2-3 sentences synthesizing core identity — who this person is overall. Mention their first name once. DO NOT name any specific number.
+- Each card: 2-3 sentences. Explain the MEANING of the component — not the digit. You may name the component itself ("Your Life Path pulls you…", "Your Soul Urge longs for…") but never write the raw number.
+- The "karmicLessons" card only appears when karmic lessons are present.
 
 Rules:
-- 3-4 short paragraphs, ~180-260 words total.
-- Paragraph 1: Core identity — who this person is at the essence. Synthesize Life Path + Expression.
-- Paragraph 2: Motivation and how they show up in the world — synthesize Soul Urge + Personality.
-- Paragraph 3: Innate gifts and growth edges — Birthday + Karmic Lessons (if any).
-- Paragraph 4 (optional): A brief note on their life mission or overarching theme.
+- DO NOT name any number (e.g. "Life Path 5", "Expression 22").
+- NO markdown, bullets, headings, emoji.
+- NO medical, legal, or financial advice. No future predictions.
+- Always grounded in the numbers in <profile>.
 
-Style:
-- Synthesis, not enumeration. DO NOT list numbers like "Your Life Path is 5". Prefer "You arrive with a pull toward freedom and a deep curiosity…"
-- Warm, personal ("You…"), reflective but direct.
-- NO markdown, headings, bullets, or emoji.
-- NO medical, legal, or financial advice.
-- Don't promise certainty about the future.
-- Ground every claim in the numbers in <profile>; never invent.
-
-Output: just the paragraphs separated by blank lines, no preamble.`;
+Output MUST be valid JSON, nothing else:
+{
+  "synthesis": "...",
+  "cards": {
+    "lifePath": "...",
+    "expression": "...",
+    "soulUrge": "...",
+    "personality": "...",
+    "birthday": "...",
+    "karmicLessons": "..."
+  }
+}`;
 }
 
 export function buildAboutMeUser(input: AboutMeInput): string {
   const km = input.karmicLessons.length ? input.karmicLessons.join(', ') : 'none';
+  const includeKarmic = input.karmicLessons.length > 0;
   return `<profile>
 name: ${input.fullName}
 
@@ -79,5 +96,43 @@ Core numbers:
 Karmic Lessons: ${km}
 </profile>
 
-Write the holistic summary now.`;
+Return JSON. ${
+    includeKarmic
+      ? 'Include all six cards (synthesis + 5 component cards + karmicLessons).'
+      : 'Omit the "karmicLessons" key entirely (no karmic lessons present).'
+  } No numbers in any string.`;
+}
+
+export interface ParsedAboutMe {
+  synthesis: string;
+  cards: Partial<{
+    lifePath: string;
+    expression: string;
+    soulUrge: string;
+    personality: string;
+    birthday: string;
+    karmicLessons: string;
+  }>;
+}
+
+export function parseAboutMe(raw: string): ParsedAboutMe | null {
+  let body = raw.trim();
+  if (body.startsWith('```')) {
+    body = body.replace(/^```(?:json)?\s*/i, '').replace(/```\s*$/i, '').trim();
+  }
+  try {
+    const obj = JSON.parse(body);
+    if (!obj || typeof obj !== 'object') return null;
+    const synthesis = typeof obj.synthesis === 'string' ? obj.synthesis.trim() : '';
+    const rawCards = obj.cards && typeof obj.cards === 'object' ? obj.cards : {};
+    const cards: ParsedAboutMe['cards'] = {};
+    for (const k of ['lifePath', 'expression', 'soulUrge', 'personality', 'birthday', 'karmicLessons'] as const) {
+      const v = (rawCards as Record<string, unknown>)[k];
+      if (typeof v === 'string' && v.trim()) cards[k] = v.trim();
+    }
+    if (!synthesis && Object.keys(cards).length === 0) return null;
+    return { synthesis, cards };
+  } catch {
+    return null;
+  }
 }

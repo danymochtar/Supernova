@@ -7,6 +7,8 @@ interface Props {
   dateLabel: string;
   /** Pre-localized day theme name, e.g. "Change & Versatility". */
   dayTitle: string;
+  /** Pre-localized "A 5 DAY" / "HARI 5" suffix. */
+  daySuffix: string;
   /** UI strings (already translated). */
   labels: {
     todaysTheme: string;
@@ -20,7 +22,7 @@ interface Props {
  * manual generate button. When the AI call fails we show a graceful fallback
  * so the page still renders.
  */
-export function DailyReadingView({ body, dateLabel, dayTitle, labels }: Props) {
+export function DailyReadingView({ body, dateLabel, dayTitle, daySuffix, labels }: Props) {
   if (!body) {
     return (
       <section className="border-border rounded-3xl border bg-gradient-to-br from-primary/10 to-accent/10 p-6 text-center dark:from-primary/20 dark:to-accent/20">
@@ -50,6 +52,7 @@ export function DailyReadingView({ body, dateLabel, dayTitle, labels }: Props) {
           <div className="space-y-1">
             <p className="text-muted-foreground text-[11px] font-medium uppercase tracking-[0.18em]">
               {labels.todaysTheme}
+              {daySuffix ? <span className="text-accent ml-2">· {daySuffix}</span> : null}
             </p>
             <h2 className="font-serif text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
               {dayTitle}

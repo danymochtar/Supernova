@@ -56,6 +56,7 @@ export function buildPairsSystem(locale: 'id' | 'en'): string {
 
 Aturan:
 - Tiap narasi 2-3 kalimat. Hangat, jujur, praktis.
+- Boleh code-mix: istilah seperti "Life Path", "Expression", "Soul Urge", "Personality", "Birthday", "master number", "karmic debt" TETAP dalam Bahasa Inggris.
 - Hormati jenis hubungan — narasi untuk pasangan ≠ rekan kerja ≠ keluarga.
 - Pasangan "cross" (mis. Expression kamu vs Soul Urge mereka) menggambarkan dinamika asimetris: apa yang satu pihak beri vs yang pihak lain rindukan. Sebut dinamika ini secara eksplisit.
 - Jangan janji masa depan. Jangan kasih saran medis/hukum/finansial.
@@ -132,6 +133,7 @@ export function buildProfileSystem(locale: 'id' | 'en'): string {
 Tugas: berdasar angka inti dua orang dan jenis hubungan mereka, tulis elaborasi panjang (3-4 paragraf, total ~250-350 kata) yang menjawab: bagaimana hubungan ini terasa, di mana kekuatannya, di mana titik gesekan yang lembut, dan apa yang bisa tumbuh dari sini.
 
 Aturan:
+- Boleh code-mix: istilah seperti "Life Path", "Expression", "Soul Urge", "Personality", "Birthday", "master number", "karmic debt" TETAP dalam Bahasa Inggris.
 - Sesuaikan dengan jenis hubungan. Pasangan, keluarga, teman, rekan kerja punya dinamika berbeda — komponen yang relevan berbeda. Untuk teman/rekan, jangan masuk ke ranah kerinduan terdalam (Soul Urge) — itu untuk pasangan/keluarga.
 - JANGAN sebut angka apa pun (mis. "Life Path 5", "Expression 6"). Cuma maknanya.
 - Boleh sebut konsep ("misi hidup yang berbeda", "kerinduan yang sama"), TIDAK angkanya.

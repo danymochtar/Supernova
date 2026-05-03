@@ -5,18 +5,23 @@ import { lensFor, pickResult, type CoreKey, type Lane } from './lens';
 /**
  * Pythagorean compatibility score for a single number pair, 0-100.
  *
- * The HARMONY / FRICTION tables come from the traditional Decoz / Millman
- * tables. The score is symmetric on (a, b) so it doesn't matter which side
- * is "me" or "them" — only the digit pair matters. Cross-component pairs
- * (my Expression vs their Soul Urge) reuse the same digit pair table —
- * what differs is the *interpretation*, surfaced by the UI.
+ * Tables synthesized from Decoz, Millman, and Glynis McCants. The score
+ * is symmetric on (a, b) — only the digit pair matters. Cross-component
+ * pairs (my Expression vs their Soul Urge) reuse the same table; what
+ * differs is the interpretation, surfaced by the UI.
  *
- * - Same digit, same component: deep resonance (80) — strong but at risk
- *   of stagnation
- * - Same digit, cross component: clean fit (78) — giver matches receiver
- * - Listed harmonious pairs: 70
- * - Neutral pairs: 55
- * - Listed challenging pairs: 45
+ * - Same digit, cross component: 82 — clean fit (giver matches receiver,
+ *   no stagnation risk because roles are differentiated)
+ * - Same digit, same component: 76 — deep resonance, with stagnation /
+ *   competition risk depending on number
+ * - Listed harmonious pairs: 75 — supportive, complementary
+ * - Neutral pairs: 60 — workable, neither boost nor friction
+ * - Listed challenging pairs: 42 — friction; can become growth ground
+ *   but starts hard
+ *
+ * Compared to the previous tier (80/78/70/55/45) we tightened so that
+ * harmonics carry more weight (matchness lifts when the chemistry is
+ * actually there) without flattening friction.
  */
 const HARMONY: Record<number, number[]> = {
   1: [3, 5, 6, 9],
@@ -49,10 +54,10 @@ export function pairScore(
 ): number {
   const x = a.reduced;
   const y = b.reduced;
-  if (x === y) return cross ? 78 : 80;
-  if (HARMONY[x]?.includes(y)) return 70;
-  if (FRICTION[x]?.includes(y)) return 45;
-  return 55;
+  if (x === y) return cross ? 82 : 76;
+  if (HARMONY[x]?.includes(y)) return 75;
+  if (FRICTION[x]?.includes(y)) return 42;
+  return 60;
 }
 
 export interface CoreLite {
@@ -126,11 +131,19 @@ export function compatibilityScore(
   const modifiers: OverallScore['modifiers'] = [];
 
   if (lens.enabledModifiers.has('masters')) {
+    // Master numbers (11/22/33) elevate the relationship regardless of
+    // who carries them. Both sides → +6 (deeper joint elevation). Only
+    // one side → +3 (asymmetric — the master partner lifts the pair).
+    // McCants and Decoz both treat masters as bringing spiritual weight
+    // to anyone in their orbit, not just to a fellow master.
     const myMasters = [me.lifePath, me.expression, me.soulUrge].filter((x) => x.isMaster).length;
     const theirMasters = [them.lifePath, them.expression, them.soulUrge].filter((x) => x.isMaster).length;
     if (myMasters > 0 && theirMasters > 0) {
-      modifiers.push({ reason: 'masters', delta: 5 });
-      overall += 5;
+      modifiers.push({ reason: 'masters', delta: 6 });
+      overall += 6;
+    } else if (myMasters > 0 || theirMasters > 0) {
+      modifiers.push({ reason: 'asymmetricMasters', delta: 3 });
+      overall += 3;
     }
   }
 
@@ -145,11 +158,17 @@ export function compatibilityScore(
   }
 
   if (lens.enabledModifiers.has('sharedKarmicDebt')) {
-    const myDebts = [me.lifePath, me.expression, me.soulUrge].some((x) => x.karmicDebt);
-    const theirDebts = [them.lifePath, them.expression, them.soulUrge].some((x) => x.karmicDebt);
-    if (myDebts && theirDebts) {
-      modifiers.push({ reason: 'sharedKarmicDebt', delta: -3 });
-      overall -= 3;
+    // Per-side, per-occurrence: -1 for each karmic-debt-bearing core
+    // number (LP, Expression, Soul Urge) on either side, capped at -3.
+    // This is gentler than the old "both have any → -3" rule and more
+    // honest: someone carrying multiple debts brings more lessons in.
+    const debtCount =
+      [me.lifePath, me.expression, me.soulUrge].filter((x) => x.karmicDebt).length +
+      [them.lifePath, them.expression, them.soulUrge].filter((x) => x.karmicDebt).length;
+    if (debtCount > 0) {
+      const delta = -Math.min(debtCount, 3);
+      modifiers.push({ reason: 'sharedKarmicDebt', delta });
+      overall += delta;
     }
   }
 
