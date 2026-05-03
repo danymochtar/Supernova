@@ -1,5 +1,7 @@
+import type { Relationship } from '@prisma/client';
 import type { Locale } from '@/lib/i18n/config';
 import type { CoreLite } from './score';
+import { lensFor } from './lens';
 
 export interface CompatibilityPattern {
   key: string;
@@ -27,6 +29,7 @@ interface T {
   freedomVsRoot: { title: string; body: string };
   pairedReducedToNine: { title: string; body: string };
   myExprTheirSu: { title: string; body: string };
+  theirExprMySu: { title: string; body: string };
 }
 
 const COPY_ID: T = {
@@ -85,6 +88,10 @@ const COPY_ID: T = {
   myExprTheirSu: {
     title: 'Bakat kamu = yang mereka rindukan',
     body: 'Cara kamu muncul ke dunia adalah persis yang mereka idamkan. Kamu mungkin terlihat seperti versi ideal dari yang sedang mereka cari.',
+  },
+  theirExprMySu: {
+    title: 'Bakat mereka = yang kamu rindukan',
+    body: 'Cara mereka muncul ke dunia adalah persis yang kamu idamkan. Mereka bisa terasa seperti jawaban dari kerinduan kamu — hati-hati jangan sampai jadi bergantung.',
   },
 };
 
@@ -145,14 +152,25 @@ const COPY_EN: T = {
     title: 'Your talent = what they yearn for',
     body: 'How you show up in the world is exactly what they long for. You may look like the ideal version of what they\'re searching for.',
   },
+  theirExprMySu: {
+    title: 'Their talent = what you yearn for',
+    body: 'The way they show up is exactly what you long for. They can feel like the answer to your craving — be careful not to slip into dependence.',
+  },
 };
 
+/**
+ * Detect compatibility patterns for a pair, filtered to those that make
+ * sense for the relationship type. Soul-Urge patterns are dropped for
+ * friend/colleague — those relationships don't reach the deepest layer.
+ */
 export function detectPatterns(
   me: CoreLite,
   them: CoreLite,
   locale: Locale,
+  relationship: Relationship,
 ): CompatibilityPattern[] {
   const c = locale === 'id' ? COPY_ID : COPY_EN;
+  const enabled = lensFor(relationship).enabledPatterns;
   const out: CompatibilityPattern[] = [];
 
   const meLP = me.lifePath.reduced;
@@ -162,62 +180,52 @@ export function detectPatterns(
   const meSU = me.soulUrge.reduced;
   const themSU = them.soulUrge.reduced;
 
-  if (meLP === themLP) out.push({ key: 'sameLifePath', tone: 'neutral', ...c.sameLifePath });
-  if (meSU === themSU) out.push({ key: 'sameSoulUrge', tone: 'harmony', ...c.sameSoulUrge });
-  if (meExpr === themExpr) out.push({ key: 'sameExpression', tone: 'neutral', ...c.sameExpression });
+  const push = (key: string, tone: CompatibilityPattern['tone'], copy: { title: string; body: string }) => {
+    if (enabled.has(key)) out.push({ key, tone, ...copy });
+  };
+
+  if (meLP === themLP) push('sameLifePath', 'neutral', c.sameLifePath);
+  if (meSU === themSU) push('sameSoulUrge', 'harmony', c.sameSoulUrge);
+  if (meExpr === themExpr) push('sameExpression', 'neutral', c.sameExpression);
 
   // Cross-component LP↔Expression
-  if (meLP !== themLP && meLP === themExpr) {
-    out.push({ key: 'myLpTheirExpr', tone: 'harmony', ...c.myLpTheirExpr });
-  }
-  if (meLP !== themLP && themLP === meExpr) {
-    out.push({ key: 'theirLpMyExpr', tone: 'harmony', ...c.theirLpMyExpr });
-  }
+  if (meLP !== themLP && meLP === themExpr) push('myLpTheirExpr', 'harmony', c.myLpTheirExpr);
+  if (meLP !== themLP && themLP === meExpr) push('theirLpMyExpr', 'harmony', c.theirLpMyExpr);
+
   // Cross-component LP↔Soul Urge
-  if (meLP !== themLP && meLP === themSU) {
-    out.push({ key: 'myLpTheirSu', tone: 'harmony', ...c.myLpTheirSu });
-  }
-  if (meLP !== themLP && themLP === meSU) {
-    out.push({ key: 'theirLpMySu', tone: 'tension', ...c.theirLpMySu });
-  }
-  if (meExpr === themSU && meExpr !== themExpr) {
-    out.push({ key: 'myExprTheirSu', tone: 'harmony', ...c.myExprTheirSu });
-  }
+  if (meLP !== themLP && meLP === themSU) push('myLpTheirSu', 'harmony', c.myLpTheirSu);
+  if (meLP !== themLP && themLP === meSU) push('theirLpMySu', 'tension', c.theirLpMySu);
+
+  // Cross-component Expression↔Soul Urge — the giver↔receiver dynamic.
+  if (meExpr === themSU && meExpr !== themExpr) push('myExprTheirSu', 'harmony', c.myExprTheirSu);
+  if (themExpr === meSU && themExpr !== meExpr) push('theirExprMySu', 'tension', c.theirExprMySu);
 
   // Specific archetype combos
   if ((meLP === 1 && themLP === 9) || (meLP === 9 && themLP === 1)) {
-    out.push({ key: 'cycleBookends', tone: 'harmony', ...c.cycleBookends });
+    push('cycleBookends', 'harmony', c.cycleBookends);
   }
   if ((meLP === 5 && themLP === 6) || (meLP === 6 && themLP === 5)) {
-    out.push({ key: 'freedomVsRoot', tone: 'tension', ...c.freedomVsRoot });
+    push('freedomVsRoot', 'tension', c.freedomVsRoot);
   }
   if (meLP !== themLP) {
     const sum = meLP + themLP;
     const reduced = sum > 9 ? Math.floor(sum / 10) + (sum % 10) : sum;
-    if (reduced === 9) {
-      out.push({ key: 'pairedReducedToNine', tone: 'harmony', ...c.pairedReducedToNine });
-    }
+    if (reduced === 9) push('pairedReducedToNine', 'harmony', c.pairedReducedToNine);
   }
 
   // Master + master
   const myMasters = [me.lifePath, me.expression, me.soulUrge].filter((x) => x.isMaster).length;
   const theirMasters = [them.lifePath, them.expression, them.soulUrge].filter((x) => x.isMaster).length;
-  if (myMasters > 0 && theirMasters > 0) {
-    out.push({ key: 'bothMasters', tone: 'harmony', ...c.bothMasters });
-  }
+  if (myMasters > 0 && theirMasters > 0) push('bothMasters', 'harmony', c.bothMasters);
 
   // Karmic debts
   const myDebts = [me.lifePath, me.expression, me.soulUrge].some((x) => x.karmicDebt);
   const theirDebts = [them.lifePath, them.expression, them.soulUrge].some((x) => x.karmicDebt);
-  if (myDebts && theirDebts) {
-    out.push({ key: 'sharedKarmicDebt', tone: 'tension', ...c.sharedKarmicDebt });
-  }
+  if (myDebts && theirDebts) push('sharedKarmicDebt', 'tension', c.sharedKarmicDebt);
 
   // Shared karmic lessons
   const shared = me.karmicLessons.filter((n) => them.karmicLessons.includes(n));
-  if (shared.length > 0) {
-    out.push({ key: 'sharedKarmicLessons', tone: 'tension', ...c.sharedKarmicLessons(shared.join(', ')) });
-  }
+  if (shared.length > 0) push('sharedKarmicLessons', 'tension', c.sharedKarmicLessons(shared.join(', ')));
 
   return out;
 }

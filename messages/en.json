@@ -328,9 +328,25 @@
   },
   "compatibility": {
     "title": "Compatibility with {name}",
-    "subtitle": "Score + cross-component patterns, computed from both your numbers.",
+    "subtitle": "Score + cross-component patterns, computed from both your numbers and adjusted for the relationship type.",
     "back": "Back to profile",
     "scoreTitle": "Compatibility score",
+    "lensTitle": "Relationship lens",
+    "lens": {
+      "PARTNER": "As partners you reach each other's deepest layer. Soul Urge (deepest yearning) and the cross dynamic of Expression × Soul Urge — what you give vs what they yearn for — carry significant weight.",
+      "FAMILY": "Family sees beneath the mask, so Personality matters less. We weight life direction (Life Path), deepest yearning (Soul Urge), and the give-and-receive dynamic between Expression and Soul Urge.",
+      "FRIEND": "Friendship lives in Expression (how you both show up) and Personality (vibe). Soul Urge isn't scored — friendships rarely reach the deepest layer.",
+      "COLLEAGUE": "At work, Expression (work style) and Personality (professional vibe) dominate. Life Path is scored through cross with Expression — does your work support each other's mission.",
+      "OTHER": "General lens: all core components scored with balanced weights."
+    },
+    "modifiersTitle": "Modifiers",
+    "modifier": {
+      "masters": "Both carry master numbers",
+      "soulUrgeMatch": "Same Soul Urge",
+      "lifePathMirror": "Life Path mirror",
+      "sharedKarmicDebt": "Both carry karmic debt"
+    },
+    "crossLabel": "Your {me} × Their {them}",
     "band": {
       "low": "Tough",
       "fair": "Fair",
@@ -348,6 +364,6 @@
     "pairsTitle": "Per-pair detail",
     "pairsSubtitle": "Short narratives for each core pair.",
     "noNarrative": "No narrative available for this pairing yet.",
-    "disclaimer": "Score & patterns are deterministically computed from your numbers (Pythagorean tradition — Decoz, Millman). Numerology is a tool for reflection, not prediction."
+    "disclaimer": "Score & patterns are deterministically computed from your numbers (Pythagorean tradition — Decoz, Millman) with a per-relationship lens. Numerology is a tool for reflection, not prediction."
   }
 }

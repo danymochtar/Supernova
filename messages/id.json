@@ -328,9 +328,25 @@
   },
   "compatibility": {
     "title": "Kompatibilitas dengan {name}",
-    "subtitle": "Skor + pola lintas-komponen, dihitung dari angka kalian berdua.",
+    "subtitle": "Skor + pola lintas-komponen, dihitung dari angka kalian berdua dan disesuaikan dengan jenis hubungan.",
     "back": "Kembali ke profil",
     "scoreTitle": "Skor kompatibilitas",
+    "lensTitle": "Lensa hubungan",
+    "lens": {
+      "PARTNER": "Sebagai pasangan, kalian saling mengakses lapisan paling dalam. Soul Urge (kerinduan terdalam) dan dinamika silang Expression × Soul Urge — apa yang kamu beri vs apa yang mereka rindukan — diberi bobot besar.",
+      "FAMILY": "Keluarga melihat di balik topeng, jadi Personality kurang berperan. Yang dihitung adalah arah hidup (Life Path), kerinduan terdalam (Soul Urge), dan dinamika memberi-menerima antara Expression dan Soul Urge.",
+      "FRIEND": "Pertemanan terjadi di lapisan Expression (cara kalian muncul) dan Personality (vibe). Soul Urge tidak dihitung — pertemanan jarang menyentuh kerinduan terdalam.",
+      "COLLEAGUE": "Di tempat kerja yang penting Expression (gaya bekerja) dan Personality (vibe profesional). Life Path dihitung lewat silang dengan Expression — apakah kerja kalian mendukung misi satu sama lain.",
+      "OTHER": "Lensa umum: semua komponen inti dihitung dengan bobot seimbang."
+    },
+    "modifiersTitle": "Pengubah",
+    "modifier": {
+      "masters": "Sama-sama membawa angka master",
+      "soulUrgeMatch": "Soul Urge sama",
+      "lifePathMirror": "Life Path mirror",
+      "sharedKarmicDebt": "Sama-sama membawa karmic debt"
+    },
+    "crossLabel": "{me} kamu × {them} mereka",
     "band": {
       "low": "Berat",
       "fair": "Cukup",
@@ -348,6 +364,6 @@
     "pairsTitle": "Detail per pasangan angka",
     "pairsSubtitle": "Narasi pendek untuk masing-masing pasangan inti.",
     "noNarrative": "Narasi untuk pasangan ini belum tersedia.",
-    "disclaimer": "Skor & pola dihitung deterministik dari angka kalian (tradisi Pythagorean — Decoz, Millman). Numerologi adalah alat refleksi, bukan ramalan."
+    "disclaimer": "Skor & pola dihitung deterministik dari angka kalian (tradisi Pythagorean — Decoz, Millman) dengan lensa per jenis hubungan. Numerologi adalah alat refleksi, bukan ramalan."
   }
 }
