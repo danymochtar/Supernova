@@ -48,7 +48,7 @@
   },
   "dashboard": {
     "greeting": "Halo,",
-    "editProfile": "Ubah profil",
+    "askCta": "Tanya AI",
     "signOut": "Keluar",
     "todayTitle": "Hari ini",
     "personalDay": "Personal Day",
@@ -92,6 +92,21 @@
     "energy": "Energi yang mendukung",
     "watch": "Hati-hati",
     "errorAi": "AI sedang sibuk. Coba lagi sebentar.",
+    "errorGeneric": "Terjadi kesalahan. Coba lagi sebentar."
+  },
+  "ask": {
+    "title": "Tanya AI Supernova",
+    "subtitle": "Ajukan pertanyaan tentang numerologi Anda. AI akan menjawab berdasarkan profil dan siklus hari ini.",
+    "backToDashboard": "Kembali ke dashboard",
+    "label": "Pertanyaan Anda",
+    "placeholder": "Contoh: Apa fokus terbaik untuk hari ini berdasarkan Personal Day saya?",
+    "hint": "1 pertanyaan per hari.",
+    "submit": "Tanya",
+    "stop": "Hentikan",
+    "answerTitle": "Jawaban",
+    "errorRateLimited": "Anda sudah pakai jatah pertanyaan hari ini. Coba lagi besok.",
+    "errorInvalid": "Pertanyaan tidak valid (minimal 2 karakter).",
+    "errorNoProfile": "Selesaikan onboarding dulu.",
     "errorGeneric": "Terjadi kesalahan. Coba lagi sebentar."
   }
 }

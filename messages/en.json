@@ -48,7 +48,7 @@
   },
   "dashboard": {
     "greeting": "Hello,",
-    "editProfile": "Edit profile",
+    "askCta": "Ask AI",
     "signOut": "Sign out",
     "todayTitle": "Today",
     "personalDay": "Personal Day",
@@ -92,6 +92,21 @@
     "energy": "Supportive energy",
     "watch": "Watch out for",
     "errorAi": "The AI is busy right now. Please try again shortly.",
+    "errorGeneric": "Something went wrong. Please try again."
+  },
+  "ask": {
+    "title": "Ask Supernova AI",
+    "subtitle": "Ask anything about your numerology. The AI answers grounded in your profile and today's cycles.",
+    "backToDashboard": "Back to dashboard",
+    "label": "Your question",
+    "placeholder": "Example: What should I focus on today given my Personal Day?",
+    "hint": "1 question per day.",
+    "submit": "Ask",
+    "stop": "Stop",
+    "answerTitle": "Answer",
+    "errorRateLimited": "You've used today's question. Try again tomorrow.",
+    "errorInvalid": "Question is too short (minimum 2 characters).",
+    "errorNoProfile": "Finish onboarding first.",
     "errorGeneric": "Something went wrong. Please try again."
   }
 }

@@ -83,13 +83,10 @@ export default async function DashboardPage({ params }: { params: { locale: stri
         </div>
         <div className="flex items-center gap-4">
           <Link
-            href={`/${locale}/welcome`}
-            className="text-muted-foreground hover:text-foreground text-sm underline-offset-4 hover:underline"
-            aria-disabled
-            tabIndex={-1}
-            style={{ pointerEvents: 'none', opacity: 0.4 }}
+            href={`/${locale}/ask`}
+            className="bg-primary text-primary-foreground rounded-lg px-4 py-2 text-sm font-medium"
           >
-            {t('editProfile')}
+            {t('askCta')}
           </Link>
           <SignOutButton label={t('signOut')} locale={locale} />
         </div>

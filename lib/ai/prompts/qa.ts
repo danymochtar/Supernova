@@ -1,0 +1,148 @@
+import { formatNumerology, type NumerologyResult } from '@/lib/numerology';
+
+export interface QaPromptContext {
+  locale: 'id' | 'en';
+  fullName: string;
+  todayLocal: { year: number; month: number; day: number; weekday: string };
+  age: number;
+  core: {
+    lifePath: NumerologyResult;
+    expression: NumerologyResult;
+    soulUrge: NumerologyResult;
+    personality: NumerologyResult;
+    birthday: NumerologyResult;
+  };
+  cycles: {
+    personalYear: NumerologyResult;
+    personalMonth: NumerologyResult;
+    personalDay: NumerologyResult;
+  };
+  active: {
+    pinnacle: { slot: 1 | 2 | 3 | 4; result: NumerologyResult };
+    challenge: { slot: 1 | 2 | 3 | 4; result: NumerologyResult };
+    cycle: { slot: 1 | 2 | 3; result: NumerologyResult };
+  };
+  karmicLessons: number[];
+}
+
+function r(x: NumerologyResult): string {
+  const tags: string[] = [];
+  if (x.isMaster) tags.push('master');
+  if (x.karmicDebt) tags.push(`karmic-${x.karmicDebt}`);
+  return tags.length ? `${formatNumerology(x)} (${tags.join(', ')})` : formatNumerology(x);
+}
+
+export function buildQaSystemPrompt(locale: 'id' | 'en'): string {
+  if (locale === 'id') {
+    return `Anda adalah pendamping numerologi Supernova. Tugas Anda adalah menjawab pertanyaan pengguna tentang numerologi mereka dalam Bahasa Indonesia yang halus dan suportif.
+
+Aturan ketat:
+- Selalu berdasarkan angka di <profile>. Jangan mengarang angka, jangan ubah perhitungan.
+- Tidak memberikan nasihat medis, hukum, atau finansial. Jika diminta, alihkan dengan halus ke tema umum yang relevan dengan numerologi.
+- Tidak menjanjikan kepastian masa depan. Gunakan bahasa kemungkinan ("energi mendukung…", "cocok untuk…").
+- Hormati identitas dan agama pengguna; netral secara budaya.
+- Hindari astrologi, tarot, atau sistem lain — fokus pada numerologi Pythagorean.
+- Jika pertanyaan tidak terkait numerologi, jawab singkat dan arahkan kembali ke tema numerologi.
+- Tulis dalam nada hangat, ringkas (2-4 paragraf), dan praktis.
+- Format respons dalam Markdown ringan: paragraf biasa, **tebal** untuk nama angka, tidak perlu heading.`;
+  }
+  return `You are Supernova's numerology companion. Your task is to answer the user's questions about their numerology in clear, supportive English.
+
+Strict rules:
+- Always ground your answers in the numbers in <profile>. Never invent numbers or change the math.
+- Do not give medical, legal, or financial advice. Redirect gently to numerology-relevant themes.
+- Never promise certainty about the future. Use possibility language ("the energy supports…", "well-suited for…").
+- Respect the user's identity and beliefs; remain culturally neutral.
+- Avoid astrology, tarot, or other systems — stay within Pythagorean numerology.
+- If the question is unrelated to numerology, answer briefly and steer back to numerology themes.
+- Write in a warm, concise voice (2-4 paragraphs), practical.
+- Format responses as light Markdown: plain paragraphs, **bold** for number names, no headings needed.`;
+}
+
+export function buildQaProfileBlock(ctx: QaPromptContext): string {
+  const { core, cycles, active, karmicLessons } = ctx;
+  const dateStr = `${ctx.todayLocal.year}-${String(ctx.todayLocal.month).padStart(2, '0')}-${String(ctx.todayLocal.day).padStart(2, '0')}`;
+  const km = karmicLessons.length ? karmicLessons.join(', ') : 'none';
+
+  return `<profile>
+name: ${ctx.fullName}
+age: ${ctx.age}
+today: ${dateStr} (${ctx.todayLocal.weekday})
+
+Core numbers:
+- Life Path: ${r(core.lifePath)}
+- Expression: ${r(core.expression)}
+- Soul Urge: ${r(core.soulUrge)}
+- Personality: ${r(core.personality)}
+- Birthday: ${r(core.birthday)}
+
+Today's cycles:
+- Personal Year: ${r(cycles.personalYear)}
+- Personal Month: ${r(cycles.personalMonth)}
+- Personal Day: ${r(cycles.personalDay)}
+
+Current chapter:
+- Pinnacle ${active.pinnacle.slot}: ${r(active.pinnacle.result)}
+- Challenge ${active.challenge.slot}: ${r(active.challenge.result)}
+- Period Cycle ${active.cycle.slot}: ${r(active.cycle.result)}
+
+Karmic Lessons (energies absent from name): ${km}
+</profile>`;
+}
+
+export interface QaTurn {
+  question: string;
+  answer: string;
+}
+
+/**
+ * Build the messages array for a Q&A turn.
+ * - System prompt (cached)
+ * - User: profile block (cached, since profile doesn't change between turns within a session)
+ * - Assistant: "Profile noted. Ready for your question."
+ * - Last N prior turns (alternating user/assistant)
+ * - User: new question (volatile, after cache breakpoint)
+ */
+export function buildQaMessages(args: {
+  ctx: QaPromptContext;
+  history: QaTurn[];
+  question: string;
+}) {
+  const messages: Array<{
+    role: 'user' | 'assistant';
+    content: Array<{ type: 'text'; text: string; cache_control?: { type: 'ephemeral' } }>;
+  }> = [];
+
+  // Profile context as the first user message — cache it so re-runs within
+  // the 5-minute window don't re-process this block.
+  messages.push({
+    role: 'user',
+    content: [
+      {
+        type: 'text',
+        text: buildQaProfileBlock(args.ctx),
+        cache_control: { type: 'ephemeral' },
+      },
+    ],
+  });
+  messages.push({
+    role: 'assistant',
+    content: [
+      {
+        type: 'text',
+        text: args.ctx.locale === 'id' ? 'Profil dicatat. Saya siap menjawab pertanyaan Anda.' : 'Profile noted. Ready for your question.',
+      },
+    ],
+  });
+
+  // Last N prior turns — volatile but bounded.
+  for (const turn of args.history) {
+    messages.push({ role: 'user', content: [{ type: 'text', text: turn.question }] });
+    messages.push({ role: 'assistant', content: [{ type: 'text', text: turn.answer }] });
+  }
+
+  // New question — volatile, no cache marker.
+  messages.push({ role: 'user', content: [{ type: 'text', text: args.question }] });
+
+  return messages;
+}
