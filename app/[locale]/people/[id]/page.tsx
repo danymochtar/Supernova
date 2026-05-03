@@ -44,11 +44,6 @@ export default async function PersonDetailPage({
   const age = ageAt(person.dob, ctx);
   const slots = activeSlots(person.dob, age);
 
-  const meaningProps = {
-    expandLabel: tDash('whatDoesThisMean'),
-    collapseLabel: tDash('hide'),
-    comingSoonLabel: tDash('meaningComingSoon'),
-  };
 
   return (
     <main className="container max-w-4xl space-y-10 py-10">
@@ -109,7 +104,7 @@ export default async function PersonDetailPage({
             locale={locale}
             type="personalDay"
             meaning={meaningFor('personalDay', cycles.personalDay, locale)}
-            {...meaningProps}
+            comingSoonLabel={tDash('meaningComingSoon')}
           />
           <NumberCard
             label={tDash('personalMonth')}
@@ -117,7 +112,7 @@ export default async function PersonDetailPage({
             locale={locale}
             type="personalMonth"
             meaning={meaningFor('personalMonth', cycles.personalMonth, locale)}
-            {...meaningProps}
+            comingSoonLabel={tDash('meaningComingSoon')}
           />
           <NumberCard
             label={tDash('personalYear')}
@@ -125,7 +120,7 @@ export default async function PersonDetailPage({
             locale={locale}
             type="personalYear"
             meaning={meaningFor('personalYear', cycles.personalYear, locale)}
-            {...meaningProps}
+            comingSoonLabel={tDash('meaningComingSoon')}
           />
         </div>
       </section>
@@ -141,7 +136,7 @@ export default async function PersonDetailPage({
             locale={locale}
             type="lifePath"
             meaning={meaningFor('lifePath', core.lifePath, locale)}
-            {...meaningProps}
+            comingSoonLabel={tDash('meaningComingSoon')}
           />
           <NumberCard
             label={tDash('expression')}
@@ -150,7 +145,7 @@ export default async function PersonDetailPage({
             locale={locale}
             type="expression"
             meaning={meaningFor('expression', core.expression, locale)}
-            {...meaningProps}
+            comingSoonLabel={tDash('meaningComingSoon')}
           />
           <NumberCard
             label={tDash('soulUrge')}
@@ -159,7 +154,7 @@ export default async function PersonDetailPage({
             locale={locale}
             type="soulUrge"
             meaning={meaningFor('soulUrge', core.soulUrge, locale)}
-            {...meaningProps}
+            comingSoonLabel={tDash('meaningComingSoon')}
           />
           <NumberCard
             label={tDash('personality')}
@@ -168,7 +163,7 @@ export default async function PersonDetailPage({
             locale={locale}
             type="personality"
             meaning={meaningFor('personality', core.personality, locale)}
-            {...meaningProps}
+            comingSoonLabel={tDash('meaningComingSoon')}
           />
           <NumberCard
             label={tDash('birthday')}
@@ -177,7 +172,7 @@ export default async function PersonDetailPage({
             locale={locale}
             type="birthday"
             meaning={meaningFor('birthday', core.birthday, locale)}
-            {...meaningProps}
+            comingSoonLabel={tDash('meaningComingSoon')}
           />
         </div>
       </section>
@@ -192,7 +187,7 @@ export default async function PersonDetailPage({
             locale={locale}
             type="pinnacle"
             meaning={meaningFor('pinnacle', pinnacleAt(core.pinnacles, slots.pinnacle), locale)}
-            {...meaningProps}
+            comingSoonLabel={tDash('meaningComingSoon')}
           />
           <NumberCard
             label={`${tDash('challenge')} ${slots.challenge}`}
@@ -200,7 +195,7 @@ export default async function PersonDetailPage({
             locale={locale}
             type="challenge"
             meaning={meaningFor('challenge', challengeAt(core.challenges, slots.challenge), locale)}
-            {...meaningProps}
+            comingSoonLabel={tDash('meaningComingSoon')}
           />
           <NumberCard
             label={`${tDash('cycle')} ${slots.cycle}`}
@@ -208,7 +203,7 @@ export default async function PersonDetailPage({
             locale={locale}
             type="cycle"
             meaning={meaningFor('cycle', cycleAt(core.periodCycles, slots.cycle), locale)}
-            {...meaningProps}
+            comingSoonLabel={tDash('meaningComingSoon')}
           />
         </div>
       </section>

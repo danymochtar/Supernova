@@ -100,12 +100,6 @@ export default async function DashboardPage({ params }: { params: { locale: stri
     karmicLessons: core.karmicLessons,
   });
 
-  const meaningProps = {
-    expandLabel: t('whatDoesThisMean'),
-    collapseLabel: t('hide'),
-    comingSoonLabel: t('meaningComingSoon'),
-  };
-
   return (
     <main className="container max-w-4xl space-y-10 py-10">
       {/* Header */}
@@ -181,7 +175,7 @@ export default async function DashboardPage({ params }: { params: { locale: stri
             locale={locale}
             type="personalDay"
             meaning={meaningFor('personalDay', cycles.personalDay, locale)}
-            {...meaningProps}
+            comingSoonLabel={t('meaningComingSoon')}
           />
           <NumberCard
             label={t('personalMonth')}
@@ -189,7 +183,7 @@ export default async function DashboardPage({ params }: { params: { locale: stri
             locale={locale}
             type="personalMonth"
             meaning={meaningFor('personalMonth', cycles.personalMonth, locale)}
-            {...meaningProps}
+            comingSoonLabel={t('meaningComingSoon')}
           />
           <NumberCard
             label={t('personalYear')}
@@ -197,7 +191,7 @@ export default async function DashboardPage({ params }: { params: { locale: stri
             locale={locale}
             type="personalYear"
             meaning={meaningFor('personalYear', cycles.personalYear, locale)}
-            {...meaningProps}
+            comingSoonLabel={t('meaningComingSoon')}
           />
         </div>
       </section>
@@ -213,7 +207,7 @@ export default async function DashboardPage({ params }: { params: { locale: stri
             locale={locale}
             type="lifePath"
             meaning={meaningFor('lifePath', core.lifePath, locale)}
-            {...meaningProps}
+            comingSoonLabel={t('meaningComingSoon')}
           />
           <NumberCard
             label={t('expression')}
@@ -222,7 +216,7 @@ export default async function DashboardPage({ params }: { params: { locale: stri
             locale={locale}
             type="expression"
             meaning={meaningFor('expression', core.expression, locale)}
-            {...meaningProps}
+            comingSoonLabel={t('meaningComingSoon')}
           />
           <NumberCard
             label={t('soulUrge')}
@@ -231,7 +225,7 @@ export default async function DashboardPage({ params }: { params: { locale: stri
             locale={locale}
             type="soulUrge"
             meaning={meaningFor('soulUrge', core.soulUrge, locale)}
-            {...meaningProps}
+            comingSoonLabel={t('meaningComingSoon')}
           />
           <NumberCard
             label={t('personality')}
@@ -240,7 +234,7 @@ export default async function DashboardPage({ params }: { params: { locale: stri
             locale={locale}
             type="personality"
             meaning={meaningFor('personality', core.personality, locale)}
-            {...meaningProps}
+            comingSoonLabel={t('meaningComingSoon')}
           />
           <NumberCard
             label={t('birthday')}
@@ -249,7 +243,7 @@ export default async function DashboardPage({ params }: { params: { locale: stri
             locale={locale}
             type="birthday"
             meaning={meaningFor('birthday', core.birthday, locale)}
-            {...meaningProps}
+            comingSoonLabel={t('meaningComingSoon')}
           />
         </div>
       </section>
@@ -266,7 +260,7 @@ export default async function DashboardPage({ params }: { params: { locale: stri
             locale={locale}
             type="pinnacle"
             meaning={meaningFor('pinnacle', activePinnacle, locale)}
-            {...meaningProps}
+            comingSoonLabel={t('meaningComingSoon')}
           />
           <NumberCard
             label={`${t('challenge')} ${slots.challenge}`}
@@ -275,7 +269,7 @@ export default async function DashboardPage({ params }: { params: { locale: stri
             locale={locale}
             type="challenge"
             meaning={meaningFor('challenge', activeChallenge, locale)}
-            {...meaningProps}
+            comingSoonLabel={t('meaningComingSoon')}
           />
           <NumberCard
             label={`${t('cycle')} ${slots.cycle}`}
@@ -284,7 +278,7 @@ export default async function DashboardPage({ params }: { params: { locale: stri
             locale={locale}
             type="cycle"
             meaning={meaningFor('cycle', activeCycle, locale)}
-            {...meaningProps}
+            comingSoonLabel={t('meaningComingSoon')}
           />
         </div>
       </section>

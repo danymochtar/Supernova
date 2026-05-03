@@ -11,12 +11,9 @@ interface Props {
   hint?: string;
   result: NumerologyResult;
   locale?: Locale;
-  /** Type key for meaning lookup. Omit to disable the expand-to-explain affordance. */
+  /** Type key for meaning lookup. Omit to disable click-to-expand. */
   type?: MeaningType;
   meaning?: string | null;
-  /** I18n labels for the toggle. Defaults to English if not provided. */
-  expandLabel?: string;
-  collapseLabel?: string;
   comingSoonLabel?: string;
 }
 
@@ -27,37 +24,47 @@ export function NumberCard({
   locale = 'id',
   type,
   meaning,
-  expandLabel = 'What does this mean?',
-  collapseLabel = 'Hide',
   comingSoonLabel = 'Detailed description coming soon.',
 }: Props) {
   const [open, setOpen] = useState(false);
   const explainable = type !== undefined;
 
-  return (
-    <div className="border-border rounded-xl border bg-white/50 p-4 dark:bg-neutral-900/50">
+  const inner = (
+    <>
       <p className="text-muted-foreground text-xs font-medium uppercase tracking-wide">{label}</p>
       <div className="mt-2">
         <CompoundReduced result={result} locale={locale} size="lg" />
       </div>
       {hint ? <p className="text-muted-foreground mt-1 text-xs">{hint}</p> : null}
+    </>
+  );
 
-      {explainable ? (
-        <>
-          <button
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            aria-expanded={open}
-            className="text-primary mt-3 text-xs font-medium underline-offset-4 hover:underline"
-          >
-            {open ? collapseLabel : expandLabel}
-          </button>
-          {open ? (
-            <div className="border-border mt-3 border-t pt-3 text-sm leading-relaxed text-neutral-800 dark:text-neutral-200">
-              {meaning ?? <span className="text-muted-foreground italic">{comingSoonLabel}</span>}
-            </div>
-          ) : null}
-        </>
+  if (!explainable) {
+    return (
+      <div className="border-border rounded-xl border bg-white/50 p-4 dark:bg-neutral-900/50">
+        {inner}
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className={`border-border rounded-xl border bg-white/50 transition dark:bg-neutral-900/50 ${
+        open ? 'ring-primary/30 ring-1' : 'hover:bg-white/70 dark:hover:bg-neutral-900/70'
+      }`}
+    >
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        className="w-full p-4 text-left"
+      >
+        {inner}
+      </button>
+      {open ? (
+        <div className="border-border border-t px-4 py-3 text-sm leading-relaxed text-neutral-800 dark:text-neutral-200">
+          {meaning ?? <span className="text-muted-foreground italic">{comingSoonLabel}</span>}
+        </div>
       ) : null}
     </div>
   );
