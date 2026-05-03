@@ -81,5 +81,17 @@
     "ageRange": "Rentang usia",
     "number": "Angka",
     "now": "Saat ini"
+  },
+  "reading": {
+    "title": "Bacaan harian",
+    "subtitle": "Sintesis singkat dari angka-angka Anda untuk hari ini, ditulis oleh asisten AI Supernova.",
+    "generateCta": "Buat bacaan hari ini",
+    "generating": "Membuat bacaan…",
+    "oncePerDay": "Satu bacaan per hari",
+    "theme": "Tema",
+    "energy": "Energi yang mendukung",
+    "watch": "Hati-hati",
+    "errorAi": "AI sedang sibuk. Coba lagi sebentar.",
+    "errorGeneric": "Terjadi kesalahan. Coba lagi sebentar."
   }
 }

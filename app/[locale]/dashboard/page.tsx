@@ -17,6 +17,9 @@ import {
 import { NumberCard } from '@/components/numerology/NumberCard';
 import { CompoundReduced } from '@/components/numerology/CompoundReduced';
 import { SignOutButton } from '@/components/auth/SignOutButton';
+import { DailyReadingView } from '@/components/reading/DailyReadingView';
+import { getReadingForLocalDay } from '@/lib/db/repositories/reading';
+import { generateDailyReading } from './actions';
 
 const DAY_NAMES_ID = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
 const MONTH_NAMES_ID = [
@@ -58,6 +61,13 @@ export default async function DashboardPage({ params }: { params: { locale: stri
   const activeChallenge = challengeAt(core.challenges, slots.challenge);
   const activeCycle = cycleAt(core.periodCycles, slots.cycle);
 
+  const cachedReading = await getReadingForLocalDay(
+    session.user.id,
+    ctx.year,
+    ctx.month,
+    ctx.day,
+  );
+
   return (
     <main className="container max-w-4xl space-y-10 py-10">
       {/* Header */}
@@ -84,6 +94,9 @@ export default async function DashboardPage({ params }: { params: { locale: stri
           <SignOutButton label={t('signOut')} locale={locale} />
         </div>
       </header>
+
+      {/* Daily AI reading */}
+      <DailyReadingView initialBody={cachedReading?.body ?? null} generate={generateDailyReading} />
 
       {/* Today */}
       <section className="space-y-4">

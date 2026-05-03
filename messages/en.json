@@ -81,5 +81,17 @@
     "ageRange": "Age range",
     "number": "Number",
     "now": "Now"
+  },
+  "reading": {
+    "title": "Daily reading",
+    "subtitle": "A short synthesis of your numbers for today, written by Supernova's AI companion.",
+    "generateCta": "Generate today's reading",
+    "generating": "Generating…",
+    "oncePerDay": "One reading per day",
+    "theme": "Theme",
+    "energy": "Supportive energy",
+    "watch": "Watch out for",
+    "errorAi": "The AI is busy right now. Please try again shortly.",
+    "errorGeneric": "Something went wrong. Please try again."
   }
 }
