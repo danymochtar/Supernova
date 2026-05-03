@@ -83,6 +83,12 @@ export default async function DashboardPage({ params }: { params: { locale: stri
         </div>
         <div className="flex items-center gap-4">
           <Link
+            href={`/${locale}/people`}
+            className="border-border rounded-lg border px-4 py-2 text-sm font-medium"
+          >
+            {t('peopleCta')}
+          </Link>
+          <Link
             href={`/${locale}/ask`}
             className="bg-primary text-primary-foreground rounded-lg px-4 py-2 text-sm font-medium"
           >

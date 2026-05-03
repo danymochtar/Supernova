@@ -49,6 +49,7 @@
   "dashboard": {
     "greeting": "Hello,",
     "askCta": "Ask AI",
+    "peopleCta": "People",
     "signOut": "Sign out",
     "todayTitle": "Today",
     "personalDay": "Personal Day",
@@ -108,5 +109,64 @@
     "errorInvalid": "Question is too short (minimum 2 characters).",
     "errorNoProfile": "Finish onboarding first.",
     "errorGeneric": "Something went wrong. Please try again."
+  },
+  "people": {
+    "title": "People",
+    "subtitle": "Add important people in your life to view their profiles and compatibility.",
+    "backToDashboard": "Back to dashboard",
+    "addCta": "+ Add person",
+    "emptyTitle": "No people yet",
+    "emptyBody": "Add a partner, family member, friend, or colleague to see their numerology.",
+    "limitNote": "MVP: up to {limit} person. Delete to add another.",
+    "relationship": {
+      "PARTNER": "Partner",
+      "FAMILY": "Family",
+      "FRIEND": "Friend",
+      "COLLEAGUE": "Colleague",
+      "OTHER": "Other"
+    }
+  },
+  "peopleForm": {
+    "title": "Add a person",
+    "subtitle": "Enter their full birth name and date of birth to compute their profile.",
+    "back": "Back to list",
+    "nameLabel": "Full birth name (as on their birth certificate)",
+    "namePlaceholder": "e.g. Siti Aisyah",
+    "nameHint": "The name on their birth certificate, not a nickname.",
+    "dobLabel": "Date of birth",
+    "relationshipLabel": "Relationship",
+    "notesLabel": "Notes (optional)",
+    "notesPlaceholder": "e.g. anniversary May 15, 2020...",
+    "submit": "Save",
+    "submitting": "Saving…",
+    "errorInvalidName": "Name can't be empty and must contain letters.",
+    "errorInvalidDob": "Invalid date of birth.",
+    "errorFutureDob": "Date of birth can't be in the future.",
+    "errorLimit": "You've reached the limit. Delete one to add another.",
+    "errorGeneric": "Failed to save. Please try again."
+  },
+  "personDetail": {
+    "back": "Back to list",
+    "compatibilityCta": "View compatibility",
+    "delete": "Delete",
+    "notes": "Notes",
+    "age": "Age {age}",
+    "quickGlance": "Quick glance",
+    "relationship": {
+      "PARTNER": "Partner",
+      "FAMILY": "Family",
+      "FRIEND": "Friend",
+      "COLLEAGUE": "Colleague",
+      "OTHER": "Other"
+    }
+  },
+  "compatibility": {
+    "title": "Compatibility with {name}",
+    "subtitle": "Your core numbers paired with theirs, with brief Hans Decoz / Dan Millman style narratives.",
+    "back": "Back to profile",
+    "you": "You",
+    "them": "Them",
+    "noNarrative": "No narrative available for this pairing yet.",
+    "disclaimer": "Narratives above are from a curated content pack (deterministic, not AI-generated). Numerology is a tool for reflection, not prediction."
   }
 }

@@ -1,0 +1,177 @@
+import Link from 'next/link';
+import { redirect, notFound } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
+import { getSession } from '@/lib/auth/requireSession';
+import { getPerson } from '@/lib/db/repositories/person';
+import { getProfileByUserId } from '@/lib/db/repositories/profile';
+import { isLocale, type Locale } from '@/lib/i18n/config';
+import {
+  activeSlots,
+  ageAt,
+  buildCoreProfile,
+  challengeAt,
+  contextFromInstant,
+  cycleAt,
+  personalCycles,
+  pinnacleAt,
+} from '@/lib/numerology';
+import { NumberCard } from '@/components/numerology/NumberCard';
+import { CompoundReduced } from '@/components/numerology/CompoundReduced';
+import { deletePersonAction } from '../actions';
+
+export default async function PersonDetailPage({
+  params,
+}: {
+  params: { locale: string; id: string };
+}) {
+  const locale: Locale = isLocale(params.locale) ? params.locale : 'id';
+  const t = await getTranslations({ locale, namespace: 'personDetail' });
+  const tDash = await getTranslations({ locale, namespace: 'dashboard' });
+
+  const session = await getSession();
+  if (!session) redirect(`/${locale}/login`);
+
+  const userProfile = await getProfileByUserId(session.user.id);
+  if (!userProfile) redirect(`/${locale}/welcome`);
+
+  const person = await getPerson(session.user.id, params.id);
+  if (!person) notFound();
+
+  const core = buildCoreProfile(person.fullName, person.dob);
+  const ctx = contextFromInstant(new Date(), userProfile.timezone);
+  const cycles = personalCycles(person.dob, ctx);
+  const age = ageAt(person.dob, ctx);
+  const slots = activeSlots(person.dob, age);
+
+  return (
+    <main className="container max-w-4xl space-y-10 py-10">
+      <header className="flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <Link
+            href={`/${locale}/people`}
+            className="text-muted-foreground hover:text-foreground text-sm underline-offset-4 hover:underline"
+          >
+            ← {t('back')}
+          </Link>
+          <h1 className="mt-1 text-2xl font-semibold tracking-tight">{person.fullName}</h1>
+          <p className="text-muted-foreground mt-1 text-sm">
+            {t(`relationship.${person.relationship}`)} ·{' '}
+            <span className="tabular-nums">
+              {person.dob.year}-{String(person.dob.month).padStart(2, '0')}-
+              {String(person.dob.day).padStart(2, '0')}
+            </span>{' '}
+            · {t('age', { age })}
+          </p>
+        </div>
+        <div className="flex items-center gap-3">
+          <Link
+            href={`/${locale}/people/${person.id}/compatibility`}
+            className="bg-primary text-primary-foreground rounded-lg px-4 py-2 text-sm font-medium"
+          >
+            {t('compatibilityCta')}
+          </Link>
+          <form action={deletePersonAction}>
+            <input type="hidden" name="id" value={person.id} />
+            <input type="hidden" name="locale" value={locale} />
+            <button
+              type="submit"
+              className="text-muted-foreground hover:text-red-700 text-sm underline-offset-4 hover:underline"
+            >
+              {t('delete')}
+            </button>
+          </form>
+        </div>
+      </header>
+
+      {person.notes ? (
+        <section className="border-border rounded-xl border bg-amber-50/50 p-4 text-sm dark:bg-amber-950/20">
+          <p className="text-muted-foreground mb-1 text-xs font-medium uppercase tracking-wider">
+            {t('notes')}
+          </p>
+          <p className="whitespace-pre-wrap">{person.notes}</p>
+        </section>
+      ) : null}
+
+      {/* Today */}
+      <section className="space-y-4">
+        <h2 className="text-lg font-semibold">{tDash('todayTitle')}</h2>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <NumberCard label={tDash('personalDay')} result={cycles.personalDay} locale={locale} />
+          <NumberCard label={tDash('personalMonth')} result={cycles.personalMonth} locale={locale} />
+          <NumberCard label={tDash('personalYear')} result={cycles.personalYear} locale={locale} />
+        </div>
+      </section>
+
+      {/* Core */}
+      <section className="space-y-4">
+        <h2 className="text-lg font-semibold">{tDash('coreTitle')}</h2>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <NumberCard label={tDash('lifePath')} hint={tDash('lifePathHint')} result={core.lifePath} locale={locale} />
+          <NumberCard label={tDash('expression')} hint={tDash('expressionHint')} result={core.expression} locale={locale} />
+          <NumberCard label={tDash('soulUrge')} hint={tDash('soulUrgeHint')} result={core.soulUrge} locale={locale} />
+          <NumberCard label={tDash('personality')} hint={tDash('personalityHint')} result={core.personality} locale={locale} />
+          <NumberCard label={tDash('birthday')} hint={tDash('birthdayHint')} result={core.birthday} locale={locale} />
+        </div>
+      </section>
+
+      {/* Active chapter */}
+      <section className="space-y-4">
+        <h2 className="text-lg font-semibold">{tDash('currentChapterTitle')}</h2>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <NumberCard
+            label={`${tDash('pinnacle')} ${slots.pinnacle}`}
+            result={pinnacleAt(core.pinnacles, slots.pinnacle)}
+            locale={locale}
+          />
+          <NumberCard
+            label={`${tDash('challenge')} ${slots.challenge}`}
+            result={challengeAt(core.challenges, slots.challenge)}
+            locale={locale}
+          />
+          <NumberCard
+            label={`${tDash('cycle')} ${slots.cycle}`}
+            result={cycleAt(core.periodCycles, slots.cycle)}
+            locale={locale}
+          />
+        </div>
+      </section>
+
+      {/* Karmic */}
+      <section className="space-y-3">
+        <h2 className="text-lg font-semibold">{tDash('karmicLessonsTitle')}</h2>
+        {core.karmicLessons.length > 0 ? (
+          <div className="flex flex-wrap gap-2">
+            {core.karmicLessons.map((n) => (
+              <span
+                key={n}
+                className="border-border rounded-full border px-3 py-1 font-mono text-sm tabular-nums"
+              >
+                {n}
+              </span>
+            ))}
+          </div>
+        ) : (
+          <p className="text-muted-foreground text-sm">{tDash('karmicLessonsNone')}</p>
+        )}
+      </section>
+
+      <section className="space-y-2">
+        <h2 className="text-lg font-semibold">{t('quickGlance')}</h2>
+        <div className="text-muted-foreground flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
+          <span>
+            <strong className="text-foreground">{tDash('lifePath')}:</strong>{' '}
+            <CompoundReduced result={core.lifePath} locale={locale} size="sm" />
+          </span>
+          <span>
+            <strong className="text-foreground">{tDash('expression')}:</strong>{' '}
+            <CompoundReduced result={core.expression} locale={locale} size="sm" />
+          </span>
+          <span>
+            <strong className="text-foreground">{tDash('soulUrge')}:</strong>{' '}
+            <CompoundReduced result={core.soulUrge} locale={locale} size="sm" />
+          </span>
+        </div>
+      </section>
+    </main>
+  );
+}

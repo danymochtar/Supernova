@@ -49,6 +49,7 @@
   "dashboard": {
     "greeting": "Halo,",
     "askCta": "Tanya AI",
+    "peopleCta": "Orang-orang",
     "signOut": "Keluar",
     "todayTitle": "Hari ini",
     "personalDay": "Personal Day",
@@ -108,5 +109,64 @@
     "errorInvalid": "Pertanyaan tidak valid (minimal 2 karakter).",
     "errorNoProfile": "Selesaikan onboarding dulu.",
     "errorGeneric": "Terjadi kesalahan. Coba lagi sebentar."
+  },
+  "people": {
+    "title": "Orang-orang",
+    "subtitle": "Tambahkan orang penting di hidup Anda untuk melihat profil dan kompatibilitas mereka.",
+    "backToDashboard": "Kembali ke dashboard",
+    "addCta": "+ Tambah orang",
+    "emptyTitle": "Belum ada orang",
+    "emptyBody": "Tambahkan pasangan, keluarga, teman, atau rekan untuk melihat numerologi mereka.",
+    "limitNote": "MVP: maksimal {limit} orang. Hapus dulu untuk menambah yang lain.",
+    "relationship": {
+      "PARTNER": "Pasangan",
+      "FAMILY": "Keluarga",
+      "FRIEND": "Teman",
+      "COLLEAGUE": "Rekan kerja",
+      "OTHER": "Lainnya"
+    }
+  },
+  "peopleForm": {
+    "title": "Tambah orang",
+    "subtitle": "Masukkan nama lengkap (sesuai akta lahir) dan tanggal lahir mereka untuk hitung profil.",
+    "back": "Kembali ke daftar",
+    "nameLabel": "Nama lengkap (sesuai akta lahir)",
+    "namePlaceholder": "Contoh: Siti Aisyah",
+    "nameHint": "Nama yang tertulis di akta kelahiran mereka, bukan panggilan.",
+    "dobLabel": "Tanggal lahir",
+    "relationshipLabel": "Hubungan",
+    "notesLabel": "Catatan (opsional)",
+    "notesPlaceholder": "Misalnya: anniversary 15 Mei 2020...",
+    "submit": "Simpan",
+    "submitting": "Menyimpan…",
+    "errorInvalidName": "Nama tidak boleh kosong dan harus mengandung huruf.",
+    "errorInvalidDob": "Tanggal lahir tidak valid.",
+    "errorFutureDob": "Tanggal lahir tidak boleh di masa depan.",
+    "errorLimit": "Anda sudah mencapai batas. Hapus salah satu untuk menambah yang lain.",
+    "errorGeneric": "Gagal menyimpan. Coba lagi."
+  },
+  "personDetail": {
+    "back": "Kembali ke daftar",
+    "compatibilityCta": "Lihat kompatibilitas",
+    "delete": "Hapus",
+    "notes": "Catatan",
+    "age": "{age} tahun",
+    "quickGlance": "Sekilas",
+    "relationship": {
+      "PARTNER": "Pasangan",
+      "FAMILY": "Keluarga",
+      "FRIEND": "Teman",
+      "COLLEAGUE": "Rekan kerja",
+      "OTHER": "Lainnya"
+    }
+  },
+  "compatibility": {
+    "title": "Kompatibilitas dengan {name}",
+    "subtitle": "Pasangan angka inti Anda dengan mereka, dengan narasi singkat dari Hans Decoz / Dan Millman.",
+    "back": "Kembali ke profil",
+    "you": "Anda",
+    "them": "Mereka",
+    "noNarrative": "Narasi untuk pasangan ini belum tersedia.",
+    "disclaimer": "Narasi di atas dari konten kurasi (deterministik, bukan AI). Numerologi adalah alat refleksi, bukan ramalan."
   }
 }
