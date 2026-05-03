@@ -22,6 +22,7 @@ import { FeedbackPrompt } from '@/components/feedback/FeedbackPrompt';
 import { getReadingForLocalDay } from '@/lib/db/repositories/reading';
 import { getFeedbackForLocalDay } from '@/lib/db/repositories/feedback';
 import { meaningFor } from '@/lib/numerology/meanings';
+import { getOrGenerateAboutMe } from '@/lib/ai/aboutMe';
 import { generateDailyReading } from './actions';
 import { submitFeedback } from './feedbackActions';
 
@@ -82,6 +83,22 @@ export default async function DashboardPage({ params }: { params: { locale: stri
   const SUGGESTED_TAGS_ID = ['kerja', 'keluarga', 'kesehatan', 'energi', 'fokus', 'mood', 'uang', 'hubungan'];
   const SUGGESTED_TAGS_EN = ['work', 'family', 'health', 'energy', 'focus', 'mood', 'money', 'relationships'];
   const suggestedTags = locale === 'id' ? SUGGESTED_TAGS_ID : SUGGESTED_TAGS_EN;
+
+  // AI-synthesized one-paragraph profile summary, cached forever (profile is
+  // immutable). First dashboard visit pays a ~3s synthesis call; every visit
+  // after is instant from the cache.
+  const aboutMeText = await getOrGenerateAboutMe(session.user.id, {
+    locale,
+    fullName: profile.fullName,
+    core: {
+      lifePath: core.lifePath,
+      expression: core.expression,
+      soulUrge: core.soulUrge,
+      personality: core.personality,
+      birthday: core.birthday,
+    },
+    karmicLessons: core.karmicLessons,
+  });
 
   const meaningProps = {
     expandLabel: t('whatDoesThisMean'),
@@ -146,25 +163,12 @@ export default async function DashboardPage({ params }: { params: { locale: stri
         }
       />
 
-      {/* About Me — narrative summary using curated meanings */}
+      {/* About Me — AI-synthesized holistic summary (cached per user) */}
       <AboutMe
-        locale={locale}
-        fullName={profile.fullName}
-        core={core}
-        karmicLessons={core.karmicLessons}
-        t={{
-          title: t('aboutMeTitle'),
-          subtitle: t('aboutMeSubtitle'),
-          lifePath: t('lifePath'),
-          expression: t('expression'),
-          soulUrge: t('soulUrge'),
-          personality: t('personality'),
-          birthday: t('birthday'),
-          karmicLessons: t('karmicLessonsTitle'),
-          karmicLessonsBody: (lessons: string) => t('karmicLessonsBody', { lessons }),
-          karmicLessonsNone: t('karmicLessonsNone'),
-          nothingYet: t('meaningComingSoon'),
-        }}
+        title={t('aboutMeTitle')}
+        subtitle={t('aboutMeSubtitle')}
+        text={aboutMeText}
+        fallback={t('aboutMeFallback')}
       />
 
       {/* Today */}
