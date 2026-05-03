@@ -8,5 +8,5 @@ dist
 *.log
 .DS_Store
 coverage
-.tsbuildinfo
+*.tsbuildinfo
 next-env.d.ts
