@@ -40,3 +40,36 @@ export async function setCachedText(
     },
   });
 }
+
+/** Generic JSON variant — stash any structured payload under `meta.data`. */
+export async function getCachedJson<T = unknown>(userId: string, key: string): Promise<T | null> {
+  const row = await prisma.numerologyCache.findUnique({
+    where: { userId_key: { userId, key } },
+    select: { meta: true },
+  });
+  if (!row?.meta) return null;
+  const meta = row.meta as { data?: unknown };
+  return meta.data === undefined ? null : (meta.data as T);
+}
+
+export async function setCachedJson(
+  userId: string,
+  key: string,
+  data: unknown,
+  extra?: Record<string, unknown>,
+): Promise<void> {
+  await prisma.numerologyCache.upsert({
+    where: { userId_key: { userId, key } },
+    create: {
+      userId,
+      key,
+      compound: 0,
+      reduced: 0,
+      isMaster: false,
+      meta: { data, ...extra, generatedAt: new Date().toISOString() } as object,
+    },
+    update: {
+      meta: { data, ...extra, generatedAt: new Date().toISOString() } as object,
+    },
+  });
+}

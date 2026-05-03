@@ -73,8 +73,14 @@ export default async function PersonDetailPage({
           </div>
           <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
             <Link
-              href={`/${locale}/people/${person.id}/compatibility`}
+              href={`/${locale}/people/${person.id}/profile`}
               className="bg-primary text-primary-foreground press rounded-full px-4 py-2 text-sm font-medium"
+            >
+              {t('relationshipProfileCta')}
+            </Link>
+            <Link
+              href={`/${locale}/people/${person.id}/compatibility`}
+              className="border-border press rounded-full border px-4 py-2 text-sm font-medium"
             >
               {t('compatibilityCta')}
             </Link>

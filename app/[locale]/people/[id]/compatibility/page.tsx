@@ -5,10 +5,10 @@ import { getPerson } from '@/lib/db/repositories/person';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { buildCoreProfile } from '@/lib/numerology';
-import { compatibilityNarrative } from '@/lib/compatibility/lookup';
 import { compatibilityScore, type LaneScore } from '@/lib/compatibility/score';
 import { detectPatterns } from '@/lib/compatibility/patterns';
 import type { CoreKey } from '@/lib/compatibility/lens';
+import { getOrGeneratePairNarratives } from '@/lib/ai/relationship';
 import { CompoundReduced } from '@/components/numerology/CompoundReduced';
 import { TopBar } from '@/components/layout/TopBar';
 
@@ -65,6 +65,20 @@ export default async function CompatibilityPage({
 
   const score = compatibilityScore(me, them, person.relationship);
   const patterns = detectPatterns(me, them, locale, person.relationship);
+
+  const narratives = await getOrGeneratePairNarratives(
+    session.user.id,
+    person.id,
+    userProfile.preferredModel,
+    {
+      locale,
+      relationship: person.relationship,
+      meName: userProfile.fullName,
+      themName: person.fullName,
+      lanes: score.lanes,
+      patternTitles: patterns.map((p) => p.title),
+    },
+  );
 
   return (
     <main className="container max-w-3xl px-4 sm:px-6">
@@ -184,22 +198,24 @@ export default async function CompatibilityPage({
           </section>
         ) : null}
 
-        {/* Per-pair narratives — only same-component pairs have curated copy */}
+        {/* Per-pair narratives — AI-generated, covers same + cross lanes */}
         <section className="space-y-4">
           <div>
             <h2 className="text-lg font-semibold">{t('pairsTitle')}</h2>
             <p className="text-muted-foreground text-sm">{t('pairsSubtitle')}</p>
           </div>
           <div className="space-y-3">
-            {score.lanes.filter((l) => !l.cross).map((lane) => {
-              const narrative = compatibilityNarrative(lane.meResult, lane.themResult, locale);
+            {score.lanes.map((lane) => {
+              const narrative = narratives[lane.key];
               return (
                 <article
                   key={lane.key}
                   className="border-border space-y-2 rounded-xl border p-5"
                 >
                   <header className="flex flex-wrap items-baseline justify-between gap-2">
-                    <h3 className="text-base font-semibold">{tDash(lane.meKey)}</h3>
+                    <h3 className="text-base font-semibold">
+                      {laneLabel(lane.meKey, lane.themKey, lane.cross, tDash, t)}
+                    </h3>
                     <div className="text-muted-foreground flex items-center gap-2 text-sm">
                       <CompoundReduced result={lane.meResult} locale={locale} size="sm" />
                       <span className="text-xs">×</span>
@@ -212,7 +228,7 @@ export default async function CompatibilityPage({
                       {narrative}
                     </p>
                   ) : (
-                    <p className="text-muted-foreground text-sm italic">{t('noNarrative')}</p>
+                    <p className="text-muted-foreground text-sm italic">{t('narrativePending')}</p>
                   )}
                 </article>
               );

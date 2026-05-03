@@ -27,25 +27,14 @@ import { getTurnsBetween } from '@/lib/db/repositories/qa';
 import { meaningFor } from '@/lib/numerology/meanings';
 import { getOrGenerateAboutMe } from '@/lib/ai/aboutMe';
 import { getOrGenerateDailyReading } from '@/lib/ai/dailyReading';
-import { greetingFor } from '@/lib/greeting';
 import { parseLayout, type WidgetId } from '@/lib/dashboard/layout';
 import { submitFeedback } from './feedbackActions';
 
-const SHORT_DAY_ID = ['MIN', 'SEN', 'SEL', 'RAB', 'KAM', 'JUM', 'SAB'];
-const SHORT_MONTH_ID = ['JAN', 'FEB', 'MAR', 'APR', 'MEI', 'JUN', 'JUL', 'AGU', 'SEP', 'OKT', 'NOV', 'DES'];
 const LONG_DAY_ID = ['MINGGU', 'SENIN', 'SELASA', 'RABU', 'KAMIS', 'JUMAT', 'SABTU'];
 const LONG_MONTH_ID = [
   'JANUARI', 'FEBRUARI', 'MARET', 'APRIL', 'MEI', 'JUNI',
   'JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER', 'DESEMBER',
 ];
-
-function formatTodayShort(ctx: { year: number; month: number; day: number }, locale: Locale): string {
-  const d = new Date(Date.UTC(ctx.year, ctx.month - 1, ctx.day));
-  if (locale === 'id') {
-    return `${SHORT_DAY_ID[d.getUTCDay()]}, ${ctx.day} ${SHORT_MONTH_ID[ctx.month - 1]}`;
-  }
-  return d.toLocaleDateString('en-US', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' }).toUpperCase();
-}
 
 function formatDateLong(ctx: { year: number; month: number; day: number }, locale: Locale): string {
   const d = new Date(Date.UTC(ctx.year, ctx.month - 1, ctx.day));
@@ -117,18 +106,6 @@ export default async function DashboardPage({ params }: { params: { locale: stri
   ]);
 
   const showFeedbackPrompt = visible.has('feedback') && todaysChatTurns.length === 0;
-
-  // Local hour in the user's timezone for time-of-day greeting.
-  const localHour = (() => {
-    const fmt = new Intl.DateTimeFormat('en-US', {
-      timeZone: profile.timezone,
-      hour: 'numeric',
-      hour12: false,
-    });
-    const part = fmt.formatToParts(new Date()).find((p) => p.type === 'hour');
-    return part ? Number(part.value) : new Date().getHours();
-  })();
-  const localGreeting = greetingFor(localHour, locale);
 
   function renderWidget(id: WidgetId): React.ReactNode {
     switch (id) {
@@ -235,13 +212,7 @@ export default async function DashboardPage({ params }: { params: { locale: stri
 
   return (
     <main className="container flex max-w-3xl flex-col gap-6 px-4 py-6 sm:px-6 sm:py-10">
-      <AppHeader
-        labels={{
-          greeting: t('greeting'),
-          contextLine: `${localGreeting.word.toUpperCase()} · ${formatTodayShort(ctx, locale)}`,
-          firstName: profile.firstName,
-        }}
-      />
+      <AppHeader />
 
       {layout.filter((w) => !w.hidden).map((w) => renderWidget(w.id))}
 

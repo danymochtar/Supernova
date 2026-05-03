@@ -312,6 +312,7 @@
   },
   "personDetail": {
     "back": "Kembali ke daftar",
+    "relationshipProfileCta": "Profil hubungan",
     "compatibilityCta": "Lihat kompatibilitas",
     "edit": "Ubah",
     "delete": "Hapus",
@@ -325,6 +326,13 @@
       "COLLEAGUE": "Rekan kerja",
       "OTHER": "Lainnya"
     }
+  },
+  "relationshipProfile": {
+    "title": "Profil hubungan dengan {name}",
+    "subtitle": "Elaborasi panjang tentang dinamika kalian — tanpa angka, fokus ke makna.",
+    "lensTitle": "Jenis hubungan",
+    "fallback": "Profil sedang disiapkan. Refresh sebentar lagi.",
+    "disclaimer": "Profil dihasilkan AI berdasar angka inti kalian dan jenis hubungan. Numerologi adalah alat refleksi, bukan ramalan."
   },
   "compatibility": {
     "title": "Kompatibilitas dengan {name}",
@@ -363,7 +371,7 @@
     },
     "pairsTitle": "Detail per pasangan angka",
     "pairsSubtitle": "Narasi pendek untuk masing-masing pasangan inti.",
-    "noNarrative": "Narasi untuk pasangan ini belum tersedia.",
+    "narrativePending": "Narasi sedang disiapkan. Refresh sebentar lagi.",
     "disclaimer": "Skor & pola dihitung deterministik dari angka kalian (tradisi Pythagorean — Decoz, Millman) dengan lensa per jenis hubungan. Numerologi adalah alat refleksi, bukan ramalan."
   }
 }
