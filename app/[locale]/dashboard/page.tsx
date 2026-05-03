@@ -15,7 +15,7 @@ import {
   pinnacleAt,
 } from '@/lib/numerology';
 import { NumberCard } from '@/components/numerology/NumberCard';
-import { CompoundReduced } from '@/components/numerology/CompoundReduced';
+import { AboutMe } from '@/components/numerology/AboutMe';
 import { SignOutButton } from '@/components/auth/SignOutButton';
 import { DailyReadingView } from '@/components/reading/DailyReadingView';
 import { getReadingForLocalDay } from '@/lib/db/repositories/reading';
@@ -88,7 +88,13 @@ export default async function DashboardPage({ params }: { params: { locale: stri
             {formatToday(ctx, locale)} · {profile.timezone}
           </p>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-3">
+          <Link
+            href={`/${locale}/journey`}
+            className="border-border rounded-lg border px-4 py-2 text-sm font-medium"
+          >
+            {t('journeyCta')}
+          </Link>
           <Link
             href={`/${locale}/people`}
             className="border-border rounded-lg border px-4 py-2 text-sm font-medium"
@@ -107,6 +113,27 @@ export default async function DashboardPage({ params }: { params: { locale: stri
 
       {/* Daily AI reading */}
       <DailyReadingView initialBody={cachedReading?.body ?? null} generate={generateDailyReading} />
+
+      {/* About Me — narrative summary using curated meanings */}
+      <AboutMe
+        locale={locale}
+        fullName={profile.fullName}
+        core={core}
+        karmicLessons={core.karmicLessons}
+        t={{
+          title: t('aboutMeTitle'),
+          subtitle: t('aboutMeSubtitle'),
+          lifePath: t('lifePath'),
+          expression: t('expression'),
+          soulUrge: t('soulUrge'),
+          personality: t('personality'),
+          birthday: t('birthday'),
+          karmicLessons: t('karmicLessonsTitle'),
+          karmicLessonsBody: (lessons: string) => t('karmicLessonsBody', { lessons }),
+          karmicLessonsNone: t('karmicLessonsNone'),
+          nothingYet: t('meaningComingSoon'),
+        }}
+      />
 
       {/* Today */}
       <section className="space-y-4">
@@ -246,87 +273,20 @@ export default async function DashboardPage({ params }: { params: { locale: stri
         )}
       </section>
 
-      {/* Full pinnacles + challenges + cycles overview */}
-      <section className="space-y-4">
-        <h2 className="text-lg font-semibold">{t('fullJourneyTitle')}</h2>
-        <div className="border-border overflow-hidden rounded-xl border">
-          <table className="w-full text-sm">
-            <thead className="bg-muted/50 text-muted-foreground text-xs uppercase tracking-wide">
-              <tr>
-                <th className="px-4 py-2 text-left font-medium">{t('stage')}</th>
-                <th className="px-4 py-2 text-left font-medium">{t('ageRange')}</th>
-                <th className="px-4 py-2 text-left font-medium">{t('pinnacle')}</th>
-                <th className="px-4 py-2 text-left font-medium">{t('challenge')}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {([1, 2, 3, 4] as const).map((slot) => {
-                const [b1, b2, b3] = core.pinnacles.ageBoundaries;
-                const range =
-                  slot === 1 ? `0–${b1 - 1}` : slot === 2 ? `${b1}–${b2 - 1}` : slot === 3 ? `${b2}–${b3 - 1}` : `${b3}+`;
-                const isActive = slot === slots.pinnacle;
-                return (
-                  <tr
-                    key={slot}
-                    className={`border-t ${isActive ? 'bg-primary/5' : ''}`}
-                  >
-                    <td className="px-4 py-3 font-medium">
-                      {slot}
-                      {isActive ? (
-                        <span className="text-primary ml-2 text-[10px] uppercase tracking-wider">
-                          {t('now')}
-                        </span>
-                      ) : null}
-                    </td>
-                    <td className="text-muted-foreground px-4 py-3 tabular-nums">{range}</td>
-                    <td className="px-4 py-3">
-                      <CompoundReduced result={pinnacleAt(core.pinnacles, slot)} locale={locale} />
-                    </td>
-                    <td className="px-4 py-3">
-                      <CompoundReduced result={challengeAt(core.challenges, slot)} locale={locale} />
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+      <Link
+        href={`/${locale}/journey`}
+        className="border-border hover:bg-muted/30 group block rounded-xl border p-5 transition"
+      >
+        <div className="flex items-center justify-between gap-3">
+          <div>
+            <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider">
+              {t('seeFullJourney')}
+            </p>
+            <p className="mt-1 font-medium">{t('seeFullJourneyHint')}</p>
+          </div>
+          <span className="text-muted-foreground text-2xl group-hover:translate-x-1 transition">→</span>
         </div>
-
-        <div className="border-border overflow-hidden rounded-xl border">
-          <table className="w-full text-sm">
-            <thead className="bg-muted/50 text-muted-foreground text-xs uppercase tracking-wide">
-              <tr>
-                <th className="px-4 py-2 text-left font-medium">{t('cycle')}</th>
-                <th className="px-4 py-2 text-left font-medium">{t('ageRange')}</th>
-                <th className="px-4 py-2 text-left font-medium">{t('number')}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {([1, 2, 3] as const).map((slot) => {
-                const [b1, b2] = core.periodCycles.ageBoundaries;
-                const range = slot === 1 ? `0–${b1 - 1}` : slot === 2 ? `${b1}–${b2 - 1}` : `${b2}+`;
-                const isActive = slot === slots.cycle;
-                return (
-                  <tr key={slot} className={`border-t ${isActive ? 'bg-primary/5' : ''}`}>
-                    <td className="px-4 py-3 font-medium">
-                      {slot}
-                      {isActive ? (
-                        <span className="text-primary ml-2 text-[10px] uppercase tracking-wider">
-                          {t('now')}
-                        </span>
-                      ) : null}
-                    </td>
-                    <td className="text-muted-foreground px-4 py-3 tabular-nums">{range}</td>
-                    <td className="px-4 py-3">
-                      <CompoundReduced result={cycleAt(core.periodCycles, slot)} locale={locale} />
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      </section>
+      </Link>
     </main>
   );
 }
