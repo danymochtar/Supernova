@@ -6,17 +6,25 @@
   "home": {
     "title": "Welcome to Supernova",
     "subtitle": "Personalized daily numerology readings.",
-    "cta": "Sign in with email"
+    "cta": "Sign in"
   },
   "login": {
-    "title": "Sign in to Supernova",
-    "subtitle": "Enter your email. We'll send a magic link — no password required.",
+    "signInTitle": "Sign in to Supernova",
+    "signInSubtitle": "Enter your email and password.",
+    "signUpTitle": "Create your Supernova account",
+    "signUpSubtitle": "Sign up with email and password.",
     "emailLabel": "Email address",
     "emailPlaceholder": "you@email.com",
-    "submit": "Send magic link",
-    "submitting": "Sending…",
-    "checkEmailTitle": "Check your email",
-    "checkEmailBody": "We just sent a sign-in link to {email}. The link expires in 10 minutes.",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "At least 8 characters",
+    "passwordHint": "Use at least 8 characters.",
+    "signInSubmit": "Sign in",
+    "signUpSubmit": "Sign up",
+    "submitting": "Working…",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "switchToSignUp": "Sign up here",
+    "switchToSignIn": "Sign in here",
     "errorGeneric": "Something went wrong. Please try again."
   },
   "welcome": {

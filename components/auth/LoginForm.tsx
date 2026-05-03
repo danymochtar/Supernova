@@ -1,54 +1,60 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { signIn } from '@/lib/auth/client';
+import { signIn, signUp } from '@/lib/auth/client';
 import type { Locale } from '@/lib/i18n/config';
+
+type Mode = 'signIn' | 'signUp';
 
 export function LoginForm({ locale }: { locale: Locale }) {
   const t = useTranslations('login');
+  const router = useRouter();
+  const [mode, setMode] = useState<Mode>('signIn');
   const [email, setEmail] = useState('');
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'sent' | 'error'>('idle');
+  const [password, setPassword] = useState('');
+  const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setStatus('submitting');
+    setSubmitting(true);
     setErrorMsg(null);
+
+    const callbackURL = `/${locale}/welcome`;
     try {
-      const callbackURL = `/${locale}/welcome`;
-      const result = await signIn.magicLink({ email, callbackURL });
+      const result =
+        mode === 'signIn'
+          ? await signIn.email({ email, password, callbackURL })
+          : await signUp.email({ email, password, name: email, callbackURL });
+
       if (result?.error) {
-        console.error('[login] signIn.magicLink error', result.error);
-        setStatus('error');
+        console.error('[login] auth error', result.error);
         setErrorMsg(result.error.message ?? t('errorGeneric'));
         return;
       }
-      setStatus('sent');
+      router.push(callbackURL);
+      router.refresh();
     } catch (err) {
-      console.error('[login] signIn.magicLink threw', err);
-      setStatus('error');
+      console.error('[login] auth threw', err);
       setErrorMsg(err instanceof Error ? err.message : t('errorGeneric'));
+    } finally {
+      setSubmitting(false);
     }
-  }
-
-  if (status === 'sent') {
-    return (
-      <div className="w-full max-w-md text-center">
-        <h1 className="text-2xl font-semibold tracking-tight">{t('checkEmailTitle')}</h1>
-        <p className="text-muted-foreground mt-3 text-sm">
-          {t('checkEmailBody', { email })}
-        </p>
-      </div>
-    );
   }
 
   return (
     <form onSubmit={onSubmit} className="w-full max-w-md space-y-6">
       <div className="space-y-2 text-center">
-        <h1 className="text-2xl font-semibold tracking-tight">{t('title')}</h1>
-        <p className="text-muted-foreground text-sm">{t('subtitle')}</p>
+        <h1 className="text-2xl font-semibold tracking-tight">
+          {mode === 'signIn' ? t('signInTitle') : t('signUpTitle')}
+        </h1>
+        <p className="text-muted-foreground text-sm">
+          {mode === 'signIn' ? t('signInSubtitle') : t('signUpSubtitle')}
+        </p>
       </div>
+
       <div className="space-y-2">
         <label htmlFor="email" className="text-sm font-medium">
           {t('emailLabel')}
@@ -57,20 +63,57 @@ export function LoginForm({ locale }: { locale: Locale }) {
           id="email"
           type="email"
           required
+          autoComplete="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder={t('emailPlaceholder')}
-          className="border-border w-full rounded-lg border bg-transparent px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+          className="border-border focus:ring-primary w-full rounded-lg border bg-transparent px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
         />
       </div>
+
+      <div className="space-y-2">
+        <label htmlFor="password" className="text-sm font-medium">
+          {t('passwordLabel')}
+        </label>
+        <input
+          id="password"
+          type="password"
+          required
+          minLength={8}
+          autoComplete={mode === 'signIn' ? 'current-password' : 'new-password'}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder={t('passwordPlaceholder')}
+          className="border-border focus:ring-primary w-full rounded-lg border bg-transparent px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
+        />
+        {mode === 'signUp' ? (
+          <p className="text-muted-foreground text-xs">{t('passwordHint')}</p>
+        ) : null}
+      </div>
+
       <button
         type="submit"
-        disabled={status === 'submitting'}
+        disabled={submitting}
         className="bg-primary text-primary-foreground w-full rounded-lg px-4 py-2.5 text-sm font-medium disabled:opacity-50"
       >
-        {status === 'submitting' ? t('submitting') : t('submit')}
+        {submitting ? t('submitting') : mode === 'signIn' ? t('signInSubmit') : t('signUpSubmit')}
       </button>
+
       {errorMsg ? <p className="text-sm text-red-600">{errorMsg}</p> : null}
+
+      <p className="text-muted-foreground text-center text-sm">
+        {mode === 'signIn' ? t('noAccount') : t('hasAccount')}{' '}
+        <button
+          type="button"
+          onClick={() => {
+            setMode(mode === 'signIn' ? 'signUp' : 'signIn');
+            setErrorMsg(null);
+          }}
+          className="text-primary font-medium underline-offset-4 hover:underline"
+        >
+          {mode === 'signIn' ? t('switchToSignUp') : t('switchToSignIn')}
+        </button>
+      </p>
     </form>
   );
 }

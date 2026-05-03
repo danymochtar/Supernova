@@ -6,17 +6,25 @@
   "home": {
     "title": "Selamat datang di Supernova",
     "subtitle": "Bacaan numerologi harian yang dipersonalisasi.",
-    "cta": "Masuk dengan email"
+    "cta": "Masuk"
   },
   "login": {
-    "title": "Masuk ke Supernova",
-    "subtitle": "Masukkan email Anda. Kami akan mengirim tautan ajaib untuk masuk — tanpa kata sandi.",
+    "signInTitle": "Masuk ke Supernova",
+    "signInSubtitle": "Masukkan email dan kata sandi Anda.",
+    "signUpTitle": "Buat akun Supernova",
+    "signUpSubtitle": "Daftar dengan email dan kata sandi.",
     "emailLabel": "Alamat email",
     "emailPlaceholder": "kamu@email.com",
-    "submit": "Kirim tautan ajaib",
-    "submitting": "Mengirim…",
-    "checkEmailTitle": "Cek email Anda",
-    "checkEmailBody": "Kami baru saja mengirim tautan masuk ke {email}. Tautan ini berlaku 10 menit.",
+    "passwordLabel": "Kata sandi",
+    "passwordPlaceholder": "Minimal 8 karakter",
+    "passwordHint": "Gunakan minimal 8 karakter.",
+    "signInSubmit": "Masuk",
+    "signUpSubmit": "Daftar",
+    "submitting": "Memproses…",
+    "noAccount": "Belum punya akun?",
+    "hasAccount": "Sudah punya akun?",
+    "switchToSignUp": "Daftar di sini",
+    "switchToSignIn": "Masuk di sini",
     "errorGeneric": "Terjadi kesalahan. Coba lagi sebentar."
   },
   "welcome": {

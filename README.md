@@ -6,7 +6,7 @@ Personalized daily numerology PWA for Southeast Asia. Bahasa Indonesia + English
 - Next.js 14 App Router, TypeScript strict
 - Tailwind + shadcn/ui
 - Prisma ORM on Postgres (single `DATABASE_URL`)
-- Better Auth (magic link) + Resend
+- Better Auth (email + password)
 - Anthropic Claude (Sonnet 4.6)
 - next-intl, Zustand, react-hook-form + zod
 - AES-256-GCM for PII at rest
@@ -17,8 +17,8 @@ Personalized daily numerology PWA for Southeast Asia. Bahasa Indonesia + English
 ```bash
 pnpm install
 cp .env.example .env.local
-# Fill in DATABASE_URL (from console.prisma.io), BETTER_AUTH_SECRET,
-# RESEND_API_KEY, DATA_ENCRYPTION_KEY, ANTHROPIC_API_KEY
+# Fill in DATABASE_URL, BETTER_AUTH_SECRET,
+# DATA_ENCRYPTION_KEY, ANTHROPIC_API_KEY (RESEND_API_KEY only needed for M7+)
 pnpm prisma migrate dev --name init
 pnpm dev
 ```
@@ -42,8 +42,9 @@ openssl rand -base64 32
 See `/root/.claude/plans/supernova-numerology-mighty-crescent.md` for the full milestone plan
 (M0 setup → M9 polish).
 
-## Email delivery in MVP
+## Auth
 
-This app currently uses the Resend sandbox sender (`onboarding@resend.dev`). Magic links will
-only deliver to the email address that owns the Resend account until a real sending domain is
-verified. Plan to swap to a verified domain before public launch.
+Email + password via Better Auth. Min password length 8. Sign-up auto-signs the user in
+and sends them straight to onboarding (`/[locale]/welcome`).
+
+Resend is wired up but not on the auth path — it's reserved for M7 weekly recap emails.
