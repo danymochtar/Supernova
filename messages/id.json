@@ -51,6 +51,7 @@
     "askCta": "Tanya AI",
     "peopleCta": "Orang-orang",
     "journeyCta": "Perjalanan",
+    "patternsCta": "Pola",
     "signOut": "Keluar",
     "aboutMeTitle": "Tentang Anda",
     "aboutMeSubtitle": "Ringkasan profil numerologi {name} dari engine deterministik. Klik kartu di bawah untuk detail tiap angka.",
@@ -118,6 +119,43 @@
     "errorInvalid": "Pertanyaan tidak valid (minimal 2 karakter).",
     "errorNoProfile": "Selesaikan onboarding dulu.",
     "errorGeneric": "Terjadi kesalahan. Coba lagi sebentar."
+  },
+  "feedback": {
+    "title": "Bagaimana hari Anda?",
+    "subtitle": "Catat singkat hari ini. Setelah ≥14 entri, Anda bisa lihat pola di halaman Pola.",
+    "rating": {
+      "GREAT": "Luar biasa",
+      "GOOD": "Bagus",
+      "NEUTRAL": "Biasa",
+      "OFF": "Kurang",
+      "HARD": "Berat"
+    },
+    "noteLabel": "Catatan (opsional)",
+    "notePlaceholder": "Apa yang menonjol hari ini?",
+    "tagsLabel": "Tag",
+    "addTagPlaceholder": "Tambah tag…",
+    "addTag": "Tambah",
+    "submitCta": "Simpan",
+    "updateCta": "Perbarui",
+    "saving": "Menyimpan…",
+    "savedAt": "Disimpan {time}",
+    "errorGeneric": "Gagal menyimpan. Coba lagi."
+  },
+  "patterns": {
+    "title": "Pola Anda",
+    "subtitle": "Berdasarkan {count} entri di {days} hari terakhir.",
+    "subtitleEmpty": "Anda baru punya {count} entri. Pola akan tampil setelah ≥{min} hari data.",
+    "backToDashboard": "Kembali ke dashboard",
+    "emptyTitle": "Belum cukup data",
+    "emptyBody": "Catat perasaan Anda setiap hari di dashboard. Setelah 14 hari, kami tampilkan pola — angka mana yang membawa hari terbaik, hari kerja yang paling kuat, dan tema yang paling sering muncul.",
+    "overallTitle": "Rata-rata keseluruhan",
+    "overallSubtitle": "Dari {count} entri.",
+    "byPersonalDay": "Berdasarkan Personal Day",
+    "byPersonalDayHint": "Rata-rata rating Anda untuk setiap angka Personal Day.",
+    "byWeekday": "Berdasarkan hari",
+    "byWeekdayHint": "Hari mana yang biasanya terasa terbaik atau terberat.",
+    "byTag": "Berdasarkan tag",
+    "byTagHint": "Tema yang paling sering muncul di catatan Anda."
   },
   "journey": {
     "title": "Perjalanan Anda",

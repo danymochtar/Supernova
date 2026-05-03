@@ -23,6 +23,7 @@ export interface QaPromptContext {
     cycle: { slot: 1 | 2 | 3; result: NumerologyResult };
   };
   karmicLessons: number[];
+  recentPatterns?: string | null;
 }
 
 function r(x: NumerologyResult): string {
@@ -87,7 +88,15 @@ Current chapter:
 - Period Cycle ${active.cycle.slot}: ${r(active.cycle.result)}
 
 Karmic Lessons (energies absent from name): ${km}
-</profile>`;
+</profile>${
+    ctx.recentPatterns
+      ? `
+
+<recent_patterns>
+${ctx.recentPatterns}
+</recent_patterns>`
+      : ''
+  }`;
 }
 
 export interface QaTurn {

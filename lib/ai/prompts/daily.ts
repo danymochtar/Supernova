@@ -23,6 +23,8 @@ export interface DailyPromptInput {
     cycle: { slot: 1 | 2 | 3; result: NumerologyResult };
   };
   karmicLessons: number[];
+  /** Optional summary of recent feedback patterns. Omit when not enough data. */
+  recentPatterns?: string | null;
 }
 
 function r(x: NumerologyResult): string {
@@ -95,7 +97,15 @@ Current chapter:
 - Period Cycle ${active.cycle.slot}: ${r(active.cycle.result)}
 
 Karmic Lessons (energies absent from name): ${km}
-</profile>
+</profile>${
+    input.recentPatterns
+      ? `
+
+<recent_patterns>
+${input.recentPatterns}
+</recent_patterns>`
+      : ''
+  }
 
 Write today's reading. Output ONLY the four XML sections, no prefix or commentary.`;
 }

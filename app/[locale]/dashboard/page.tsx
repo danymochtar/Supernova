@@ -18,9 +18,12 @@ import { NumberCard } from '@/components/numerology/NumberCard';
 import { AboutMe } from '@/components/numerology/AboutMe';
 import { SignOutButton } from '@/components/auth/SignOutButton';
 import { DailyReadingView } from '@/components/reading/DailyReadingView';
+import { FeedbackPrompt } from '@/components/feedback/FeedbackPrompt';
 import { getReadingForLocalDay } from '@/lib/db/repositories/reading';
+import { getFeedbackForLocalDay } from '@/lib/db/repositories/feedback';
 import { meaningFor } from '@/lib/numerology/meanings';
 import { generateDailyReading } from './actions';
+import { submitFeedback } from './feedbackActions';
 
 const DAY_NAMES_ID = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
 const MONTH_NAMES_ID = [
@@ -69,6 +72,17 @@ export default async function DashboardPage({ params }: { params: { locale: stri
     ctx.day,
   );
 
+  const todayFeedback = await getFeedbackForLocalDay(
+    session.user.id,
+    ctx.year,
+    ctx.month,
+    ctx.day,
+  );
+
+  const SUGGESTED_TAGS_ID = ['kerja', 'keluarga', 'kesehatan', 'energi', 'fokus', 'mood', 'uang', 'hubungan'];
+  const SUGGESTED_TAGS_EN = ['work', 'family', 'health', 'energy', 'focus', 'mood', 'money', 'relationships'];
+  const suggestedTags = locale === 'id' ? SUGGESTED_TAGS_ID : SUGGESTED_TAGS_EN;
+
   const meaningProps = {
     expandLabel: t('whatDoesThisMean'),
     collapseLabel: t('hide'),
@@ -96,6 +110,12 @@ export default async function DashboardPage({ params }: { params: { locale: stri
             {t('journeyCta')}
           </Link>
           <Link
+            href={`/${locale}/patterns`}
+            className="border-border rounded-lg border px-4 py-2 text-sm font-medium"
+          >
+            {t('patternsCta')}
+          </Link>
+          <Link
             href={`/${locale}/people`}
             className="border-border rounded-lg border px-4 py-2 text-sm font-medium"
           >
@@ -113,6 +133,18 @@ export default async function DashboardPage({ params }: { params: { locale: stri
 
       {/* Daily AI reading */}
       <DailyReadingView initialBody={cachedReading?.body ?? null} generate={generateDailyReading} />
+
+      {/* End-of-day feedback */}
+      <FeedbackPrompt
+        locale={locale}
+        action={submitFeedback}
+        suggestedTags={suggestedTags}
+        initial={
+          todayFeedback
+            ? { rating: todayFeedback.rating, note: todayFeedback.note, tags: todayFeedback.tags }
+            : null
+        }
+      />
 
       {/* About Me — narrative summary using curated meanings */}
       <AboutMe

@@ -5,7 +5,9 @@ import type { Prisma } from '@prisma/client';
 import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { getRecentTurns, saveTurn } from '@/lib/db/repositories/qa';
+import { getRecentFeedback } from '@/lib/db/repositories/feedback';
 import { logUsage } from '@/lib/db/repositories/usage';
+import { aggregate, promptSummary } from '@/lib/patterns/aggregate';
 import { anthropic, model } from '@/lib/ai/client';
 import {
   buildQaMessages,
@@ -61,6 +63,17 @@ export async function POST(req: Request) {
   const age = ageAt(profile.dob, ctx);
   const slots = activeSlots(profile.dob, age);
 
+  const since30 = new Date(Date.UTC(ctx.year, ctx.month - 1, ctx.day));
+  since30.setUTCDate(since30.getUTCDate() - 30);
+  const feedback = await getRecentFeedback(session.user.id, since30);
+  const patterns = aggregate(
+    feedback.map((f) => ({ date: f.date, rating: f.rating, tags: f.tags })),
+    profile.dob,
+    30,
+    profile.locale,
+  );
+  const recentPatterns = promptSummary(patterns);
+
   const dayMarker = new Date(Date.UTC(ctx.year, ctx.month - 1, ctx.day));
   const weekdayIdx = dayMarker.getUTCDay();
   const weekday = profile.locale === 'id' ? WEEKDAY_ID[weekdayIdx]! : WEEKDAY_EN[weekdayIdx]!;
@@ -84,6 +97,7 @@ export async function POST(req: Request) {
       cycle: { slot: slots.cycle, result: cycleAt(core.periodCycles, slots.cycle) },
     },
     karmicLessons: core.karmicLessons,
+    recentPatterns,
   };
 
   const history = (await getRecentTurns(session.user.id, HISTORY_TURNS)).map((t) => ({

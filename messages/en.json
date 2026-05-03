@@ -51,6 +51,7 @@
     "askCta": "Ask AI",
     "peopleCta": "People",
     "journeyCta": "Journey",
+    "patternsCta": "Patterns",
     "signOut": "Sign out",
     "aboutMeTitle": "About you",
     "aboutMeSubtitle": "{name}'s deterministic numerology summary. Tap any card below for detail on each number.",
@@ -118,6 +119,43 @@
     "errorInvalid": "Question is too short (minimum 2 characters).",
     "errorNoProfile": "Finish onboarding first.",
     "errorGeneric": "Something went wrong. Please try again."
+  },
+  "feedback": {
+    "title": "How was your day?",
+    "subtitle": "Log a quick check-in. After ≥14 entries you'll see patterns in the Patterns view.",
+    "rating": {
+      "GREAT": "Great",
+      "GOOD": "Good",
+      "NEUTRAL": "Neutral",
+      "OFF": "Off",
+      "HARD": "Hard"
+    },
+    "noteLabel": "Note (optional)",
+    "notePlaceholder": "What stood out today?",
+    "tagsLabel": "Tags",
+    "addTagPlaceholder": "Add a tag…",
+    "addTag": "Add",
+    "submitCta": "Save",
+    "updateCta": "Update",
+    "saving": "Saving…",
+    "savedAt": "Saved {time}",
+    "errorGeneric": "Failed to save. Please try again."
+  },
+  "patterns": {
+    "title": "Your patterns",
+    "subtitle": "Based on {count} entries in the last {days} days.",
+    "subtitleEmpty": "You have {count} entries so far. Patterns appear once you have ≥{min} days of data.",
+    "backToDashboard": "Back to dashboard",
+    "emptyTitle": "Not enough data yet",
+    "emptyBody": "Log how your day went on the dashboard. After 14 days we'll surface patterns — which numbers bring your best days, the weekdays that hit hardest, and the themes that recur.",
+    "overallTitle": "Overall average",
+    "overallSubtitle": "Across {count} entries.",
+    "byPersonalDay": "By Personal Day",
+    "byPersonalDayHint": "Your average rating per Personal Day number.",
+    "byWeekday": "By weekday",
+    "byWeekdayHint": "Which days tend to feel best or hardest.",
+    "byTag": "By tag",
+    "byTagHint": "The themes that recur most in your notes."
   },
   "journey": {
     "title": "Your journey",
