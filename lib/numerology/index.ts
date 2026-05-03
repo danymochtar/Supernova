@@ -28,6 +28,7 @@ export {
   type PersonalContext,
 } from './personal';
 export { buildCoreProfile } from './profile';
+export { ageAt } from './age';
 
 /** Render a NumerologyResult as "compound/intermediate/reduced" or "compound/reduced". */
 export function formatNumerology(r: { compound: number; reduced: number; isMaster: boolean }): string {
