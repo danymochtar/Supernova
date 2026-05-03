@@ -5,8 +5,7 @@ Personalized daily numerology PWA for Southeast Asia. Bahasa Indonesia + English
 ## Stack
 - Next.js 14 App Router, TypeScript strict
 - Tailwind + shadcn/ui
-- Prisma ORM on **Prisma Postgres** (single Edge-compatible connection string,
-  no Accelerate add-on needed)
+- Prisma ORM on Postgres (single `DATABASE_URL`)
 - Better Auth (magic link) + Resend
 - Anthropic Claude (Sonnet 4.6)
 - next-intl, Zustand, react-hook-form + zod
