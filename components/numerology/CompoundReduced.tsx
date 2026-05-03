@@ -36,7 +36,7 @@ export function CompoundReduced({
       ) : null}
       {result.karmicDebt ? (
         <span
-          className="rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-medium text-amber-800"
+          className="karmic-badge rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-medium text-amber-800"
           title={tooltip ?? undefined}
         >
           karmic

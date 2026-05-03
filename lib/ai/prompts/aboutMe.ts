@@ -11,6 +11,8 @@ export interface AboutMeInput {
     birthday: NumerologyResult;
   };
   karmicLessons: number[];
+  /** Optional per-user model override (forwarded to model('aboutMe', ...)). */
+  preferredModel?: string | null;
 }
 
 function r(x: NumerologyResult): string {

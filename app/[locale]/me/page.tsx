@@ -9,6 +9,7 @@ import { isLocale, type Locale } from '@/lib/i18n/config';
 import { LocaleSwitcher } from '@/components/layout/LocaleSwitcher';
 import { SignOutButton } from '@/components/auth/SignOutButton';
 import { PersonalNotesForm } from '@/components/auth/PersonalNotesForm';
+import { PreferencesPanel } from '@/components/auth/PreferencesPanel';
 import { savePersonalNotes } from './actions';
 
 export default async function MePage({ params }: { params: { locale: string } }) {
@@ -117,6 +118,24 @@ export default async function MePage({ params }: { params: { locale: string } })
           </div>
           <SignOutButton label={t('signOutCta')} locale={locale} />
         </div>
+      </section>
+
+      {/* Preferences */}
+      <section className="space-y-2">
+        <h2 className="px-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          {t('settingsTitle')}
+        </h2>
+        <PreferencesPanel
+          locale={locale}
+          initial={{
+            theme: profile.theme,
+            tone: profile.tone,
+            showKarmicDebt: profile.showKarmicDebt,
+            preferredModel: profile.preferredModel,
+            reminderEnabled: profile.reminderEnabled,
+            reminderTime: profile.reminderTime,
+          }}
+        />
       </section>
 
       <p className="text-muted-foreground py-4 text-center text-xs">{t('appVersion')}</p>

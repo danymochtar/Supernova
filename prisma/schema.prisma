@@ -119,21 +119,30 @@ enum SummaryKind {
 }
 
 model Profile {
-  id            String   @id @default(cuid())
-  userId        String   @unique
-  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  firstName     String
-  middleName    String?
-  lastName      String
-  dob           DateTime @db.Date
-  timezone      String   @default("Asia/Jakarta")
-  locale        String   @default("id")
-  // Free-form notes the user wants the AI to remember about them — life
-  // context, preferences, goals, inside jokes. Injected into chat as the
-  // <personal_notes> block when present. Up to ~4000 chars.
-  personalNotes String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  firstName       String
+  middleName      String?
+  lastName        String
+  dob             DateTime @db.Date
+  timezone        String   @default("Asia/Jakarta")
+  locale          String   @default("id")
+  // Free-form notes the user wants the AI to remember about them.
+  personalNotes   String?
+  // Appearance.
+  theme           String   @default("auto") // "light" | "dark" | "auto"
+  // AI tone — affects chat / daily reading / About Me voice.
+  tone            String   @default("warm") // "warm" | "direct" | "playful"
+  // UI preference: hide karmic-debt badges if the user finds them anxious.
+  showKarmicDebt  Boolean  @default(true)
+  // Optional model override for chat/daily/aboutMe (power-user setting).
+  preferredModel  String?
+  // Local-time reminder ("HH:mm" in user's timezone) — delivery via web push.
+  reminderEnabled Boolean  @default(false)
+  reminderTime    String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
   @@map("profile")
 }

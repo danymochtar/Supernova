@@ -11,6 +11,9 @@ export interface ProfileInput {
   locale: 'id' | 'en';
 }
 
+export type Theme = 'light' | 'dark' | 'auto';
+export type Tone = 'warm' | 'direct' | 'playful';
+
 export interface ProfileView {
   id: string;
   userId: string;
@@ -23,6 +26,12 @@ export interface ProfileView {
   timezone: string;
   locale: 'id' | 'en';
   personalNotes: string | null;
+  theme: Theme;
+  tone: Tone;
+  showKarmicDebt: boolean;
+  preferredModel: string | null;
+  reminderEnabled: boolean;
+  reminderTime: string | null;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -82,6 +91,10 @@ export async function getProfileByUserId(userId: string): Promise<ProfileView | 
 
 function toView(row: ProfileRow): ProfileView {
   const locale = row.locale === 'en' ? 'en' : 'id';
+  const theme: Theme =
+    row.theme === 'light' || row.theme === 'dark' ? row.theme : 'auto';
+  const tone: Tone =
+    row.tone === 'direct' || row.tone === 'playful' ? row.tone : 'warm';
   return {
     id: row.id,
     userId: row.userId,
@@ -93,9 +106,28 @@ function toView(row: ProfileRow): ProfileView {
     timezone: row.timezone,
     locale,
     personalNotes: row.personalNotes,
+    theme,
+    tone,
+    showKarmicDebt: row.showKarmicDebt,
+    preferredModel: row.preferredModel,
+    reminderEnabled: row.reminderEnabled,
+    reminderTime: row.reminderTime,
     createdAt: row.createdAt,
     updatedAt: row.updatedAt,
   };
+}
+
+export interface PreferenceUpdate {
+  theme?: Theme;
+  tone?: Tone;
+  showKarmicDebt?: boolean;
+  preferredModel?: string | null;
+  reminderEnabled?: boolean;
+  reminderTime?: string | null;
+}
+
+export async function updatePreferences(userId: string, prefs: PreferenceUpdate): Promise<void> {
+  await prisma.profile.update({ where: { userId }, data: prefs });
 }
 
 /** Update only the free-form personal notes; doesn't touch name/DOB. */

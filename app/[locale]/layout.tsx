@@ -4,6 +4,9 @@ import { getMessages, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { BottomNav } from '@/components/layout/BottomNav';
+import { ThemeProvider } from '@/components/layout/ThemeProvider';
+import { getSession } from '@/lib/auth/requireSession';
+import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import '../globals.css';
 
 export const metadata: Metadata = {
@@ -60,15 +63,25 @@ export default async function LocaleLayout({
     me: t('me'),
   };
 
+  // Pull the user's saved theme preference so first paint matches it. Falls
+  // back to "auto" (follow system) when no profile is loaded — public pages.
+  const session = await getSession();
+  const profile = session ? await getProfileByUserId(session.user.id) : null;
+  const initialTheme = profile?.theme ?? 'auto';
+
+  const htmlClass = profile?.showKarmicDebt === false ? 'hide-karmic' : '';
+
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang={locale} className={htmlClass} suppressHydrationWarning>
       <body className="bg-background text-foreground min-h-screen antialiased">
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <div className="pb-[calc(theme(spacing.20)+env(safe-area-inset-bottom))]">
-            {children}
-          </div>
-          <BottomNav locale={locale as Locale} labels={navLabels} />
-        </NextIntlClientProvider>
+        <ThemeProvider defaultTheme={initialTheme}>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <div className="pb-[calc(theme(spacing.20)+env(safe-area-inset-bottom))]">
+              {children}
+            </div>
+            <BottomNav locale={locale as Locale} labels={navLabels} />
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

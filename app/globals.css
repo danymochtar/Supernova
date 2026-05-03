@@ -67,3 +67,9 @@
     scrollbar-width: none;
   }
 }
+
+/* Per-user karmic-debt visibility — toggled by adding `hide-karmic` to the
+ * <html> element from the layout when profile.showKarmicDebt is false. */
+.hide-karmic .karmic-badge {
+  display: none;
+}

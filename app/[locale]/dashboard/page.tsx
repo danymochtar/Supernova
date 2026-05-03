@@ -84,6 +84,7 @@ export default async function DashboardPage({ params }: { params: { locale: stri
         birthday: core.birthday,
       },
       karmicLessons: core.karmicLessons,
+      preferredModel: profile.preferredModel,
     }),
   ]);
 

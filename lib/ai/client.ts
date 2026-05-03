@@ -19,13 +19,16 @@ export type AiFeatureKind = 'chat' | 'daily' | 'aboutMe' | 'rollup';
  * reads the output. Internal summarization (rollups) defaults to Haiku 4.5
  * — output is just context for future calls, so cheap + fast wins.
  *
- * Either default can be overridden via env (`ANTHROPIC_MODEL` for the
- * primary surfaces, `ANTHROPIC_ROLLUP_MODEL` for rollups) without a code
- * change.
+ * Per-user override (`profile.preferredModel`) wins for user-facing
+ * surfaces only — rollups always use the rollup default since they're
+ * internal and cost-sensitive.
+ *
+ * Env defaults (`ANTHROPIC_MODEL`, `ANTHROPIC_ROLLUP_MODEL`) sit between.
  */
-export function model(feature: AiFeatureKind = 'chat'): string {
+export function model(feature: AiFeatureKind = 'chat', userOverride?: string | null): string {
   if (feature === 'rollup') {
     return process.env.ANTHROPIC_ROLLUP_MODEL ?? 'claude-haiku-4-5';
   }
+  if (userOverride) return userOverride;
   return process.env.ANTHROPIC_MODEL ?? 'claude-sonnet-4-6';
 }

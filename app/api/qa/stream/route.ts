@@ -61,7 +61,7 @@ export async function POST(req: Request) {
   ]);
 
   const userId = session.user.id;
-  const modelId = model('chat');
+  const modelId = model('chat', profile.preferredModel);
 
   // Build the message array. Cache the static context block so follow-up
   // turns within the same 5-minute window pay ~10% input on the prefix.
@@ -110,7 +110,7 @@ export async function POST(req: Request) {
           system: [
             {
               type: 'text',
-              text: chatSystemPrompt(locale),
+              text: chatSystemPrompt(locale, profile.tone),
               cache_control: { type: 'ephemeral' },
             } as Anthropic.TextBlockParam,
           ],

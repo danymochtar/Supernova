@@ -87,7 +87,7 @@ export async function generateDailyReading(): Promise<GenerateResult> {
     recentPatterns,
   };
 
-  const modelId = model('daily');
+  const modelId = model('daily', profile.preferredModel);
 
   let body: string;
   let inputTokens = 0;
