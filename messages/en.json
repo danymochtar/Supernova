@@ -409,7 +409,9 @@
       "asymmetricMasters": "One side carries a master number",
       "soulUrgeMatch": "Same Soul Urge",
       "lifePathMirror": "Life Path mirror",
-      "sharedKarmicDebt": "Karmic debt load"
+      "sharedKarmicDebt": "Karmic debt on both sides",
+      "oldSoul": "Old soul (master + multiple karmic lessons)",
+      "complementaryKarmic": "Natural teachers (core ↔ karmic lesson)"
     },
     "crossLabel": "Your {me} × Their {them}",
     "band": {

@@ -409,7 +409,9 @@
       "asymmetricMasters": "Salah satu membawa master number",
       "soulUrgeMatch": "Soul Urge sama",
       "lifePathMirror": "Life Path mirror",
-      "sharedKarmicDebt": "Beban karmic debt"
+      "sharedKarmicDebt": "Karmic debt di kedua sisi",
+      "oldSoul": "Old soul (master + banyak karmic lessons)",
+      "complementaryKarmic": "Saling jadi guru (core ↔ karmic lesson)"
     },
     "crossLabel": "{me} kamu × {them} mereka",
     "band": {

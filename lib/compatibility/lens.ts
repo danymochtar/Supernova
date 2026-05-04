@@ -66,7 +66,7 @@ const PARTNER_LENS: RelationshipLens = {
     { key: 'bd-bd',     meKey: 'birthday',    themKey: 'birthday',    weight: 0.12, cross: false },
   ],
   enabledPatterns: ALL_PATTERNS,
-  enabledModifiers: new Set(['masters', 'soulUrgeMatch', 'lifePathMirror', 'sharedKarmicDebt']),
+  enabledModifiers: new Set(['masters', 'soulUrgeMatch', 'lifePathMirror', 'sharedKarmicDebt', 'oldSoul', 'complementaryKarmic']),
 };
 
 const FAMILY_LENS: RelationshipLens = {
@@ -84,7 +84,7 @@ const FAMILY_LENS: RelationshipLens = {
     { key: 'bd-bd',     meKey: 'birthday',    themKey: 'birthday',    weight: 0.05, cross: false },
   ],
   enabledPatterns: ALL_PATTERNS,
-  enabledModifiers: new Set(['masters', 'soulUrgeMatch', 'lifePathMirror', 'sharedKarmicDebt']),
+  enabledModifiers: new Set(['masters', 'soulUrgeMatch', 'lifePathMirror', 'sharedKarmicDebt', 'oldSoul', 'complementaryKarmic']),
 };
 
 const FRIEND_LENS: RelationshipLens = {
@@ -111,7 +111,7 @@ const FRIEND_LENS: RelationshipLens = {
     'bothMasters',
     'sharedKarmicLessons',
   ]),
-  enabledModifiers: new Set(['masters', 'lifePathMirror']),
+  enabledModifiers: new Set(['masters', 'lifePathMirror', 'oldSoul', 'complementaryKarmic']),
 };
 
 const COLLEAGUE_LENS: RelationshipLens = {
@@ -133,7 +133,7 @@ const COLLEAGUE_LENS: RelationshipLens = {
     'pairedReducedToNine',
     'bothMasters',
   ]),
-  enabledModifiers: new Set(['masters']),
+  enabledModifiers: new Set(['masters', 'complementaryKarmic']),
 };
 
 const OTHER_LENS: RelationshipLens = {
@@ -146,7 +146,7 @@ const OTHER_LENS: RelationshipLens = {
     { key: 'bd-bd',     meKey: 'birthday',    themKey: 'birthday',    weight: 0.10, cross: false },
   ],
   enabledPatterns: ALL_PATTERNS,
-  enabledModifiers: new Set(['masters', 'soulUrgeMatch', 'lifePathMirror']),
+  enabledModifiers: new Set(['masters', 'soulUrgeMatch', 'lifePathMirror', 'oldSoul', 'complementaryKarmic']),
 };
 
 // PARENT, CHILD, SIBLING all share the FAMILY lens — the dynamics are

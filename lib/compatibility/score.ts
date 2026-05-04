@@ -158,16 +158,60 @@ export function compatibilityScore(
   }
 
   if (lens.enabledModifiers.has('sharedKarmicDebt')) {
-    // Per-side, per-occurrence: -1 for each karmic-debt-bearing core
-    // number (LP, Expression, Soul Urge) on either side, capped at -3.
-    // This is gentler than the old "both have any → -3" rule and more
-    // honest: someone carrying multiple debts brings more lessons in.
-    const debtCount =
-      [me.lifePath, me.expression, me.soulUrge].filter((x) => x.karmicDebt).length +
-      [them.lifePath, them.expression, them.soulUrge].filter((x) => x.karmicDebt).length;
-    if (debtCount > 0) {
-      const delta = -Math.min(debtCount, 3);
-      modifiers.push({ reason: 'sharedKarmicDebt', delta });
+    // Karmic debt is the bearer's own learning curve, not a relationship
+    // burden. We only penalize when BOTH sides carry debt (true shared
+    // trigger — same emotional/structural triggers can compound between
+    // partners). One-sided debt is the bearer's solo work; the partner
+    // is witness, not punished.
+    //
+    // Rationale: previous "-1 per occurrence" rule penalized non-debt
+    // partners just for being adjacent to a debt-bearing person, which
+    // didn't reflect how Decoz / McCants describe karmic debt's role
+    // in pairings.
+    const myDebts = [me.lifePath, me.expression, me.soulUrge].filter((x) => x.karmicDebt).length;
+    const theirDebts = [them.lifePath, them.expression, them.soulUrge].filter((x) => x.karmicDebt).length;
+    if (myDebts > 0 && theirDebts > 0) {
+      modifiers.push({ reason: 'sharedKarmicDebt', delta: -2 });
+      overall -= 2;
+    }
+  }
+
+  if (lens.enabledModifiers.has('oldSoul')) {
+    // "Old soul still learning" archetype: master number(s) in core +
+    // multiple karmic lessons in the same person. High spiritual
+    // capacity paired with explicit work-to-do. McCants treats this
+    // profile as elevating to be around — they bring depth + humility
+    // to a relationship. Recognize it on either side.
+    const myMaster = [me.lifePath, me.expression, me.soulUrge].some((x) => x.isMaster);
+    const theirMaster = [them.lifePath, them.expression, them.soulUrge].some((x) => x.isMaster);
+    const oldSoul =
+      (myMaster && me.karmicLessons.length >= 3) ||
+      (theirMaster && them.karmicLessons.length >= 3);
+    if (oldSoul) {
+      modifiers.push({ reason: 'oldSoul', delta: 2 });
+      overall += 2;
+    }
+  }
+
+  if (lens.enabledModifiers.has('complementaryKarmic')) {
+    // When YOUR strong core (LP / Expression / Soul Urge reduced)
+    // matches one of your partner's karmic-lesson digits, you're a
+    // natural teacher in the area they came here to develop. Count
+    // matches both directions; each match adds +1 to a cap of +3.
+    const myStrong = new Set(
+      [me.lifePath.reduced, me.expression.reduced, me.soulUrge.reduced]
+        .filter((n) => n >= 1 && n <= 9),
+    );
+    const theirStrong = new Set(
+      [them.lifePath.reduced, them.expression.reduced, them.soulUrge.reduced]
+        .filter((n) => n >= 1 && n <= 9),
+    );
+    let teachMatches = 0;
+    for (const lesson of them.karmicLessons) if (myStrong.has(lesson)) teachMatches++;
+    for (const lesson of me.karmicLessons) if (theirStrong.has(lesson)) teachMatches++;
+    if (teachMatches > 0) {
+      const delta = Math.min(teachMatches, 3);
+      modifiers.push({ reason: 'complementaryKarmic', delta });
       overall += delta;
     }
   }
