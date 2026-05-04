@@ -13,6 +13,7 @@ import {
   contextFromInstant,
   cycleAt,
   personalCycles,
+  personalYearBirthdayAnchored,
   pinnacleAt,
 } from '@/lib/numerology';
 import { NumberCard } from '@/components/numerology/NumberCard';
@@ -64,6 +65,7 @@ export default async function DashboardPage({ params }: { params: { locale: stri
   const core = buildCoreProfile(profile.fullName, profile.dob);
   const ctx = contextFromInstant(new Date(), profile.timezone);
   const cycles = personalCycles(profile.dob, ctx);
+  const pyBirthday = personalYearBirthdayAnchored(profile.dob, ctx);
   const age = ageAt(profile.dob, ctx);
   const slots = activeSlots(profile.dob, age);
 
@@ -117,6 +119,11 @@ export default async function DashboardPage({ params }: { params: { locale: stri
             dateLabel={formatDateLong(ctx, locale)}
             dayTitle={meaningFor('personalDayTitle', cycles.personalDay, locale) ?? ''}
             daySuffix={tReading('daySuffix', { n: cycles.personalDay.reduced })}
+            triple={{
+              day: cycles.personalDay.reduced,
+              month: cycles.personalMonth.reduced,
+              year: pyBirthday.reduced,
+            }}
             labels={{
               todaysTheme: tReading('todaysTheme'),
               affirmation: tReading('affirmation'),

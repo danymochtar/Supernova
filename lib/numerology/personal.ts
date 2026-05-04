@@ -22,6 +22,32 @@ export function personalYear(dob: BirthDate, currentYear: number): NumerologyRes
   return makeResult(m + d + y);
 }
 
+/**
+ * Birthday-anchored Personal Year (Decoz / Millman / World Numerology).
+ *
+ * PY rolls over on the user's birthday — not Jan 1. Before the birthday in
+ * the current calendar year, the user is still in the cycle that started
+ * on their LAST birthday (so we use last year's number). On/after the
+ * birthday, we use this year's.
+ *
+ * For someone born 17 May 1995 looking at 4 May 2026 (13 days pre-birthday):
+ *   year-of-cycle-start = 2025
+ *   PY = 5 + 8 + 9 = 22 → 4
+ *
+ * Use this when surfacing "what year of life am I in" — it tracks the
+ * user's lived rhythm. Use the calendar variant when the question is
+ * "what's the energy of calendar 2026 for me".
+ */
+export function personalYearBirthdayAnchored(
+  dob: BirthDate,
+  ctx: PersonalContext,
+): NumerologyResult {
+  const beforeBirthday =
+    ctx.month < dob.month || (ctx.month === dob.month && ctx.day < dob.day);
+  const cycleStartYear = beforeBirthday ? ctx.year - 1 : ctx.year;
+  return personalYear(dob, cycleStartYear);
+}
+
 /** Personal Month = reduce(PY.reduced + currentMonth). */
 export function personalMonth(dob: BirthDate, ctx: PersonalContext): NumerologyResult {
   const py = personalYear(dob, ctx.year);

@@ -9,6 +9,9 @@ interface Props {
   dayTitle: string;
   /** Pre-localized "A 5 DAY" / "HARI 5" suffix. */
   daySuffix: string;
+  /** Today's three numbers — Personal Day / Personal Month / Personal Year
+   * (birthday-anchored). Rendered as a small triple inline with the title. */
+  triple?: { day: number; month: number; year: number };
   /** UI strings (already translated). */
   labels: {
     todaysTheme: string;
@@ -22,7 +25,7 @@ interface Props {
  * manual generate button. When the AI call fails we show a graceful fallback
  * so the page still renders.
  */
-export function DailyReadingView({ body, dateLabel, dayTitle, daySuffix, labels }: Props) {
+export function DailyReadingView({ body, dateLabel, dayTitle, daySuffix, triple, labels }: Props) {
   if (!body) {
     return (
       <section className="border-border rounded-3xl border bg-gradient-to-br from-primary/10 to-accent/10 p-6 text-center dark:from-primary/20 dark:to-accent/20">
@@ -49,14 +52,25 @@ export function DailyReadingView({ body, dateLabel, dayTitle, daySuffix, labels 
 
       <div className="space-y-5 px-6 py-6 sm:px-7">
         {dayTitle ? (
-          <div className="space-y-1">
-            <p className="text-muted-foreground text-[11px] font-semibold uppercase tracking-[0.18em]">
-              {labels.todaysTheme}
-              {daySuffix ? <span className="text-accent ml-2">· {daySuffix}</span> : null}
-            </p>
-            <h2 className="font-serif text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
-              {dayTitle}
-            </h2>
+          <div className="flex items-start justify-between gap-4">
+            <div className="space-y-1">
+              <p className="text-muted-foreground text-[11px] font-semibold uppercase tracking-[0.18em]">
+                {labels.todaysTheme}
+                {daySuffix ? <span className="text-accent ml-2">· {daySuffix}</span> : null}
+              </p>
+              <h2 className="font-serif text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
+                {dayTitle}
+              </h2>
+            </div>
+            {triple ? (
+              <div className="font-serif relative -mt-1 flex shrink-0 items-end gap-0.5 text-3xl font-semibold leading-none tracking-tight sm:text-4xl">
+                <span className="text-primary">{triple.day}</span>
+                <span className="text-accent translate-y-1">{triple.month}</span>
+                <span className="text-emerald-600 translate-y-2 dark:text-emerald-400">
+                  {triple.year}
+                </span>
+              </div>
+            ) : null}
           </div>
         ) : null}
 

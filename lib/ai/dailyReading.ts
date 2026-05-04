@@ -18,6 +18,7 @@ import {
   contextFromInstant,
   cycleAt,
   personalCycles,
+  personalYearBirthdayAnchored,
   pinnacleAt,
   type BirthDate,
 } from '@/lib/numerology';
@@ -78,6 +79,8 @@ export async function getOrGenerateDailyReading(
   const weekdayIdx = dayMarker.getUTCDay();
   const weekday = profile.locale === 'id' ? WEEKDAY_ID[weekdayIdx]! : WEEKDAY_EN[weekdayIdx]!;
 
+  const personalYearBA = personalYearBirthdayAnchored(profile.dob, ctx);
+
   const promptInput: DailyPromptInput = {
     locale: profile.locale,
     fullName: profile.fullName,
@@ -85,6 +88,7 @@ export async function getOrGenerateDailyReading(
     todayLocal: { year: ctx.year, month: ctx.month, day: ctx.day, weekday },
     age,
     dayTitle: dayTitleFor(cycles.personalDay.reduced, profile.locale),
+    personalYearBirthdayAnchored: personalYearBA,
     core: {
       lifePath: core.lifePath,
       expression: core.expression,
