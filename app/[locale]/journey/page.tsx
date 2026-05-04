@@ -1,6 +1,5 @@
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-import { ChevronDown } from 'lucide-react';
 import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { isLocale, type Locale } from '@/lib/i18n/config';
@@ -136,21 +135,21 @@ export default async function JourneyPage({ params }: { params: { locale: string
           ) : null}
         </article>
 
-        {/* Upcoming years timeline — compact cards with arrows between */}
+        {/* Upcoming years — horizontal carousel (swipe sideways) */}
         <div>
-          <p className="text-muted-foreground mb-3 text-xs font-medium uppercase tracking-wider">
+          <p className="text-muted-foreground mb-3 px-1 text-xs font-medium uppercase tracking-wider">
             {t('upcomingTitle')}
           </p>
-          <ol className="space-y-1">
-            {upcoming.map((y) => {
-              const meaning = meaningFor('personalYear', y.result, locale);
-              const blurb = meaning ? meaning.split('. ')[0] + '.' : null;
-              return (
-                <li key={y.year}>
-                  <div className="flex justify-center py-1">
-                    <ChevronDown className="text-muted-foreground/50 h-4 w-4" aria-hidden />
-                  </div>
-                  <article className="border-border rounded-xl border bg-white/40 p-4 dark:bg-neutral-900/40">
+          <div className="-mx-4 sm:-mx-6">
+            <div className="scroll-px-4 sm:scroll-px-6 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-3 sm:px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              {upcoming.map((y) => {
+                const meaning = meaningFor('personalYear', y.result, locale);
+                const blurb = meaning ? meaning.split('. ')[0] + '.' : null;
+                return (
+                  <article
+                    key={y.year}
+                    className="border-border w-[78%] shrink-0 snap-start rounded-xl border bg-white/40 p-4 dark:bg-neutral-900/40 sm:w-[42%] md:w-[32%]"
+                  >
                     <header className="flex items-baseline justify-between gap-3">
                       <div className="flex items-baseline gap-2">
                         <span className="font-mono text-base font-semibold tabular-nums">
@@ -168,10 +167,10 @@ export default async function JourneyPage({ params }: { params: { locale: string
                       </p>
                     ) : null}
                   </article>
-                </li>
-              );
-            })}
-          </ol>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -337,41 +336,41 @@ export default async function JourneyPage({ params }: { params: { locale: string
           ) : null}
         </article>
 
-        {/* Upcoming shifts timeline */}
+        {/* Upcoming shifts — horizontal carousel */}
         {essenceFuture.length > 0 ? (
           <div>
-            <p className="text-muted-foreground mb-3 text-xs font-medium uppercase tracking-wider">
+            <p className="text-muted-foreground mb-3 px-1 text-xs font-medium uppercase tracking-wider">
               {t('upcomingShifts')}
             </p>
-            <ol className="space-y-1">
-              {essenceFuture.map((frame) => (
-                <li key={frame.age}>
-                  <div className="flex justify-center py-1">
-                    <ChevronDown className="text-muted-foreground/50 h-4 w-4" aria-hidden />
-                  </div>
-                  <article className="border-border rounded-xl border bg-white/40 p-4 dark:bg-neutral-900/40">
+            <div className="-mx-4 sm:-mx-6">
+              <div className="scroll-px-4 sm:scroll-px-6 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-3 sm:px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                {essenceFuture.map((frame) => (
+                  <article
+                    key={frame.age}
+                    className="border-border w-[60%] shrink-0 snap-start rounded-xl border bg-white/40 p-4 dark:bg-neutral-900/40 sm:w-[36%] md:w-[28%]"
+                  >
                     <header className="flex items-baseline justify-between gap-3">
                       <div className="flex items-baseline gap-2">
                         <span className="font-mono text-base font-semibold tabular-nums">
                           {t('age')} {frame.age}
                         </span>
-                        <span className="text-muted-foreground font-serif text-sm">
-                          {frame.letters}
-                        </span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        {frame.essence.karmicDebt ? (
-                          <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-400">
-                            {t('karmicTag', { n: frame.essence.karmicDebt })}
-                          </span>
-                        ) : null}
-                        <CompoundReduced result={frame.essence} locale={locale} size="sm" />
-                      </div>
+                      <CompoundReduced result={frame.essence} locale={locale} size="sm" />
                     </header>
+                    <div className="mt-2 flex items-center justify-between gap-2">
+                      <span className="text-muted-foreground font-serif text-base">
+                        {frame.letters}
+                      </span>
+                      {frame.essence.karmicDebt ? (
+                        <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-400">
+                          {t('karmicTag', { n: frame.essence.karmicDebt })}
+                        </span>
+                      ) : null}
+                    </div>
                   </article>
-                </li>
-              ))}
-            </ol>
+                ))}
+              </div>
+            </div>
           </div>
         ) : null}
       </section>
