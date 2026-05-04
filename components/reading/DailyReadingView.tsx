@@ -69,14 +69,39 @@ export function DailyReadingView({
 
   return (
     <section className="border-border overflow-hidden rounded-3xl border bg-white shadow-sm dark:bg-neutral-900">
-      <div className="bg-gradient-to-r from-accent via-accent to-amber-300 px-5 py-3 text-amber-950">
-        <p className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em]">
-          <Sparkles className="h-3.5 w-3.5" aria-hidden />
-          {dateLabel}
-        </p>
-      </div>
+      {tripleCanToggle ? (
+        <button
+          type="button"
+          onClick={() => setShowNumbers((v) => !v)}
+          aria-expanded={showNumbers}
+          aria-label={showNumbers ? hideLabel : showLabel}
+          className="press-soft flex w-full items-center justify-between gap-2 bg-gradient-to-r from-accent via-accent to-amber-300 px-5 py-3 text-left text-amber-950 transition-colors hover:from-accent/95 hover:to-amber-300/95"
+        >
+          <p className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em]">
+            <Sparkles className="h-3.5 w-3.5" aria-hidden />
+            {dateLabel}
+          </p>
+          <ChevronDown
+            className={`h-4 w-4 shrink-0 transition-transform ${showNumbers ? 'rotate-180' : ''}`}
+            aria-hidden
+          />
+        </button>
+      ) : (
+        <div className="bg-gradient-to-r from-accent via-accent to-amber-300 px-5 py-3 text-amber-950">
+          <p className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em]">
+            <Sparkles className="h-3.5 w-3.5" aria-hidden />
+            {dateLabel}
+          </p>
+        </div>
+      )}
 
       <div className="space-y-5 px-6 py-6 sm:px-7">
+        {tripleCanToggle && showNumbers ? (
+          <div className="border-border/60 -mx-6 -mt-6 border-b bg-amber-50/40 px-6 py-5 dark:bg-amber-950/10 sm:-mx-7 sm:px-7">
+            {numbers}
+          </div>
+        ) : null}
+
         {dayTitle ? (
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0 space-y-1">
@@ -89,36 +114,13 @@ export function DailyReadingView({
               </h2>
             </div>
             {triple ? (
-              tripleCanToggle ? (
-                <button
-                  type="button"
-                  onClick={() => setShowNumbers((v) => !v)}
-                  aria-expanded={showNumbers}
-                  aria-label={showNumbers ? hideLabel : showLabel}
-                  title={showNumbers ? hideLabel : showLabel}
-                  className="press-soft hover:bg-muted/40 -mr-2 flex shrink-0 items-end gap-0.5 rounded-2xl px-2 py-1 text-3xl font-semibold leading-none tracking-tight transition-colors sm:text-4xl"
-                >
-                  <span className="text-primary font-serif">{triple.day}</span>
-                  <span className="text-accent font-serif translate-y-1">{triple.month}</span>
-                  <span className="text-emerald-600 font-serif translate-y-2 dark:text-emerald-400">
-                    {triple.date}
-                  </span>
-                  <ChevronDown
-                    className={`text-muted-foreground ml-1 h-4 w-4 self-end transition-transform ${
-                      showNumbers ? 'rotate-180' : ''
-                    }`}
-                    aria-hidden
-                  />
-                </button>
-              ) : (
-                <div className="font-serif relative -mt-1 flex shrink-0 items-end gap-0.5 text-3xl font-semibold leading-none tracking-tight sm:text-4xl">
-                  <span className="text-primary">{triple.day}</span>
-                  <span className="text-accent translate-y-1">{triple.month}</span>
-                  <span className="text-emerald-600 translate-y-2 dark:text-emerald-400">
-                    {triple.date}
-                  </span>
-                </div>
-              )
+              <div className="font-serif relative -mt-1 flex shrink-0 items-end gap-0.5 text-3xl font-semibold leading-none tracking-tight sm:text-4xl">
+                <span className="text-primary">{triple.day}</span>
+                <span className="text-accent translate-y-1">{triple.month}</span>
+                <span className="text-emerald-600 translate-y-2 dark:text-emerald-400">
+                  {triple.date}
+                </span>
+              </div>
             ) : null}
           </div>
         ) : null}
@@ -140,15 +142,6 @@ export function DailyReadingView({
             <p className="font-serif text-base italic leading-snug text-neutral-800 dark:text-neutral-100">
               {parsed.affirmation}
             </p>
-          </div>
-        ) : null}
-
-        {tripleCanToggle ? (
-          <div
-            className={`border-border/60 border-t pt-4 ${showNumbers ? 'block' : 'hidden'}`}
-            aria-hidden={!showNumbers}
-          >
-            {numbers}
           </div>
         ) : null}
       </div>
