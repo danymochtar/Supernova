@@ -1,6 +1,6 @@
 import { Sparkles } from 'lucide-react';
 import type { ParsedAboutMe } from '@/lib/ai/prompts/aboutMe';
-import type { NumerologyResult } from '@/lib/numerology';
+import type { MinorNumbers, NumerologyResult } from '@/lib/numerology';
 import type { Locale } from '@/lib/i18n/config';
 import { Explainer } from '@/components/layout/Explainer';
 import { CompoundReduced } from './CompoundReduced';
@@ -27,6 +27,17 @@ interface Props {
   locale?: Locale;
   /** Optional educational disclosure shown under the subtitle. */
   explainer?: { title: string; body: string };
+  /** Minor Numbers from the user's nickname, when one is set. Surfaced as a
+   * small chip row beneath the synthesis card so the user can see "the
+   * me people actually call" alongside the deep birth-name self. */
+  minor?: MinorNumbers | null;
+  /** Translated labels for the minor block. */
+  minorLabels?: {
+    heading: string;
+    expression: string;
+    soulUrge: string;
+    personality: string;
+  };
 }
 
 const CARD_ORDER = [
@@ -53,6 +64,8 @@ export function AboutMe({
   numbers,
   locale = 'id',
   explainer,
+  minor,
+  minorLabels,
 }: Props) {
   if (!data) {
     return (
@@ -87,6 +100,19 @@ export function AboutMe({
           <p className="text-[15px] leading-relaxed text-neutral-800 dark:text-neutral-200">
             {data.synthesis}
           </p>
+        </div>
+      ) : null}
+
+      {minor && minorLabels ? (
+        <div className="border-border rounded-xl border bg-white/40 p-4 dark:bg-neutral-900/40">
+          <p className="text-muted-foreground text-[11px] font-semibold uppercase tracking-[0.18em]">
+            {minorLabels.heading} · <span className="font-serif text-foreground italic normal-case tracking-normal">{minor.source}</span>
+          </p>
+          <div className="mt-3 grid grid-cols-3 gap-3">
+            <MinorChip label={minorLabels.expression} result={minor.minorExpression} locale={locale} />
+            <MinorChip label={minorLabels.soulUrge} result={minor.minorSoulUrge} locale={locale} />
+            <MinorChip label={minorLabels.personality} result={minor.minorPersonality} locale={locale} />
+          </div>
         </div>
       ) : null}
 
@@ -132,5 +158,24 @@ export function AboutMe({
         </div>
       ) : null}
     </section>
+  );
+}
+
+function MinorChip({
+  label,
+  result,
+  locale,
+}: {
+  label: string;
+  result: NumerologyResult;
+  locale: Locale;
+}) {
+  return (
+    <div className="space-y-0.5 text-center">
+      <p className="text-muted-foreground text-[10px] font-medium uppercase tracking-wide">
+        {label}
+      </p>
+      <CompoundReduced result={result} locale={locale} size="sm" />
+    </div>
   );
 }

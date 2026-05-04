@@ -8,6 +8,7 @@ import { isLocale, type Locale } from '@/lib/i18n/config';
 import {
   buildCoreProfile,
   contextFromInstant,
+  minorNumbers,
   personalCycles,
 } from '@/lib/numerology';
 import { NumberCard } from '@/components/numerology/NumberCard';
@@ -60,6 +61,7 @@ export default async function DashboardPage({ params }: { params: { locale: stri
   const core = buildCoreProfile(profile.fullName, profile.dob);
   const ctx = contextFromInstant(new Date(), profile.timezone);
   const cycles = personalCycles(profile.dob, ctx);
+  const minor = minorNumbers(profile.nickname);
   // World Numerology's "today's numbers are X, Y, Z" framing: PD, PM, and
   // the calendar day-of-month digital root. May 4 → 4; May 31 → 4 (3+1).
   const dayOfMonthReduced = (() => {
@@ -192,6 +194,13 @@ export default async function DashboardPage({ params }: { params: { locale: stri
             explainer={{
               title: t('explainerLearnMore'),
               body: t('aboutMeExplainer'),
+            }}
+            minor={minor}
+            minorLabels={{
+              heading: t('minorHeading'),
+              expression: t('minorExpression'),
+              soulUrge: t('minorSoulUrge'),
+              personality: t('minorPersonality'),
             }}
           />
         );
