@@ -284,7 +284,12 @@
     "fromLastName": "dari {name}",
     "noMiddleNameNote": "Kamu nggak punya middle name, jadi cuma ada Physical + Spiritual Transit.",
     "upcomingShifts": "Pergeseran berikutnya",
-    "karmicTag": "Karmic {n}"
+    "karmicTag": "Karmic {n}",
+    "explainerLearnMore": "Apa ini? Pelajari konsepnya",
+    "personalYearExplainer": "Personal Year (PY) adalah tema utama hidup kamu sepanjang 12 bulan ke depan. Dia bergerak dalam siklus 1→9 yang berulang seumur hidup — tahun 1 = mulai sesuatu yang baru, tahun 5 = perubahan & gerak, tahun 9 = penyelesaian sebelum siklus baru. Dihitung dari (bulan + tanggal lahir + tahun sekarang). Jika compound-nya 13/14/16/19, ada karmic debt yang menambah dimensi pelajaran.",
+    "pinnacleExplainer": "Pinnacle = empat babak besar hidup kamu, masing-masing membawa tema dominan selama bertahun-tahun. Pinnacle 1 berlangsung sampai usia (36 − Life Path); berikutnya selang 9 tahun. Tiap Pinnacle datang berpasangan dengan Challenge — kekurangan/ujian utama di babak tersebut. Pinnacle ngasih tau apa yang dimasak hidup; Challenge ngasih tau apa yang harus dilatih.",
+    "cycleExplainer": "Period Cycle = tiga gelombang besar hidup. Gelombang 1 (Formative, ~lahir-28 tahun) ditentukan dari bulan lahir; Gelombang 2 (Productive, ~28-56) dari tanggal lahir; Gelombang 3 (Harvest, ~56+) dari tahun lahir. Beda dari Pinnacle: Pinnacle adalah TEMA babak, Period Cycle adalah BACKDROP energetik di belakangnya.",
+    "essenceExplainer": "Essence Cycle adalah lapisan paling personal — dia ngebaca huruf-huruf di nama kamu. Tiap huruf \"hidup\" sebanyak nilai Pythagorean-nya (D=4 → 4 tahun, Y=7 → 7 tahun, dst). Tiga aliran berjalan paralel: Physical (nama depan, hubungannya ke fisik & kerja), Mental (middle name, kalo ada — ke pikiran), Spiritual (nama belakang, ke inner growth & relasi). Essence = jumlah huruf aktif. Karmic debt 13/14/16/19 dipertahankan, gak di-reduce — itu sinyal tahun yang membawa pelajaran khusus."
   },
   "people": {
     "title": "Orang-orang",

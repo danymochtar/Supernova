@@ -88,9 +88,10 @@ export default async function JourneyPage({ params }: { params: { locale: string
 
       {/* THIS YEAR — hero card with cycle position dots */}
       <section className="space-y-4">
-        <div className="space-y-1">
+        <div className="space-y-2">
           <h2 className="text-lg font-semibold">{t('forecastTitle')}</h2>
           <p className="text-muted-foreground text-sm">{t('forecastSubtitle')}</p>
+          <Explainer title={t("explainerLearnMore")} body={t("personalYearExplainer")} />
         </div>
 
         <article className="border-primary/40 from-primary/10 ring-primary/20 relative overflow-hidden rounded-2xl border-2 bg-gradient-to-br to-accent/20 p-6 ring-1 dark:to-accent/15">
@@ -174,65 +175,75 @@ export default async function JourneyPage({ params }: { params: { locale: string
         </div>
       </section>
 
-      {/* Life chapters — Pinnacles + Challenges */}
+      {/* Life chapters — Pinnacles + Challenges, horizontal carousel */}
       <section className="space-y-4">
-        <div className="space-y-1">
+        <div className="space-y-2">
           <h2 className="text-lg font-semibold">{t('stagesTitle')}</h2>
           <p className="text-muted-foreground text-sm">{t('stagesSubtitle')}</p>
+          <Explainer title={t("explainerLearnMore")} body={t("pinnacleExplainer")} />
         </div>
-        <div className="space-y-3">
-          {pinnacleRows.map((row) => {
-            const meaning = meaningFor('pinnacle', row.pinnacle, locale);
-            return (
-              <article
-                key={row.slot}
-                className={`border-border rounded-xl border p-4 ${
-                  row.isActive ? 'bg-primary/5 ring-primary/30 ring-1' : 'bg-white/40 dark:bg-neutral-900/40'
-                }`}
-              >
-                <header className="flex flex-wrap items-baseline justify-between gap-3">
-                  <div>
-                    <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider">
-                      {tDash('pinnacle')} {row.slot}
-                    </p>
-                    <p className="text-muted-foreground tabular-nums text-sm">
-                      {t('age')} {row.range}
+        <div className="-mx-4 sm:-mx-6">
+          <div className="scroll-px-4 sm:scroll-px-6 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-3 sm:px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {pinnacleRows.map((row) => {
+              const meaning = meaningFor('pinnacle', row.pinnacle, locale);
+              return (
+                <article
+                  key={row.slot}
+                  className={`w-[80%] shrink-0 snap-start rounded-xl border p-4 sm:w-[44%] md:w-[32%] ${
+                    row.isActive
+                      ? 'border-primary/50 bg-primary/5 ring-1 ring-primary/30'
+                      : 'border-border bg-white/40 dark:bg-neutral-900/40'
+                  }`}
+                >
+                  <header className="space-y-1">
+                    <div className="flex items-baseline justify-between gap-2">
+                      <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider">
+                        {tDash('pinnacle')} {row.slot}
+                      </p>
                       {row.isActive ? (
-                        <span className="text-primary ml-2 text-[10px] uppercase tracking-wider">
+                        <span className="text-primary text-[10px] font-semibold uppercase tracking-wider">
                           {tDash('now')}
                         </span>
                       ) : null}
+                    </div>
+                    <p className="text-muted-foreground text-sm tabular-nums">
+                      {t('age')} {row.range}
                     </p>
-                  </div>
-                  <div className="text-right">
-                    <div className="flex items-center gap-3">
-                      <span className="text-muted-foreground text-xs">{tDash('pinnacle')}</span>
+                  </header>
+                  <div className="border-border/60 mt-3 flex items-center justify-between gap-3 border-t pt-3">
+                    <div className="space-y-1">
+                      <p className="text-muted-foreground text-[10px] uppercase tracking-wider">
+                        {tDash('pinnacle')}
+                      </p>
                       <CompoundReduced result={row.pinnacle} locale={locale} size="sm" />
                     </div>
-                    <div className="mt-1 flex items-center gap-3">
-                      <span className="text-muted-foreground text-xs">{tDash('challenge')}</span>
+                    <div className="space-y-1 text-right">
+                      <p className="text-muted-foreground text-[10px] uppercase tracking-wider">
+                        {tDash('challenge')}
+                      </p>
                       <CompoundReduced result={row.challenge} locale={locale} size="sm" />
                     </div>
                   </div>
-                </header>
-                {meaning ? (
-                  <p className="mt-3 text-sm leading-relaxed text-neutral-800 dark:text-neutral-200">
-                    {meaning}
-                  </p>
-                ) : (
-                  <p className="text-muted-foreground mt-3 text-sm italic">{t('comingSoon')}</p>
-                )}
-              </article>
-            );
-          })}
+                  {meaning ? (
+                    <p className="mt-3 text-sm leading-relaxed text-neutral-800 dark:text-neutral-200">
+                      {meaning}
+                    </p>
+                  ) : (
+                    <p className="text-muted-foreground mt-3 text-sm italic">{t('comingSoon')}</p>
+                  )}
+                </article>
+              );
+            })}
+          </div>
         </div>
       </section>
 
       {/* Period Cycles */}
       <section className="space-y-4">
-        <div className="space-y-1">
+        <div className="space-y-2">
           <h2 className="text-lg font-semibold">{t('cyclesTitle')}</h2>
           <p className="text-muted-foreground text-sm">{t('cyclesSubtitle')}</p>
+          <Explainer title={t("explainerLearnMore")} body={t("cycleExplainer")} />
         </div>
         <div className="border-border overflow-hidden rounded-xl border">
           <table className="w-full text-sm">
@@ -267,9 +278,10 @@ export default async function JourneyPage({ params }: { params: { locale: string
 
       {/* Essence Cycle — Transit letters + current Essence number */}
       <section className="space-y-4">
-        <div className="space-y-1">
+        <div className="space-y-2">
           <h2 className="text-lg font-semibold">{t('essenceTitle')}</h2>
           <p className="text-muted-foreground text-sm">{t('essenceSubtitle')}</p>
+          <Explainer title={t("explainerLearnMore")} body={t("essenceExplainer")} />
         </div>
 
         {/* Current Essence card */}
@@ -375,6 +387,24 @@ export default async function JourneyPage({ params }: { params: { locale: string
         ) : null}
       </section>
     </main>
+  );
+}
+
+/**
+ * Tiny disclosure explainer used at the top of each Journey section.
+ * Native <details> so it survives without client JS, defaults closed
+ * to keep the page calm — user taps "What is this?" when they want
+ * the educational background.
+ */
+function Explainer({ title, body }: { title: string; body: string }) {
+  return (
+    <details className="border-border group rounded-lg border bg-white/30 px-3 py-2 text-xs dark:bg-neutral-900/30">
+      <summary className="text-muted-foreground flex cursor-pointer list-none items-center gap-1.5 font-medium [&::-webkit-details-marker]:hidden">
+        <span className="text-accent transition-transform group-open:rotate-90">▸</span>
+        <span>{title}</span>
+      </summary>
+      <p className="text-muted-foreground mt-2 whitespace-pre-line leading-relaxed">{body}</p>
+    </details>
   );
 }
 

@@ -284,7 +284,12 @@
     "fromLastName": "from {name}",
     "noMiddleNameNote": "You don't have a middle name, so only Physical + Spiritual Transits apply.",
     "upcomingShifts": "Upcoming shifts",
-    "karmicTag": "Karmic {n}"
+    "karmicTag": "Karmic {n}",
+    "explainerLearnMore": "What is this? Learn the concept",
+    "personalYearExplainer": "Personal Year (PY) is the main theme of your life for the next 12 months. It moves through a 1→9 cycle that repeats over your lifetime — year 1 = start something new, year 5 = change & movement, year 9 = completion before a fresh cycle. Computed from (birth month + birth day + current year). When the compound is 13/14/16/19 there's a karmic debt adding a layer of lessons.",
+    "pinnacleExplainer": "Pinnacle = the four big chapters of your life, each carrying a dominant theme for many years. Pinnacle 1 runs until age (36 − Life Path); each subsequent one spans 9 years. Each Pinnacle pairs with a Challenge — the central tension or growth edge of that chapter. Pinnacle tells you what life is cooking; Challenge tells you what to train.",
+    "cycleExplainer": "Period Cycle = three big waves of life. Wave 1 (Formative, ~birth-28) is set by your birth month; Wave 2 (Productive, ~28-56) by your birth day; Wave 3 (Harvest, ~56+) by your birth year. Different from Pinnacle: Pinnacle is the THEME of a chapter, Period Cycle is the energetic BACKDROP behind it.",
+    "essenceExplainer": "Essence Cycle is the most personal layer — it reads the letters of your name. Each letter \"lives\" for as many years as its Pythagorean value (D=4 → 4 years, Y=7 → 7 years, etc.). Three streams run in parallel: Physical (first name, your body & work), Mental (middle name if any, your mind), Spiritual (last name, inner growth & relationships). Essence = sum of currently-active letters. Karmic debts 13/14/16/19 are preserved, not reduced — they signal years carrying a specific lesson."
   },
   "people": {
     "title": "People",
