@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-import { Plus, HeartHandshake, ChevronRight } from 'lucide-react';
+import { Plus, HeartHandshake, ChevronRight, Trash2 } from 'lucide-react';
 import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { listPeople } from '@/lib/db/repositories/person';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { deletePersonAction } from './actions';
 
 const PEOPLE_LIMIT = 999;
 
@@ -49,14 +50,16 @@ export default async function PeoplePage({ params }: { params: { locale: string 
       ) : (
         <section className="space-y-3">
           {people.map((p) => (
-            <Link
+            <div
               key={p.id}
-              href={`/${locale}/people/${p.id}`}
-              className="border-border press-soft hover:bg-muted/30 block rounded-xl border p-4 transition-colors"
+              className="border-border group relative flex items-stretch overflow-hidden rounded-xl border transition-colors hover:bg-muted/30"
             >
-              <div className="flex items-baseline justify-between gap-3">
-                <div>
-                  <p className="font-medium">{p.fullName}</p>
+              <Link
+                href={`/${locale}/people/${p.id}`}
+                className="press-soft flex flex-1 items-baseline justify-between gap-3 py-4 pl-4 pr-2"
+              >
+                <div className="min-w-0">
+                  <p className="truncate font-medium">{p.fullName}</p>
                   <p className="text-muted-foreground text-xs">
                     {t(`relationship.${p.relationship}`)} ·{' '}
                     <span className="tabular-nums">
@@ -65,9 +68,20 @@ export default async function PeoplePage({ params }: { params: { locale: string 
                     </span>
                   </p>
                 </div>
-                <ChevronRight className="text-muted-foreground h-4 w-4" aria-hidden />
-              </div>
-            </Link>
+                <ChevronRight className="text-muted-foreground h-4 w-4 shrink-0" aria-hidden />
+              </Link>
+              <form action={deletePersonAction} className="flex items-stretch">
+                <input type="hidden" name="id" value={p.id} />
+                <input type="hidden" name="locale" value={locale} />
+                <button
+                  type="submit"
+                  aria-label={t('deletePerson', { name: p.fullName })}
+                  className="text-muted-foreground hover:bg-red-50 hover:text-red-700 dark:hover:bg-red-950/40 dark:hover:text-red-400 flex w-12 items-center justify-center transition-colors"
+                >
+                  <Trash2 className="h-4 w-4" aria-hidden />
+                </button>
+              </form>
+            </div>
           ))}
         </section>
       )}
