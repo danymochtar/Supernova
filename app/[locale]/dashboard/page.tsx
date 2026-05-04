@@ -197,22 +197,54 @@ export default async function DashboardPage({ params }: { params: { locale: stri
       case 'core':
         return (
           <Widget key={id} title={t('coreTitle')} defaultOpen={false}>
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              <NumberCard label={t('lifePath')} hint={t('lifePathHint')} result={core.lifePath} locale={locale} type="lifePath" meaning={meaningFor('lifePath', core.lifePath, locale)} comingSoonLabel={t('meaningComingSoon')} />
-              <NumberCard label={t('expression')} hint={t('expressionHint')} result={core.expression} locale={locale} type="expression" meaning={meaningFor('expression', core.expression, locale)} comingSoonLabel={t('meaningComingSoon')} />
-              <NumberCard label={t('soulUrge')} hint={t('soulUrgeHint')} result={core.soulUrge} locale={locale} type="soulUrge" meaning={meaningFor('soulUrge', core.soulUrge, locale)} comingSoonLabel={t('meaningComingSoon')} />
-              <NumberCard label={t('personality')} hint={t('personalityHint')} result={core.personality} locale={locale} type="personality" meaning={meaningFor('personality', core.personality, locale)} comingSoonLabel={t('meaningComingSoon')} />
-              <NumberCard label={t('birthday')} hint={t('birthdayHint')} result={core.birthday} locale={locale} type="birthday" meaning={meaningFor('birthday', core.birthday, locale)} comingSoonLabel={t('meaningComingSoon')} />
+            <div className="-mx-5">
+              <div className="scroll-px-5 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                {[
+                  { label: t('lifePath'), hint: t('lifePathHint'), result: core.lifePath, type: 'lifePath' as const },
+                  { label: t('expression'), hint: t('expressionHint'), result: core.expression, type: 'expression' as const },
+                  { label: t('soulUrge'), hint: t('soulUrgeHint'), result: core.soulUrge, type: 'soulUrge' as const },
+                  { label: t('personality'), hint: t('personalityHint'), result: core.personality, type: 'personality' as const },
+                  { label: t('birthday'), hint: t('birthdayHint'), result: core.birthday, type: 'birthday' as const },
+                ].map((c) => (
+                  <div key={c.type} className="w-[80%] shrink-0 snap-start sm:w-[44%] md:w-[32%]">
+                    <NumberCard
+                      label={c.label}
+                      hint={c.hint}
+                      result={c.result}
+                      locale={locale}
+                      type={c.type}
+                      meaning={meaningFor(c.type, c.result, locale)}
+                      comingSoonLabel={t('meaningComingSoon')}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </Widget>
         );
       case 'chapter':
         return (
           <Widget key={id} title={t('currentChapterTitle')} hint={t('currentChapterSubtitle', { age })} defaultOpen={false}>
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-              <NumberCard label={`${t('pinnacle')} ${slots.pinnacle}`} hint={t('pinnacleHint')} result={activePinnacle} locale={locale} type="pinnacle" meaning={meaningFor('pinnacle', activePinnacle, locale)} comingSoonLabel={t('meaningComingSoon')} />
-              <NumberCard label={`${t('challenge')} ${slots.challenge}`} hint={t('challengeHint')} result={activeChallenge} locale={locale} type="challenge" meaning={meaningFor('challenge', activeChallenge, locale)} comingSoonLabel={t('meaningComingSoon')} />
-              <NumberCard label={`${t('cycle')} ${slots.cycle}`} hint={t('cycleHint')} result={activeCycle} locale={locale} type="cycle" meaning={meaningFor('cycle', activeCycle, locale)} comingSoonLabel={t('meaningComingSoon')} />
+            <div className="-mx-5">
+              <div className="scroll-px-5 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                {[
+                  { label: `${t('pinnacle')} ${slots.pinnacle}`, hint: t('pinnacleHint'), result: activePinnacle, type: 'pinnacle' as const },
+                  { label: `${t('challenge')} ${slots.challenge}`, hint: t('challengeHint'), result: activeChallenge, type: 'challenge' as const },
+                  { label: `${t('cycle')} ${slots.cycle}`, hint: t('cycleHint'), result: activeCycle, type: 'cycle' as const },
+                ].map((c) => (
+                  <div key={c.type} className="w-[80%] shrink-0 snap-start sm:w-[44%] md:w-[32%]">
+                    <NumberCard
+                      label={c.label}
+                      hint={c.hint}
+                      result={c.result}
+                      locale={locale}
+                      type={c.type}
+                      meaning={meaningFor(c.type, c.result, locale)}
+                      comingSoonLabel={t('meaningComingSoon')}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </Widget>
         );
