@@ -14,8 +14,6 @@ interface Props {
   fallback: string;
   /** Translated label per card key. Missing keys fall back to the key itself. */
   cardLabels: Record<CardKey, string>;
-  /** "About you" sub-label shown above each card title. */
-  aboutLabel: string;
   /** Numbers to render on each card. karmicLessons is rendered separately as
    * a list of small chips since there's no single NumerologyResult to show. */
   numbers?: {
@@ -52,7 +50,6 @@ export function AboutMe({
   data,
   fallback,
   cardLabels,
-  aboutLabel,
   numbers,
   locale = 'id',
   explainer,
@@ -107,14 +104,9 @@ export function AboutMe({
                   className="border-border bg-card text-card-foreground w-[78%] shrink-0 snap-start space-y-3 rounded-2xl border p-5 sm:w-[60%] md:w-[44%]"
                 >
                   <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0 space-y-1">
-                      <p className="text-muted-foreground text-[10px] font-medium uppercase tracking-[0.18em]">
-                        {aboutLabel}
-                      </p>
-                      <h3 className="font-serif text-xl font-semibold tracking-tight">
-                        {card.label}
-                      </h3>
-                    </div>
+                    <h3 className="min-w-0 font-serif text-xl font-semibold tracking-tight">
+                      {card.label}
+                    </h3>
                     {result ? (
                       <CompoundReduced result={result} locale={locale} size="lg" />
                     ) : karmic && karmic.length > 0 ? (

@@ -172,7 +172,6 @@ export default async function DashboardPage({ params }: { params: { locale: stri
             subtitle={t('aboutMeSubtitle')}
             data={aboutMeData}
             fallback={t('aboutMeFallback')}
-            aboutLabel={t('aboutMeCardLabel')}
             cardLabels={{
               lifePath: t('lifePath'),
               expression: t('expression'),
