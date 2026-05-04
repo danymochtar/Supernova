@@ -5,7 +5,13 @@ import { getReadingForLocalDay } from '@/lib/db/repositories/reading';
 import { getRecentFeedback } from '@/lib/db/repositories/feedback';
 import { listSummaries } from '@/lib/db/repositories/conversationSummary';
 import { aggregate, promptSummary } from '@/lib/patterns/aggregate';
-import { ageAt, buildCoreProfile, formatNumerology, personalCycles } from '@/lib/numerology';
+import {
+  ageAt,
+  buildCoreProfile,
+  formatNumerology,
+  minorNumbers,
+  personalCycles,
+} from '@/lib/numerology';
 import type { BirthDate } from '@/lib/numerology/types';
 import type { ProfileView } from '@/lib/db/repositories/profile';
 
@@ -98,9 +104,11 @@ today's cycles: Personal Year=${r(cycles.personalYear)}, Personal Month=${r(cycl
 
   const result: SmartContext = { base, loaded };
 
-  // Decide which conditional sources to fetch up-front so we can fan them
-  // out in parallel with the always-on history cascade.
-  const wantPeople = matches(question, KEYWORDS.people);
+  // People are now always loaded — the user often references them by
+  // name without using a relationship keyword ("mood Sabri gimana?"),
+  // and we want the model to recognize and answer with their data
+  // without bouncing back to ask. The list is small (most users have
+  // < 20 people) so the token cost is bounded.
   const wantReading = matches(question, KEYWORDS.reading);
   const wantPatterns = matches(question, KEYWORDS.patterns);
 
@@ -111,7 +119,7 @@ today's cycles: Personal Year=${r(cycles.personalYear)}, Personal Month=${r(cycl
     listSummaries(userId, 'DAILY', 7),
     listSummaries(userId, 'WEEKLY', 4),
     listSummaries(userId, 'MONTHLY', 6),
-    wantPeople ? listPeople(userId) : Promise.resolve([] as Awaited<ReturnType<typeof listPeople>>),
+    listPeople(userId),
     wantReading ? getReadingForLocalDay(userId, ctx.year, ctx.month, ctx.day) : Promise.resolve(null),
     wantPatterns
       ? getRecentFeedback(userId, since)
@@ -123,11 +131,24 @@ today's cycles: Personal Year=${r(cycles.personalYear)}, Personal Month=${r(cycl
     loaded.push('history');
   }
 
-  if (wantPeople && people.length > 0) {
+  if (people.length > 0) {
+    // For each known person we precompute their core numbers + today's
+    // Personal Day/Month/Year so the model can answer "mood dia gimana
+    // hari ini?" without asking for data we already have. Nickname is
+    // included so the model knows what to call them.
     result.people = people
       .map((p) => {
         const c = buildCoreProfile(p.fullName, p.dob);
-        return `- ${p.fullName} (${p.relationship.toLowerCase()}, born ${p.dob.year}-${String(p.dob.month).padStart(2, '0')}-${String(p.dob.day).padStart(2, '0')}): LP=${r(c.lifePath)}, Expr=${r(c.expression)}, SU=${r(c.soulUrge)}`;
+        const cyc = personalCycles(p.dob, ctx);
+        const m = minorNumbers(p.nickname);
+        const dobLine = `${p.dob.year}-${String(p.dob.month).padStart(2, '0')}-${String(p.dob.day).padStart(2, '0')}`;
+        const nick = p.nickname ? `, dipanggil "${p.nickname}"` : '';
+        const minorLine = m
+          ? `\n  minor (from "${m.source}"): Expr=${r(m.minorExpression)}, SU=${r(m.minorSoulUrge)}, Pers=${r(m.minorPersonality)}`
+          : '';
+        return `- ${p.fullName}${nick} (${p.relationship.toLowerCase()}, born ${dobLine})
+  core: LP=${r(c.lifePath)}, Expr=${r(c.expression)}, SU=${r(c.soulUrge)}, Pers=${r(c.personality)}, BD=${r(c.birthday)}
+  today's cycles: PD=${r(cyc.personalDay)}, PM=${r(cyc.personalMonth)}, PY=${r(cyc.personalYear)}${minorLine}`;
       })
       .join('\n');
     loaded.push('people');
