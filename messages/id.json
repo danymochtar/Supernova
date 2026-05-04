@@ -272,7 +272,19 @@
     "cyclesTitle": "Period Cycles",
     "cyclesSubtitle": "Tiga siklus besar — masa muda, kedewasaan, dan masa matang.",
     "age": "Usia",
-    "comingSoon": "Penjelasan untuk angka ini sedang kami siapkan."
+    "comingSoon": "Penjelasan untuk angka ini sedang kami siapkan.",
+    "essenceTitle": "Essence Cycle",
+    "essenceSubtitle": "Tiap huruf di nama kamu \"hidup\" sepanjang nilai numeriknya. Essence = jumlah huruf-huruf yang lagi aktif sekarang. Karmic debt (13/14/16/19) tidak di-reduce.",
+    "essenceNow": "Essence di umur {age}",
+    "physicalTransit": "Physical Transit",
+    "mentalTransit": "Mental Transit",
+    "spiritualTransit": "Spiritual Transit",
+    "fromFirstName": "dari {name}",
+    "fromMiddleName": "dari {name}",
+    "fromLastName": "dari {name}",
+    "noMiddleNameNote": "Kamu nggak punya middle name, jadi cuma ada Physical + Spiritual Transit.",
+    "upcomingShifts": "Pergeseran berikutnya",
+    "karmicTag": "Karmic {n}"
   },
   "people": {
     "title": "Orang-orang",

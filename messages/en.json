@@ -272,7 +272,19 @@
     "cyclesTitle": "Period Cycles",
     "cyclesSubtitle": "Three big cycles — youth, maturity, fullness.",
     "age": "Age",
-    "comingSoon": "Description for this number is still being curated."
+    "comingSoon": "Description for this number is still being curated.",
+    "essenceTitle": "Essence Cycle",
+    "essenceSubtitle": "Each letter of your name \"lives\" for as many years as its numeric value. Essence = sum of the letters currently active. Karmic debts (13/14/16/19) are preserved, not reduced.",
+    "essenceNow": "Essence at age {age}",
+    "physicalTransit": "Physical Transit",
+    "mentalTransit": "Mental Transit",
+    "spiritualTransit": "Spiritual Transit",
+    "fromFirstName": "from {name}",
+    "fromMiddleName": "from {name}",
+    "fromLastName": "from {name}",
+    "noMiddleNameNote": "You don't have a middle name, so only Physical + Spiritual Transits apply.",
+    "upcomingShifts": "Upcoming shifts",
+    "karmicTag": "Karmic {n}"
   },
   "people": {
     "title": "People",

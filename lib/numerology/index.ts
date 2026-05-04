@@ -30,6 +30,15 @@ export {
 } from './personal';
 export { buildCoreProfile } from './profile';
 export { ageAt } from './age';
+export {
+  activeTransit,
+  transitTimeline,
+  essenceAt,
+  essenceTimeline,
+  nextEssenceShift,
+  type TransitInfo,
+  type EssenceFrame,
+} from './essence';
 
 /** Render a NumerologyResult as "compound/intermediate/reduced" or "compound/reduced". */
 export function formatNumerology(r: { compound: number; reduced: number; isMaster: boolean }): string {

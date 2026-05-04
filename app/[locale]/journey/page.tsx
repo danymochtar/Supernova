@@ -10,6 +10,8 @@ import {
   challengeAt,
   contextFromInstant,
   cycleAt,
+  essenceAt,
+  essenceTimeline,
   personalYear,
   pinnacleAt,
   activeSlots,
@@ -67,6 +69,16 @@ export default async function JourneyPage({ params }: { params: { locale: string
   }));
 
   const thisYearMeaning = meaningFor('personalYear', thisYear.result, locale);
+
+  // Essence Cycle (Decoz). Compute today's frame + the next ~12 years of
+  // shifts so the user sees how their letters cascade.
+  const essenceNames = {
+    firstName: profile.firstName,
+    middleName: profile.middleName,
+    lastName: profile.lastName,
+  };
+  const essenceNow = essenceAt(essenceNames, age);
+  const essenceFuture = essenceTimeline(essenceNames, age, age + 15).slice(1, 6);
 
   return (
     <main className="container max-w-3xl space-y-10 px-4 py-6 sm:px-6 sm:py-10">
@@ -253,6 +265,150 @@ export default async function JourneyPage({ params }: { params: { locale: string
           </table>
         </div>
       </section>
+
+      {/* Essence Cycle — Transit letters + current Essence number */}
+      <section className="space-y-4">
+        <div className="space-y-1">
+          <h2 className="text-lg font-semibold">{t('essenceTitle')}</h2>
+          <p className="text-muted-foreground text-sm">{t('essenceSubtitle')}</p>
+        </div>
+
+        {/* Current Essence card */}
+        <article className="border-primary/40 from-primary/5 ring-primary/20 relative overflow-hidden rounded-2xl border-2 bg-gradient-to-br to-accent/10 p-6 ring-1 dark:to-accent/15">
+          <div className="flex flex-wrap items-baseline justify-between gap-2">
+            <p className="text-primary text-xs font-semibold uppercase tracking-wider">
+              {t('essenceNow', { age })}
+            </p>
+            {essenceNow.essence.karmicDebt ? (
+              <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-amber-900 dark:bg-amber-950 dark:text-amber-200">
+                {t('karmicTag', { n: essenceNow.essence.karmicDebt })}
+              </span>
+            ) : null}
+          </div>
+
+          <div className="mt-3 flex items-baseline gap-4">
+            <CompoundReduced result={essenceNow.essence} locale={locale} size="lg" />
+            <span className="font-serif text-muted-foreground text-2xl tracking-tight">
+              {essenceNow.letters}
+            </span>
+          </div>
+
+          {/* Active transit letters */}
+          <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
+            {essenceNow.physical ? (
+              <TransitChip
+                label={t('physicalTransit')}
+                hint={t('fromFirstName', { name: profile.firstName })}
+                letter={essenceNow.physical.letter}
+                value={essenceNow.physical.value}
+                rangeStart={essenceNow.physical.rangeStart}
+                rangeEnd={essenceNow.physical.rangeEnd}
+                ageLabel={t('age')}
+              />
+            ) : null}
+            {essenceNow.mental ? (
+              <TransitChip
+                label={t('mentalTransit')}
+                hint={t('fromMiddleName', { name: profile.middleName ?? '' })}
+                letter={essenceNow.mental.letter}
+                value={essenceNow.mental.value}
+                rangeStart={essenceNow.mental.rangeStart}
+                rangeEnd={essenceNow.mental.rangeEnd}
+                ageLabel={t('age')}
+              />
+            ) : null}
+            {essenceNow.spiritual ? (
+              <TransitChip
+                label={t('spiritualTransit')}
+                hint={t('fromLastName', { name: profile.lastName })}
+                letter={essenceNow.spiritual.letter}
+                value={essenceNow.spiritual.value}
+                rangeStart={essenceNow.spiritual.rangeStart}
+                rangeEnd={essenceNow.spiritual.rangeEnd}
+                ageLabel={t('age')}
+              />
+            ) : null}
+          </div>
+
+          {!profile.middleName ? (
+            <p className="text-muted-foreground mt-4 text-xs italic">
+              {t('noMiddleNameNote')}
+            </p>
+          ) : null}
+        </article>
+
+        {/* Upcoming shifts timeline */}
+        {essenceFuture.length > 0 ? (
+          <div>
+            <p className="text-muted-foreground mb-3 text-xs font-medium uppercase tracking-wider">
+              {t('upcomingShifts')}
+            </p>
+            <ol className="space-y-1">
+              {essenceFuture.map((frame) => (
+                <li key={frame.age}>
+                  <div className="flex justify-center py-1">
+                    <ChevronDown className="text-muted-foreground/50 h-4 w-4" aria-hidden />
+                  </div>
+                  <article className="border-border rounded-xl border bg-white/40 p-4 dark:bg-neutral-900/40">
+                    <header className="flex items-baseline justify-between gap-3">
+                      <div className="flex items-baseline gap-2">
+                        <span className="font-mono text-base font-semibold tabular-nums">
+                          {t('age')} {frame.age}
+                        </span>
+                        <span className="text-muted-foreground font-serif text-sm">
+                          {frame.letters}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {frame.essence.karmicDebt ? (
+                          <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-400">
+                            {t('karmicTag', { n: frame.essence.karmicDebt })}
+                          </span>
+                        ) : null}
+                        <CompoundReduced result={frame.essence} locale={locale} size="sm" />
+                      </div>
+                    </header>
+                  </article>
+                </li>
+              ))}
+            </ol>
+          </div>
+        ) : null}
+      </section>
     </main>
+  );
+}
+
+function TransitChip({
+  label,
+  hint,
+  letter,
+  value,
+  rangeStart,
+  rangeEnd,
+  ageLabel,
+}: {
+  label: string;
+  hint: string;
+  letter: string;
+  value: number;
+  rangeStart: number;
+  rangeEnd: number;
+  ageLabel: string;
+}) {
+  return (
+    <div className="border-border rounded-xl border bg-white/60 p-4 dark:bg-neutral-900/60">
+      <p className="text-muted-foreground text-[10px] font-semibold uppercase tracking-[0.18em]">
+        {label}
+      </p>
+      <div className="mt-1 flex items-baseline gap-2">
+        <span className="font-serif text-3xl font-semibold tracking-tight">{letter}</span>
+        <span className="text-muted-foreground font-mono text-sm tabular-nums">= {value}</span>
+      </div>
+      <p className="text-muted-foreground mt-1 text-xs tabular-nums">
+        {ageLabel} {rangeStart}–{rangeEnd}
+      </p>
+      <p className="text-muted-foreground mt-1 truncate text-[10px]">{hint}</p>
+    </div>
   );
 }
