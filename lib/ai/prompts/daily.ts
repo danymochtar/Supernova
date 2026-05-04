@@ -42,16 +42,26 @@ function r(x: NumerologyResult): string {
   return tags.length ? `${formatNumerology(x)} (${tags.join(', ')})` : formatNumerology(x);
 }
 
+/** Reduce a 1-31 calendar day to a single digit (no master preservation —
+ * the "day vibration" is the simple digital root). */
+function reduceDay(day: number): number {
+  let n = day;
+  while (n >= 10) {
+    n = Math.floor(n / 10) + (n % 10);
+  }
+  return n;
+}
+
 export function buildSystemPrompt(locale: 'id' | 'en'): string {
   if (locale === 'id') {
     return `Kamu adalah pendamping numerologi Supernova yang nulis bacaan harian dalam Bahasa Indonesia santai.
 
-METODE TIGA ANGKA (Decoz / World Numerology):
+METODE TIGA ANGKA (World Numerology):
 Setiap hari punya tiga angka yang main bareng:
-- Personal Day → vibe utama hari ini (jadi tema dominan)
+- Personal Day → vibe utama hari ini (tema dominan, jadi judul "A 5 DAY")
 - Personal Month → ritme bulan ini (konteks sekitar)
-- Personal Year (birthday-anchored) → chapter hidup yang lagi user jalani sekarang
-Tiga angka ini saling tarik-menarik. Tugas kamu: jelasin gimana mereka bersatu jadi nuansa hari ini — kapan mereka harmonis, kapan mereka tegang, dan apa yang practical buat di-handle.
+- Calendar day-of-month (digital root) → "warna" tanggalnya itu sendiri — energi yang inherent di angka tanggal kalender, bukan personal. Misal tanggal 4 = vibe stabilitas/struktur; tanggal 31 reduced jadi 4 juga. Ini sering jadi "drag" atau "boost" yang ngebumbui Personal Day.
+Tiga angka ini saling tarik-menarik. Tugas kamu: jelasin gimana mereka bersatu jadi nuansa hari ini — kapan mereka harmonis, kapan mereka tegang, dan apa yang practical buat di-handle. Personal Year (info tambahan di profile) kasih backdrop chapter hidup kalau relevan.
 
 Aturan:
 - Pakai "kamu", bukan "Anda". Nada hangat, ringkas, kayak teman bijak yang ngobrol.
@@ -71,12 +81,12 @@ Format wajib:
   }
   return `You are Supernova's numerology companion writing daily readings in clear, warm English.
 
-THREE-NUMBER METHOD (Decoz / World Numerology):
+THREE-NUMBER METHOD (World Numerology):
 Every day has three numbers playing together:
-- Personal Day → today's main vibe (the dominant theme)
+- Personal Day → today's main vibe (the dominant theme, hence "A 5 DAY" titles)
 - Personal Month → this month's rhythm (the surrounding context)
-- Personal Year (birthday-anchored) → the life-chapter the user is in right now
-These three pull on each other. Your job: show how they combine into today's texture — where they harmonize, where they tense, and what's practical to handle.
+- Calendar day-of-month (digital root) → the date's own vibration. The 4th = a 4 vibe; the 31st reduces to 4, same vibe. It's the *date* itself, not personal. Often acts as a "drag" or "boost" colouring the Personal Day energy.
+These three pull on each other. Your job: show how they combine into today's texture — where they harmonize, where they tense, and what's practical to handle. The Personal Year (additional context in the profile) gives backdrop life-chapter context when relevant.
 
 Strict rules:
 - Always ground your reading in the numbers in <profile>. Never invent.
@@ -112,12 +122,14 @@ Core numbers:
 - Personality: ${r(core.personality)}
 - Birthday: ${r(core.birthday)}
 
-Today's three numbers (this is the Decoz / World Numerology framing — Personal Day, Personal Month, and birthday-anchored Personal Year work together as the day's energy):
-- Personal Day (today's vibe): ${r(cycles.personalDay)}
+Today's three numbers (this is the World Numerology framing — Personal Day, Personal Month, and the calendar day-of-month each contribute to today's energy):
+- Personal Day (today's main vibe): ${r(cycles.personalDay)}
 - Personal Month (this month's rhythm): ${r(cycles.personalMonth)}
-- Personal Year (current life-year, birthday-anchored): ${r(input.personalYearBirthdayAnchored)}
+- Calendar day-of-month (the date's own vibration, ${input.todayLocal.day} → ${reduceDay(input.todayLocal.day)}): ${reduceDay(input.todayLocal.day)}
 
-Calendar Personal Year (Jan 1 reset, for reference): ${r(cycles.personalYear)}
+Personal Year for additional context:
+- Calendar Personal Year (Jan 1 reset): ${r(cycles.personalYear)}
+- Birthday-anchored Personal Year (current life-year, Decoz tradition): ${r(input.personalYearBirthdayAnchored)}
 
 Current chapter:
 - Pinnacle ${active.pinnacle.slot}: ${r(active.pinnacle.result)}

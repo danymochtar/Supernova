@@ -9,9 +9,10 @@ interface Props {
   dayTitle: string;
   /** Pre-localized "A 5 DAY" / "HARI 5" suffix. */
   daySuffix: string;
-  /** Today's three numbers — Personal Day / Personal Month / Personal Year
-   * (birthday-anchored). Rendered as a small triple inline with the title. */
-  triple?: { day: number; month: number; year: number };
+  /** Today's three numbers — Personal Day / Personal Month / calendar day-of-month
+   * (digital root). Rendered as a small staircase inline with the title,
+   * mirroring World Numerology's "today's numbers are X, Y, Z" framing. */
+  triple?: { day: number; month: number; date: number };
   /** UI strings (already translated). */
   labels: {
     todaysTheme: string;
@@ -67,7 +68,7 @@ export function DailyReadingView({ body, dateLabel, dayTitle, daySuffix, triple,
                 <span className="text-primary">{triple.day}</span>
                 <span className="text-accent translate-y-1">{triple.month}</span>
                 <span className="text-emerald-600 translate-y-2 dark:text-emerald-400">
-                  {triple.year}
+                  {triple.date}
                 </span>
               </div>
             ) : null}

@@ -13,7 +13,6 @@ import {
   contextFromInstant,
   cycleAt,
   personalCycles,
-  personalYearBirthdayAnchored,
   pinnacleAt,
 } from '@/lib/numerology';
 import { NumberCard } from '@/components/numerology/NumberCard';
@@ -65,7 +64,13 @@ export default async function DashboardPage({ params }: { params: { locale: stri
   const core = buildCoreProfile(profile.fullName, profile.dob);
   const ctx = contextFromInstant(new Date(), profile.timezone);
   const cycles = personalCycles(profile.dob, ctx);
-  const pyBirthday = personalYearBirthdayAnchored(profile.dob, ctx);
+  // World Numerology's "today's numbers are X, Y, Z" framing: PD, PM, and
+  // the calendar day-of-month digital root. May 4 → 4; May 31 → 4 (3+1).
+  const dayOfMonthReduced = (() => {
+    let n = ctx.day;
+    while (n >= 10) n = Math.floor(n / 10) + (n % 10);
+    return n;
+  })();
   const age = ageAt(profile.dob, ctx);
   const slots = activeSlots(profile.dob, age);
 
@@ -122,7 +127,7 @@ export default async function DashboardPage({ params }: { params: { locale: stri
             triple={{
               day: cycles.personalDay.reduced,
               month: cycles.personalMonth.reduced,
-              year: pyBirthday.reduced,
+              date: dayOfMonthReduced,
             }}
             labels={{
               todaysTheme: tReading('todaysTheme'),
