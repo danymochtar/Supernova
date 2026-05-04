@@ -6,14 +6,9 @@ import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import {
-  activeSlots,
-  ageAt,
   buildCoreProfile,
-  challengeAt,
   contextFromInstant,
-  cycleAt,
   personalCycles,
-  pinnacleAt,
 } from '@/lib/numerology';
 import { NumberCard } from '@/components/numerology/NumberCard';
 import { AboutMe } from '@/components/numerology/AboutMe';
@@ -71,13 +66,6 @@ export default async function DashboardPage({ params }: { params: { locale: stri
     while (n >= 10) n = Math.floor(n / 10) + (n % 10);
     return n;
   })();
-  const age = ageAt(profile.dob, ctx);
-  const slots = activeSlots(profile.dob, age);
-
-  const activePinnacle = pinnacleAt(core.pinnacles, slots.pinnacle);
-  const activeChallenge = challengeAt(core.challenges, slots.challenge);
-  const activeCycle = cycleAt(core.periodCycles, slots.cycle);
-
   const todayStart = new Date(Date.UTC(ctx.year, ctx.month - 1, ctx.day));
   const todayEnd = new Date(todayStart);
   todayEnd.setUTCDate(todayEnd.getUTCDate() + 1);
@@ -192,61 +180,16 @@ export default async function DashboardPage({ params }: { params: { locale: stri
               birthday: t('birthday'),
               karmicLessons: t('karmicLessonsTitle'),
             }}
+            numbers={{
+              lifePath: core.lifePath,
+              expression: core.expression,
+              soulUrge: core.soulUrge,
+              personality: core.personality,
+              birthday: core.birthday,
+              karmicLessons: core.karmicLessons,
+            }}
+            locale={locale}
           />
-        );
-      case 'core':
-        return (
-          <Widget key={id} title={t('coreTitle')} defaultOpen={false}>
-            <div className="-mx-5">
-              <div className="scroll-px-5 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                {[
-                  { label: t('lifePath'), hint: t('lifePathHint'), result: core.lifePath, type: 'lifePath' as const },
-                  { label: t('expression'), hint: t('expressionHint'), result: core.expression, type: 'expression' as const },
-                  { label: t('soulUrge'), hint: t('soulUrgeHint'), result: core.soulUrge, type: 'soulUrge' as const },
-                  { label: t('personality'), hint: t('personalityHint'), result: core.personality, type: 'personality' as const },
-                  { label: t('birthday'), hint: t('birthdayHint'), result: core.birthday, type: 'birthday' as const },
-                ].map((c) => (
-                  <div key={c.type} className="w-[80%] shrink-0 snap-start sm:w-[44%] md:w-[32%]">
-                    <NumberCard
-                      label={c.label}
-                      hint={c.hint}
-                      result={c.result}
-                      locale={locale}
-                      type={c.type}
-                      meaning={meaningFor(c.type, c.result, locale)}
-                      comingSoonLabel={t('meaningComingSoon')}
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </Widget>
-        );
-      case 'chapter':
-        return (
-          <Widget key={id} title={t('currentChapterTitle')} hint={t('currentChapterSubtitle', { age })} defaultOpen={false}>
-            <div className="-mx-5">
-              <div className="scroll-px-5 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                {[
-                  { label: `${t('pinnacle')} ${slots.pinnacle}`, hint: t('pinnacleHint'), result: activePinnacle, type: 'pinnacle' as const },
-                  { label: `${t('challenge')} ${slots.challenge}`, hint: t('challengeHint'), result: activeChallenge, type: 'challenge' as const },
-                  { label: `${t('cycle')} ${slots.cycle}`, hint: t('cycleHint'), result: activeCycle, type: 'cycle' as const },
-                ].map((c) => (
-                  <div key={c.type} className="w-[80%] shrink-0 snap-start sm:w-[44%] md:w-[32%]">
-                    <NumberCard
-                      label={c.label}
-                      hint={c.hint}
-                      result={c.result}
-                      locale={locale}
-                      type={c.type}
-                      meaning={meaningFor(c.type, c.result, locale)}
-                      comingSoonLabel={t('meaningComingSoon')}
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </Widget>
         );
       case 'karmic':
         return (
@@ -260,24 +203,6 @@ export default async function DashboardPage({ params }: { params: { locale: stri
               comingSoonLabel={t('meaningComingSoon')}
             />
           </Widget>
-        );
-      case 'journey':
-        return (
-          <Link
-            key={id}
-            href={`/${locale}/journey`}
-            className="border-border hover:bg-muted/30 press-soft group block rounded-xl border p-5 transition-colors"
-          >
-            <div className="flex items-center justify-between gap-3">
-              <div>
-                <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider">
-                  {t('seeFullJourney')}
-                </p>
-                <p className="mt-1 font-medium">{t('seeFullJourneyHint')}</p>
-              </div>
-              <span className="text-muted-foreground text-2xl transition group-hover:translate-x-1">→</span>
-            </div>
-          </Link>
         );
       default:
         return null;

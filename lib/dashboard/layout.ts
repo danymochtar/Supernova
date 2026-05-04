@@ -5,13 +5,10 @@
  */
 
 export const WIDGET_IDS = [
-  'reading', // daily AI reading (now also hosts PD/PM/PY behind a tap)
+  'reading', // daily AI reading (also hosts PD/PM/PY behind a tap)
   'feedback', // end-of-day journal prompt (auto-hides if chat active)
-  'aboutMe', // AI synthesis paragraph
-  'core', // 5 core numbers
-  'chapter', // active pinnacle/challenge/cycle
+  'aboutMe', // AI synthesis carousel — now includes per-component numbers
   'karmic', // karmic lessons chips
-  'journey', // CTA to /journey
 ] as const;
 
 export type WidgetId = (typeof WIDGET_IDS)[number];
