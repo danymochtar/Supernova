@@ -310,6 +310,7 @@
     "subtitle": "View profiles & compatibility for the important people in your life.",
     "backToDashboard": "Back to dashboard",
     "addCta": "Add person",
+    "editPerson": "Edit {name}",
     "deletePerson": "Delete {name}",
     "emptyTitle": "No people yet",
     "emptyBody": "Add a partner, family member, friend, or colleague to see their numerology.",

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-import { Plus, HeartHandshake, ChevronRight, Trash2 } from 'lucide-react';
+import { Plus, HeartHandshake, ChevronRight, Pencil, Trash2 } from 'lucide-react';
 import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { listPeople } from '@/lib/db/repositories/person';
@@ -52,7 +52,7 @@ export default async function PeoplePage({ params }: { params: { locale: string 
           {people.map((p) => (
             <div
               key={p.id}
-              className="border-border group relative flex items-stretch overflow-hidden rounded-xl border transition-colors hover:bg-muted/30"
+              className="border-border flex items-stretch overflow-hidden rounded-xl border transition-colors hover:bg-muted/30"
             >
               <Link
                 href={`/${locale}/people/${p.id}`}
@@ -70,13 +70,21 @@ export default async function PeoplePage({ params }: { params: { locale: string 
                 </div>
                 <ChevronRight className="text-muted-foreground h-4 w-4 shrink-0" aria-hidden />
               </Link>
+              <Link
+                href={`/${locale}/people/${p.id}/edit`}
+                aria-label={t('editPerson', { name: p.fullName })}
+                title={t('editPerson', { name: p.fullName })}
+                className="text-muted-foreground hover:bg-muted/40 hover:text-foreground flex w-11 items-center justify-center border-l border-border transition-colors"
+              >
+                <Pencil className="h-4 w-4" aria-hidden />
+              </Link>
               <form action={deletePersonAction} className="flex items-stretch">
                 <input type="hidden" name="id" value={p.id} />
                 <input type="hidden" name="locale" value={locale} />
                 <button
                   type="submit"
                   aria-label={t('deletePerson', { name: p.fullName })}
-                  className="text-muted-foreground hover:bg-red-50 hover:text-red-700 dark:hover:bg-red-950/40 dark:hover:text-red-400 flex w-12 items-center justify-center transition-colors"
+                  className="text-muted-foreground hover:bg-red-50 hover:text-red-700 dark:hover:bg-red-950/40 dark:hover:text-red-400 flex w-11 items-center justify-center border-l border-border transition-colors"
                 >
                   <Trash2 className="h-4 w-4" aria-hidden />
                 </button>
