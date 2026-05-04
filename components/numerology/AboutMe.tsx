@@ -2,8 +2,10 @@ import { Sparkles } from 'lucide-react';
 import type { ParsedAboutMe } from '@/lib/ai/prompts/aboutMe';
 import type { MinorNumbers, NumerologyResult } from '@/lib/numerology';
 import type { Locale } from '@/lib/i18n/config';
+import { meaningFor } from '@/lib/numerology/meanings';
 import { Explainer } from '@/components/layout/Explainer';
 import { CompoundReduced } from './CompoundReduced';
+import { NumberCard } from './NumberCard';
 
 type CardKey = 'lifePath' | 'expression' | 'soulUrge' | 'personality' | 'birthday' | 'karmicLessons';
 
@@ -27,17 +29,21 @@ interface Props {
   locale?: Locale;
   /** Optional educational disclosure shown under the subtitle. */
   explainer?: { title: string; body: string };
-  /** Minor Numbers from the user's nickname, when one is set. Surfaced as a
-   * small chip row beneath the synthesis card so the user can see "the
-   * me people actually call" alongside the deep birth-name self. */
+  /** Minor Numbers from the user's nickname, when one is set. Surfaced as
+   * three tap-to-reveal NumberCards beneath the synthesis card so the
+   * user can see "the me people actually call" alongside the deep
+   * birth-name self. */
   minor?: MinorNumbers | null;
   /** Translated labels for the minor block. */
   minorLabels?: {
-    heading: string;
     expression: string;
     soulUrge: string;
     personality: string;
   };
+  /** Optional Explainer for the Minor concept. */
+  minorExplainer?: { title: string; body: string };
+  /** "Coming soon" string for unmapped meanings. */
+  comingSoonLabel?: string;
 }
 
 const CARD_ORDER = [
@@ -66,6 +72,8 @@ export function AboutMe({
   explainer,
   minor,
   minorLabels,
+  minorExplainer,
+  comingSoonLabel,
 }: Props) {
   if (!data) {
     return (
@@ -104,14 +112,35 @@ export function AboutMe({
       ) : null}
 
       {minor && minorLabels ? (
-        <div className="border-border rounded-xl border bg-white/40 p-4 dark:bg-neutral-900/40">
-          <p className="text-muted-foreground text-[11px] font-semibold uppercase tracking-[0.18em]">
-            {minorLabels.heading} · <span className="font-serif text-foreground italic normal-case tracking-normal">{minor.source}</span>
-          </p>
-          <div className="mt-3 grid grid-cols-3 gap-3">
-            <MinorChip label={minorLabels.expression} result={minor.minorExpression} locale={locale} />
-            <MinorChip label={minorLabels.soulUrge} result={minor.minorSoulUrge} locale={locale} />
-            <MinorChip label={minorLabels.personality} result={minor.minorPersonality} locale={locale} />
+        <div className="space-y-3">
+          {minorExplainer ? (
+            <Explainer title={minorExplainer.title} body={minorExplainer.body} />
+          ) : null}
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+            <NumberCard
+              label={minorLabels.expression}
+              result={minor.minorExpression}
+              locale={locale}
+              type="expression"
+              meaning={meaningFor('expression', minor.minorExpression, locale)}
+              comingSoonLabel={comingSoonLabel}
+            />
+            <NumberCard
+              label={minorLabels.soulUrge}
+              result={minor.minorSoulUrge}
+              locale={locale}
+              type="soulUrge"
+              meaning={meaningFor('soulUrge', minor.minorSoulUrge, locale)}
+              comingSoonLabel={comingSoonLabel}
+            />
+            <NumberCard
+              label={minorLabels.personality}
+              result={minor.minorPersonality}
+              locale={locale}
+              type="personality"
+              meaning={meaningFor('personality', minor.minorPersonality, locale)}
+              comingSoonLabel={comingSoonLabel}
+            />
           </div>
         </div>
       ) : null}
@@ -161,21 +190,3 @@ export function AboutMe({
   );
 }
 
-function MinorChip({
-  label,
-  result,
-  locale,
-}: {
-  label: string;
-  result: NumerologyResult;
-  locale: Locale;
-}) {
-  return (
-    <div className="space-y-0.5 text-center">
-      <p className="text-muted-foreground text-[10px] font-medium uppercase tracking-wide">
-        {label}
-      </p>
-      <CompoundReduced result={result} locale={locale} size="sm" />
-    </div>
-  );
-}

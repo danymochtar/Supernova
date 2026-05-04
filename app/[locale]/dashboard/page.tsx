@@ -197,11 +197,15 @@ export default async function DashboardPage({ params }: { params: { locale: stri
             }}
             minor={minor}
             minorLabels={{
-              heading: t('minorHeading'),
               expression: t('minorExpression'),
               soulUrge: t('minorSoulUrge'),
               personality: t('minorPersonality'),
             }}
+            minorExplainer={{
+              title: t('explainerLearnMore'),
+              body: t('minorExplainer'),
+            }}
+            comingSoonLabel={t('meaningComingSoon')}
           />
         );
       case 'karmic':

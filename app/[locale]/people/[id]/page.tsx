@@ -16,9 +16,9 @@ import { compatibilityScore } from '@/lib/compatibility/score';
 import { detectPatterns } from '@/lib/compatibility/patterns';
 import { getOrGenerateRelationshipProfile } from '@/lib/ai/relationship';
 import { meaningFor } from '@/lib/numerology/meanings';
-import { CompoundReduced } from '@/components/numerology/CompoundReduced';
 import { NumberCard } from '@/components/numerology/NumberCard';
 import { TopBar } from '@/components/layout/TopBar';
+import { Explainer } from '@/components/layout/Explainer';
 
 export const maxDuration = 60;
 export const dynamic = 'force-dynamic';
@@ -148,17 +148,36 @@ export default async function PersonDetailPage({
             </div>
           </div>
           {minor ? (
-            <div className="border-border rounded-xl border bg-white/40 p-4 dark:bg-neutral-900/40">
-              <p className="text-muted-foreground text-[11px] font-semibold uppercase tracking-[0.18em]">
-                {t('minorHeading')} ·{' '}
-                <span className="text-foreground font-serif italic normal-case tracking-normal">
-                  {minor.source}
-                </span>
-              </p>
-              <div className="mt-3 grid grid-cols-3 gap-2">
-                <SummaryNumber label={t('minorExpression')} result={minor.minorExpression} locale={locale} />
-                <SummaryNumber label={t('minorSoulUrge')} result={minor.minorSoulUrge} locale={locale} />
-                <SummaryNumber label={t('minorPersonality')} result={minor.minorPersonality} locale={locale} />
+            <div className="space-y-3">
+              <Explainer
+                title={tDash('explainerLearnMore')}
+                body={tDash('minorExplainer')}
+              />
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                <NumberCard
+                  label={t('minorExpression')}
+                  result={minor.minorExpression}
+                  locale={locale}
+                  type="expression"
+                  meaning={meaningFor('expression', minor.minorExpression, locale)}
+                  comingSoonLabel={tDash('meaningComingSoon')}
+                />
+                <NumberCard
+                  label={t('minorSoulUrge')}
+                  result={minor.minorSoulUrge}
+                  locale={locale}
+                  type="soulUrge"
+                  meaning={meaningFor('soulUrge', minor.minorSoulUrge, locale)}
+                  comingSoonLabel={tDash('meaningComingSoon')}
+                />
+                <NumberCard
+                  label={t('minorPersonality')}
+                  result={minor.minorPersonality}
+                  locale={locale}
+                  type="personality"
+                  meaning={meaningFor('personality', minor.minorPersonality, locale)}
+                  comingSoonLabel={tDash('meaningComingSoon')}
+                />
               </div>
             </div>
           ) : null}
@@ -250,19 +269,3 @@ export default async function PersonDetailPage({
   );
 }
 
-function SummaryNumber({
-  label,
-  result,
-  locale,
-}: {
-  label: string;
-  result: { compound: number; reduced: number; isMaster: boolean; karmicDebt?: 13 | 14 | 16 | 19 };
-  locale: Locale;
-}) {
-  return (
-    <div className="space-y-1 text-center">
-      <p className="text-muted-foreground text-[10px] font-medium uppercase tracking-wide">{label}</p>
-      <CompoundReduced result={result} locale={locale} size="sm" />
-    </div>
-  );
-}
