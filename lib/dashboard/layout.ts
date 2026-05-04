@@ -5,10 +5,9 @@
  */
 
 export const WIDGET_IDS = [
-  'reading', // daily AI reading
+  'reading', // daily AI reading (now also hosts PD/PM/PY behind a tap)
   'feedback', // end-of-day journal prompt (auto-hides if chat active)
   'aboutMe', // AI synthesis paragraph
-  'today', // PD/PM/PY trio
   'core', // 5 core numbers
   'chapter', // active pinnacle/challenge/cycle
   'karmic', // karmic lessons chips

@@ -88,7 +88,6 @@
     "reading": "Daily reading",
     "feedback": "Daily check-in",
     "aboutMe": "About you",
-    "today": "Today (PD/PM/PY)",
     "core": "Core profile",
     "chapter": "Current chapter",
     "karmic": "Karmic Lessons",
@@ -206,7 +205,9 @@
     "daySuffix": "A {n} DAY",
     "affirmation": "Affirmation",
     "fallback": "Today's reading isn't ready yet. Try refreshing in a moment.",
-    "oncePerDay": "One reading per day"
+    "oncePerDay": "One reading per day",
+    "showNumbers": "Show today's numbers",
+    "hideNumbers": "Hide numbers"
   },
   "chat": {
     "title": "Talk to Supernova",

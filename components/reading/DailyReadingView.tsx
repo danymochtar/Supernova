@@ -1,4 +1,7 @@
-import { Sparkles } from 'lucide-react';
+'use client';
+
+import { useState, type ReactNode } from 'react';
+import { ChevronDown, Sparkles } from 'lucide-react';
 import { parseReading } from '@/lib/ai/prompts/daily';
 
 interface Props {
@@ -9,10 +12,17 @@ interface Props {
   dayTitle: string;
   /** Pre-localized "A 5 DAY" / "HARI 5" suffix. */
   daySuffix: string;
-  /** Today's three numbers — Personal Day / Personal Month / calendar day-of-month
-   * (digital root). Rendered as a small staircase inline with the title,
-   * mirroring World Numerology's "today's numbers are X, Y, Z" framing. */
+  /** Today's three numbers — Personal Day / Personal Month / calendar
+   * day-of-month digital root. Rendered as a small staircase that doubles
+   * as the toggle button for the expandable numbers panel below. */
   triple?: { day: number; month: number; date: number };
+  /** Pre-rendered Personal Day / Month / Year cards to reveal when the
+   * user taps the triple. Stays mounted but hidden when collapsed so the
+   * inner click-to-expand-meaning state survives. */
+  numbers?: ReactNode;
+  /** "Show numbers" / "Hide numbers" labels. */
+  showLabel?: string;
+  hideLabel?: string;
   /** UI strings (already translated). */
   labels: {
     todaysTheme: string;
@@ -23,10 +33,23 @@ interface Props {
 
 /**
  * Hero card for today's reading. Auto-generated server-side — there is no
- * manual generate button. When the AI call fails we show a graceful fallback
- * so the page still renders.
+ * manual generate button. The triple in the corner doubles as a tap target
+ * that reveals Personal Day / Month / Year cards underneath, each of which
+ * itself opens to show the meaning. Defaults closed so the page is calm.
  */
-export function DailyReadingView({ body, dateLabel, dayTitle, daySuffix, triple, labels }: Props) {
+export function DailyReadingView({
+  body,
+  dateLabel,
+  dayTitle,
+  daySuffix,
+  triple,
+  numbers,
+  showLabel = 'Lihat angka hari ini',
+  hideLabel = 'Sembunyikan angka',
+  labels,
+}: Props) {
+  const [showNumbers, setShowNumbers] = useState(false);
+
   if (!body) {
     return (
       <section className="border-border rounded-3xl border bg-gradient-to-br from-primary/10 to-accent/10 p-6 text-center dark:from-primary/20 dark:to-accent/20">
@@ -42,6 +65,8 @@ export function DailyReadingView({ body, dateLabel, dayTitle, daySuffix, triple,
     .map((p) => p.trim())
     .filter(Boolean);
 
+  const tripleCanToggle = Boolean(triple && numbers);
+
   return (
     <section className="border-border overflow-hidden rounded-3xl border bg-white shadow-sm dark:bg-neutral-900">
       <div className="bg-gradient-to-r from-accent via-accent to-amber-300 px-5 py-3 text-amber-950">
@@ -54,7 +79,7 @@ export function DailyReadingView({ body, dateLabel, dayTitle, daySuffix, triple,
       <div className="space-y-5 px-6 py-6 sm:px-7">
         {dayTitle ? (
           <div className="flex items-start justify-between gap-4">
-            <div className="space-y-1">
+            <div className="min-w-0 space-y-1">
               <p className="text-muted-foreground text-[11px] font-semibold uppercase tracking-[0.18em]">
                 {labels.todaysTheme}
                 {daySuffix ? <span className="text-accent ml-2">· {daySuffix}</span> : null}
@@ -64,13 +89,36 @@ export function DailyReadingView({ body, dateLabel, dayTitle, daySuffix, triple,
               </h2>
             </div>
             {triple ? (
-              <div className="font-serif relative -mt-1 flex shrink-0 items-end gap-0.5 text-3xl font-semibold leading-none tracking-tight sm:text-4xl">
-                <span className="text-primary">{triple.day}</span>
-                <span className="text-accent translate-y-1">{triple.month}</span>
-                <span className="text-emerald-600 translate-y-2 dark:text-emerald-400">
-                  {triple.date}
-                </span>
-              </div>
+              tripleCanToggle ? (
+                <button
+                  type="button"
+                  onClick={() => setShowNumbers((v) => !v)}
+                  aria-expanded={showNumbers}
+                  aria-label={showNumbers ? hideLabel : showLabel}
+                  title={showNumbers ? hideLabel : showLabel}
+                  className="press-soft hover:bg-muted/40 -mr-2 flex shrink-0 items-end gap-0.5 rounded-2xl px-2 py-1 text-3xl font-semibold leading-none tracking-tight transition-colors sm:text-4xl"
+                >
+                  <span className="text-primary font-serif">{triple.day}</span>
+                  <span className="text-accent font-serif translate-y-1">{triple.month}</span>
+                  <span className="text-emerald-600 font-serif translate-y-2 dark:text-emerald-400">
+                    {triple.date}
+                  </span>
+                  <ChevronDown
+                    className={`text-muted-foreground ml-1 h-4 w-4 self-end transition-transform ${
+                      showNumbers ? 'rotate-180' : ''
+                    }`}
+                    aria-hidden
+                  />
+                </button>
+              ) : (
+                <div className="font-serif relative -mt-1 flex shrink-0 items-end gap-0.5 text-3xl font-semibold leading-none tracking-tight sm:text-4xl">
+                  <span className="text-primary">{triple.day}</span>
+                  <span className="text-accent translate-y-1">{triple.month}</span>
+                  <span className="text-emerald-600 translate-y-2 dark:text-emerald-400">
+                    {triple.date}
+                  </span>
+                </div>
+              )
             ) : null}
           </div>
         ) : null}
@@ -92,6 +140,15 @@ export function DailyReadingView({ body, dateLabel, dayTitle, daySuffix, triple,
             <p className="font-serif text-base italic leading-snug text-neutral-800 dark:text-neutral-100">
               {parsed.affirmation}
             </p>
+          </div>
+        ) : null}
+
+        {tripleCanToggle ? (
+          <div
+            className={`border-border/60 border-t pt-4 ${showNumbers ? 'block' : 'hidden'}`}
+            aria-hidden={!showNumbers}
+          >
+            {numbers}
           </div>
         ) : null}
       </div>

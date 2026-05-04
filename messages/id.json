@@ -88,7 +88,6 @@
     "reading": "Bacaan harian",
     "feedback": "Catatan harian",
     "aboutMe": "Tentang kamu",
-    "today": "Hari ini (PD/PM/PY)",
     "core": "Profil inti",
     "chapter": "Babak saat ini",
     "karmic": "Karmic Lessons",
@@ -206,7 +205,9 @@
     "daySuffix": "HARI {n}",
     "affirmation": "Afirmasi",
     "fallback": "Bacaan hari ini belum bisa dibuat. Coba refresh sebentar lagi.",
-    "oncePerDay": "Satu bacaan per hari"
+    "oncePerDay": "Satu bacaan per hari",
+    "showNumbers": "Lihat angka hari ini",
+    "hideNumbers": "Sembunyikan angka"
   },
   "chat": {
     "title": "Curhat ke Supernova",

@@ -129,6 +129,36 @@ export default async function DashboardPage({ params }: { params: { locale: stri
               month: cycles.personalMonth.reduced,
               date: dayOfMonthReduced,
             }}
+            showLabel={tReading('showNumbers')}
+            hideLabel={tReading('hideNumbers')}
+            numbers={
+              <div className="space-y-3">
+                <NumberCard
+                  label={t('personalDay')}
+                  result={cycles.personalDay}
+                  locale={locale}
+                  type="personalDay"
+                  meaning={meaningFor('personalDay', cycles.personalDay, locale)}
+                  comingSoonLabel={t('meaningComingSoon')}
+                />
+                <NumberCard
+                  label={t('personalMonth')}
+                  result={cycles.personalMonth}
+                  locale={locale}
+                  type="personalMonth"
+                  meaning={meaningFor('personalMonth', cycles.personalMonth, locale)}
+                  comingSoonLabel={t('meaningComingSoon')}
+                />
+                <NumberCard
+                  label={t('personalYear')}
+                  result={cycles.personalYear}
+                  locale={locale}
+                  type="personalYear"
+                  meaning={meaningFor('personalYear', cycles.personalYear, locale)}
+                  comingSoonLabel={t('meaningComingSoon')}
+                />
+              </div>
+            }
             labels={{
               todaysTheme: tReading('todaysTheme'),
               affirmation: tReading('affirmation'),
@@ -163,16 +193,6 @@ export default async function DashboardPage({ params }: { params: { locale: stri
               karmicLessons: t('karmicLessonsTitle'),
             }}
           />
-        );
-      case 'today':
-        return (
-          <Widget key={id} title={t('todayTitle')}>
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-              <NumberCard label={t('personalDay')} result={cycles.personalDay} locale={locale} type="personalDay" meaning={meaningFor('personalDay', cycles.personalDay, locale)} comingSoonLabel={t('meaningComingSoon')} />
-              <NumberCard label={t('personalMonth')} result={cycles.personalMonth} locale={locale} type="personalMonth" meaning={meaningFor('personalMonth', cycles.personalMonth, locale)} comingSoonLabel={t('meaningComingSoon')} />
-              <NumberCard label={t('personalYear')} result={cycles.personalYear} locale={locale} type="personalYear" meaning={meaningFor('personalYear', cycles.personalYear, locale)} comingSoonLabel={t('meaningComingSoon')} />
-            </div>
-          </Widget>
         );
       case 'core':
         return (
