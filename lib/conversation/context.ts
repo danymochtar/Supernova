@@ -5,7 +5,7 @@ import { getReadingForLocalDay } from '@/lib/db/repositories/reading';
 import { getRecentFeedback } from '@/lib/db/repositories/feedback';
 import { listSummaries } from '@/lib/db/repositories/conversationSummary';
 import { aggregate, promptSummary } from '@/lib/patterns/aggregate';
-import { buildCoreProfile, formatNumerology } from '@/lib/numerology';
+import { ageAt, buildCoreProfile, formatNumerology, personalCycles } from '@/lib/numerology';
 import type { BirthDate } from '@/lib/numerology/types';
 import type { ProfileView } from '@/lib/db/repositories/profile';
 
@@ -77,13 +77,23 @@ export async function loadSmartContext(opts: LoadOpts): Promise<SmartContext> {
   const loaded: string[] = ['base'];
 
   // ---- Base (always) -----------------------------------------------------
+  // Includes DOB and today's personal cycles directly. These are cheap
+  // (pure functions, no DB) and high-value — most chat questions reference
+  // "this year", "today", "my Personal Day/Month/Year", and the model
+  // shouldn't have to ask the user for data we already know.
   const core = buildCoreProfile(profile.fullName, dob);
+  const cycles = personalCycles(dob, ctx);
+  const age = ageAt(dob, ctx);
+  const dobStr = `${dob.year}-${String(dob.month).padStart(2, '0')}-${String(dob.day).padStart(2, '0')}`;
   const todayDate = `${ctx.year}-${String(ctx.month).padStart(2, '0')}-${String(ctx.day).padStart(2, '0')}`;
   const base = `<profile>
 name: ${profile.fullName}
+date of birth: ${dobStr}
+age: ${age}
 today (${profile.timezone}): ${todayDate}
-core numbers: LP=${r(core.lifePath)}, Expression=${r(core.expression)}, Soul Urge=${r(core.soulUrge)}, Personality=${r(core.personality)}, Birthday=${r(core.birthday)}
+core numbers: Life Path=${r(core.lifePath)}, Expression=${r(core.expression)}, Soul Urge=${r(core.soulUrge)}, Personality=${r(core.personality)}, Birthday=${r(core.birthday)}
 karmic lessons: ${core.karmicLessons.length ? core.karmicLessons.join(', ') : 'none'}
+today's cycles: Personal Year=${r(cycles.personalYear)}, Personal Month=${r(cycles.personalMonth)}, Personal Day=${r(cycles.personalDay)}
 </profile>`;
 
   const result: SmartContext = { base, loaded };
