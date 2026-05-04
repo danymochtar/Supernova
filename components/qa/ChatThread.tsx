@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useTransition } from 'react';
 import { useTranslations } from 'next-intl';
 import { ArrowUp, Square, Sparkles, Trash2 } from 'lucide-react';
 import type { DeleteTurnResult } from '@/app/[locale]/ask/actions';
+import { renderInlineMd } from './inlineMd';
 
 export interface ChatTurn {
   id: string;
@@ -352,7 +353,7 @@ function Pair({
       </div>
       <div className="flex justify-start">
         <div className="border-border max-w-[80%] whitespace-pre-wrap rounded-2xl rounded-tl-md border bg-white/60 px-4 py-2.5 text-sm dark:bg-neutral-900/60">
-          {answer}
+          {renderInlineMd(answer)}
           {streaming ? (
             <span className="ml-1 inline-block h-3 w-1.5 animate-pulse bg-neutral-400 align-middle" />
           ) : null}
