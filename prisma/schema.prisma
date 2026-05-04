@@ -127,7 +127,12 @@ model Profile {
   user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   firstName       String
   middleName      String?
-  lastName        String
+  lastName        String?
+  // Optional nickname / commonly-used name. Some people are called by
+  // something quite different from their birth name (e.g. Chinese name vs
+  // everyday English nickname). Used to compute Minor numbers — the
+  // day-to-day energy of how the person is publicly known.
+  nickname        String?
   dob             DateTime @db.Date
   timezone        String   @default("Asia/Jakarta")
   locale          String   @default("id")
@@ -177,7 +182,9 @@ model Person {
   user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   firstName    String
   middleName   String?
-  lastName     String
+  lastName     String?
+  // Optional nickname / call-by name — see Profile.nickname for context.
+  nickname     String?
   dob          DateTime     @db.Date
   relationship Relationship
   notes        String?

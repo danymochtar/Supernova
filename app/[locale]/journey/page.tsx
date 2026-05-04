@@ -368,7 +368,7 @@ export default async function JourneyPage({ params }: { params: { locale: string
           {essenceNow.spiritual ? (
             <TransitChip
               label={t('spiritualTransit')}
-              hint={t('fromLastName', { name: profile.lastName })}
+              hint={t('fromLastName', { name: profile.lastName ?? '' })}
               letter={essenceNow.spiritual.letter}
               value={essenceNow.spiritual.value}
               rangeStart={essenceNow.spiritual.rangeStart}

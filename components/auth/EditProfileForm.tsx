@@ -10,7 +10,8 @@ interface Props {
   initial: {
     firstName: string;
     middleName: string | null;
-    lastName: string;
+    lastName: string | null;
+    nickname: string | null;
     dob: { year: number; month: number; day: number };
     timezone: string;
     locale: Locale;
@@ -96,16 +97,31 @@ export function EditProfileForm({ locale, initial, timezones, action }: Props) {
               id="lastName"
               name="lastName"
               type="text"
-              required
-              minLength={1}
               maxLength={60}
-              defaultValue={initial.lastName}
+              defaultValue={initial.lastName ?? ''}
               autoComplete="family-name"
               className="border-border focus:ring-primary w-full rounded-lg border bg-transparent px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
             />
           </div>
         </div>
       </fieldset>
+
+      <div className="space-y-2">
+        <label htmlFor="nickname" className="text-sm font-medium">
+          {tWelcome('nicknameLabel')}
+        </label>
+        <p className="text-muted-foreground text-xs">{tWelcome('nicknameHint')}</p>
+        <input
+          id="nickname"
+          name="nickname"
+          type="text"
+          maxLength={40}
+          defaultValue={initial.nickname ?? ''}
+          autoComplete="nickname"
+          placeholder={tWelcome('nicknamePlaceholder')}
+          className="border-border focus:ring-primary w-full rounded-lg border bg-transparent px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
+        />
+      </div>
 
       <div className="space-y-2">
         <label htmlFor="dob" className="text-sm font-medium">

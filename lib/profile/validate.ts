@@ -19,9 +19,19 @@ export const profileFormSchema = z.object({
   lastName: z
     .string()
     .trim()
-    .min(1, 'name_required')
     .max(60, 'name_too_long')
-    .regex(NAME_PART_REGEX, 'name_invalid_chars'),
+    .regex(NAME_PART_REGEX, 'name_invalid_chars')
+    .optional()
+    .or(z.literal('')),
+  /** Optional nickname / call-by name. Letters + spaces + a few punctuation,
+   * up to 40 chars. Used for Minor numbers calculation. */
+  nickname: z
+    .string()
+    .trim()
+    .max(40, 'name_too_long')
+    .regex(NAME_PART_REGEX, 'name_invalid_chars')
+    .optional()
+    .or(z.literal('')),
   dob: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'dob_format'),
   timezone: z.string().min(1),
   locale: z.string().min(2),
@@ -37,7 +47,8 @@ export type ProfileFormError =
 export interface ParsedProfileForm {
   firstName: string;
   middleName: string | null;
-  lastName: string;
+  lastName: string | null;
+  nickname: string | null;
   dob: { year: number; month: number; day: number };
   timezone: string;
   locale: string;
@@ -48,6 +59,7 @@ export function parseProfileForm(input: {
   firstName: unknown;
   middleName: unknown;
   lastName: unknown;
+  nickname?: unknown;
   dob: unknown;
   timezone: unknown;
   locale: unknown;
@@ -55,14 +67,19 @@ export function parseProfileForm(input: {
   const parsed = profileFormSchema.safeParse(input);
   if (!parsed.success) {
     const path = parsed.error.issues[0]?.path[0];
-    if (path === 'firstName' || path === 'lastName' || path === 'middleName') {
+    if (
+      path === 'firstName' ||
+      path === 'lastName' ||
+      path === 'middleName' ||
+      path === 'nickname'
+    ) {
       return { ok: false, error: 'invalid_name' };
     }
     if (path === 'dob') return { ok: false, error: 'invalid_dob' };
     return { ok: false, error: 'generic' };
   }
 
-  const { firstName, middleName, lastName, dob, timezone, locale } = parsed.data;
+  const { firstName, middleName, lastName, nickname, dob, timezone, locale } = parsed.data;
   const [yStr, mStr, dStr] = dob.split('-');
   const year = Number(yStr);
   const month = Number(mStr);
@@ -85,7 +102,8 @@ export function parseProfileForm(input: {
     data: {
       firstName,
       middleName: middleName && middleName.length > 0 ? middleName : null,
-      lastName,
+      lastName: lastName && lastName.length > 0 ? lastName : null,
+      nickname: nickname && nickname.length > 0 ? nickname : null,
       dob: { year, month, day },
       timezone,
       locale,

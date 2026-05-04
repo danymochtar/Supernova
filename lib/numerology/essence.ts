@@ -138,12 +138,12 @@ export interface EssenceFrame {
  * If middle name is empty/missing, mental is null and ignored from the sum.
  */
 export function essenceAt(
-  names: { firstName: string; middleName?: string | null; lastName: string },
+  names: { firstName: string; middleName?: string | null; lastName?: string | null },
   age: number,
 ): EssenceFrame {
   const physical = activeTransit(names.firstName, age);
   const mental = names.middleName ? activeTransit(names.middleName, age) : null;
-  const spiritual = activeTransit(names.lastName, age);
+  const spiritual = names.lastName ? activeTransit(names.lastName, age) : null;
 
   const sum =
     (physical?.value ?? 0) + (mental?.value ?? 0) + (spiritual?.value ?? 0);
@@ -189,7 +189,7 @@ export function nextEssenceShift(frame: EssenceFrame): { age: number; ends: ('ph
  * age - 1 is when it ends.
  */
 export function essenceTimeline(
-  names: { firstName: string; middleName?: string | null; lastName: string },
+  names: { firstName: string; middleName?: string | null; lastName?: string | null },
   fromAge: number,
   toAge: number,
 ): EssenceFrame[] {

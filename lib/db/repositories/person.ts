@@ -6,7 +6,8 @@ import type { BirthDate } from '@/lib/numerology/types';
 export interface PersonInput {
   firstName: string;
   middleName?: string | null;
-  lastName: string;
+  lastName?: string | null;
+  nickname?: string | null;
   dob: BirthDate;
   relationship: Relationship;
   notes?: string | null;
@@ -17,7 +18,8 @@ export interface PersonView {
   userId: string;
   firstName: string;
   middleName: string | null;
-  lastName: string;
+  lastName: string | null;
+  nickname: string | null;
   fullName: string;
   dob: BirthDate;
   relationship: Relationship;
@@ -33,8 +35,12 @@ function toDateUTC({ year, month, day }: BirthDate): Date {
   return new Date(Date.UTC(year, month - 1, day));
 }
 
-function joinName(firstName: string, middleName: string | null, lastName: string): string {
-  return [firstName.trim(), middleName?.trim() || null, lastName.trim()]
+function joinName(
+  firstName: string,
+  middleName: string | null,
+  lastName: string | null,
+): string {
+  return [firstName.trim(), middleName?.trim() || null, lastName?.trim() || null]
     .filter((s): s is string => Boolean(s))
     .join(' ');
 }
@@ -46,6 +52,7 @@ function toView(row: Person): PersonView {
     firstName: row.firstName,
     middleName: row.middleName,
     lastName: row.lastName,
+    nickname: row.nickname,
     fullName: joinName(row.firstName, row.middleName, row.lastName),
     dob: toBirthDate(row.dob),
     relationship: row.relationship,
@@ -88,7 +95,8 @@ export async function createPerson(userId: string, input: PersonInput): Promise<
       userId,
       firstName: input.firstName,
       middleName: input.middleName?.trim() || null,
-      lastName: input.lastName,
+      lastName: input.lastName?.trim() || null,
+      nickname: input.nickname?.trim() || null,
       dob: toDateUTC(input.dob),
       relationship: input.relationship,
       notes: input.notes ?? null,
@@ -109,7 +117,8 @@ export async function updatePerson(
     data: {
       firstName: input.firstName,
       middleName: input.middleName?.trim() || null,
-      lastName: input.lastName,
+      lastName: input.lastName?.trim() || null,
+      nickname: input.nickname?.trim() || null,
       dob: toDateUTC(input.dob),
       relationship: input.relationship,
       notes: input.notes?.trim() || null,

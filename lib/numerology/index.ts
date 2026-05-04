@@ -29,6 +29,7 @@ export {
   type PersonalContext,
 } from './personal';
 export { buildCoreProfile } from './profile';
+export { minorNumbers, type MinorNumbers } from './minor';
 export { ageAt } from './age';
 export {
   activeTransit,

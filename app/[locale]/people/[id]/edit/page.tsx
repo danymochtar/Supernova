@@ -37,6 +37,7 @@ export default async function EditPersonPage({
             firstName: person.firstName,
             middleName: person.middleName,
             lastName: person.lastName,
+            nickname: person.nickname,
             dob: person.dob,
             relationship: person.relationship,
             notes: person.notes,

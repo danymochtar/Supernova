@@ -86,8 +86,6 @@ export function OnboardingForm({ locale, defaultTimezone, timezones, action }: P
               id="lastName"
               name="lastName"
               type="text"
-              required
-              minLength={1}
               maxLength={60}
               autoComplete="family-name"
               placeholder={t('lastNamePlaceholder')}
@@ -96,6 +94,22 @@ export function OnboardingForm({ locale, defaultTimezone, timezones, action }: P
           </div>
         </div>
       </fieldset>
+
+      <div className="space-y-2">
+        <label htmlFor="nickname" className="text-sm font-medium">
+          {t('nicknameLabel')}
+        </label>
+        <p className="text-muted-foreground text-xs">{t('nicknameHint')}</p>
+        <input
+          id="nickname"
+          name="nickname"
+          type="text"
+          maxLength={40}
+          autoComplete="nickname"
+          placeholder={t('nicknamePlaceholder')}
+          className="border-border focus:ring-primary w-full rounded-lg border bg-transparent px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
+        />
+      </div>
 
       <div className="space-y-2">
         <label htmlFor="dob" className="text-sm font-medium">

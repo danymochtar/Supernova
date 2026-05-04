@@ -28,6 +28,7 @@ export default async function EditProfilePage({ params }: { params: { locale: st
             firstName: profile.firstName,
             middleName: profile.middleName,
             lastName: profile.lastName,
+            nickname: profile.nickname,
             dob: profile.dob,
             timezone: profile.timezone,
             locale: profile.locale,

@@ -81,7 +81,8 @@ export async function createPersonAction(formData: FormData): Promise<PersonActi
   await createPerson(session.user.id, {
     firstName: parsed.data.firstName,
     middleName: parsed.data.middleName || null,
-    lastName: parsed.data.lastName,
+    lastName: parsed.data.lastName || null,
+    nickname: parsed.data.nickname || null,
     dob: { year: dob.year, month: dob.month, day: dob.day },
     relationship: parsed.data.relationship,
     notes: parsed.data.notes?.trim() || null,
@@ -104,7 +105,8 @@ export async function updatePersonAction(formData: FormData): Promise<PersonActi
   const parsed = personSchema.safeParse({
     firstName: formData.get('firstName'),
     middleName: formData.get('middleName') ?? '',
-    lastName: formData.get('lastName'),
+    lastName: formData.get('lastName') ?? '',
+    nickname: formData.get('nickname') ?? '',
     dob: formData.get('dob'),
     timezone: 'UTC',
     locale: String(formData.get('locale') ?? 'id'),
@@ -113,7 +115,12 @@ export async function updatePersonAction(formData: FormData): Promise<PersonActi
   });
   if (!parsed.success) {
     const path = parsed.error.issues[0]?.path[0];
-    if (path === 'firstName' || path === 'lastName' || path === 'middleName') {
+    if (
+      path === 'firstName' ||
+      path === 'lastName' ||
+      path === 'middleName' ||
+      path === 'nickname'
+    ) {
       return { ok: false, error: 'invalid_name' };
     }
     if (path === 'dob') return { ok: false, error: 'invalid_dob' };
@@ -127,7 +134,8 @@ export async function updatePersonAction(formData: FormData): Promise<PersonActi
   await updatePerson(session.user.id, id, {
     firstName: parsed.data.firstName,
     middleName: parsed.data.middleName || null,
-    lastName: parsed.data.lastName,
+    lastName: parsed.data.lastName || null,
+    nickname: parsed.data.nickname || null,
     dob: { year: dob.year, month: dob.month, day: dob.day },
     relationship: parsed.data.relationship,
     notes: parsed.data.notes?.trim() || null,

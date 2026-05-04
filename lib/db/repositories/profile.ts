@@ -5,7 +5,8 @@ import type { BirthDate } from '@/lib/numerology/types';
 export interface ProfileInput {
   firstName: string;
   middleName?: string | null;
-  lastName: string;
+  lastName?: string | null;
+  nickname?: string | null;
   dob: BirthDate;
   timezone: string;
   locale: 'id' | 'en';
@@ -19,8 +20,9 @@ export interface ProfileView {
   userId: string;
   firstName: string;
   middleName: string | null;
-  lastName: string;
-  /** Derived: firstName + middle (if any) + lastName, joined by spaces. */
+  lastName: string | null;
+  nickname: string | null;
+  /** Derived: firstName + middle (if any) + lastName (if any), joined by spaces. */
   fullName: string;
   dob: BirthDate;
   timezone: string;
@@ -45,8 +47,12 @@ function toDateUTC({ year, month, day }: BirthDate): Date {
   return new Date(Date.UTC(year, month - 1, day));
 }
 
-function joinName(firstName: string, middleName: string | null, lastName: string): string {
-  return [firstName.trim(), middleName?.trim() || null, lastName.trim()]
+function joinName(
+  firstName: string,
+  middleName: string | null,
+  lastName: string | null,
+): string {
+  return [firstName.trim(), middleName?.trim() || null, lastName?.trim() || null]
     .filter((s): s is string => Boolean(s))
     .join(' ');
 }
@@ -57,7 +63,8 @@ export async function createProfile(userId: string, input: ProfileInput): Promis
       userId,
       firstName: input.firstName,
       middleName: input.middleName?.trim() || null,
-      lastName: input.lastName,
+      lastName: input.lastName?.trim() || null,
+      nickname: input.nickname?.trim() || null,
       dob: toDateUTC(input.dob),
       timezone: input.timezone,
       locale: input.locale,
@@ -72,7 +79,8 @@ export async function updateProfile(userId: string, input: ProfileInput): Promis
     data: {
       firstName: input.firstName,
       middleName: input.middleName?.trim() || null,
-      lastName: input.lastName,
+      lastName: input.lastName?.trim() || null,
+      nickname: input.nickname?.trim() || null,
       dob: toDateUTC(input.dob),
       timezone: input.timezone,
       locale: input.locale,
@@ -102,6 +110,7 @@ function toView(row: ProfileRow): ProfileView {
     firstName: row.firstName,
     middleName: row.middleName,
     lastName: row.lastName,
+    nickname: row.nickname,
     fullName: joinName(row.firstName, row.middleName, row.lastName),
     dob: toBirthDate(row.dob),
     timezone: row.timezone,

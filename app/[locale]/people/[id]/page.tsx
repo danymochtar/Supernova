@@ -12,6 +12,7 @@ import {
   challengeAt,
   contextFromInstant,
   cycleAt,
+  minorNumbers,
   personalCycles,
   pinnacleAt,
 } from '@/lib/numerology';
@@ -45,9 +46,10 @@ export default async function PersonDetailPage({
   const cycles = personalCycles(person.dob, ctx);
   const age = ageAt(person.dob, ctx);
   const slots = activeSlots(person.dob, age);
+  const minor = minorNumbers(person.nickname);
 
 
-  const initials = `${person.firstName.charAt(0)}${person.lastName.charAt(0)}`.toUpperCase();
+  const initials = `${person.firstName.charAt(0)}${person.lastName?.charAt(0) ?? ''}`.toUpperCase();
 
   return (
     <main className="container max-w-3xl px-4 sm:px-6">
@@ -239,6 +241,37 @@ export default async function PersonDetailPage({
           comingSoonLabel={tDash('meaningComingSoon')}
         />
       </section>
+
+      {minor ? (
+        <section className="space-y-3">
+          <div className="space-y-1">
+            <h2 className="text-lg font-semibold">{t('minorTitle')}</h2>
+            <p className="text-muted-foreground text-sm">
+              {t('minorSubtitle', { source: minor.source })}
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+            <NumberCard
+              label={t('minorExpression')}
+              hint={t('minorExpressionHint')}
+              result={minor.minorExpression}
+              locale={locale}
+            />
+            <NumberCard
+              label={t('minorSoulUrge')}
+              hint={t('minorSoulUrgeHint')}
+              result={minor.minorSoulUrge}
+              locale={locale}
+            />
+            <NumberCard
+              label={t('minorPersonality')}
+              hint={t('minorPersonalityHint')}
+              result={minor.minorPersonality}
+              locale={locale}
+            />
+          </div>
+        </section>
+      ) : null}
 
       <section className="space-y-2">
         <h2 className="text-lg font-semibold">{t('quickGlance')}</h2>

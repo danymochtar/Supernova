@@ -18,7 +18,8 @@ export async function saveOnboardingProfile(formData: FormData): Promise<Onboard
   const parsed = parseProfileForm({
     firstName: formData.get('firstName'),
     middleName: formData.get('middleName') ?? '',
-    lastName: formData.get('lastName'),
+    lastName: formData.get('lastName') ?? '',
+    nickname: formData.get('nickname') ?? '',
     dob: formData.get('dob'),
     timezone: formData.get('timezone'),
     locale: formData.get('locale'),
@@ -36,6 +37,7 @@ export async function saveOnboardingProfile(formData: FormData): Promise<Onboard
     firstName: parsed.data.firstName,
     middleName: parsed.data.middleName,
     lastName: parsed.data.lastName,
+    nickname: parsed.data.nickname,
     dob: parsed.data.dob,
     timezone: parsed.data.timezone,
     locale: localeChecked,
