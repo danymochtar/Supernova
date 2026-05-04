@@ -15,6 +15,9 @@ export interface RelationshipPromptInput {
 
 const REL_LABEL_ID: Record<Relationship, string> = {
   PARTNER: 'pasangan',
+  PARENT: 'orang tua',
+  CHILD: 'anak',
+  SIBLING: 'saudara (kakak/adik)',
   FAMILY: 'keluarga',
   FRIEND: 'teman',
   COLLEAGUE: 'rekan kerja',
@@ -23,6 +26,9 @@ const REL_LABEL_ID: Record<Relationship, string> = {
 
 const REL_LABEL_EN: Record<Relationship, string> = {
   PARTNER: 'partner',
+  PARENT: 'parent',
+  CHILD: 'child',
+  SIBLING: 'sibling',
   FAMILY: 'family',
   FRIEND: 'friend',
   COLLEAGUE: 'colleague',

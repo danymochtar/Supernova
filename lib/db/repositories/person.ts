@@ -1,5 +1,6 @@
 import type { Person, Prisma, Relationship } from '@prisma/client';
 import { prisma } from '@/lib/db/prisma';
+import { relationshipPriority } from '@/lib/compatibility/lens';
 import type { BirthDate } from '@/lib/numerology/types';
 
 export interface PersonInput {
@@ -58,7 +59,17 @@ export async function listPeople(userId: string): Promise<PersonView[]> {
     where: { userId },
     orderBy: { createdAt: 'asc' },
   });
-  return rows.map(toView);
+  // Sort in app code: closest relationship type first (PARTNER → OTHER),
+  // then by createdAt as tiebreak. Postgres enum sort order isn't aligned
+  // with our priority ordering, so we do it here.
+  return rows
+    .map(toView)
+    .sort((a, b) => {
+      const pa = relationshipPriority(a.relationship);
+      const pb = relationshipPriority(b.relationship);
+      if (pa !== pb) return pa - pb;
+      return a.createdAt.getTime() - b.createdAt.getTime();
+    });
 }
 
 export async function countPeople(userId: string): Promise<number> {

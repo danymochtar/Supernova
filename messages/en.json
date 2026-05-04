@@ -308,6 +308,9 @@
     "limitNote": "Up to {limit} people.",
     "relationship": {
       "PARTNER": "Partner",
+      "PARENT": "Parent",
+      "CHILD": "Child",
+      "SIBLING": "Sibling",
       "FAMILY": "Family",
       "FRIEND": "Friend",
       "COLLEAGUE": "Colleague",
@@ -348,6 +351,9 @@
     "quickGlance": "Quick glance",
     "relationship": {
       "PARTNER": "Partner",
+      "PARENT": "Parent",
+      "CHILD": "Child",
+      "SIBLING": "Sibling",
       "FAMILY": "Family",
       "FRIEND": "Friend",
       "COLLEAGUE": "Colleague",
@@ -369,6 +375,9 @@
     "lensTitle": "Relationship lens",
     "lens": {
       "PARTNER": "As partners you reach each other's deepest layer. Soul Urge (deepest yearning) and the cross dynamic of Expression × Soul Urge — what you give vs what they yearn for — carry significant weight.",
+      "PARENT": "Parent–child relationships reach the same deep layer as family. We weight life direction (Life Path), deepest yearning (Soul Urge), and the give-and-receive between Expression and Soul Urge. There's a natural asymmetry — parents lay the foundation, children form identity with or against it.",
+      "CHILD": "Your relationship with a child reaches the same deep layer as family. We weight life direction (Life Path), deepest yearning (Soul Urge), and the give-and-receive between Expression and Soul Urge. Children arrive with their own compass — your role is space, not steering.",
+      "SIBLING": "Sibling relationships are scored through the family lens — Life Path, Soul Urge, and the cross dynamic of Expression × Soul Urge. Siblings often become the most honest mirror: same soil, different bloom.",
       "FAMILY": "Family sees beneath the mask, so Personality matters less. We weight life direction (Life Path), deepest yearning (Soul Urge), and the give-and-receive dynamic between Expression and Soul Urge.",
       "FRIEND": "Friendship lives in Expression (how you both show up) and Personality (vibe). Soul Urge isn't scored — friendships rarely reach the deepest layer.",
       "COLLEAGUE": "At work, Expression (work style) and Personality (professional vibe) dominate. Life Path is scored through cross with Expression — does your work support each other's mission.",

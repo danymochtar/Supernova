@@ -149,8 +149,15 @@ const OTHER_LENS: RelationshipLens = {
   enabledModifiers: new Set(['masters', 'soulUrgeMatch', 'lifePathMirror']),
 };
 
+// PARENT, CHILD, SIBLING all share the FAMILY lens — the dynamics are
+// deep, blood-tier, and access the same components (LP, Soul Urge,
+// cross Expression↔Soul Urge). The differences are narrative, not
+// numerical, and surface in the AI-generated relationship profile.
 const LENSES: Record<Relationship, RelationshipLens> = {
   PARTNER: PARTNER_LENS,
+  PARENT: { ...FAMILY_LENS, relationship: 'PARENT' },
+  CHILD: { ...FAMILY_LENS, relationship: 'CHILD' },
+  SIBLING: { ...FAMILY_LENS, relationship: 'SIBLING' },
   FAMILY: FAMILY_LENS,
   FRIEND: FRIEND_LENS,
   COLLEAGUE: COLLEAGUE_LENS,
@@ -159,6 +166,25 @@ const LENSES: Record<Relationship, RelationshipLens> = {
 
 export function lensFor(relationship: Relationship): RelationshipLens {
   return LENSES[relationship] ?? OTHER_LENS;
+}
+
+/**
+ * Sort priority for the People list — closest emotional ties on top, looser
+ * acquaintances at the bottom. Used by the people repo to order rows.
+ */
+const RELATIONSHIP_PRIORITY: Record<Relationship, number> = {
+  PARTNER: 0,
+  PARENT: 1,
+  CHILD: 2,
+  SIBLING: 3,
+  FAMILY: 4,
+  FRIEND: 5,
+  COLLEAGUE: 6,
+  OTHER: 7,
+};
+
+export function relationshipPriority(r: Relationship): number {
+  return RELATIONSHIP_PRIORITY[r] ?? 99;
 }
 
 /** Pull the right NumerologyResult off a CoreLite for a given lane key. */

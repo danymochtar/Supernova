@@ -18,7 +18,7 @@ import { profileFormSchema, type ProfileFormError } from '@/lib/profile/validate
 // soft gate on free tier; user removed it for the MVP.
 const PEOPLE_LIMIT = 999;
 
-const RELATIONSHIPS = ['PARTNER', 'FAMILY', 'FRIEND', 'COLLEAGUE', 'OTHER'] as const;
+const RELATIONSHIPS = ['PARTNER', 'PARENT', 'CHILD', 'SIBLING', 'FAMILY', 'FRIEND', 'COLLEAGUE', 'OTHER'] as const;
 
 const personSchema = profileFormSchema.extend({
   relationship: z.enum(RELATIONSHIPS),

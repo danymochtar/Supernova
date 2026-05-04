@@ -308,6 +308,9 @@
     "limitNote": "Maksimal {limit} orang.",
     "relationship": {
       "PARTNER": "Pasangan",
+      "PARENT": "Orang tua",
+      "CHILD": "Anak",
+      "SIBLING": "Saudara (kakak/adik)",
       "FAMILY": "Keluarga",
       "FRIEND": "Teman",
       "COLLEAGUE": "Rekan kerja",
@@ -348,6 +351,9 @@
     "quickGlance": "Sekilas",
     "relationship": {
       "PARTNER": "Pasangan",
+      "PARENT": "Orang tua",
+      "CHILD": "Anak",
+      "SIBLING": "Saudara (kakak/adik)",
       "FAMILY": "Keluarga",
       "FRIEND": "Teman",
       "COLLEAGUE": "Rekan kerja",
@@ -369,6 +375,9 @@
     "lensTitle": "Lensa hubungan",
     "lens": {
       "PARTNER": "Sebagai pasangan, kalian saling mengakses lapisan paling dalam. Soul Urge (kerinduan terdalam) dan dinamika silang Expression × Soul Urge — apa yang kamu beri vs apa yang mereka rindukan — diberi bobot besar.",
+      "PARENT": "Hubungan orang tua–anak menyentuh lapisan dalam yang sama dengan keluarga. Yang dihitung: arah hidup (Life Path), kerinduan terdalam (Soul Urge), dan dinamika memberi-menerima antara Expression dan Soul Urge. Sering ada asimetri natural — orang tua memberi pondasi, anak membentuk identitas dengan/melawannya.",
+      "CHILD": "Hubungan dengan anak menyentuh lapisan dalam yang sama dengan keluarga. Yang dihitung: arah hidup (Life Path), kerinduan terdalam (Soul Urge), dan dinamika memberi-menerima antara Expression dan Soul Urge. Anak datang dengan kompasnya sendiri — peranmu adalah ruang, bukan setir.",
+      "SIBLING": "Hubungan saudara dihitung lewat lensa keluarga — Life Path, Soul Urge, dan dinamika silang Expression × Soul Urge. Saudara sering jadi cermin paling jujur: tumbuh di tanah yang sama tapi mekar berbeda.",
       "FAMILY": "Keluarga melihat di balik topeng, jadi Personality kurang berperan. Yang dihitung adalah arah hidup (Life Path), kerinduan terdalam (Soul Urge), dan dinamika memberi-menerima antara Expression dan Soul Urge.",
       "FRIEND": "Pertemanan terjadi di lapisan Expression (cara kalian muncul) dan Personality (vibe). Soul Urge tidak dihitung — pertemanan jarang menyentuh kerinduan terdalam.",
       "COLLEAGUE": "Di tempat kerja yang penting Expression (gaya bekerja) dan Personality (vibe profesional). Life Path dihitung lewat silang dengan Expression — apakah kerja kalian mendukung misi satu sama lain.",

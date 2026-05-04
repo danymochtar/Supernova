@@ -91,6 +91,9 @@ model Verification {
 
 enum Relationship {
   PARTNER
+  PARENT
+  CHILD
+  SIBLING
   FAMILY
   FRIEND
   COLLEAGUE
