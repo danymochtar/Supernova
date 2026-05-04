@@ -41,6 +41,11 @@ export const viewport: Viewport = {
   ],
   width: 'device-width',
   initialScale: 1,
+  // Native-app feel: no pinch zoom, no auto-zoom-on-input. iOS still
+  // respects accessibility text size — this only locks page scale, not
+  // system font scaling.
+  maximumScale: 1,
+  userScalable: false,
   viewportFit: 'cover',
 };
 

@@ -43,6 +43,22 @@
       radial-gradient(ellipse 70% 50% at 100% 110%, hsl(38 90% 55% / 0.08), transparent 70%);
     background-attachment: fixed;
     -webkit-tap-highlight-color: transparent;
+    /* Kill the 300ms tap delay; treat as a manipulation surface. */
+    touch-action: manipulation;
+    /* Prevent iOS rubber-band overscroll showing white. */
+    overscroll-behavior-y: contain;
+  }
+
+  /* iOS Safari auto-zooms on focus when input font-size is < 16px. Force
+   * 16px on touch breakpoints so we keep our small UI elsewhere but don't
+   * trigger zoom on input focus. Tailwind's text-sm (14px) inputs would
+   * otherwise zoom in. */
+  @media (max-width: 768px) {
+    input,
+    textarea,
+    select {
+      font-size: 16px;
+    }
   }
 
   /* Stronger, calmer focus ring across the app — matches the primary color. */
