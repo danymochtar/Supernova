@@ -305,7 +305,7 @@ export function ChatThread({
           onKeyDown={onKey}
           placeholder={t('placeholder')}
           disabled={streaming}
-          className="border-border focus:ring-primary max-h-32 min-h-[2.5rem] flex-1 resize-none rounded-2xl border bg-transparent px-4 py-2 text-sm focus:outline-none focus:ring-2 disabled:opacity-50"
+          className="border-border focus:ring-primary max-h-32 min-h-[2.75rem] flex-1 resize-none rounded-2xl border bg-transparent px-4 py-2.5 text-sm leading-tight focus:outline-none focus:ring-2 disabled:opacity-50"
         />
         {streaming ? (
           <button
