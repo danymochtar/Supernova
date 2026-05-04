@@ -40,7 +40,7 @@ export function OnboardingForm({ locale, defaultTimezone, timezones, action }: P
   return (
     <form onSubmit={onSubmit} className="space-y-7">
       <header className="space-y-2">
-        <h1 className="text-2xl font-semibold tracking-tight">{t('title')}</h1>
+        <h1 className="font-serif text-2xl font-semibold tracking-tight">{t('title')}</h1>
         <p className="text-muted-foreground text-sm">{t('warningBody')}</p>
       </header>
 

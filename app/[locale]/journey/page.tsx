@@ -71,7 +71,7 @@ export default async function JourneyPage({ params }: { params: { locale: string
   return (
     <main className="container max-w-3xl space-y-10 px-4 py-6 sm:px-6 sm:py-10">
       <header className="space-y-1 pt-2">
-        <h1 className="text-2xl font-semibold tracking-tight">{t('title')}</h1>
+        <h1 className="font-serif text-2xl font-semibold tracking-tight">{t('title')}</h1>
         <p className="text-muted-foreground text-sm">{t('subtitle', { age })}</p>
       </header>
 

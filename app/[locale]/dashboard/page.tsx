@@ -39,10 +39,10 @@ const LONG_MONTH_ID = [
 function formatDateLong(ctx: { year: number; month: number; day: number }, locale: Locale): string {
   const d = new Date(Date.UTC(ctx.year, ctx.month - 1, ctx.day));
   if (locale === 'id') {
-    return `${LONG_DAY_ID[d.getUTCDay()]}, ${ctx.day} ${LONG_MONTH_ID[ctx.month - 1]}`;
+    return `${LONG_DAY_ID[d.getUTCDay()]}, ${ctx.day} ${LONG_MONTH_ID[ctx.month - 1]} ${ctx.year}`;
   }
   return d.toLocaleDateString('en-US', {
-    weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC',
+    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC',
   }).toUpperCase();
 }
 

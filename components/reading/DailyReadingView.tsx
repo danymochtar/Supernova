@@ -41,7 +41,7 @@ export function DailyReadingView({ body, dateLabel, dayTitle, daySuffix, labels 
   return (
     <section className="border-border overflow-hidden rounded-3xl border bg-white shadow-sm dark:bg-neutral-900">
       <div className="bg-gradient-to-r from-accent via-accent to-amber-300 px-5 py-3 text-amber-950">
-        <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em]">
+        <p className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em]">
           <Sparkles className="h-3.5 w-3.5" aria-hidden />
           {dateLabel}
         </p>
@@ -50,7 +50,7 @@ export function DailyReadingView({ body, dateLabel, dayTitle, daySuffix, labels 
       <div className="space-y-5 px-6 py-6 sm:px-7">
         {dayTitle ? (
           <div className="space-y-1">
-            <p className="text-muted-foreground text-[11px] font-medium uppercase tracking-[0.18em]">
+            <p className="text-muted-foreground text-[11px] font-semibold uppercase tracking-[0.18em]">
               {labels.todaysTheme}
               {daySuffix ? <span className="text-accent ml-2">· {daySuffix}</span> : null}
             </p>
@@ -71,7 +71,7 @@ export function DailyReadingView({ body, dateLabel, dayTitle, daySuffix, labels 
 
         {parsed.affirmation ? (
           <div className="border-accent/60 border-l-[3px] bg-accent/5 px-4 py-3 dark:bg-accent/10">
-            <p className="text-muted-foreground mb-1 text-[10px] font-semibold uppercase tracking-[0.18em]">
+            <p className="text-muted-foreground mb-1 text-[11px] font-semibold uppercase tracking-[0.18em]">
               {labels.affirmation}
             </p>
             <p className="font-serif text-base italic leading-snug text-neutral-800 dark:text-neutral-100">
