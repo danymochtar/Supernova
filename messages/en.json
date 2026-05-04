@@ -275,7 +275,7 @@
     "subtitle": "You're {age}.",
     "summaryTitle": "Year {year} at a glance",
     "backToDashboard": "Back to dashboard",
-    "forecastTitle": "Personal Year forecast",
+    "forecastTitle": "Personal Year ahead",
     "forecastSubtitle": "Your 9-year cycle starting this year. Each number carries the main theme for 12 months.",
     "thisYear": "This year",
     "cyclePosition": "Year {current} of {total}",
