@@ -145,11 +145,10 @@ export default async function JourneyPage({ params }: { params: { locale: string
             <div className="scroll-px-4 sm:scroll-px-6 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-3 sm:px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {upcoming.map((y) => {
                 const meaning = meaningFor('personalYear', y.result, locale);
-                const blurb = meaning ? meaning.split('. ')[0] + '.' : null;
                 return (
                   <article
                     key={y.year}
-                    className="border-border w-[78%] shrink-0 snap-start rounded-xl border bg-white/40 p-4 dark:bg-neutral-900/40 sm:w-[42%] md:w-[32%]"
+                    className="border-border w-[80%] shrink-0 snap-start rounded-xl border bg-white/40 p-4 dark:bg-neutral-900/40 sm:w-[52%] md:w-[40%]"
                   >
                     <header className="flex items-baseline justify-between gap-3">
                       <div className="flex items-baseline gap-2">
@@ -162,11 +161,13 @@ export default async function JourneyPage({ params }: { params: { locale: string
                       </div>
                       <CompoundReduced result={y.result} locale={locale} size="sm" />
                     </header>
-                    {blurb ? (
+                    {meaning ? (
                       <p className="mt-2 text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">
-                        {blurb}
+                        {meaning}
                       </p>
-                    ) : null}
+                    ) : (
+                      <p className="text-muted-foreground mt-2 text-sm italic">{t('comingSoon')}</p>
+                    )}
                   </article>
                 );
               })}
@@ -346,6 +347,15 @@ export default async function JourneyPage({ params }: { params: { locale: string
               {t('noMiddleNameNote')}
             </p>
           ) : null}
+
+          {(() => {
+            const m = meaningFor('essence', essenceNow.essence, locale);
+            return m ? (
+              <p className="border-border/60 mt-5 border-t pt-4 text-sm leading-relaxed text-neutral-800 dark:text-neutral-200">
+                {m}
+              </p>
+            ) : null;
+          })()}
         </article>
 
         {/* Upcoming shifts — horizontal carousel */}
@@ -356,31 +366,41 @@ export default async function JourneyPage({ params }: { params: { locale: string
             </p>
             <div className="-mx-4 sm:-mx-6">
               <div className="scroll-px-4 sm:scroll-px-6 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-3 sm:px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                {essenceFuture.map((frame) => (
-                  <article
-                    key={frame.age}
-                    className="border-border w-[60%] shrink-0 snap-start rounded-xl border bg-white/40 p-4 dark:bg-neutral-900/40 sm:w-[36%] md:w-[28%]"
-                  >
-                    <header className="flex items-baseline justify-between gap-3">
-                      <div className="flex items-baseline gap-2">
-                        <span className="font-mono text-base font-semibold tabular-nums">
-                          {t('age')} {frame.age}
-                        </span>
-                      </div>
-                      <CompoundReduced result={frame.essence} locale={locale} size="sm" />
-                    </header>
-                    <div className="mt-2 flex items-center justify-between gap-2">
-                      <span className="text-muted-foreground font-serif text-base">
-                        {frame.letters}
-                      </span>
-                      {frame.essence.karmicDebt ? (
-                        <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-400">
-                          {t('karmicTag', { n: frame.essence.karmicDebt })}
-                        </span>
-                      ) : null}
-                    </div>
-                  </article>
-                ))}
+                {essenceFuture.map((frame) => {
+                  const meaning = meaningFor('essence', frame.essence, locale);
+                  return (
+                    <article
+                      key={frame.age}
+                      className="border-border w-[80%] shrink-0 snap-start rounded-xl border bg-white/40 p-4 dark:bg-neutral-900/40 sm:w-[52%] md:w-[40%]"
+                    >
+                      <header className="flex items-baseline justify-between gap-3">
+                        <div className="flex items-baseline gap-2">
+                          <span className="font-mono text-base font-semibold tabular-nums">
+                            {t('age')} {frame.age}
+                          </span>
+                          <span className="text-muted-foreground font-serif text-sm">
+                            {frame.letters}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          {frame.essence.karmicDebt ? (
+                            <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-400">
+                              {t('karmicTag', { n: frame.essence.karmicDebt })}
+                            </span>
+                          ) : null}
+                          <CompoundReduced result={frame.essence} locale={locale} size="sm" />
+                        </div>
+                      </header>
+                      {meaning ? (
+                        <p className="mt-2 text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">
+                          {meaning}
+                        </p>
+                      ) : (
+                        <p className="text-muted-foreground mt-2 text-sm italic">{t('comingSoon')}</p>
+                      )}
+                    </article>
+                  );
+                })}
               </div>
             </div>
           </div>

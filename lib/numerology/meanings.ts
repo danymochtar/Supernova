@@ -21,6 +21,7 @@ export type MeaningType =
   | 'pinnacle'
   | 'challenge'
   | 'cycle'
+  | 'essence'
   | 'karmicLesson'
   | 'personalDayTitle';
 
