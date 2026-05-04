@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useTransition } from 'react';
 import { useTranslations } from 'next-intl';
-import { ArrowUp, Square, Sparkles } from 'lucide-react';
+import { ArrowUp, Square, Sparkles, Trash2 } from 'lucide-react';
+import type { DeleteTurnResult } from '@/app/[locale]/ask/actions';
 
 export interface ChatTurn {
   id: string;
@@ -31,9 +32,17 @@ interface Props {
   emptyHint: string;
   /** Short example prompts shown as tappable chips when the thread is empty. */
   starterPrompts?: string[];
+  /** Server action to delete a persisted turn. */
+  deleteAction?: (input: { id: string }) => Promise<DeleteTurnResult>;
 }
 
-export function ChatThread({ initialTurns, priorDays, emptyHint, starterPrompts = [] }: Props) {
+export function ChatThread({
+  initialTurns,
+  priorDays,
+  emptyHint,
+  starterPrompts = [],
+  deleteAction,
+}: Props) {
   const t = useTranslations('chat');
   const [turns, setTurns] = useState<ChatTurn[]>(initialTurns);
   const [pending, setPending] = useState<{ question: string; answer: string } | null>(null);
@@ -43,6 +52,24 @@ export function ChatThread({ initialTurns, priorDays, emptyHint, starterPrompts 
   const abortRef = useRef<AbortController | null>(null);
   const bottomRef = useRef<HTMLDivElement | null>(null);
   const [showHistory, setShowHistory] = useState(false);
+  const [, startDelete] = useTransition();
+
+  function onDelete(id: string) {
+    // Optimistic remove. If the action fails (server-side miss) we restore
+    // the turn and surface the generic error so the user knows it didn't
+    // take. Local-only turns (haven't been persisted yet — happens during a
+    // streaming reply or right after a fresh send) just need state removal.
+    const previous = turns;
+    setTurns((prev) => prev.filter((tn) => tn.id !== id));
+    if (id.startsWith('local-') || !deleteAction) return;
+    startDelete(async () => {
+      const result = await deleteAction({ id });
+      if (!result.ok) {
+        setTurns(previous);
+        setError(t('errorGeneric'));
+      }
+    });
+  }
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
@@ -235,7 +262,13 @@ export function ChatThread({ initialTurns, priorDays, emptyHint, starterPrompts 
         ) : (
           <div className="space-y-4">
             {turns.map((tn) => (
-              <Pair key={tn.id} question={tn.question} answer={tn.answer} />
+              <Pair
+                key={tn.id}
+                question={tn.question}
+                answer={tn.answer}
+                onDelete={() => onDelete(tn.id)}
+                deleteLabel={t('delete')}
+              />
             ))}
             {pending ? (
               <Pair
@@ -301,13 +334,17 @@ function Pair({
   question,
   answer,
   streaming,
+  onDelete,
+  deleteLabel,
 }: {
   question: string;
   answer: string;
   streaming?: boolean;
+  onDelete?: () => void;
+  deleteLabel?: string;
 }) {
   return (
-    <div className="space-y-3">
+    <div className="group/pair relative space-y-3">
       <div className="flex justify-end">
         <div className="bg-primary text-primary-foreground max-w-[80%] whitespace-pre-wrap rounded-2xl rounded-tr-md px-4 py-2.5 text-sm">
           {question}
@@ -321,6 +358,17 @@ function Pair({
           ) : null}
         </div>
       </div>
+      {onDelete && !streaming ? (
+        <button
+          type="button"
+          onClick={onDelete}
+          aria-label={deleteLabel}
+          title={deleteLabel}
+          className="text-muted-foreground hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 absolute -bottom-1 right-0 rounded-full p-1.5 opacity-60 transition group-hover/pair:opacity-100 sm:opacity-0"
+        >
+          <Trash2 className="h-3.5 w-3.5" aria-hidden />
+        </button>
+      ) : null}
     </div>
   );
 }

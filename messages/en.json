@@ -215,6 +215,7 @@
     "placeholder": "Write anything. Enter to send, Shift+Enter for a new line.",
     "send": "Send",
     "stop": "Stop",
+    "delete": "Delete message",
     "emptyHint": "Start the conversation — about today, how you're feeling, a relationship, or anything on your mind.",
     "starter1": "What should I focus on today?",
     "starter2": "I'm feeling off, help me make sense of it",

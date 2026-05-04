@@ -44,3 +44,11 @@ export async function saveTurn(input: {
     },
   });
 }
+
+/** Delete a single turn. Scoped to the userId so users can't delete others'. */
+export async function deleteTurn(userId: string, turnId: string): Promise<boolean> {
+  const result = await prisma.qaHistory.deleteMany({
+    where: { id: turnId, userId },
+  });
+  return result.count > 0;
+}
