@@ -105,7 +105,7 @@ today's cycles: Personal Year=${r(cycles.personalYear)}, Personal Month=${r(cycl
   const result: SmartContext = { base, loaded };
 
   // People are now always loaded — the user often references them by
-  // name without using a relationship keyword ("mood Sabri gimana?"),
+  // name without using a relationship keyword ("mood [name] gimana?"),
   // and we want the model to recognize and answer with their data
   // without bouncing back to ask. The list is small (most users have
   // < 20 people) so the token cost is bounded.
