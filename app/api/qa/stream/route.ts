@@ -15,13 +15,84 @@ import { isLocale, type Locale } from '@/lib/i18n/config';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
+// Allow larger bodies for image / PDF attachments. Vercel default is 1MB
+// for serverless POSTs; we cap our own client-side at ~10MB total payload.
+export const maxDuration = 60;
+
+const IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'] as const;
+const PDF_TYPE = 'application/pdf';
+
+const attachmentSchema = z.object({
+  kind: z.enum(['image', 'pdf', 'text']),
+  name: z.string().max(200),
+  mediaType: z.string().max(100),
+  /** Pure base64, no data: prefix. */
+  data: z.string().max(15_000_000), // ~10 MB after base64 expansion
+});
 
 const bodySchema = z.object({
-  question: z.string().trim().min(1).max(4000),
-});
+  question: z.string().trim().max(4000),
+  attachments: z.array(attachmentSchema).max(4).optional(),
+}).refine(
+  (b) => b.question.length > 0 || (b.attachments && b.attachments.length > 0),
+  { message: 'empty_message' },
+);
+
+type Attachment = z.infer<typeof attachmentSchema>;
+
+/** SDK 0.32 doesn't expose a unified ContentBlockParam union or
+ * DocumentBlockParam. Locally type the subset we use. The API accepts
+ * `document` blocks at runtime even though the SDK types don't yet
+ * declare them. */
+type UserContentBlock =
+  | Anthropic.TextBlockParam
+  | Anthropic.ImageBlockParam
+  | { type: 'document'; source: { type: 'base64'; media_type: 'application/pdf'; data: string } };
 
 function frame(obj: unknown): Uint8Array {
   return new TextEncoder().encode(JSON.stringify(obj) + '\n');
+}
+
+/**
+ * Convert validated attachments into Anthropic content blocks. Text files
+ * are inlined as <attached_file> XML blocks (cheaper than passing as a
+ * document). Images and PDFs use native base64 source blocks.
+ */
+function attachmentBlocks(attachments: Attachment[]): {
+  blocks: UserContentBlock[];
+  textPreamble: string;
+} {
+  const blocks: UserContentBlock[] = [];
+  const textParts: string[] = [];
+  for (const a of attachments) {
+    if (a.kind === 'text') {
+      // Decode base64 → utf-8. Limit to avoid runaway prompts.
+      const decoded = Buffer.from(a.data, 'base64').toString('utf-8').slice(0, 50_000);
+      textParts.push(`<attached_file name="${a.name.replace(/"/g, '')}">\n${decoded}\n</attached_file>`);
+    } else if (a.kind === 'image' && (IMAGE_TYPES as readonly string[]).includes(a.mediaType)) {
+      blocks.push({
+        type: 'image',
+        source: {
+          type: 'base64',
+          media_type: a.mediaType as (typeof IMAGE_TYPES)[number],
+          data: a.data,
+        },
+      });
+    } else if (a.kind === 'pdf' && a.mediaType === PDF_TYPE) {
+      blocks.push({
+        type: 'document',
+        source: {
+          type: 'base64',
+          media_type: 'application/pdf',
+          data: a.data,
+        },
+      } as UserContentBlock);
+    }
+  }
+  return {
+    blocks,
+    textPreamble: textParts.length ? textParts.join('\n\n') + '\n\n' : '',
+  };
 }
 
 export async function POST(req: Request) {
@@ -36,7 +107,7 @@ export async function POST(req: Request) {
   if (!parsed.success) {
     return NextResponse.json({ error: 'invalid_question' }, { status: 400 });
   }
-  const { question } = parsed.data;
+  const { question, attachments = [] } = parsed.data;
 
   const locale: Locale = isLocale(profile.locale) ? profile.locale : 'id';
   const ctx = contextFromInstant(new Date(), profile.timezone);
@@ -82,13 +153,36 @@ export async function POST(req: Request) {
   //      it as authoritative truth, so it won't ask the user for data
   //      that's already there even if prior assistant turns did.
   const contextBlock = composeContextBlock(smart, profile.personalNotes);
+
+  // Build the current user message. If attachments are present, the content
+  // becomes a multi-block array: image/document blocks + a final text block
+  // (with any text-file preamble prepended to the question).
+  const { blocks: attachmentContentBlocks, textPreamble } = attachmentBlocks(attachments);
+  const finalQuestion = `${textPreamble}${question || (locale === 'id' ? '(File terlampir di atas — kasih perspektif kamu)' : '(Attachments above — share your perspective)')}`;
+  const currentUserContent: string | UserContentBlock[] =
+    attachmentContentBlocks.length > 0
+      ? [...attachmentContentBlocks, { type: 'text' as const, text: finalQuestion }]
+      : finalQuestion;
+
   const messages: Anthropic.MessageParam[] = [
     ...todaysTurns.flatMap<Anthropic.MessageParam>((t) => [
       { role: 'user', content: t.question },
       { role: 'assistant', content: t.answer },
     ]),
-    { role: 'user', content: question },
+    // Cast: the SDK 0.32 MessageParam.content type doesn't list 'document'
+    // as a valid block kind, but the runtime API accepts it. Validated via
+    // attachmentSchema before reaching here.
+    { role: 'user', content: currentUserContent } as Anthropic.MessageParam,
   ];
+
+  // Save just the question + a small attachment summary; we don't persist
+  // the binary payloads (heavy + ephemeral by design).
+  const attachmentSummary = attachments.length
+    ? attachments.map((a) => `[${a.kind}: ${a.name}]`).join(' ')
+    : '';
+  const persistedQuestion = attachmentSummary
+    ? `${attachmentSummary}${question ? ' ' + question : ''}`
+    : question;
 
   const stream = new ReadableStream<Uint8Array>({
     async start(controller) {
@@ -137,9 +231,12 @@ export async function POST(req: Request) {
           try {
             await saveTurn({
               userId,
-              question,
+              question: persistedQuestion,
               answer,
-              contextSnapshot: { loaded: smart.loaded } as unknown as Prisma.InputJsonValue,
+              contextSnapshot: {
+                loaded: smart.loaded,
+                attachments: attachments.map((a) => ({ kind: a.kind, name: a.name, mediaType: a.mediaType })),
+              } as unknown as Prisma.InputJsonValue,
             });
             await logUsage({
               userId,
