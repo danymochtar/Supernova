@@ -16,6 +16,7 @@ import {
   activeSlots,
 } from '@/lib/numerology';
 import { meaningFor } from '@/lib/numerology/meanings';
+import type { NumerologyResult } from '@/lib/numerology';
 import { CompoundReduced } from '@/components/numerology/CompoundReduced';
 import { Explainer } from '@/components/layout/Explainer';
 
@@ -80,14 +81,86 @@ export default async function JourneyPage({ params }: { params: { locale: string
   const essenceNow = essenceAt(essenceNames, age);
   const essenceFuture = essenceTimeline(essenceNames, age, age + 15).slice(1, 6);
 
+  const activePinnacleSlot = slots.pinnacle;
+  const activeChallengeSlot = slots.challenge;
+  const activeCycleSlot = slots.cycle;
+  const activePinnacle = pinnacleAt(core.pinnacles, activePinnacleSlot);
+  const activeChallenge = challengeAt(core.challenges, activeChallengeSlot);
+  const activeCycleResult = cycleAt(core.periodCycles, activeCycleSlot);
+  const pinnacleMeaning = meaningFor('pinnacle', activePinnacle, locale);
+  const cycleMeaningNow = meaningFor('cycle', activeCycleResult, locale);
+  const essenceMeaning = meaningFor('essence', essenceNow.essence, locale);
+
+  function firstSentence(s: string | null): string {
+    if (!s) return '';
+    // Prefer the part after the first em-dash (theme blurb in our content),
+    // otherwise just the first sentence.
+    const dashIdx = s.indexOf('—');
+    const body = dashIdx >= 0 ? s.slice(dashIdx + 1).trim() : s;
+    const period = body.indexOf('. ');
+    return period > 0 ? body.slice(0, period + 1) : body;
+  }
+
   return (
     <main className="container max-w-3xl space-y-10 px-4 py-6 sm:px-6 sm:py-10">
-      <header className="space-y-1 pt-2">
+      <header className="pt-2">
         <h1 className="font-serif text-2xl font-semibold tracking-tight">{t('title')}</h1>
-        <p className="text-muted-foreground text-sm">{t('subtitle', { age })}</p>
       </header>
 
-      {/* THIS YEAR — hero card with cycle position dots */}
+      {/* SUMMARY HERO — year-at-a-glance across all 4 layers */}
+      <section className="border-primary/40 from-primary/10 ring-primary/20 overflow-hidden rounded-2xl border-2 bg-gradient-to-br to-accent/15 ring-1 dark:to-accent/15">
+        <div className="bg-gradient-to-r from-primary/15 to-accent/15 px-6 py-3">
+          <p className="text-primary flex items-baseline justify-between gap-2 text-[11px] font-semibold uppercase tracking-[0.18em]">
+            <span>{t('summaryTitle', { year: ctx.year })}</span>
+            <span className="text-muted-foreground tabular-nums normal-case tracking-normal">{t('age')} {age}</span>
+          </p>
+        </div>
+
+        <div className="divide-border/60 divide-y px-6 py-5">
+          <SummaryRow
+            label={t('forecastTitle')}
+            sub={t('cyclePosition', { current: cyclePosition, total: 9 })}
+            result={thisYear.result}
+            meaning={firstSentence(thisYearMeaning)}
+            locale={locale}
+            karmicLabel={t('karmicTag', { n: thisYear.result.karmicDebt ?? 0 })}
+            showKarmic={Boolean(thisYear.result.karmicDebt)}
+          />
+
+          <SummaryRow
+            label={`${tDash('pinnacle')} ${activePinnacleSlot} · ${tDash('challenge')} ${activeChallengeSlot}`}
+            sub={pinnacleRows[activePinnacleSlot - 1]?.range
+              ? `${t('age')} ${pinnacleRows[activePinnacleSlot - 1]!.range}`
+              : ''}
+            result={activePinnacle}
+            secondary={activeChallenge}
+            meaning={firstSentence(pinnacleMeaning)}
+            locale={locale}
+          />
+
+          <SummaryRow
+            label={`${tDash('cycle')} ${activeCycleSlot}`}
+            sub={cycleRows[activeCycleSlot - 1]?.range
+              ? `${t('age')} ${cycleRows[activeCycleSlot - 1]!.range}`
+              : ''}
+            result={activeCycleResult}
+            meaning={firstSentence(cycleMeaningNow)}
+            locale={locale}
+          />
+
+          <SummaryRow
+            label={t('essenceTitle')}
+            sub={essenceNow.letters}
+            result={essenceNow.essence}
+            meaning={firstSentence(essenceMeaning)}
+            locale={locale}
+            karmicLabel={t('karmicTag', { n: essenceNow.essence.karmicDebt ?? 0 })}
+            showKarmic={Boolean(essenceNow.essence.karmicDebt)}
+          />
+        </div>
+      </section>
+
+      {/* PERSONAL YEAR — cycle dots + upcoming */}
       <section className="space-y-4">
         <div className="space-y-2">
           <h2 className="text-lg font-semibold">{t('forecastTitle')}</h2>
@@ -95,47 +168,28 @@ export default async function JourneyPage({ params }: { params: { locale: string
           <Explainer title={t("explainerLearnMore")} body={t("personalYearExplainer")} />
         </div>
 
-        <article className="border-primary/40 from-primary/10 ring-primary/20 relative overflow-hidden rounded-2xl border-2 bg-gradient-to-br to-accent/20 p-6 ring-1 dark:to-accent/15">
-          <div className="flex flex-wrap items-baseline justify-between gap-2">
-            <p className="text-primary text-xs font-semibold uppercase tracking-wider">
-              {t('thisYear')} · {thisYear.year}
-            </p>
-            <p className="text-muted-foreground text-xs font-medium tabular-nums">
-              {t('cyclePosition', { current: cyclePosition, total: 9 })}
-            </p>
-          </div>
-          <div className="mt-3">
-            <CompoundReduced result={thisYear.result} locale={locale} size="lg" />
-          </div>
-
-          {/* 1→9 cycle progression dots */}
-          <div className="mt-4 flex items-center gap-1.5">
+        {/* 1→9 cycle progression dots */}
+        <div className="border-border space-y-1.5 rounded-xl border bg-white/40 p-4 dark:bg-neutral-900/40">
+          <div className="flex items-center gap-1.5">
             {Array.from({ length: 9 }, (_, i) => {
               const pos = i + 1;
               const isHere = pos === cyclePosition;
               const isPast = pos < cyclePosition;
               return (
-                <div key={pos} className="flex flex-1 items-center gap-1.5">
-                  <div
-                    className={`h-2 flex-1 rounded-full ${
-                      isHere ? 'bg-primary' : isPast ? 'bg-primary/40' : 'bg-muted'
-                    }`}
-                  />
-                </div>
+                <div
+                  key={pos}
+                  className={`h-2 flex-1 rounded-full ${
+                    isHere ? 'bg-primary' : isPast ? 'bg-primary/40' : 'bg-muted'
+                  }`}
+                />
               );
             })}
           </div>
-          <div className="mt-1.5 flex items-center justify-between text-[10px] font-mono text-muted-foreground tabular-nums">
+          <div className="text-muted-foreground flex items-center justify-between font-mono text-[10px] tabular-nums">
             <span>1</span>
             <span>9</span>
           </div>
-
-          {thisYearMeaning ? (
-            <p className="mt-4 text-sm leading-relaxed text-neutral-800 dark:text-neutral-200">
-              {thisYearMeaning}
-            </p>
-          ) : null}
-        </article>
+        </div>
 
         {/* Upcoming years — horizontal carousel (swipe sideways) */}
         <div>
@@ -286,78 +340,49 @@ export default async function JourneyPage({ params }: { params: { locale: string
           <Explainer title={t("explainerLearnMore")} body={t("essenceExplainer")} />
         </div>
 
-        {/* Current Essence card */}
-        <article className="border-primary/40 from-primary/5 ring-primary/20 relative overflow-hidden rounded-2xl border-2 bg-gradient-to-br to-accent/10 p-6 ring-1 dark:to-accent/15">
-          <div className="flex flex-wrap items-baseline justify-between gap-2">
-            <p className="text-primary text-xs font-semibold uppercase tracking-wider">
-              {t('essenceNow', { age })}
-            </p>
-            {essenceNow.essence.karmicDebt ? (
-              <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-amber-900 dark:bg-amber-950 dark:text-amber-200">
-                {t('karmicTag', { n: essenceNow.essence.karmicDebt })}
-              </span>
-            ) : null}
-          </div>
-
-          <div className="mt-3 flex items-baseline gap-4">
-            <CompoundReduced result={essenceNow.essence} locale={locale} size="lg" />
-            <span className="font-serif text-muted-foreground text-2xl tracking-tight">
-              {essenceNow.letters}
-            </span>
-          </div>
-
-          {/* Active transit letters */}
-          <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
-            {essenceNow.physical ? (
-              <TransitChip
-                label={t('physicalTransit')}
-                hint={t('fromFirstName', { name: profile.firstName })}
-                letter={essenceNow.physical.letter}
-                value={essenceNow.physical.value}
-                rangeStart={essenceNow.physical.rangeStart}
-                rangeEnd={essenceNow.physical.rangeEnd}
-                ageLabel={t('age')}
-              />
-            ) : null}
-            {essenceNow.mental ? (
-              <TransitChip
-                label={t('mentalTransit')}
-                hint={t('fromMiddleName', { name: profile.middleName ?? '' })}
-                letter={essenceNow.mental.letter}
-                value={essenceNow.mental.value}
-                rangeStart={essenceNow.mental.rangeStart}
-                rangeEnd={essenceNow.mental.rangeEnd}
-                ageLabel={t('age')}
-              />
-            ) : null}
-            {essenceNow.spiritual ? (
-              <TransitChip
-                label={t('spiritualTransit')}
-                hint={t('fromLastName', { name: profile.lastName })}
-                letter={essenceNow.spiritual.letter}
-                value={essenceNow.spiritual.value}
-                rangeStart={essenceNow.spiritual.rangeStart}
-                rangeEnd={essenceNow.spiritual.rangeEnd}
-                ageLabel={t('age')}
-              />
-            ) : null}
-          </div>
-
-          {!profile.middleName ? (
-            <p className="text-muted-foreground mt-4 text-xs italic">
-              {t('noMiddleNameNote')}
-            </p>
+        {/* Active transit letters — compact chips, the actual essence number
+         * is already shown in the summary hero up top. */}
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+          {essenceNow.physical ? (
+            <TransitChip
+              label={t('physicalTransit')}
+              hint={t('fromFirstName', { name: profile.firstName })}
+              letter={essenceNow.physical.letter}
+              value={essenceNow.physical.value}
+              rangeStart={essenceNow.physical.rangeStart}
+              rangeEnd={essenceNow.physical.rangeEnd}
+              ageLabel={t('age')}
+            />
           ) : null}
+          {essenceNow.mental ? (
+            <TransitChip
+              label={t('mentalTransit')}
+              hint={t('fromMiddleName', { name: profile.middleName ?? '' })}
+              letter={essenceNow.mental.letter}
+              value={essenceNow.mental.value}
+              rangeStart={essenceNow.mental.rangeStart}
+              rangeEnd={essenceNow.mental.rangeEnd}
+              ageLabel={t('age')}
+            />
+          ) : null}
+          {essenceNow.spiritual ? (
+            <TransitChip
+              label={t('spiritualTransit')}
+              hint={t('fromLastName', { name: profile.lastName })}
+              letter={essenceNow.spiritual.letter}
+              value={essenceNow.spiritual.value}
+              rangeStart={essenceNow.spiritual.rangeStart}
+              rangeEnd={essenceNow.spiritual.rangeEnd}
+              ageLabel={t('age')}
+            />
+          ) : null}
+        </div>
 
-          {(() => {
-            const m = meaningFor('essence', essenceNow.essence, locale);
-            return m ? (
-              <p className="border-border/60 mt-5 border-t pt-4 text-sm leading-relaxed text-neutral-800 dark:text-neutral-200">
-                {m}
-              </p>
-            ) : null;
-          })()}
-        </article>
+        {!profile.middleName ? (
+          <p className="text-muted-foreground text-xs italic">
+            {t('noMiddleNameNote')}
+          </p>
+        ) : null}
 
         {/* Upcoming shifts — horizontal carousel */}
         {essenceFuture.length > 0 ? (
@@ -408,6 +433,56 @@ export default async function JourneyPage({ params }: { params: { locale: string
         ) : null}
       </section>
     </main>
+  );
+}
+
+/**
+ * One row in the year-at-a-glance summary hero. Layout: label + sub on the
+ * left, number (and optional secondary) on the right, single-line meaning
+ * snippet underneath. Designed to be stacked into a divide-y column.
+ */
+function SummaryRow({
+  label,
+  sub,
+  result,
+  secondary,
+  meaning,
+  locale,
+  showKarmic,
+  karmicLabel,
+}: {
+  label: string;
+  sub?: string;
+  result: NumerologyResult;
+  secondary?: NumerologyResult;
+  meaning?: string;
+  locale: Locale;
+  showKarmic?: boolean;
+  karmicLabel?: string;
+}) {
+  return (
+    <div className="space-y-1.5 py-3 first:pt-0 last:pb-0">
+      <div className="flex items-baseline justify-between gap-3">
+        <div className="min-w-0 space-y-0.5">
+          <p className="text-foreground text-sm font-medium">{label}</p>
+          {sub ? <p className="text-muted-foreground text-xs tabular-nums">{sub}</p> : null}
+        </div>
+        <div className="flex shrink-0 items-center gap-2">
+          {showKarmic && karmicLabel ? (
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-400">
+              {karmicLabel}
+            </span>
+          ) : null}
+          {secondary ? (
+            <CompoundReduced result={secondary} locale={locale} size="sm" />
+          ) : null}
+          <CompoundReduced result={result} locale={locale} size="sm" />
+        </div>
+      </div>
+      {meaning ? (
+        <p className="text-muted-foreground text-xs leading-relaxed">{meaning}</p>
+      ) : null}
+    </div>
   );
 }
 
