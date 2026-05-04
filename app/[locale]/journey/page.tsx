@@ -17,6 +17,7 @@ import {
 } from '@/lib/numerology';
 import { meaningFor } from '@/lib/numerology/meanings';
 import { CompoundReduced } from '@/components/numerology/CompoundReduced';
+import { Explainer } from '@/components/layout/Explainer';
 
 export default async function JourneyPage({ params }: { params: { locale: string } }) {
   const locale: Locale = isLocale(params.locale) ? params.locale : 'id';
@@ -407,24 +408,6 @@ export default async function JourneyPage({ params }: { params: { locale: string
         ) : null}
       </section>
     </main>
-  );
-}
-
-/**
- * Tiny disclosure explainer used at the top of each Journey section.
- * Native <details> so it survives without client JS, defaults closed
- * to keep the page calm — user taps "What is this?" when they want
- * the educational background.
- */
-function Explainer({ title, body }: { title: string; body: string }) {
-  return (
-    <details className="border-border group rounded-lg border bg-white/30 px-3 py-2 text-xs dark:bg-neutral-900/30">
-      <summary className="text-muted-foreground flex cursor-pointer list-none items-center gap-1.5 font-medium [&::-webkit-details-marker]:hidden">
-        <span className="text-accent transition-transform group-open:rotate-90">▸</span>
-        <span>{title}</span>
-      </summary>
-      <p className="text-muted-foreground mt-2 whitespace-pre-line leading-relaxed">{body}</p>
-    </details>
   );
 }
 

@@ -15,6 +15,7 @@ import { AboutMe } from '@/components/numerology/AboutMe';
 import { KarmicLessonsList } from '@/components/numerology/KarmicLessonsList';
 import { AppHeader } from '@/components/layout/AppHeader';
 import { Widget } from '@/components/layout/Widget';
+import { Explainer } from '@/components/layout/Explainer';
 import { DailyReadingView } from '@/components/reading/DailyReadingView';
 import { FeedbackPrompt } from '@/components/feedback/FeedbackPrompt';
 import { getFeedbackForLocalDay } from '@/lib/db/repositories/feedback';
@@ -189,19 +190,26 @@ export default async function DashboardPage({ params }: { params: { locale: stri
               karmicLessons: core.karmicLessons,
             }}
             locale={locale}
+            explainer={{
+              title: t('explainerLearnMore'),
+              body: t('aboutMeExplainer'),
+            }}
           />
         );
       case 'karmic':
         return (
           <Widget key={id} title={t('karmicLessonsTitle')} hint={t('karmicLessonsHint')} defaultOpen={false}>
-            <KarmicLessonsList
-              lessons={core.karmicLessons.map((n) => ({
-                number: n,
-                meaning: meaningFor('karmicLesson', { compound: n, reduced: n, isMaster: false }, locale),
-              }))}
-              emptyLabel={t('karmicLessonsNone')}
-              comingSoonLabel={t('meaningComingSoon')}
-            />
+            <div className="space-y-3">
+              <Explainer title={t('explainerLearnMore')} body={t('karmicLessonsExplainer')} />
+              <KarmicLessonsList
+                lessons={core.karmicLessons.map((n) => ({
+                  number: n,
+                  meaning: meaningFor('karmicLesson', { compound: n, reduced: n, isMaster: false }, locale),
+                }))}
+                emptyLabel={t('karmicLessonsNone')}
+                comingSoonLabel={t('meaningComingSoon')}
+              />
+            </div>
           </Widget>
         );
       default:

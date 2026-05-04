@@ -2,6 +2,7 @@ import { Sparkles } from 'lucide-react';
 import type { ParsedAboutMe } from '@/lib/ai/prompts/aboutMe';
 import type { NumerologyResult } from '@/lib/numerology';
 import type { Locale } from '@/lib/i18n/config';
+import { Explainer } from '@/components/layout/Explainer';
 import { CompoundReduced } from './CompoundReduced';
 
 type CardKey = 'lifePath' | 'expression' | 'soulUrge' | 'personality' | 'birthday' | 'karmicLessons';
@@ -26,6 +27,8 @@ interface Props {
     karmicLessons: number[];
   };
   locale?: Locale;
+  /** Optional educational disclosure shown under the subtitle. */
+  explainer?: { title: string; body: string };
 }
 
 const CARD_ORDER = [
@@ -52,13 +55,15 @@ export function AboutMe({
   aboutLabel,
   numbers,
   locale = 'id',
+  explainer,
 }: Props) {
   if (!data) {
     return (
       <section className="border-border space-y-3 rounded-2xl border bg-white/30 p-6 dark:bg-neutral-900/30">
-        <header className="space-y-1">
+        <header className="space-y-2">
           <h2 className="text-lg font-semibold">{title}</h2>
           <p className="text-muted-foreground text-sm">{subtitle}</p>
+          {explainer ? <Explainer title={explainer.title} body={explainer.body} /> : null}
         </header>
         <p className="text-muted-foreground text-sm italic">{fallback}</p>
       </section>
@@ -73,9 +78,10 @@ export function AboutMe({
 
   return (
     <section className="space-y-4">
-      <header className="space-y-1 px-1">
+      <header className="space-y-2 px-1">
         <h2 className="text-lg font-semibold">{title}</h2>
         <p className="text-muted-foreground text-sm">{subtitle}</p>
+        {explainer ? <Explainer title={explainer.title} body={explainer.body} /> : null}
       </header>
 
       {data.synthesis ? (
