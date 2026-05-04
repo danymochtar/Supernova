@@ -9,6 +9,11 @@ import { buildCoreProfile } from '@/lib/numerology';
 import { getOrGenerateRelationshipProfile } from '@/lib/ai/relationship';
 import { TopBar } from '@/components/layout/TopBar';
 
+// AI generation can take 15-25s on cold cache; bump function timeout
+// well above Vercel's 10s default so the page doesn't 504.
+export const maxDuration = 60;
+export const dynamic = 'force-dynamic';
+
 export default async function RelationshipProfilePage({
   params,
 }: {

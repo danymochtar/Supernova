@@ -104,23 +104,40 @@ export interface ParsedPairs {
 }
 
 export function parsePairs(raw: string): ParsedPairs {
-  // Tolerant: strip code fences if model added them.
+  // Tolerant: strip code fences, then fall back to grabbing the first
+  // top-level {...} block if the model wrapped it in prose like
+  // "Here's the JSON: { ... }".
   let body = raw.trim();
   if (body.startsWith('```')) {
     body = body.replace(/^```(?:json)?\s*/i, '').replace(/```\s*$/i, '').trim();
   }
-  try {
-    const obj = JSON.parse(body);
-    if (obj && typeof obj === 'object' && obj.narratives && typeof obj.narratives === 'object') {
-      const out: Record<string, string> = {};
-      for (const [k, v] of Object.entries(obj.narratives as Record<string, unknown>)) {
-        if (typeof v === 'string') out[k] = v.trim();
+
+  const tryParse = (s: string): ParsedPairs | null => {
+    try {
+      const obj = JSON.parse(s);
+      if (obj && typeof obj === 'object' && obj.narratives && typeof obj.narratives === 'object') {
+        const out: Record<string, string> = {};
+        for (const [k, v] of Object.entries(obj.narratives as Record<string, unknown>)) {
+          if (typeof v === 'string') out[k] = v.trim();
+        }
+        return { narratives: out };
       }
-      return { narratives: out };
+    } catch {
+      // fall through
     }
-  } catch {
-    // fall through
+    return null;
+  };
+
+  const direct = tryParse(body);
+  if (direct) return direct;
+
+  const start = body.indexOf('{');
+  const end = body.lastIndexOf('}');
+  if (start !== -1 && end > start) {
+    const sliced = tryParse(body.slice(start, end + 1));
+    if (sliced) return sliced;
   }
+
   return { narratives: {} };
 }
 

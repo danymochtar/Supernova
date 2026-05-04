@@ -12,6 +12,10 @@ import { getOrGeneratePairNarratives } from '@/lib/ai/relationship';
 import { CompoundReduced } from '@/components/numerology/CompoundReduced';
 import { TopBar } from '@/components/layout/TopBar';
 
+// AI narratives generation can take 15-25s on cold cache.
+export const maxDuration = 60;
+export const dynamic = 'force-dynamic';
+
 const TONE_STYLES: Record<'harmony' | 'tension' | 'neutral', string> = {
   harmony: 'border-emerald-200 bg-emerald-50 dark:border-emerald-900/40 dark:bg-emerald-950/20',
   tension: 'border-amber-200 bg-amber-50 dark:border-amber-900/40 dark:bg-amber-950/20',

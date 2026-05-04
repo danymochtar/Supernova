@@ -18,8 +18,26 @@ import {
 } from '@/lib/db/repositories/numerologyCache';
 import { logUsage } from '@/lib/db/repositories/usage';
 
-const PAIRS_VERSION = 'v1';
-const PROFILE_VERSION = 'v1';
+const PAIRS_VERSION = 'v2';
+const PROFILE_VERSION = 'v2';
+
+// Per-Anthropic-call timeout. Sits below the 60s function timeout so we
+// can retry once if the first call stalls. The SDK default is 600s which
+// would let a stuck call eat the whole function budget.
+const CALL_TIMEOUT_MS = 40_000;
+
+async function callWithRetry<T>(fn: () => Promise<T>, label: string): Promise<T> {
+  try {
+    return await fn();
+  } catch (err) {
+    const status = (err as { status?: number; statusCode?: number })?.status
+      ?? (err as { statusCode?: number })?.statusCode;
+    const transient = !status || status >= 500 || status === 429 || status === 408;
+    if (!transient) throw err;
+    console.warn(`[${label}] first attempt failed, retrying once`, err);
+    return await fn();
+  }
+}
 
 function pairsKey(personId: string, relationship: Relationship, locale: string): string {
   return `relPairs-${PAIRS_VERSION}:${personId}:${relationship}:${locale}`;
@@ -55,17 +73,29 @@ export async function getOrGeneratePairNarratives(
   const cached = await getCachedJson<{ narratives: Record<string, string> }>(userId, key);
   if (cached?.narratives) return cached.narratives;
 
-  const modelId = model('aboutMe', preferredModel);
+  // Pairs is a pure-format JSON task with structured output — Haiku 4.5
+  // hits this well, ~3× faster than Sonnet and the narratives are short
+  // enough that quality doesn't suffer noticeably.
+  const modelId = preferredModel ?? process.env.ANTHROPIC_RELATIONSHIP_MODEL ?? 'claude-haiku-4-5';
   try {
-    const response = await anthropic().messages.create({
-      model: modelId,
-      max_tokens: 1500,
-      system: buildPairsSystem(input.locale),
-      messages: [{ role: 'user', content: buildPairsUser(input) }],
-    });
+    const response = await callWithRetry(
+      () => anthropic().messages.create(
+        {
+          model: modelId,
+          max_tokens: 1500,
+          system: buildPairsSystem(input.locale),
+          messages: [{ role: 'user', content: buildPairsUser(input) }],
+        },
+        { timeout: CALL_TIMEOUT_MS },
+      ),
+      'relationship.pairs',
+    );
     const raw = extractText(response.content);
     const parsed = parsePairs(raw);
-    if (Object.keys(parsed.narratives).length === 0) return {};
+    if (Object.keys(parsed.narratives).length === 0) {
+      console.warn('[relationship.pairs] empty narratives parsed from raw', raw.slice(0, 200));
+      return {};
+    }
 
     await setCachedJson(userId, key, parsed, {
       model: modelId,
@@ -100,14 +130,22 @@ export async function getOrGenerateRelationshipProfile(
   const cached = await getCachedText(userId, key);
   if (cached) return cached;
 
+  // Profile is read-once, kept-around prose — Sonnet is worth it for
+  // warmth/nuance. Per-user override still wins.
   const modelId = model('aboutMe', preferredModel);
   try {
-    const response = await anthropic().messages.create({
-      model: modelId,
-      max_tokens: 900,
-      system: buildProfileSystem(input.locale),
-      messages: [{ role: 'user', content: buildProfileUser(input) }],
-    });
+    const response = await callWithRetry(
+      () => anthropic().messages.create(
+        {
+          model: modelId,
+          max_tokens: 800,
+          system: buildProfileSystem(input.locale),
+          messages: [{ role: 'user', content: buildProfileUser(input) }],
+        },
+        { timeout: CALL_TIMEOUT_MS },
+      ),
+      'relationship.profile',
+    );
     const text = extractText(response.content);
     if (!text) return null;
 
