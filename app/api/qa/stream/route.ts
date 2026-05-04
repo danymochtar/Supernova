@@ -44,21 +44,32 @@ export async function POST(req: Request) {
   const todayEnd = new Date(todayStart);
   todayEnd.setUTCDate(todayEnd.getUTCDate() + 1);
 
-  // Run the rollup catch-up in parallel with fetching today's turns + smart
-  // context. The rollup hits the Anthropic API only when a past period has
-  // unprocessed turns; usually it's just one cheap precheck.
-  const [, todaysTurns, smart] = await Promise.all([
-    rollupAll(session.user.id, locale, new Date()),
-    getTurnsBetween(session.user.id, todayStart, todayEnd),
-    loadSmartContext({
-      userId: session.user.id,
-      locale,
-      profile,
-      question,
-      ctx,
-      dob: profile.dob,
-    }),
-  ]);
+  // Fire-and-forget the rollup: it makes 1-3 Anthropic calls when a period
+  // has unprocessed turns and used to block the chat response (and break it
+  // on transient failures). It's idempotent and the next request will retry,
+  // so we don't gate the user's reply on it.
+  void rollupAll(session.user.id, locale, new Date()).catch((err) => {
+    console.error('[chat/stream] rollup failed (background)', err);
+  });
+
+  let todaysTurns: Awaited<ReturnType<typeof getTurnsBetween>>;
+  let smart: Awaited<ReturnType<typeof loadSmartContext>>;
+  try {
+    [todaysTurns, smart] = await Promise.all([
+      getTurnsBetween(session.user.id, todayStart, todayEnd),
+      loadSmartContext({
+        userId: session.user.id,
+        locale,
+        profile,
+        question,
+        ctx,
+        dob: profile.dob,
+      }),
+    ]);
+  } catch (err) {
+    console.error('[chat/stream] context load failed', err);
+    return NextResponse.json({ error: 'context_failed' }, { status: 500 });
+  }
 
   const userId = session.user.id;
   const modelId = model('chat', profile.preferredModel);
