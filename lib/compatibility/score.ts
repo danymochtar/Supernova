@@ -233,6 +233,8 @@ export function compatibilityScore(
     //     scatter risk — both get exhausted in the same way at the
     //     same time. Mild penalty.
     //
+    // Thresholds tuned so most pairs land in one of the three buckets;
+    // the modifier should be a regular signal, not a rare event.
     // The three cases are mutually exclusive; at most one fires.
     const myBr = bridges(me);
     const theirBr = bridges(them);
@@ -241,23 +243,29 @@ export function compatibilityScore(
     const theirLPE = theirBr.lifePathExpression.reduced;
     const theirSUP = theirBr.soulUrgePersonality.reduced;
 
-    const meIntegrated = myLPE <= 2 && mySUP <= 2;
-    const themIntegrated = theirLPE <= 2 && theirSUP <= 2;
-    const meStretched = myLPE >= 5 || mySUP >= 5;
-    const themStretched = theirLPE >= 5 || theirSUP >= 5;
-    const bothFullyStretched = myLPE >= 5 && mySUP >= 5 && theirLPE >= 5 && theirSUP >= 5;
-    const distance = Math.abs(myLPE - theirLPE) + Math.abs(mySUP - theirSUP);
+    const meSum = myLPE + mySUP;       // 0..16, total bridge weight
+    const theirSum = theirLPE + theirSUP;
+    const diff = Math.abs(meSum - theirSum);
+
+    const meIntegrated = meSum <= 4;   // both bridges low overall
+    const themIntegrated = theirSum <= 4;
+    const meStretched = meSum >= 8;    // both bridges fairly large overall
+    const themStretched = theirSum >= 8;
+    const bothStretched = meStretched && themStretched;
 
     if (
       (meIntegrated && themStretched) ||
       (themIntegrated && meStretched)
     ) {
+      // One clearly more integrated than the other → complement
       modifiers.push({ reason: 'bridgeComplement', delta: 2 });
       overall += 2;
-    } else if (distance <= 2 && !bothFullyStretched) {
+    } else if (diff <= 3 && !bothStretched) {
+      // Similar internal landscape (and not both grinding) → sync
       modifiers.push({ reason: 'bridgeSync', delta: 2 });
       overall += 2;
-    } else if (bothFullyStretched) {
+    } else if (bothStretched && diff <= 3) {
+      // Both equally stretched → compound exhaustion
       modifiers.push({ reason: 'mutualBridgeStretch', delta: -1 });
       overall -= 1;
     }
