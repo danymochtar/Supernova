@@ -11,7 +11,9 @@ import { getCachedJson, setCachedJson } from '@/lib/db/repositories/numerologyCa
 
 // v3: structured carousel — synthesis + per-component cards. Bumping the
 // key invalidates v2 prose-only blobs without needing a migration.
-const CACHE_KEY = 'aboutMe-v3';
+// v4: bridge numbers added to prompt context → tone shifts to acknowledge
+// internal integration / friction. Old v3 blobs regenerate on next access.
+const CACHE_KEY = 'aboutMe-v4';
 
 /**
  * Cache-first structured About Me. Profile name + DOB never change so the

@@ -6,6 +6,7 @@ import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import {
+  bridges,
   buildCoreProfile,
   contextFromInstant,
   minorNumbers,
@@ -62,6 +63,7 @@ export default async function DashboardPage({ params }: { params: { locale: stri
   const ctx = contextFromInstant(new Date(), profile.timezone);
   const cycles = personalCycles(profile.dob, ctx);
   const minor = minorNumbers(profile.nickname);
+  const bridge = bridges(core);
   // World Numerology's "today's numbers are X, Y, Z" framing: PD, PM, and
   // the calendar day-of-month digital root. May 4 → 4; May 31 → 4 (3+1).
   const dayOfMonthReduced = (() => {
@@ -204,6 +206,17 @@ export default async function DashboardPage({ params }: { params: { locale: stri
             minorExplainer={{
               title: t('explainerLearnMore'),
               body: t('minorExplainer'),
+            }}
+            bridge={bridge}
+            bridgeLabels={{
+              lifePathExpression: t('bridgeLifePathExpression'),
+              lifePathExpressionHint: t('bridgeLifePathExpressionHint'),
+              soulUrgePersonality: t('bridgeSoulUrgePersonality'),
+              soulUrgePersonalityHint: t('bridgeSoulUrgePersonalityHint'),
+            }}
+            bridgeExplainer={{
+              title: t('explainerLearnMore'),
+              body: t('bridgeExplainer'),
             }}
             comingSoonLabel={t('meaningComingSoon')}
           />

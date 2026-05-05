@@ -1,4 +1,4 @@
-import { formatNumerology, type NumerologyResult } from '@/lib/numerology';
+import { bridges, formatNumerology, type NumerologyResult } from '@/lib/numerology';
 
 export interface AboutMeInput {
   locale: 'id' | 'en';
@@ -83,6 +83,7 @@ Output MUST be valid JSON, nothing else:
 export function buildAboutMeUser(input: AboutMeInput): string {
   const km = input.karmicLessons.length ? input.karmicLessons.join(', ') : 'none';
   const includeKarmic = input.karmicLessons.length > 0;
+  const br = bridges(input.core);
   return `<profile>
 name: ${input.fullName}
 
@@ -94,6 +95,11 @@ Core numbers:
 - Birthday: ${r(input.core.birthday)}
 
 Karmic Lessons: ${km}
+
+Bridge Numbers (gap between paired core numbers — informs how easily two facets integrate):
+- Life Path × Expression bridge: ${br.lifePathExpression.reduced} (talent ↔ mission alignment)
+- Soul Urge × Personality bridge: ${br.soulUrgePersonality.reduced} (inner self ↔ outer presentation alignment)
+Use these as INTERNAL signals to color the synthesis tone — small bridges = smooth integration, large bridges = the person is stretched between two facets and growth lives in the gap. Do NOT mention bridge numbers literally in the output.
 </profile>
 
 Return JSON. ${

@@ -1,6 +1,6 @@
 import { Sparkles } from 'lucide-react';
 import type { ParsedAboutMe } from '@/lib/ai/prompts/aboutMe';
-import type { MinorNumbers, NumerologyResult } from '@/lib/numerology';
+import type { Bridges, MinorNumbers, NumerologyResult } from '@/lib/numerology';
 import type { Locale } from '@/lib/i18n/config';
 import { meaningFor } from '@/lib/numerology/meanings';
 import { Explainer } from '@/components/layout/Explainer';
@@ -42,6 +42,18 @@ interface Props {
   };
   /** Optional Explainer for the Minor concept. */
   minorExplainer?: { title: string; body: string };
+  /** Bridge Numbers — the gap between LP↔Expression and SU↔Personality.
+   * Surfaced beneath the Minor block when present. */
+  bridge?: Bridges | null;
+  /** Translated labels for the bridge block. */
+  bridgeLabels?: {
+    lifePathExpression: string;
+    lifePathExpressionHint: string;
+    soulUrgePersonality: string;
+    soulUrgePersonalityHint: string;
+  };
+  /** Optional Explainer for the Bridge concept. */
+  bridgeExplainer?: { title: string; body: string };
   /** "Coming soon" string for unmapped meanings. */
   comingSoonLabel?: string;
 }
@@ -73,6 +85,9 @@ export function AboutMe({
   minor,
   minorLabels,
   minorExplainer,
+  bridge,
+  bridgeLabels,
+  bridgeExplainer,
   comingSoonLabel,
 }: Props) {
   if (!data) {
@@ -139,6 +154,34 @@ export function AboutMe({
               locale={locale}
               type="personality"
               meaning={meaningFor('personality', minor.minorPersonality, locale)}
+              comingSoonLabel={comingSoonLabel}
+            />
+          </div>
+        </div>
+      ) : null}
+
+      {bridge && bridgeLabels ? (
+        <div className="space-y-3">
+          {bridgeExplainer ? (
+            <Explainer title={bridgeExplainer.title} body={bridgeExplainer.body} />
+          ) : null}
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <NumberCard
+              label={bridgeLabels.lifePathExpression}
+              hint={bridgeLabels.lifePathExpressionHint}
+              result={bridge.lifePathExpression}
+              locale={locale}
+              type="bridge"
+              meaning={meaningFor('bridge', bridge.lifePathExpression, locale)}
+              comingSoonLabel={comingSoonLabel}
+            />
+            <NumberCard
+              label={bridgeLabels.soulUrgePersonality}
+              hint={bridgeLabels.soulUrgePersonalityHint}
+              result={bridge.soulUrgePersonality}
+              locale={locale}
+              type="bridge"
+              meaning={meaningFor('bridge', bridge.soulUrgePersonality, locale)}
               comingSoonLabel={comingSoonLabel}
             />
           </div>

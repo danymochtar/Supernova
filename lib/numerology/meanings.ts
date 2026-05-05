@@ -22,6 +22,7 @@ export type MeaningType =
   | 'challenge'
   | 'cycle'
   | 'essence'
+  | 'bridge'
   | 'karmicLesson'
   | 'personalDayTitle';
 

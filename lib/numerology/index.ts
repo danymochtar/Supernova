@@ -30,6 +30,7 @@ export {
 } from './personal';
 export { buildCoreProfile } from './profile';
 export { minorNumbers, type MinorNumbers } from './minor';
+export { bridges, type Bridges } from './bridge';
 export { ageAt } from './age';
 export {
   activeTransit,

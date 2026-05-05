@@ -8,6 +8,7 @@ import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import {
   ageAt,
+  bridges,
   buildCoreProfile,
   contextFromInstant,
   minorNumbers,
@@ -59,6 +60,7 @@ export default async function PersonDetailPage({
     .slice(0, 2);
 
   const minor = minorNumbers(person.nickname);
+  const bridge = bridges(them);
   const initials = `${person.firstName.charAt(0)}${person.lastName?.charAt(0) ?? ''}`.toUpperCase();
 
   // Relationship profile is AI-generated long-form prose. Cache-first.
@@ -181,6 +183,33 @@ export default async function PersonDetailPage({
               </div>
             </div>
           ) : null}
+
+          <div className="space-y-3">
+            <Explainer
+              title={tDash('explainerLearnMore')}
+              body={tDash('bridgeExplainer')}
+            />
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <NumberCard
+                label={t('bridgeLifePathExpression')}
+                hint={t('bridgeLifePathExpressionHint')}
+                result={bridge.lifePathExpression}
+                locale={locale}
+                type="bridge"
+                meaning={meaningFor('bridge', bridge.lifePathExpression, locale)}
+                comingSoonLabel={tDash('meaningComingSoon')}
+              />
+              <NumberCard
+                label={t('bridgeSoulUrgePersonality')}
+                hint={t('bridgeSoulUrgePersonalityHint')}
+                result={bridge.soulUrgePersonality}
+                locale={locale}
+                type="bridge"
+                meaning={meaningFor('bridge', bridge.soulUrgePersonality, locale)}
+                comingSoonLabel={tDash('meaningComingSoon')}
+              />
+            </div>
+          </div>
         </section>
 
         {/* Relationship profile — summary always visible, full text behind
