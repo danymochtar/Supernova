@@ -243,6 +243,44 @@ function formatHistory(
   return blocks.join('\n\n');
 }
 
+/**
+ * Tiny "ground-truth date facts" string injected right next to the user's
+ * current question. The system prompt and full <profile> already carry
+ * these facts, but the model sometimes anchors on its OWN earlier
+ * assistant turns (where it may have fabricated a wrong DOB) and ignores
+ * the system context. Putting the date facts at the very end of the
+ * prompt — adjacent to the question being answered — gives them recency
+ * weight that overrides the bad narrative.
+ */
+export function dateFactAnchor(
+  dob: BirthDate,
+  ctx: { year: number; month: number; day: number },
+  locale: Locale,
+): string {
+  const todayMs = Date.UTC(ctx.year, ctx.month - 1, ctx.day);
+  let nbYear = ctx.year;
+  let nbMs = Date.UTC(nbYear, dob.month - 1, dob.day);
+  if (nbMs < todayMs) {
+    nbYear = ctx.year + 1;
+    nbMs = Date.UTC(nbYear, dob.month - 1, dob.day);
+  }
+  const dobStr = `${dob.year}-${String(dob.month).padStart(2, '0')}-${String(dob.day).padStart(2, '0')}`;
+  const nbStr = `${nbYear}-${String(dob.month).padStart(2, '0')}-${String(dob.day).padStart(2, '0')}`;
+  const days = Math.round((nbMs - todayMs) / 86_400_000);
+  const turning = nbYear - dob.year;
+  // Compute current age the same way ageAt does: we already imported it,
+  // but to keep this helper free of personal.ts' PersonalContext shape
+  // we recompute trivially here.
+  const beforeBirthday =
+    ctx.month < dob.month || (ctx.month === dob.month && ctx.day < dob.day);
+  const age = ctx.year - dob.year - (beforeBirthday ? 1 : 0);
+
+  if (locale === 'id') {
+    return `[FAKTA dari <profile> — pakai persis ini, jangan diinferensi: tanggal lahir ${dobStr}, umur ${age}, ulang tahun berikutnya ${nbStr} (${days} hari lagi, jadi ${turning}).]`;
+  }
+  return `[FACTS from <profile> — use exactly, do not infer: date of birth ${dobStr}, age ${age}, next birthday ${nbStr} (in ${days} day${days === 1 ? '' : 's'}, turning ${turning}).]`;
+}
+
 /** Compose the smart context into a single user-turn string for the model. */
 export function composeContextBlock(c: SmartContext, personalNotes?: string | null): string {
   const parts: string[] = [c.base];

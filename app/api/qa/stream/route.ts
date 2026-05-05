@@ -8,7 +8,7 @@ import { getTurnsBetween, saveTurn } from '@/lib/db/repositories/qa';
 import { logUsage } from '@/lib/db/repositories/usage';
 import { anthropic, model } from '@/lib/ai/client';
 import { chatSystemPrompt } from '@/lib/ai/prompts/conversation';
-import { composeContextBlock, loadSmartContext } from '@/lib/conversation/context';
+import { composeContextBlock, dateFactAnchor, loadSmartContext } from '@/lib/conversation/context';
 import { rollupAll } from '@/lib/conversation/rollup';
 import { contextFromInstant } from '@/lib/numerology';
 import { isLocale, type Locale } from '@/lib/i18n/config';
@@ -157,8 +157,14 @@ export async function POST(req: Request) {
   // Build the current user message. If attachments are present, the content
   // becomes a multi-block array: image/document blocks + a final text block
   // (with any text-file preamble prepended to the question).
+  // We prepend a tiny date-fact anchor — the model otherwise tends to
+  // anchor on its own earlier assistant turns (where it may have
+  // fabricated a wrong DOB) and ignore the system <profile>. This
+  // anchor is sent to the API only; we don't persist it to QaHistory.
   const { blocks: attachmentContentBlocks, textPreamble } = attachmentBlocks(attachments);
-  const finalQuestion = `${textPreamble}${question || (locale === 'id' ? '(File terlampir di atas — kasih perspektif kamu)' : '(Attachments above — share your perspective)')}`;
+  const anchor = dateFactAnchor(profile.dob, ctx, locale);
+  const baseQuestion = `${textPreamble}${question || (locale === 'id' ? '(File terlampir di atas — kasih perspektif kamu)' : '(Attachments above — share your perspective)')}`;
+  const finalQuestion = `${anchor}\n\n${baseQuestion}`;
   const currentUserContent: string | UserContentBlock[] =
     attachmentContentBlocks.length > 0
       ? [...attachmentContentBlocks, { type: 'text' as const, text: finalQuestion }]
