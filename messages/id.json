@@ -247,12 +247,6 @@
     "starter2": "Lagi gak enak rasanya, bantu aku pahamin",
     "starter3": "Cerita dong tentang Personal Year aku tahun ini",
     "starter4": "Aku lagi mikirin hubungan, kasih perspektif dong",
-    "showHistory": "Tampilkan ringkasan sebelumnya ({count})",
-    "hideHistory": "Sembunyikan ringkasan",
-    "dailyLabel": "{date}",
-    "weeklyLabel": "{from} – {to}",
-    "monthlyLabel": "Bulan {range}",
-    "turnCount": "{count} percakapan",
     "errorInvalid": "Pesan terlalu pendek atau panjang.",
     "errorNoProfile": "Selesaikan onboarding dulu.",
     "errorGeneric": "Terjadi kesalahan. Coba lagi sebentar."

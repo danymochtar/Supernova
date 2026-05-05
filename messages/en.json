@@ -247,12 +247,6 @@
     "starter2": "I'm feeling off, help me make sense of it",
     "starter3": "Tell me about my Personal Year this year",
     "starter4": "I've been thinking about a relationship — give me perspective",
-    "showHistory": "Show prior summaries ({count})",
-    "hideHistory": "Hide summaries",
-    "dailyLabel": "{date}",
-    "weeklyLabel": "{from} – {to}",
-    "monthlyLabel": "{range}",
-    "turnCount": "{count} messages",
     "errorInvalid": "Message is too short or too long.",
     "errorNoProfile": "Finish onboarding first.",
     "errorGeneric": "Something went wrong. Please try again."

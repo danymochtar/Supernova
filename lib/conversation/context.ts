@@ -1,9 +1,7 @@
 import type { Locale } from '@/lib/i18n/config';
-import type { ConversationSummary } from '@prisma/client';
 import { listPeople } from '@/lib/db/repositories/person';
 import { getReadingForLocalDay } from '@/lib/db/repositories/reading';
 import { getRecentFeedback } from '@/lib/db/repositories/feedback';
-import { listSummaries } from '@/lib/db/repositories/conversationSummary';
 import { aggregate, promptSummary } from '@/lib/patterns/aggregate';
 import {
   ageAt,
@@ -37,11 +35,6 @@ const KEYWORDS = {
     'pola', 'pattern', 'biasanya', 'usually', 'sering', 'tend',
     'tracking', 'feedback', 'mood',
   ],
-  history: [
-    'kemarin', 'yesterday', 'minggu lalu', 'last week', 'bulan lalu', 'last month',
-    'pernah', 'sebelumnya', 'previously', 'dulu',
-    'kita pernah', 'ingat', 'remember',
-  ],
 };
 
 function matches(text: string, keywords: string[]): boolean {
@@ -62,8 +55,6 @@ export interface SmartContext {
   reading?: string;
   /** Only present when the question asks about patterns / mood / habits. */
   patterns?: string;
-  /** Daily / weekly / monthly summary cascade — always present if any exist. */
-  history?: string;
   /** What was loaded — surfaced in dev logs for debugging. */
   loaded: string[];
 }
@@ -132,21 +123,13 @@ today's cycles: Personal Year=${r(cycles.personalYear)}, Personal Month=${r(cycl
   const since = new Date(Date.UTC(ctx.year, ctx.month - 1, ctx.day));
   since.setUTCDate(since.getUTCDate() - 30);
 
-  const [dailies, weeklies, monthlies, people, reading, feedback] = await Promise.all([
-    listSummaries(userId, 'DAILY', 7),
-    listSummaries(userId, 'WEEKLY', 4),
-    listSummaries(userId, 'MONTHLY', 6),
+  const [people, reading, feedback] = await Promise.all([
     listPeople(userId),
     wantReading ? getReadingForLocalDay(userId, ctx.year, ctx.month, ctx.day) : Promise.resolve(null),
     wantPatterns
       ? getRecentFeedback(userId, since)
       : Promise.resolve([] as Awaited<ReturnType<typeof getRecentFeedback>>),
   ]);
-
-  if (dailies.length || weeklies.length || monthlies.length) {
-    result.history = formatHistory(dailies, weeklies, monthlies, locale);
-    loaded.push('history');
-  }
 
   if (people.length > 0) {
     // For each known person we precompute their core numbers + today's
@@ -193,56 +176,6 @@ today's cycles: Personal Year=${r(cycles.personalYear)}, Personal Month=${r(cycl
   return result;
 }
 
-function formatHistory(
-  daily: ConversationSummary[],
-  weekly: ConversationSummary[],
-  monthly: ConversationSummary[],
-  locale: Locale,
-): string {
-  const blocks: string[] = [];
-
-  if (monthly.length) {
-    blocks.push(
-      `=== ${locale === 'id' ? 'Ringkasan bulanan' : 'Monthly summaries'} ===\n` +
-        monthly
-          .slice(0, 6)
-          .reverse()
-          .map(
-            (m) =>
-              `[${m.periodStart.toISOString().slice(0, 7)}] ${m.summary}`,
-          )
-          .join('\n\n'),
-    );
-  }
-  if (weekly.length) {
-    blocks.push(
-      `=== ${locale === 'id' ? 'Ringkasan mingguan' : 'Weekly summaries'} ===\n` +
-        weekly
-          .slice(0, 4)
-          .reverse()
-          .map(
-            (w) =>
-              `[${w.periodStart.toISOString().slice(0, 10)} → ${w.periodEnd.toISOString().slice(0, 10)}] ${w.summary}`,
-          )
-          .join('\n\n'),
-    );
-  }
-  if (daily.length) {
-    blocks.push(
-      `=== ${locale === 'id' ? 'Ringkasan harian (terbaru)' : 'Daily summaries (recent)'} ===\n` +
-        daily
-          .slice(0, 7)
-          .reverse()
-          .map(
-            (d) =>
-              `[${d.periodStart.toISOString().slice(0, 10)}] ${d.summary}`,
-          )
-          .join('\n\n'),
-    );
-  }
-  return blocks.join('\n\n');
-}
-
 /**
  * Tiny "ground-truth date facts" string injected right next to the user's
  * current question. The system prompt and full <profile> already carry
@@ -286,9 +219,6 @@ export function composeContextBlock(c: SmartContext, personalNotes?: string | nu
   const parts: string[] = [c.base];
   if (personalNotes && personalNotes.trim()) {
     parts.push(`<personal_notes>\n${personalNotes.trim()}\n</personal_notes>`);
-  }
-  if (c.history) {
-    parts.push(`<conversation_history>\n${c.history}\n</conversation_history>`);
   }
   if (c.people) {
     parts.push(`<people>\n${c.people}\n</people>`);

@@ -4,12 +4,17 @@ import { ChatThread } from '@/components/qa/ChatThread';
 import { deleteTurnAction } from './actions';
 import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
-import { getTurnsBetween } from '@/lib/db/repositories/qa';
-import { listSummaries } from '@/lib/db/repositories/conversationSummary';
-import { contextFromInstant } from '@/lib/numerology';
+import { getRecentTurns } from '@/lib/db/repositories/qa';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 
 export const dynamic = 'force-dynamic';
+
+/**
+ * How many of the most recent turns to hydrate into the chat. Mirrors the
+ * server-side history window the streaming route sends to the model, so what
+ * the user sees on screen and what the assistant remembers stay aligned.
+ */
+const HISTORY_WINDOW = 50;
 
 export default async function AskPage({ params }: { params: { locale: string } }) {
   const locale: Locale = isLocale(params.locale) ? params.locale : 'id';
@@ -21,51 +26,7 @@ export default async function AskPage({ params }: { params: { locale: string } }
   const profile = await getProfileByUserId(session.user.id);
   if (!profile) redirect(`/${locale}/welcome`);
 
-  const ctx = contextFromInstant(new Date(), profile.timezone);
-  const todayStart = new Date(Date.UTC(ctx.year, ctx.month - 1, ctx.day));
-  const todayEnd = new Date(todayStart);
-  todayEnd.setUTCDate(todayEnd.getUTCDate() + 1);
-
-  // Note: rollups run lazily inside POST /api/qa/stream when a new period
-  // boundary is crossed — no need to block this page render on them.
-  const [todaysTurns, dailies, weeklies, monthlies] = await Promise.all([
-    getTurnsBetween(session.user.id, todayStart, todayEnd),
-    listSummaries(session.user.id, 'DAILY', 7),
-    listSummaries(session.user.id, 'WEEKLY', 4),
-    listSummaries(session.user.id, 'MONTHLY', 6),
-  ]);
-
-  const dateFmt = (d: Date) =>
-    d.toLocaleDateString(locale === 'id' ? 'id-ID' : 'en-US', {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
-      timeZone: 'UTC',
-    });
-
-  const priorDays = [
-    ...monthlies.map((m) => ({
-      label: t('monthlyLabel', { range: dateFmt(m.periodStart).slice(-4) }),
-      start: m.periodStart.toISOString(),
-      end: m.periodEnd.toISOString(),
-      summary: m.summary,
-      turnCount: m.turnCount,
-    })),
-    ...weeklies.map((w) => ({
-      label: t('weeklyLabel', { from: dateFmt(w.periodStart), to: dateFmt(w.periodEnd) }),
-      start: w.periodStart.toISOString(),
-      end: w.periodEnd.toISOString(),
-      summary: w.summary,
-      turnCount: w.turnCount,
-    })),
-    ...dailies.map((d) => ({
-      label: t('dailyLabel', { date: dateFmt(d.periodStart) }),
-      start: d.periodStart.toISOString(),
-      end: d.periodEnd.toISOString(),
-      summary: d.summary,
-      turnCount: d.turnCount,
-    })),
-  ];
+  const recentTurns = await getRecentTurns(session.user.id, HISTORY_WINDOW);
 
   return (
     <main className="container max-w-3xl px-4 py-4 sm:px-6 sm:py-6">
@@ -75,13 +36,12 @@ export default async function AskPage({ params }: { params: { locale: string } }
       </header>
 
       <ChatThread
-        initialTurns={todaysTurns.map((tn) => ({
+        initialTurns={recentTurns.map((tn) => ({
           id: tn.id,
           question: tn.question,
           answer: tn.answer,
           createdAt: tn.createdAt.toISOString(),
         }))}
-        priorDays={priorDays}
         emptyHint={t('emptyHint')}
         starterPrompts={[t('starter1'), t('starter2'), t('starter3'), t('starter4')]}
         deleteAction={deleteTurnAction}

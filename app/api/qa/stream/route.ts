@@ -4,14 +4,22 @@ import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
-import { getTurnsBetween, saveTurn } from '@/lib/db/repositories/qa';
+import { getRecentTurns, saveTurn } from '@/lib/db/repositories/qa';
 import { logUsage } from '@/lib/db/repositories/usage';
 import { anthropic, model } from '@/lib/ai/client';
 import { chatSystemPrompt } from '@/lib/ai/prompts/conversation';
 import { composeContextBlock, dateFactAnchor, loadSmartContext } from '@/lib/conversation/context';
-import { rollupAll } from '@/lib/conversation/rollup';
 import { contextFromInstant } from '@/lib/numerology';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+
+/**
+ * How many of the user's most recent chat turns to send back to the
+ * model as raw conversation history. Each turn = one user message +
+ * one assistant reply. 50 turns = ~25 exchanges = enough to stay
+ * "in the same conversation" across days without summarization, while
+ * keeping the input prompt size bounded.
+ */
+const HISTORY_WINDOW = 50;
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -111,23 +119,12 @@ export async function POST(req: Request) {
 
   const locale: Locale = isLocale(profile.locale) ? profile.locale : 'id';
   const ctx = contextFromInstant(new Date(), profile.timezone);
-  const todayStart = new Date(Date.UTC(ctx.year, ctx.month - 1, ctx.day));
-  const todayEnd = new Date(todayStart);
-  todayEnd.setUTCDate(todayEnd.getUTCDate() + 1);
 
-  // Fire-and-forget the rollup: it makes 1-3 Anthropic calls when a period
-  // has unprocessed turns and used to block the chat response (and break it
-  // on transient failures). It's idempotent and the next request will retry,
-  // so we don't gate the user's reply on it.
-  void rollupAll(session.user.id, locale, new Date()).catch((err) => {
-    console.error('[chat/stream] rollup failed (background)', err);
-  });
-
-  let todaysTurns: Awaited<ReturnType<typeof getTurnsBetween>>;
+  let recentTurns: Awaited<ReturnType<typeof getRecentTurns>>;
   let smart: Awaited<ReturnType<typeof loadSmartContext>>;
   try {
-    [todaysTurns, smart] = await Promise.all([
-      getTurnsBetween(session.user.id, todayStart, todayEnd),
+    [recentTurns, smart] = await Promise.all([
+      getRecentTurns(session.user.id, HISTORY_WINDOW),
       loadSmartContext({
         userId: session.user.id,
         locale,
@@ -171,7 +168,7 @@ export async function POST(req: Request) {
       : finalQuestion;
 
   const messages: Anthropic.MessageParam[] = [
-    ...todaysTurns.flatMap<Anthropic.MessageParam>((t) => [
+    ...recentTurns.flatMap<Anthropic.MessageParam>((t) => [
       { role: 'user', content: t.question },
       { role: 'assistant', content: t.answer },
     ]),

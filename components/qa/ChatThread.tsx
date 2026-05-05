@@ -69,17 +69,8 @@ interface Frame {
   message?: string;
 }
 
-interface PriorPeriod {
-  label: string;
-  start: string;
-  end: string;
-  summary: string;
-  turnCount: number;
-}
-
 interface Props {
   initialTurns: ChatTurn[];
-  priorDays: PriorPeriod[];
   emptyHint: string;
   /** Short example prompts shown as tappable chips when the thread is empty. */
   starterPrompts?: string[];
@@ -89,7 +80,6 @@ interface Props {
 
 export function ChatThread({
   initialTurns,
-  priorDays,
   emptyHint,
   starterPrompts = [],
   deleteAction,
@@ -104,7 +94,6 @@ export function ChatThread({
   const abortRef = useRef<AbortController | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const bottomRef = useRef<HTMLDivElement | null>(null);
-  const [showHistory, setShowHistory] = useState(false);
   const [, startDelete] = useTransition();
 
   async function onPickFiles(files: FileList | null) {
@@ -315,36 +304,6 @@ export function ChatThread({
       style={{ minHeight: 'calc(100dvh - 8rem - env(safe-area-inset-bottom))' }}
     >
       <div className="flex-1 overflow-y-auto pb-4">
-        {priorDays.length > 0 ? (
-          <div className="mb-6">
-            <button
-              type="button"
-              onClick={() => setShowHistory((v) => !v)}
-              className="text-muted-foreground text-xs underline-offset-4 hover:underline"
-            >
-              {showHistory ? t('hideHistory') : t('showHistory', { count: priorDays.length })}
-            </button>
-            {showHistory ? (
-              <div className="mt-3 space-y-3">
-                {priorDays.map((d) => (
-                  <div
-                    key={d.start}
-                    className="border-border rounded-xl border bg-white/40 p-4 dark:bg-neutral-900/40"
-                  >
-                    <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider">
-                      {d.label}
-                    </p>
-                    <p className="mt-2 text-sm leading-relaxed">{d.summary}</p>
-                    <p className="text-muted-foreground mt-2 text-xs">
-                      {t('turnCount', { count: d.turnCount })}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            ) : null}
-          </div>
-        ) : null}
-
         {turns.length === 0 && !pending ? (
           <div className="flex flex-col items-center gap-5 py-10 text-center">
             <div className="bg-primary/10 text-primary flex h-14 w-14 items-center justify-center rounded-full">
