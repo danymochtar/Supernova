@@ -13,7 +13,11 @@ import { getCachedJson, setCachedJson } from '@/lib/db/repositories/numerologyCa
 // key invalidates v2 prose-only blobs without needing a migration.
 // v4: bridge numbers added to prompt context → tone shifts to acknowledge
 // internal integration / friction. Old v3 blobs regenerate on next access.
-const CACHE_KEY = 'aboutMe-v4';
+// v5: EN was removed from the app — invalidate any blob that was generated
+// in English so users who picked EN before the lockdown see ID copy. New
+// entries are always ID since profile.locale is now coerced to 'id'. When
+// EN is reintroduced, switch to a locale-suffixed key (\`aboutMe-v6:${locale}\`).
+const CACHE_KEY = 'aboutMe-v5';
 
 /**
  * Cache-first structured About Me. Profile name + DOB never change so the
