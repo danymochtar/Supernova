@@ -92,10 +92,27 @@ export async function loadSmartContext(opts: LoadOpts): Promise<SmartContext> {
   const age = ageAt(dob, ctx);
   const dobStr = `${dob.year}-${String(dob.month).padStart(2, '0')}-${String(dob.day).padStart(2, '0')}`;
   const todayDate = `${ctx.year}-${String(ctx.month).padStart(2, '0')}-${String(ctx.day).padStart(2, '0')}`;
+
+  // Pre-compute the user's next birthday so the model never has to derive
+  // "when is their birthday" — a known hallucination path where the model
+  // confuses the Birthday core number (day-of-month reduced) with an
+  // actual calendar date.
+  const todayMs = Date.UTC(ctx.year, ctx.month - 1, ctx.day);
+  let nbYear = ctx.year;
+  let nbMs = Date.UTC(nbYear, dob.month - 1, dob.day);
+  if (nbMs < todayMs) {
+    nbYear = ctx.year + 1;
+    nbMs = Date.UTC(nbYear, dob.month - 1, dob.day);
+  }
+  const nbStr = `${nbYear}-${String(dob.month).padStart(2, '0')}-${String(dob.day).padStart(2, '0')}`;
+  const daysUntilBirthday = Math.round((nbMs - todayMs) / 86_400_000);
+  const turningAge = nbYear - dob.year;
+
   const base = `<profile>
 name: ${profile.fullName}
 date of birth: ${dobStr}
 age: ${age}
+next birthday: ${nbStr} (in ${daysUntilBirthday} day${daysUntilBirthday === 1 ? '' : 's'}, turning ${turningAge})
 today (${profile.timezone}): ${todayDate}
 core numbers: Life Path=${r(core.lifePath)}, Expression=${r(core.expression)}, Soul Urge=${r(core.soulUrge)}, Personality=${r(core.personality)}, Birthday=${r(core.birthday)}
 karmic lessons: ${core.karmicLessons.length ? core.karmicLessons.join(', ') : 'none'}

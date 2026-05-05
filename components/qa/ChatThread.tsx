@@ -367,7 +367,7 @@ export function ChatThread({
             ) : null}
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-5">
             {turns.map((tn) => (
               <Pair
                 key={tn.id}
@@ -527,7 +527,15 @@ function Pair({
         <div className="border-border max-w-[80%] whitespace-pre-wrap rounded-2xl rounded-tl-md border bg-white/60 px-4 py-2.5 text-sm dark:bg-neutral-900/60">
           {renderInlineMd(answer)}
           {streaming ? (
-            <span className="ml-1 inline-block h-3 w-1.5 animate-pulse bg-neutral-400 align-middle" />
+            answer.length === 0 ? (
+              <span className="inline-flex items-center gap-1 py-0.5" aria-label="typing">
+                <span className="bg-muted-foreground/50 h-1.5 w-1.5 animate-bounce rounded-full [animation-delay:-0.3s]" />
+                <span className="bg-muted-foreground/50 h-1.5 w-1.5 animate-bounce rounded-full [animation-delay:-0.15s]" />
+                <span className="bg-muted-foreground/50 h-1.5 w-1.5 animate-bounce rounded-full" />
+              </span>
+            ) : (
+              <span className="bg-muted-foreground/60 ml-1 inline-block h-3 w-1.5 animate-pulse align-middle" />
+            )
           ) : null}
         </div>
       </div>
