@@ -4,7 +4,6 @@ import { getTranslations } from 'next-intl/server';
 import {
   BarChart3,
   ChevronRight,
-  Globe,
   LayoutGrid,
   LogOut,
   NotebookPen,
@@ -16,7 +15,6 @@ import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { isAdminEmail } from '@/lib/auth/admin';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { ageAt, contextFromInstant } from '@/lib/numerology';
-import { LocaleSwitcher } from '@/components/layout/LocaleSwitcher';
 import { SignOutButton } from '@/components/auth/SignOutButton';
 import { PersonalNotesForm } from '@/components/auth/PersonalNotesForm';
 import { SettingsGroup } from '@/components/auth/SettingsGroup';
@@ -46,7 +44,7 @@ function NavRow({
   hint,
 }: {
   href: string;
-  icon: typeof Globe;
+  icon: typeof BarChart3;
   title: string;
   hint?: string;
 }) {
@@ -134,14 +132,6 @@ export default async function MePage({ params }: { params: { locale: string } })
       {/* Appearance */}
       <SettingsGroup title={t('groupAppearance')}>
         <ThemeRow initial={profile.theme} />
-        <div className="flex items-center gap-3 px-5 py-4">
-          <Globe className="text-muted-foreground h-5 w-5 shrink-0" aria-hidden />
-          <div className="min-w-0 flex-1">
-            <p className="text-sm font-medium">{t('language')}</p>
-            <p className="text-muted-foreground text-xs">{t('languageHint')}</p>
-          </div>
-          <LocaleSwitcher active={locale} />
-        </div>
       </SettingsGroup>
 
       {/* AI */}

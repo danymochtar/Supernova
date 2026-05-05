@@ -23,7 +23,6 @@ export default async function EditProfilePage({ params }: { params: { locale: st
       <TopBar title={t('title')} backHref={`/${locale}/me`} />
       <div className="space-y-6 pb-6 sm:pb-10">
         <EditProfileForm
-          locale={locale}
           initial={{
             firstName: profile.firstName,
             middleName: profile.middleName,
@@ -31,7 +30,6 @@ export default async function EditProfilePage({ params }: { params: { locale: st
             nickname: profile.nickname,
             dob: profile.dob,
             timezone: profile.timezone,
-            locale: profile.locale,
           }}
           timezones={TIMEZONES}
           action={updateProfileAction}

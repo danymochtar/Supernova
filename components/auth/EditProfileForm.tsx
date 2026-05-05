@@ -2,11 +2,9 @@
 
 import { useState, useTransition } from 'react';
 import { useTranslations } from 'next-intl';
-import type { Locale } from '@/lib/i18n/config';
 import type { UpdateProfileResult, updateProfileAction } from '@/app/[locale]/profile/edit/actions';
 
 interface Props {
-  locale: Locale;
   initial: {
     firstName: string;
     middleName: string | null;
@@ -14,7 +12,6 @@ interface Props {
     nickname: string | null;
     dob: { year: number; month: number; day: number };
     timezone: string;
-    locale: Locale;
   };
   timezones: { value: string; label: string }[];
   action: typeof updateProfileAction;
@@ -30,7 +27,7 @@ const ERROR_KEY: Record<Exclude<UpdateProfileResult, { ok: true }>['error'], str
   generic: 'errorGeneric',
 };
 
-export function EditProfileForm({ locale, initial, timezones, action }: Props) {
+export function EditProfileForm({ initial, timezones, action }: Props) {
   const t = useTranslations('editProfile');
   const tWelcome = useTranslations('welcome');
   const [error, setError] = useState<string | null>(null);
@@ -156,20 +153,7 @@ export function EditProfileForm({ locale, initial, timezones, action }: Props) {
         </select>
       </div>
 
-      <div className="space-y-2">
-        <label htmlFor="locale" className="text-sm font-medium">
-          {tWelcome('localeLabel')}
-        </label>
-        <select
-          id="locale"
-          name="locale"
-          defaultValue={locale}
-          className="border-border focus:ring-primary w-full rounded-lg border bg-transparent px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
-        >
-          <option value="id">Bahasa Indonesia</option>
-          <option value="en">English</option>
-        </select>
-      </div>
+      <input type="hidden" name="locale" value="id" />
 
       <button
         type="submit"

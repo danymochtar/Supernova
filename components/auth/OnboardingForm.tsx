@@ -2,11 +2,9 @@
 
 import { useState, useTransition } from 'react';
 import { useTranslations } from 'next-intl';
-import type { Locale } from '@/lib/i18n/config';
 import type { OnboardingActionResult } from '@/app/[locale]/welcome/actions';
 
 interface Props {
-  locale: Locale;
   defaultTimezone: string;
   timezones: { value: string; label: string }[];
   action: (formData: FormData) => Promise<OnboardingActionResult>;
@@ -22,7 +20,7 @@ const ERROR_KEY: Record<Exclude<OnboardingActionResult, { ok: true }>['error'], 
   generic: 'errorGeneric',
 };
 
-export function OnboardingForm({ locale, defaultTimezone, timezones, action }: Props) {
+export function OnboardingForm({ defaultTimezone, timezones, action }: Props) {
   const t = useTranslations('welcome');
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
@@ -143,20 +141,7 @@ export function OnboardingForm({ locale, defaultTimezone, timezones, action }: P
         </select>
       </div>
 
-      <div className="space-y-2">
-        <label htmlFor="locale" className="text-sm font-medium">
-          {t('localeLabel')}
-        </label>
-        <select
-          id="locale"
-          name="locale"
-          defaultValue={locale}
-          className="border-border focus:ring-primary w-full rounded-lg border bg-transparent px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
-        >
-          <option value="id">Bahasa Indonesia</option>
-          <option value="en">English</option>
-        </select>
-      </div>
+      <input type="hidden" name="locale" value="id" />
 
       <button
         type="submit"

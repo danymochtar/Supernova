@@ -99,7 +99,10 @@ export async function getProfileByUserId(userId: string): Promise<ProfileView | 
 }
 
 function toView(row: ProfileRow): ProfileView {
-  const locale = row.locale === 'en' ? 'en' : 'id';
+  // EN is currently disabled at the routing level — coerce any stored 'en'
+  // values back to 'id' so AI prompts don't speak EN to a user who only
+  // sees ID chrome. Remove this coercion when EN is re-enabled.
+  const locale: 'id' | 'en' = 'id';
   const theme: Theme =
     row.theme === 'light' || row.theme === 'dark' ? row.theme : 'auto';
   const tone: Tone =
