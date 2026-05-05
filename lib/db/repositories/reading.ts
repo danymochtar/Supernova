@@ -17,6 +17,17 @@ export async function getReadingForLocalDay(
   });
 }
 
+export async function deleteReadingForLocalDay(
+  userId: string,
+  year: number,
+  month: number,
+  day: number,
+): Promise<void> {
+  await prisma.dailyReading.deleteMany({
+    where: { userId, date: toDayMarker(year, month, day) },
+  });
+}
+
 export interface CreateReadingInput {
   userId: string;
   year: number;

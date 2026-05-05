@@ -6,7 +6,11 @@ import {
   buildUserPrompt,
   type DailyPromptInput,
 } from '@/lib/ai/prompts/daily';
-import { createReading, getReadingForLocalDay } from '@/lib/db/repositories/reading';
+import {
+  createReading,
+  deleteReadingForLocalDay,
+  getReadingForLocalDay,
+} from '@/lib/db/repositories/reading';
 import { getRecentFeedback } from '@/lib/db/repositories/feedback';
 import { logUsage } from '@/lib/db/repositories/usage';
 import { aggregate, promptSummary } from '@/lib/patterns/aggregate';
@@ -57,7 +61,16 @@ export async function getOrGenerateDailyReading(
   const ctx = contextFromInstant(new Date(), profile.timezone);
 
   const cached = await getReadingForLocalDay(userId, ctx.year, ctx.month, ctx.day);
-  if (cached) return cached.body;
+  if (cached) {
+    // If the cached reading was generated in a different language than the
+    // user is currently using (typically because they just toggled the
+    // locale), regenerate so the dashboard chrome and the reading body
+    // speak the same language. Costs one extra LLM call per toggle, which
+    // is the right tradeoff — the alternative is the visible "mixed
+    // languages" experience users complain about.
+    if (cached.locale === profile.locale) return cached.body;
+    await deleteReadingForLocalDay(userId, ctx.year, ctx.month, ctx.day);
+  }
 
   const core = buildCoreProfile(profile.fullName, profile.dob);
   const cycles = personalCycles(profile.dob, ctx);

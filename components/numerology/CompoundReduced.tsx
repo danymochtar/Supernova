@@ -8,6 +8,11 @@ const KARMIC_LABELS: Record<13 | 14 | 16 | 19, { id: string; en: string }> = {
   19: { id: 'Karmic 19: belajar mandiri sejati', en: 'Karmic 19: learn true independence' },
 };
 
+const BADGE_LABELS = {
+  master: { id: 'master', en: 'master' },
+  karmic: { id: 'karmik', en: 'karmic' },
+};
+
 export function CompoundReduced({
   result,
   locale = 'id',
@@ -31,7 +36,7 @@ export function CompoundReduced({
       </span>
       {result.isMaster ? (
         <span className="text-[10px] font-medium uppercase tracking-wider text-primary">
-          master
+          {BADGE_LABELS.master[locale]}
         </span>
       ) : null}
       {result.karmicDebt ? (
@@ -39,7 +44,7 @@ export function CompoundReduced({
           className="karmic-badge rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-medium text-amber-800"
           title={tooltip ?? undefined}
         >
-          karmic
+          {BADGE_LABELS.karmic[locale]}
         </span>
       ) : null}
     </span>

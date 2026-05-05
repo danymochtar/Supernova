@@ -1,6 +1,7 @@
 'use client';
 
 import { useTransition } from 'react';
+import { usePathname } from 'next/navigation';
 import type { Locale } from '@/lib/i18n/config';
 import { setLocale } from '@/app/[locale]/profile/locale-actions';
 
@@ -11,6 +12,7 @@ const LOCALES: { code: Locale; label: string }[] = [
 
 export function LocaleSwitcher({ active }: { active: Locale }) {
   const [pending, startTransition] = useTransition();
+  const pathname = usePathname();
 
   return (
     <div
@@ -27,7 +29,7 @@ export function LocaleSwitcher({ active }: { active: Locale }) {
             disabled={pending || isActive}
             onClick={() =>
               startTransition(() => {
-                setLocale(l.code);
+                setLocale(l.code, pathname);
               })
             }
             className={`press px-3 py-1.5 font-medium transition-colors ${
