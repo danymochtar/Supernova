@@ -1,16 +1,69 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-import { ChevronRight, BarChart3, Pencil, LogOut, Globe, ShieldCheck, NotebookPen, LayoutGrid } from 'lucide-react';
+import {
+  BarChart3,
+  ChevronRight,
+  Globe,
+  LayoutGrid,
+  LogOut,
+  NotebookPen,
+  Pencil,
+  ShieldCheck,
+} from 'lucide-react';
 import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { isAdminEmail } from '@/lib/auth/admin';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { ageAt, contextFromInstant } from '@/lib/numerology';
 import { LocaleSwitcher } from '@/components/layout/LocaleSwitcher';
 import { SignOutButton } from '@/components/auth/SignOutButton';
 import { PersonalNotesForm } from '@/components/auth/PersonalNotesForm';
-import { PreferencesPanel } from '@/components/auth/PreferencesPanel';
+import { SettingsGroup } from '@/components/auth/SettingsGroup';
+import {
+  DeleteRow,
+  ExportRow,
+  KarmicRow,
+  ModelRow,
+  ReminderRow,
+  ThemeRow,
+  ToneRow,
+} from '@/components/auth/PreferencesPanel';
 import { savePersonalNotes } from './actions';
+
+function initialsFor(firstName: string, lastName: string | null, nickname: string | null): string {
+  const first = firstName.trim()[0] ?? '';
+  if (lastName?.trim()) return (first + lastName.trim()[0]).toUpperCase();
+  if (nickname?.trim()) return (first + nickname.trim()[0]).toUpperCase();
+  if (firstName.trim().length >= 2) return (first + firstName.trim()[1]).toUpperCase();
+  return first.toUpperCase();
+}
+
+function NavRow({
+  href,
+  icon: Icon,
+  title,
+  hint,
+}: {
+  href: string;
+  icon: typeof Globe;
+  title: string;
+  hint?: string;
+}) {
+  return (
+    <Link
+      href={href}
+      className="hover:bg-muted/30 flex items-center gap-3 px-5 py-4 transition"
+    >
+      <Icon className="text-muted-foreground h-5 w-5 shrink-0" aria-hidden />
+      <div className="min-w-0 flex-1">
+        <p className="text-sm font-medium">{title}</p>
+        {hint ? <p className="text-muted-foreground text-xs">{hint}</p> : null}
+      </div>
+      <ChevronRight className="text-muted-foreground h-4 w-4 shrink-0" aria-hidden />
+    </Link>
+  );
+}
 
 export default async function MePage({ params }: { params: { locale: string } }) {
   const locale: Locale = isLocale(params.locale) ? params.locale : 'id';
@@ -22,135 +75,130 @@ export default async function MePage({ params }: { params: { locale: string } })
   const profile = await getProfileByUserId(session.user.id);
   if (!profile) redirect(`/${locale}/welcome`);
 
-  const dobStr = `${profile.dob.year}-${String(profile.dob.month).padStart(2, '0')}-${String(profile.dob.day).padStart(2, '0')}`;
+  const ctx = contextFromInstant(new Date(), profile.timezone);
+  const age = ageAt(profile.dob, ctx);
+  const initials = initialsFor(profile.firstName, profile.lastName, profile.nickname);
   const isAdmin = isAdminEmail(session.user.email);
 
   return (
     <main className="container max-w-xl space-y-6 px-4 py-6 sm:px-6">
-      <header className="space-y-1 pt-2">
-        <h1 className="font-serif text-2xl font-semibold tracking-tight">{t('title')}</h1>
-        <p className="text-muted-foreground text-sm">{t('subtitle')}</p>
-      </header>
-
-      {/* Profile summary */}
-      <section className="border-border rounded-2xl border bg-white/40 p-5 dark:bg-neutral-900/40">
-        <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider">
-          {t('profile')}
-        </p>
-        <p className="mt-1 text-lg font-semibold">{profile.fullName}</p>
-        <p className="text-muted-foreground mt-0.5 text-sm tabular-nums">
-          {dobStr} · {profile.timezone}
-        </p>
-        <Link
-          href={`/${locale}/profile/edit`}
-          className="bg-primary text-primary-foreground mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium"
-        >
-          <Pencil className="h-4 w-4" aria-hidden />
-          {t('editProfile')}
-        </Link>
+      {/* Hero identity card — replaces the plain "Saya" title */}
+      <section className="border-border from-primary/10 via-background to-accent/10 dark:from-primary/20 dark:to-accent/20 relative overflow-hidden rounded-3xl border bg-gradient-to-br p-6">
+        <div className="flex items-start gap-4">
+          <div className="from-primary/40 to-accent/40 text-foreground flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-gradient-to-br font-serif text-2xl font-semibold tracking-tight">
+            {initials}
+          </div>
+          <div className="min-w-0 flex-1 space-y-1">
+            <h1 className="font-serif text-2xl font-semibold leading-tight tracking-tight">
+              {profile.fullName}
+            </h1>
+            {profile.nickname ? (
+              <p className="text-muted-foreground font-serif text-sm italic">
+                &ldquo;{profile.nickname}&rdquo;
+              </p>
+            ) : null}
+            <p className="text-muted-foreground text-sm tabular-nums">
+              {t('ageYears', { age })} · {profile.timezone}
+            </p>
+          </div>
+        </div>
+        <div className="mt-5 flex flex-wrap gap-2">
+          <Link
+            href={`/${locale}/profile/edit`}
+            className="bg-primary text-primary-foreground press inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium"
+          >
+            <Pencil className="h-3.5 w-3.5" aria-hidden />
+            {t('editProfile')}
+          </Link>
+        </div>
       </section>
 
       {/* Personal notes — long-term context the chat assistant remembers */}
-      <section className="border-border space-y-3 rounded-2xl border bg-white/40 p-5 dark:bg-neutral-900/40">
-        <div className="flex items-start gap-3">
-          <NotebookPen className="text-muted-foreground mt-0.5 h-5 w-5 shrink-0" aria-hidden />
-          <div className="space-y-0.5">
-            <p className="text-sm font-medium">{t('notesTitle')}</p>
-            <p className="text-muted-foreground text-xs">{t('notesHint')}</p>
-          </div>
-        </div>
-        <PersonalNotesForm locale={locale} initial={profile.personalNotes} action={savePersonalNotes} />
-      </section>
-
-      {/* Settings list */}
-      <section className="border-border overflow-hidden rounded-2xl border bg-white/40 dark:bg-neutral-900/40">
-        <div className="flex items-center justify-between gap-3 border-b border-border px-5 py-4">
-          <div className="flex items-center gap-3">
-            <Globe className="text-muted-foreground h-5 w-5" aria-hidden />
-            <div>
-              <p className="text-sm font-medium">{t('language')}</p>
-              <p className="text-muted-foreground text-xs">{t('languageHint')}</p>
+      <SettingsGroup title={t('groupContext')}>
+        <div className="space-y-3 px-5 py-4">
+          <div className="flex items-start gap-3">
+            <NotebookPen className="text-muted-foreground mt-0.5 h-5 w-5 shrink-0" aria-hidden />
+            <div className="min-w-0 flex-1 space-y-0.5">
+              <p className="text-sm font-medium">{t('notesTitle')}</p>
+              <p className="text-muted-foreground text-xs">{t('notesHint')}</p>
             </div>
+          </div>
+          <PersonalNotesForm
+            locale={locale}
+            initial={profile.personalNotes}
+            action={savePersonalNotes}
+          />
+        </div>
+      </SettingsGroup>
+
+      {/* Appearance */}
+      <SettingsGroup title={t('groupAppearance')}>
+        <ThemeRow initial={profile.theme} />
+        <div className="flex items-center gap-3 px-5 py-4">
+          <Globe className="text-muted-foreground h-5 w-5 shrink-0" aria-hidden />
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-medium">{t('language')}</p>
+            <p className="text-muted-foreground text-xs">{t('languageHint')}</p>
           </div>
           <LocaleSwitcher active={locale} />
         </div>
+      </SettingsGroup>
 
-        <Link
+      {/* AI */}
+      <SettingsGroup title={t('groupAi')}>
+        <ToneRow initial={profile.tone} />
+        <ModelRow initial={profile.preferredModel} />
+        <KarmicRow initial={profile.showKarmicDebt} />
+      </SettingsGroup>
+
+      {/* Reminder */}
+      <SettingsGroup title={t('groupReminder')}>
+        <ReminderRow
+          initial={{ enabled: profile.reminderEnabled, time: profile.reminderTime }}
+        />
+      </SettingsGroup>
+
+      {/* Navigation */}
+      <SettingsGroup title={t('groupNavigation')}>
+        <NavRow
           href={`/${locale}/patterns`}
-          className="hover:bg-muted/30 flex items-center justify-between gap-3 px-5 py-4 transition"
-        >
-          <div className="flex items-center gap-3">
-            <BarChart3 className="text-muted-foreground h-5 w-5" aria-hidden />
-            <div>
-              <p className="text-sm font-medium">{t('patterns')}</p>
-              <p className="text-muted-foreground text-xs">{t('patternsHint')}</p>
-            </div>
-          </div>
-          <ChevronRight className="text-muted-foreground h-4 w-4" aria-hidden />
-        </Link>
-
-        <Link
+          icon={BarChart3}
+          title={t('patterns')}
+          hint={t('patternsHint')}
+        />
+        <NavRow
           href={`/${locale}/me/layout`}
-          className="hover:bg-muted/30 flex items-center justify-between gap-3 border-t border-border px-5 py-4 transition"
-        >
-          <div className="flex items-center gap-3">
-            <LayoutGrid className="text-muted-foreground h-5 w-5" aria-hidden />
-            <div>
-              <p className="text-sm font-medium">{t('dashboardLayoutTitle')}</p>
-              <p className="text-muted-foreground text-xs">{t('dashboardLayoutHint')}</p>
-            </div>
-          </div>
-          <ChevronRight className="text-muted-foreground h-4 w-4" aria-hidden />
-        </Link>
-
+          icon={LayoutGrid}
+          title={t('dashboardLayoutTitle')}
+          hint={t('dashboardLayoutHint')}
+        />
         {isAdmin ? (
-          <Link
+          <NavRow
             href={`/${locale}/admin/usage`}
-            className="hover:bg-muted/30 flex items-center justify-between gap-3 border-t border-border px-5 py-4 transition"
-          >
-            <div className="flex items-center gap-3">
-              <ShieldCheck className="text-muted-foreground h-5 w-5" aria-hidden />
-              <div>
-                <p className="text-sm font-medium">Admin · Usage</p>
-                <p className="text-muted-foreground text-xs">AI cost & token breakdown</p>
-              </div>
-            </div>
-            <ChevronRight className="text-muted-foreground h-4 w-4" aria-hidden />
-          </Link>
+            icon={ShieldCheck}
+            title="Admin · Usage"
+            hint="AI cost & token breakdown"
+          />
         ) : null}
-      </section>
+      </SettingsGroup>
 
-      {/* Sign out */}
-      <section className="border-border rounded-2xl border bg-white/40 p-5 dark:bg-neutral-900/40">
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <LogOut className="text-muted-foreground h-5 w-5" aria-hidden />
-            <div>
-              <p className="text-sm font-medium">{t('signOut')}</p>
-              <p className="text-muted-foreground text-xs">{session.user.email}</p>
-            </div>
+      {/* Data */}
+      <SettingsGroup title={t('groupData')}>
+        <ExportRow />
+        <DeleteRow locale={locale} />
+      </SettingsGroup>
+
+      {/* Account */}
+      <SettingsGroup title={t('groupAccount')}>
+        <div className="flex items-center gap-3 px-5 py-4">
+          <LogOut className="text-muted-foreground h-5 w-5 shrink-0" aria-hidden />
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-medium">{t('signOut')}</p>
+            <p className="text-muted-foreground truncate text-xs">{session.user.email}</p>
           </div>
           <SignOutButton label={t('signOutCta')} locale={locale} />
         </div>
-      </section>
-
-      {/* Preferences */}
-      <section className="space-y-2">
-        <h2 className="px-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-          {t('settingsTitle')}
-        </h2>
-        <PreferencesPanel
-          locale={locale}
-          initial={{
-            theme: profile.theme,
-            tone: profile.tone,
-            showKarmicDebt: profile.showKarmicDebt,
-            preferredModel: profile.preferredModel,
-            reminderEnabled: profile.reminderEnabled,
-            reminderTime: profile.reminderTime,
-          }}
-        />
-      </section>
+      </SettingsGroup>
 
       <p className="text-muted-foreground py-4 text-center text-xs">{t('appVersion')}</p>
     </main>

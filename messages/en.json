@@ -72,6 +72,14 @@
     "deleteConfirm": "Delete forever",
     "dashboardLayoutTitle": "Customize home",
     "dashboardLayoutHint": "Reorder & hide widgets on the Home tab.",
+    "ageYears": "{age} years",
+    "groupContext": "Context",
+    "groupAppearance": "Appearance",
+    "groupAi": "AI",
+    "groupReminder": "Reminder",
+    "groupNavigation": "Navigation",
+    "groupData": "Data",
+    "groupAccount": "Account",
     "appVersion": "Supernova MVP"
   },
   "layoutEditor": {

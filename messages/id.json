@@ -72,6 +72,14 @@
     "deleteConfirm": "Hapus selamanya",
     "dashboardLayoutTitle": "Susun beranda",
     "dashboardLayoutHint": "Atur urutan & sembunyikan widget di Beranda.",
+    "ageYears": "{age} tahun",
+    "groupContext": "Konteks",
+    "groupAppearance": "Tampilan",
+    "groupAi": "AI",
+    "groupReminder": "Pengingat",
+    "groupNavigation": "Navigasi",
+    "groupData": "Data",
+    "groupAccount": "Akun",
     "appVersion": "Supernova MVP"
   },
   "layoutEditor": {
