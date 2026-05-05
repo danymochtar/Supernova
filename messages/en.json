@@ -421,7 +421,10 @@
       "lifePathMirror": "Life Path mirror",
       "sharedKarmicDebt": "Karmic debt on both sides",
       "oldSoul": "Old soul (master + multiple karmic lessons)",
-      "complementaryKarmic": "Natural teachers (core ↔ karmic lesson)"
+      "complementaryKarmic": "Natural teachers (core ↔ karmic lesson)",
+      "bridgeSync": "Bridges in sync (similar internal landscape)",
+      "bridgeComplement": "Bridge complement (one integrated, one stretched)",
+      "mutualBridgeStretch": "Both stretched across multiple bridges"
     },
     "crossLabel": "Your {me} × Their {them}",
     "band": {

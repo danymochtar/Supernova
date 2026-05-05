@@ -1,5 +1,5 @@
 import type { Relationship } from '@prisma/client';
-import type { NumerologyResult } from '@/lib/numerology';
+import { bridges, type NumerologyResult } from '@/lib/numerology';
 import { lensFor, pickResult, type CoreKey, type Lane } from './lens';
 
 /**
@@ -213,6 +213,53 @@ export function compatibilityScore(
       const delta = Math.min(teachMatches, 3);
       modifiers.push({ reason: 'complementaryKarmic', delta });
       overall += delta;
+    }
+  }
+
+  if (lens.enabledModifiers.has('bridgeFit')) {
+    // Bridge Numbers (intra-personal integration gaps) tell us how each
+    // partner navigates their own internal landscape — well-integrated
+    // (small bridges) or stretched between two facets (large bridges).
+    // The relationship between two people's bridge profiles produces a
+    // few real dynamics worth scoring:
+    //
+    //   - Bridge Sync: their internal landscapes look similar (both
+    //     small, or both stretched in similar pattern). Mutual "we get
+    //     each other's struggle." Bonding.
+    //   - Bridge Complement: one is integrated, the other stretched.
+    //     The integrated partner offers steady ground for the stretched
+    //     one's growth work. Natural teaching dynamic.
+    //   - Mutual Stretch: both stretched on both bridges. Compound
+    //     scatter risk — both get exhausted in the same way at the
+    //     same time. Mild penalty.
+    //
+    // The three cases are mutually exclusive; at most one fires.
+    const myBr = bridges(me);
+    const theirBr = bridges(them);
+    const myLPE = myBr.lifePathExpression.reduced;
+    const mySUP = myBr.soulUrgePersonality.reduced;
+    const theirLPE = theirBr.lifePathExpression.reduced;
+    const theirSUP = theirBr.soulUrgePersonality.reduced;
+
+    const meIntegrated = myLPE <= 2 && mySUP <= 2;
+    const themIntegrated = theirLPE <= 2 && theirSUP <= 2;
+    const meStretched = myLPE >= 5 || mySUP >= 5;
+    const themStretched = theirLPE >= 5 || theirSUP >= 5;
+    const bothFullyStretched = myLPE >= 5 && mySUP >= 5 && theirLPE >= 5 && theirSUP >= 5;
+    const distance = Math.abs(myLPE - theirLPE) + Math.abs(mySUP - theirSUP);
+
+    if (
+      (meIntegrated && themStretched) ||
+      (themIntegrated && meStretched)
+    ) {
+      modifiers.push({ reason: 'bridgeComplement', delta: 2 });
+      overall += 2;
+    } else if (distance <= 2 && !bothFullyStretched) {
+      modifiers.push({ reason: 'bridgeSync', delta: 2 });
+      overall += 2;
+    } else if (bothFullyStretched) {
+      modifiers.push({ reason: 'mutualBridgeStretch', delta: -1 });
+      overall -= 1;
     }
   }
 

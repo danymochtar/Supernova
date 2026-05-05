@@ -421,7 +421,10 @@
       "lifePathMirror": "Life Path mirror",
       "sharedKarmicDebt": "Karmic debt di kedua sisi",
       "oldSoul": "Old soul (master + banyak karmic lessons)",
-      "complementaryKarmic": "Saling jadi guru (core ↔ karmic lesson)"
+      "complementaryKarmic": "Saling jadi guru (core ↔ karmic lesson)",
+      "bridgeSync": "Bridge selaras (lanskap internal mirip)",
+      "bridgeComplement": "Bridge complement (satu integrated, satu stretched)",
+      "mutualBridgeStretch": "Dua-duanya stretched di banyak sisi"
     },
     "crossLabel": "{me} kamu × {them} mereka",
     "band": {
