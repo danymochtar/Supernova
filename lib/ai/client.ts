@@ -16,12 +16,14 @@ export type AiFeatureKind = 'chat' | 'daily' | 'aboutMe' | 'rollup';
 /**
  * Per-feature model picker.
  *
- * - `chat`: Haiku 4.5 by default — chat is high-volume and latency-sensitive.
- *   Haiku 4.5 is ~3× faster than Sonnet 4.6 with comparable warmth/quality
- *   for short conversational replies. Override via ANTHROPIC_CHAT_MODEL env
- *   or per-user `profile.preferredModel`.
- * - `daily` / `aboutMe`: Sonnet 4.6 by default — read once, kept around;
- *   quality matters more than latency.
+ * - `chat`: Sonnet 4.6 by default — the chat needs to follow nuanced
+ *   topic-flow / no-tangent / no-numerology-namedrop rules, and Haiku
+ *   was drifting on those (re-asking closed topics, dragging in
+ *   unrelated context, listing raw numbers). Worth the cost bump for
+ *   quality. Override via ANTHROPIC_CHAT_MODEL env or per-user
+ *   `profile.preferredModel`.
+ * - `daily` / `aboutMe`: Sonnet 4.6 by default — read once, kept
+ *   around; quality matters more than latency.
  * - `rollup`: Haiku 4.5 — internal summarization, cost-sensitive.
  *
  * Per-user override (`profile.preferredModel`) wins for user-facing
@@ -34,7 +36,7 @@ export function model(feature: AiFeatureKind = 'chat', userOverride?: string | n
   }
   if (userOverride) return userOverride;
   if (feature === 'chat') {
-    return process.env.ANTHROPIC_CHAT_MODEL ?? 'claude-haiku-4-5';
+    return process.env.ANTHROPIC_CHAT_MODEL ?? 'claude-sonnet-4-6';
   }
   return process.env.ANTHROPIC_MODEL ?? 'claude-sonnet-4-6';
 }
