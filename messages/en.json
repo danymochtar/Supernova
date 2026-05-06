@@ -278,6 +278,8 @@
     "title": "Your journey",
     "subtitle": "You're {age}.",
     "summaryTitle": "Year {year} at a glance",
+    "outlookTipsLabel": "Tips for this year",
+    "outlookAffirmationLabel": "Affirmation for the year",
     "backToDashboard": "Back to dashboard",
     "forecastTitle": "Personal Year ahead",
     "forecastSubtitle": "Your 9-year cycle starting this year. Each number carries the main theme for 12 months.",
