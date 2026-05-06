@@ -348,7 +348,7 @@ export function ChatThread({
       className="flex flex-col"
       style={{ minHeight: 'calc(100dvh - 8rem - env(safe-area-inset-bottom))' }}
     >
-      <div className={`flex-1 overflow-y-auto ${selectMode ? 'pb-24' : 'pb-4'}`}>
+      <div className={`flex-1 overflow-y-auto pb-4 ${selectMode ? 'pt-16' : ''}`}>
         {turns.length === 0 && !pending ? (
           <div className="flex flex-col items-center gap-5 py-10 text-center">
             <div className="bg-primary/10 text-primary flex h-14 w-14 items-center justify-center rounded-full">
@@ -431,14 +431,13 @@ export function ChatThread({
         </div>
       ) : null}
 
-      {/* Floating action bar — pinned to viewport bottom (above the
-        * BottomNav) so it stays reachable while the user scrolls up to
-        * select older messages. Replaces the input row visually while in
-        * select mode. */}
+      {/* Floating action bar — pinned to viewport TOP so it stays
+        * reachable as the user scrolls through messages picking entries.
+        * Replaces the input row visually while in select mode. */}
       {selectMode ? (
         <div
-          className="border-border bg-background/95 fixed inset-x-0 z-40 border-t supports-[backdrop-filter]:bg-background/80 supports-[backdrop-filter]:backdrop-blur"
-          style={{ bottom: 'calc(theme(spacing.16) + env(safe-area-inset-bottom))' }}
+          className="border-border bg-background/95 fixed inset-x-0 top-0 z-50 border-b supports-[backdrop-filter]:bg-background/80 supports-[backdrop-filter]:backdrop-blur"
+          style={{ paddingTop: 'env(safe-area-inset-top)' }}
         >
           <div className="mx-auto flex max-w-3xl items-center gap-2 px-4 py-3 sm:px-6">
             <p className="text-foreground flex-1 text-sm">
