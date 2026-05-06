@@ -111,6 +111,7 @@ export function ChatThread({
   const abortRef = useRef<AbortController | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const bottomRef = useRef<HTMLDivElement | null>(null);
+  const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const [, startDelete] = useTransition();
   // Journal multi-select. \`selectMode\` makes every persisted turn tappable
   // to toggle inclusion; the floating action bar at the bottom commits the
@@ -344,11 +345,23 @@ export function ChatThread({
   }
 
   function onKey(e: React.KeyboardEvent<HTMLTextAreaElement>) {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    // Cmd/Ctrl+Enter sends. Plain Enter inserts a newline (default
+    // browser behavior) — many users compose multi-line messages and
+    // expect Enter to break the line, not commit.
+    if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
       e.preventDefault();
       send();
     }
   }
+
+  // Auto-grow the textarea up to a sensible max as the user types,
+  // so long messages don't clip into a tiny scrollable box.
+  useEffect(() => {
+    const el = inputRef.current;
+    if (!el) return;
+    el.style.height = 'auto';
+    el.style.height = `${Math.min(el.scrollHeight, 200)}px`;
+  }, [input]);
 
   return (
     <div
@@ -545,6 +558,7 @@ export function ChatThread({
             )}
           </button>
           <textarea
+            ref={inputRef}
             rows={1}
             maxLength={4000}
             value={input}
@@ -552,7 +566,7 @@ export function ChatThread({
             onKeyDown={onKey}
             placeholder={t('placeholder')}
             disabled={streaming}
-            className="border-border focus:ring-primary max-h-32 min-h-[2.75rem] flex-1 resize-none rounded-2xl border bg-transparent px-4 py-2.5 text-sm leading-tight focus:outline-none focus:ring-2 disabled:opacity-50"
+            className="border-border focus:ring-primary min-h-[2.75rem] flex-1 resize-none overflow-y-auto rounded-2xl border bg-transparent px-4 py-2.5 text-sm leading-snug focus:outline-none focus:ring-2 disabled:opacity-50"
           />
           {streaming ? (
             <button
