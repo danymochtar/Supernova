@@ -124,7 +124,10 @@ export default async function JourneyPage({ params }: { params: { locale: string
   }
 
   return (
-    <main className="container max-w-3xl space-y-10 px-4 py-6 sm:px-6 sm:py-10">
+    <main
+      className="container max-w-3xl space-y-10 px-4 pb-6 sm:px-6 sm:pb-10"
+      style={{ paddingTop: 'calc(env(safe-area-inset-top) + 1.5rem)' }}
+    >
       <header className="pt-2">
         <h1 className="font-serif text-2xl font-semibold tracking-tight">{t('title')}</h1>
       </header>

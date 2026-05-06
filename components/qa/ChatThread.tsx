@@ -202,8 +202,16 @@ export function ChatThread({
     });
   }
 
+  // First mount jumps straight to the bottom so the user sees their
+  // latest exchange + the input box without having to scroll. After that,
+  // subsequent updates (new turn, streaming answer growing) animate.
+  const firstScrollRef = useRef(true);
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    bottomRef.current?.scrollIntoView({
+      behavior: firstScrollRef.current ? 'auto' : 'smooth',
+      block: 'end',
+    });
+    firstScrollRef.current = false;
   }, [turns.length, pending?.answer]);
 
   function commitJournal() {

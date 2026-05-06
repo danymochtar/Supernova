@@ -47,7 +47,10 @@ export default async function PeoplePage({
   }
 
   return (
-    <main className="container max-w-3xl space-y-6 px-4 py-6 sm:px-6 sm:py-10">
+    <main
+      className="container max-w-3xl space-y-6 px-4 pb-6 sm:px-6 sm:pb-10"
+      style={{ paddingTop: 'calc(env(safe-area-inset-top) + 1.5rem)' }}
+    >
       <header className="space-y-3 pt-2">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="space-y-1">

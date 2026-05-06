@@ -30,7 +30,10 @@ export default async function AskPage({ params }: { params: { locale: string } }
   const recentTurns = await getRecentTurns(session.user.id, HISTORY_WINDOW);
 
   return (
-    <main className="container max-w-3xl px-4 py-4 sm:px-6 sm:py-6">
+    <main
+      className="container max-w-3xl px-4 pb-4 sm:px-6 sm:pb-6"
+      style={{ paddingTop: 'calc(env(safe-area-inset-top) + 1rem)' }}
+    >
       <header className="mb-4 space-y-1 pt-2">
         <h1 className="font-serif text-2xl font-semibold tracking-tight">{t('title')}</h1>
         <p className="text-muted-foreground text-sm">{t('subtitle')}</p>
