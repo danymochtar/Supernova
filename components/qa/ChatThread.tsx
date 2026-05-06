@@ -68,11 +68,24 @@ function classifyFile(file: File): AttachmentKind | null {
   return null;
 }
 
+export interface ChatTurnAttachment {
+  kind: AttachmentKind;
+  name: string;
+  mediaType: string;
+  /** Data URL preview — only set for images, only available in the
+   * session where the user uploaded them. After page reload these are
+   * gone since we don't persist binaries to the server. */
+  previewUrl?: string;
+}
+
 export interface ChatTurn {
   id: string;
   question: string;
   answer: string;
   createdAt: string;
+  /** Optional inline attachments — only present for turns sent in the
+   * current session. */
+  attachments?: ChatTurnAttachment[];
 }
 
 interface Frame {
@@ -107,7 +120,11 @@ export function ChatThread({
 }: Props) {
   const t = useTranslations('chat');
   const [turns, setTurns] = useState<ChatTurn[]>(initialTurns);
-  const [pending, setPending] = useState<{ question: string; answer: string } | null>(null);
+  const [pending, setPending] = useState<{
+    question: string;
+    answer: string;
+    attachments?: ChatTurnAttachment[];
+  } | null>(null);
   const [input, setInput] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [streaming, setStreaming] = useState(false);
@@ -124,6 +141,8 @@ export function ChatThread({
   const [selectMode, setSelectMode] = useState(false);
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [journalToast, setJournalToast] = useState<string | null>(null);
+  // Active fullscreen image viewer (data URL of an attached image).
+  const [viewingImage, setViewingImage] = useState<{ src: string; name: string } | null>(null);
   const [journalPending, startJournal] = useTransition();
 
   async function onPickFiles(files: FileList | null) {
@@ -216,11 +235,22 @@ export function ChatThread({
     setInput('');
     const sentAttachments = attachments;
     setAttachments([]);
-    const summary = sentAttachments.length
-      ? sentAttachments.map((a) => `[${a.kind}: ${a.name}]`).join(' ')
-      : '';
-    const optimisticQuestion = summary ? (q ? `${summary}\n${q}` : summary) : q;
-    setPending({ question: optimisticQuestion, answer: '' });
+    // Optimistic display question: just the user's typed text. The
+    // \`[image: name]\` summary is built separately and used only as
+    // fallback display for turns rehydrated after a page reload (when
+    // the binary previews are gone).
+    const optimisticQuestion = q;
+    const optimisticAttachments: ChatTurnAttachment[] = sentAttachments.map((a) => ({
+      kind: a.kind,
+      name: a.name,
+      mediaType: a.mediaType,
+      previewUrl: a.previewUrl,
+    }));
+    setPending({
+      question: optimisticQuestion,
+      answer: '',
+      attachments: optimisticAttachments.length ? optimisticAttachments : undefined,
+    });
     setStreaming(true);
 
     const controller = new AbortController();
@@ -283,7 +313,11 @@ export function ChatThread({
           }
           if (frame.type === 'text' && frame.delta) {
             answerSoFar += frame.delta;
-            setPending({ question: optimisticQuestion, answer: answerSoFar });
+            setPending({
+              question: optimisticQuestion,
+              answer: answerSoFar,
+              attachments: optimisticAttachments.length ? optimisticAttachments : undefined,
+            });
           } else if (frame.type === 'error') {
             console.error('[chat] stream error frame', {
               message: frame.message,
@@ -304,6 +338,7 @@ export function ChatThread({
                 question: optimisticQuestion,
                 answer: answerSoFar,
                 createdAt: new Date().toISOString(),
+                attachments: optimisticAttachments.length ? optimisticAttachments : undefined,
               },
             ]);
             setPending(null);
@@ -319,6 +354,7 @@ export function ChatThread({
           question: optimisticQuestion,
           answer: answerSoFar,
           createdAt: new Date().toISOString(),
+          attachments: optimisticAttachments.length ? optimisticAttachments : undefined,
         },
       ]);
       setPending(null);
@@ -332,6 +368,7 @@ export function ChatThread({
               question: pending.question,
               answer: pending.answer,
               createdAt: new Date().toISOString(),
+              attachments: optimisticAttachments.length ? optimisticAttachments : undefined,
             },
           ]);
         }
@@ -405,6 +442,8 @@ export function ChatThread({
                   key={tn.id}
                   question={tn.question}
                   answer={tn.answer}
+                  attachments={tn.attachments}
+                  onOpenImage={(src, name) => setViewingImage({ src, name })}
                   onDelete={selectMode ? undefined : () => onDelete(tn.id)}
                   deleteLabel={t('delete')}
                   onAddToJournal={
@@ -434,6 +473,8 @@ export function ChatThread({
               <Pair
                 question={pending.question}
                 answer={pending.answer}
+                attachments={pending.attachments}
+                onOpenImage={(src, name) => setViewingImage({ src, name })}
                 streaming
               />
             ) : null}
@@ -454,6 +495,38 @@ export function ChatThread({
         <div className="border-border bg-background fixed inset-x-0 bottom-24 z-50 mx-auto flex max-w-sm items-center gap-2 rounded-full border px-4 py-2 text-sm shadow-lg">
           <BookmarkPlus className="text-primary h-4 w-4" aria-hidden />
           <span>{journalToast}</span>
+        </div>
+      ) : null}
+
+      {/* Fullscreen image viewer — opened by tapping an attachment
+        * thumbnail. Click anywhere or the X button to close. */}
+      {viewingImage ? (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={viewingImage.name}
+          onClick={() => setViewingImage(null)}
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/85 p-4"
+        >
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              setViewingImage(null);
+            }}
+            aria-label="Close"
+            className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur hover:bg-white/20"
+            style={{ marginTop: 'env(safe-area-inset-top)' }}
+          >
+            <X className="h-5 w-5" aria-hidden />
+          </button>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={viewingImage.src}
+            alt={viewingImage.name}
+            className="max-h-full max-w-full rounded-lg object-contain"
+            onClick={(e) => e.stopPropagation()}
+          />
         </div>
       ) : null}
 
@@ -611,6 +684,8 @@ function Pair({
   selected,
   onToggleSelect,
   journalable,
+  attachments,
+  onOpenImage,
 }: {
   question: string;
   answer: string;
@@ -624,10 +699,17 @@ function Pair({
   onToggleSelect?: () => void;
   /** Whether this turn is eligible for journaling (saved to DB, not local-only). */
   journalable?: boolean;
+  /** Inline attachments for current-session messages — image
+   * thumbnails + non-image file chips. Undefined for rehydrated
+   * turns where binaries are no longer available. */
+  attachments?: ChatTurnAttachment[];
+  /** Open a fullscreen viewer for the given image data URL. */
+  onOpenImage?: (src: string, name: string) => void;
 }) {
   const wrapperClass = `group/pair relative space-y-3 ${
     selectMode && journalable ? 'cursor-pointer' : ''
   } ${selectMode && journalable && selected ? 'ring-primary/50 ring-2 rounded-2xl ring-offset-2 ring-offset-background' : ''}`;
+  const visibleQuestion = (question ?? '').replace(/\[(?:image|pdf|text):[^\]]*\]\s*/gi, '').trim();
   return (
     <div
       className={wrapperClass}
@@ -635,11 +717,61 @@ function Pair({
       role={selectMode && journalable ? 'button' : undefined}
       aria-pressed={selectMode && journalable ? selected : undefined}
     >
-      <div className="flex justify-end">
-        <div className="bg-primary text-primary-foreground max-w-[80%] whitespace-pre-wrap rounded-2xl rounded-tr-md px-4 py-2.5 text-sm">
-          {question}
+      {attachments && attachments.length > 0 ? (
+        <div className="flex max-w-[80%] flex-wrap gap-2 self-end ml-auto justify-end">
+          {attachments.map((a, i) => {
+            if (a.kind === 'image' && a.previewUrl) {
+              return (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onOpenImage?.(a.previewUrl!, a.name);
+                  }}
+                  className="press-soft block overflow-hidden rounded-2xl"
+                  aria-label={a.name}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={a.previewUrl}
+                    alt={a.name}
+                    className="h-32 w-32 rounded-2xl object-cover sm:h-40 sm:w-40"
+                  />
+                </button>
+              );
+            }
+            return (
+              <div
+                key={i}
+                className="border-border bg-muted/40 flex items-center gap-2 rounded-xl border px-3 py-2 text-xs"
+              >
+                <FileText className="text-muted-foreground h-4 w-4 shrink-0" aria-hidden />
+                <div className="min-w-0 max-w-[10rem]">
+                  <p className="truncate font-medium">{a.name}</p>
+                  <p className="text-muted-foreground uppercase tracking-wide">{a.kind}</p>
+                </div>
+              </div>
+            );
+          })}
         </div>
-      </div>
+      ) : null}
+      {(() => {
+        // Pick what to show in the user bubble:
+        // - if we have inline attachments: show the cleaned text (no "[image: …]" markers)
+        // - otherwise: show the raw question (which on rehydrated turns includes the markers,
+        //   so the user still sees a hint that something was attached)
+        const text =
+          attachments && attachments.length > 0 ? visibleQuestion : question;
+        if (!text) return null;
+        return (
+          <div className="flex justify-end">
+            <div className="bg-primary text-primary-foreground max-w-[80%] whitespace-pre-wrap rounded-2xl rounded-tr-md px-4 py-2.5 text-sm">
+              {text}
+            </div>
+          </div>
+        );
+      })()}
       <div className="flex justify-start">
         <div className="border-border max-w-[80%] whitespace-pre-wrap rounded-2xl rounded-tl-md border bg-white/60 px-4 py-2.5 text-sm dark:bg-neutral-900/60">
           {renderInlineMd(answer)}
