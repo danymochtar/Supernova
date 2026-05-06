@@ -8,7 +8,7 @@ import { getRecentTurns, saveTurn } from '@/lib/db/repositories/qa';
 import { logUsage } from '@/lib/db/repositories/usage';
 import { anthropic, model } from '@/lib/ai/client';
 import { chatSystemPrompt } from '@/lib/ai/prompts/conversation';
-import { composeContextBlock, dateFactAnchor, loadSmartContext } from '@/lib/conversation/context';
+import { composeContextBlock, chatPaceNote, dateFactAnchor, loadSmartContext } from '@/lib/conversation/context';
 import { contextFromInstant } from '@/lib/numerology';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 
@@ -149,7 +149,16 @@ export async function POST(req: Request) {
   //      etc. in system instead of as a user message makes the model treat
   //      it as authoritative truth, so it won't ask the user for data
   //      that's already there even if prior assistant turns did.
-  const contextBlock = composeContextBlock(smart, profile.personalNotes);
+  // Silent staleness signal — tells the model how long ago the user
+  // last messaged so it doesn't resurface "done with the gym?" hours
+  // after the gym session actually ended. The prompt forbids ever
+  // surfacing the elapsed time in the reply.
+  const lastTurnAt =
+    recentTurns.length > 0 ? recentTurns[recentTurns.length - 1]!.createdAt : null;
+  const paceNote = chatPaceNote(lastTurnAt, new Date(), locale);
+  const contextBlock = [composeContextBlock(smart, profile.personalNotes), paceNote]
+    .filter(Boolean)
+    .join('\n\n');
 
   // Build the current user message. If attachments are present, the content
   // becomes a multi-block array: image/document blocks + a final text block

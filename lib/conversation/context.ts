@@ -214,6 +214,57 @@ export function dateFactAnchor(
   return `[FACTS from <profile> — use exactly, do not infer: date of birth ${dobStr}, age ${age}, next birthday ${nbStr} (in ${days} day${days === 1 ? '' : 's'}, turning ${turning}).]`;
 }
 
+/**
+ * Internal note telling the model how much wall-clock time has passed
+ * since the user's last message. Used to keep the assistant from
+ * resurfacing stale topics ("done with the gym?") hours after the user
+ * actually was at the gym. Strictly internal — the prompt forbids ever
+ * mentioning timestamps in replies.
+ *
+ * Buckets are intentionally coarse — the model just needs the vibe of
+ * "still in the moment" vs "fresh thread", not minute-by-minute math.
+ */
+export function chatPaceNote(
+  lastTurnAt: Date | null,
+  now: Date,
+  locale: Locale,
+): string | null {
+  if (!lastTurnAt) return null;
+  const minutes = Math.max(0, Math.round((now.getTime() - lastTurnAt.getTime()) / 60_000));
+
+  type Bucket = 'active' | 'lull' | 'gap' | 'stale' | 'fresh_day';
+  let bucket: Bucket;
+  if (minutes < 30) bucket = 'active';
+  else if (minutes < 180) bucket = 'lull';
+  else if (minutes < 720) bucket = 'gap';
+  else if (minutes < 1440) bucket = 'stale';
+  else bucket = 'fresh_day';
+
+  if (locale === 'id') {
+    const lines: Record<Bucket, string> = {
+      active:
+        'Obrolan masih aktif (jeda <30 menit). Boleh nyambung topik yang lagi dibahas.',
+      lull:
+        'Ada jeda beberapa puluh menit – beberapa jam sejak pesan terakhir. Boleh nyambungin kalau pas, tapi jangan force topik lama.',
+      gap:
+        'Udah lewat beberapa jam sejak pesan terakhir. Anggep topik lama udah lewat – JANGAN proaktif nanyain follow-up "udah selesai gym?" / "jadi mutusin X?" dsb. Tunggu user yang bawa.',
+      stale:
+        'Udah lebih dari setengah hari sejak pesan terakhir. Treat ini sebagai thread baru – langsung respon ke pesan user sekarang aja, jangan nyangkut ke topik kemarin kecuali user yang nyebut.',
+      fresh_day:
+        'Udah ganti hari (atau lebih) sejak pesan terakhir. Treat ini sebagai pembukaan thread baru – jangan resurface apapun dari sesi sebelumnya kecuali user yang bawa.',
+    };
+    return `<chat_pace>\n${lines[bucket]} Pakai info ini diam-diam buat ngatur respon — JANGAN sebut jam, hari, atau jeda waktu di balasanmu.\n</chat_pace>`;
+  }
+  const lines: Record<Bucket, string> = {
+    active: 'Conversation is active (<30 min gap). Continue the current topic if the user is still in it.',
+    lull: 'Tens of minutes to a few hours have passed since the last message. Continue softly, but don\'t force prior topics.',
+    gap: 'Several hours have passed. Treat earlier topics as past — DO NOT proactively follow up ("are you done at the gym?", "did you decide on X?"). Let the user steer.',
+    stale: 'More than half a day has passed. Treat this as a new thread — respond to the current message only, don\'t loop back to yesterday\'s topics unless the user does.',
+    fresh_day: 'The day has rolled over (or longer) since the last message. Treat this as a fresh thread opening — don\'t resurface anything from prior sessions unless the user brings it up.',
+  };
+  return `<chat_pace>\n${lines[bucket]} Use this internally to shape the reply — NEVER mention times, days, or elapsed gaps in your output.\n</chat_pace>`;
+}
+
 /** Compose the smart context into a single user-turn string for the model. */
 export function composeContextBlock(c: SmartContext, personalNotes?: string | null): string {
   const parts: string[] = [c.base];
