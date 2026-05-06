@@ -224,8 +224,26 @@ export async function POST(req: Request) {
         inputTokens = final.usage.input_tokens;
         outputTokens = final.usage.output_tokens;
       } catch (err) {
-        console.error('[chat/stream] model call failed', err);
-        controller.enqueue(frame({ type: 'error', message: 'ai_failed' }));
+        const e = err as {
+          message?: string;
+          status?: number;
+          error?: { type?: string; message?: string };
+        };
+        console.error('[chat/stream] model call failed', {
+          message: e.message,
+          status: e.status,
+          type: e.error?.type,
+          inner: e.error?.message,
+          modelId,
+        });
+        controller.enqueue(
+          frame({
+            type: 'error',
+            message: e.error?.message ?? e.message ?? 'ai_failed',
+            status: e.status,
+            inner: e.error?.type,
+          }),
+        );
         aborted = true;
       } finally {
         const answer = collected.join('').trim();

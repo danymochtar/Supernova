@@ -79,6 +79,8 @@ interface Frame {
   type: 'text' | 'done' | 'error';
   delta?: string;
   message?: string;
+  status?: number;
+  inner?: string;
 }
 
 interface Props {
@@ -278,6 +280,11 @@ export function ChatThread({
             answerSoFar += frame.delta;
             setPending({ question: optimisticQuestion, answer: answerSoFar });
           } else if (frame.type === 'error') {
+            console.error('[chat] stream error frame', {
+              message: frame.message,
+              status: frame.status,
+              inner: frame.inner,
+            });
             setError(t('errorGeneric'));
             setPending(null);
             return;
