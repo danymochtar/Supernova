@@ -263,7 +263,7 @@
     "emptyCta": "Open Chat",
     "addedAt": "Saved",
     "delete": "Remove from Journal",
-    "sourcesToggle": "Show original chat ({n})"
+    "sourcesToggle": "Show original chat"
   },
   "feedback": {
     "title": "How was your day?",

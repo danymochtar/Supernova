@@ -10,6 +10,7 @@ import {
 } from '@/lib/db/repositories/journal';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { synthesizeJournalNarrative } from '@/lib/ai/journal';
+import { detectUserPronoun } from '@/lib/ai/prompts/journal';
 import { prisma } from '@/lib/db/prisma';
 
 export type AddToJournalResult =
@@ -77,10 +78,24 @@ export async function addToJournalAction(input: { turnIds: string[] }): Promise<
     createdAt: r.createdAt.toISOString(),
   }));
 
+  // Detect the user's habitual first-person pronoun from a wider window
+  // of recent chat — 3-5 selected turns alone may not have enough signal,
+  // but the last ~80 turns reliably surface whether the user writes in
+  // gw / gue / gua / aku / saya. The journal narrative locks to that
+  // pronoun so it doesn't read like someone else's voice.
+  const recentForPronoun = await prisma.qaHistory.findMany({
+    where: { userId: session.user.id, personId: null },
+    orderBy: { createdAt: 'desc' },
+    take: 80,
+    select: { question: true },
+  });
+  const pronoun = detectUserPronoun(recentForPronoun);
+
   const synth = await synthesizeJournalNarrative(session.user.id, {
     locale: profile.locale,
     firstName: profile.firstName,
     tone: profile.tone,
+    pronoun,
     turns: rows.map((r) => ({
       question: r.question,
       answer: r.answer,

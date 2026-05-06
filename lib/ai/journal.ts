@@ -26,7 +26,7 @@ export async function synthesizeJournalNarrative(
     const response = await anthropic().messages.create({
       model: modelId,
       max_tokens: 600,
-      system: buildJournalSystem(input.locale, input.tone),
+      system: buildJournalSystem(input.locale, input.tone, input.pronoun),
       messages: [{ role: 'user', content: buildJournalUser(input) }],
     });
 

@@ -7,10 +7,57 @@ export interface JournalSourceTurn {
   at: string;
 }
 
+/**
+ * First-person pronoun the user habitually writes with. Detected from the
+ * source turns; if the user mixes gw/gue/gua we keep the most frequent
+ * one. We never substitute "aku"/"saya" for someone who writes in
+ * "gw"/"gue" — that would feel like the journal is somebody else's.
+ */
+export type UserPronoun = 'gw' | 'gue' | 'gua' | 'aku' | 'saya';
+
+const SLANG_GROUP = new Set<UserPronoun>(['gw', 'gue', 'gua']);
+
+export function detectUserPronoun(turns: { question: string }[]): UserPronoun {
+  const text = turns.map((t) => t.question).join(' ').toLowerCase();
+  const counts: Record<UserPronoun, number> = {
+    gw: 0,
+    gue: 0,
+    gua: 0,
+    aku: 0,
+    saya: 0,
+  };
+  for (const key of Object.keys(counts) as UserPronoun[]) {
+    const re = new RegExp(`(^|[^a-z])${key}(?=$|[^a-z])`, 'g');
+    counts[key] = (text.match(re) ?? []).length;
+  }
+  // Slang trio counts as a family — if any of them appears, pick the most-
+  // frequent slang variant rather than letting "aku" win on ties.
+  const slangTotal = counts.gw + counts.gue + counts.gua;
+  if (slangTotal > 0) {
+    const slangBest = (['gw', 'gue', 'gua'] as const).reduce<UserPronoun>(
+      (best, p) => (counts[p] > counts[best] ? p : best),
+      'gw',
+    );
+    return slangBest;
+  }
+  if (counts.aku > 0) return 'aku';
+  if (counts.saya > 0) return 'saya';
+  return 'aku';
+}
+
+const PRONOUN_REGISTER_ID: Record<UserPronoun, string> = {
+  gw: 'sangat kasual Jakarta — pake "gw" konsisten, bisa pake slang ringan ("males", "bgt", "doang", "dah") kalau muncul di obrolan asli',
+  gue: 'sangat kasual Jakarta — pake "gue" konsisten, bisa pake slang ringan kalau muncul di obrolan asli',
+  gua: 'sangat kasual Jakarta — pake "gua" konsisten, bisa pake slang ringan kalau muncul di obrolan asli',
+  aku: 'kasual reflektif — pake "aku" konsisten, bahasa apa adanya tanpa formal',
+  saya: 'formal-tapi-natural — pake "saya" konsisten, tetap personal tapi nggak slang',
+};
+
 export interface JournalSynthInput {
   locale: 'id' | 'en';
   firstName: string;
   tone: Tone;
+  pronoun: UserPronoun;
   /** Source chat turns in chronological order. */
   turns: JournalSourceTurn[];
   preferredModel?: string | null;
@@ -28,16 +75,31 @@ const TONE_VOICE_EN: Record<Tone, string> = {
   playful: 'Light and conversational. Wry humor allowed, but stays grounded in what actually happened.',
 };
 
-export function buildJournalSystem(locale: 'id' | 'en', tone: Tone): string {
+export function buildJournalSystem(
+  locale: 'id' | 'en',
+  tone: Tone,
+  pronoun: UserPronoun,
+): string {
   if (locale === 'id') {
-    return `Kamu nulis entri jurnal pribadi untuk user, dari sudut pandang ORANG PERTAMA — sebagai user itu sendiri ("aku..."), BUKAN sebagai pendamping yang ngomong ke user.
+    return `Kamu nulis entri jurnal pribadi untuk user, dari sudut pandang ORANG PERTAMA — sebagai user itu sendiri, BUKAN sebagai pendamping yang ngomong ke user.
 
-Voice: ${TONE_VOICE_ID[tone]}
+Voice umum: ${TONE_VOICE_ID[tone]}
+
+PRONOUN — KRUSIAL, JANGAN MELESET:
+- Pake "${pronoun}" SECARA KONSISTEN sebagai kata ganti orang pertama dari kalimat pertama sampai akhir. JANGAN switch ke pronoun lain di tengah jalan, JANGAN mix "${pronoun}" sama "aku" / "saya" / "gw" / "gue" / "gua" lain dalam satu entri.
+- Register yang cocok dengan "${pronoun}": ${PRONOUN_REGISTER_ID[pronoun]}.
+- Possessive ngikut: ${
+      SLANG_GROUP.has(pronoun)
+        ? `pake "${pronoun}" buat possessive juga ("rencana ${pronoun}", "${pronoun} ngerasa", "buat ${pronoun}")`
+        : pronoun === 'aku'
+          ? 'pake "aku" atau "-ku" ("rencana aku" / "rencanaku", "aku ngerasa")'
+          : 'pake "saya" ("rencana saya", "saya merasa")'
+    }.
 
 Konteksnya: user baru aja ngobrol curhat sama Supernova. Mereka pilih beberapa pesan untuk disimpen jadi entri jurnal. Tugas kamu: rangkum apa yang lagi mereka pikirin / rasain / proses, kayak orang yang lagi nulis jurnal pas habis ngobrol panjang sama temen.
 
 Aturan:
-- Selalu pake "aku" (orang pertama). Jangan pake "kamu", "Supernova", "pendamping", atau referensi apapun ke obrolan eksternal — jurnal itu privat, isinya cuma POV user sendiri.
+- Selalu orang pertama. JANGAN pake "kamu", "Supernova", "pendamping", atau referensi apapun ke obrolan eksternal — jurnal itu privat, isinya cuma POV user sendiri.
 - 1-3 paragraf pendek. Total 80-180 kata. Padat, bukan transkrip.
 - Tangkep INTI: apa yang lagi diolah, perasaan, keputusan yang lagi muncul, pertanyaan yang masih nge-gantung. Bukan ngulang isi obrolan.
 - Boleh sebut nama orang/tempat/event spesifik kalau muncul di obrolan (misal "Sabri", "trip Sabah", "event Microsoft 7 Mei") — itu yang bikin entri kerasa hidup.
@@ -73,9 +135,14 @@ export function buildJournalUser(input: JournalSynthInput): string {
     )
     .join('\n\n');
 
+  const pronounReminder =
+    input.locale === 'id'
+      ? `Tulis dari POV ${input.firstName} pake "${input.pronoun}" KONSISTEN dari awal sampai akhir. Match register & gaya ngomong ${input.firstName} di obrolan di atas.`
+      : `Write from ${input.firstName}'s POV in first person.`;
+
   return `Source conversation (chronological):
 
 ${turnLines}
 
-Write the journal entry now, in first person, as ${input.firstName}.`;
+${pronounReminder}`;
 }

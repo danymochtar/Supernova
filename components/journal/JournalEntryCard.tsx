@@ -78,7 +78,7 @@ export function JournalEntryCard({
             aria-expanded={showSources}
             className="text-muted-foreground press-soft inline-flex items-center gap-1 text-[11px] underline-offset-4 hover:underline"
           >
-            {labels.sources.replace('{n}', String(sources.length))}
+            {labels.sources} ({sources.length})
             <ChevronDown
               className={`h-3 w-3 transition-transform ${showSources ? 'rotate-180' : ''}`}
               aria-hidden
