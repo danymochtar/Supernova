@@ -6,6 +6,7 @@ import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { buildCoreProfile } from '@/lib/numerology';
 import { compatibilityScore, type LaneScore } from '@/lib/compatibility/score';
+import { renderInlineMd } from '@/components/qa/inlineMd';
 import { detectPatterns } from '@/lib/compatibility/patterns';
 import type { CoreKey } from '@/lib/compatibility/lens';
 import { getOrGeneratePairNarratives } from '@/lib/ai/relationship';
@@ -229,7 +230,7 @@ export default async function CompatibilityPage({
                   </header>
                   {narrative ? (
                     <p className="text-sm leading-relaxed text-neutral-800 dark:text-neutral-200">
-                      {narrative}
+                      {renderInlineMd(narrative)}
                     </p>
                   ) : (
                     <p className="text-muted-foreground text-sm italic">{t('narrativePending')}</p>

@@ -4,6 +4,7 @@ import type { Bridges, MinorNumbers, NumerologyResult } from '@/lib/numerology';
 import type { Locale } from '@/lib/i18n/config';
 import { meaningFor } from '@/lib/numerology/meanings';
 import { Explainer } from '@/components/layout/Explainer';
+import { renderInlineMd } from '@/components/qa/inlineMd';
 import { CompoundReduced } from './CompoundReduced';
 import { NumberCard } from './NumberCard';
 
@@ -121,7 +122,7 @@ export function AboutMe({
         <div className="border-border rounded-2xl border bg-gradient-to-br from-primary/5 to-accent/5 p-5 dark:from-primary/15 dark:to-accent/15">
           <Sparkles className="text-accent mb-2 h-4 w-4" aria-hidden />
           <p className="text-[15px] leading-relaxed text-neutral-800 dark:text-neutral-200">
-            {data.synthesis}
+            {renderInlineMd(data.synthesis)}
           </p>
         </div>
       ) : null}
@@ -221,7 +222,7 @@ export function AboutMe({
                     ) : null}
                   </div>
                   <p className="text-sm leading-relaxed text-neutral-800 dark:text-neutral-200">
-                    {card.body}
+                    {renderInlineMd(card.body)}
                   </p>
                 </article>
               );

@@ -3,6 +3,7 @@
 import { useState, type ReactNode } from 'react';
 import { ChevronDown, Sparkles } from 'lucide-react';
 import { parseReading } from '@/lib/ai/prompts/daily';
+import { renderInlineMd } from '@/components/qa/inlineMd';
 
 interface Props {
   body: string | null;
@@ -127,10 +128,10 @@ export function DailyReadingView({
 
         <div className="space-y-3 text-[15px] leading-relaxed text-neutral-800 dark:text-neutral-200">
           {parsed.greeting ? (
-            <p className="text-foreground font-medium">{parsed.greeting}</p>
+            <p className="text-foreground font-medium">{renderInlineMd(parsed.greeting)}</p>
           ) : null}
           {paragraphs.map((p, i) => (
-            <p key={i}>{p}</p>
+            <p key={i}>{renderInlineMd(p)}</p>
           ))}
         </div>
 
@@ -140,7 +141,7 @@ export function DailyReadingView({
               {labels.affirmation}
             </p>
             <p className="font-serif text-base italic leading-snug text-neutral-800 dark:text-neutral-100">
-              {parsed.affirmation}
+              {renderInlineMd(parsed.affirmation)}
             </p>
           </div>
         ) : null}

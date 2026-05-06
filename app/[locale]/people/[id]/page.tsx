@@ -20,6 +20,7 @@ import { meaningFor } from '@/lib/numerology/meanings';
 import { NumberCard } from '@/components/numerology/NumberCard';
 import { TopBar } from '@/components/layout/TopBar';
 import { Explainer } from '@/components/layout/Explainer';
+import { renderInlineMd } from '@/components/qa/inlineMd';
 
 export const maxDuration = 60;
 export const dynamic = 'force-dynamic';
@@ -221,7 +222,7 @@ export default async function PersonDetailPage({
             <details className="border-border group rounded-2xl border bg-white/40 p-5 dark:bg-neutral-900/40">
               <summary className="press-soft flex cursor-pointer list-none items-start justify-between gap-3 [&::-webkit-details-marker]:hidden">
                 <p className="text-[15px] leading-relaxed text-neutral-800 dark:text-neutral-200">
-                  {relSummary}
+                  {renderInlineMd(relSummary)}
                 </p>
                 <ChevronRight
                   className="text-muted-foreground mt-1 h-4 w-4 shrink-0 transition-transform group-open:rotate-90"
@@ -231,7 +232,7 @@ export default async function PersonDetailPage({
               {relRest.length > 0 ? (
                 <div className="border-border/60 mt-4 space-y-3 border-t pt-4 text-[15px] leading-relaxed text-neutral-800 dark:text-neutral-200">
                   {relRest.map((p, i) => (
-                    <p key={i}>{p}</p>
+                    <p key={i}>{renderInlineMd(p)}</p>
                   ))}
                 </div>
               ) : null}
