@@ -16,26 +16,27 @@ datasource db {
 // Schema follows the Better Auth 1.1.x Prisma adapter convention.
 
 model User {
-  id            String    @id
-  email         String    @unique
-  emailVerified Boolean   @default(false)
+  id            String   @id
+  email         String   @unique
+  emailVerified Boolean  @default(false)
   name          String?
   image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
-  sessions Session[]
-  accounts Account[]
-  profile  Profile?
-  people   Person[]
-  readings DailyReading[]
-  qa       QaHistory[]
-  feedback DailyFeedback[]
-  push     PushSubscription[]
-  rate     RateLimit[]
-  usage    AiUsage[]
-  cache    NumerologyCache[]
+  sessions  Session[]
+  accounts  Account[]
+  profile   Profile?
+  people    Person[]
+  readings  DailyReading[]
+  qa        QaHistory[]
+  feedback  DailyFeedback[]
+  push      PushSubscription[]
+  rate      RateLimit[]
+  usage     AiUsage[]
+  cache     NumerologyCache[]
   summaries ConversationSummary[]
+  journal   JournalEntry[]
 
   @@map("user")
 }
@@ -159,17 +160,17 @@ model Profile {
 }
 
 model NumerologyCache {
-  id          String  @id @default(cuid())
-  userId      String
-  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  key         String
-  compound    Int
-  reduced     Int
-  isMaster    Boolean @default(false)
-  karmicDebt  Int?
-  meta        Json?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  key        String
+  compound   Int
+  reduced    Int
+  isMaster   Boolean  @default(false)
+  karmicDebt Int?
+  meta       Json?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   @@unique([userId, key])
   @@index([userId])
@@ -306,4 +307,29 @@ model ConversationSummary {
   @@unique([userId, kind, periodStart])
   @@index([userId, kind, periodStart])
   @@map("conversation_summary")
+}
+
+// Journal entries — chat turns the user explicitly chose to remember by
+// tapping "+ Tambah ke Jurnal" on a turn. Snapshotted (question + answer +
+// original timestamp) so deleting the source chat turn doesn't destroy
+// journaled content. Cheap by design — no AI generation, no derived fields.
+model JournalEntry {
+  id             String   @id @default(cuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // Snapshot of the chat turn at journaling time. We keep these as plain
+  // text rather than FK to QaHistory so journaling outlives chat deletion.
+  question       String
+  answer         String
+  // When the original chat happened (createdAt of the QaHistory row at the
+  // moment of journaling). Lets us group journal entries by chat-day.
+  originalTurnAt DateTime
+  // Optional FK to the source turn for de-dup checks. Nulled on chat delete.
+  sourceTurnId   String?
+  // Optional user-added note layered on top when journaling.
+  note           String?
+  addedAt        DateTime @default(now())
+
+  @@index([userId, addedAt(sort: Desc)])
+  @@map("journal_entry")
 }

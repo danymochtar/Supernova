@@ -244,7 +244,7 @@ export default async function DashboardPage({ params }: { params: { locale: stri
 
   return (
     <main className="container flex max-w-3xl flex-col gap-6 px-4 py-6 sm:px-6 sm:py-10">
-      <AppHeader />
+      <AppHeader locale={locale} settingsLabel={t('settingsLink')} />
 
       {layout.filter((w) => !w.hidden).map((w) => renderWidget(w.id))}
 

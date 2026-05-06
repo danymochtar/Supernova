@@ -2,11 +2,11 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Compass, Heart, MessageCircle, Sparkles, User } from 'lucide-react';
+import { BookOpen, Compass, Heart, MessageCircle, Sparkles } from 'lucide-react';
 import type { Locale } from '@/lib/i18n/config';
 
 interface Tab {
-  key: 'home' | 'journey' | 'chat' | 'people' | 'me';
+  key: 'home' | 'journey' | 'chat' | 'people' | 'journal';
   href: (locale: Locale) => string;
   icon: typeof Sparkles;
   /** Path prefixes that count as "active" for this tab. */
@@ -18,10 +18,13 @@ const TABS: Tab[] = [
   { key: 'journey', href: (l) => `/${l}/journey`, icon: Compass, matches: ['/journey'] },
   { key: 'chat', href: (l) => `/${l}/ask`, icon: MessageCircle, matches: ['/ask'] },
   { key: 'people', href: (l) => `/${l}/people`, icon: Heart, matches: ['/people'] },
-  { key: 'me', href: (l) => `/${l}/me`, icon: User, matches: ['/me', '/profile', '/patterns'] },
+  { key: 'journal', href: (l) => `/${l}/journal`, icon: BookOpen, matches: ['/journal'] },
 ];
 
-const APP_ROUTES = ['/dashboard', '/journey', '/ask', '/people', '/patterns', '/me', '/profile'];
+// Routes where the bottom nav stays visible. Profile/settings/patterns moved
+// off the bottom nav (reachable via the gear icon in AppHeader) but the nav
+// still shows on those pages so users have a quick way back.
+const APP_ROUTES = ['/dashboard', '/journey', '/ask', '/people', '/journal', '/patterns', '/me', '/profile'];
 
 export function BottomNav({ locale, labels }: { locale: Locale; labels: Record<Tab['key'], string> }) {
   const pathname = usePathname();

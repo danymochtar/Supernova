@@ -8,7 +8,7 @@
     "journey": "Journey",
     "chat": "Chat",
     "people": "People",
-    "me": "Me"
+    "journal": "Journal"
   },
   "me": {
     "title": "Me",
@@ -212,6 +212,7 @@
     "ageRange": "Age range",
     "number": "Number",
     "now": "Now",
+    "settingsLink": "Settings & profile",
     "customizeDashboard": "Customize home widgets",
     "meaningComingSoon": "We're still curating the description for this number. Meanwhile the number on the card is a deterministic calculation — you can ask the AI on \"Ask AI\" for deeper context."
   },
@@ -246,7 +247,22 @@
     "starter4": "I've been thinking about a relationship — give me perspective",
     "errorInvalid": "Message is too short or too long.",
     "errorNoProfile": "Finish onboarding first.",
-    "errorGeneric": "Something went wrong. Please try again."
+    "errorGeneric": "Something went wrong. Please try again.",
+    "journalAdd": "Add to Journal",
+    "journalSelectCount": "{n} selected",
+    "journalCancel": "Cancel",
+    "journalCommit": "Add to Journal",
+    "journalSaving": "Saving…",
+    "journalAdded": "{added} added to Journal{skipped, plural, =0 {} other { · # already saved}}"
+  },
+  "journal": {
+    "title": "Journal",
+    "subtitle": "Messages you've chosen to keep — a place to revisit moments that mattered.",
+    "emptyHint": "No journal entries yet. While chatting, tap the + icon on a message you want to remember.",
+    "emptyCta": "Open Chat",
+    "fromChat": "From Chat",
+    "addedAt": "Saved",
+    "delete": "Remove from Journal"
   },
   "feedback": {
     "title": "How was your day?",

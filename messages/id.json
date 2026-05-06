@@ -8,7 +8,7 @@
     "journey": "Perjalanan",
     "chat": "Curhat",
     "people": "Orang",
-    "me": "Saya"
+    "journal": "Jurnal"
   },
   "me": {
     "title": "Saya",
@@ -212,6 +212,7 @@
     "ageRange": "Rentang usia",
     "number": "Angka",
     "now": "Saat ini",
+    "settingsLink": "Pengaturan & profil",
     "customizeDashboard": "Susun widget di Beranda",
     "meaningComingSoon": "Penjelasan untuk angka ini sedang kami siapkan. Sementara, angka di kartu adalah perhitungan deterministik — kamu bisa tanya AI di halaman \"Tanya AI\" untuk konteks lebih dalam."
   },
@@ -246,7 +247,22 @@
     "starter4": "Aku lagi mikirin hubungan, kasih perspektif dong",
     "errorInvalid": "Pesan terlalu pendek atau panjang.",
     "errorNoProfile": "Selesaikan onboarding dulu.",
-    "errorGeneric": "Terjadi kesalahan. Coba lagi sebentar."
+    "errorGeneric": "Terjadi kesalahan. Coba lagi sebentar.",
+    "journalAdd": "Tambah ke Jurnal",
+    "journalSelectCount": "{n} dipilih",
+    "journalCancel": "Batal",
+    "journalCommit": "Tambah ke Jurnal",
+    "journalSaving": "Menyimpan…",
+    "journalAdded": "{added} ditambah ke Jurnal{skipped, plural, =0 {} other { · # sudah ada}}"
+  },
+  "journal": {
+    "title": "Jurnal",
+    "subtitle": "Pesan-pesan yang kamu pilih buat disimpen — tempat balik baca momen yang berarti.",
+    "emptyHint": "Belum ada yang masuk Jurnal. Pas lagi curhat, tap ikon + di pesan yang pengen kamu inget.",
+    "emptyCta": "Buka Curhat",
+    "fromChat": "Dari Curhat",
+    "addedAt": "Disimpan",
+    "delete": "Hapus dari Jurnal"
   },
   "feedback": {
     "title": "Bagaimana hari kamu?",

@@ -65,7 +65,7 @@ export default async function LocaleLayout({
     journey: t('journey'),
     chat: t('chat'),
     people: t('people'),
-    me: t('me'),
+    journal: t('journal'),
   };
 
   // Pull the user's saved theme preference so first paint matches it. Falls

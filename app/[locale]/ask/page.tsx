@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { ChatThread } from '@/components/qa/ChatThread';
 import { deleteTurnAction } from './actions';
+import { addToJournalAction } from '@/app/[locale]/journal/actions';
 import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { getRecentTurns } from '@/lib/db/repositories/qa';
@@ -45,6 +46,7 @@ export default async function AskPage({ params }: { params: { locale: string } }
         emptyHint={t('emptyHint')}
         starterPrompts={[t('starter1'), t('starter2'), t('starter3'), t('starter4')]}
         deleteAction={deleteTurnAction}
+        journalAction={addToJournalAction}
       />
     </main>
   );

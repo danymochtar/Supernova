@@ -2,8 +2,20 @@
 
 import { useEffect, useRef, useState, useTransition } from 'react';
 import { useTranslations } from 'next-intl';
-import { ArrowUp, FileText, Image as ImageIcon, Paperclip, Square, Sparkles, Trash2, X } from 'lucide-react';
+import {
+  ArrowUp,
+  BookmarkPlus,
+  Check,
+  FileText,
+  Image as ImageIcon,
+  Paperclip,
+  Sparkles,
+  Square,
+  Trash2,
+  X,
+} from 'lucide-react';
 import type { DeleteTurnResult } from '@/app/[locale]/ask/actions';
+import type { AddToJournalResult } from '@/app/[locale]/journal/actions';
 import { renderInlineMd } from './inlineMd';
 
 type AttachmentKind = 'image' | 'pdf' | 'text';
@@ -76,6 +88,8 @@ interface Props {
   starterPrompts?: string[];
   /** Server action to delete a persisted turn. */
   deleteAction?: (input: { id: string }) => Promise<DeleteTurnResult>;
+  /** Server action to snapshot turns into the journal. */
+  journalAction?: (input: { turnIds: string[] }) => Promise<AddToJournalResult>;
 }
 
 export function ChatThread({
@@ -83,6 +97,7 @@ export function ChatThread({
   emptyHint,
   starterPrompts = [],
   deleteAction,
+  journalAction,
 }: Props) {
   const t = useTranslations('chat');
   const [turns, setTurns] = useState<ChatTurn[]>(initialTurns);
@@ -95,6 +110,14 @@ export function ChatThread({
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const bottomRef = useRef<HTMLDivElement | null>(null);
   const [, startDelete] = useTransition();
+  // Journal multi-select. \`selectMode\` makes every persisted turn tappable
+  // to toggle inclusion; the floating action bar at the bottom commits the
+  // selection. Local-only turns (id starts with "local-") aren't journalable
+  // until the page reloads and they get a real DB id.
+  const [selectMode, setSelectMode] = useState(false);
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [journalToast, setJournalToast] = useState<string | null>(null);
+  const [journalPending, startJournal] = useTransition();
 
   async function onPickFiles(files: FileList | null) {
     if (!files || files.length === 0) return;
@@ -156,6 +179,30 @@ export function ChatThread({
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
   }, [turns.length, pending?.answer]);
+
+  function commitJournal() {
+    if (!journalAction) return;
+    const ids = Array.from(selected);
+    if (ids.length === 0) return;
+    startJournal(async () => {
+      const result = await journalAction({ turnIds: ids });
+      if (result.ok) {
+        setJournalToast(
+          t('journalAdded', { added: result.added, skipped: result.skipped }),
+        );
+        setSelectMode(false);
+        setSelected(new Set());
+        setTimeout(() => setJournalToast(null), 3500);
+      } else {
+        setError(t('errorGeneric'));
+      }
+    });
+  }
+
+  function cancelSelect() {
+    setSelectMode(false);
+    setSelected(new Set());
+  }
 
   async function send() {
     const q = input.trim();
@@ -327,15 +374,38 @@ export function ChatThread({
           </div>
         ) : (
           <div className="space-y-5">
-            {turns.map((tn) => (
-              <Pair
-                key={tn.id}
-                question={tn.question}
-                answer={tn.answer}
-                onDelete={() => onDelete(tn.id)}
-                deleteLabel={t('delete')}
-              />
-            ))}
+            {turns.map((tn) => {
+              const journalable = journalAction !== undefined && !tn.id.startsWith('local-');
+              return (
+                <Pair
+                  key={tn.id}
+                  question={tn.question}
+                  answer={tn.answer}
+                  onDelete={selectMode ? undefined : () => onDelete(tn.id)}
+                  deleteLabel={t('delete')}
+                  onAddToJournal={
+                    journalAction
+                      ? () => {
+                          setSelectMode(true);
+                          setSelected(new Set([tn.id]));
+                        }
+                      : undefined
+                  }
+                  addLabel={t('journalAdd')}
+                  selectMode={selectMode}
+                  journalable={journalable}
+                  selected={selected.has(tn.id)}
+                  onToggleSelect={() => {
+                    setSelected((prev) => {
+                      const next = new Set(prev);
+                      if (next.has(tn.id)) next.delete(tn.id);
+                      else next.add(tn.id);
+                      return next;
+                    });
+                  }}
+                />
+              );
+            })}
             {pending ? (
               <Pair
                 question={pending.question}
@@ -355,7 +425,43 @@ export function ChatThread({
         <div ref={bottomRef} />
       </div>
 
+      {/* Journal "added" toast — auto-clears after a few seconds. */}
+      {journalToast ? (
+        <div className="border-border bg-background fixed inset-x-0 bottom-24 z-50 mx-auto flex max-w-sm items-center gap-2 rounded-full border px-4 py-2 text-sm shadow-lg">
+          <BookmarkPlus className="text-primary h-4 w-4" aria-hidden />
+          <span>{journalToast}</span>
+        </div>
+      ) : null}
+
+      {/* Floating action bar — replaces the input row while in journal-select
+        * mode so the user has one clear committed action and a cancel. */}
+      {selectMode ? (
+        <div className="border-border bg-background/95 flex items-center gap-2 border-t px-1 py-3 supports-[backdrop-filter]:bg-background/80 supports-[backdrop-filter]:backdrop-blur">
+          <p className="text-foreground flex-1 text-sm">
+            {t('journalSelectCount', { n: selected.size })}
+          </p>
+          <button
+            type="button"
+            onClick={cancelSelect}
+            disabled={journalPending}
+            className="border-border press hover:bg-muted/40 rounded-full border px-3 py-1.5 text-xs font-medium disabled:opacity-50"
+          >
+            {t('journalCancel')}
+          </button>
+          <button
+            type="button"
+            onClick={commitJournal}
+            disabled={journalPending || selected.size === 0}
+            className="bg-primary text-primary-foreground press inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium disabled:opacity-40"
+          >
+            <BookmarkPlus className="h-3.5 w-3.5" aria-hidden />
+            {journalPending ? t('journalSaving') : t('journalCommit')}
+          </button>
+        </div>
+      ) : null}
+
       <form
+        hidden={selectMode}
         onSubmit={(e) => {
           e.preventDefault();
           send();
@@ -468,15 +574,36 @@ function Pair({
   streaming,
   onDelete,
   deleteLabel,
+  onAddToJournal,
+  addLabel,
+  selectMode,
+  selected,
+  onToggleSelect,
+  journalable,
 }: {
   question: string;
   answer: string;
   streaming?: boolean;
   onDelete?: () => void;
   deleteLabel?: string;
+  onAddToJournal?: () => void;
+  addLabel?: string;
+  selectMode?: boolean;
+  selected?: boolean;
+  onToggleSelect?: () => void;
+  /** Whether this turn is eligible for journaling (saved to DB, not local-only). */
+  journalable?: boolean;
 }) {
+  const wrapperClass = `group/pair relative space-y-3 ${
+    selectMode && journalable ? 'cursor-pointer' : ''
+  } ${selectMode && journalable && selected ? 'ring-primary/50 ring-2 rounded-2xl ring-offset-2 ring-offset-background' : ''}`;
   return (
-    <div className="group/pair relative space-y-3">
+    <div
+      className={wrapperClass}
+      onClick={selectMode && journalable && onToggleSelect ? onToggleSelect : undefined}
+      role={selectMode && journalable ? 'button' : undefined}
+      aria-pressed={selectMode && journalable ? selected : undefined}
+    >
       <div className="flex justify-end">
         <div className="bg-primary text-primary-foreground max-w-[80%] whitespace-pre-wrap rounded-2xl rounded-tr-md px-4 py-2.5 text-sm">
           {question}
@@ -498,16 +625,55 @@ function Pair({
           ) : null}
         </div>
       </div>
-      {onDelete && !streaming ? (
-        <button
-          type="button"
-          onClick={onDelete}
-          aria-label={deleteLabel}
-          title={deleteLabel}
-          className="text-muted-foreground hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 absolute -bottom-1 right-0 rounded-full p-1.5 opacity-60 transition group-hover/pair:opacity-100 sm:opacity-0"
-        >
-          <Trash2 className="h-3.5 w-3.5" aria-hidden />
-        </button>
+
+      {/* Per-turn affordances: in normal mode show + (journal) and trash;
+        * in select mode show a check-circle reflecting selection state. */}
+      {!streaming ? (
+        <div className="absolute -bottom-1 right-0 flex items-center gap-1">
+          {selectMode && journalable ? (
+            <span
+              aria-hidden
+              className={`flex h-6 w-6 items-center justify-center rounded-full border-2 transition ${
+                selected
+                  ? 'bg-primary border-primary text-primary-foreground'
+                  : 'border-muted-foreground/40 bg-background'
+              }`}
+            >
+              {selected ? <Check className="h-3.5 w-3.5" /> : null}
+            </span>
+          ) : (
+            <>
+              {onAddToJournal && journalable ? (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onAddToJournal();
+                  }}
+                  aria-label={addLabel}
+                  title={addLabel}
+                  className="text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-full p-1.5 opacity-60 transition group-hover/pair:opacity-100 sm:opacity-0"
+                >
+                  <BookmarkPlus className="h-3.5 w-3.5" aria-hidden />
+                </button>
+              ) : null}
+              {onDelete ? (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onDelete();
+                  }}
+                  aria-label={deleteLabel}
+                  title={deleteLabel}
+                  className="text-muted-foreground hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-full p-1.5 opacity-60 transition group-hover/pair:opacity-100 sm:opacity-0"
+                >
+                  <Trash2 className="h-3.5 w-3.5" aria-hidden />
+                </button>
+              ) : null}
+            </>
+          )}
+        </div>
       ) : null}
     </div>
   );
