@@ -71,6 +71,7 @@
     "dashboardLayoutTitle": "Susun beranda",
     "dashboardLayoutHint": "Atur urutan & sembunyikan widget di Beranda.",
     "ageYears": "{age} tahun",
+    "topBarTitle": "Pengaturan",
     "groupContext": "Konteks",
     "groupAppearance": "Tampilan",
     "groupAi": "AI",
@@ -260,7 +261,6 @@
     "subtitle": "Pesan-pesan yang kamu pilih buat disimpen — tempat balik baca momen yang berarti.",
     "emptyHint": "Belum ada yang masuk Jurnal. Pas lagi curhat, tap ikon + di pesan yang pengen kamu inget.",
     "emptyCta": "Buka Curhat",
-    "fromChat": "Dari Curhat",
     "addedAt": "Disimpan",
     "delete": "Hapus dari Jurnal"
   },

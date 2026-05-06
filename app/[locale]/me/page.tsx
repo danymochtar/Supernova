@@ -18,6 +18,7 @@ import { ageAt, contextFromInstant } from '@/lib/numerology';
 import { SignOutButton } from '@/components/auth/SignOutButton';
 import { PersonalNotesForm } from '@/components/auth/PersonalNotesForm';
 import { SettingsGroup } from '@/components/auth/SettingsGroup';
+import { TopBar } from '@/components/layout/TopBar';
 import {
   DeleteRow,
   ExportRow,
@@ -79,7 +80,9 @@ export default async function MePage({ params }: { params: { locale: string } })
   const isAdmin = isAdminEmail(session.user.email);
 
   return (
-    <main className="container max-w-xl space-y-6 px-4 py-6 sm:px-6">
+    <main className="container max-w-xl px-4 sm:px-6">
+      <TopBar title={t('topBarTitle')} backHref={`/${locale}/dashboard`} />
+      <div className="space-y-6 pb-6">
       {/* Hero identity card — replaces the plain "Saya" title */}
       <section className="border-border from-primary/10 via-background to-accent/10 dark:from-primary/20 dark:to-accent/20 relative overflow-hidden rounded-3xl border bg-gradient-to-br p-6">
         <div className="flex items-start gap-4">
@@ -191,6 +194,7 @@ export default async function MePage({ params }: { params: { locale: string } })
       </SettingsGroup>
 
       <p className="text-muted-foreground py-4 text-center text-xs">{t('appVersion')}</p>
+      </div>
     </main>
   );
 }

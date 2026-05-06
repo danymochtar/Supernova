@@ -30,6 +30,20 @@ export default async function JournalPage({ params }: { params: { locale: string
 
   const entries = await listJournal(session.user.id, 200);
 
+  // Group entries by the chat-day they came from. Within a group keep
+  // the journaling order (most-recently-added first) — that reads as a
+  // natural "what I saved from this conversation" cluster.
+  const groups = new Map<string, typeof entries>();
+  for (const e of entries) {
+    const key = e.originalTurnAt.toISOString().slice(0, 10);
+    const arr = groups.get(key);
+    if (arr) arr.push(e);
+    else groups.set(key, [e]);
+  }
+  const orderedGroups = Array.from(groups.entries()).sort(([a], [b]) =>
+    a < b ? 1 : a > b ? -1 : 0,
+  );
+
   return (
     <main className="container max-w-3xl space-y-6 px-4 py-6 sm:px-6 sm:py-10">
       <header className="space-y-1 pt-2">
@@ -52,24 +66,32 @@ export default async function JournalPage({ params }: { params: { locale: string
           </Link>
         </section>
       ) : (
-        <section className="space-y-3">
-          {entries.map((entry) => (
-            <JournalEntryCard
-              key={entry.id}
-              id={entry.id}
-              question={entry.question}
-              answerMarkdown={renderInlineMd(entry.answer)}
-              originalDate={formatDayId(entry.originalTurnAt)}
-              addedDate={formatDayId(entry.addedAt)}
-              deleteAction={deleteJournalAction}
-              labels={{
-                fromChat: t('fromChat'),
-                addedAt: t('addedAt'),
-                delete: t('delete'),
-              }}
-            />
-          ))}
-        </section>
+        <div className="space-y-8">
+          {orderedGroups.map(([dayKey, dayEntries]) => {
+            const groupDate = formatDayId(dayEntries[0]!.originalTurnAt);
+            return (
+              <section key={dayKey} className="space-y-3">
+                <p className="text-muted-foreground px-1 text-[11px] font-semibold uppercase tracking-[0.18em]">
+                  {groupDate}
+                </p>
+                {dayEntries.map((entry) => (
+                  <JournalEntryCard
+                    key={entry.id}
+                    id={entry.id}
+                    question={entry.question}
+                    answerMarkdown={renderInlineMd(entry.answer)}
+                    addedDate={formatDayId(entry.addedAt)}
+                    deleteAction={deleteJournalAction}
+                    labels={{
+                      addedAt: t('addedAt'),
+                      delete: t('delete'),
+                    }}
+                  />
+                ))}
+              </section>
+            );
+          })}
+        </div>
       )}
     </main>
   );

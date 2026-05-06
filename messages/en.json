@@ -71,6 +71,7 @@
     "dashboardLayoutTitle": "Customize home",
     "dashboardLayoutHint": "Reorder & hide widgets on the Home tab.",
     "ageYears": "{age} years",
+    "topBarTitle": "Settings",
     "groupContext": "Context",
     "groupAppearance": "Appearance",
     "groupAi": "AI",
@@ -260,7 +261,6 @@
     "subtitle": "Messages you've chosen to keep — a place to revisit moments that mattered.",
     "emptyHint": "No journal entries yet. While chatting, tap the + icon on a message you want to remember.",
     "emptyCta": "Open Chat",
-    "fromChat": "From Chat",
     "addedAt": "Saved",
     "delete": "Remove from Journal"
   },
