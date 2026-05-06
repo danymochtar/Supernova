@@ -257,9 +257,15 @@ export async function POST(req: Request) {
       } finally {
         const answer = collected.join('').trim();
 
+        // Capture the persisted turn's id so we can return it in the
+        // `done` frame — the client then swaps its optimistic
+        // \`local-${ts}\` placeholder for the real DB id, which makes
+        // the just-saved turn immediately journalable without a page
+        // refresh.
+        let savedTurnId: string | null = null;
         if (!aborted && answer.length > 0) {
           try {
-            await saveTurn({
+            const saved = await saveTurn({
               userId,
               question: persistedQuestion,
               answer,
@@ -268,6 +274,7 @@ export async function POST(req: Request) {
                 attachments: attachments.map((a) => ({ kind: a.kind, name: a.name, mediaType: a.mediaType })),
               } as unknown as Prisma.InputJsonValue,
             });
+            savedTurnId = saved.id;
             await logUsage({
               userId,
               feature: 'QA',
@@ -283,6 +290,7 @@ export async function POST(req: Request) {
         controller.enqueue(
           frame({
             type: 'done',
+            id: savedTurnId,
             usage: { inputTokens, outputTokens, loaded: smart.loaded },
           }),
         );

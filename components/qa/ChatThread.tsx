@@ -81,6 +81,10 @@ interface Frame {
   message?: string;
   status?: number;
   inner?: string;
+  /** On `done`: the just-persisted QaHistory id, so the client can
+   * swap its optimistic placeholder for a real DB id and the new
+   * turn becomes journalable without a page refresh. */
+  id?: string | null;
 }
 
 interface Props {
@@ -290,11 +294,13 @@ export function ChatThread({
             setPending(null);
             return;
           } else if (frame.type === 'done') {
-            // commit pending turn into list
+            // commit pending turn into list. If the server returned the
+            // saved DB id, use it so the new turn is immediately
+            // journalable without needing a page refresh.
             setTurns((prev) => [
               ...prev,
               {
-                id: `local-${Date.now()}`,
+                id: frame.id ?? `local-${Date.now()}`,
                 question: optimisticQuestion,
                 answer: answerSoFar,
                 createdAt: new Date().toISOString(),
