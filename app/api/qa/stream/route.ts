@@ -8,7 +8,13 @@ import { getRecentTurns, saveTurn } from '@/lib/db/repositories/qa';
 import { logUsage } from '@/lib/db/repositories/usage';
 import { anthropic, model } from '@/lib/ai/client';
 import { chatSystemPrompt } from '@/lib/ai/prompts/conversation';
-import { composeContextBlock, chatPaceNote, dateFactAnchor, loadSmartContext } from '@/lib/conversation/context';
+import {
+  chatPaceNote,
+  composeContextBlock,
+  dateFactAnchor,
+  loadSmartContext,
+  localDateLabel,
+} from '@/lib/conversation/context';
 import { contextFromInstant } from '@/lib/numerology';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 
@@ -176,11 +182,19 @@ export async function POST(req: Request) {
       ? [...attachmentContentBlocks, { type: 'text' as const, text: finalQuestion }]
       : finalQuestion;
 
+  // Prefix each past user turn with a local-date marker so the model
+  // can compute "today / yesterday / N days ago" against <profile>'s
+  // today line. Without this it just guesses ("tadi pagi" for an envy
+  // story the user actually told days ago). The current user message
+  // is built separately below and already carries the FACTS anchor.
   const messages: Anthropic.MessageParam[] = [
-    ...recentTurns.flatMap<Anthropic.MessageParam>((t) => [
-      { role: 'user', content: t.question },
-      { role: 'assistant', content: t.answer },
-    ]),
+    ...recentTurns.flatMap<Anthropic.MessageParam>((t) => {
+      const day = localDateLabel(t.createdAt, profile.timezone);
+      return [
+        { role: 'user', content: `[${day}] ${t.question}` },
+        { role: 'assistant', content: t.answer },
+      ];
+    }),
     // Cast: the SDK 0.32 MessageParam.content type doesn't list 'document'
     // as a valid block kind, but the runtime API accepts it. Validated via
     // attachmentSchema before reaching here.

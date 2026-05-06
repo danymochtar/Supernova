@@ -215,6 +215,26 @@ export function dateFactAnchor(
 }
 
 /**
+ * Local-day label for a turn's createdAt, in the user's timezone, as
+ * YYYY-MM-DD. Prepended to past chat turns so the model can compute
+ * "today / yesterday / N days ago" against <profile>'s \`today:\` line
+ * — without per-turn timestamps the model just guesses ("tadi pagi"
+ * for things that happened a week ago).
+ */
+export function localDateLabel(at: Date, timezone: string): string {
+  try {
+    return new Intl.DateTimeFormat('en-CA', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      timeZone: timezone,
+    }).format(at);
+  } catch {
+    return at.toISOString().slice(0, 10);
+  }
+}
+
+/**
  * Internal note telling the model how much wall-clock time has passed
  * since the user's last message. Used to keep the assistant from
  * resurfacing stale topics ("done with the gym?") hours after the user
