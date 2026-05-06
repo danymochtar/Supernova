@@ -3,21 +3,48 @@
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { getSession } from '@/lib/auth/requireSession';
-import { addToJournal, deleteJournalEntry } from '@/lib/db/repositories/journal';
+import {
+  createJournalEntry,
+  deleteJournalEntry,
+  type JournalSourceSnapshot,
+} from '@/lib/db/repositories/journal';
+import { getProfileByUserId } from '@/lib/db/repositories/profile';
+import { synthesizeJournalNarrative } from '@/lib/ai/journal';
 import { prisma } from '@/lib/db/prisma';
 
 export type AddToJournalResult =
   | { ok: true; added: number; skipped: number }
-  | { ok: false; error: 'unauth' | 'invalid' | 'no_turns' | 'generic' };
+  | { ok: false; error: 'unauth' | 'invalid' | 'no_turns' | 'no_profile' | 'synth_failed' | 'generic' };
 
 const addSchema = z.object({
-  turnIds: z.array(z.string().min(1)).min(1).max(50),
+  turnIds: z.array(z.string().min(1)).min(1).max(20),
 });
 
+function fmtTurnAt(d: Date, tz: string): string {
+  // We don't need surgical local-time precision; a stable readable string
+  // for prompt context is enough. Use ISO with short-form TZ.
+  try {
+    return new Intl.DateTimeFormat('en-CA', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+      timeZone: tz,
+    }).format(d);
+  } catch {
+    return d.toISOString();
+  }
+}
+
 /**
- * Snapshot the chosen chat turns into the user's journal. Called from the
- * chat thread's multi-select mode. Idempotent — re-adding the same turn is
- * a no-op (counted as skipped).
+ * Snapshot the chosen chat turns into a journal entry. Calls Claude to
+ * synthesize a first-person narrative in the user's tone, then persists
+ * narrative + sources as a single row. If synthesis fails, the action
+ * returns an error so the caller can surface it — we don't silently store
+ * an entry without a narrative since the whole point of the feature is
+ * the synthesized voice.
  */
 export async function addToJournalAction(input: { turnIds: string[] }): Promise<AddToJournalResult> {
   const session = await getSession();
@@ -26,29 +53,56 @@ export async function addToJournalAction(input: { turnIds: string[] }): Promise<
   const parsed = addSchema.safeParse(input);
   if (!parsed.success) return { ok: false, error: 'invalid' };
 
+  const profile = await getProfileByUserId(session.user.id);
+  if (!profile) return { ok: false, error: 'no_profile' };
+
   // Pull the actual turn rows scoped to this user — defends against caller
-  // passing IDs of someone else's turns. Only main-thread turns (personId
-  // null) are journalable from the curhat tab.
+  // passing IDs of someone else's turns. Only main-thread turns
+  // (personId null) are journalable from the curhat tab.
   const rows = await prisma.qaHistory.findMany({
-    where: { id: { in: parsed.data.turnIds }, userId: session.user.id, personId: null },
+    where: {
+      id: { in: parsed.data.turnIds },
+      userId: session.user.id,
+      personId: null,
+    },
+    orderBy: { createdAt: 'asc' },
     select: { id: true, question: true, answer: true, createdAt: true },
   });
   if (rows.length === 0) return { ok: false, error: 'no_turns' };
 
+  const sources: JournalSourceSnapshot[] = rows.map((r) => ({
+    turnId: r.id,
+    question: r.question,
+    answer: r.answer,
+    createdAt: r.createdAt.toISOString(),
+  }));
+
+  const synth = await synthesizeJournalNarrative(session.user.id, {
+    locale: profile.locale,
+    firstName: profile.firstName,
+    tone: profile.tone,
+    turns: rows.map((r) => ({
+      question: r.question,
+      answer: r.answer,
+      at: fmtTurnAt(r.createdAt, profile.timezone),
+    })),
+    preferredModel: profile.preferredModel,
+  });
+
+  if (!synth) return { ok: false, error: 'synth_failed' };
+
   try {
-    const result = await addToJournal(
-      session.user.id,
-      rows.map((r) => ({
-        sourceTurnId: r.id,
-        question: r.question,
-        answer: r.answer,
-        originalTurnAt: r.createdAt,
-      })),
-    );
+    await createJournalEntry({
+      userId: session.user.id,
+      narrative: synth.narrative,
+      sources,
+      rangeStart: rows[0]!.createdAt,
+      rangeEnd: rows[rows.length - 1]!.createdAt,
+    });
     revalidatePath('/[locale]/journal', 'page');
-    return { ok: true, added: result.added, skipped: rows.length - result.added };
+    return { ok: true, added: 1, skipped: 0 };
   } catch (err) {
-    console.error('[journal] addToJournal failed', err);
+    console.error('[journal] persist failed', err);
     return { ok: false, error: 'generic' };
   }
 }

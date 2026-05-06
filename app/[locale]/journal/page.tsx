@@ -5,7 +5,6 @@ import { BookOpen, MessageCircle } from 'lucide-react';
 import { getSession } from '@/lib/auth/requireSession';
 import { listJournal } from '@/lib/db/repositories/journal';
 import { isLocale, type Locale } from '@/lib/i18n/config';
-import { renderInlineMd } from '@/components/qa/inlineMd';
 import { JournalEntryCard } from '@/components/journal/JournalEntryCard';
 import { deleteJournalAction } from './actions';
 
@@ -30,12 +29,12 @@ export default async function JournalPage({ params }: { params: { locale: string
 
   const entries = await listJournal(session.user.id, 200);
 
-  // Group entries by the chat-day they came from. Within a group keep
-  // the journaling order (most-recently-added first) — that reads as a
-  // natural "what I saved from this conversation" cluster.
-  const groups = new Map<string, typeof entries>();
+  // Group entries by the chat-day they came from (rangeStart day in UTC).
+  // Within a group keep journaling order — most-recently-added first.
+  type Entry = (typeof entries)[number];
+  const groups = new Map<string, Entry[]>();
   for (const e of entries) {
-    const key = e.originalTurnAt.toISOString().slice(0, 10);
+    const key = e.rangeStart.toISOString().slice(0, 10);
     const arr = groups.get(key);
     if (arr) arr.push(e);
     else groups.set(key, [e]);
@@ -68,7 +67,7 @@ export default async function JournalPage({ params }: { params: { locale: string
       ) : (
         <div className="space-y-8">
           {orderedGroups.map(([dayKey, dayEntries]) => {
-            const groupDate = formatDayId(dayEntries[0]!.originalTurnAt);
+            const groupDate = formatDayId(dayEntries[0]!.rangeStart);
             return (
               <section key={dayKey} className="space-y-3">
                 <p className="text-muted-foreground px-1 text-[11px] font-semibold uppercase tracking-[0.18em]">
@@ -78,13 +77,14 @@ export default async function JournalPage({ params }: { params: { locale: string
                   <JournalEntryCard
                     key={entry.id}
                     id={entry.id}
-                    question={entry.question}
-                    answerMarkdown={renderInlineMd(entry.answer)}
+                    narrative={entry.narrative}
+                    sources={entry.sources.map((s) => ({ question: s.question, answer: s.answer }))}
                     addedDate={formatDayId(entry.addedAt)}
                     deleteAction={deleteJournalAction}
                     labels={{
                       addedAt: t('addedAt'),
                       delete: t('delete'),
+                      sources: t('sourcesToggle'),
                     }}
                   />
                 ))}

@@ -253,8 +253,8 @@
     "journalSelectCount": "{n} selected",
     "journalCancel": "Cancel",
     "journalCommit": "Add to Journal",
-    "journalSaving": "Saving…",
-    "journalAdded": "{added} added to Journal{skipped, plural, =0 {} other { · # already saved}}"
+    "journalSaving": "Writing journal…",
+    "journalSavedToast": "Saved to Journal"
   },
   "journal": {
     "title": "Journal",
@@ -262,7 +262,8 @@
     "emptyHint": "No journal entries yet. While chatting, tap the + icon on a message you want to remember.",
     "emptyCta": "Open Chat",
     "addedAt": "Saved",
-    "delete": "Remove from Journal"
+    "delete": "Remove from Journal",
+    "sourcesToggle": "Show original chat ({n})"
   },
   "feedback": {
     "title": "How was your day?",

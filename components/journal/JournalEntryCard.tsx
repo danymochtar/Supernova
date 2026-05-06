@@ -1,37 +1,50 @@
 'use client';
 
-import { useTransition, type ReactNode } from 'react';
-import { Trash2 } from 'lucide-react';
+import { useState, useTransition } from 'react';
+import { ChevronDown, Trash2 } from 'lucide-react';
 import type { DeleteJournalResult } from '@/app/[locale]/journal/actions';
+import { renderInlineMd } from '@/components/qa/inlineMd';
+
+interface SourceLite {
+  question: string;
+  answer: string;
+}
 
 interface Props {
   id: string;
-  question: string;
-  answerMarkdown: ReactNode;
-  /** When the user journaled this turn — different from the chat date. */
+  narrative: string;
+  sources: SourceLite[];
+  /** When the user journaled this entry — different from the chat date. */
   addedDate: string;
   deleteAction: (input: { id: string }) => Promise<DeleteJournalResult>;
   labels: {
     addedAt: string;
     delete: string;
+    sources: string;
   };
 }
 
 export function JournalEntryCard({
   id,
-  question,
-  answerMarkdown,
+  narrative,
+  sources,
   addedDate,
   deleteAction,
   labels,
 }: Props) {
   const [pending, startTransition] = useTransition();
+  const [showSources, setShowSources] = useState(false);
 
   function onDelete() {
     startTransition(async () => {
       await deleteAction({ id });
     });
   }
+
+  const paragraphs = narrative
+    .split(/\n\s*\n/)
+    .map((p) => p.trim())
+    .filter(Boolean);
 
   return (
     <article className="border-border group relative space-y-3 rounded-2xl border bg-white/40 p-5 dark:bg-neutral-900/40">
@@ -46,18 +59,48 @@ export function JournalEntryCard({
         <Trash2 className="h-3.5 w-3.5" aria-hidden />
       </button>
 
-      <div className="space-y-3">
-        <div className="bg-primary/10 text-foreground rounded-2xl rounded-tl-md px-4 py-2.5 pr-10 text-sm whitespace-pre-wrap">
-          {question}
-        </div>
-        <div className="border-border whitespace-pre-wrap rounded-2xl rounded-tl-md border bg-white/60 px-4 py-2.5 text-sm leading-relaxed text-neutral-800 dark:bg-neutral-900/60 dark:text-neutral-200">
-          {answerMarkdown}
-        </div>
+      <div className="font-serif space-y-3 pr-8 text-[15px] leading-relaxed text-neutral-800 dark:text-neutral-200">
+        {paragraphs.length > 0 ? (
+          paragraphs.map((p, i) => <p key={i}>{renderInlineMd(p)}</p>)
+        ) : (
+          <p className="text-muted-foreground italic">…</p>
+        )}
       </div>
 
-      <p className="text-muted-foreground text-[11px]">
-        {labels.addedAt} {addedDate}
-      </p>
+      <div className="flex items-center justify-between gap-3">
+        <p className="text-muted-foreground text-[11px]">
+          {labels.addedAt} {addedDate}
+        </p>
+        {sources.length > 0 ? (
+          <button
+            type="button"
+            onClick={() => setShowSources((v) => !v)}
+            aria-expanded={showSources}
+            className="text-muted-foreground press-soft inline-flex items-center gap-1 text-[11px] underline-offset-4 hover:underline"
+          >
+            {labels.sources.replace('{n}', String(sources.length))}
+            <ChevronDown
+              className={`h-3 w-3 transition-transform ${showSources ? 'rotate-180' : ''}`}
+              aria-hidden
+            />
+          </button>
+        ) : null}
+      </div>
+
+      {showSources && sources.length > 0 ? (
+        <div className="border-border/60 space-y-3 border-t pt-3">
+          {sources.map((s, i) => (
+            <div key={i} className="space-y-2">
+              <div className="bg-primary/10 text-foreground rounded-xl rounded-tl-md px-3 py-2 text-xs whitespace-pre-wrap">
+                {s.question}
+              </div>
+              <div className="border-border whitespace-pre-wrap rounded-xl rounded-tl-md border bg-white/40 px-3 py-2 text-xs leading-relaxed text-neutral-800 dark:bg-neutral-900/40 dark:text-neutral-200">
+                {renderInlineMd(s.answer)}
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : null}
     </article>
   );
 }

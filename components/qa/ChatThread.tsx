@@ -187,9 +187,7 @@ export function ChatThread({
     startJournal(async () => {
       const result = await journalAction({ turnIds: ids });
       if (result.ok) {
-        setJournalToast(
-          t('journalAdded', { added: result.added, skipped: result.skipped }),
-        );
+        setJournalToast(t('journalSavedToast'));
         setSelectMode(false);
         setSelected(new Set());
         setTimeout(() => setJournalToast(null), 3500);
@@ -350,7 +348,7 @@ export function ChatThread({
       className="flex flex-col"
       style={{ minHeight: 'calc(100dvh - 8rem - env(safe-area-inset-bottom))' }}
     >
-      <div className="flex-1 overflow-y-auto pb-4">
+      <div className={`flex-1 overflow-y-auto ${selectMode ? 'pb-24' : 'pb-4'}`}>
         {turns.length === 0 && !pending ? (
           <div className="flex flex-col items-center gap-5 py-10 text-center">
             <div className="bg-primary/10 text-primary flex h-14 w-14 items-center justify-center rounded-full">
@@ -433,30 +431,37 @@ export function ChatThread({
         </div>
       ) : null}
 
-      {/* Floating action bar — replaces the input row while in journal-select
-        * mode so the user has one clear committed action and a cancel. */}
+      {/* Floating action bar — pinned to viewport bottom (above the
+        * BottomNav) so it stays reachable while the user scrolls up to
+        * select older messages. Replaces the input row visually while in
+        * select mode. */}
       {selectMode ? (
-        <div className="border-border bg-background/95 flex items-center gap-2 border-t px-1 py-3 supports-[backdrop-filter]:bg-background/80 supports-[backdrop-filter]:backdrop-blur">
-          <p className="text-foreground flex-1 text-sm">
-            {t('journalSelectCount', { n: selected.size })}
-          </p>
-          <button
-            type="button"
-            onClick={cancelSelect}
-            disabled={journalPending}
-            className="border-border press hover:bg-muted/40 rounded-full border px-3 py-1.5 text-xs font-medium disabled:opacity-50"
-          >
-            {t('journalCancel')}
-          </button>
-          <button
-            type="button"
-            onClick={commitJournal}
-            disabled={journalPending || selected.size === 0}
-            className="bg-primary text-primary-foreground press inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium disabled:opacity-40"
-          >
-            <BookmarkPlus className="h-3.5 w-3.5" aria-hidden />
-            {journalPending ? t('journalSaving') : t('journalCommit')}
-          </button>
+        <div
+          className="border-border bg-background/95 fixed inset-x-0 z-40 border-t supports-[backdrop-filter]:bg-background/80 supports-[backdrop-filter]:backdrop-blur"
+          style={{ bottom: 'calc(theme(spacing.16) + env(safe-area-inset-bottom))' }}
+        >
+          <div className="mx-auto flex max-w-3xl items-center gap-2 px-4 py-3 sm:px-6">
+            <p className="text-foreground flex-1 text-sm">
+              {t('journalSelectCount', { n: selected.size })}
+            </p>
+            <button
+              type="button"
+              onClick={cancelSelect}
+              disabled={journalPending}
+              className="border-border press hover:bg-muted/40 rounded-full border px-3 py-1.5 text-xs font-medium disabled:opacity-50"
+            >
+              {t('journalCancel')}
+            </button>
+            <button
+              type="button"
+              onClick={commitJournal}
+              disabled={journalPending || selected.size === 0}
+              className="bg-primary text-primary-foreground press inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium disabled:opacity-40"
+            >
+              <BookmarkPlus className="h-3.5 w-3.5" aria-hidden />
+              {journalPending ? t('journalSaving') : t('journalCommit')}
+            </button>
+          </div>
         </div>
       ) : null}
 

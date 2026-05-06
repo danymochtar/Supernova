@@ -253,8 +253,8 @@
     "journalSelectCount": "{n} dipilih",
     "journalCancel": "Batal",
     "journalCommit": "Tambah ke Jurnal",
-    "journalSaving": "Menyimpan…",
-    "journalAdded": "{added} ditambah ke Jurnal{skipped, plural, =0 {} other { · # sudah ada}}"
+    "journalSaving": "Menyusun jurnal…",
+    "journalSavedToast": "Tersimpan ke Jurnal"
   },
   "journal": {
     "title": "Jurnal",
@@ -262,7 +262,8 @@
     "emptyHint": "Belum ada yang masuk Jurnal. Pas lagi curhat, tap ikon + di pesan yang pengen kamu inget.",
     "emptyCta": "Buka Curhat",
     "addedAt": "Disimpan",
-    "delete": "Hapus dari Jurnal"
+    "delete": "Hapus dari Jurnal",
+    "sourcesToggle": "Lihat obrolan asli ({n})"
   },
   "feedback": {
     "title": "Bagaimana hari kamu?",

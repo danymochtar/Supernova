@@ -309,26 +309,26 @@ model ConversationSummary {
   @@map("conversation_summary")
 }
 
-// Journal entries — chat turns the user explicitly chose to remember by
-// tapping "+ Tambah ke Jurnal" on a turn. Snapshotted (question + answer +
-// original timestamp) so deleting the source chat turn doesn't destroy
-// journaled content. Cheap by design — no AI generation, no derived fields.
+// Journal entries — batches of chat turns the user explicitly chose to
+// remember, synthesized into a first-person narrative in the user's tone.
+// Sources are snapshotted so the entry survives chat-history deletion.
 model JournalEntry {
-  id             String   @id @default(cuid())
-  userId         String
-  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  // Snapshot of the chat turn at journaling time. We keep these as plain
-  // text rather than FK to QaHistory so journaling outlives chat deletion.
-  question       String
-  answer         String
-  // When the original chat happened (createdAt of the QaHistory row at the
-  // moment of journaling). Lets us group journal entries by chat-day.
-  originalTurnAt DateTime
-  // Optional FK to the source turn for de-dup checks. Nulled on chat delete.
-  sourceTurnId   String?
-  // Optional user-added note layered on top when journaling.
-  note           String?
-  addedAt        DateTime @default(now())
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // First-person narrative generated at journaling time from the source
+  // turns. The user's tone preference (warm/direct/playful) shapes voice.
+  narrative  String
+  // JSON array of { question, answer, createdAt, turnId } in chronological
+  // order — fallback content if narrative is empty + audit trail.
+  sources    Json
+  // Earliest and latest createdAt across the source turns; lets the page
+  // group journal entries by the chat-day they came from.
+  rangeStart DateTime
+  rangeEnd   DateTime
+  // Optional extra note the user adds when journaling (future use).
+  note       String?
+  addedAt    DateTime @default(now())
 
   @@index([userId, addedAt(sort: Desc)])
   @@map("journal_entry")
