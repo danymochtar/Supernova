@@ -31,7 +31,7 @@ export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 // Allow larger bodies for image / PDF attachments. Vercel default is 1MB
 // for serverless POSTs; we cap our own client-side at ~10MB total payload.
-export const maxDuration = 60;
+export const maxDuration = 120;
 
 const IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'] as const;
 const PDF_TYPE = 'application/pdf';

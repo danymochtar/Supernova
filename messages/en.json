@@ -248,7 +248,7 @@
     "starter4": "I've been thinking about a relationship — give me perspective",
     "errorInvalid": "Message is too short or too long.",
     "errorNoProfile": "Finish onboarding first.",
-    "errorGeneric": "Something went wrong. Please try again.",
+    "errorGeneric": "Couldn't send. Your message is kept — try again.",
     "journalAdd": "Add to Journal",
     "journalSelectCount": "{n} selected",
     "journalCancel": "Cancel",

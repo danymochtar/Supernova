@@ -248,7 +248,7 @@
     "starter4": "Aku lagi mikirin hubungan, kasih perspektif dong",
     "errorInvalid": "Pesan terlalu pendek atau panjang.",
     "errorNoProfile": "Selesaikan onboarding dulu.",
-    "errorGeneric": "Terjadi kesalahan. Coba lagi sebentar.",
+    "errorGeneric": "Gagal kirim. Pesan kamu disimpen — coba kirim ulang.",
     "journalAdd": "Tambah ke Jurnal",
     "journalSelectCount": "{n} dipilih",
     "journalCancel": "Batal",

@@ -256,6 +256,16 @@ export function ChatThread({
     const controller = new AbortController();
     abortRef.current = controller;
 
+    // If anything along the send path fails, restore the user's typed
+    // text and attachments so they can retry without re-typing or
+    // re-attaching. The locale toast wording "Pesan kamu disimpen"
+    // matches what we actually do here.
+    function restoreOnError() {
+      setInput(q);
+      setAttachments(sentAttachments);
+      setPending(null);
+    }
+
     try {
       const res = await fetch('/api/qa/stream', {
         method: 'POST',
@@ -281,13 +291,13 @@ export function ChatThread({
               ? t('errorInvalid')
               : t('errorGeneric'),
         );
-        setPending(null);
+        restoreOnError();
         return;
       }
 
       if (!res.body) {
         setError(t('errorGeneric'));
-        setPending(null);
+        restoreOnError();
         return;
       }
 
@@ -325,7 +335,7 @@ export function ChatThread({
               inner: frame.inner,
             });
             setError(t('errorGeneric'));
-            setPending(null);
+            restoreOnError();
             return;
           } else if (frame.type === 'done') {
             // commit pending turn into list. If the server returned the
@@ -377,7 +387,7 @@ export function ChatThread({
       }
       console.error('[chat] stream failed', err);
       setError(t('errorGeneric'));
-      setPending(null);
+      restoreOnError();
     } finally {
       setStreaming(false);
     }
