@@ -253,7 +253,11 @@ export function chatPaceNote(
       fresh_day:
         'Udah ganti hari (atau lebih) sejak pesan terakhir. Treat ini sebagai pembukaan thread baru – jangan resurface apapun dari sesi sebelumnya kecuali user yang bawa.',
     };
-    return `<chat_pace>\n${lines[bucket]} Pakai info ini diam-diam buat ngatur respon — JANGAN sebut jam, hari, atau jeda waktu di balasanmu.\n</chat_pace>`;
+    return `<chat_pace>
+${lines[bucket]} Pakai info ini diam-diam buat ngatur respon — JANGAN sebut jam, hari, atau jeda waktu di balasanmu.
+
+PENTING: ini cuma ngatur kapan lo proaktif. Memory lo soal obrolan sebelumnya TETAP utuh. Kalau user yang nge-trigger / nyebut topik lama duluan ("eh tadi gw bilang...", "ngomong-ngomong soal X..."), lo BOLEH dan HARUS respon penuh dengan konteks yang lo inget — bukan pura-pura lupa.
+</chat_pace>`;
   }
   const lines: Record<Bucket, string> = {
     active: 'Conversation is active (<30 min gap). Continue the current topic if the user is still in it.',
@@ -262,7 +266,11 @@ export function chatPaceNote(
     stale: 'More than half a day has passed. Treat this as a new thread — respond to the current message only, don\'t loop back to yesterday\'s topics unless the user does.',
     fresh_day: 'The day has rolled over (or longer) since the last message. Treat this as a fresh thread opening — don\'t resurface anything from prior sessions unless the user brings it up.',
   };
-  return `<chat_pace>\n${lines[bucket]} Use this internally to shape the reply — NEVER mention times, days, or elapsed gaps in your output.\n</chat_pace>`;
+  return `<chat_pace>
+${lines[bucket]} Use this internally to shape the reply — NEVER mention times, days, or elapsed gaps in your output.
+
+IMPORTANT: this only governs when YOU proactively bring something up. Your memory of prior turns is fully intact. If the user themself raises an earlier topic ("oh wait, earlier I said…", "speaking of X again…"), engage fully with the context you remember — don't pretend to have forgotten.
+</chat_pace>`;
 }
 
 /** Compose the smart context into a single user-turn string for the model. */
