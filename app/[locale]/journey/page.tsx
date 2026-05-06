@@ -123,8 +123,6 @@ export default async function JourneyPage({ params }: { params: { locale: string
             result={thisYear.result}
             meaning={firstSentence(thisYearMeaning)}
             locale={locale}
-            karmicLabel={t('karmicTag', { n: thisYear.result.karmicDebt ?? 0 })}
-            showKarmic={Boolean(thisYear.result.karmicDebt)}
           />
 
           <SummaryRow
@@ -154,8 +152,6 @@ export default async function JourneyPage({ params }: { params: { locale: string
             result={essenceNow.essence}
             meaning={firstSentence(essenceMeaning)}
             locale={locale}
-            karmicLabel={t('karmicTag', { n: essenceNow.essence.karmicDebt ?? 0 })}
-            showKarmic={Boolean(essenceNow.essence.karmicDebt)}
           />
         </div>
       </section>
@@ -409,11 +405,6 @@ export default async function JourneyPage({ params }: { params: { locale: string
                           </span>
                         </div>
                         <div className="flex items-center gap-2">
-                          {frame.essence.karmicDebt ? (
-                            <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-400">
-                              {t('karmicTag', { n: frame.essence.karmicDebt })}
-                            </span>
-                          ) : null}
                           <CompoundReduced result={frame.essence} locale={locale} size="sm" />
                         </div>
                       </header>
@@ -448,8 +439,6 @@ function SummaryRow({
   secondary,
   meaning,
   locale,
-  showKarmic,
-  karmicLabel,
 }: {
   label: string;
   sub?: string;
@@ -457,8 +446,6 @@ function SummaryRow({
   secondary?: NumerologyResult;
   meaning?: string;
   locale: Locale;
-  showKarmic?: boolean;
-  karmicLabel?: string;
 }) {
   return (
     <div className="space-y-1.5 py-3 first:pt-0 last:pb-0">
@@ -468,11 +455,6 @@ function SummaryRow({
           {sub ? <p className="text-muted-foreground text-xs tabular-nums">{sub}</p> : null}
         </div>
         <div className="flex shrink-0 items-center gap-2">
-          {showKarmic && karmicLabel ? (
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-400">
-              {karmicLabel}
-            </span>
-          ) : null}
           {secondary ? (
             <CompoundReduced result={secondary} locale={locale} size="sm" />
           ) : null}
