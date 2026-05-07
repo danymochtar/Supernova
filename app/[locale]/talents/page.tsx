@@ -3,6 +3,7 @@ import { getTranslations } from 'next-intl/server';
 import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { buildCoreProfile } from '@/lib/numerology';
 import { talentDistribution } from '@/lib/numerology/talents';
 import idMeanings from '@/content/meanings/id.json';
 import enMeanings from '@/content/meanings/en.json';
@@ -34,7 +35,8 @@ export default async function TalentsPage({ params }: { params: { locale: string
   const profile = await getProfileByUserId(session.user.id);
   if (!profile) redirect(`/${locale}/welcome`);
 
-  const dist = talentDistribution(profile.fullName);
+  const core = buildCoreProfile(profile.fullName, profile.dob);
+  const dist = talentDistribution(profile.fullName, core);
   const maxPct = Math.max(1, ...dist.slices.map((s) => s.percentage));
 
   const meanings = (locale === 'id' ? idMeanings : enMeanings) as Record<string, string>;
@@ -78,7 +80,7 @@ export default async function TalentsPage({ params }: { params: { locale: string
                       style={{
                         height: `${Math.max(heightPct, 4)}%`,
                         backgroundColor: DIGIT_COLOR[s.digit],
-                        opacity: s.count === 0 ? 0.18 : 1,
+                        opacity: s.letterCount === 0 ? 0.18 : 1,
                       }}
                       aria-label={`Digit ${s.digit}: ${s.percentage}%`}
                     />
@@ -155,7 +157,7 @@ export default async function TalentsPage({ params }: { params: { locale: string
           {dist.slices.map((s) => {
             const positive = trait(s.digit, 'positive');
             const shadow = trait(s.digit, 'shadow');
-            const muted = s.count === 0;
+            const muted = s.letterCount === 0;
             return (
               <details
                 key={s.digit}
@@ -177,9 +179,6 @@ export default async function TalentsPage({ params }: { params: { locale: string
                   <div className="min-w-0 flex-1">
                     <p className="text-sm font-semibold tabular-nums">
                       {s.percentage}%
-                      <span className="text-muted-foreground ml-2 text-xs font-normal">
-                        ({s.count})
-                      </span>
                     </p>
                     <p className="text-muted-foreground truncate text-xs">
                       {positive ?? t('comingSoon')}
