@@ -585,6 +585,13 @@
         "high": "Skor tinggi: lo make the most dari resources yang ada. Lo pake waktu efisien dan nggak biarin deadlines jadi alasan buat nggak deliver yang terbaik. Probably best work alone atau di environment dengan minimal intrusion & oversight. Set high standards buat diri sendiri — apa pun vokasi lo, lo bawa quality.",
         "medium": "Skor sedang: lo bisa eksekusi rapi pas dibutuhin, tapi juga butuh ruang fleksibel. Mode hybrid — cocok di tim yang gabungin struktur sama kebebasan.",
         "low": "Skor rendah: pendekatan lo lebih organic / spontan. Eksekusi nggak selalu by-the-book, tapi hasilnya bisa surprise. Yang perlu dijaga: deadline & komitmen ke orang lain."
+      },
+      "workWithOthers": {
+        "title": "Cara kerja sama orang",
+        "subTraits": "Loving, populer, in-demand, fungsi di environment yang minta personal interaction, kolaboratif, menjaga harmoni tim, supportive, easy to work with",
+        "high": "Skor tinggi: lo loving, populer, dan in-demand. Saking populernya, kadang lo harus safeguard biar nggak nge-ignore kebutuhan & keinginan lo sendiri. Lo function well di environment yang minta personal interaction — tim, klien, atau peran yang banyak interaksi.",
+        "medium": "Skor sedang: lo bisa kerja sama orang dengan baik, tapi juga butuh waktu sendiri buat recharge. Cocok di tim kecil atau peran yang ngedip antara kolab dan solo.",
+        "low": "Skor rendah: lo lebih nyaman kerja independent atau di lingkungan yang gak minta banyak personal interaction. Bukan anti-sosial — cuma operating mode lo lebih ke fokus + deliver, bukan small talk."
       }
     },
     "vocationsTitle": "Bidang vokasi",

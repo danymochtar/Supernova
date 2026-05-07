@@ -189,7 +189,8 @@ export type TalentGroupId =
   | 'generousCaring'
   | 'romantic'
   | 'perseverance'
-  | 'practical';
+  | 'practical'
+  | 'workWithOthers';
 
 export interface TalentGroupDef {
   id: TalentGroupId;
@@ -259,6 +260,13 @@ export const TALENT_GROUPS: TalentGroupDef[] = [
     // execution — 4 the practical disciplined, 8 results-oriented,
     // 1 sets standards.
     digits: { 4: 1.0, 8: 0.7, 1: 0.4 },
+  },
+  {
+    id: 'workWithOthers',
+    // Popular, loving, in demand, thrives on personal interaction —
+    // 6 the harmonious carer (with the self-sacrifice watch-out), 2
+    // the cooperative partner, 3 the sociable communicator.
+    digits: { 6: 1.0, 2: 0.8, 3: 0.5 },
   },
 ];
 

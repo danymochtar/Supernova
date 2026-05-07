@@ -585,6 +585,13 @@
         "high": "High score: you make the most of the resources at hand. You use your time efficiently and do not allow deadlines to provide you with an excuse for not performing your duties to the best of your ability. You probably work best alone, or in an environment with minimal intrusion and oversight. You set high standards for yourself — whatever your vocation, you bring quality.",
         "medium": "Medium score: you can execute cleanly when needed, but you also need flexible space. Hybrid mode — fits teams that combine structure with freedom.",
         "low": "Low score: your approach is more organic / spontaneous. Execution isn't always by-the-book, but the results can surprise. What to watch: deadlines and commitments to others."
+      },
+      "workWithOthers": {
+        "title": "How you work with others",
+        "subTraits": "Loving, popular, in demand, functions in environments that require personal interaction, collaborative, keeps team harmony, supportive, easy to work with",
+        "high": "High score: a high rating in this area tells us you are loving, popular, and in demand. So much so that you may have to safeguard against ignoring your own needs and desires. You function well in environments that require personal interaction — teams, clients, or roles with lots of touchpoints.",
+        "medium": "Medium score: you work well with others but also need solo time to recharge. Fits small teams or roles that flip between collaboration and solo focus.",
+        "low": "Low score: you're more comfortable working independently or in environments that don't demand much personal interaction. Not anti-social — your mode is more focus-and-deliver than small talk."
       }
     },
     "vocationsTitle": "Vocational fields",
