@@ -550,6 +550,41 @@
         "high": "Skor tinggi: lo punya hasrat genuine buat bikin dunia lebih baik. Mungkin volunteer, atau kasih waktu ke orang yang butuh. Standar tinggi — yang lo terapin di semua area hidup lo.",
         "medium": "Skor sedang: lo peduli orang, tapi ada batas yang lo jaga. Sehat — kapasitas lo terbatas, fair untuk dijaga.",
         "low": "Skor rendah: fokus lo lebih ke lingkaran dekat. Bukan egois — itu cara lo nge-protect energi. Yang penting jangan jadi tertutup total."
+      },
+      "sensitive": {
+        "title": "Sisi sensitif",
+        "subTraits": "Empati emosional, koneksi sama orang asing, rasa tanggung jawab buat yang kurang beruntung, kemurahan hati impulsif",
+        "high": "Skor tinggi: cinta & apresiasi lo ke orang lain ngaruh banget ke keputusan yang lo buat. Lo emotionally connected sama orang, bahkan yang nggak pernah lo temuin. Empati & rasa tanggung jawab buat yang kurang beruntung sering bikin lo ngambil keputusan impulsif — biasanya yang giving.",
+        "medium": "Skor sedang: lo punya empati, tapi nggak dikuasai sama itu. Bisa kasih ke orang lain tanpa nge-drain diri sendiri. Balance bagus.",
+        "low": "Skor rendah: lo lebih rasional sama emosi orang. Bisa peduli, tapi nggak gampang ke-trigger. Bukan dingin — cuma nggak gampang larut."
+      },
+      "generousCaring": {
+        "title": "Sisi murah hati & peduli",
+        "subTraits": "Aset komunitas, pilar kekuatan buat keluarga & teman, gampang dipercaya, jadi tempat curhat, dukungan emosional konsisten",
+        "high": "Skor tinggi: lo aset buat komunitas — pilar kekuatan buat teman & keluarga. Orang nyaman cerita masalahnya ke lo, dan lo siap kasih bahu buat nangis. Hati-hati: jangan terlalu trusting, ada orang yang bisa manfaatin kebaikan & sensitivitas emosional lo.",
+        "medium": "Skor sedang: lo bisa jadi tempat curhat, tapi ada batasnya. Healthy — kapasitas lo limited, fair untuk dijaga.",
+        "low": "Skor rendah: lo lebih milih jadi pendengar di area-area tertentu aja. Nggak semua orang gampang dapet akses ke sisi caring lo. Yang penting: yang udah masuk inner circle, lo all-in."
+      },
+      "romantic": {
+        "title": "Sisi romantis",
+        "subTraits": "Memberi cinta penuh, optimisme di hubungan, kapasitas loyalitas jangka panjang, komitmen, ekspresi kasih sayang",
+        "high": "Skor tinggi: lo kasih cinta sepenuhnya tanpa restraint. Hasilnya, lo mungkin udah ngalamin banyak encounter yang bikin disappointed. Lo cenderung overly optimistic & nggak as discriminating as you should be. Tapi pas nemu partner, kapasitas lo buat loyal & komit jangka panjang gede banget.",
+        "medium": "Skor sedang: lo bisa romantis, tapi ada filter yang lo jaga sebelum invest emosi. Slower to fall, tapi durable kalau udah jatuh.",
+        "low": "Skor rendah: lo lebih praktis di urusan romantis — ekspresi kasih sayang lewat aksi konkret, bukan grand gestures. Bukan kurang cinta, cuma cara express-nya beda."
+      },
+      "perseverance": {
+        "title": "Persistence & ngejar tujuan",
+        "subTraits": "Definisi sukses sendiri, supportive traits buat nyampe tujuan, kemampuan nemu niche, work ethic, fokus jangka panjang, ngga gampang menyerah",
+        "high": "Skor tinggi: keep in mind sukses beda-beda definisinya per orang — lo punya semua supportive traits buat nyampe definisi sukses lo sendiri. Lo punya peluang lebih besar dari kebanyakan buat nemu niche. Hati-hati: jangan sampai losing sight personal life di luar karier dan eksternal achievements.",
+        "medium": "Skor sedang: lo persistent kalau goal-nya berarti, tapi nggak grindset 24/7. Sustainable mode — sukses dicapai tanpa burning out.",
+        "low": "Skor rendah: lo lebih flowing daripada goal-driven. Nggak salah — beberapa pencapaian terbaik lahir dari proses, bukan target. Tapi sesekali set milestone biar nggak ngambang."
+      },
+      "practical": {
+        "title": "Sisi praktis & realistis",
+        "subTraits": "Efisiensi waktu, nggak pake deadline buat alasan, kerja best alone atau dengan minimal oversight, set high standards, eksekusi konsisten, attention to detail, problem-solving terstruktur, time management, accountability, professional reliability",
+        "high": "Skor tinggi: lo make the most dari resources yang ada. Lo pake waktu efisien dan nggak biarin deadlines jadi alasan buat nggak deliver yang terbaik. Probably best work alone atau di environment dengan minimal intrusion & oversight. Set high standards buat diri sendiri — apa pun vokasi lo, lo bawa quality.",
+        "medium": "Skor sedang: lo bisa eksekusi rapi pas dibutuhin, tapi juga butuh ruang fleksibel. Mode hybrid — cocok di tim yang gabungin struktur sama kebebasan.",
+        "low": "Skor rendah: pendekatan lo lebih organic / spontan. Eksekusi nggak selalu by-the-book, tapi hasilnya bisa surprise. Yang perlu dijaga: deadline & komitmen ke orang lain."
       }
     }
   }

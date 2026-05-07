@@ -550,6 +550,41 @@
         "high": "High score: you have a genuine drive to make the world a little better. May volunteer or give time to people who need it. High standards — applied to every area of your life.",
         "medium": "Medium score: you care about people, but you keep boundaries. Healthy — your capacity is finite and fair to protect.",
         "low": "Low score: your focus is mostly on your inner circle. Not selfish — it's how you protect your energy. The key is not closing off entirely."
+      },
+      "sensitive": {
+        "title": "Sensitive side",
+        "subTraits": "Emotional empathy, connection with strangers, responsibility for the less fortunate, impulsive generosity",
+        "high": "High score: your love and appreciation for others significantly influences the choices and decisions you make. You feel emotionally connected to others, even people you've never met. Empathy and a sense of responsibility for those less fortunate often motivates you to make impulsive decisions — usually of a giving nature.",
+        "medium": "Medium score: you have empathy without being ruled by it. You can give to others without draining yourself. Solid balance.",
+        "low": "Low score: you're more rational about other people's emotions. You can care, but you're not easily triggered. Not cold — just don't get pulled in."
+      },
+      "generousCaring": {
+        "title": "Generous & caring side",
+        "subTraits": "Asset to community, pillar of strength for friends and family, easy to confide in, willing to be a shoulder, consistent emotional support",
+        "high": "High score: you're an asset to your community — a pillar of strength for friends and family. Others feel comfortable sharing their problems with you, and you're willing to offer them a shoulder to cry on. Watch out: don't be too trusting; some people may take advantage of your emotional kindness and sensitivity.",
+        "medium": "Medium score: you can be a place to confide, but with limits. Healthy — your capacity is finite, fair to guard.",
+        "low": "Low score: you're more selective about being a sounding board. Not everyone gets easy access to your caring side. The flip side: those in your inner circle get all of you."
+      },
+      "romantic": {
+        "title": "Romantic side",
+        "subTraits": "Gives love fully, optimism in relationships, capacity for long-term loyalty, commitment, expression of affection",
+        "high": "High score: you give your love fully and without restraint. As a result, you've likely experienced many disappointing encounters. This rating indicates you tend to be overly optimistic and not as discriminating as you should be. However, once you find a partner, your capacity for long-term loyalty and commitment is significant.",
+        "medium": "Medium score: you can be romantic, but with a filter before you invest emotionally. Slower to fall, durable once you do.",
+        "low": "Low score: you're more practical in romance — affection through concrete actions, not grand gestures. Not less love, just a different way of expressing it."
+      },
+      "perseverance": {
+        "title": "Perseverance & reaching goals",
+        "subTraits": "Personal definition of success, supportive traits to reach goals, ability to find one's niche, work ethic, long-term focus, doesn't give up easily",
+        "high": "High score: keeping in mind that success means different things to different people, you have all the supportive traits you need to attain your definition of success. You also have a better chance than most to find your niche. However, you may need to guard against losing sight of the things that matter in your personal life, outside of your career and other external achievements.",
+        "medium": "Medium score: you persist when the goal matters, but you're not in grindset 24/7. Sustainable mode — success without burning out.",
+        "low": "Low score: you're more flowing than goal-driven. Not wrong — some of your best wins come from process, not targets. But set milestones now and then so you don't drift."
+      },
+      "practical": {
+        "title": "Practical & realistic side",
+        "subTraits": "Time efficiency, no using deadlines as an excuse, work best alone or with minimal oversight, set high standards, consistent execution, attention to detail, structured problem-solving, time management, accountability, professional reliability",
+        "high": "High score: you make the most of the resources at hand. You use your time efficiently and do not allow deadlines to provide you with an excuse for not performing your duties to the best of your ability. You probably work best alone, or in an environment with minimal intrusion and oversight. You set high standards for yourself — whatever your vocation, you bring quality.",
+        "medium": "Medium score: you can execute cleanly when needed, but you also need flexible space. Hybrid mode — fits teams that combine structure with freedom.",
+        "low": "Low score: your approach is more organic / spontaneous. Execution isn't always by-the-book, but the results can surprise. What to watch: deadlines and commitments to others."
       }
     }
   }

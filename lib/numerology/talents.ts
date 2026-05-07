@@ -184,7 +184,12 @@ export type TalentGroupId =
   | 'innerSelf'
   | 'artistic'
   | 'enjoyLife'
-  | 'humanitarian';
+  | 'humanitarian'
+  | 'sensitive'
+  | 'generousCaring'
+  | 'romantic'
+  | 'perseverance'
+  | 'practical';
 
 export interface TalentGroupDef {
   id: TalentGroupId;
@@ -222,6 +227,38 @@ export const TALENT_GROUPS: TalentGroupDef[] = [
     // Empathy, compassion, service — 9 the humanitarian, 6 the carer,
     // 2 the sensitive supporter.
     digits: { 9: 1.0, 6: 0.6, 2: 0.4 },
+  },
+  {
+    id: 'sensitive',
+    // Emotional sensitivity, empathy with strangers, impulsive giving —
+    // 2 is the sensitive intuitive, 6 the carer, 9 universal compassion.
+    digits: { 2: 1.0, 6: 0.7, 9: 0.5 },
+  },
+  {
+    id: 'generousCaring',
+    // Pillar of strength for friends/family, easy to confide in — 6 is
+    // the family/community number, 9 humanitarian generosity, 2 sensitive
+    // supporter, 1 dependable strength.
+    digits: { 6: 1.0, 9: 0.5, 2: 0.4, 1: 0.3 },
+  },
+  {
+    id: 'romantic',
+    // Gives love fully, long-term loyalty, optimistic in love — 6 is
+    // the romance/family number, 2 partnership, 3 romantic expression.
+    digits: { 6: 1.0, 2: 0.7, 3: 0.5 },
+  },
+  {
+    id: 'perseverance',
+    // Persistence, success orientation, finding niche, long-term focus —
+    // 4 the disciplined builder, 8 achievement-oriented, 1 driven.
+    digits: { 4: 1.0, 8: 0.8, 1: 0.6 },
+  },
+  {
+    id: 'practical',
+    // Efficient time use, accountability, high standards, structured
+    // execution — 4 the practical disciplined, 8 results-oriented,
+    // 1 sets standards.
+    digits: { 4: 1.0, 8: 0.7, 1: 0.4 },
   },
 ];
 
