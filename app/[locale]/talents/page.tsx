@@ -4,7 +4,11 @@ import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { buildCoreProfile } from '@/lib/numerology';
-import { talentDistribution } from '@/lib/numerology/talents';
+import {
+  TALENT_GROUPS,
+  rateTalentGroups,
+  talentDistribution,
+} from '@/lib/numerology/talents';
 import idMeanings from '@/content/meanings/id.json';
 import enMeanings from '@/content/meanings/en.json';
 import { Explainer } from '@/components/layout/Explainer';
@@ -147,6 +151,53 @@ export default async function TalentsPage({ params }: { params: { locale: string
           ) : (
             <p className="text-muted-foreground mt-3 text-xs leading-relaxed">{t('noAbsent')}</p>
           )}
+        </div>
+      </section>
+
+      {/* Talent groups (WN-style 11-group breakdown — 5 implemented). */}
+      <section className="space-y-3">
+        <div className="space-y-1">
+          <h2 className="text-lg font-semibold">{t('groupsTitle')}</h2>
+          <p className="text-muted-foreground text-sm">{t('groupsHint')}</p>
+        </div>
+        <div className="space-y-3">
+          {(() => {
+            const ratings = rateTalentGroups(dist.slices);
+            const RATING_STYLE: Record<typeof ratings[number]['rating'], { dot: string; text: string; ring: string }> = {
+              high: { dot: 'bg-emerald-500', text: 'text-emerald-700 dark:text-emerald-300', ring: 'ring-emerald-500/20' },
+              medium: { dot: 'bg-amber-500', text: 'text-amber-700 dark:text-amber-300', ring: 'ring-amber-500/20' },
+              low: { dot: 'bg-neutral-400', text: 'text-muted-foreground', ring: 'ring-neutral-400/15' },
+            };
+            return TALENT_GROUPS.map((g) => {
+              const r = ratings.find((x) => x.id === g.id);
+              if (!r) return null;
+              const style = RATING_STYLE[r.rating];
+              const ratingLabel = t(`rating${r.rating === 'high' ? 'High' : r.rating === 'medium' ? 'Medium' : 'Low'}`);
+              return (
+                <article
+                  key={g.id}
+                  className={`border-border ring-1 ${style.ring} rounded-2xl border bg-white/40 p-5 dark:bg-neutral-900/40`}
+                >
+                  <header className="mb-2 flex items-center justify-between gap-3">
+                    <h3 className="text-base font-semibold">{t(`groups.${g.id}.title`)}</h3>
+                    <span className={`inline-flex items-center gap-1.5 text-xs font-semibold ${style.text}`}>
+                      <span className={`h-2 w-2 rounded-full ${style.dot}`} aria-hidden />
+                      {ratingLabel}
+                      <span className="text-muted-foreground tabular-nums">
+                        · {r.score}%
+                      </span>
+                    </span>
+                  </header>
+                  <p className="text-muted-foreground mb-3 text-xs leading-relaxed">
+                    {t(`groups.${g.id}.subTraits`)}
+                  </p>
+                  <p className="text-sm leading-relaxed text-neutral-800 dark:text-neutral-200">
+                    {t(`groups.${g.id}.${r.rating}`)}
+                  </p>
+                </article>
+              );
+            });
+          })()}
         </div>
       </section>
 

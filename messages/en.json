@@ -509,6 +509,48 @@
     "shadowLabel": "Shadow side",
     "explainerLearnMore": "How to read this chart",
     "explainer": "Each letter has a numeric value 1-9 (Pythagorean). Your full name = a set of letters = a digit distribution. The dominant ones give you traits that come naturally; small percentages don't mean absent, they just need specific conditions to surface. Fully absent digits often become life lessons — similar to karmic lessons.",
-    "comingSoon": "Full description coming soon."
+    "comingSoon": "Full description coming soon.",
+    "groupsTitle": "Talents by area",
+    "groupsHint": "Trait groups in the World Numerology tradition — computed from your digit proportions, not guesses.",
+    "ratingHigh": "High",
+    "ratingMedium": "Medium",
+    "ratingLow": "Low",
+    "groups": {
+      "individualism": {
+        "title": "Individualism & Initiative",
+        "subTraits": "Leadership, independence, originality, drive, ambition, vision, determination, courage, initiative, self-reliance",
+        "high": "High score: you have strong instincts for leading, taking initiative, and going your own way. Suited to roles that give you autonomy and room to explore ideas. Watch-out: learn to collaborate, don't get stuck in stubborn mode.",
+        "medium": "Medium score: you can lead when needed but don't always want to be in front. There's a balance between initiative and teamwork — play that sweet spot.",
+        "low": "Low score: you're more comfortable supporting, following, or working behind the scenes. Not a weakness — many strong roles don't need to be the 'leader'."
+      },
+      "innerSelf": {
+        "title": "Inner self & spiritual",
+        "subTraits": "Reflection, intuition, truth-seeking, depth, study, philosophical thinking",
+        "high": "High score: you tend not to take things at face value — always looking past the surface. Suited to deep topics: philosophy, spirituality, research. Watch-out: don't over-isolate.",
+        "medium": "Medium score: you have reflective moments but stay grounded in the practical. Solid balance.",
+        "low": "Low score: you're more action-oriented, practical-first. The inner world isn't a priority — fine, but the occasional pause for reflection is still worth it."
+      },
+      "artistic": {
+        "title": "Artistic side",
+        "subTraits": "Creativity, expression, aesthetics, imagination, design, performance, rhythm, sensitivity to beauty",
+        "high": "High score: you have strong expressive talent and aesthetic sense. Suited to writing, performance, design, anything asking for sensitivity to beauty. Channel it into work that flows.",
+        "medium": "Medium score: you appreciate art and can be creative when needed, but it's not dominant. Suits a hobby or side practice.",
+        "low": "Low score: you're more practical than artistic. Not that you can't appreciate it — your operating mode is just different, more systematic and measurable."
+      },
+      "enjoyLife": {
+        "title": "Ability to enjoy life",
+        "subTraits": "Joy, optimism, humor, spontaneity, sociability, curiosity, playfulness, gratitude",
+        "high": "High score: naturally happy and energetic, you bounce back from disappointment easily. Sense of humor, easily touched emotionally. People are drawn to your vibe.",
+        "medium": "Medium score: you can be happy, but you also need time for serious things. A balanced approach — joy isn't forced, struggle isn't rejected.",
+        "low": "Low score: you tend toward serious or introspective. Joy comes through specific moments, not as a default mode. Find small rituals that bring delight."
+      },
+      "humanitarian": {
+        "title": "Humanitarian side",
+        "subTraits": "Empathy, service, compassion, high standards for self and others",
+        "high": "High score: you have a genuine drive to make the world a little better. May volunteer or give time to people who need it. High standards — applied to every area of your life.",
+        "medium": "Medium score: you care about people, but you keep boundaries. Healthy — your capacity is finite and fair to protect.",
+        "low": "Low score: your focus is mostly on your inner circle. Not selfish — it's how you protect your energy. The key is not closing off entirely."
+      }
+    }
   }
 }

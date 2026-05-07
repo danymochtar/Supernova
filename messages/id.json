@@ -509,6 +509,48 @@
     "shadowLabel": "Sisi bayangan",
     "explainerLearnMore": "Cara baca chart ini",
     "explainer": "Setiap huruf di alfabet punya nilai 1-9 (Pythagorean). Nama lengkap kamu = kumpulan huruf = distribusi digit. Yang dominan ngasih lo sifat yang gampang muncul natural; yang persentasenya kecil bukan berarti gak ada — cuma butuh kondisi tertentu buat muncul. Yang absen total biasanya jadi pelajaran hidup — kayak karmic lessons.",
-    "comingSoon": "Deskripsi lengkap segera."
+    "comingSoon": "Deskripsi lengkap segera.",
+    "groupsTitle": "Talenta per bidang",
+    "groupsHint": "Kelompok sifat ala World Numerology — dihitung dari proporsi digit kamu, bukan tebak-tebakan.",
+    "ratingHigh": "Tinggi",
+    "ratingMedium": "Sedang",
+    "ratingLow": "Rendah",
+    "groups": {
+      "individualism": {
+        "title": "Individualisme & Inisiatif",
+        "subTraits": "Kepemimpinan, kemandirian, orisinalitas, dorongan, ambisi, visi, ketegasan, keberanian, inisiatif, kemampuan jalan sendiri",
+        "high": "Skor tinggi: lo punya naluri kuat buat mimpin, ngambil inisiatif, dan jalan sendiri. Cocok di posisi yang ngasih otonomi & ruang ngeksplorasi ide. Tantangannya: belajar kolab, jangan kepala batu.",
+        "medium": "Skor sedang: lo bisa mimpin pas dibutuhin, tapi nggak selalu pengen di depan. Ada keseimbangan antara inisiatif dan kerja sama — mainin sweet spot itu.",
+        "low": "Skor rendah: lo lebih nyaman ngikut, support, atau kerja di balik layar. Bukan kelemahan — banyak peran kuat yang nggak harus jadi 'leader'."
+      },
+      "innerSelf": {
+        "title": "Diri batin & spiritual",
+        "subTraits": "Refleksi, intuisi, pencarian kebenaran, kedalaman, ketekunan studi, pemikiran filosofis",
+        "high": "Skor tinggi: lo cenderung nggak nge-take sesuatu di face value — selalu nyari di balik. Cocok eksplor topik dalam: filsafat, spiritual, riset. Tantangannya: jangan over-isolate.",
+        "medium": "Skor sedang: lo punya saat-saat reflektif, tapi tetep grounded di dunia praktis. Balance bagus.",
+        "low": "Skor rendah: lo lebih action-oriented, urusan praktis dulu. Dunia batin nggak jadi prioritas — fine, tapi sesekali pause buat refleksi tetep berharga."
+      },
+      "artistic": {
+        "title": "Sisi artistik",
+        "subTraits": "Kreativitas, ekspresi, estetika, imajinasi, desain, performa, ritme, sensitivitas keindahan",
+        "high": "Skor tinggi: lo punya bakat ekspresi & rasa estetik kuat. Cocok jadi penulis, performer, designer, atau apapun yang minta sensitivitas keindahan. Channel-nya ke karya yang ngalir.",
+        "medium": "Skor sedang: lo apresiasi seni dan bisa kreatif kalau dibutuhin, tapi bukan dominan. Cocok dijadiin hobi atau side practice.",
+        "low": "Skor rendah: lo lebih praktis daripada artistik. Bukan berarti nggak bisa apresiasi — cuma mode operandi-nya beda, lebih ke sistematik & terukur."
+      },
+      "enjoyLife": {
+        "title": "Kemampuan menikmati hidup",
+        "subTraits": "Kegembiraan, optimisme, humor, spontanitas, sosialitas, rasa ingin tahu, playful, syukur",
+        "high": "Skor tinggi: lo natural happy & energetic, gampang bangkit setelah kecewa. Punya humor & gampang touched secara emosi. Orang ketarik sama vibe lo.",
+        "medium": "Skor sedang: lo bisa happy, tapi juga butuh waktu serius. Balanced approach — joy nggak terpaksa, struggle nggak ditolak.",
+        "low": "Skor rendah: lo cenderung serius atau introspektif. Joy datang lewat momen-momen tertentu, bukan default mode. Cari ritual kecil yang bikin senang."
+      },
+      "humanitarian": {
+        "title": "Sisi humanitarian",
+        "subTraits": "Empati, pelayanan, compassion, standar tinggi buat diri & orang lain",
+        "high": "Skor tinggi: lo punya hasrat genuine buat bikin dunia lebih baik. Mungkin volunteer, atau kasih waktu ke orang yang butuh. Standar tinggi — yang lo terapin di semua area hidup lo.",
+        "medium": "Skor sedang: lo peduli orang, tapi ada batas yang lo jaga. Sehat — kapasitas lo terbatas, fair untuk dijaga.",
+        "low": "Skor rendah: fokus lo lebih ke lingkaran dekat. Bukan egois — itu cara lo nge-protect energi. Yang penting jangan jadi tertutup total."
+      }
+    }
   }
 }

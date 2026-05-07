@@ -163,3 +163,100 @@ export function talentDistribution(
 
   return { slices, totalLetters, dominant, absent };
 }
+
+/**
+ * Talent groups inspired by World Numerology's "Talents and Traits"
+ * profile (74 traits across 11 groups). For each group we declare which
+ * digits feed into the rating and with what weight; the rating itself
+ * is the weighted average of those digits' percentages from
+ * \`talentDistribution\`.
+ *
+ * Five groups so far (matching the five user screenshots — Individualism,
+ * Inner Self, Artistic, Enjoy Life, Humanitarian). The remaining six
+ * (per WN's "eleven groups") get added as the reference is supplied.
+ *
+ * Weights are 0-1 floats indicating how strongly a digit feeds the group.
+ * E.g. Individualism is heavily 1-driven (weight 1.0) but 8 (drive) and
+ * 5 (independence/courage) also contribute meaningfully.
+ */
+export type TalentGroupId =
+  | 'individualism'
+  | 'innerSelf'
+  | 'artistic'
+  | 'enjoyLife'
+  | 'humanitarian';
+
+export interface TalentGroupDef {
+  id: TalentGroupId;
+  /** Digit → 0..1 contribution weight. Missing digits don't contribute. */
+  digits: Partial<Record<TalentDigit, number>>;
+}
+
+export const TALENT_GROUPS: TalentGroupDef[] = [
+  {
+    id: 'individualism',
+    // Leadership, independence, ambition — 1 is the dominant digit, 8
+    // (drive/authority) and 5 (courage/independence) round it out.
+    digits: { 1: 1.0, 8: 0.7, 5: 0.5 },
+  },
+  {
+    id: 'innerSelf',
+    // Spirituality, intuition, depth, contemplation — 7 is the seeker,
+    // 9 the universal/idealist, 2 the intuitive sensitive.
+    digits: { 7: 1.0, 9: 0.5, 2: 0.4 },
+  },
+  {
+    id: 'artistic',
+    // Creativity, expression, beauty — 3 is creative/expressive, 6
+    // brings aesthetics, 9 universal artistry, 7 the depth/perfection.
+    digits: { 3: 1.0, 6: 0.7, 9: 0.5, 7: 0.3 },
+  },
+  {
+    id: 'enjoyLife',
+    // Joy, optimism, sociability — 3 is bouncy/expressive, 5 sensual/
+    // pleasure, 6 harmonious connection, 1 confident vitality.
+    digits: { 3: 1.0, 5: 0.7, 6: 0.5, 1: 0.4 },
+  },
+  {
+    id: 'humanitarian',
+    // Empathy, compassion, service — 9 the humanitarian, 6 the carer,
+    // 2 the sensitive supporter.
+    digits: { 9: 1.0, 6: 0.6, 2: 0.4 },
+  },
+];
+
+export type TalentRating = 'high' | 'medium' | 'low';
+
+export interface TalentGroupResult {
+  id: TalentGroupId;
+  /** Weighted average of contributing digit percentages (0-100). */
+  score: number;
+  rating: TalentRating;
+}
+
+/**
+ * Compute a rating bucket for each defined group from the user's
+ * distribution. Thresholds are tuned so the screenshots' "high" cases
+ * all bucket as high — most users will see a mix of high/medium with
+ * one or two lows, mirroring WN's chart shape.
+ */
+export function rateTalentGroups(slices: TalentSlice[]): TalentGroupResult[] {
+  const byDigit = new Map<TalentDigit, number>();
+  for (const s of slices) byDigit.set(s.digit, s.percentage);
+
+  return TALENT_GROUPS.map((g) => {
+    const totalWeight = Object.values(g.digits).reduce<number>((a, b) => a + (b ?? 0), 0);
+    let weightedSum = 0;
+    for (const [digitStr, weight] of Object.entries(g.digits)) {
+      const d = Number(digitStr) as TalentDigit;
+      const pct = byDigit.get(d) ?? 0;
+      weightedSum += pct * (weight ?? 0);
+    }
+    const score = totalWeight > 0 ? weightedSum / totalWeight : 0;
+    let rating: TalentRating;
+    if (score >= 16) rating = 'high';
+    else if (score >= 9) rating = 'medium';
+    else rating = 'low';
+    return { id: g.id, score: Math.round(score * 10) / 10, rating };
+  });
+}
