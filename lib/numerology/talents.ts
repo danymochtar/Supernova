@@ -6,13 +6,19 @@ import type { CoreProfile } from './types';
  * core numbers and the letters in their full name. Modeled after World
  * Numerology's Proportional Numerology Chart, where the dominant bars
  * line up with the user's actual core numbers (Life Path, Expression,
- * Soul Urge, Personality, Birthday, Maturity), not just the letter
- * distribution.
+ * Soul Urge, Personality, Birthday), not just the letter distribution.
  *
- * Weighting (chosen to match WN's chart shape on real profiles):
- * - Life Path: 4 points (the "main" number gets the heaviest weight)
- * - Expression / Soul Urge / Personality / Birthday / Maturity: 3 each
+ * Weighting (tuned against a real WN reference profile so the chart
+ * shape matches — 5/6 close together when Pers and Expr land on
+ * neighbouring digits, 8 strong when both SU and BD reduce to 8, etc.):
+ * - Life Path / Expression / Soul Urge / Personality: 4 points each
+ * - Birthday: 2 points (it's just the day-of-month digit, lower weight)
  * - Each letter in the full name: 1 point
+ *
+ * Maturity is intentionally NOT included — it would double-count one
+ * digit when LP+Expr happens to land on the same digit as another core
+ * (e.g. Dany's LP=1, Expr=5 → Maturity=6, but Personality is already
+ * 6, which inflates that bar by 50% relative to WN's actual chart).
  *
  * Master numbers (11/22/33) are reduced to their single-digit equivalent
  * (2/4/6) for this proportional view since the chart is digits 1-9.
@@ -44,8 +50,6 @@ export interface TalentDistribution {
    * weight contributions.
    */
   absent: TalentDigit[];
-  /** Maturity number (LP + Expression, reduced) — for surface in UI. */
-  maturity: TalentDigit;
 }
 
 /** Reduce master numbers (11/22/33) to their single-digit equivalents
@@ -57,23 +61,8 @@ function toSingle(n: number): number {
   return n;
 }
 
-/** Recursively reduce any positive integer to a single 1-9 digit
- *  (no master preservation — talents view is single-digit only). */
-function singleDigit(n: number): number {
-  let x = Math.abs(n);
-  while (x >= 10) {
-    let s = 0;
-    while (x > 0) {
-      s += x % 10;
-      x = Math.floor(x / 10);
-    }
-    x = s;
-  }
-  return x;
-}
-
-const LP_WEIGHT = 4;
-const CORE_WEIGHT = 3;
+const CORE_WEIGHT = 4;
+const BIRTHDAY_WEIGHT = 2;
 const LETTER_WEIGHT = 1;
 
 export function talentDistribution(
@@ -92,17 +81,11 @@ export function talentDistribution(
     if (d >= 1 && d <= 9) points[d as TalentDigit] += weight;
   }
 
-  bump(core.lifePath.reduced, LP_WEIGHT);
+  bump(core.lifePath.reduced, CORE_WEIGHT);
   bump(core.expression.reduced, CORE_WEIGHT);
   bump(core.soulUrge.reduced, CORE_WEIGHT);
   bump(core.personality.reduced, CORE_WEIGHT);
-  bump(core.birthday.reduced, CORE_WEIGHT);
-
-  // Maturity = LP + Expression, reduced to 1-9 (no master preservation here).
-  const maturity = singleDigit(
-    toSingle(core.lifePath.reduced) + toSingle(core.expression.reduced),
-  ) as TalentDigit;
-  bump(maturity, CORE_WEIGHT);
+  bump(core.birthday.reduced, BIRTHDAY_WEIGHT);
 
   // Letters from the name — weight 1 each.
   let totalLetters = 0;
@@ -133,5 +116,5 @@ export function talentDistribution(
   // page agrees with whatever karmic.ts reports elsewhere.
   const absent = core.karmicLessons.filter((n): n is TalentDigit => n >= 1 && n <= 9);
 
-  return { slices, totalLetters, dominant, absent, maturity };
+  return { slices, totalLetters, dominant, absent };
 }
