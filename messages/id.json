@@ -586,6 +586,59 @@
         "medium": "Skor sedang: lo bisa eksekusi rapi pas dibutuhin, tapi juga butuh ruang fleksibel. Mode hybrid — cocok di tim yang gabungin struktur sama kebebasan.",
         "low": "Skor rendah: pendekatan lo lebih organic / spontan. Eksekusi nggak selalu by-the-book, tapi hasilnya bisa surprise. Yang perlu dijaga: deadline & komitmen ke orang lain."
       }
+    },
+    "vocationsTitle": "Bidang vokasi",
+    "vocationsHint": "Aptitude lo lintas tujuh bidang karier — dihitung dari proporsi digit lo, bukan tebak-tebakan. Kalau lagi ngerasa salah jalur, listing ini bisa kasih ide area baru.",
+    "vocations": {
+      "business": {
+        "title": "Bisnis & manajemen",
+        "subTraits": "Eksekutif, lead tim, ngambil keputusan tegas, fokus hasil, ownership",
+        "high": "Skor tinggi: lo punya naluri eksekutif kuat — bisa lead tim, ngambil keputusan tegas, fokus ke hasil. Cocok di posisi management, ownership, atau peran yang minta accountability tinggi.",
+        "medium": "Skor sedang: lo bisa nge-handle business setting kalau dibutuhin, tapi bukan jalur paling natural. Mungkin lebih cocok jadi spesialis di bidang tertentu daripada generalist manager.",
+        "low": "Skor rendah: business / management bukan strong suit lo. Bukan berarti gak bisa, cuma butuh effort lebih buat di-translate ke peran kayak gitu."
+      },
+      "medicineEducation": {
+        "title": "Medis & pendidikan",
+        "subTraits": "Dokter, perawat, terapis, guru, dosen, konselor",
+        "high": "Skor tinggi: lo natural di profesi yang nge-tuntut peduli sama orang. Kombinasi sensitivitas + analitis bikin lo cocok ngajarin atau ngerawat. Cocok di kedokteran, keperawatan, terapi, atau pendidikan.",
+        "medium": "Skor sedang: lo bisa di profesi caring kalau motivasi lo kuat, tapi bukan calling utama.",
+        "low": "Skor rendah: profesi caring intensif kayak dokter / guru bukan natural fit. Lebih cocok di peran yang nggak emotionally heavy."
+      },
+      "legalPolitics": {
+        "title": "Hukum & politik",
+        "subTraits": "Pengacara, hakim, politisi, advokat, regulator, mediator publik",
+        "high": "Skor tinggi: kombinasi authority, struktur, dan rasa keadilan bikin lo cocok di hukum atau politik. Bisa argumentasi tajam, baca sistem, dan stand by prinsip.",
+        "medium": "Skor sedang: lo bisa di area legal/politik kalau topiknya in line, tapi bukan default jalur.",
+        "low": "Skor rendah: bidang ini terlalu adversarial atau structured buat lo. Mending area yang lebih fluid."
+      },
+      "artsDesign": {
+        "title": "Seni & desain",
+        "subTraits": "Penulis, designer, performer, fotografer, sineas, seniman visual, music maker, illustrator",
+        "high": "Skor tinggi: bakat lo di artistik & design kuat. Bisa jadi penulis, designer, performer, atau pekerja kreatif lain yang butuh sensitivitas estetik.",
+        "medium": "Skor sedang: lo apresiasi seni & punya momen kreatif, tapi bukan jalur penuh waktu. Cocok jadi side practice.",
+        "low": "Skor rendah: artistik bukan area natural lo. Kalau tertarik, dekati lewat appreciation atau hobby — bukan karier."
+      },
+      "salesPr": {
+        "title": "Sales, advertising & PR",
+        "subTraits": "Sales, marketing, advertising, public relations, brand ambassador",
+        "high": "Skor tinggi: charm, persuasi, dan komunikasi cepat lo kuat. Cocok di sales, advertising, PR, atau apapun yang butuh ngebaca audience cepat dan deliver pesan yang nyangkut.",
+        "medium": "Skor sedang: lo bisa kerja di area ini kalau passionate sama produknya, tapi bukan jalur natural.",
+        "low": "Skor rendah: extrovert-driven profession kayak sales kemungkinan kerasa exhausting buat lo. Cocok di area yang lebih internal atau analitis."
+      },
+      "scienceEngineering": {
+        "title": "Sains, engineering & konstruksi",
+        "subTraits": "Engineer, peneliti, programmer, arsitek, kontraktor, ilmuwan, technician, data analyst",
+        "high": "Skor tinggi: kombinasi praktis + analitis + hasil bikin lo cocok di STEM / engineering / construction. Suka pattern, sistem, dan bangun hal nyata.",
+        "medium": "Skor sedang: lo bisa di area teknis kalau tertarik sama materinya, tapi bukan default talent.",
+        "low": "Skor rendah: pendekatan structured-engineering bukan style lo. Mungkin lebih nyaman di area yang lebih intuitive."
+      },
+      "agriculture": {
+        "title": "Pertanian & berkebun",
+        "subTraits": "Petani, peternak, gardener, hortikulturis, pekerja alam, environmental",
+        "high": "Skor tinggi: lo punya bakat buat kerja sama alam, tanaman, atau aktivitas tangan-tangan yang grounded. Bisa farming, gardening, atau apapun yang minta kesabaran sama proses alami.",
+        "medium": "Skor sedang: lo bisa enjoy aktivitas di alam, tapi bukan calling utama. Hobi yang sehat.",
+        "low": "Skor rendah: aktivitas yang ngandelin alam & kesabaran panjang kurang cocok. Lebih ke environment yang dinamis."
+      }
     }
   }
 }

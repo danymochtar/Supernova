@@ -297,3 +297,89 @@ export function rateTalentGroups(slices: TalentSlice[]): TalentGroupResult[] {
     return { id: g.id, score: Math.round(score * 10) / 10, rating };
   });
 }
+
+/**
+ * Vocational aptitude — separate from trait groups. WN's report rates
+ * the user's fit across 7 career fields ("Vocations"), each driven by
+ * a different mix of digits. Same weighting + bucketing scheme as the
+ * trait groups (uniform thresholds keep the high/medium/low bars
+ * meaningful across both sections).
+ */
+export type TalentVocationId =
+  | 'business'
+  | 'medicineEducation'
+  | 'legalPolitics'
+  | 'artsDesign'
+  | 'salesPr'
+  | 'scienceEngineering'
+  | 'agriculture';
+
+export interface TalentVocationDef {
+  id: TalentVocationId;
+  digits: Partial<Record<TalentDigit, number>>;
+}
+
+export const TALENT_VOCATIONS: TalentVocationDef[] = [
+  {
+    id: 'business',
+    // Executive instinct, results orientation, leadership.
+    digits: { 8: 1.0, 1: 0.7, 4: 0.5 },
+  },
+  {
+    id: 'medicineEducation',
+    // Caring/teaching, service, analytical depth.
+    digits: { 6: 1.0, 9: 0.6, 7: 0.4 },
+  },
+  {
+    id: 'legalPolitics',
+    // Authority, structure, leadership, justice.
+    digits: { 8: 1.0, 1: 0.7, 4: 0.5, 9: 0.3 },
+  },
+  {
+    id: 'artsDesign',
+    // Expression, aesthetic sensibility, perfectionist depth.
+    digits: { 3: 1.0, 6: 0.7, 7: 0.4 },
+  },
+  {
+    id: 'salesPr',
+    // Charm, persuasion, communication, drive.
+    digits: { 5: 1.0, 3: 0.7, 1: 0.4 },
+  },
+  {
+    id: 'scienceEngineering',
+    // Practical+analytical+results combo. STEM vibe.
+    digits: { 4: 1.0, 7: 0.7, 8: 0.4 },
+  },
+  {
+    id: 'agriculture',
+    // Earthbound work, nurturing patience, slow-burn.
+    digits: { 4: 1.0, 6: 0.7, 2: 0.3 },
+  },
+];
+
+export interface TalentVocationResult {
+  id: TalentVocationId;
+  score: number;
+  rating: TalentRating;
+}
+
+export function rateVocations(slices: TalentSlice[]): TalentVocationResult[] {
+  const byDigit = new Map<TalentDigit, number>();
+  for (const s of slices) byDigit.set(s.digit, s.percentage);
+
+  return TALENT_VOCATIONS.map((v) => {
+    const totalWeight = Object.values(v.digits).reduce<number>((a, b) => a + (b ?? 0), 0);
+    let weightedSum = 0;
+    for (const [digitStr, weight] of Object.entries(v.digits)) {
+      const d = Number(digitStr) as TalentDigit;
+      const pct = byDigit.get(d) ?? 0;
+      weightedSum += pct * (weight ?? 0);
+    }
+    const score = totalWeight > 0 ? weightedSum / totalWeight : 0;
+    let rating: TalentRating;
+    if (score >= 16) rating = 'high';
+    else if (score >= 9) rating = 'medium';
+    else rating = 'low';
+    return { id: v.id, score: Math.round(score * 10) / 10, rating };
+  });
+}

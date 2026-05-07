@@ -586,6 +586,59 @@
         "medium": "Medium score: you can execute cleanly when needed, but you also need flexible space. Hybrid mode — fits teams that combine structure with freedom.",
         "low": "Low score: your approach is more organic / spontaneous. Execution isn't always by-the-book, but the results can surprise. What to watch: deadlines and commitments to others."
       }
+    },
+    "vocationsTitle": "Vocational fields",
+    "vocationsHint": "Your aptitude across seven career fields — computed from your digit proportions, not guesses. If you feel you're in the wrong line of work, this listing may surface areas worth considering.",
+    "vocations": {
+      "business": {
+        "title": "Business & management",
+        "subTraits": "Executive, team leadership, decisive call-making, results focus, ownership",
+        "high": "High score: you have strong executive instincts — can lead teams, make decisive calls, focus on results. Suited to management, ownership, or roles asking for high accountability.",
+        "medium": "Medium score: you can handle a business setting when needed, but it isn't your most natural lane. Possibly better suited to specialist roles than generalist management.",
+        "low": "Low score: business / management isn't your strong suit. Not that you can't, but it takes more effort to translate your style into roles like this."
+      },
+      "medicineEducation": {
+        "title": "Medicine & education",
+        "subTraits": "Doctor, nurse, therapist, teacher, professor, counselor",
+        "high": "High score: you're natural in professions that demand caring for others. Sensitivity + analytical mix suits teaching or healing. Fits medicine, nursing, therapy, or education.",
+        "medium": "Medium score: you can work in a caring profession when motivation is high, but it isn't a primary calling.",
+        "low": "Low score: emotionally intensive caring professions don't fit naturally. Better in roles that aren't emotionally heavy."
+      },
+      "legalPolitics": {
+        "title": "Legal field & politics",
+        "subTraits": "Lawyer, judge, politician, advocate, regulator, public mediator",
+        "high": "High score: authority + structure + sense of justice make you a fit for law or politics. Sharp argumentation, system reading, principle-keeping.",
+        "medium": "Medium score: you can work in legal/political areas when the topic aligns, but it isn't your default lane.",
+        "low": "Low score: this field is too adversarial or structured for your style. Better in more fluid areas."
+      },
+      "artsDesign": {
+        "title": "Arts & design",
+        "subTraits": "Writer, designer, performer, photographer, filmmaker, visual artist, musician, illustrator",
+        "high": "High score: strong artistic and design talent. Could be a writer, designer, performer, or any creative role asking for aesthetic sensitivity.",
+        "medium": "Medium score: you appreciate art and have creative moments, but not a full-time path. Suited to a side practice.",
+        "low": "Low score: artistry isn't your natural area. If interested, approach it through appreciation or hobby — not career."
+      },
+      "salesPr": {
+        "title": "Sales, advertising & PR",
+        "subTraits": "Sales, marketing, advertising, public relations, brand ambassador",
+        "high": "High score: charm, persuasion, and quick communication are strong. Suits sales, advertising, PR, or anything that needs reading audiences fast and delivering messages that land.",
+        "medium": "Medium score: you can work in this area when passionate about the product, but it isn't a natural lane.",
+        "low": "Low score: extrovert-driven professions like sales likely feel exhausting. Better in more internal or analytical work."
+      },
+      "scienceEngineering": {
+        "title": "Science, engineering & construction",
+        "subTraits": "Engineer, researcher, programmer, architect, contractor, scientist, technician, data analyst",
+        "high": "High score: practical + analytical + results combo fits STEM / engineering / construction. You like patterns, systems, and building real things.",
+        "medium": "Medium score: you can work in technical areas when interested in the subject, but it isn't a default talent.",
+        "low": "Low score: structured-engineering approach isn't your style. You're more comfortable in more intuitive areas."
+      },
+      "agriculture": {
+        "title": "Agriculture & gardening",
+        "subTraits": "Farmer, rancher, gardener, horticulturist, nature worker, environmental",
+        "high": "High score: you have a knack for working with nature, plants, or grounded hands-on activity. Suits farming, gardening, or anything that asks for patience with natural processes.",
+        "medium": "Medium score: you can enjoy nature-based activity, but it isn't a primary calling. A healthy hobby.",
+        "low": "Low score: activity that depends on nature and long patience doesn't fit well. More dynamic environments suit you."
+      }
     }
   }
 }
