@@ -15,6 +15,18 @@ import type { CoreProfile } from './types';
  * - Birthday: 2 points (it's just the day-of-month digit, lower weight)
  * - Each letter in the full name: 1 point
  *
+ * Plus sub-fractional tiebreakers so the 9 digits always sort to a
+ * unique rank (1..9) — no two digits ever come out at the same
+ * sortable score, even when the displayed percentages happen to round
+ * to the same number:
+ * - Letter count gets a 0.01-scale bonus (more letters → higher rank).
+ * - Position-weighted letter sum (1/n for the n-th letter) gets a
+ *   0.0001-scale bonus — earlier letters in the name nudge the rank up
+ *   ("cornerstone" effect, a real numerology concept).
+ * - As a final deterministic fallback, lower digit wins.
+ * Tiebreakers are sized below percentage rounding so they don't change
+ * the visible bar / number, only the sort order.
+ *
  * Maturity is intentionally NOT included — it would double-count one
  * digit when LP+Expr happens to land on the same digit as another core
  * (e.g. Dany's LP=1, Expr=5 → Maturity=6, but Personality is already
@@ -30,10 +42,13 @@ export type TalentDigit = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 
 export interface TalentSlice {
   digit: TalentDigit;
-  /** Percentage of total weighted points, rounded to 1 decimal. */
+  /** Percentage of total weighted points, rounded to 1 decimal. May tie
+   *  visually with another digit; use \`rank\` for a unique ordering. */
   percentage: number;
   /** Raw letter count from the user's full name (no weighting). */
   letterCount: number;
+  /** Unique rank 1..9 across the 9 digits. 1 = most dominant. No ties. */
+  rank: number;
 }
 
 export interface TalentDistribution {
@@ -75,6 +90,9 @@ export function talentDistribution(
   const letters: Record<TalentDigit, number> = {
     1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0,
   };
+  const positionScore: Record<TalentDigit, number> = {
+    1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0,
+  };
 
   function bump(digit: number, weight: number) {
     const d = toSingle(digit);
@@ -87,28 +105,55 @@ export function talentDistribution(
   bump(core.personality.reduced, CORE_WEIGHT);
   bump(core.birthday.reduced, BIRTHDAY_WEIGHT);
 
-  // Letters from the name — weight 1 each.
+  // Letters from the name — weight 1 each, plus a 1/n positional
+  // micro-bonus for the n-th letter so earlier letters break ties first.
   let totalLetters = 0;
+  let pos = 0;
   for (const ch of fullName.toUpperCase()) {
     const v = letterValue(ch);
     if (v >= 1 && v <= 9) {
-      points[v as TalentDigit] += LETTER_WEIGHT;
-      letters[v as TalentDigit] += 1;
+      pos++;
+      const d = v as TalentDigit;
+      points[d] += LETTER_WEIGHT;
+      letters[d] += 1;
+      positionScore[d] += 1 / pos;
       totalLetters++;
     }
   }
 
   const total = Object.values(points).reduce((a, b) => a + b, 0);
 
+  // Sortable score = points + sub-percent tiebreakers. Tiebreakers are
+  // scaled so they fall below the percentage display rounding, so the
+  // bars / numbers don't shift but the rank order is always unique.
+  function sortScore(d: TalentDigit): number {
+    return (
+      points[d] +
+      letters[d] * 0.01 +
+      positionScore[d] * 0.0001 +
+      // Final fallback so two truly-identical configurations still sort
+      // deterministically (lower digit wins).
+      (10 - d) * 0.000001
+    );
+  }
+
+  const ranked = ([1, 2, 3, 4, 5, 6, 7, 8, 9] as const)
+    .map((d) => ({ d, s: sortScore(d) }))
+    .sort((a, b) => b.s - a.s);
+  const rankByDigit = new Map<TalentDigit, number>();
+  ranked.forEach((entry, idx) => rankByDigit.set(entry.d, idx + 1));
+
   const slices: TalentSlice[] = ([1, 2, 3, 4, 5, 6, 7, 8, 9] as const).map((d) => ({
     digit: d,
     percentage: total > 0 ? Math.round((points[d] / total) * 1000) / 10 : 0,
     letterCount: letters[d],
+    rank: rankByDigit.get(d) ?? 9,
   }));
 
-  const dominant = [...slices]
-    .sort((a, b) => b.percentage - a.percentage)
-    .slice(0, 3)
+  // Top 3 by unique rank — no ties possible.
+  const dominant = slices
+    .filter((s) => s.rank <= 3)
+    .sort((a, b) => a.rank - b.rank)
     .map((s) => s.digit);
 
   // Absent = Pythagorean karmic lessons (digits 1-9 with zero letters).

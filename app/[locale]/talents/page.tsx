@@ -154,7 +154,7 @@ export default async function TalentsPage({ params }: { params: { locale: string
         </div>
 
         <div className="space-y-3">
-          {dist.slices.map((s) => {
+          {[...dist.slices].sort((a, b) => a.rank - b.rank).map((s) => {
             const positive = trait(s.digit, 'positive');
             const shadow = trait(s.digit, 'shadow');
             const muted = s.letterCount === 0;
@@ -164,6 +164,12 @@ export default async function TalentsPage({ params }: { params: { locale: string
                 className="border-border group overflow-hidden rounded-2xl border bg-white/40 dark:bg-neutral-900/40"
               >
                 <summary className="press-soft flex cursor-pointer list-none items-center gap-3 px-5 py-4 [&::-webkit-details-marker]:hidden">
+                  <span
+                    className="text-muted-foreground font-mono w-6 shrink-0 text-center text-xs font-semibold tabular-nums"
+                    aria-label={t('rankLabel', { n: s.rank })}
+                  >
+                    #{s.rank}
+                  </span>
                   <span
                     className={`font-serif inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-lg font-semibold ${
                       muted ? 'opacity-40' : 'text-white'
