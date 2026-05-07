@@ -62,8 +62,12 @@ export default async function TalentsPage({ params }: { params: { locale: string
         </div>
 
         <div className="border-border rounded-2xl border bg-white/40 p-5 dark:bg-neutral-900/40">
-          {/* Bars */}
-          <div className="flex h-44 items-end justify-between gap-1.5 sm:gap-3">
+          {/* Bars — each column stretches to the container's full height
+            * (items-stretch default), then the bar fills bottom-up with an
+            * absolute-positioned inner div whose height is a percentage of
+            * its relative parent. Earlier "items-end + flex-1" approach
+            * collapsed the column to auto height so the % had no anchor. */}
+          <div className="flex h-48 items-stretch gap-1.5 sm:gap-3">
             {dist.slices.map((s) => {
               const heightPct = (s.percentage / maxPct) * 100;
               return (
@@ -74,11 +78,11 @@ export default async function TalentsPage({ params }: { params: { locale: string
                   >
                     {s.digit}
                   </span>
-                  <div className="flex w-full flex-1 items-end">
+                  <div className="relative w-full flex-1">
                     <div
-                      className="w-full rounded-t-md"
+                      className="absolute bottom-0 left-0 w-full rounded-t-md"
                       style={{
-                        height: `${Math.max(heightPct, 4)}%`,
+                        height: `${Math.max(heightPct, 3)}%`,
                         backgroundColor: DIGIT_COLOR[s.digit],
                         opacity: s.letterCount === 0 ? 0.18 : 1,
                       }}
