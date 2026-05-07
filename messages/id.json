@@ -6,6 +6,7 @@
   "nav": {
     "home": "Beranda",
     "journey": "Perjalanan",
+    "talents": "Talenta",
     "chat": "Curhat",
     "people": "Orang",
     "journal": "Jurnal"
@@ -490,5 +491,23 @@
     "pairsSubtitle": "Narasi pendek untuk masing-masing pasangan inti.",
     "narrativePending": "Narasi sedang disiapkan. Refresh sebentar lagi.",
     "disclaimer": "Skor & pola dihitung deterministik dari angka kalian (tradisi Pythagorean — Decoz, Millman) dengan lensa per jenis hubungan. Numerologi adalah alat refleksi, bukan ramalan."
+  },
+  "talents": {
+    "title": "Talenta",
+    "subtitle": "Profil sifat & bakat dari proporsi huruf di nama lengkap kamu.",
+    "chartTitle": "Proporsi Numerologi",
+    "chartHint": "Tinggi tiap bar = berapa sering digit itu muncul di huruf nama lengkap kamu. Yang dominan jadi ciri utama; yang absen jadi ruang tumbuh.",
+    "totalLetters": "{n} huruf dihitung",
+    "dominantLabel": "Dominan",
+    "absentLabel": "Absen — pelajaran",
+    "absentHint": "Energi yang nggak muncul di nama kamu. Sering jadi ciri yang baru kamu kembangkan setelah dewasa, mirip karmic lessons.",
+    "noAbsent": "Nggak ada yang benar-benar absen — semua digit muncul minimal sekali di nama kamu.",
+    "traitsTitle": "Sifat per digit",
+    "traitsHint": "Tap kartu buat liat sisi positif & shadow tiap digit. Yang persentasenya gede berasa paling jelas di kepribadian kamu.",
+    "positiveLabel": "Sisi positif",
+    "shadowLabel": "Sisi bayangan",
+    "explainerLearnMore": "Cara baca chart ini",
+    "explainer": "Setiap huruf di alfabet punya nilai 1-9 (Pythagorean). Nama lengkap kamu = kumpulan huruf = distribusi digit. Yang dominan ngasih lo sifat yang gampang muncul natural; yang persentasenya kecil bukan berarti gak ada — cuma butuh kondisi tertentu buat muncul. Yang absen total biasanya jadi pelajaran hidup — kayak karmic lessons.",
+    "comingSoon": "Deskripsi lengkap segera."
   }
 }

@@ -172,5 +172,24 @@
   "bridge:5": "Bridge 5 — Sizable. Often a tug-of-war between freedom vs stability, or expression vs responsibility. Not severe friction, but consistent. Key: schedule space for both sides — don't force one to win.",
   "bridge:6": "Bridge 6 — Large. The two sides pull you strongly in different directions. Integration takes conscious work — but when it lands, it becomes a source of power because you can bring two rare qualities into one package.",
   "bridge:7": "Bridge 7 — Wide gap with an introspection-vs-action or spiritual-vs-material theme. Solo time and regular reflection help align the two sides. The temptation: suppress one. The healthy move: build a ritual for each.",
-  "bridge:8": "Bridge 8 — Largest bridge in the 1-9 cycle. The two sides of you are as far apart as it gets; integration takes consistent effort and patience. But the deepest growth lives here — you're stretched to develop capacity that doesn't come naturally."
+  "bridge:8": "Bridge 8 — Largest bridge in the 1-9 cycle. The two sides of you are as far apart as it gets; integration takes consistent effort and patience. But the deepest growth lives here — you're stretched to develop capacity that doesn't come naturally.",
+
+  "talent:1:positive": "independent, original, driven, ambitious, leader, visionary, individualistic, determined",
+  "talent:1:shadow": "ruthless, aggressive, can dominate when challenged",
+  "talent:2:positive": "intuitive, diplomatic, sensitive, supportive, gentle, tactful, considerate, musical, insightful",
+  "talent:2:shadow": "moody, jealous, can turn manipulative when overlooked",
+  "talent:3:positive": "creative, communicative, energetic, inventive, bouncy, optimistic, broad-minded, imaginative",
+  "talent:3:shadow": "scattered, unreliable, mood swings, hides behind humor",
+  "talent:4:positive": "dependable, detail-oriented, orderly, disciplined, punctual, practical, problem-solving, trustworthy",
+  "talent:4:shadow": "rigid, judgmental, slow to flex, can read as boring under heavy routine",
+  "talent:5:positive": "dynamic, quick-witted, restless, sensual, innovative, daring, persuasive, charming",
+  "talent:5:shadow": "impatient, impulsive, irresponsible, struggles with commitment, easily bored",
+  "talent:6:positive": "responsible, harmonious, caring, self-sacrificing, protective, helpful, compassionate, artistic",
+  "talent:6:shadow": "slavish, gullible, over-gives, hard time saying 'no'",
+  "talent:7:positive": "perfectionist, virtuous, analytical, tolerant, thorough, introverted, spiritual, studious, diligent",
+  "talent:7:shadow": "obsessive, cynical, isolates, chronic overthinker",
+  "talent:8:positive": "authoritative, entrepreneurial, realistic, results-oriented, generous, forceful, farsighted",
+  "talent:8:shadow": "greedy, dishonest under pressure, power-trips, materialistic",
+  "talent:9:positive": "idealistic, tolerant, confident, sophisticated, open-minded, humanitarian, global",
+  "talent:9:shadow": "arrogant, aloof, struggles with the small/personal, detaches"
 }

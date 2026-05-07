@@ -6,6 +6,7 @@
   "nav": {
     "home": "Home",
     "journey": "Journey",
+    "talents": "Talents",
     "chat": "Chat",
     "people": "People",
     "journal": "Journal"
@@ -490,5 +491,23 @@
     "pairsSubtitle": "Short narratives for each core pair.",
     "narrativePending": "Narrative is being prepared. Refresh in a moment.",
     "disclaimer": "Score & patterns are deterministically computed from your numbers (Pythagorean tradition — Decoz, Millman) with a per-relationship lens. Numerology is a tool for reflection, not prediction."
+  },
+  "talents": {
+    "title": "Talents",
+    "subtitle": "A profile of traits and aptitudes from the letter proportions in your full name.",
+    "chartTitle": "Proportional chart",
+    "chartHint": "Bar height = how often that digit appears across the letters in your full name. Dominant ones become defining traits; absent ones become room to grow.",
+    "totalLetters": "{n} letters counted",
+    "dominantLabel": "Dominant",
+    "absentLabel": "Absent — lessons",
+    "absentHint": "Energies that don't appear in your name. These often become traits you grow into later in life, similar to karmic lessons.",
+    "noAbsent": "Nothing is fully absent — every digit shows up at least once in your name.",
+    "traitsTitle": "Traits per digit",
+    "traitsHint": "Tap a card to see the positive and shadow sides of each digit. Higher percentages tend to feel more obvious in your personality.",
+    "positiveLabel": "Positive side",
+    "shadowLabel": "Shadow side",
+    "explainerLearnMore": "How to read this chart",
+    "explainer": "Each letter has a numeric value 1-9 (Pythagorean). Your full name = a set of letters = a digit distribution. The dominant ones give you traits that come naturally; small percentages don't mean absent, they just need specific conditions to surface. Fully absent digits often become life lessons — similar to karmic lessons.",
+    "comingSoon": "Full description coming soon."
   }
 }
