@@ -495,6 +495,13 @@
   "talents": {
     "title": "Talenta",
     "subtitle": "Profil sifat & bakat dari proporsi huruf di nama lengkap kamu.",
+    "heroEyebrow": "Profil talenta kamu",
+    "heroTitleWithTop": "Energi paling kuat: {top}",
+    "heroTitleFallback": "Profil talenta kamu",
+    "heroTopVocation": "Bidang paling cocok: {name}",
+    "careerSeeAll": "Lihat semua",
+    "detailTitle": "Foundation & detail per digit",
+    "detailHint": "Chart proporsi nama lengkap kamu + breakdown sifat per digit. Buat yang mau ngerti math-nya.",
     "chartTitle": "Proporsi Numerologi",
     "chartHint": "Tinggi tiap bar = berapa sering digit itu muncul di huruf nama lengkap kamu. Yang dominan jadi ciri utama; yang absen jadi ruang tumbuh.",
     "totalLetters": "{n} huruf dihitung",

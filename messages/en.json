@@ -495,6 +495,13 @@
   "talents": {
     "title": "Talents",
     "subtitle": "A profile of traits and aptitudes from the letter proportions in your full name.",
+    "heroEyebrow": "Your talent profile",
+    "heroTitleWithTop": "Strongest energy: {top}",
+    "heroTitleFallback": "Your talent profile",
+    "heroTopVocation": "Best-matched field: {name}",
+    "careerSeeAll": "See all",
+    "detailTitle": "Foundation & per-digit detail",
+    "detailHint": "Proportional chart of your full name + a trait breakdown per digit. For when you want to understand the math.",
     "chartTitle": "Proportional chart",
     "chartHint": "Bar height = how often that digit appears across the letters in your full name. Dominant ones become defining traits; absent ones become room to grow.",
     "totalLetters": "{n} letters counted",
