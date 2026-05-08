@@ -44,6 +44,11 @@ function formatDateLong(ctx: { year: number; month: number; day: number }, local
   }).toUpperCase();
 }
 
+// Surface the master compound (11/22/33) when present so days like a Sixth-Sense 11 don't read as a plain 2.
+function displayN(r: { compound: number; reduced: number; isMaster: boolean }): number {
+  return r.isMaster ? r.compound : r.reduced;
+}
+
 
 export default async function DashboardPage({ params }: { params: { locale: string } }) {
   const locale: Locale = isLocale(params.locale) ? params.locale : 'id';
@@ -109,11 +114,11 @@ export default async function DashboardPage({ params }: { params: { locale: stri
             body={readingBody}
             dateLabel={formatDateLong(ctx, locale)}
             dayTitle={meaningFor('personalDayTitle', cycles.personalDay, locale) ?? ''}
-            daySuffix={tReading('daySuffix', { n: cycles.personalDay.reduced })}
+            daySuffix={tReading('daySuffix', { n: displayN(cycles.personalDay) })}
             triple={{
-              day: cycles.personalDay.reduced,
-              month: cycles.personalMonth.reduced,
-              year: cycles.personalYear.reduced,
+              day: displayN(cycles.personalDay),
+              month: displayN(cycles.personalMonth),
+              year: displayN(cycles.personalYear),
             }}
             showLabel={tReading('showNumbers')}
             hideLabel={tReading('hideNumbers')}
