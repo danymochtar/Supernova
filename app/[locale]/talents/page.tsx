@@ -7,11 +7,10 @@ import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { buildCoreProfile } from '@/lib/numerology';
 import {
-  TALENT_GROUPS,
-  TALENT_VOCATIONS,
   rateTalentGroups,
   rateVocations,
   talentDistribution,
+  type TalentRating,
 } from '@/lib/numerology/talents';
 import idMeanings from '@/content/meanings/id.json';
 import enMeanings from '@/content/meanings/en.json';
@@ -166,37 +165,61 @@ export default async function TalentsPage({ params }: { params: { locale: string
         </div>
         <div className="space-y-3">
           {(() => {
-            const ratings = rateTalentGroups(dist.slices);
-            const RATING_STYLE: Record<typeof ratings[number]['rating'], { dot: string; text: string; ring: string }> = {
-              high: { dot: 'bg-emerald-500', text: 'text-emerald-700 dark:text-emerald-300', ring: 'ring-emerald-500/20' },
-              medium: { dot: 'bg-amber-500', text: 'text-amber-700 dark:text-amber-300', ring: 'ring-amber-500/20' },
-              low: { dot: 'bg-neutral-400', text: 'text-muted-foreground', ring: 'ring-neutral-400/15' },
+            // Sort by score descending so the user's strongest groups
+            // sit at the top. Visual strength bars are normalized to
+            // the user's max so the chart always feels balanced.
+            const ratings = [...rateTalentGroups(dist.slices)].sort((a, b) => b.score - a.score);
+            const RATING_STYLE: Record<TalentRating, { dot: string; text: string; ring: string; bar: string }> = {
+              high: {
+                dot: 'bg-emerald-500',
+                text: 'text-emerald-700 dark:text-emerald-300',
+                ring: 'ring-emerald-500/20',
+                bar: 'bg-emerald-500',
+              },
+              medium: {
+                dot: 'bg-amber-500',
+                text: 'text-amber-700 dark:text-amber-300',
+                ring: 'ring-amber-500/20',
+                bar: 'bg-amber-500',
+              },
+              low: {
+                dot: 'bg-neutral-400',
+                text: 'text-muted-foreground',
+                ring: 'ring-neutral-400/15',
+                bar: 'bg-neutral-400',
+              },
             };
-            return TALENT_GROUPS.map((g) => {
-              const r = ratings.find((x) => x.id === g.id);
-              if (!r) return null;
+            return ratings.map((r) => {
               const style = RATING_STYLE[r.rating];
-              const ratingLabel = t(`rating${r.rating === 'high' ? 'High' : r.rating === 'medium' ? 'Medium' : 'Low'}`);
+              const ratingLabel = t(
+                r.rating === 'high' ? 'ratingHigh' : r.rating === 'medium' ? 'ratingMedium' : 'ratingLow',
+              );
               return (
                 <article
-                  key={g.id}
+                  key={r.id}
                   className={`border-border ring-1 ${style.ring} rounded-2xl border bg-white/40 p-5 dark:bg-neutral-900/40`}
                 >
-                  <header className="mb-2 flex items-center justify-between gap-3">
-                    <h3 className="text-base font-semibold">{t(`groups.${g.id}.title`)}</h3>
+                  <header className="mb-3 flex items-center justify-between gap-3">
+                    <h3 className="text-base font-semibold">{t(`groups.${r.id}.title`)}</h3>
                     <span className={`inline-flex items-center gap-1.5 text-xs font-semibold ${style.text}`}>
                       <span className={`h-2 w-2 rounded-full ${style.dot}`} aria-hidden />
                       {ratingLabel}
-                      <span className="text-muted-foreground tabular-nums">
-                        · {r.score}%
-                      </span>
                     </span>
                   </header>
+                  <div
+                    className="bg-muted/50 mb-3 h-1.5 w-full overflow-hidden rounded-full"
+                    aria-label={`Strength ${r.strength}%`}
+                  >
+                    <div
+                      className={`h-full rounded-full transition-all ${style.bar}`}
+                      style={{ width: `${Math.max(r.strength, 4)}%` }}
+                    />
+                  </div>
                   <p className="text-muted-foreground mb-3 text-xs leading-relaxed">
-                    {t(`groups.${g.id}.subTraits`)}
+                    {t(`groups.${r.id}.subTraits`)}
                   </p>
                   <p className="text-sm leading-relaxed text-neutral-800 dark:text-neutral-200">
-                    {t(`groups.${g.id}.${r.rating}`)}
+                    {t(`groups.${r.id}.${r.rating}`)}
                   </p>
                 </article>
               );
@@ -230,37 +253,58 @@ export default async function TalentsPage({ params }: { params: { locale: string
         </div>
         <div className="space-y-3">
           {(() => {
-            const ratings = rateVocations(dist.slices);
-            const RATING_STYLE: Record<typeof ratings[number]['rating'], { dot: string; text: string; ring: string }> = {
-              high: { dot: 'bg-emerald-500', text: 'text-emerald-700 dark:text-emerald-300', ring: 'ring-emerald-500/20' },
-              medium: { dot: 'bg-amber-500', text: 'text-amber-700 dark:text-amber-300', ring: 'ring-amber-500/20' },
-              low: { dot: 'bg-neutral-400', text: 'text-muted-foreground', ring: 'ring-neutral-400/15' },
+            const ratings = [...rateVocations(dist.slices)].sort((a, b) => b.score - a.score);
+            const RATING_STYLE: Record<TalentRating, { dot: string; text: string; ring: string; bar: string }> = {
+              high: {
+                dot: 'bg-emerald-500',
+                text: 'text-emerald-700 dark:text-emerald-300',
+                ring: 'ring-emerald-500/20',
+                bar: 'bg-emerald-500',
+              },
+              medium: {
+                dot: 'bg-amber-500',
+                text: 'text-amber-700 dark:text-amber-300',
+                ring: 'ring-amber-500/20',
+                bar: 'bg-amber-500',
+              },
+              low: {
+                dot: 'bg-neutral-400',
+                text: 'text-muted-foreground',
+                ring: 'ring-neutral-400/15',
+                bar: 'bg-neutral-400',
+              },
             };
-            return TALENT_VOCATIONS.map((v) => {
-              const r = ratings.find((x) => x.id === v.id);
-              if (!r) return null;
+            return ratings.map((r) => {
               const style = RATING_STYLE[r.rating];
-              const ratingLabel = t(`rating${r.rating === 'high' ? 'High' : r.rating === 'medium' ? 'Medium' : 'Low'}`);
+              const ratingLabel = t(
+                r.rating === 'high' ? 'ratingHigh' : r.rating === 'medium' ? 'ratingMedium' : 'ratingLow',
+              );
               return (
                 <article
-                  key={v.id}
+                  key={r.id}
                   className={`border-border ring-1 ${style.ring} rounded-2xl border bg-white/40 p-5 dark:bg-neutral-900/40`}
                 >
-                  <header className="mb-2 flex items-center justify-between gap-3">
-                    <h3 className="text-base font-semibold">{t(`vocations.${v.id}.title`)}</h3>
+                  <header className="mb-3 flex items-center justify-between gap-3">
+                    <h3 className="text-base font-semibold">{t(`vocations.${r.id}.title`)}</h3>
                     <span className={`inline-flex items-center gap-1.5 text-xs font-semibold ${style.text}`}>
                       <span className={`h-2 w-2 rounded-full ${style.dot}`} aria-hidden />
                       {ratingLabel}
-                      <span className="text-muted-foreground tabular-nums">
-                        · {r.score}%
-                      </span>
                     </span>
                   </header>
+                  <div
+                    className="bg-muted/50 mb-3 h-1.5 w-full overflow-hidden rounded-full"
+                    aria-label={`Strength ${r.strength}%`}
+                  >
+                    <div
+                      className={`h-full rounded-full transition-all ${style.bar}`}
+                      style={{ width: `${Math.max(r.strength, 4)}%` }}
+                    />
+                  </div>
                   <p className="text-muted-foreground mb-3 text-xs leading-relaxed">
-                    {t(`vocations.${v.id}.subTraits`)}
+                    {t(`vocations.${r.id}.subTraits`)}
                   </p>
                   <p className="text-sm leading-relaxed text-neutral-800 dark:text-neutral-200">
-                    {t(`vocations.${v.id}.${r.rating}`)}
+                    {t(`vocations.${r.id}.${r.rating}`)}
                   </p>
                 </article>
               );

@@ -274,22 +274,33 @@ export type TalentRating = 'high' | 'medium' | 'low';
 
 export interface TalentGroupResult {
   id: TalentGroupId;
-  /** Weighted average of contributing digit percentages (0-100). */
+  /** Raw weighted average of contributing digit percentages (0-100). */
   score: number;
+  /** Score normalized to 0-100 within this user's group set — the
+   *  strongest group always reads as 100, weakest as 0. Used for the
+   *  visual fill bar, which makes the chart feel balanced regardless
+   *  of the absolute weighted-average values. */
+  strength: number;
+  /** Relative tertile: top ~27% of the user's groups → high, bottom
+   *  ~27% → low, the rest → medium. Replaces the earlier absolute
+   *  thresholds, which read as cosmetically wrong (a 19% weighted
+   *  average came out "high" because absolute thresholds couldn't
+   *  account for the fact that bounded weighted averages sit lower
+   *  than naïve users expect). */
   rating: TalentRating;
 }
 
 /**
- * Compute a rating bucket for each defined group from the user's
- * distribution. Thresholds are tuned so the screenshots' "high" cases
- * all bucket as high — most users will see a mix of high/medium with
- * one or two lows, mirroring WN's chart shape.
+ * Compute scores + a relative tertile rating for each defined group.
+ * The user always sees a balanced spread (some highs, some mediums,
+ * some lows) regardless of where their weighted averages happen to
+ * cluster, mirroring how WN's bar chart visually feels balanced.
  */
 export function rateTalentGroups(slices: TalentSlice[]): TalentGroupResult[] {
   const byDigit = new Map<TalentDigit, number>();
   for (const s of slices) byDigit.set(s.digit, s.percentage);
 
-  return TALENT_GROUPS.map((g) => {
+  const raw = TALENT_GROUPS.map((g) => {
     const totalWeight = Object.values(g.digits).reduce<number>((a, b) => a + (b ?? 0), 0);
     let weightedSum = 0;
     for (const [digitStr, weight] of Object.entries(g.digits)) {
@@ -298,12 +309,43 @@ export function rateTalentGroups(slices: TalentSlice[]): TalentGroupResult[] {
       weightedSum += pct * (weight ?? 0);
     }
     const score = totalWeight > 0 ? weightedSum / totalWeight : 0;
-    let rating: TalentRating;
-    if (score >= 16) rating = 'high';
-    else if (score >= 9) rating = 'medium';
-    else rating = 'low';
-    return { id: g.id, score: Math.round(score * 10) / 10, rating };
+    return { id: g.id, score };
   });
+
+  return assignRatingsAndStrength(raw);
+}
+
+/**
+ * Bucket the items into roughly thirds (top 27% → high, bottom 27% →
+ * low, middle → medium) and compute a per-item strength normalized to
+ * the strongest item in the set. Generic so the same helper works for
+ * trait groups and vocations.
+ */
+function assignRatingsAndStrength<T extends { id: string; score: number }>(
+  items: T[],
+): (T & { strength: number; rating: TalentRating })[] {
+  if (items.length === 0) {
+    return [] as (T & { strength: number; rating: TalentRating })[];
+  }
+  const sortedIds = [...items]
+    .sort((a, b) => b.score - a.score)
+    .map((x) => x.id);
+  const n = items.length;
+  const highCount = Math.max(1, Math.ceil(n * 0.27));
+  const lowCount = Math.max(1, Math.ceil(n * 0.27));
+  const ratingById = new Map<string, TalentRating>();
+  sortedIds.forEach((id, idx) => {
+    if (idx < highCount) ratingById.set(id, 'high');
+    else if (idx >= n - lowCount) ratingById.set(id, 'low');
+    else ratingById.set(id, 'medium');
+  });
+  const maxScore = Math.max(...items.map((x) => x.score), 0.0001);
+  return items.map((x) => ({
+    ...x,
+    score: Math.round(x.score * 10) / 10,
+    strength: Math.round((x.score / maxScore) * 100),
+    rating: ratingById.get(x.id) ?? 'medium',
+  }));
 }
 
 /**
@@ -368,6 +410,7 @@ export const TALENT_VOCATIONS: TalentVocationDef[] = [
 export interface TalentVocationResult {
   id: TalentVocationId;
   score: number;
+  strength: number;
   rating: TalentRating;
 }
 
@@ -375,7 +418,7 @@ export function rateVocations(slices: TalentSlice[]): TalentVocationResult[] {
   const byDigit = new Map<TalentDigit, number>();
   for (const s of slices) byDigit.set(s.digit, s.percentage);
 
-  return TALENT_VOCATIONS.map((v) => {
+  const raw = TALENT_VOCATIONS.map((v) => {
     const totalWeight = Object.values(v.digits).reduce<number>((a, b) => a + (b ?? 0), 0);
     let weightedSum = 0;
     for (const [digitStr, weight] of Object.entries(v.digits)) {
@@ -384,10 +427,8 @@ export function rateVocations(slices: TalentSlice[]): TalentVocationResult[] {
       weightedSum += pct * (weight ?? 0);
     }
     const score = totalWeight > 0 ? weightedSum / totalWeight : 0;
-    let rating: TalentRating;
-    if (score >= 16) rating = 'high';
-    else if (score >= 9) rating = 'medium';
-    else rating = 'low';
-    return { id: v.id, score: Math.round(score * 10) / 10, rating };
+    return { id: v.id, score };
   });
+
+  return assignRatingsAndStrength(raw);
 }
