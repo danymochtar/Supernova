@@ -37,6 +37,7 @@ model User {
   cache     NumerologyCache[]
   summaries ConversationSummary[]
   journal   JournalEntry[]
+  career    CareerEntry[]
 
   @@map("user")
 }
@@ -332,4 +333,35 @@ model JournalEntry {
 
   @@index([userId, addedAt(sort: Desc)])
   @@map("journal_entry")
+}
+
+// Career entries — user's work history rows (parsed from a PDF resume
+// they uploaded, or eventually entered manually). Each row carries a
+// snapshotted match score against one of the 7 vocation fields from
+// lib/numerology/talents.ts. Rebuilt wholesale on every upload —
+// users get one resume snapshot at a time.
+model CareerEntry {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title       String
+  company     String?
+  // Year-month is enough; day stored as 1 for simplicity. End is null
+  // when the role is current.
+  startDate   DateTime? @db.Date
+  endDate     DateTime? @db.Date
+  // Short 1-2 sentence summary lifted from the resume bullets.
+  description String?
+  // One of the 7 TalentVocationId values — chosen by the parser based
+  // on the role title + description.
+  vocationId  String
+  // Snapshot of the vocation rating for this role (0-100).
+  matchScore  Float
+  // Short AI-written note about why this role fits / mis-fits given
+  // the user's strongest digits. Optional.
+  insight     String?
+  createdAt   DateTime  @default(now())
+
+  @@index([userId, startDate(sort: Desc)])
+  @@map("career_entry")
 }

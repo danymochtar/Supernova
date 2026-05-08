@@ -1,5 +1,7 @@
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
+import { Briefcase, ChevronRight } from 'lucide-react';
 import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { isLocale, type Locale } from '@/lib/i18n/config';
@@ -201,6 +203,23 @@ export default async function TalentsPage({ params }: { params: { locale: string
             });
           })()}
         </div>
+      </section>
+
+      {/* Career match CTA — links to the resume-upload sub-page. */}
+      <section>
+        <Link
+          href={`/${locale}/talents/career`}
+          className="border-border press-soft hover:bg-muted/40 group flex items-center gap-4 rounded-2xl border bg-gradient-to-br from-primary/5 to-accent/5 p-5 transition dark:from-primary/15 dark:to-accent/15"
+        >
+          <div className="bg-primary/15 text-primary flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl">
+            <Briefcase className="h-5 w-5" aria-hidden />
+          </div>
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-semibold">{t('careerCardTitle')}</p>
+            <p className="text-muted-foreground text-xs leading-relaxed">{t('careerCardHint')}</p>
+          </div>
+          <ChevronRight className="text-muted-foreground h-4 w-4 shrink-0" aria-hidden />
+        </Link>
       </section>
 
       {/* Vocational fields (WN's "seven fields" career aptitude). */}

@@ -7,7 +7,9 @@ const nextConfig = {
   reactStrictMode: true,
   experimental: {
     serverActions: {
-      bodySizeLimit: '1mb',
+      // 10mb covers résumé PDF uploads (typically <5mb). The limit is
+      // per-request so other server actions are unaffected.
+      bodySizeLimit: '10mb',
     },
   },
 };
