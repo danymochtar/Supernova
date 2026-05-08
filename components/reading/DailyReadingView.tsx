@@ -13,10 +13,10 @@ interface Props {
   dayTitle: string;
   /** Pre-localized "A 5 DAY" / "HARI 5" suffix. */
   daySuffix: string;
-  /** Today's three numbers — Personal Day / Personal Month / calendar
-   * day-of-month digital root. Rendered as a small staircase that doubles
-   * as the toggle button for the expandable numbers panel below. */
-  triple?: { day: number; month: number; date: number };
+  /** Today's three personal cycle numbers — PD / PM / PY. Rendered as a
+   * small staircase that doubles as the toggle button for the
+   * expandable numbers panel below. */
+  triple?: { day: number; month: number; year: number };
   /** Pre-rendered Personal Day / Month / Year cards to reveal when the
    * user taps the triple. Stays mounted but hidden when collapsed so the
    * inner click-to-expand-meaning state survives. */
@@ -119,7 +119,7 @@ export function DailyReadingView({
                 <span className="text-primary">{triple.day}</span>
                 <span className="text-accent translate-y-1">{triple.month}</span>
                 <span className="text-emerald-600 translate-y-2 dark:text-emerald-400">
-                  {triple.date}
+                  {triple.year}
                 </span>
               </div>
             ) : null}

@@ -64,13 +64,6 @@ export default async function DashboardPage({ params }: { params: { locale: stri
   const cycles = personalCycles(profile.dob, ctx);
   const minor = minorNumbers(profile.nickname);
   const bridge = bridges(core);
-  // World Numerology's "today's numbers are X, Y, Z" framing: PD, PM, and
-  // the calendar day-of-month digital root. May 4 → 4; May 31 → 4 (3+1).
-  const dayOfMonthReduced = (() => {
-    let n = ctx.day;
-    while (n >= 10) n = Math.floor(n / 10) + (n % 10);
-    return n;
-  })();
   const todayStart = new Date(Date.UTC(ctx.year, ctx.month - 1, ctx.day));
   const todayEnd = new Date(todayStart);
   todayEnd.setUTCDate(todayEnd.getUTCDate() + 1);
@@ -120,7 +113,7 @@ export default async function DashboardPage({ params }: { params: { locale: stri
             triple={{
               day: cycles.personalDay.reduced,
               month: cycles.personalMonth.reduced,
-              date: dayOfMonthReduced,
+              year: cycles.personalYear.reduced,
             }}
             showLabel={tReading('showNumbers')}
             hideLabel={tReading('hideNumbers')}
