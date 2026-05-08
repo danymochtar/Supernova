@@ -13,10 +13,9 @@ interface Props {
   dayTitle: string;
   /** Pre-localized "A 5 DAY" / "HARI 5" suffix. */
   daySuffix: string;
-  /** Today's three personal cycle numbers — PD / PM / PY. Rendered as a
-   * small staircase that doubles as the toggle button for the
-   * expandable numbers panel below. */
-  triple?: { day: number; month: number; year: number };
+  /** WN-style "today's numbers": Personal Day reduced + compound + the compound's digits.
+   * Rendered as a small staircase that doubles as the toggle button. */
+  todaysNumbers?: number[];
   /** Pre-rendered Personal Day / Month / Year cards to reveal when the
    * user taps the triple. Stays mounted but hidden when collapsed so the
    * inner click-to-expand-meaning state survives. */
@@ -43,7 +42,7 @@ export function DailyReadingView({
   dateLabel,
   dayTitle,
   daySuffix,
-  triple,
+  todaysNumbers,
   numbers,
   showLabel = 'Lihat angka hari ini',
   hideLabel = 'Sembunyikan angka',
@@ -66,7 +65,7 @@ export function DailyReadingView({
     .map((p) => p.trim())
     .filter(Boolean);
 
-  const tripleCanToggle = Boolean(triple && numbers);
+  const tripleCanToggle = Boolean(todaysNumbers && todaysNumbers.length > 0 && numbers);
 
   return (
     <section className="border-border overflow-hidden rounded-3xl border bg-white shadow-sm dark:bg-neutral-900">
@@ -114,13 +113,9 @@ export function DailyReadingView({
                 {dayTitle}
               </h2>
             </div>
-            {triple ? (
-              <div className="font-serif relative -mt-1 flex shrink-0 items-end gap-0.5 text-3xl font-semibold leading-none tracking-tight sm:text-4xl">
-                <span className="text-primary">{triple.day}</span>
-                <span className="text-accent translate-y-1">{triple.month}</span>
-                <span className="text-emerald-600 translate-y-2 dark:text-emerald-400">
-                  {triple.year}
-                </span>
+            {todaysNumbers && todaysNumbers.length > 0 ? (
+              <div className="font-serif text-muted-foreground shrink-0 text-sm font-semibold tabular-nums sm:text-base">
+                {todaysNumbers.join(', ')}
               </div>
             ) : null}
           </div>
