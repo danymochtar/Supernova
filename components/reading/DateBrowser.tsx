@@ -10,7 +10,6 @@ interface Props {
   maxIso: string;
   pickLabel: string;
   backLabel: string;
-  previewLabel: string;
 }
 
 export function DateBrowser({
@@ -19,7 +18,6 @@ export function DateBrowser({
   maxIso,
   pickLabel,
   backLabel,
-  previewLabel,
 }: Props) {
   const router = useRouter();
   const pathname = usePathname();
@@ -38,28 +36,25 @@ export function DateBrowser({
   }
 
   return (
-    <div className="flex items-center justify-between gap-2">
+    <div className="flex items-center justify-end gap-2">
       {isPreview ? (
         <button
           type="button"
           onClick={() => navigate(todayIso)}
           disabled={pending}
-          className="press-soft text-muted-foreground hover:text-foreground inline-flex items-center gap-1 text-xs font-medium disabled:opacity-50"
+          aria-label={backLabel}
+          className="press-soft text-muted-foreground hover:text-foreground inline-flex h-8 w-8 items-center justify-center rounded-full disabled:opacity-50"
         >
-          <ArrowLeft className="h-3.5 w-3.5" aria-hidden />
-          {backLabel}
+          <ArrowLeft className="h-4 w-4" aria-hidden />
         </button>
-      ) : (
-        <span aria-hidden />
-      )}
-
+      ) : null}
       <label
-        className={`press-soft border-border hover:bg-muted/40 relative inline-flex cursor-pointer items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-medium ${
-          isPreview ? 'bg-amber-100 dark:bg-amber-950/40' : ''
+        aria-label={pickLabel}
+        className={`press-soft border-border hover:bg-muted/40 relative inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border ${
+          isPreview ? 'bg-amber-100 text-amber-900 dark:bg-amber-950/40 dark:text-amber-200' : ''
         }`}
       >
-        <Calendar className="h-3.5 w-3.5" aria-hidden />
-        <span>{isPreview ? previewLabel : pickLabel}</span>
+        <Calendar className="h-4 w-4" aria-hidden />
         <input
           type="date"
           value={selectedIso}

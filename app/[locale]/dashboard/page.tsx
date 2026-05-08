@@ -162,17 +162,11 @@ export default async function DashboardPage({
               maxIso={maxIso}
               pickLabel={tReading('pickDate')}
               backLabel={tReading('backToToday')}
-              previewLabel={tReading('previewBadge')}
             />
             <DailyReadingView
               body={readingBody}
             dateLabel={formatDateLong(ctx, locale)}
             dayTitle={meaningFor('personalDayTitle', cycles.personalDay, locale) ?? ''}
-            daySuffix={tReading('daySuffix', {
-              n: cycles.personalDay.isMaster
-                ? cycles.personalDay.compound
-                : cycles.personalDay.reduced,
-            })}
             todaysNumbers={wnDayNumbers(cycles.personalDay)}
             showLabel={tReading('showNumbers')}
             hideLabel={tReading('hideNumbers')}
@@ -205,7 +199,6 @@ export default async function DashboardPage({
               </div>
             }
             labels={{
-              todaysTheme: tReading('todaysTheme'),
               affirmation: tReading('affirmation'),
               fallback: tReading('fallback'),
             }}

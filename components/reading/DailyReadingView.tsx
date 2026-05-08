@@ -5,14 +5,19 @@ import { ChevronDown, Sparkles } from 'lucide-react';
 import { parseReading } from '@/lib/ai/prompts/daily';
 import { renderInlineMd } from '@/components/qa/inlineMd';
 
+const STAIR_COLORS = [
+  'text-primary',
+  'text-accent',
+  'text-emerald-600 dark:text-emerald-400',
+  'text-rose-500 dark:text-rose-400',
+];
+
 interface Props {
   body: string | null;
   /** Pre-localized "TUESDAY, MAY 4" style date label. */
   dateLabel: string;
-  /** Pre-localized day theme name, e.g. "Change & Versatility". */
+  /** Pre-localized day theme name, e.g. "Take Charge". */
   dayTitle: string;
-  /** Pre-localized "A 5 DAY" / "HARI 5" suffix. */
-  daySuffix: string;
   /** WN-style "today's numbers": Personal Day reduced + compound + the compound's digits.
    * Rendered as a small staircase that doubles as the toggle button. */
   todaysNumbers?: number[];
@@ -25,7 +30,6 @@ interface Props {
   hideLabel?: string;
   /** UI strings (already translated). */
   labels: {
-    todaysTheme: string;
     affirmation: string;
     fallback: string;
   };
@@ -41,7 +45,6 @@ export function DailyReadingView({
   body,
   dateLabel,
   dayTitle,
-  daySuffix,
   todaysNumbers,
   numbers,
   showLabel = 'Lihat angka hari ini',
@@ -104,18 +107,20 @@ export function DailyReadingView({
 
         {dayTitle ? (
           <div className="flex items-start justify-between gap-4">
-            <div className="min-w-0 space-y-1">
-              <p className="text-muted-foreground text-[11px] font-semibold uppercase tracking-[0.18em]">
-                {labels.todaysTheme}
-                {daySuffix ? <span className="text-accent ml-2">· {daySuffix}</span> : null}
-              </p>
-              <h2 className="font-serif text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
-                {dayTitle}
-              </h2>
-            </div>
+            <h2 className="font-serif text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
+              {dayTitle}
+            </h2>
             {todaysNumbers && todaysNumbers.length > 0 ? (
-              <div className="font-serif text-muted-foreground shrink-0 text-sm font-semibold tabular-nums sm:text-base">
-                {todaysNumbers.join(', ')}
+              <div className="font-serif relative -mt-1 flex shrink-0 items-end gap-1 text-2xl font-semibold leading-none tracking-tight sm:text-3xl">
+                {todaysNumbers.map((n, i) => (
+                  <span
+                    key={i}
+                    className={STAIR_COLORS[i % STAIR_COLORS.length]}
+                    style={{ transform: `translateY(${i * 0.2}rem)` }}
+                  >
+                    {n}
+                  </span>
+                ))}
               </div>
             ) : null}
           </div>
