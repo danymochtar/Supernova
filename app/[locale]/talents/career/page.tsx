@@ -10,21 +10,25 @@ import { UploadResumeForm } from '@/components/talents/UploadResumeForm';
 import { CareerActionsBar } from '@/components/talents/CareerActionsBar';
 import { buildCoreProfile } from '@/lib/numerology';
 import {
+  rateTalentGroups,
   rateVocations,
   ratingBucket,
   talentDistribution,
   VOCATION_COLOR,
   type TalentRating,
 } from '@/lib/numerology/talents';
-import { loadCareerEntriesScored } from '@/lib/numerology/career';
+import {
+  classifyContributingGroups,
+  loadCareerEntriesScored,
+} from '@/lib/numerology/career';
 import { deleteAllCareerAction, uploadResumeAction } from './actions';
 
 export const dynamic = 'force-dynamic';
 
-const RATING_LABEL_KEY: Record<TalentRating, string> = {
-  high: 'ratingHigh',
-  medium: 'ratingMedium',
-  low: 'ratingLow',
+const FIT_KEY: Record<TalentRating, string> = {
+  high: 'careerFitHigh',
+  medium: 'careerFitMedium',
+  low: 'careerFitLow',
 };
 
 const RATING_DOT: Record<TalentRating, string> = {
@@ -45,16 +49,6 @@ const AGG_KEY: Record<TalentRating, string> = {
   low: 'careerAggLow',
 };
 
-function parseInsightGroups(insight: string | null | undefined): string[] {
-  if (!insight) return [];
-  try {
-    const parsed = JSON.parse(insight);
-    return Array.isArray(parsed?.groups) ? (parsed.groups as string[]) : [];
-  } catch {
-    return [];
-  }
-}
-
 export default async function CareerPage({ params }: { params: { locale: string } }) {
   const locale: Locale = isLocale(params.locale) ? params.locale : 'id';
   const t = await getTranslations({ locale, namespace: 'talents' });
@@ -68,10 +62,12 @@ export default async function CareerPage({ params }: { params: { locale: string 
   const core = buildCoreProfile(profile.fullName, profile.dob);
   const dist = talentDistribution(profile.fullName, core);
   const vocationResults = rateVocations(dist.slices);
+  const groupResults = rateTalentGroups(dist.slices);
   const { entries, avgScore: avgMatch } = await loadCareerEntriesScored(
     session.user.id,
     vocationResults,
   );
+  const avgFit = ratingBucket(avgMatch);
 
   return (
     <main className="container max-w-3xl px-4 sm:px-6">
@@ -111,8 +107,8 @@ export default async function CareerPage({ params }: { params: { locale: string 
                   <p className="text-muted-foreground text-[11px] font-semibold uppercase tracking-[0.18em]">
                     {t('careerAvgLabel')}
                   </p>
-                  <p className="font-serif mt-1 text-3xl font-semibold tabular-nums">
-                    {avgMatch}%
+                  <p className={`font-serif mt-1 text-3xl font-semibold ${RATING_TEXT[avgFit]}`}>
+                    {t(FIT_KEY[avgFit])}
                   </p>
                 </div>
                 <div className="flex items-center gap-1.5">
@@ -123,7 +119,7 @@ export default async function CareerPage({ params }: { params: { locale: string 
                 </div>
               </div>
               <p className="text-muted-foreground mt-3 text-sm leading-relaxed">
-                {t(AGG_KEY[ratingBucket(avgMatch)])}
+                {t(AGG_KEY[avgFit])}
               </p>
             </section>
 
@@ -141,7 +137,7 @@ export default async function CareerPage({ params }: { params: { locale: string 
               {entries.map((e) => {
                 const bucket = ratingBucket(e.matchScore);
                 const color = VOCATION_COLOR[e.vocationId as keyof typeof VOCATION_COLOR] ?? '#888';
-                const insightGroups = parseInsightGroups(e.insight);
+                const { strong, improve } = classifyContributingGroups(e.vocationId, groupResults);
                 return (
                   <article
                     key={e.id}
@@ -158,10 +154,7 @@ export default async function CareerPage({ params }: { params: { locale: string 
                         className={`inline-flex items-center gap-1.5 text-xs font-semibold ${RATING_TEXT[bucket]}`}
                       >
                         <span className={`h-2 w-2 rounded-full ${RATING_DOT[bucket]}`} aria-hidden />
-                        {t(RATING_LABEL_KEY[bucket])}
-                        <span className="text-muted-foreground tabular-nums">
-                          · {Math.round(e.matchScore)}%
-                        </span>
+                        {t(FIT_KEY[bucket])}
                       </span>
                     </header>
                     <div className="text-muted-foreground mt-2 flex flex-wrap items-center gap-2 text-xs">
@@ -184,10 +177,16 @@ export default async function CareerPage({ params }: { params: { locale: string 
                         {e.description}
                       </p>
                     ) : null}
-                    {insightGroups.length > 0 ? (
+                    {strong.length > 0 ? (
                       <p className="text-muted-foreground mt-3 text-xs leading-relaxed">
                         <span className="font-medium">{t('careerWhyLabel')}:</span>{' '}
-                        {insightGroups.map((g) => t(`groups.${g}.title`)).join(' · ')}
+                        {strong.map((g) => t(`groups.${g}.title`)).join(' · ')}
+                      </p>
+                    ) : null}
+                    {improve.length > 0 ? (
+                      <p className="text-muted-foreground mt-1 text-xs leading-relaxed">
+                        <span className="font-medium">{t('careerImproveLabel')}:</span>{' '}
+                        {improve.map((g) => t(`groups.${g}.title`)).join(' · ')}
                       </p>
                     ) : null}
                   </article>

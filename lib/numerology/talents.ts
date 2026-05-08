@@ -444,6 +444,10 @@ const VOCATION_TO_GROUPS: Record<TalentVocationId, TalentGroupId[]> = {
   agriculture: ['practical', 'humanitarian', 'sensitive'],
 };
 
+export function vocationContributingGroups(vocationId: string): TalentGroupId[] {
+  return VOCATION_TO_GROUPS[vocationId as TalentVocationId] ?? [];
+}
+
 export interface VocationMatch {
   /** 0-100 — the user's vocation strength, same scale as the hero's
    *  "best-matched field" rating so the two surfaces never disagree. */

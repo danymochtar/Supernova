@@ -60,6 +60,12 @@ const RATING_LABEL_KEY: Record<TalentRating, string> = {
   low: 'ratingLow',
 };
 
+const FIT_KEY: Record<TalentRating, string> = {
+  high: 'careerFitHigh',
+  medium: 'careerFitMedium',
+  low: 'careerFitLow',
+};
+
 function StrengthBar({
   strength,
   barClass,
@@ -249,21 +255,16 @@ export default async function TalentsPage({ params }: { params: { locale: string
                   <p className="text-muted-foreground text-[11px] font-semibold uppercase tracking-[0.18em]">
                     {t('careerAvgLabel')}
                   </p>
-                  <p className="font-serif mt-1 text-3xl font-semibold tabular-nums">
-                    {avgCareerMatch}%
+                  <p
+                    className={`font-serif mt-1 text-3xl font-semibold ${RATING_STYLE[ratingBucket(avgCareerMatch)].text}`}
+                  >
+                    {t(FIT_KEY[ratingBucket(avgCareerMatch)])}
                   </p>
                 </div>
                 <div className="text-muted-foreground inline-flex items-center gap-1.5 text-xs">
                   <Sparkles className="text-primary h-4 w-4" aria-hidden />
                   {t('careerCount', { n: careerEntries.length })}
                 </div>
-              </div>
-              <div className="mt-3">
-                <StrengthBar
-                  strength={avgCareerMatch}
-                  barClass={RATING_STYLE[ratingBucket(avgCareerMatch)].bar}
-                  trackClass="h-2"
-                />
               </div>
             </div>
 
@@ -272,7 +273,6 @@ export default async function TalentsPage({ params }: { params: { locale: string
                 const bucket = ratingBucket(e.matchScore);
                 const style = RATING_STYLE[bucket];
                 const color = VOCATION_COLOR[e.vocationId as keyof typeof VOCATION_COLOR] ?? '#888';
-                const score = Math.round(e.matchScore);
                 return (
                   <li
                     key={e.id}
@@ -283,7 +283,7 @@ export default async function TalentsPage({ params }: { params: { locale: string
                       style={{ backgroundColor: color }}
                       aria-hidden
                     />
-                    <div className="min-w-0 flex-1 space-y-1">
+                    <div className="min-w-0 flex-1 space-y-0.5">
                       <p className="truncate text-sm font-semibold">{e.title}</p>
                       <p className="text-muted-foreground truncate text-xs">
                         {e.company ? `${e.company} · ` : ''}
@@ -293,10 +293,12 @@ export default async function TalentsPage({ params }: { params: { locale: string
                             }`
                           : ''}
                       </p>
-                      <StrengthBar strength={score} barClass={style.bar} trackClass="h-1" />
                     </div>
-                    <span className={`shrink-0 text-xs font-semibold tabular-nums ${style.text}`}>
-                      {score}%
+                    <span
+                      className={`inline-flex shrink-0 items-center gap-1.5 text-xs font-semibold ${style.text}`}
+                    >
+                      <span className={`h-2 w-2 rounded-full ${style.dot}`} aria-hidden />
+                      {t(FIT_KEY[bucket])}
                     </span>
                   </li>
                 );
