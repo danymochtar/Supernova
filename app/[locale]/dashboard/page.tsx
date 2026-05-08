@@ -19,6 +19,7 @@ import { AppHeader } from '@/components/layout/AppHeader';
 import { Widget } from '@/components/layout/Widget';
 import { Explainer } from '@/components/layout/Explainer';
 import { DailyReadingView } from '@/components/reading/DailyReadingView';
+import { DateBrowser } from '@/components/reading/DateBrowser';
 import { FeedbackPrompt } from '@/components/feedback/FeedbackPrompt';
 import { getFeedbackForLocalDay } from '@/lib/db/repositories/feedback';
 import { getTurnsBetween } from '@/lib/db/repositories/qa';
@@ -53,8 +54,43 @@ function wnDayNumbers(pd: { compound: number; reduced: number }): number[] {
   return [pd.reduced, pd.compound, tens, ones];
 }
 
+const PREVIEW_WINDOW_DAYS = 90;
 
-export default async function DashboardPage({ params }: { params: { locale: string } }) {
+function pad2(n: number): string {
+  return n < 10 ? `0${n}` : String(n);
+}
+
+function isoOf(ctx: { year: number; month: number; day: number }): string {
+  return `${ctx.year}-${pad2(ctx.month)}-${pad2(ctx.day)}`;
+}
+
+function ctxFromIso(iso: string): { year: number; month: number; day: number } {
+  const [y, m, d] = iso.split('-').map(Number);
+  return { year: y!, month: m!, day: d! };
+}
+
+function shiftIso(iso: string, days: number): string {
+  const c = ctxFromIso(iso);
+  const dt = new Date(Date.UTC(c.year, c.month - 1, c.day));
+  dt.setUTCDate(dt.getUTCDate() + days);
+  return `${dt.getUTCFullYear()}-${pad2(dt.getUTCMonth() + 1)}-${pad2(dt.getUTCDate())}`;
+}
+
+function clampDateParam(input: string | undefined, todayIso: string, maxIso: string): string {
+  if (!input || !/^\d{4}-\d{2}-\d{2}$/.test(input)) return todayIso;
+  if (input < todayIso) return todayIso;
+  if (input > maxIso) return maxIso;
+  return input;
+}
+
+
+export default async function DashboardPage({
+  params,
+  searchParams,
+}: {
+  params: { locale: string };
+  searchParams: { date?: string };
+}) {
   const locale: Locale = isLocale(params.locale) ? params.locale : 'id';
   const t = await getTranslations({ locale, namespace: 'dashboard' });
   const tReading = await getTranslations({ locale, namespace: 'reading' });
@@ -69,25 +105,31 @@ export default async function DashboardPage({ params }: { params: { locale: stri
   const visible = new Set<WidgetId>(layout.filter((w) => !w.hidden).map((w) => w.id));
 
   const core = buildCoreProfile(profile.fullName, profile.dob);
-  const ctx = contextFromInstant(new Date(), profile.timezone);
+  const today = contextFromInstant(new Date(), profile.timezone);
+  const todayIso = isoOf(today);
+  const maxIso = shiftIso(todayIso, PREVIEW_WINDOW_DAYS);
+  const selectedIso = clampDateParam(searchParams.date, todayIso, maxIso);
+  const isPreview = selectedIso !== todayIso;
+  const ctx = isPreview ? ctxFromIso(selectedIso) : today;
   const cycles = personalCycles(profile.dob, ctx);
   const minor = minorNumbers(profile.nickname);
   const bridge = bridges(core);
-  const todayStart = new Date(Date.UTC(ctx.year, ctx.month - 1, ctx.day));
+  const todayStart = new Date(Date.UTC(today.year, today.month - 1, today.day));
   const todayEnd = new Date(todayStart);
   todayEnd.setUTCDate(todayEnd.getUTCDate() + 1);
 
-  // Lazy fetch — only data for widgets the user has visible. Reading + About
-  // Me are the slow ones; if hidden, we skip them entirely (saving a DB call
-  // and a cold-start AI call respectively).
+  // Preview dates skip the AI body + feedback fetch; they only show deterministic
+  // numbers and a curated PD blurb from the content pack.
   const [readingBody, todayFeedback, todaysChatTurns, aboutMeData] = await Promise.all([
     visible.has('reading')
-      ? getOrGenerateDailyReading(session.user.id, profile)
+      ? isPreview
+        ? Promise.resolve(meaningFor('personalDay', cycles.personalDay, locale))
+        : getOrGenerateDailyReading(session.user.id, profile)
       : Promise.resolve(null),
-    visible.has('feedback')
-      ? getFeedbackForLocalDay(session.user.id, ctx.year, ctx.month, ctx.day)
+    visible.has('feedback') && !isPreview
+      ? getFeedbackForLocalDay(session.user.id, today.year, today.month, today.day)
       : Promise.resolve(null),
-    visible.has('feedback')
+    visible.has('feedback') && !isPreview
       ? getTurnsBetween(session.user.id, todayStart, todayEnd)
       : Promise.resolve([] as Awaited<ReturnType<typeof getTurnsBetween>>),
     visible.has('aboutMe')
@@ -107,15 +149,23 @@ export default async function DashboardPage({ params }: { params: { locale: stri
       : Promise.resolve(null),
   ]);
 
-  const showFeedbackPrompt = visible.has('feedback') && todaysChatTurns.length === 0;
+  const showFeedbackPrompt = !isPreview && visible.has('feedback') && todaysChatTurns.length === 0;
 
   function renderWidget(id: WidgetId): React.ReactNode {
     switch (id) {
       case 'reading':
         return (
-          <DailyReadingView
-            key={id}
-            body={readingBody}
+          <div key={id} className="space-y-2">
+            <DateBrowser
+              selectedIso={selectedIso}
+              todayIso={todayIso}
+              maxIso={maxIso}
+              pickLabel={tReading('pickDate')}
+              backLabel={tReading('backToToday')}
+              previewLabel={tReading('previewBadge')}
+            />
+            <DailyReadingView
+              body={readingBody}
             dateLabel={formatDateLong(ctx, locale)}
             dayTitle={meaningFor('personalDayTitle', cycles.personalDay, locale) ?? ''}
             daySuffix={tReading('daySuffix', {
@@ -159,7 +209,8 @@ export default async function DashboardPage({ params }: { params: { locale: stri
               affirmation: tReading('affirmation'),
               fallback: tReading('fallback'),
             }}
-          />
+            />
+          </div>
         );
       case 'feedback':
         return showFeedbackPrompt ? (

@@ -255,7 +255,10 @@
     "fallback": "Today's reading isn't ready yet. Try refreshing in a moment.",
     "oncePerDay": "One reading per day",
     "showNumbers": "Show today's numbers",
-    "hideNumbers": "Hide numbers"
+    "hideNumbers": "Hide numbers",
+    "pickDate": "Pick a date",
+    "backToToday": "Back to today",
+    "previewBadge": "Preview"
   },
   "chat": {
     "title": "Talk to Supernova",

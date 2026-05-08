@@ -255,7 +255,10 @@
     "fallback": "Bacaan hari ini belum bisa dibuat. Coba refresh sebentar lagi.",
     "oncePerDay": "Satu bacaan per hari",
     "showNumbers": "Lihat angka hari ini",
-    "hideNumbers": "Sembunyikan angka"
+    "hideNumbers": "Sembunyikan angka",
+    "pickDate": "Pilih tanggal",
+    "backToToday": "Hari ini",
+    "previewBadge": "Preview"
   },
   "chat": {
     "title": "Curhat ke Supernova",
