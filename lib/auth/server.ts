@@ -38,6 +38,20 @@ export const auth = betterAuth({
     maxPasswordLength: 128,
     requireEmailVerification: false,
   },
+  // PWA homescreen launches feel like a fresh app every time, so the
+  // default 7-day session was logging users out far too often. Extend
+  // the session to 60 days, refresh it whenever the user comes back
+  // after >7 days, and turn on the in-cookie session cache so the
+  // common path (already-signed-in user reopens the app) doesn't even
+  // need to hit the database.
+  session: {
+    expiresIn: 60 * 60 * 24 * 60, // 60 days
+    updateAge: 60 * 60 * 24 * 7, // sliding refresh every 7 days
+    cookieCache: {
+      enabled: true,
+      maxAge: 5 * 60, // 5 minutes — short enough that revoke takes effect quickly
+    },
+  },
 });
 
 export type Auth = typeof auth;
