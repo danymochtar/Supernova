@@ -264,6 +264,7 @@
     "placeholder": "Write anything…",
     "send": "Send",
     "stop": "Stop",
+    "scrollToBottom": "Jump to latest",
     "delete": "Delete message",
     "attach": "Attach an image or file",
     "attachmentRemove": "Remove attachment",

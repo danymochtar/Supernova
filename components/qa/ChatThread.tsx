@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useTransition } from 'react';
 import { useTranslations } from 'next-intl';
 import {
+  ArrowDown,
   ArrowUp,
   BookmarkPlus,
   Check,
@@ -132,7 +133,9 @@ export function ChatThread({
   const abortRef = useRef<AbortController | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const bottomRef = useRef<HTMLDivElement | null>(null);
+  const scrollRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
+  const [isAtBottom, setIsAtBottom] = useState(true);
   const [, startDelete] = useTransition();
   // Journal multi-select. \`selectMode\` makes every persisted turn tappable
   // to toggle inclusion; the floating action bar at the bottom commits the
@@ -202,17 +205,34 @@ export function ChatThread({
     });
   }
 
-  // First mount jumps straight to the bottom so the user sees their
-  // latest exchange + the input box without having to scroll. After that,
-  // subsequent updates (new turn, streaming answer growing) animate.
+  // First mount lands at the bottom. After that, only auto-scroll when the
+  // user is already near the bottom — otherwise streaming would yank them
+  // away from older messages they're trying to read.
   const firstScrollRef = useRef(true);
   useEffect(() => {
+    if (!firstScrollRef.current && !isAtBottom) return;
     bottomRef.current?.scrollIntoView({
       behavior: firstScrollRef.current ? 'auto' : 'smooth',
       block: 'end',
     });
     firstScrollRef.current = false;
-  }, [turns.length, pending?.answer]);
+  }, [turns.length, pending?.answer, isAtBottom]);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    function update() {
+      if (!el) return;
+      setIsAtBottom(el.scrollTop + el.clientHeight >= el.scrollHeight - 80);
+    }
+    el.addEventListener('scroll', update, { passive: true });
+    update();
+    return () => el.removeEventListener('scroll', update);
+  }, []);
+
+  function scrollToBottom() {
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  }
 
   function commitJournal() {
     if (!journalAction) return;
@@ -426,10 +446,13 @@ export function ChatThread({
 
   return (
     <div
-      className="flex flex-col"
+      className="relative flex flex-col"
       style={{ minHeight: 'calc(100dvh - 8rem - env(safe-area-inset-bottom))' }}
     >
-      <div className={`flex-1 overflow-y-auto pb-4 ${selectMode ? 'pt-16' : ''}`}>
+      <div
+        ref={scrollRef}
+        className={`flex-1 overflow-y-auto pb-4 ${selectMode ? 'pt-16' : ''}`}
+      >
         {turns.length === 0 && !pending ? (
           <div className="flex flex-col items-center gap-5 py-10 text-center">
             <div className="bg-primary/10 text-primary flex h-14 w-14 items-center justify-center rounded-full">
@@ -579,6 +602,17 @@ export function ChatThread({
             </button>
           </div>
         </div>
+      ) : null}
+
+      {!isAtBottom && !selectMode && (turns.length > 0 || pending) ? (
+        <button
+          type="button"
+          onClick={scrollToBottom}
+          aria-label={t('scrollToBottom')}
+          className="border-border bg-background/95 text-foreground absolute bottom-24 right-3 z-30 flex h-10 w-10 items-center justify-center rounded-full border shadow-lg supports-[backdrop-filter]:bg-background/80 supports-[backdrop-filter]:backdrop-blur"
+        >
+          <ArrowDown className="h-5 w-5" aria-hidden />
+        </button>
       ) : null}
 
       <form
