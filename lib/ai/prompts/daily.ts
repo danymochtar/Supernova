@@ -102,10 +102,11 @@ Aturan lain:
 - Hormati identitas user; netral budaya & agama.
 
 Format wajib:
-- Mulai dengan satu sapaan singkat ke nama depan user (1 baris pendek).
-- Lanjut 2 paragraf prosa (total 140-220 kata) yang ngalir natural — bukan list-list per angka. Paragraf 1: nuansa hari ini secara keseluruhan, ketiga thread sudah terjalin di sini. Paragraf 2: saran praktis + satu hal yang perlu diwaspadai lembut, masih nge-blend ketiga angka (mis. 8 = domain finansial/karier; 7 = jangan terburu-buru put it off; 1 = jangan tunggu orang).
+- BARIS PERTAMA: judul 2-5 kata yang reflect KOMBINASI angka spesifik hari itu (PD compound + reduced + PM + master/karmic). Format: \`# Judul\`. Judul HARUS UNIK per kombinasi compound — PD 30/3 dan PD 12/3 walau sama-sama reduced 3, harus dapet judul beda yang nge-cue perbedaan compound-nya. Master compound (11/22/33) selalu dapet judul yang acknowledge sisi master itu. Hindari judul template generic.
+- Lalu satu baris kosong, lanjut sapaan singkat ke nama depan user (1 baris pendek).
+- Lanjut 2 paragraf prosa (total 140-220 kata) yang ngalir natural — bukan list-list per angka. Paragraf 1: nuansa hari itu secara keseluruhan, ketiga thread sudah terjalin di sini. Paragraf 2: saran praktis + satu hal yang perlu diwaspadai lembut, masih nge-blend ketiga angka (mis. 8 = domain finansial/karier; 7 = jangan terburu-buru put it off; 1 = jangan tunggu orang).
 - Tutup dengan satu kalimat afirmasi yang bisa diulang sepanjang hari, dipisah baris kosong sebelumnya.
-- Output prosa biasa — TIDAK ada heading, TIDAK ada bullet, TIDAK ada tag XML, TIDAK ada angka, TIDAK ada label "Personal Day/Month/Year".`;
+- Output prosa biasa setelah judul — TIDAK ada heading lagi, TIDAK ada bullet, TIDAK ada tag XML, TIDAK ada angka, TIDAK ada label "Personal Day/Month/Year".`;
   }
   return `You are Supernova's numerology companion writing daily readings in clear, warm English.
 
@@ -150,10 +151,11 @@ Other rules:
 - Respect the user's identity; remain culturally neutral.
 
 Required format:
-- Open with one short greeting using the user's first name (one line). Example: "Hi [Name], today feels like a fresh wind."
+- FIRST LINE: a 2-5 word title reflecting the day's specific number COMBINATION (PD compound + reduced + PM + master/karmic). Format: \`# Title\`. Title MUST be UNIQUE per compound — PD 30/3 and PD 12/3 share a reduced 3 but must get distinct titles cuing the compound difference. Master compound (11/22/33) always gets a title acknowledging the master quality. No generic templates.
+- Then a blank line, then one short greeting using the user's first name (one line). Example: "Hi [Name], today feels like a fresh wind."
 - Then 2 prose paragraphs (140-220 words total) that flow naturally — not a list per number. Paragraph 1: the overall texture of the day, all three threads woven in. Paragraph 2: what's well-suited + one gentle thing to watch, still blending the three (e.g. 8 = financial/career domain; 7 = don't rush, put off if needed; 1 = don't wait on others).
 - End with a single affirmation sentence the user can repeat, separated by a blank line.
-- Plain prose only — NO headings, NO bullets, NO XML tags, NO digits, NO "Personal Day/Month/Year" labels in the output.`;
+- Plain prose after the title — NO further headings, NO bullets, NO XML tags, NO digits, NO "Personal Day/Month/Year" labels in the output.`;
 }
 
 export function buildUserPrompt(input: DailyPromptInput): string {
@@ -200,10 +202,15 @@ ${input.recentPatterns}
       : ''
   }
 
-Write today's reading as prose only. Greet ${input.firstName} by first name, then 2 paragraphs, then a blank line, then one affirmation sentence. Do not mention any numbers.`;
+Write the reading for ${dateStr}. Start with \`# Title\` (2-5 words, unique to this exact compound combination — not a generic label for the reduced digit). Then blank line, greet ${input.firstName} by first name, then 2 paragraphs, then a blank line, then one affirmation sentence. Do not mention any numbers in the body.`;
 }
 
 export interface ParsedReading {
+  /** AI-generated title unique to the day's number combination — only present
+   *  on readings written under the new format (a leading `# Title` line).
+   *  Older cached readings don't have this; callers should fall back to a
+   *  static label when missing. */
+  title: string;
   /** Greeting line, if present. */
   greeting: string;
   /** Main prose body (2 paragraphs in the new format, 4 sections in the old). */
@@ -237,6 +244,7 @@ export function parseReading(raw: string): ParsedReading {
     const affirmation = (trimmed.match(LEGACY_RE.affirmation)?.[1] ?? '').trim();
     const body = [theme, energy, watch].filter(Boolean).join('\n\n');
     return {
+      title: '',
       greeting: '',
       body,
       affirmation,
@@ -245,18 +253,24 @@ export function parseReading(raw: string): ParsedReading {
     };
   }
 
-  // New prose format. Split by blank lines.
-  const paragraphs = trimmed
+  // Pull off the leading `# Title` line if present, then process the rest as prose.
+  let title = '';
+  let prose = trimmed;
+  const titleMatch = trimmed.match(/^#\s+(.+?)\s*$/m);
+  if (titleMatch && trimmed.startsWith('#')) {
+    title = titleMatch[1]!.trim();
+    prose = trimmed.slice(titleMatch[0]!.length).replace(/^\s*\n/, '').trim();
+  }
+
+  const paragraphs = prose
     .split(/\n\s*\n/)
     .map((p) => p.trim())
     .filter(Boolean);
 
   if (paragraphs.length === 0) {
-    return { greeting: '', body: trimmed, affirmation: '', raw };
+    return { title, greeting: '', body: prose, affirmation: '', raw };
   }
 
-  // Heuristic: a short first paragraph (<= 140 chars and a single sentence)
-  // is treated as the greeting line.
   let greeting = '';
   let rest = paragraphs;
   const first = paragraphs[0]!;
@@ -265,7 +279,6 @@ export function parseReading(raw: string): ParsedReading {
     rest = paragraphs.slice(1);
   }
 
-  // Last paragraph is the affirmation.
   let affirmation = '';
   if (rest.length > 1) {
     affirmation = rest[rest.length - 1]!;
@@ -273,6 +286,7 @@ export function parseReading(raw: string): ParsedReading {
   }
 
   return {
+    title,
     greeting,
     body: rest.join('\n\n'),
     affirmation,

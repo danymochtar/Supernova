@@ -118,13 +118,12 @@ export default async function DashboardPage({
   const todayEnd = new Date(todayStart);
   todayEnd.setUTCDate(todayEnd.getUTCDate() + 1);
 
-  // Preview dates skip the AI body + feedback fetch; they only show deterministic
-  // numbers and a curated PD blurb from the content pack.
+  // Each (user, date) gets its own AI reading so the title + body reflect the
+  // exact compound combination — different compounds with the same reduced PD
+  // (e.g. PD 12/3 vs 30/3) must read distinctly. Cached after first generation.
   const [readingBody, todayFeedback, todaysChatTurns, aboutMeData] = await Promise.all([
     visible.has('reading')
-      ? isPreview
-        ? Promise.resolve(meaningFor('personalDay', cycles.personalDay, locale))
-        : getOrGenerateDailyReading(session.user.id, profile)
+      ? getOrGenerateDailyReading(session.user.id, profile, isPreview ? { targetCtx: ctx } : undefined)
       : Promise.resolve(null),
     visible.has('feedback') && !isPreview
       ? getFeedbackForLocalDay(session.user.id, today.year, today.month, today.day)

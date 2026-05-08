@@ -67,6 +67,7 @@ export function DailyReadingView({
     .split(/\n\s*\n/)
     .map((p) => p.trim())
     .filter(Boolean);
+  const headlineTitle = parsed.title || dayTitle;
 
   const tripleCanToggle = Boolean(todaysNumbers && todaysNumbers.length > 0 && numbers);
 
@@ -105,10 +106,10 @@ export function DailyReadingView({
           </div>
         ) : null}
 
-        {dayTitle ? (
+        {headlineTitle ? (
           <div className="flex items-start justify-between gap-4">
             <h2 className="font-serif text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
-              {dayTitle}
+              {headlineTitle}
             </h2>
             {todaysNumbers && todaysNumbers.length > 0 ? (
               <div className="font-serif relative -mt-1 flex shrink-0 items-end gap-1 text-2xl font-semibold leading-none tracking-tight sm:text-3xl">

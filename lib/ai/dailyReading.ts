@@ -57,8 +57,9 @@ function dayTitleFor(reduced: number, locale: 'id' | 'en'): string {
 export async function getOrGenerateDailyReading(
   userId: string,
   profile: ProfileLike,
+  options?: { targetCtx?: { year: number; month: number; day: number } },
 ): Promise<string | null> {
-  const ctx = contextFromInstant(new Date(), profile.timezone);
+  const ctx = options?.targetCtx ?? contextFromInstant(new Date(), profile.timezone);
 
   const cached = await getReadingForLocalDay(userId, ctx.year, ctx.month, ctx.day);
   if (cached) {
