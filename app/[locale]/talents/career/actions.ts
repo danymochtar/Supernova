@@ -4,7 +4,11 @@ import { revalidatePath } from 'next/cache';
 import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { buildCoreProfile } from '@/lib/numerology';
-import { rateVocations, talentDistribution } from '@/lib/numerology/talents';
+import {
+  rateTalentGroups,
+  scoreVocationFromGroups,
+  talentDistribution,
+} from '@/lib/numerology/talents';
 import { parseResumePdf } from '@/lib/ai/resumeParse';
 import {
   deleteAllCareerEntries,
@@ -40,21 +44,29 @@ export async function uploadResumeAction(formData: FormData): Promise<UploadResu
   if (!parsed) return { ok: false, error: 'parse_failed' };
   if (parsed.roles.length === 0) return { ok: false, error: 'no_roles' };
 
-  // Score each role against the user's vocation ratings.
+  // Score each role against the user's 11 trait groups (the
+  // detailed dimensions like Individualism, Practical, Perseverance,
+  // etc.) — not just the 7-vocation abstraction. Each role's
+  // contributing-groups list is stored in `insight` as a JSON-encoded
+  // array of TalentGroupId so the page can surface "cocok karena
+  // kuat di X & Y" without re-running the mapping.
   const core = buildCoreProfile(profile.fullName, profile.dob);
   const dist = talentDistribution(profile.fullName, core);
-  const ratings = rateVocations(dist.slices);
-  const scoreById = new Map(ratings.map((r) => [r.id, r.score]));
+  const groupResults = rateTalentGroups(dist.slices);
 
-  const inputs: CareerInput[] = parsed.roles.map((r) => ({
-    title: r.title,
-    company: r.company,
-    startDate: r.startDate ? new Date(r.startDate) : null,
-    endDate: r.endDate ? new Date(r.endDate) : null,
-    description: r.summary,
-    vocationId: r.vocation,
-    matchScore: scoreById.get(r.vocation) ?? 0,
-  }));
+  const inputs: CareerInput[] = parsed.roles.map((r) => {
+    const match = scoreVocationFromGroups(r.vocation, groupResults);
+    return {
+      title: r.title,
+      company: r.company,
+      startDate: r.startDate ? new Date(r.startDate) : null,
+      endDate: r.endDate ? new Date(r.endDate) : null,
+      description: r.summary,
+      vocationId: r.vocation,
+      matchScore: match.score,
+      insight: JSON.stringify({ groups: match.contributingGroups }),
+    };
+  });
 
   try {
     const count = await replaceCareerEntries(session.user.id, inputs);

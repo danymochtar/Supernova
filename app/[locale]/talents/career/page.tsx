@@ -31,9 +31,12 @@ function fmtMonth(d: Date | null, locale: Locale): string {
   return `${months[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
 }
 
+// matchScore is now an absolute 0-100 average of strength across the
+// trait groups feeding the role's vocation. Pick thresholds that read
+// intuitively on that scale.
 function ratingBucket(score: number): 'high' | 'medium' | 'low' {
-  if (score >= 16) return 'high';
-  if (score >= 9) return 'medium';
+  if (score >= 70) return 'high';
+  if (score >= 45) return 'medium';
   return 'low';
 }
 
@@ -52,9 +55,7 @@ export default async function CareerPage({ params }: { params: { locale: string 
   // Aggregate match — average across all entries.
   const avgMatch =
     entries.length > 0
-      ? Math.round(
-          (entries.reduce((s, e) => s + e.matchScore, 0) / entries.length) * 10,
-        ) / 10
+      ? Math.round(entries.reduce((s, e) => s + e.matchScore, 0) / entries.length)
       : 0;
 
   return (
@@ -108,9 +109,9 @@ export default async function CareerPage({ params }: { params: { locale: string 
                 </div>
               </div>
               <p className="text-muted-foreground mt-3 text-sm leading-relaxed">
-                {avgMatch >= 16
+                {avgMatch >= 70
                   ? t('careerAggHigh')
-                  : avgMatch >= 9
+                  : avgMatch >= 45
                     ? t('careerAggMedium')
                     : t('careerAggLow')}
               </p>
@@ -169,7 +170,7 @@ export default async function CareerPage({ params }: { params: { locale: string 
                         <span className={`h-2 w-2 rounded-full ${dot}`} aria-hidden />
                         {ratingLabel}
                         <span className="text-muted-foreground tabular-nums">
-                          · {Math.round(e.matchScore * 10) / 10}%
+                          · {Math.round(e.matchScore)}%
                         </span>
                       </span>
                     </header>
@@ -193,6 +194,30 @@ export default async function CareerPage({ params }: { params: { locale: string 
                         {e.description}
                       </p>
                     ) : null}
+                    {(() => {
+                      // Show which 11-group talent dimensions fed this
+                      // role's score, so the user understands WHY a
+                      // role landed where it did rather than just
+                      // seeing a bare percentage.
+                      let groups: string[] = [];
+                      try {
+                        const parsed = e.insight ? JSON.parse(e.insight) : null;
+                        if (parsed && Array.isArray(parsed.groups)) {
+                          groups = parsed.groups as string[];
+                        }
+                      } catch {
+                        /* old rows or malformed JSON — skip silently */
+                      }
+                      if (groups.length === 0) return null;
+                      return (
+                        <p className="text-muted-foreground mt-3 text-xs leading-relaxed">
+                          <span className="font-medium">{t('careerWhyLabel')}:</span>{' '}
+                          {groups
+                            .map((g) => t(`groups.${g}.title`))
+                            .join(' · ')}
+                        </p>
+                      );
+                    })()}
                   </article>
                 );
               })}

@@ -432,3 +432,59 @@ export function rateVocations(slices: TalentSlice[]): TalentVocationResult[] {
 
   return assignRatingsAndStrength(raw);
 }
+
+/**
+ * Mapping from each vocation field → the trait groups (from the 11)
+ * that meaningfully feed into success in that field. Used for career
+ * match scoring: a "business" role isn't just measured against the
+ * abstract "business" vocation rating; it's measured against the
+ * specific groups (Individualism, Practical, Perseverance, etc.)
+ * that someone in a leadership / management role actually leans on.
+ *
+ * The groups picked here are the ones traditionally associated with
+ * the field — not numerology dogma, just a reasonable mapping that
+ * lets a role's match score reflect ALL the relevant strengths a
+ * user has, not just one weighted-average abstraction.
+ */
+const VOCATION_TO_GROUPS: Record<TalentVocationId, TalentGroupId[]> = {
+  business: ['individualism', 'practical', 'perseverance', 'workWithOthers'],
+  medicineEducation: ['humanitarian', 'sensitive', 'generousCaring', 'innerSelf'],
+  legalPolitics: ['individualism', 'perseverance', 'innerSelf', 'practical'],
+  artsDesign: ['artistic', 'innerSelf', 'sensitive', 'enjoyLife'],
+  salesPr: ['enjoyLife', 'workWithOthers', 'generousCaring', 'individualism'],
+  scienceEngineering: ['practical', 'innerSelf', 'perseverance'],
+  agriculture: ['practical', 'humanitarian', 'sensitive'],
+};
+
+export interface VocationMatch {
+  /** 0-100 match score — average of the user's strength on the
+   *  contributing trait groups. Strength is already normalized to
+   *  the user's own group set (top group = 100), so two roles in the
+   *  same vocation field but with different supporting-group profiles
+   *  can land at meaningfully different scores. */
+  score: number;
+  /** Trait groups that contributed to the score, in the order they're
+   *  weighted. Used by the UI to surface "cocok karena kuat di X & Y". */
+  contributingGroups: TalentGroupId[];
+}
+
+/**
+ * Score a single vocation match for the user against the 11 trait
+ * groups (rather than the 7-vocation abstraction). Used for career
+ * matching where each role from the résumé needs a meaningful 0-100
+ * fit score, broken out by the specific strengths feeding it.
+ */
+export function scoreVocationFromGroups(
+  vocationId: TalentVocationId,
+  groupResults: TalentGroupResult[],
+): VocationMatch {
+  const groups = VOCATION_TO_GROUPS[vocationId];
+  const byId = new Map(groupResults.map((r) => [r.id, r.strength]));
+  const strengths = groups.map((g) => byId.get(g) ?? 0);
+  if (strengths.length === 0) return { score: 0, contributingGroups: [] };
+  const avg = strengths.reduce((a, b) => a + b, 0) / strengths.length;
+  return {
+    score: Math.round(avg),
+    contributingGroups: groups,
+  };
+}

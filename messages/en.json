@@ -616,6 +616,7 @@
     "careerAggMedium": "Your current lane sits in the match zone — your dominant traits are in use, but some areas may be underused.",
     "careerAggLow": "Your average match is low. Doesn't mean your career is wrong — could be exploration or motivation beyond natural fit. Still worth checking which lane reads more natural.",
     "careerTimelineTitle": "Per-role history",
+    "careerWhyLabel": "Strong match in",
     "careerCurrent": "current",
     "careerDeleteAll": "Delete all",
     "careerDeleteConfirm": "Delete all career history? This can't be undone.",
