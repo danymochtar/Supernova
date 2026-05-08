@@ -16,8 +16,11 @@ export function TopBar({
 }) {
   return (
     <header
-      className="border-border bg-background/95 sticky top-0 z-30 -mx-4 mb-4 flex h-14 items-center gap-2 border-b px-4 backdrop-blur sm:-mx-6 sm:px-6 supports-[backdrop-filter]:bg-background/80"
-      style={{ paddingTop: 'env(safe-area-inset-top)' }}
+      className="border-border bg-background/95 sticky top-0 z-30 -mx-4 mb-4 flex items-center gap-2 border-b px-4 backdrop-blur sm:-mx-6 sm:px-6 supports-[backdrop-filter]:bg-background/80"
+      style={{
+        paddingTop: 'env(safe-area-inset-top)',
+        minHeight: 'calc(3.5rem + env(safe-area-inset-top))',
+      }}
     >
       {backHref ? (
         <Link
