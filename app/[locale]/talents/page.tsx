@@ -10,6 +10,7 @@ import { buildCoreProfile } from '@/lib/numerology';
 import {
   rateTalentGroups,
   rateVocations,
+  scoreCareerMatch,
   talentDistribution,
   type TalentRating,
 } from '@/lib/numerology/talents';
@@ -94,7 +95,17 @@ export default async function TalentsPage({ params }: { params: { locale: string
   const groupRatings = [...rateTalentGroups(dist.slices)].sort((a, b) => b.score - a.score);
   const vocationRatings = [...rateVocations(dist.slices)].sort((a, b) => b.score - a.score);
 
-  const careerEntries = await listCareerEntries(session.user.id);
+  // Recompute career match scores live from the role's vocationId
+  // against the current vocation ratings. The DB stores a snapshot
+  // taken at upload time, but the scoring rule has evolved since then
+  // and we want changes to take effect without forcing the user to
+  // re-upload. Live computation also guarantees the scores agree with
+  // the vocation rating shown in the hero.
+  const rawCareerEntries = await listCareerEntries(session.user.id);
+  const careerEntries = rawCareerEntries.map((e) => ({
+    ...e,
+    matchScore: scoreCareerMatch(e.vocationId, vocationRatings).score,
+  }));
   const avgCareerMatch =
     careerEntries.length > 0
       ? Math.round(

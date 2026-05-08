@@ -457,22 +457,43 @@ const VOCATION_TO_GROUPS: Record<TalentVocationId, TalentGroupId[]> = {
 };
 
 export interface VocationMatch {
-  /** 0-100 match score — average of the user's strength on the
-   *  contributing trait groups. Strength is already normalized to
-   *  the user's own group set (top group = 100), so two roles in the
-   *  same vocation field but with different supporting-group profiles
-   *  can land at meaningfully different scores. */
+  /** 0-100 match score = the user's strength on that vocation field,
+   *  normalized within the 7 vocations (top vocation = 100, weakest = 0).
+   *  Identical scale + arithmetic as the hero "best-matched field" rating
+   *  so a user whose top vocation is Business sees Business roles as a
+   *  high match — never the cognitive-dissonance case where the hero
+   *  says "Business is your strongest" but career detail says "your
+   *  match is low". */
   score: number;
-  /** Trait groups that contributed to the score, in the order they're
-   *  weighted. Used by the UI to surface "cocok karena kuat di X & Y". */
+  /** Trait groups that contribute to the field, in display order. Used
+   *  for the "cocok karena kuat di X · Y" explanation under each role. */
   contributingGroups: TalentGroupId[];
 }
 
 /**
- * Score a single vocation match for the user against the 11 trait
- * groups (rather than the 7-vocation abstraction). Used for career
- * matching where each role from the résumé needs a meaningful 0-100
- * fit score, broken out by the specific strengths feeding it.
+ * Score a single role's career match against the user's profile. The
+ * score is the user's strength on the role's vocation field (so it
+ * always agrees with the vocation rating shown elsewhere). Contributing
+ * groups are the curated trait groups feeding that field, used purely
+ * as the "why" explanation — not as the score arithmetic, because the
+ * group-average produced numbers that contradicted the vocation rating.
+ */
+export function scoreCareerMatch(
+  vocationId: string,
+  vocationResults: TalentVocationResult[],
+): VocationMatch {
+  const v = vocationResults.find((r) => r.id === vocationId);
+  if (!v) return { score: 0, contributingGroups: [] };
+  return {
+    score: v.strength,
+    contributingGroups: VOCATION_TO_GROUPS[v.id],
+  };
+}
+
+/**
+ * @deprecated Replaced by scoreCareerMatch which uses the vocation's
+ * normalized strength directly. Kept only to avoid breaking imports
+ * during refactor — remove once callers are migrated.
  */
 export function scoreVocationFromGroups(
   vocationId: TalentVocationId,

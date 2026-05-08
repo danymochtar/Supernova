@@ -8,6 +8,8 @@ import { TopBar } from '@/components/layout/TopBar';
 import { UploadResumeForm } from '@/components/talents/UploadResumeForm';
 import { CareerActionsBar } from '@/components/talents/CareerActionsBar';
 import { listCareerEntries } from '@/lib/db/repositories/career';
+import { buildCoreProfile } from '@/lib/numerology';
+import { rateVocations, scoreCareerMatch, talentDistribution } from '@/lib/numerology/talents';
 import { deleteAllCareerAction, uploadResumeAction } from './actions';
 
 export const dynamic = 'force-dynamic';
@@ -50,7 +52,18 @@ export default async function CareerPage({ params }: { params: { locale: string 
   const profile = await getProfileByUserId(session.user.id);
   if (!profile) redirect(`/${locale}/welcome`);
 
-  const entries = await listCareerEntries(session.user.id);
+  // Recompute matchScore live from each entry's vocationId so changes
+  // to the scoring rule take effect without forcing a re-upload, and
+  // so the per-role + aggregate scores stay consistent with the
+  // vocation rating shown on /talents.
+  const core = buildCoreProfile(profile.fullName, profile.dob);
+  const dist = talentDistribution(profile.fullName, core);
+  const vocationResults = rateVocations(dist.slices);
+  const rawEntries = await listCareerEntries(session.user.id);
+  const entries = rawEntries.map((e) => ({
+    ...e,
+    matchScore: scoreCareerMatch(e.vocationId, vocationResults).score,
+  }));
 
   // Aggregate match — average across all entries.
   const avgMatch =
@@ -119,12 +132,11 @@ export default async function CareerPage({ params }: { params: { locale: string 
 
             {/* Per-role timeline */}
             <section className="space-y-3">
-              <div className="flex items-baseline justify-between gap-3">
+              <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
                 <h2 className="text-lg font-semibold">{t('careerTimelineTitle')}</h2>
                 <CareerActionsBar
                   deleteAction={deleteAllCareerAction}
                   labels={{
-                    reupload: t('careerReuploadHint'),
                     deleteAll: t('careerDeleteAll'),
                     deleteConfirm: t('careerDeleteConfirm'),
                   }}
