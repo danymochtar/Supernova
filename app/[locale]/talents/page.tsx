@@ -4,23 +4,23 @@ import { getTranslations } from 'next-intl/server';
 import { ArrowRight, Briefcase, ChevronRight, Sparkles, Star } from 'lucide-react';
 import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
-import { listCareerEntries } from '@/lib/db/repositories/career';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { formatMonthShort } from '@/lib/i18n/date';
 import { buildCoreProfile } from '@/lib/numerology';
 import {
   rateTalentGroups,
   rateVocations,
-  scoreCareerMatch,
+  ratingBucket,
   talentDistribution,
+  VOCATION_COLOR,
   type TalentRating,
 } from '@/lib/numerology/talents';
+import { loadCareerEntriesScored } from '@/lib/numerology/career';
 import idMeanings from '@/content/meanings/id.json';
 import enMeanings from '@/content/meanings/en.json';
 
 export const dynamic = 'force-dynamic';
 
-/** Branded colors per digit. Mirrors the WN palette so the chart at the
- *  bottom and the hero chips read with the same visual language. */
 const DIGIT_COLOR: Record<number, string> = {
   1: '#ef4444',
   2: '#f97316',
@@ -54,29 +54,72 @@ const RATING_STYLE: Record<TalentRating, { dot: string; text: string; ring: stri
   },
 };
 
-const VOCATION_COLOR: Record<string, string> = {
-  business: '#ec4899',
-  medicineEducation: '#06b6d4',
-  legalPolitics: '#a855f7',
-  artsDesign: '#eab308',
-  salesPr: '#f97316',
-  scienceEngineering: '#3b82f6',
-  agriculture: '#84cc16',
+const RATING_LABEL_KEY: Record<TalentRating, string> = {
+  high: 'ratingHigh',
+  medium: 'ratingMedium',
+  low: 'ratingLow',
 };
 
-const MONTHS_ID = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
-const MONTHS_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-function fmtMonth(d: Date | null, locale: Locale): string {
-  if (!d) return '';
-  const months = locale === 'id' ? MONTHS_ID : MONTHS_EN;
-  return `${months[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+function StrengthBar({
+  strength,
+  barClass,
+  trackClass = 'h-1.5',
+  minWidth = 4,
+}: {
+  strength: number;
+  barClass: string;
+  trackClass?: string;
+  minWidth?: number;
+}) {
+  return (
+    <div
+      className={`bg-muted/50 ${trackClass} w-full overflow-hidden rounded-full`}
+      aria-hidden
+    >
+      <div
+        className={`h-full rounded-full transition-all ${barClass}`}
+        style={{ width: `${Math.max(strength, minWidth)}%` }}
+      />
+    </div>
+  );
 }
 
-function ratingBucket(score: number): TalentRating {
-  if (score >= 70) return 'high';
-  if (score >= 45) return 'medium';
-  return 'low';
+function RatingCard({
+  rating,
+  strength,
+  title,
+  subTraits,
+  body,
+  ratingLabel,
+}: {
+  rating: TalentRating;
+  strength: number;
+  title: string;
+  subTraits: string;
+  body: string;
+  ratingLabel: string;
+}) {
+  const style = RATING_STYLE[rating];
+  return (
+    <article
+      className={`border-border ring-1 ${style.ring} rounded-2xl border bg-white/40 p-5 dark:bg-neutral-900/40`}
+    >
+      <header className="mb-3 flex items-center justify-between gap-3">
+        <h3 className="text-base font-semibold">{title}</h3>
+        <span
+          className={`inline-flex items-center gap-1.5 text-xs font-semibold ${style.text}`}
+        >
+          <span className={`h-2 w-2 rounded-full ${style.dot}`} aria-hidden />
+          {ratingLabel}
+        </span>
+      </header>
+      <div className="mb-3">
+        <StrengthBar strength={strength} barClass={style.bar} />
+      </div>
+      <p className="text-muted-foreground mb-3 text-xs leading-relaxed">{subTraits}</p>
+      <p className="text-sm leading-relaxed text-neutral-800 dark:text-neutral-200">{body}</p>
+    </article>
+  );
 }
 
 export default async function TalentsPage({ params }: { params: { locale: string } }) {
@@ -91,27 +134,13 @@ export default async function TalentsPage({ params }: { params: { locale: string
 
   const core = buildCoreProfile(profile.fullName, profile.dob);
   const dist = talentDistribution(profile.fullName, core);
+  const groupRatings = rateTalentGroups(dist.slices).sort((a, b) => b.score - a.score);
+  const vocationRatings = rateVocations(dist.slices).sort((a, b) => b.score - a.score);
 
-  const groupRatings = [...rateTalentGroups(dist.slices)].sort((a, b) => b.score - a.score);
-  const vocationRatings = [...rateVocations(dist.slices)].sort((a, b) => b.score - a.score);
-
-  // Recompute career match scores live from the role's vocationId
-  // against the current vocation ratings. The DB stores a snapshot
-  // taken at upload time, but the scoring rule has evolved since then
-  // and we want changes to take effect without forcing the user to
-  // re-upload. Live computation also guarantees the scores agree with
-  // the vocation rating shown in the hero.
-  const rawCareerEntries = await listCareerEntries(session.user.id);
-  const careerEntries = rawCareerEntries.map((e) => ({
-    ...e,
-    matchScore: scoreCareerMatch(e.vocationId, vocationRatings).score,
-  }));
-  const avgCareerMatch =
-    careerEntries.length > 0
-      ? Math.round(
-          careerEntries.reduce((s, e) => s + e.matchScore, 0) / careerEntries.length,
-        )
-      : 0;
+  const { entries: careerEntries, avgScore: avgCareerMatch } = await loadCareerEntriesScored(
+    session.user.id,
+    vocationRatings,
+  );
   const careerPreview = careerEntries.slice(0, 3);
 
   const meanings = (locale === 'id' ? idMeanings : enMeanings) as Record<string, string>;
@@ -119,8 +148,7 @@ export default async function TalentsPage({ params }: { params: { locale: string
     return meanings[`talent:${digit}:${side}`] ?? null;
   }
 
-  // Top-3 group titles for the hero summary.
-  const topGroupTitles = groupRatings.slice(0, 3).map((g) => t(`groups.${g.id}.title`));
+  const top3Groups = groupRatings.slice(0, 3);
   const topVocation = vocationRatings[0];
   const maxChartPct = Math.max(1, ...dist.slices.map((s) => s.percentage));
 
@@ -134,82 +162,57 @@ export default async function TalentsPage({ params }: { params: { locale: string
         <p className="text-muted-foreground text-sm">{t('subtitle')}</p>
       </header>
 
-      {/* HERO SUMMARY — at-a-glance read of who the user is talent-wise.
-        * No raw percentages here, just the top three group names + the
-        * dominant digits as colored chips + the user's strongest career
-        * field. Acts as the value-led entry point so the page doesn't
-        * open with a chart the user has to interpret. */}
-      <section className="border-primary/40 from-primary/10 ring-primary/20 overflow-hidden rounded-3xl border-2 bg-gradient-to-br to-accent/15 p-6 ring-1 dark:to-accent/15">
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <p className="text-primary text-[11px] font-semibold uppercase tracking-[0.18em]">
-              {t('heroEyebrow')}
-            </p>
-            <h2 className="font-serif text-xl font-semibold leading-tight tracking-tight sm:text-2xl">
-              {topGroupTitles.length > 0
-                ? t('heroTitleWithTop', {
-                    top: topGroupTitles[0] ?? '',
-                  })
-                : t('heroTitleFallback')}
-            </h2>
-          </div>
+      <section className="border-primary/40 from-primary/10 ring-primary/20 space-y-4 overflow-hidden rounded-3xl border-2 bg-gradient-to-br to-accent/15 p-6 ring-1 dark:to-accent/15">
+        <div className="space-y-2">
+          <p className="text-primary text-[11px] font-semibold uppercase tracking-[0.18em]">
+            {t('heroEyebrow')}
+          </p>
+          <h2 className="font-serif text-xl font-semibold leading-tight tracking-tight sm:text-2xl">
+            {top3Groups.length > 0
+              ? t('heroTitleWithTop', { top: t(`groups.${top3Groups[0]!.id}.title`) })
+              : t('heroTitleFallback')}
+          </h2>
+        </div>
 
-          {/* Top 3 talent groups as ranked rows. */}
-          {groupRatings.length > 0 ? (
-            <ol className="space-y-2">
-              {groupRatings.slice(0, 3).map((g, i) => {
-                const style = RATING_STYLE[g.rating];
-                return (
-                  <li key={g.id} className="flex items-center gap-3">
-                    <span className="text-primary font-mono w-5 shrink-0 text-xs font-semibold tabular-nums">
-                      #{i + 1}
-                    </span>
-                    <span className="min-w-0 flex-1 truncate text-sm font-medium">
-                      {t(`groups.${g.id}.title`)}
-                    </span>
-                    <div
-                      className="bg-muted/50 hidden h-1.5 w-32 overflow-hidden rounded-full sm:block"
-                      aria-hidden
-                    >
-                      <div
-                        className={`h-full rounded-full ${style.bar}`}
-                        style={{ width: `${Math.max(g.strength, 6)}%` }}
-                      />
-                    </div>
-                  </li>
-                );
-              })}
-            </ol>
-          ) : null}
-
-          {/* Dominant digits as colored circles + top vocation. */}
-          <div className="border-border/40 flex flex-wrap items-center gap-3 border-t pt-4">
-            <div className="flex items-center gap-1.5">
-              {dist.dominant.map((d) => (
-                <span
-                  key={d}
-                  className="font-serif inline-flex h-8 w-8 items-center justify-center rounded-full text-sm font-semibold text-white"
-                  style={{ backgroundColor: DIGIT_COLOR[d] }}
-                >
-                  {d}
+        {top3Groups.length > 0 ? (
+          <ol className="space-y-2">
+            {top3Groups.map((g, i) => (
+              <li key={g.id} className="flex items-center gap-3">
+                <span className="text-primary font-mono w-5 shrink-0 text-xs font-semibold tabular-nums">
+                  #{i + 1}
                 </span>
-              ))}
+                <span className="min-w-0 flex-1 truncate text-sm font-medium">
+                  {t(`groups.${g.id}.title`)}
+                </span>
+                <div className="hidden w-32 sm:block">
+                  <StrengthBar strength={g.strength} barClass={RATING_STYLE[g.rating].bar} minWidth={6} />
+                </div>
+              </li>
+            ))}
+          </ol>
+        ) : null}
+
+        <div className="border-border/40 flex flex-wrap items-center gap-3 border-t pt-4">
+          <div className="flex items-center gap-1.5">
+            {dist.dominant.map((d) => (
+              <span
+                key={d}
+                className="font-serif inline-flex h-8 w-8 items-center justify-center rounded-full text-sm font-semibold text-white"
+                style={{ backgroundColor: DIGIT_COLOR[d] }}
+              >
+                {d}
+              </span>
+            ))}
+          </div>
+          {topVocation ? (
+            <div className="text-muted-foreground flex items-center gap-1.5 text-xs">
+              <Star className="text-amber-500 h-3.5 w-3.5" aria-hidden />
+              <span>{t('heroTopVocation', { name: t(`vocations.${topVocation.id}.title`) })}</span>
             </div>
-            {topVocation ? (
-              <div className="text-muted-foreground flex items-center gap-1.5 text-xs">
-                <Star className="text-amber-500 h-3.5 w-3.5" aria-hidden />
-                <span>
-                  {t('heroTopVocation', { name: t(`vocations.${topVocation.id}.title`) })}
-                </span>
-              </div>
-            ) : null}
-          </div>
+          ) : null}
         </div>
       </section>
 
-      {/* CAREER section — moved up. Shows real preview when the user has
-        * uploaded a résumé, falls back to a CTA card otherwise. This is
-        * the value-led core of /talents per the user's intent. */}
       <section className="space-y-3">
         <div className="flex items-baseline justify-between gap-3">
           <h2 className="text-lg font-semibold">{t('careerTitle')}</h2>
@@ -240,7 +243,6 @@ export default async function TalentsPage({ params }: { params: { locale: string
           </Link>
         ) : (
           <div className="space-y-3">
-            {/* Aggregate */}
             <div className="border-border rounded-2xl border bg-gradient-to-br from-primary/5 to-accent/5 p-5 dark:from-primary/15 dark:to-accent/15">
               <div className="flex items-baseline justify-between gap-3">
                 <div>
@@ -256,23 +258,20 @@ export default async function TalentsPage({ params }: { params: { locale: string
                   {t('careerCount', { n: careerEntries.length })}
                 </div>
               </div>
-              <div
-                className="bg-muted/50 mt-3 h-2 w-full overflow-hidden rounded-full"
-                aria-hidden
-              >
-                <div
-                  className={`h-full rounded-full ${RATING_STYLE[ratingBucket(avgCareerMatch)].bar}`}
-                  style={{ width: `${Math.max(avgCareerMatch, 4)}%` }}
+              <div className="mt-3">
+                <StrengthBar
+                  strength={avgCareerMatch}
+                  barClass={RATING_STYLE[ratingBucket(avgCareerMatch)].bar}
+                  trackClass="h-2"
                 />
               </div>
             </div>
 
-            {/* Top 3 most-recent roles preview. */}
             <ul className="space-y-2">
               {careerPreview.map((e) => {
                 const bucket = ratingBucket(e.matchScore);
                 const style = RATING_STYLE[bucket];
-                const color = VOCATION_COLOR[e.vocationId] ?? '#888';
+                const color = VOCATION_COLOR[e.vocationId as keyof typeof VOCATION_COLOR] ?? '#888';
                 const score = Math.round(e.matchScore);
                 return (
                   <li
@@ -289,20 +288,12 @@ export default async function TalentsPage({ params }: { params: { locale: string
                       <p className="text-muted-foreground truncate text-xs">
                         {e.company ? `${e.company} · ` : ''}
                         {e.startDate || e.endDate
-                          ? `${fmtMonth(e.startDate, locale)} — ${
-                              e.endDate ? fmtMonth(e.endDate, locale) : t('careerCurrent')
+                          ? `${formatMonthShort(e.startDate, locale)} — ${
+                              e.endDate ? formatMonthShort(e.endDate, locale) : t('careerCurrent')
                             }`
                           : ''}
                       </p>
-                      <div
-                        className="bg-muted/50 h-1 w-full overflow-hidden rounded-full"
-                        aria-hidden
-                      >
-                        <div
-                          className={`h-full rounded-full ${style.bar}`}
-                          style={{ width: `${Math.max(score, 4)}%` }}
-                        />
-                      </div>
+                      <StrengthBar strength={score} barClass={style.bar} trackClass="h-1" />
                     </div>
                     <span className={`shrink-0 text-xs font-semibold tabular-nums ${style.text}`}>
                       {score}%
@@ -315,98 +306,46 @@ export default async function TalentsPage({ params }: { params: { locale: string
         )}
       </section>
 
-      {/* TALENT GROUPS — 11 areas, sorted dominant first. */}
       <section className="space-y-3 pt-2">
         <div className="space-y-1">
           <h2 className="text-lg font-semibold">{t('groupsTitle')}</h2>
           <p className="text-muted-foreground text-sm">{t('groupsHint')}</p>
         </div>
         <div className="space-y-3">
-          {groupRatings.map((r) => {
-            const style = RATING_STYLE[r.rating];
-            const ratingLabel = t(
-              r.rating === 'high' ? 'ratingHigh' : r.rating === 'medium' ? 'ratingMedium' : 'ratingLow',
-            );
-            return (
-              <article
-                key={r.id}
-                className={`border-border ring-1 ${style.ring} rounded-2xl border bg-white/40 p-5 dark:bg-neutral-900/40`}
-              >
-                <header className="mb-3 flex items-center justify-between gap-3">
-                  <h3 className="text-base font-semibold">{t(`groups.${r.id}.title`)}</h3>
-                  <span className={`inline-flex items-center gap-1.5 text-xs font-semibold ${style.text}`}>
-                    <span className={`h-2 w-2 rounded-full ${style.dot}`} aria-hidden />
-                    {ratingLabel}
-                  </span>
-                </header>
-                <div
-                  className="bg-muted/50 mb-3 h-1.5 w-full overflow-hidden rounded-full"
-                  aria-hidden
-                >
-                  <div
-                    className={`h-full rounded-full transition-all ${style.bar}`}
-                    style={{ width: `${Math.max(r.strength, 4)}%` }}
-                  />
-                </div>
-                <p className="text-muted-foreground mb-3 text-xs leading-relaxed">
-                  {t(`groups.${r.id}.subTraits`)}
-                </p>
-                <p className="text-sm leading-relaxed text-neutral-800 dark:text-neutral-200">
-                  {t(`groups.${r.id}.${r.rating}`)}
-                </p>
-              </article>
-            );
-          })}
+          {groupRatings.map((r) => (
+            <RatingCard
+              key={r.id}
+              rating={r.rating}
+              strength={r.strength}
+              title={t(`groups.${r.id}.title`)}
+              subTraits={t(`groups.${r.id}.subTraits`)}
+              body={t(`groups.${r.id}.${r.rating}`)}
+              ratingLabel={t(RATING_LABEL_KEY[r.rating])}
+            />
+          ))}
         </div>
       </section>
 
-      {/* VOCATIONS — 7 fields, sorted dominant first. */}
       <section className="space-y-3 pt-2">
         <div className="space-y-1">
           <h2 className="text-lg font-semibold">{t('vocationsTitle')}</h2>
           <p className="text-muted-foreground text-sm">{t('vocationsHint')}</p>
         </div>
         <div className="space-y-3">
-          {vocationRatings.map((r) => {
-            const style = RATING_STYLE[r.rating];
-            const ratingLabel = t(
-              r.rating === 'high' ? 'ratingHigh' : r.rating === 'medium' ? 'ratingMedium' : 'ratingLow',
-            );
-            return (
-              <article
-                key={r.id}
-                className={`border-border ring-1 ${style.ring} rounded-2xl border bg-white/40 p-5 dark:bg-neutral-900/40`}
-              >
-                <header className="mb-3 flex items-center justify-between gap-3">
-                  <h3 className="text-base font-semibold">{t(`vocations.${r.id}.title`)}</h3>
-                  <span className={`inline-flex items-center gap-1.5 text-xs font-semibold ${style.text}`}>
-                    <span className={`h-2 w-2 rounded-full ${style.dot}`} aria-hidden />
-                    {ratingLabel}
-                  </span>
-                </header>
-                <div
-                  className="bg-muted/50 mb-3 h-1.5 w-full overflow-hidden rounded-full"
-                  aria-hidden
-                >
-                  <div
-                    className={`h-full rounded-full transition-all ${style.bar}`}
-                    style={{ width: `${Math.max(r.strength, 4)}%` }}
-                  />
-                </div>
-                <p className="text-muted-foreground mb-3 text-xs leading-relaxed">
-                  {t(`vocations.${r.id}.subTraits`)}
-                </p>
-                <p className="text-sm leading-relaxed text-neutral-800 dark:text-neutral-200">
-                  {t(`vocations.${r.id}.${r.rating}`)}
-                </p>
-              </article>
-            );
-          })}
+          {vocationRatings.map((r) => (
+            <RatingCard
+              key={r.id}
+              rating={r.rating}
+              strength={r.strength}
+              title={t(`vocations.${r.id}.title`)}
+              subTraits={t(`vocations.${r.id}.subTraits`)}
+              body={t(`vocations.${r.id}.${r.rating}`)}
+              ratingLabel={t(RATING_LABEL_KEY[r.rating])}
+            />
+          ))}
         </div>
       </section>
 
-      {/* DETAIL — chart + per-digit. Wrapped in a <details> so it's
-        * collapsed by default; users who want the foundation can expand. */}
       <details className="border-border group rounded-2xl border bg-white/30 dark:bg-neutral-900/30">
         <summary className="press-soft flex cursor-pointer list-none items-center justify-between gap-2 px-5 py-4 [&::-webkit-details-marker]:hidden">
           <div className="space-y-0.5">
@@ -420,7 +359,6 @@ export default async function TalentsPage({ params }: { params: { locale: string
         </summary>
 
         <div className="border-border/60 space-y-6 border-t px-5 py-5">
-          {/* Numerology proportional chart */}
           <div className="space-y-2">
             <p className="text-muted-foreground text-[11px] font-semibold uppercase tracking-[0.18em]">
               {t('chartTitle')}
@@ -460,14 +398,14 @@ export default async function TalentsPage({ params }: { params: { locale: string
             <p className="text-muted-foreground text-xs leading-relaxed">{t('explainer')}</p>
           </div>
 
-          {/* Per-digit traits */}
           <div className="space-y-2">
             <p className="text-muted-foreground text-[11px] font-semibold uppercase tracking-[0.18em]">
               {t('traitsTitle')}
             </p>
             <p className="text-muted-foreground text-xs leading-relaxed">{t('traitsHint')}</p>
             <div className="space-y-2">
-              {[...dist.slices]
+              {dist.slices
+                .slice()
                 .sort((a, b) => a.rank - b.rank)
                 .map((s) => {
                   const positive = trait(s.digit, 'positive');

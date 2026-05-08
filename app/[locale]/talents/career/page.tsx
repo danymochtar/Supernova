@@ -4,42 +4,55 @@ import { Briefcase, Sparkles } from 'lucide-react';
 import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { formatMonthShort } from '@/lib/i18n/date';
 import { TopBar } from '@/components/layout/TopBar';
 import { UploadResumeForm } from '@/components/talents/UploadResumeForm';
 import { CareerActionsBar } from '@/components/talents/CareerActionsBar';
-import { listCareerEntries } from '@/lib/db/repositories/career';
 import { buildCoreProfile } from '@/lib/numerology';
-import { rateVocations, scoreCareerMatch, talentDistribution } from '@/lib/numerology/talents';
+import {
+  rateVocations,
+  ratingBucket,
+  talentDistribution,
+  VOCATION_COLOR,
+  type TalentRating,
+} from '@/lib/numerology/talents';
+import { loadCareerEntriesScored } from '@/lib/numerology/career';
 import { deleteAllCareerAction, uploadResumeAction } from './actions';
 
 export const dynamic = 'force-dynamic';
 
-const VOCATION_COLOR: Record<string, string> = {
-  business: '#ec4899',
-  medicineEducation: '#06b6d4',
-  legalPolitics: '#a855f7',
-  artsDesign: '#eab308',
-  salesPr: '#f97316',
-  scienceEngineering: '#3b82f6',
-  agriculture: '#84cc16',
+const RATING_LABEL_KEY: Record<TalentRating, string> = {
+  high: 'ratingHigh',
+  medium: 'ratingMedium',
+  low: 'ratingLow',
 };
 
-const MONTHS_ID = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
-const MONTHS_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const RATING_DOT: Record<TalentRating, string> = {
+  high: 'bg-emerald-500',
+  medium: 'bg-amber-500',
+  low: 'bg-neutral-400',
+};
 
-function fmtMonth(d: Date | null, locale: Locale): string {
-  if (!d) return '';
-  const months = locale === 'id' ? MONTHS_ID : MONTHS_EN;
-  return `${months[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
-}
+const RATING_TEXT: Record<TalentRating, string> = {
+  high: 'text-emerald-700 dark:text-emerald-300',
+  medium: 'text-amber-700 dark:text-amber-300',
+  low: 'text-muted-foreground',
+};
 
-// matchScore is now an absolute 0-100 average of strength across the
-// trait groups feeding the role's vocation. Pick thresholds that read
-// intuitively on that scale.
-function ratingBucket(score: number): 'high' | 'medium' | 'low' {
-  if (score >= 70) return 'high';
-  if (score >= 45) return 'medium';
-  return 'low';
+const AGG_KEY: Record<TalentRating, string> = {
+  high: 'careerAggHigh',
+  medium: 'careerAggMedium',
+  low: 'careerAggLow',
+};
+
+function parseInsightGroups(insight: string | null | undefined): string[] {
+  if (!insight) return [];
+  try {
+    const parsed = JSON.parse(insight);
+    return Array.isArray(parsed?.groups) ? (parsed.groups as string[]) : [];
+  } catch {
+    return [];
+  }
 }
 
 export default async function CareerPage({ params }: { params: { locale: string } }) {
@@ -52,24 +65,13 @@ export default async function CareerPage({ params }: { params: { locale: string 
   const profile = await getProfileByUserId(session.user.id);
   if (!profile) redirect(`/${locale}/welcome`);
 
-  // Recompute matchScore live from each entry's vocationId so changes
-  // to the scoring rule take effect without forcing a re-upload, and
-  // so the per-role + aggregate scores stay consistent with the
-  // vocation rating shown on /talents.
   const core = buildCoreProfile(profile.fullName, profile.dob);
   const dist = talentDistribution(profile.fullName, core);
   const vocationResults = rateVocations(dist.slices);
-  const rawEntries = await listCareerEntries(session.user.id);
-  const entries = rawEntries.map((e) => ({
-    ...e,
-    matchScore: scoreCareerMatch(e.vocationId, vocationResults).score,
-  }));
-
-  // Aggregate match — average across all entries.
-  const avgMatch =
-    entries.length > 0
-      ? Math.round(entries.reduce((s, e) => s + e.matchScore, 0) / entries.length)
-      : 0;
+  const { entries, avgScore: avgMatch } = await loadCareerEntriesScored(
+    session.user.id,
+    vocationResults,
+  );
 
   return (
     <main className="container max-w-3xl px-4 sm:px-6">
@@ -103,7 +105,6 @@ export default async function CareerPage({ params }: { params: { locale: string 
           </section>
         ) : (
           <>
-            {/* Aggregate */}
             <section className="border-border rounded-2xl border bg-gradient-to-br from-primary/5 to-accent/5 p-5 dark:from-primary/15 dark:to-accent/15">
               <div className="flex items-baseline justify-between gap-3">
                 <div>
@@ -122,15 +123,10 @@ export default async function CareerPage({ params }: { params: { locale: string 
                 </div>
               </div>
               <p className="text-muted-foreground mt-3 text-sm leading-relaxed">
-                {avgMatch >= 70
-                  ? t('careerAggHigh')
-                  : avgMatch >= 45
-                    ? t('careerAggMedium')
-                    : t('careerAggLow')}
+                {t(AGG_KEY[ratingBucket(avgMatch)])}
               </p>
             </section>
 
-            {/* Per-role timeline */}
             <section className="space-y-3">
               <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
                 <h2 className="text-lg font-semibold">{t('careerTimelineTitle')}</h2>
@@ -144,26 +140,8 @@ export default async function CareerPage({ params }: { params: { locale: string 
               </div>
               {entries.map((e) => {
                 const bucket = ratingBucket(e.matchScore);
-                const color = VOCATION_COLOR[e.vocationId] ?? '#888';
-                const ratingLabel = t(
-                  bucket === 'high'
-                    ? 'ratingHigh'
-                    : bucket === 'medium'
-                      ? 'ratingMedium'
-                      : 'ratingLow',
-                );
-                const dot =
-                  bucket === 'high'
-                    ? 'bg-emerald-500'
-                    : bucket === 'medium'
-                      ? 'bg-amber-500'
-                      : 'bg-neutral-400';
-                const ratingText =
-                  bucket === 'high'
-                    ? 'text-emerald-700 dark:text-emerald-300'
-                    : bucket === 'medium'
-                      ? 'text-amber-700 dark:text-amber-300'
-                      : 'text-muted-foreground';
+                const color = VOCATION_COLOR[e.vocationId as keyof typeof VOCATION_COLOR] ?? '#888';
+                const insightGroups = parseInsightGroups(e.insight);
                 return (
                   <article
                     key={e.id}
@@ -177,10 +155,10 @@ export default async function CareerPage({ params }: { params: { locale: string 
                         ) : null}
                       </div>
                       <span
-                        className={`inline-flex items-center gap-1.5 text-xs font-semibold ${ratingText}`}
+                        className={`inline-flex items-center gap-1.5 text-xs font-semibold ${RATING_TEXT[bucket]}`}
                       >
-                        <span className={`h-2 w-2 rounded-full ${dot}`} aria-hidden />
-                        {ratingLabel}
+                        <span className={`h-2 w-2 rounded-full ${RATING_DOT[bucket]}`} aria-hidden />
+                        {t(RATING_LABEL_KEY[bucket])}
                         <span className="text-muted-foreground tabular-nums">
                           · {Math.round(e.matchScore)}%
                         </span>
@@ -195,9 +173,9 @@ export default async function CareerPage({ params }: { params: { locale: string 
                       </span>
                       {e.startDate || e.endDate ? (
                         <span className="tabular-nums">
-                          {fmtMonth(e.startDate, locale)}
+                          {formatMonthShort(e.startDate, locale)}
                           {' — '}
-                          {e.endDate ? fmtMonth(e.endDate, locale) : t('careerCurrent')}
+                          {e.endDate ? formatMonthShort(e.endDate, locale) : t('careerCurrent')}
                         </span>
                       ) : null}
                     </div>
@@ -206,30 +184,12 @@ export default async function CareerPage({ params }: { params: { locale: string 
                         {e.description}
                       </p>
                     ) : null}
-                    {(() => {
-                      // Show which 11-group talent dimensions fed this
-                      // role's score, so the user understands WHY a
-                      // role landed where it did rather than just
-                      // seeing a bare percentage.
-                      let groups: string[] = [];
-                      try {
-                        const parsed = e.insight ? JSON.parse(e.insight) : null;
-                        if (parsed && Array.isArray(parsed.groups)) {
-                          groups = parsed.groups as string[];
-                        }
-                      } catch {
-                        /* old rows or malformed JSON — skip silently */
-                      }
-                      if (groups.length === 0) return null;
-                      return (
-                        <p className="text-muted-foreground mt-3 text-xs leading-relaxed">
-                          <span className="font-medium">{t('careerWhyLabel')}:</span>{' '}
-                          {groups
-                            .map((g) => t(`groups.${g}.title`))
-                            .join(' · ')}
-                        </p>
-                      );
-                    })()}
+                    {insightGroups.length > 0 ? (
+                      <p className="text-muted-foreground mt-3 text-xs leading-relaxed">
+                        <span className="font-medium">{t('careerWhyLabel')}:</span>{' '}
+                        {insightGroups.map((g) => t(`groups.${g}.title`)).join(' · ')}
+                      </p>
+                    ) : null}
                   </article>
                 );
               })}

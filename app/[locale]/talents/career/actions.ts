@@ -44,14 +44,7 @@ export async function uploadResumeAction(formData: FormData): Promise<UploadResu
   if (!parsed) return { ok: false, error: 'parse_failed' };
   if (parsed.roles.length === 0) return { ok: false, error: 'no_roles' };
 
-  // Score each role against the user's vocation strength — same
-  // arithmetic as the hero "best-matched field" rating, so the two
-  // surfaces always tell a consistent story (top vocation = high match
-  // for any role classified into that field). The contributing groups
-  // are stored as `insight` purely so the per-role view can surface
-  // "cocok karena kuat di X & Y" — they no longer drive the score.
-  // matchScore is recomputed live on read in the pages too, so changes
-  // to the scoring rule take effect without forcing a re-upload.
+  // matchScore stored here is the upload-time snapshot; pages recompute live on read.
   const core = buildCoreProfile(profile.fullName, profile.dob);
   const dist = talentDistribution(profile.fullName, core);
   const vocationResults = rateVocations(dist.slices);

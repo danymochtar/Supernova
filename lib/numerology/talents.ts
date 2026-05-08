@@ -433,19 +433,7 @@ export function rateVocations(slices: TalentSlice[]): TalentVocationResult[] {
   return assignRatingsAndStrength(raw);
 }
 
-/**
- * Mapping from each vocation field → the trait groups (from the 11)
- * that meaningfully feed into success in that field. Used for career
- * match scoring: a "business" role isn't just measured against the
- * abstract "business" vocation rating; it's measured against the
- * specific groups (Individualism, Practical, Perseverance, etc.)
- * that someone in a leadership / management role actually leans on.
- *
- * The groups picked here are the ones traditionally associated with
- * the field — not numerology dogma, just a reasonable mapping that
- * lets a role's match score reflect ALL the relevant strengths a
- * user has, not just one weighted-average abstraction.
- */
+// Trait groups that each vocation surfaces in the "cocok karena kuat di X · Y" explanation.
 const VOCATION_TO_GROUPS: Record<TalentVocationId, TalentGroupId[]> = {
   business: ['individualism', 'practical', 'perseverance', 'workWithOthers'],
   medicineEducation: ['humanitarian', 'sensitive', 'generousCaring', 'innerSelf'],
@@ -457,27 +445,12 @@ const VOCATION_TO_GROUPS: Record<TalentVocationId, TalentGroupId[]> = {
 };
 
 export interface VocationMatch {
-  /** 0-100 match score = the user's strength on that vocation field,
-   *  normalized within the 7 vocations (top vocation = 100, weakest = 0).
-   *  Identical scale + arithmetic as the hero "best-matched field" rating
-   *  so a user whose top vocation is Business sees Business roles as a
-   *  high match — never the cognitive-dissonance case where the hero
-   *  says "Business is your strongest" but career detail says "your
-   *  match is low". */
+  /** 0-100 — the user's vocation strength, same scale as the hero's
+   *  "best-matched field" rating so the two surfaces never disagree. */
   score: number;
-  /** Trait groups that contribute to the field, in display order. Used
-   *  for the "cocok karena kuat di X · Y" explanation under each role. */
   contributingGroups: TalentGroupId[];
 }
 
-/**
- * Score a single role's career match against the user's profile. The
- * score is the user's strength on the role's vocation field (so it
- * always agrees with the vocation rating shown elsewhere). Contributing
- * groups are the curated trait groups feeding that field, used purely
- * as the "why" explanation — not as the score arithmetic, because the
- * group-average produced numbers that contradicted the vocation rating.
- */
 export function scoreCareerMatch(
   vocationId: string,
   vocationResults: TalentVocationResult[],
@@ -490,22 +463,18 @@ export function scoreCareerMatch(
   };
 }
 
-/**
- * @deprecated Replaced by scoreCareerMatch which uses the vocation's
- * normalized strength directly. Kept only to avoid breaking imports
- * during refactor — remove once callers are migrated.
- */
-export function scoreVocationFromGroups(
-  vocationId: TalentVocationId,
-  groupResults: TalentGroupResult[],
-): VocationMatch {
-  const groups = VOCATION_TO_GROUPS[vocationId];
-  const byId = new Map(groupResults.map((r) => [r.id, r.strength]));
-  const strengths = groups.map((g) => byId.get(g) ?? 0);
-  if (strengths.length === 0) return { score: 0, contributingGroups: [] };
-  const avg = strengths.reduce((a, b) => a + b, 0) / strengths.length;
-  return {
-    score: Math.round(avg),
-    contributingGroups: groups,
-  };
+export function ratingBucket(score: number): TalentRating {
+  if (score >= 70) return 'high';
+  if (score >= 45) return 'medium';
+  return 'low';
 }
+
+export const VOCATION_COLOR: Record<TalentVocationId, string> = {
+  business: '#ec4899',
+  medicineEducation: '#06b6d4',
+  legalPolitics: '#a855f7',
+  artsDesign: '#eab308',
+  salesPr: '#f97316',
+  scienceEngineering: '#3b82f6',
+  agriculture: '#84cc16',
+};
