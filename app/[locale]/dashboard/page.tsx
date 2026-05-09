@@ -154,15 +154,8 @@ export default async function DashboardPage({
     switch (id) {
       case 'reading':
         return (
-          <div key={id} className="space-y-2">
-            <DateBrowser
-              selectedIso={selectedIso}
-              todayIso={todayIso}
-              maxIso={maxIso}
-              pickLabel={tReading('pickDate')}
-              backLabel={tReading('backToToday')}
-            />
             <DailyReadingView
+              key={id}
               body={readingBody}
             dateLabel={formatDateLong(ctx, locale)}
             dayTitle={meaningFor('personalDayTitle', cycles.personalDay, locale) ?? ''}
@@ -201,8 +194,7 @@ export default async function DashboardPage({
               affirmation: tReading('affirmation'),
               fallback: tReading('fallback'),
             }}
-            />
-          </div>
+          />
         );
       case 'feedback':
         return showFeedbackPrompt ? (
@@ -292,7 +284,21 @@ export default async function DashboardPage({
       className="container flex max-w-3xl flex-col gap-6 px-4 pb-6 sm:px-6 sm:pb-10"
       style={{ paddingTop: 'calc(env(safe-area-inset-top) + 1.5rem)' }}
     >
-      <AppHeader locale={locale} settingsLabel={t('settingsLink')} />
+      <AppHeader
+        locale={locale}
+        settingsLabel={t('settingsLink')}
+        leading={
+          visible.has('reading') ? (
+            <DateBrowser
+              selectedIso={selectedIso}
+              todayIso={todayIso}
+              maxIso={maxIso}
+              pickLabel={tReading('pickDate')}
+              backLabel={tReading('backToToday')}
+            />
+          ) : null
+        }
+      />
 
       {layout.filter((w) => !w.hidden).map((w) => renderWidget(w.id))}
 
