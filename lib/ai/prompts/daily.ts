@@ -106,12 +106,12 @@ Format wajib:
 - Lalu satu baris kosong, lanjut sapaan singkat ke nama depan user (1 baris pendek).
 - Lanjut 2 paragraf prosa (total 140-220 kata) yang ngalir natural — bukan list-list per angka. Paragraf 1: nuansa hari itu secara keseluruhan, ketiga thread sudah terjalin di sini. Paragraf 2: saran praktis + satu hal yang perlu diwaspadai lembut, masih nge-blend ketiga angka (mis. 8 = domain finansial/karier; 7 = jangan terburu-buru put it off; 1 = jangan tunggu orang).
 - Tutup dengan satu kalimat afirmasi yang bisa diulang sepanjang hari, dipisah baris kosong sebelumnya.
-- Setelah afirmasi, baris kosong, lalu 3-5 bullet vibe-check spesifik buat hari itu yang reflect kombinasi angka — campur antara yang **cocok** dan yang **skip**. Format: \`+ Cocok buat ...\` untuk yang baik, \`- Skip ...\` untuk yang dihindari. Jangan generic — hubungin ke konteks nyata: bisnis, percakapan, romansa, finansial, sosialisasi, kerjaan, fisik, dst. Master/karmic compound harus reflect ke bullets-nya juga.
+- Setelah afirmasi, baris kosong, lalu 3-5 bullet vibe-check yang **PENDEK** (max 8 kata per bullet) — campur antara yang **cocok** dan yang **skip**. Format: \`+ Cocok: ...\` atau \`+ Lucky: ...\` untuk yang baik, \`- Skip: ...\` atau \`- Hindari: ...\` untuk yang dihindari. Spesifik tapi singkat — 1 baris doang per bullet, tanpa anak kalimat panjang.
   Contoh untuk PD 11 (psychic master) di PM 1:
-  + Cocok buat journaling atau ngobrol dalam soal arah karier
-  + Lucky day buat creative pitch
-  - Skip negosiasi finansial yang transaksional banget
-  - Hindari deep talk romantis yang bisa kerasa fragile
+  + Lucky buat creative pitch
+  + Cocok journaling soal arah karier
+  - Skip negosiasi finansial transaksional
+  - Hindari deep talk romantis fragile
 - Output prosa biasa setelah judul — TIDAK ada heading lagi, TIDAK ada angka di prosa, TIDAK ada label "Personal Day/Month/Year". Bullets pakai + dan - persis kayak format di atas, jangan ✓✗ atau emoji lain.`;
   }
   return `You are Supernova's numerology companion writing daily readings in clear, warm English.
@@ -161,12 +161,12 @@ Required format:
 - Then a blank line, then one short greeting using the user's first name (one line). Example: "Hi [Name], today feels like a fresh wind."
 - Then 2 prose paragraphs (140-220 words total) that flow naturally — not a list per number. Paragraph 1: the overall texture of the day, all three threads woven in. Paragraph 2: what's well-suited + one gentle thing to watch, still blending the three (e.g. 8 = financial/career domain; 7 = don't rush, put off if needed; 1 = don't wait on others).
 - End with a single affirmation sentence the user can repeat, separated by a blank line.
-- After the affirmation, blank line, then 3-5 specific vibe-check bullets reflecting the number combination — mixed **good for** and **skip**. Format: \`+ Good for ...\` for favorable, \`- Skip ...\` for avoid. Be specific — connect to real life (business, conversations, romance, finance, socializing, work, physical activity). Master/karmic compounds should be reflected in the bullets.
+- After the affirmation, blank line, then 3-5 **SHORT** vibe bullets (max 8 words each) — mixed **good for** and **skip**. Format: \`+ Good for ...\` or \`+ Lucky for ...\` for favorable, \`- Skip ...\` or \`- Avoid ...\` for unfavorable. Specific but punchy — one line per bullet, no compound clauses.
   Example for PD 11 (psychic master) in PM 1:
-  + Good for journaling or talking through career direction
-  + Lucky day for a creative pitch
-  - Skip transactional financial negotiations
-  - Avoid fragile romantic deep talks
+  + Lucky for a creative pitch
+  + Good for journaling on direction
+  - Skip transactional financial talks
+  - Avoid fragile romantic deep dives
 - Plain prose after the title — NO further headings, NO digits in prose, NO "Personal Day/Month/Year" labels. Bullets use + and - exactly as above; no ✓✗ or other emoji.`;
 }
 

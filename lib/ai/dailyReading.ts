@@ -63,13 +63,15 @@ export async function getOrGenerateDailyReading(
 
   const cached = await getReadingForLocalDay(userId, ctx.year, ctx.month, ctx.day);
   if (cached) {
-    // If the cached reading was generated in a different language than the
-    // user is currently using (typically because they just toggled the
-    // locale), regenerate so the dashboard chrome and the reading body
-    // speak the same language. Costs one extra LLM call per toggle, which
-    // is the right tradeoff — the alternative is the visible "mixed
-    // languages" experience users complain about.
-    if (cached.locale === profile.locale) return cached.body;
+    // Regenerate when (a) locale changed since cache or (b) the cached body
+    // lacks the new "# Title" + "+/- vibe bullet" format. Costs one extra
+    // LLM call but spares users a stale layout that doesn't match the rest
+    // of the dashboard.
+    const stale =
+      cached.locale !== profile.locale ||
+      !cached.body.trimStart().startsWith('#') ||
+      !/^[+-]\s+\S/m.test(cached.body);
+    if (!stale) return cached.body;
     await deleteReadingForLocalDay(userId, ctx.year, ctx.month, ctx.day);
   }
 
