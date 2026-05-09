@@ -131,10 +131,6 @@ function toView(row: ProfileRow): ProfileView {
   };
 }
 
-export async function updateDashboardLayout(userId: string, json: string): Promise<void> {
-  await prisma.profile.update({ where: { userId }, data: { dashboardLayout: json } });
-}
-
 export interface PreferenceUpdate {
   theme?: Theme;
   tone?: Tone;

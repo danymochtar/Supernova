@@ -1,7 +1,5 @@
 import { redirect } from 'next/navigation';
-import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
-import { Settings2 } from 'lucide-react';
 import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { isLocale, type Locale } from '@/lib/i18n/config';
@@ -26,8 +24,13 @@ import { getTurnsBetween } from '@/lib/db/repositories/qa';
 import { meaningFor } from '@/lib/numerology/meanings';
 import { getOrGenerateAboutMe } from '@/lib/ai/aboutMe';
 import { getOrGenerateDailyReading } from '@/lib/ai/dailyReading';
-import { parseLayout, type WidgetId } from '@/lib/dashboard/layout';
 import { submitFeedback } from './feedbackActions';
+
+type WidgetId = 'reading' | 'aboutMe' | 'karmic' | 'feedback';
+
+// Fixed dashboard widget order. The end-of-day feedback prompt sits last so
+// the more reference-heavy About Me + Karmic blocks aren't pushed down by it.
+const WIDGET_ORDER: WidgetId[] = ['reading', 'aboutMe', 'karmic', 'feedback'];
 
 const LONG_DAY_ID = ['MINGGU', 'SENIN', 'SELASA', 'RABU', 'KAMIS', 'JUMAT', 'SABTU'];
 const LONG_MONTH_ID = [
@@ -101,9 +104,6 @@ export default async function DashboardPage({
   const profile = await getProfileByUserId(session.user.id);
   if (!profile) redirect(`/${locale}/welcome`);
 
-  const layout = parseLayout(profile.dashboardLayout);
-  const visible = new Set<WidgetId>(layout.filter((w) => !w.hidden).map((w) => w.id));
-
   const core = buildCoreProfile(profile.fullName, profile.dob);
   const today = contextFromInstant(new Date(), profile.timezone);
   const todayIso = isoOf(today);
@@ -122,33 +122,29 @@ export default async function DashboardPage({
   // exact compound combination — different compounds with the same reduced PD
   // (e.g. PD 12/3 vs 30/3) must read distinctly. Cached after first generation.
   const [readingBody, todayFeedback, todaysChatTurns, aboutMeData] = await Promise.all([
-    visible.has('reading')
-      ? getOrGenerateDailyReading(session.user.id, profile, isPreview ? { targetCtx: ctx } : undefined)
-      : Promise.resolve(null),
-    visible.has('feedback') && !isPreview
+    getOrGenerateDailyReading(session.user.id, profile, isPreview ? { targetCtx: ctx } : undefined),
+    !isPreview
       ? getFeedbackForLocalDay(session.user.id, today.year, today.month, today.day)
       : Promise.resolve(null),
-    visible.has('feedback') && !isPreview
+    !isPreview
       ? getTurnsBetween(session.user.id, todayStart, todayEnd)
       : Promise.resolve([] as Awaited<ReturnType<typeof getTurnsBetween>>),
-    visible.has('aboutMe')
-      ? getOrGenerateAboutMe(session.user.id, {
-          locale,
-          fullName: profile.fullName,
-          core: {
-            lifePath: core.lifePath,
-            expression: core.expression,
-            soulUrge: core.soulUrge,
-            personality: core.personality,
-            birthday: core.birthday,
-          },
-          karmicLessons: core.karmicLessons,
-          preferredModel: profile.preferredModel,
-        })
-      : Promise.resolve(null),
+    getOrGenerateAboutMe(session.user.id, {
+      locale,
+      fullName: profile.fullName,
+      core: {
+        lifePath: core.lifePath,
+        expression: core.expression,
+        soulUrge: core.soulUrge,
+        personality: core.personality,
+        birthday: core.birthday,
+      },
+      karmicLessons: core.karmicLessons,
+      preferredModel: profile.preferredModel,
+    }),
   ]);
 
-  const showFeedbackPrompt = !isPreview && visible.has('feedback') && todaysChatTurns.length === 0;
+  const showFeedbackPrompt = !isPreview && todaysChatTurns.length === 0;
 
   function renderWidget(id: WidgetId): React.ReactNode {
     switch (id) {
@@ -289,27 +285,17 @@ export default async function DashboardPage({
         locale={locale}
         settingsLabel={t('settingsLink')}
         leading={
-          visible.has('reading') ? (
-            <DateBrowser
-              selectedIso={selectedIso}
-              todayIso={todayIso}
-              maxIso={maxIso}
-              pickLabel={tReading('pickDate')}
-              backLabel={tReading('backToToday')}
-            />
-          ) : null
+          <DateBrowser
+            selectedIso={selectedIso}
+            todayIso={todayIso}
+            maxIso={maxIso}
+            pickLabel={tReading('pickDate')}
+            backLabel={tReading('backToToday')}
+          />
         }
       />
 
-      {layout.filter((w) => !w.hidden).map((w) => renderWidget(w.id))}
-
-      <Link
-        href={`/${locale}/me/layout`}
-        className="text-muted-foreground hover:text-foreground press-soft inline-flex items-center gap-1.5 self-start text-xs underline-offset-4 hover:underline"
-      >
-        <Settings2 className="h-3.5 w-3.5" aria-hidden />
-        {t('customizeDashboard')}
-      </Link>
+      {WIDGET_ORDER.map((id) => renderWidget(id))}
     </main>
   );
 }

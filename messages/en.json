@@ -69,8 +69,6 @@
     "deleteConfirmCopy": "Type DELETE (uppercase) to confirm. Your account and all data will be removed immediately.",
     "deleteCancel": "Cancel",
     "deleteConfirm": "Delete forever",
-    "dashboardLayoutTitle": "Customize home",
-    "dashboardLayoutHint": "Reorder & hide widgets on the Home tab.",
     "ageYears": "{age} years",
     "topBarTitle": "Settings",
     "groupContext": "Context",
@@ -243,7 +241,6 @@
     "number": "Number",
     "now": "Now",
     "settingsLink": "Settings & profile",
-    "customizeDashboard": "Customize home widgets",
     "meaningComingSoon": "We're still curating the description for this number. Meanwhile the number on the card is a deterministic calculation — you can ask the AI on \"Ask AI\" for deeper context."
   },
   "reading": {

@@ -4,7 +4,6 @@ import { getTranslations } from 'next-intl/server';
 import {
   BarChart3,
   ChevronRight,
-  LayoutGrid,
   LogOut,
   NotebookPen,
   Pencil,
@@ -158,12 +157,6 @@ export default async function MePage({ params }: { params: { locale: string } })
           icon={BarChart3}
           title={t('patterns')}
           hint={t('patternsHint')}
-        />
-        <NavRow
-          href={`/${locale}/me/layout`}
-          icon={LayoutGrid}
-          title={t('dashboardLayoutTitle')}
-          hint={t('dashboardLayoutHint')}
         />
         {isAdmin ? (
           <NavRow
