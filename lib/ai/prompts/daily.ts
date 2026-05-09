@@ -106,7 +106,13 @@ Format wajib:
 - Lalu satu baris kosong, lanjut sapaan singkat ke nama depan user (1 baris pendek).
 - Lanjut 2 paragraf prosa (total 140-220 kata) yang ngalir natural — bukan list-list per angka. Paragraf 1: nuansa hari itu secara keseluruhan, ketiga thread sudah terjalin di sini. Paragraf 2: saran praktis + satu hal yang perlu diwaspadai lembut, masih nge-blend ketiga angka (mis. 8 = domain finansial/karier; 7 = jangan terburu-buru put it off; 1 = jangan tunggu orang).
 - Tutup dengan satu kalimat afirmasi yang bisa diulang sepanjang hari, dipisah baris kosong sebelumnya.
-- Output prosa biasa setelah judul — TIDAK ada heading lagi, TIDAK ada bullet, TIDAK ada tag XML, TIDAK ada angka, TIDAK ada label "Personal Day/Month/Year".`;
+- Setelah afirmasi, baris kosong, lalu 3-5 bullet vibe-check spesifik buat hari itu yang reflect kombinasi angka — campur antara yang **cocok** dan yang **skip**. Format: \`+ Cocok buat ...\` untuk yang baik, \`- Skip ...\` untuk yang dihindari. Jangan generic — hubungin ke konteks nyata: bisnis, percakapan, romansa, finansial, sosialisasi, kerjaan, fisik, dst. Master/karmic compound harus reflect ke bullets-nya juga.
+  Contoh untuk PD 11 (psychic master) di PM 1:
+  + Cocok buat journaling atau ngobrol dalam soal arah karier
+  + Lucky day buat creative pitch
+  - Skip negosiasi finansial yang transaksional banget
+  - Hindari deep talk romantis yang bisa kerasa fragile
+- Output prosa biasa setelah judul — TIDAK ada heading lagi, TIDAK ada angka di prosa, TIDAK ada label "Personal Day/Month/Year". Bullets pakai + dan - persis kayak format di atas, jangan ✓✗ atau emoji lain.`;
   }
   return `You are Supernova's numerology companion writing daily readings in clear, warm English.
 
@@ -155,7 +161,13 @@ Required format:
 - Then a blank line, then one short greeting using the user's first name (one line). Example: "Hi [Name], today feels like a fresh wind."
 - Then 2 prose paragraphs (140-220 words total) that flow naturally — not a list per number. Paragraph 1: the overall texture of the day, all three threads woven in. Paragraph 2: what's well-suited + one gentle thing to watch, still blending the three (e.g. 8 = financial/career domain; 7 = don't rush, put off if needed; 1 = don't wait on others).
 - End with a single affirmation sentence the user can repeat, separated by a blank line.
-- Plain prose after the title — NO further headings, NO bullets, NO XML tags, NO digits, NO "Personal Day/Month/Year" labels in the output.`;
+- After the affirmation, blank line, then 3-5 specific vibe-check bullets reflecting the number combination — mixed **good for** and **skip**. Format: \`+ Good for ...\` for favorable, \`- Skip ...\` for avoid. Be specific — connect to real life (business, conversations, romance, finance, socializing, work, physical activity). Master/karmic compounds should be reflected in the bullets.
+  Example for PD 11 (psychic master) in PM 1:
+  + Good for journaling or talking through career direction
+  + Lucky day for a creative pitch
+  - Skip transactional financial negotiations
+  - Avoid fragile romantic deep talks
+- Plain prose after the title — NO further headings, NO digits in prose, NO "Personal Day/Month/Year" labels. Bullets use + and - exactly as above; no ✓✗ or other emoji.`;
 }
 
 export function buildUserPrompt(input: DailyPromptInput): string {
@@ -202,22 +214,24 @@ ${input.recentPatterns}
       : ''
   }
 
-Write the reading for ${dateStr}. Start with \`# Title\` (2-5 words, unique to this exact compound combination — not a generic label for the reduced digit). Then blank line, greet ${input.firstName} by first name, then 2 paragraphs, then a blank line, then one affirmation sentence. Do not mention any numbers in the body.`;
+Write the reading for ${dateStr}. Start with \`# Title\` (2-5 words, unique to this exact compound combination — not a generic label for the reduced digit). Then blank line, greet ${input.firstName} by first name, then 2 paragraphs, then a blank line, then one affirmation sentence, then a blank line, then 3-5 \`+\`/\`-\` vibe bullets specific to the day's number combination. Do not mention any numbers in the prose or bullets.`;
+}
+
+export interface VibeBullet {
+  kind: 'good' | 'skip';
+  text: string;
 }
 
 export interface ParsedReading {
   /** AI-generated title unique to the day's number combination — only present
-   *  on readings written under the new format (a leading `# Title` line).
-   *  Older cached readings don't have this; callers should fall back to a
-   *  static label when missing. */
+   *  on readings written under the new format (a leading `# Title` line). */
   title: string;
-  /** Greeting line, if present. */
   greeting: string;
-  /** Main prose body (2 paragraphs in the new format, 4 sections in the old). */
   body: string;
-  /** Final affirmation sentence. Always last paragraph. */
   affirmation: string;
-  /** Legacy XML sections, populated only when the cached body uses them. */
+  /** Trailing "+ good for" / "- skip" bullets emitted by the new prompt format.
+   *  Empty for legacy / pre-vibes readings. */
+  vibes: VibeBullet[];
   legacy?: {
     theme: string;
     energy: string;
@@ -248,12 +262,12 @@ export function parseReading(raw: string): ParsedReading {
       greeting: '',
       body,
       affirmation,
+      vibes: [],
       legacy: { theme, energy, watch },
       raw,
     };
   }
 
-  // Pull off the leading `# Title` line if present, then process the rest as prose.
   let title = '';
   let prose = trimmed;
   const titleMatch = trimmed.match(/^#\s+(.+?)\s*$/m);
@@ -262,13 +276,29 @@ export function parseReading(raw: string): ParsedReading {
     prose = trimmed.slice(titleMatch[0]!.length).replace(/^\s*\n/, '').trim();
   }
 
+  // Pull trailing "+ ..." / "- ..." vibe bullets off the end before splitting paragraphs.
+  const vibes: VibeBullet[] = [];
+  const lines = prose.split(/\r?\n/);
+  while (lines.length > 0) {
+    const last = lines[lines.length - 1]!.trim();
+    if (last === '') {
+      lines.pop();
+      continue;
+    }
+    const m = last.match(/^([+-])\s+(.+)$/);
+    if (!m) break;
+    vibes.unshift({ kind: m[1] === '+' ? 'good' : 'skip', text: m[2]!.trim() });
+    lines.pop();
+  }
+  prose = lines.join('\n').trim();
+
   const paragraphs = prose
     .split(/\n\s*\n/)
     .map((p) => p.trim())
     .filter(Boolean);
 
   if (paragraphs.length === 0) {
-    return { title, greeting: '', body: prose, affirmation: '', raw };
+    return { title, greeting: '', body: prose, affirmation: '', vibes, raw };
   }
 
   let greeting = '';
@@ -290,6 +320,7 @@ export function parseReading(raw: string): ParsedReading {
     greeting,
     body: rest.join('\n\n'),
     affirmation,
+    vibes,
     raw,
   };
 }

@@ -251,7 +251,7 @@
     "subtitle": "Sintesis singkat dari angka-angka kamu untuk hari ini, ditulis oleh asisten AI Supernova.",
     "todaysTheme": "Tema hari ini",
     "daySuffix": "HARI {n}",
-    "affirmation": "Afirmasi",
+    "affirmation": "Afirmasi hari ini",
     "fallback": "Bacaan hari ini belum bisa dibuat. Coba refresh sebentar lagi.",
     "oncePerDay": "Satu bacaan per hari",
     "showNumbers": "Lihat angka hari ini",

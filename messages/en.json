@@ -251,7 +251,7 @@
     "subtitle": "A short synthesis of your numbers for today, written by Supernova's AI companion.",
     "todaysTheme": "Today's theme",
     "daySuffix": "A {n} DAY",
-    "affirmation": "Affirmation",
+    "affirmation": "Today's affirmation",
     "fallback": "Today's reading isn't ready yet. Try refreshing in a moment.",
     "oncePerDay": "One reading per day",
     "showNumbers": "Show today's numbers",

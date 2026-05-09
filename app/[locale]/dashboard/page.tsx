@@ -160,6 +160,7 @@ export default async function DashboardPage({
             dateLabel={formatDateLong(ctx, locale)}
             dayTitle={meaningFor('personalDayTitle', cycles.personalDay, locale) ?? ''}
             todaysNumbers={wnDayNumbers(cycles.personalDay)}
+            showAffirmation={!isPreview}
             showLabel={tReading('showNumbers')}
             hideLabel={tReading('hideNumbers')}
             numbers={

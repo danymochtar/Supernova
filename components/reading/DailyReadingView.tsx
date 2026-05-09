@@ -28,10 +28,15 @@ interface Props {
   /** "Show numbers" / "Hide numbers" labels. */
   showLabel?: string;
   hideLabel?: string;
+  /** Affirmation block is reserved for today only — passing false renders the
+   *  vibes section but skips the affirmation card. */
+  showAffirmation?: boolean;
   /** UI strings (already translated). */
   labels: {
     affirmation: string;
     fallback: string;
+    vibesGood?: string;
+    vibesSkip?: string;
   };
 }
 
@@ -49,6 +54,7 @@ export function DailyReadingView({
   numbers,
   showLabel = 'Lihat angka hari ini',
   hideLabel = 'Sembunyikan angka',
+  showAffirmation = true,
   labels,
 }: Props) {
   const [showNumbers, setShowNumbers] = useState(false);
@@ -136,7 +142,7 @@ export function DailyReadingView({
           ))}
         </div>
 
-        {parsed.affirmation ? (
+        {showAffirmation && parsed.affirmation ? (
           <div className="border-accent/60 border-l-[3px] bg-accent/5 px-4 py-3 dark:bg-accent/10">
             <p className="text-muted-foreground mb-1 text-[11px] font-semibold uppercase tracking-[0.18em]">
               {labels.affirmation}
@@ -145,6 +151,28 @@ export function DailyReadingView({
               {renderInlineMd(parsed.affirmation)}
             </p>
           </div>
+        ) : null}
+
+        {parsed.vibes.length > 0 ? (
+          <ul className="space-y-1.5 pt-1 text-[14px] leading-snug">
+            {parsed.vibes.map((v, i) => (
+              <li key={i} className="flex items-start gap-2">
+                <span
+                  aria-hidden
+                  className={`font-mono mt-0.5 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-[11px] font-bold ${
+                    v.kind === 'good'
+                      ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'
+                      : 'bg-rose-500/15 text-rose-700 dark:text-rose-300'
+                  }`}
+                >
+                  {v.kind === 'good' ? '+' : '−'}
+                </span>
+                <span className="text-neutral-800 dark:text-neutral-200">
+                  {renderInlineMd(v.text)}
+                </span>
+              </li>
+            ))}
+          </ul>
         ) : null}
       </div>
     </section>
