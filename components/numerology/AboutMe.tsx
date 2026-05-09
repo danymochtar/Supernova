@@ -127,6 +127,48 @@ export function AboutMe({
         </div>
       ) : null}
 
+      {cards.length > 0 ? (
+        <div className="-mx-4 sm:-mx-6">
+          <div className="scroll-px-4 sm:scroll-px-6 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-3 pt-1 sm:px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {cards.map((card) => {
+              const result =
+                numbers && card.key !== 'karmicLessons' ? numbers[card.key] : null;
+              const karmic =
+                numbers && card.key === 'karmicLessons' ? numbers.karmicLessons : null;
+              return (
+                <article
+                  key={card.key}
+                  className="border-border bg-card text-card-foreground w-[78%] shrink-0 snap-start space-y-3 rounded-2xl border p-5 sm:w-[60%] md:w-[44%]"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <h3 className="min-w-0 font-serif text-xl font-semibold tracking-tight">
+                      {card.label}
+                    </h3>
+                    {result ? (
+                      <CompoundReduced result={result} locale={locale} size="lg" />
+                    ) : karmic && karmic.length > 0 ? (
+                      <div className="flex flex-wrap justify-end gap-1">
+                        {karmic.map((n) => (
+                          <span
+                            key={n}
+                            className="bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-200 rounded-full px-2 py-0.5 font-mono text-xs font-semibold tabular-nums"
+                          >
+                            {n}
+                          </span>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+                  <p className="text-sm leading-relaxed text-neutral-800 dark:text-neutral-200">
+                    {renderInlineMd(card.body)}
+                  </p>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      ) : null}
+
       {minor && minorLabels ? (
         <div className="space-y-3">
           {minorExplainer ? (
@@ -185,48 +227,6 @@ export function AboutMe({
               meaning={meaningFor('bridge', bridge.soulUrgePersonality, locale)}
               comingSoonLabel={comingSoonLabel}
             />
-          </div>
-        </div>
-      ) : null}
-
-      {cards.length > 0 ? (
-        <div className="-mx-4 sm:-mx-6">
-          <div className="scroll-px-4 sm:scroll-px-6 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-3 pt-1 sm:px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {cards.map((card) => {
-              const result =
-                numbers && card.key !== 'karmicLessons' ? numbers[card.key] : null;
-              const karmic =
-                numbers && card.key === 'karmicLessons' ? numbers.karmicLessons : null;
-              return (
-                <article
-                  key={card.key}
-                  className="border-border bg-card text-card-foreground w-[78%] shrink-0 snap-start space-y-3 rounded-2xl border p-5 sm:w-[60%] md:w-[44%]"
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <h3 className="min-w-0 font-serif text-xl font-semibold tracking-tight">
-                      {card.label}
-                    </h3>
-                    {result ? (
-                      <CompoundReduced result={result} locale={locale} size="lg" />
-                    ) : karmic && karmic.length > 0 ? (
-                      <div className="flex flex-wrap justify-end gap-1">
-                        {karmic.map((n) => (
-                          <span
-                            key={n}
-                            className="bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-200 rounded-full px-2 py-0.5 font-mono text-xs font-semibold tabular-nums"
-                          >
-                            {n}
-                          </span>
-                        ))}
-                      </div>
-                    ) : null}
-                  </div>
-                  <p className="text-sm leading-relaxed text-neutral-800 dark:text-neutral-200">
-                    {renderInlineMd(card.body)}
-                  </p>
-                </article>
-              );
-            })}
           </div>
         </div>
       ) : null}
