@@ -37,16 +37,26 @@
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
-    /* Brand backdrop — midnight glow at top, warm amber spark bottom-right. */
-    background-image:
-      radial-gradient(ellipse 80% 50% at 50% -10%, hsl(230 65% 35% / 0.10), transparent 70%),
-      radial-gradient(ellipse 70% 50% at 100% 110%, hsl(38 90% 55% / 0.08), transparent 70%);
-    background-attachment: fixed;
     -webkit-tap-highlight-color: transparent;
     /* Kill the 300ms tap delay; treat as a manipulation surface. */
     touch-action: manipulation;
     /* Prevent iOS rubber-band overscroll showing white. */
     overscroll-behavior-y: contain;
+  }
+
+  /* Brand backdrop — midnight glow top, warm amber bottom-right. Lives on a
+   * dedicated fixed layer instead of body's background-attachment because
+   * iOS Safari mis-positions fixed children of an element that has a
+   * fixed background-attachment, causing the bottom nav to render mid-page. */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, hsl(230 65% 35% / 0.10), transparent 70%),
+      radial-gradient(ellipse 70% 50% at 100% 110%, hsl(38 90% 55% / 0.08), transparent 70%);
   }
 
   /* iOS Safari auto-zooms on focus when input font-size is < 16px. Force

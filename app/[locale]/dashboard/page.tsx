@@ -48,13 +48,24 @@ function formatDateLong(ctx: { year: number; month: number; day: number }, local
   }).toUpperCase();
 }
 
-// World Numerology's "today's numbers are X, Y, Z, W" framing — PD as star: reduced, compound, then the compound's digits.
-// PD compound ≤ 9 → just [reduced]; ≥ 10 → [reduced, compound, tens, ones].
+// World Numerology's "today's numbers are X, Y, Z, W" framing — PD as star.
+// Slot 1 = single-digit reduction (master days like 11 still show "2" here),
+// slot 2 = compound, slots 3-4 = compound's tens/ones digits.
 function wnDayNumbers(pd: { compound: number; reduced: number }): number[] {
-  if (pd.compound < 10) return [pd.reduced];
+  if (pd.compound < 10) return [pd.compound];
+  let single = pd.reduced;
+  while (single >= 10) {
+    let s = 0;
+    let x = single;
+    while (x > 0) {
+      s += x % 10;
+      x = Math.floor(x / 10);
+    }
+    single = s;
+  }
   const tens = Math.floor(pd.compound / 10);
   const ones = pd.compound % 10;
-  return [pd.reduced, pd.compound, tens, ones];
+  return [single, pd.compound, tens, ones];
 }
 
 const PREVIEW_WINDOW_DAYS = 90;
