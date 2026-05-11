@@ -22,6 +22,8 @@
     "signOutCta": "Sign out",
     "notesTitle": "Personal notes",
     "notesHint": "Context about you that the AI will remember — preferences, life situation, what you're processing. Injected into every chat.",
+    "notesStatusSaved": "Saved · {count} characters",
+    "notesStatusEmpty": "No notes yet — tap to add",
     "notesPlaceholder": "Example: I'm thinking about a job change, first kid started solids, prefer direct over small talk...",
     "notesSubmit": "Save notes",
     "notesSaving": "Saving…",

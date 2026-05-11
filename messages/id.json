@@ -22,6 +22,8 @@
     "signOutCta": "Keluar",
     "notesTitle": "Catatan personal",
     "notesHint": "Konteks tentang kamu yang AI bakal inget — preferensi, situasi hidup, hal yang lagi diproses. Disuntik ke setiap obrolan curhat.",
+    "notesStatusSaved": "Tersimpan · {count} karakter",
+    "notesStatusEmpty": "Belum ada catatan — ketuk buat nambahin",
     "notesPlaceholder": "Contoh: aku lagi pertimbangin pindah kerja, anak pertama lagi MPASI, lebih suka direct daripada basa-basi...",
     "notesSubmit": "Simpan catatan",
     "notesSaving": "Menyimpan…",

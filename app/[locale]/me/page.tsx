@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import {
   BarChart3,
+  ChevronDown,
   ChevronRight,
   LogOut,
   NotebookPen,
@@ -114,22 +115,37 @@ export default async function MePage({ params }: { params: { locale: string } })
         </div>
       </section>
 
-      {/* Personal notes — long-term context the chat assistant remembers */}
+      {/* Personal notes — long-term context the chat assistant remembers.
+        * Collapsed by default since the saved body is sensitive and bloated
+        * the settings page; the user expands when they want to edit. */}
       <SettingsGroup title={t('groupContext')}>
-        <div className="space-y-3 px-5 py-4">
-          <div className="flex items-start gap-3">
-            <NotebookPen className="text-muted-foreground mt-0.5 h-5 w-5 shrink-0" aria-hidden />
-            <div className="min-w-0 flex-1 space-y-0.5">
-              <p className="text-sm font-medium">{t('notesTitle')}</p>
-              <p className="text-muted-foreground text-xs">{t('notesHint')}</p>
+        <details className="group">
+          <summary className="press-soft flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4 [&::-webkit-details-marker]:hidden">
+            <div className="flex min-w-0 flex-1 items-start gap-3">
+              <NotebookPen className="text-muted-foreground mt-0.5 h-5 w-5 shrink-0" aria-hidden />
+              <div className="min-w-0 flex-1 space-y-0.5">
+                <p className="text-sm font-medium">{t('notesTitle')}</p>
+                <p className="text-muted-foreground truncate text-xs">
+                  {profile.personalNotes
+                    ? t('notesStatusSaved', { count: profile.personalNotes.length })
+                    : t('notesStatusEmpty')}
+                </p>
+              </div>
             </div>
+            <ChevronDown
+              className="text-muted-foreground h-4 w-4 shrink-0 transition-transform group-open:rotate-180"
+              aria-hidden
+            />
+          </summary>
+          <div className="space-y-3 px-5 pb-4">
+            <p className="text-muted-foreground text-xs">{t('notesHint')}</p>
+            <PersonalNotesForm
+              locale={locale}
+              initial={profile.personalNotes}
+              action={savePersonalNotes}
+            />
           </div>
-          <PersonalNotesForm
-            locale={locale}
-            initial={profile.personalNotes}
-            action={savePersonalNotes}
-          />
-        </div>
+        </details>
       </SettingsGroup>
 
       {/* Appearance */}
