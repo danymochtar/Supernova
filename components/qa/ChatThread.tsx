@@ -143,7 +143,10 @@ export function ChatThread({
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const [isAtBottom, setIsAtBottom] = useState(true);
   const [replyTo, setReplyTo] = useState<ChatTurn | null>(null);
-  const [pairMenu, setPairMenu] = useState<ChatTurn | null>(null);
+  const [pairMenu, setPairMenu] = useState<{
+    turn: ChatTurn;
+    anchor: { x: number; y: number; openUp: boolean };
+  } | null>(null);
   const [, startDelete] = useTransition();
   // Journal multi-select. \`selectMode\` makes every persisted turn tappable
   // to toggle inclusion; the floating action bar at the bottom commits the
@@ -499,7 +502,20 @@ export function ChatThread({
                   attachments={tn.attachments}
                   onOpenImage={(src, name) => setViewingImage({ src, name })}
                   onLongPress={
-                    selectMode ? undefined : () => setPairMenu(tn)
+                    selectMode
+                      ? undefined
+                      : (rect) => {
+                          const vh = window.innerHeight;
+                          const vw = window.innerWidth;
+                          const MENU_WIDTH = 240;
+                          const openUp = rect.bottom > vh * 0.55;
+                          const x = Math.max(
+                            12,
+                            Math.min(rect.left, vw - MENU_WIDTH - 12),
+                          );
+                          const y = openUp ? rect.top : rect.bottom;
+                          setPairMenu({ turn: tn, anchor: { x, y, openUp } });
+                        }
                   }
                   selectMode={selectMode}
                   journalable={journalable}
@@ -536,66 +552,68 @@ export function ChatThread({
         <div ref={bottomRef} />
       </div>
 
-      {/* Long-press action sheet — Reply / Save to journal / Delete. */}
+      {/* iOS-style long-press popover — floats next to the tapped bubble,
+        * positioned above or below depending on viewport position. */}
       {pairMenu ? (
         <div
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-[55] flex items-end justify-center bg-black/40 backdrop-blur-sm sm:items-center"
+          className="fixed inset-0 z-[55]"
           onClick={() => setPairMenu(null)}
         >
           <div
-            className="bg-background border-border w-full max-w-md rounded-t-3xl border-t shadow-2xl sm:rounded-3xl sm:border"
-            style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
+            className="border-border bg-background/95 absolute w-[240px] overflow-hidden rounded-2xl border shadow-2xl supports-[backdrop-filter]:bg-background/85 supports-[backdrop-filter]:backdrop-blur-xl"
+            style={{
+              left: pairMenu.anchor.x,
+              top: pairMenu.anchor.openUp ? 'auto' : pairMenu.anchor.y + 8,
+              bottom: pairMenu.anchor.openUp
+                ? `calc(100dvh - ${pairMenu.anchor.y - 8}px)`
+                : 'auto',
+            }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="bg-muted-foreground/30 mx-auto my-3 h-1 w-12 rounded-full" aria-hidden />
-            <div className="space-y-1 px-2 pb-2">
-              <button
-                type="button"
-                onClick={() => {
-                  setReplyTo(pairMenu);
-                  setPairMenu(null);
-                  inputRef.current?.focus();
-                }}
-                className="press hover:bg-muted/40 flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-left text-sm font-medium"
-              >
-                <CornerUpLeft className="text-primary h-4 w-4" aria-hidden />
-                {t('reply')}
-              </button>
-              {journalAction && !pairMenu.id.startsWith('local-') ? (
+            <button
+              type="button"
+              onClick={() => {
+                setReplyTo(pairMenu.turn);
+                setPairMenu(null);
+                inputRef.current?.focus();
+              }}
+              className="press-soft hover:bg-muted/40 flex w-full items-center justify-between gap-3 px-4 py-3 text-left text-[15px] font-medium"
+            >
+              <span>{t('reply')}</span>
+              <CornerUpLeft className="text-muted-foreground h-[18px] w-[18px]" aria-hidden />
+            </button>
+            {journalAction && !pairMenu.turn.id.startsWith('local-') ? (
+              <>
+                <div className="border-border/60 border-t" aria-hidden />
                 <button
                   type="button"
                   onClick={() => {
+                    const id = pairMenu.turn.id;
                     setSelectMode(true);
-                    setSelected(new Set([pairMenu.id]));
+                    setSelected(new Set([id]));
                     setPairMenu(null);
                   }}
-                  className="press hover:bg-muted/40 flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-left text-sm font-medium"
+                  className="press-soft hover:bg-muted/40 flex w-full items-center justify-between gap-3 px-4 py-3 text-left text-[15px] font-medium"
                 >
-                  <BookmarkPlus className="text-primary h-4 w-4" aria-hidden />
-                  {t('journalAdd')}
+                  <span>{t('journalAdd')}</span>
+                  <BookmarkPlus className="text-muted-foreground h-[18px] w-[18px]" aria-hidden />
                 </button>
-              ) : null}
-              <button
-                type="button"
-                onClick={() => {
-                  const id = pairMenu.id;
-                  setPairMenu(null);
-                  onDelete(id);
-                }}
-                className="press hover:bg-red-50 dark:hover:bg-red-950/30 flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-left text-sm font-medium text-red-700 dark:text-red-300"
-              >
-                <Trash2 className="h-4 w-4" aria-hidden />
-                {t('delete')}
-              </button>
-            </div>
+              </>
+            ) : null}
+            <div className="border-border/60 border-t" aria-hidden />
             <button
               type="button"
-              onClick={() => setPairMenu(null)}
-              className="press border-border w-full border-t px-4 py-3 text-sm font-medium"
+              onClick={() => {
+                const id = pairMenu.turn.id;
+                setPairMenu(null);
+                onDelete(id);
+              }}
+              className="press-soft hover:bg-red-50 dark:hover:bg-red-950/30 flex w-full items-center justify-between gap-3 px-4 py-3 text-left text-[15px] font-medium text-red-600 dark:text-red-400"
             >
-              {t('journalCancel')}
+              <span>{t('delete')}</span>
+              <Trash2 className="h-[18px] w-[18px]" aria-hidden />
             </button>
           </div>
         </div>
@@ -837,7 +855,7 @@ function Pair({
   /** Fires on a tap-and-hold on touch, or a right-click on desktop. The
    *  ChatThread parent opens an action sheet (reply / journal / delete)
    *  in response — chat-app convention, replaces the per-message icon row. */
-  onLongPress?: () => void;
+  onLongPress?: (rect: DOMRect) => void;
   selectMode?: boolean;
   selected?: boolean;
   onToggleSelect?: () => void;
@@ -857,13 +875,15 @@ function Pair({
   const longPressTimer = useRef<number | null>(null);
   const longPressFired = useRef(false);
 
-  function startLongPress() {
+  function startLongPress(e: React.TouchEvent<HTMLDivElement>) {
     if (selectMode || streaming || !onLongPress) return;
+    // Capture the rect now — the event ref may be released before the timer fires.
+    const rect = e.currentTarget.getBoundingClientRect();
     longPressFired.current = false;
     if (longPressTimer.current) window.clearTimeout(longPressTimer.current);
     longPressTimer.current = window.setTimeout(() => {
       longPressFired.current = true;
-      onLongPress();
+      onLongPress(rect);
     }, 400);
   }
 
@@ -891,7 +911,7 @@ function Pair({
       onContextMenu={(e) => {
         if (!onLongPress || selectMode) return;
         e.preventDefault();
-        onLongPress();
+        onLongPress(e.currentTarget.getBoundingClientRect());
       }}
       onTouchStart={startLongPress}
       onTouchEnd={cancelLongPress}
