@@ -7,6 +7,7 @@ import {
   ArrowUp,
   BookmarkPlus,
   Check,
+  CornerUpLeft,
   FileText,
   Image as ImageIcon,
   Paperclip,
@@ -54,6 +55,11 @@ function readAsBase64(file: File): Promise<string> {
     reader.onerror = () => reject(reader.error);
     reader.readAsDataURL(file);
   });
+}
+
+function truncate(s: string, max: number): string {
+  const t = s.replace(/\s+/g, ' ').trim();
+  return t.length <= max ? t : `${t.slice(0, max - 1).trim()}…`;
 }
 
 function classifyFile(file: File): AttachmentKind | null {
@@ -136,6 +142,7 @@ export function ChatThread({
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const [isAtBottom, setIsAtBottom] = useState(true);
+  const [replyTo, setReplyTo] = useState<ChatTurn | null>(null);
   const [, startDelete] = useTransition();
   // Journal multi-select. \`selectMode\` makes every persisted turn tappable
   // to toggle inclusion; the floating action bar at the bottom commits the
@@ -257,16 +264,21 @@ export function ChatThread({
   }
 
   async function send() {
-    const q = input.trim();
-    if ((!q && attachments.length === 0) || streaming) return;
+    const userText = input.trim();
+    if ((!userText && attachments.length === 0) || streaming) return;
     setError(null);
     setInput('');
     const sentAttachments = attachments;
     setAttachments([]);
-    // Optimistic display question: just the user's typed text. The
-    // \`[image: name]\` summary is built separately and used only as
-    // fallback display for turns rehydrated after a page reload (when
-    // the binary previews are gone).
+    const sentReplyTo = replyTo;
+    setReplyTo(null);
+    // When replying to an earlier turn, prepend a quote header so the AI
+    // sees the context and the persisted question records that it was a
+    // reply. The quote is truncated to keep prompts and storage bounded.
+    const quotePrefix = sentReplyTo
+      ? `> ${truncate(sentReplyTo.answer || sentReplyTo.question, 280)}\n\n`
+      : '';
+    const q = `${quotePrefix}${userText}`;
     const optimisticQuestion = q;
     const optimisticAttachments: ChatTurnAttachment[] = sentAttachments.map((a) => ({
       kind: a.kind,
@@ -285,12 +297,12 @@ export function ChatThread({
     abortRef.current = controller;
 
     // If anything along the send path fails, restore the user's typed
-    // text and attachments so they can retry without re-typing or
-    // re-attaching. The locale toast wording "Pesan kamu disimpen"
-    // matches what we actually do here.
+    // text, attachments, and reply context so they can retry without
+    // re-typing or re-selecting the message to reply to.
     function restoreOnError() {
-      setInput(q);
+      setInput(userText);
       setAttachments(sentAttachments);
+      if (sentReplyTo) setReplyTo(sentReplyTo);
       setPending(null);
     }
 
@@ -487,6 +499,15 @@ export function ChatThread({
                   onOpenImage={(src, name) => setViewingImage({ src, name })}
                   onDelete={selectMode ? undefined : () => onDelete(tn.id)}
                   deleteLabel={t('delete')}
+                  onReply={
+                    selectMode
+                      ? undefined
+                      : () => {
+                          setReplyTo(tn);
+                          inputRef.current?.focus();
+                        }
+                  }
+                  replyLabel={t('reply')}
                   onAddToJournal={
                     journalAction
                       ? () => {
@@ -625,6 +646,29 @@ export function ChatThread({
         className="border-border bg-background/95 fixed inset-x-3 z-30 mx-auto max-w-3xl space-y-2 rounded-3xl border px-3 py-2.5 shadow-lg supports-[backdrop-filter]:bg-background/80 supports-[backdrop-filter]:backdrop-blur sm:inset-x-4 sm:px-4 sm:py-3"
         style={{ bottom: 'calc(3.5rem + env(safe-area-inset-bottom) + 0.5rem)' }}
       >
+        {/* Reply quote chip — shown when the user tapped Reply on a previous turn. */}
+        {replyTo ? (
+          <div className="border-border bg-muted/40 group relative flex items-start gap-2 rounded-lg border-l-2 border-l-primary px-3 py-2 text-xs">
+            <CornerUpLeft className="text-primary mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden />
+            <div className="min-w-0 flex-1">
+              <p className="text-muted-foreground mb-0.5 text-[10px] font-semibold uppercase tracking-wider">
+                {t('replyingTo')}
+              </p>
+              <p className="line-clamp-2 leading-snug text-neutral-700 dark:text-neutral-200">
+                {truncate(replyTo.answer || replyTo.question, 200)}
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setReplyTo(null)}
+              aria-label={t('cancelReply')}
+              className="press text-muted-foreground hover:text-foreground -mr-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full"
+            >
+              <X className="h-3.5 w-3.5" aria-hidden />
+            </button>
+          </div>
+        ) : null}
+
         {/* Attachment preview chips */}
         {attachments.length > 0 ? (
           <div className="flex flex-wrap gap-2">
@@ -734,6 +778,8 @@ function Pair({
   deleteLabel,
   onAddToJournal,
   addLabel,
+  onReply,
+  replyLabel,
   selectMode,
   selected,
   onToggleSelect,
@@ -748,6 +794,8 @@ function Pair({
   deleteLabel?: string;
   onAddToJournal?: () => void;
   addLabel?: string;
+  onReply?: () => void;
+  replyLabel?: string;
   selectMode?: boolean;
   selected?: boolean;
   onToggleSelect?: () => void;
@@ -860,6 +908,20 @@ function Pair({
             </span>
           ) : (
             <>
+              {onReply ? (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onReply();
+                  }}
+                  aria-label={replyLabel}
+                  title={replyLabel}
+                  className="text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-full p-1.5 opacity-60 transition group-hover/pair:opacity-100 sm:opacity-0"
+                >
+                  <CornerUpLeft className="h-3.5 w-3.5" aria-hidden />
+                </button>
+              ) : null}
               {onAddToJournal && journalable ? (
                 <button
                   type="button"
