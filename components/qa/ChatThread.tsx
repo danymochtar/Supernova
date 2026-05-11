@@ -143,6 +143,7 @@ export function ChatThread({
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const [isAtBottom, setIsAtBottom] = useState(true);
   const [replyTo, setReplyTo] = useState<ChatTurn | null>(null);
+  const [pairMenu, setPairMenu] = useState<ChatTurn | null>(null);
   const [, startDelete] = useTransition();
   // Journal multi-select. \`selectMode\` makes every persisted turn tappable
   // to toggle inclusion; the floating action bar at the bottom commits the
@@ -497,26 +498,9 @@ export function ChatThread({
                   answer={tn.answer}
                   attachments={tn.attachments}
                   onOpenImage={(src, name) => setViewingImage({ src, name })}
-                  onDelete={selectMode ? undefined : () => onDelete(tn.id)}
-                  deleteLabel={t('delete')}
-                  onReply={
-                    selectMode
-                      ? undefined
-                      : () => {
-                          setReplyTo(tn);
-                          inputRef.current?.focus();
-                        }
+                  onLongPress={
+                    selectMode ? undefined : () => setPairMenu(tn)
                   }
-                  replyLabel={t('reply')}
-                  onAddToJournal={
-                    journalAction
-                      ? () => {
-                          setSelectMode(true);
-                          setSelected(new Set([tn.id]));
-                        }
-                      : undefined
-                  }
-                  addLabel={t('journalAdd')}
                   selectMode={selectMode}
                   journalable={journalable}
                   selected={selected.has(tn.id)}
@@ -551,6 +535,71 @@ export function ChatThread({
 
         <div ref={bottomRef} />
       </div>
+
+      {/* Long-press action sheet — Reply / Save to journal / Delete. */}
+      {pairMenu ? (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-[55] flex items-end justify-center bg-black/40 backdrop-blur-sm sm:items-center"
+          onClick={() => setPairMenu(null)}
+        >
+          <div
+            className="bg-background border-border w-full max-w-md rounded-t-3xl border-t shadow-2xl sm:rounded-3xl sm:border"
+            style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="bg-muted-foreground/30 mx-auto my-3 h-1 w-12 rounded-full" aria-hidden />
+            <div className="space-y-1 px-2 pb-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setReplyTo(pairMenu);
+                  setPairMenu(null);
+                  inputRef.current?.focus();
+                }}
+                className="press hover:bg-muted/40 flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-left text-sm font-medium"
+              >
+                <CornerUpLeft className="text-primary h-4 w-4" aria-hidden />
+                {t('reply')}
+              </button>
+              {journalAction && !pairMenu.id.startsWith('local-') ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectMode(true);
+                    setSelected(new Set([pairMenu.id]));
+                    setPairMenu(null);
+                  }}
+                  className="press hover:bg-muted/40 flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-left text-sm font-medium"
+                >
+                  <BookmarkPlus className="text-primary h-4 w-4" aria-hidden />
+                  {t('journalAdd')}
+                </button>
+              ) : null}
+              <button
+                type="button"
+                onClick={() => {
+                  const id = pairMenu.id;
+                  setPairMenu(null);
+                  onDelete(id);
+                }}
+                className="press hover:bg-red-50 dark:hover:bg-red-950/30 flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-left text-sm font-medium text-red-700 dark:text-red-300"
+              >
+                <Trash2 className="h-4 w-4" aria-hidden />
+                {t('delete')}
+              </button>
+            </div>
+            <button
+              type="button"
+              onClick={() => setPairMenu(null)}
+              className="press border-border w-full border-t px-4 py-3 text-sm font-medium"
+            >
+              {t('journalCancel')}
+            </button>
+          </div>
+        </div>
+      ) : null}
 
       {/* Journal "added" toast — auto-clears after a few seconds. */}
       {journalToast ? (
@@ -774,12 +823,7 @@ function Pair({
   question,
   answer,
   streaming,
-  onDelete,
-  deleteLabel,
-  onAddToJournal,
-  addLabel,
-  onReply,
-  replyLabel,
+  onLongPress,
   selectMode,
   selected,
   onToggleSelect,
@@ -790,12 +834,10 @@ function Pair({
   question: string;
   answer: string;
   streaming?: boolean;
-  onDelete?: () => void;
-  deleteLabel?: string;
-  onAddToJournal?: () => void;
-  addLabel?: string;
-  onReply?: () => void;
-  replyLabel?: string;
+  /** Fires on a tap-and-hold on touch, or a right-click on desktop. The
+   *  ChatThread parent opens an action sheet (reply / journal / delete)
+   *  in response — chat-app convention, replaces the per-message icon row. */
+  onLongPress?: () => void;
   selectMode?: boolean;
   selected?: boolean;
   onToggleSelect?: () => void;
@@ -812,10 +854,49 @@ function Pair({
     selectMode && journalable ? 'cursor-pointer' : ''
   } ${selectMode && journalable && selected ? 'ring-primary/50 ring-2 rounded-2xl ring-offset-2 ring-offset-background' : ''}`;
   const visibleQuestion = (question ?? '').replace(/\[(?:image|pdf|text):[^\]]*\]\s*/gi, '').trim();
+  const longPressTimer = useRef<number | null>(null);
+  const longPressFired = useRef(false);
+
+  function startLongPress() {
+    if (selectMode || streaming || !onLongPress) return;
+    longPressFired.current = false;
+    if (longPressTimer.current) window.clearTimeout(longPressTimer.current);
+    longPressTimer.current = window.setTimeout(() => {
+      longPressFired.current = true;
+      onLongPress();
+    }, 400);
+  }
+
+  function cancelLongPress() {
+    if (longPressTimer.current) {
+      window.clearTimeout(longPressTimer.current);
+      longPressTimer.current = null;
+    }
+  }
+
   return (
     <div
       className={wrapperClass}
-      onClick={selectMode && journalable && onToggleSelect ? onToggleSelect : undefined}
+      onClick={
+        selectMode && journalable && onToggleSelect
+          ? () => {
+              if (longPressFired.current) {
+                longPressFired.current = false;
+                return;
+              }
+              onToggleSelect();
+            }
+          : undefined
+      }
+      onContextMenu={(e) => {
+        if (!onLongPress || selectMode) return;
+        e.preventDefault();
+        onLongPress();
+      }}
+      onTouchStart={startLongPress}
+      onTouchEnd={cancelLongPress}
+      onTouchMove={cancelLongPress}
+      onTouchCancel={cancelLongPress}
       role={selectMode && journalable ? 'button' : undefined}
       aria-pressed={selectMode && journalable ? selected : undefined}
     >
@@ -891,67 +972,18 @@ function Pair({
         </div>
       </div>
 
-      {/* Per-turn affordances: in normal mode show + (journal) and trash;
-        * in select mode show a check-circle reflecting selection state. */}
-      {!streaming ? (
+      {!streaming && selectMode && journalable ? (
         <div className="absolute -bottom-1 right-0 flex items-center gap-1">
-          {selectMode && journalable ? (
-            <span
-              aria-hidden
-              className={`flex h-6 w-6 items-center justify-center rounded-full border-2 transition ${
-                selected
-                  ? 'bg-primary border-primary text-primary-foreground'
-                  : 'border-muted-foreground/40 bg-background'
-              }`}
-            >
-              {selected ? <Check className="h-3.5 w-3.5" /> : null}
-            </span>
-          ) : (
-            <>
-              {onReply ? (
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onReply();
-                  }}
-                  aria-label={replyLabel}
-                  title={replyLabel}
-                  className="text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-full p-1.5 opacity-60 transition group-hover/pair:opacity-100 sm:opacity-0"
-                >
-                  <CornerUpLeft className="h-3.5 w-3.5" aria-hidden />
-                </button>
-              ) : null}
-              {onAddToJournal && journalable ? (
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onAddToJournal();
-                  }}
-                  aria-label={addLabel}
-                  title={addLabel}
-                  className="text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-full p-1.5 opacity-60 transition group-hover/pair:opacity-100 sm:opacity-0"
-                >
-                  <BookmarkPlus className="h-3.5 w-3.5" aria-hidden />
-                </button>
-              ) : null}
-              {onDelete ? (
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onDelete();
-                  }}
-                  aria-label={deleteLabel}
-                  title={deleteLabel}
-                  className="text-muted-foreground hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-full p-1.5 opacity-60 transition group-hover/pair:opacity-100 sm:opacity-0"
-                >
-                  <Trash2 className="h-3.5 w-3.5" aria-hidden />
-                </button>
-              ) : null}
-            </>
-          )}
+          <span
+            aria-hidden
+            className={`flex h-6 w-6 items-center justify-center rounded-full border-2 transition ${
+              selected
+                ? 'bg-primary border-primary text-primary-foreground'
+                : 'border-muted-foreground/40 bg-background'
+            }`}
+          >
+            {selected ? <Check className="h-3.5 w-3.5" /> : null}
+          </span>
         </div>
       ) : null}
     </div>
