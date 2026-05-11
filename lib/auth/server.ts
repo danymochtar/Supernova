@@ -38,6 +38,16 @@ export const auth = betterAuth({
     maxPasswordLength: 128,
     requireEmailVerification: false,
   },
+  // Account self-service from /me/account. Email verification isn't wired up
+  // in the MVP (sandbox Resend), so we allow direct email updates as long as
+  // the user is logged in and their current email is unverified — Better Auth
+  // takes care of the password-check + session refresh.
+  user: {
+    changeEmail: {
+      enabled: true,
+      updateEmailWithoutVerification: true,
+    },
+  },
   // Long session + cookie cache so PWA homescreen launches don't feel like a fresh login.
   session: {
     expiresIn: 60 * 60 * 24 * 60,

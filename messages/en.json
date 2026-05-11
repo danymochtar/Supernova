@@ -698,5 +698,30 @@
         "low": "Low score: activity that depends on nature and long patience doesn't fit well. More dynamic environments suit you."
       }
     }
+  },
+  "account": {
+    "title": "Email & password",
+    "subtitle": "Change your login email or password. Other sessions sign out automatically when you change your password.",
+    "save": "Save",
+    "saving": "Saving…",
+    "saved": "Saved",
+    "emailTitle": "Change email",
+    "emailHint": "Current: {current}. The new email applies on your next sign-in.",
+    "emailField": "New email",
+    "emailPlaceholder": "you@email.com",
+    "passwordTitle": "Change password",
+    "passwordHint": "Min 8 characters. After saving, other devices are signed out.",
+    "currentPasswordField": "Current password",
+    "newPasswordField": "New password",
+    "confirmPasswordField": "Confirm new password",
+    "passwordMismatch": "New password and confirmation don't match.",
+    "navTitle": "Email & password",
+    "navHint": "Change your login email or password.",
+    "errorInvalid": "Invalid format, please check.",
+    "errorWrongPassword": "Current password is wrong.",
+    "errorEmailTaken": "That email is already used by another account.",
+    "errorSameEmail": "New email is the same as the current one.",
+    "errorWeakPassword": "New password is too short (min 8 characters).",
+    "errorGeneric": "Couldn't save. Try again in a moment."
   }
 }

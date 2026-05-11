@@ -66,6 +66,7 @@ function NavRow({
 export default async function MePage({ params }: { params: { locale: string } }) {
   const locale: Locale = isLocale(params.locale) ? params.locale : 'id';
   const t = await getTranslations({ locale, namespace: 'me' });
+  const tAccount = await getTranslations({ locale, namespace: 'account' });
 
   const session = await getSession();
   if (!session) redirect(`/${locale}/login`);
@@ -176,6 +177,12 @@ export default async function MePage({ params }: { params: { locale: string } })
 
       {/* Account */}
       <SettingsGroup title={t('groupAccount')}>
+        <NavRow
+          href={`/${locale}/me/account`}
+          icon={ShieldCheck}
+          title={tAccount('navTitle')}
+          hint={tAccount('navHint')}
+        />
         <div className="flex items-center gap-3 px-5 py-4">
           <LogOut className="text-muted-foreground h-5 w-5 shrink-0" aria-hidden />
           <div className="min-w-0 flex-1">

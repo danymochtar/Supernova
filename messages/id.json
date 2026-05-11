@@ -698,5 +698,30 @@
         "low": "Skor rendah: aktivitas yang ngandelin alam & kesabaran panjang kurang cocok. Lebih ke environment yang dinamis."
       }
     }
+  },
+  "account": {
+    "title": "Email & password",
+    "subtitle": "Ganti email login atau password kamu. Logout dari device lain otomatis pas password berubah.",
+    "save": "Simpan",
+    "saving": "Menyimpan…",
+    "saved": "Berhasil diubah",
+    "emailTitle": "Ubah email",
+    "emailHint": "Email lo sekarang: {current}. Email baru bakal langsung kepake buat login berikutnya.",
+    "emailField": "Email baru",
+    "emailPlaceholder": "kamu@email.com",
+    "passwordTitle": "Ubah password",
+    "passwordHint": "Min 8 karakter. Setelah ganti, sesi di device lain bakal di-logout otomatis.",
+    "currentPasswordField": "Password sekarang",
+    "newPasswordField": "Password baru",
+    "confirmPasswordField": "Konfirmasi password baru",
+    "passwordMismatch": "Password baru sama konfirmasi gak sama.",
+    "navTitle": "Email & password",
+    "navHint": "Ganti email login atau password.",
+    "errorInvalid": "Format gak valid, cek lagi.",
+    "errorWrongPassword": "Password sekarang salah.",
+    "errorEmailTaken": "Email ini udah dipakai akun lain.",
+    "errorSameEmail": "Email baru sama kayak yang sekarang.",
+    "errorWeakPassword": "Password baru terlalu pendek (min 8 karakter).",
+    "errorGeneric": "Gagal nyimpen. Coba lagi sebentar."
   }
 }
