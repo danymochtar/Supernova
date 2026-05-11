@@ -38,6 +38,9 @@ export function AddPersonForm({ locale, action, edit }: Props) {
   const t = useTranslations('peopleForm');
   const tRel = useTranslations('people.relationship');
   const [error, setError] = useState<string | null>(null);
+  const [relationship, setRelationship] = useState<(typeof RELATIONSHIPS)[number]>(
+    edit?.relationship ?? 'PARTNER',
+  );
   const [isPending, startTransition] = useTransition();
 
   const dobStr = edit
@@ -130,7 +133,10 @@ export function AddPersonForm({ locale, action, edit }: Props) {
         <select
           id="relationship"
           name="relationship"
-          defaultValue={edit?.relationship ?? 'PARTNER'}
+          value={relationship}
+          onChange={(e) =>
+            setRelationship(e.target.value as (typeof RELATIONSHIPS)[number])
+          }
           className="border-border focus:ring-primary w-full rounded-lg border bg-transparent px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
         >
           {RELATIONSHIPS.map((r) => (
@@ -139,6 +145,11 @@ export function AddPersonForm({ locale, action, edit }: Props) {
             </option>
           ))}
         </select>
+        {relationship === 'PARENT' ? (
+          <p className="text-muted-foreground text-xs leading-relaxed">
+            {t('parentHint')}
+          </p>
+        ) : null}
       </div>
 
       <div className="space-y-2">

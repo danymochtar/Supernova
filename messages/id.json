@@ -399,6 +399,7 @@
     "nicknamePlaceholder": "Nama panggilan dia",
     "dobLabel": "Tanggal lahir",
     "relationshipLabel": "Hubungan",
+    "parentHint": "Karena ini orang tua, halaman detail bakal ngasih analisis warisan: pola yang lo bawa terus dari mereka + pelajaran yang inherit dari sisi yang lo belum kembangkan.",
     "notesLabel": "Catatan (opsional)",
     "notesPlaceholder": "Misalnya: anniversary 15 Mei 2020...",
     "submit": "Simpan",

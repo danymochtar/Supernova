@@ -34,7 +34,6 @@ export interface ProfileView {
   preferredModel: string | null;
   reminderEnabled: boolean;
   reminderTime: string | null;
-  dashboardLayout: string | null;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -125,7 +124,6 @@ function toView(row: ProfileRow): ProfileView {
     preferredModel: row.preferredModel,
     reminderEnabled: row.reminderEnabled,
     reminderTime: row.reminderTime,
-    dashboardLayout: row.dashboardLayout,
     createdAt: row.createdAt,
     updatedAt: row.updatedAt,
   };

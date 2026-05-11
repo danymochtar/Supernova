@@ -399,6 +399,7 @@
     "nicknamePlaceholder": "What they go by",
     "dobLabel": "Date of birth",
     "relationshipLabel": "Relationship",
+    "parentHint": "Since this is a parent, the detail page will surface a family-tree analysis: patterns you carry through from them + lessons you inherited in areas you haven't grown into yet.",
     "notesLabel": "Notes (optional)",
     "notesPlaceholder": "e.g. anniversary May 15, 2020...",
     "submit": "Save",

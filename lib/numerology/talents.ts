@@ -1,4 +1,5 @@
 import { letterValue } from './letterMap';
+import { nameTokens } from './nameParts';
 import type { CoreProfile } from './types';
 
 /**
@@ -107,17 +108,21 @@ export function talentDistribution(
 
   // Letters from the name — weight 1 each, plus a 1/n positional
   // micro-bonus for the n-th letter so earlier letters break ties first.
+  // Iterate via nameTokens so >4-part names use the same Goodwin-capped
+  // letter set as Expression / Soul Urge / Personality / Karmic Lessons.
   let totalLetters = 0;
   let pos = 0;
-  for (const ch of fullName.toUpperCase()) {
-    const v = letterValue(ch);
-    if (v >= 1 && v <= 9) {
-      pos++;
-      const d = v as TalentDigit;
-      points[d] += LETTER_WEIGHT;
-      letters[d] += 1;
-      positionScore[d] += 1 / pos;
-      totalLetters++;
+  for (const token of nameTokens(fullName)) {
+    for (const ch of token.toUpperCase()) {
+      const v = letterValue(ch);
+      if (v >= 1 && v <= 9) {
+        pos++;
+        const d = v as TalentDigit;
+        points[d] += LETTER_WEIGHT;
+        letters[d] += 1;
+        positionScore[d] += 1 / pos;
+        totalLetters++;
+      }
     }
   }
 

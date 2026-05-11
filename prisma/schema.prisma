@@ -152,9 +152,6 @@ model Profile {
   // Local-time reminder ("HH:mm" in user's timezone) — delivery via web push.
   reminderEnabled Boolean  @default(false)
   reminderTime    String?
-  // Dashboard layout: JSON array of {id, hidden} preserving widget order.
-  // Null = use the default order with all widgets visible.
-  dashboardLayout String?
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
