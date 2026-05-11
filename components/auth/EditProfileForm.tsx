@@ -55,6 +55,15 @@ export function EditProfileForm({ initial, timezones, action }: Props) {
       <fieldset className="space-y-3">
         <legend className="text-sm font-medium">{tWelcome('nameLabel')}</legend>
         <p className="text-muted-foreground text-xs">{tWelcome('nameHint')}</p>
+        <details className="border-border group rounded-xl border bg-white/40 px-3 py-2 text-xs dark:bg-neutral-900/40">
+          <summary className="press-soft text-muted-foreground hover:text-foreground flex cursor-pointer list-none items-center gap-2 [&::-webkit-details-marker]:hidden">
+            <span className="text-accent transition-transform group-open:rotate-90">▸</span>
+            {tWelcome('nameMethodologyTitle')}
+          </summary>
+          <p className="text-muted-foreground mt-2 whitespace-pre-wrap leading-relaxed">
+            {tWelcome('nameMethodology')}
+          </p>
+        </details>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           <div className="space-y-1">
             <label htmlFor="firstName" className="text-muted-foreground text-xs uppercase tracking-wider">

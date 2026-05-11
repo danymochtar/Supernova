@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { sanitizeNamePart } from './sanitizeName';
 
 const NAME_PART_REGEX = /^[\p{L}\p{M}'\-.\s]+$/u;
 
@@ -52,6 +53,10 @@ export interface ParsedProfileForm {
   dob: { year: number; month: number; day: number };
   timezone: string;
   locale: string;
+  /** Honorifics that were silently dropped from the name fields during
+   *  sanitization. Empty when nothing was stripped. Surfaced to the caller so
+   *  the action can toast "we removed Dr., Hj. from the calculation". */
+  strippedHonorifics: string[];
 }
 
 /** Validate raw form fields and return either parsed data or a stable error code. */
@@ -79,7 +84,25 @@ export function parseProfileForm(input: {
     return { ok: false, error: 'generic' };
   }
 
-  const { firstName, middleName, lastName, nickname, dob, timezone, locale } = parsed.data;
+  const raw = parsed.data;
+  const cleanFirst = sanitizeNamePart(raw.firstName);
+  const cleanMiddle = sanitizeNamePart(raw.middleName ?? '');
+  const cleanLast = sanitizeNamePart(raw.lastName ?? '');
+  const cleanNick = sanitizeNamePart(raw.nickname ?? '');
+  const strippedHonorifics = [
+    ...cleanFirst.stripped,
+    ...cleanMiddle.stripped,
+    ...cleanLast.stripped,
+    ...cleanNick.stripped,
+  ];
+  // A first name made entirely of honorifics is malformed.
+  if (cleanFirst.cleaned.length === 0) return { ok: false, error: 'invalid_name' };
+
+  const firstName = cleanFirst.cleaned;
+  const middleName = cleanMiddle.cleaned;
+  const lastName = cleanLast.cleaned;
+  const nickname = cleanNick.cleaned;
+  const { dob, timezone, locale } = raw;
   const [yStr, mStr, dStr] = dob.split('-');
   const year = Number(yStr);
   const month = Number(mStr);
@@ -107,6 +130,7 @@ export function parseProfileForm(input: {
       dob: { year, month, day },
       timezone,
       locale,
+      strippedHonorifics,
     },
   };
 }

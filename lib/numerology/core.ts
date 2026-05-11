@@ -1,4 +1,5 @@
 import { LETTER_VALUES, PURE_VOWELS } from './letterMap';
+import { applyGoodwinCap } from './nameParts';
 import { makeResult, reducePreservingMasters } from './reduce';
 import type { BirthDate, NumerologyResult } from './types';
 import { isYVowel } from './yVowel';
@@ -6,14 +7,16 @@ import { isYVowel } from './yVowel';
 /**
  * Tokenize a full name into name parts (split on whitespace) and within each
  * part return the indices of letters that map to a Pythagorean value. Diacritics
- * are stripped via NFD normalization (e.g. "José" → "Jose").
+ * are stripped via NFD normalization (e.g. "José" → "Jose"). Names with more
+ * than four parts collapse to first + last per Goodwin's rule.
  */
 function tokenize(fullName: string): string[] {
-  return fullName
+  const parts = fullName
     .normalize('NFD')
     .replace(/[̀-ͯ]/g, '')
     .split(/\s+/)
     .filter(Boolean);
+  return applyGoodwinCap(parts);
 }
 
 type LetterClass = 'vowel' | 'consonant' | 'ignore';

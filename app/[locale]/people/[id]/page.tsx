@@ -13,10 +13,13 @@ import {
   contextFromInstant,
   minorNumbers,
 } from '@/lib/numerology';
+import { compareToParent } from '@/lib/numerology/familyTree';
 import { compatibilityScore } from '@/lib/compatibility/score';
 import { detectPatterns } from '@/lib/compatibility/patterns';
 import { getOrGenerateRelationshipProfile } from '@/lib/ai/relationship';
 import { meaningFor } from '@/lib/numerology/meanings';
+import idFamily from '@/content/family/id.json';
+import enFamily from '@/content/family/en.json';
 import { NumberCard } from '@/components/numerology/NumberCard';
 import { TopBar } from '@/components/layout/TopBar';
 import { Explainer } from '@/components/layout/Explainer';
@@ -63,6 +66,12 @@ export default async function PersonDetailPage({
   const minor = minorNumbers(person.nickname);
   const bridge = bridges(them);
   const initials = `${person.firstName.charAt(0)}${person.lastName?.charAt(0) ?? ''}`.toUpperCase();
+
+  // Family Tree overlay — only meaningful when this Person is a parent. We
+  // surface (a) reduced numbers present in both charts and (b) parent core
+  // numbers that intersect the user's karmic lessons.
+  const familyMatches = person.relationship === 'PARENT' ? compareToParent(me, them) : null;
+  const familyCopy = (locale === 'id' ? idFamily : enFamily) as Record<string, string>;
 
   // Relationship profile is AI-generated long-form prose. Cache-first.
   const relProfileText = await getOrGenerateRelationshipProfile(
@@ -212,6 +221,63 @@ export default async function PersonDetailPage({
             </div>
           </div>
         </section>
+
+        {familyMatches ? (
+          <section className="space-y-3">
+            <h2 className="text-lg font-semibold">{t('familyTreeTitle')}</h2>
+            <Explainer
+              title={tDash('explainerLearnMore')}
+              body={familyCopy.hint ?? ''}
+            />
+            {familyMatches.shared.length === 0 && familyMatches.inheritedLessons.length === 0 ? (
+              <p className="text-muted-foreground text-sm italic">
+                {t('familyTreeEmpty', { name: person.firstName })}
+              </p>
+            ) : (
+              <div className="space-y-4">
+                {familyMatches.shared.length > 0 ? (
+                  <div className="border-border space-y-2 rounded-2xl border bg-emerald-50/40 p-4 dark:bg-emerald-950/15">
+                    <p className="text-muted-foreground text-[11px] font-semibold uppercase tracking-[0.18em]">
+                      {t('familyTreeSharedLabel')}
+                    </p>
+                    <ul className="space-y-2">
+                      {familyMatches.shared.map((n) => (
+                        <li key={n} className="flex items-start gap-3">
+                          <span className="bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 font-mono inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold tabular-nums">
+                            {n}
+                          </span>
+                          <p className="text-sm leading-relaxed text-neutral-800 dark:text-neutral-200">
+                            {familyCopy[`shared:${n}`] ?? ''}
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+
+                {familyMatches.inheritedLessons.length > 0 ? (
+                  <div className="border-border space-y-2 rounded-2xl border bg-amber-50/40 p-4 dark:bg-amber-950/15">
+                    <p className="text-muted-foreground text-[11px] font-semibold uppercase tracking-[0.18em]">
+                      {t('familyTreeInheritedLabel', { name: person.firstName })}
+                    </p>
+                    <ul className="space-y-2">
+                      {familyMatches.inheritedLessons.map((n) => (
+                        <li key={n} className="flex items-start gap-3">
+                          <span className="bg-amber-500/15 text-amber-800 dark:text-amber-300 font-mono inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold tabular-nums">
+                            {n}
+                          </span>
+                          <p className="text-sm leading-relaxed text-neutral-800 dark:text-neutral-200">
+                            {familyCopy[`inheritedLesson:${n}`] ?? ''}
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+              </div>
+            )}
+          </section>
+        ) : null}
 
         {/* Relationship profile — summary always visible, full text behind
          * a native <details> disclosure. AI-generated, cached per (person,
