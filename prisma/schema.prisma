@@ -38,6 +38,7 @@ model User {
   summaries ConversationSummary[]
   journal   JournalEntry[]
   career    CareerEntry[]
+  personVibes PersonDailyVibe[]
 
   @@map("user")
 }
@@ -193,8 +194,32 @@ model Person {
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
 
+  dailyVibes PersonDailyVibe[]
+
   @@index([userId])
   @@map("person")
+}
+
+// On-demand "vibe of the day" snapshot for a Person. Generated the first time
+// the user taps the AI button on /people/[id] for that calendar date in their
+// own timezone, then cached so re-opens that day don't re-bill the model.
+model PersonDailyVibe {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  personId     String
+  person       Person   @relation(fields: [personId], references: [id], onDelete: Cascade)
+  // Date anchored in the user's local timezone.
+  date         DateTime @db.Date
+  locale       String
+  body         String
+  inputTokens  Int      @default(0)
+  outputTokens Int      @default(0)
+  createdAt    DateTime @default(now())
+
+  @@unique([personId, date])
+  @@index([userId, createdAt])
+  @@map("person_daily_vibe")
 }
 
 model DailyReading {

@@ -156,3 +156,49 @@ export async function deletePersonAction(formData: FormData): Promise<void> {
   revalidatePath(`/${localeChecked}/people`);
   redirect(`/${localeChecked}/people`);
 }
+
+export type PersonVibeResult =
+  | { ok: true; body: string }
+  | { ok: false; error: 'unauth' | 'not_found' | 'no_profile' | 'generic' };
+
+/**
+ * On-demand "what's their vibe today" AI briefing for a Person. Caller
+ * triggers this on tap; the underlying generator caches by (personId, date)
+ * so re-taps the same day return the same body without re-billing the model.
+ */
+export async function generatePersonVibeAction({
+  personId,
+}: {
+  personId: string;
+}): Promise<PersonVibeResult> {
+  const { getProfileByUserId } = await import('@/lib/db/repositories/profile');
+  const { generatePersonDailyVibe } = await import('@/lib/ai/personDailyVibe');
+
+  const session = await getSession();
+  if (!session) return { ok: false, error: 'unauth' };
+  const profile = await getProfileByUserId(session.user.id);
+  if (!profile) return { ok: false, error: 'no_profile' };
+  const person = await getPerson(session.user.id, personId);
+  if (!person) return { ok: false, error: 'not_found' };
+
+  const body = await generatePersonDailyVibe(
+    {
+      id: session.user.id,
+      fullName: profile.fullName,
+      firstName: profile.firstName,
+      dob: profile.dob,
+      timezone: profile.timezone,
+      locale: profile.locale,
+      preferredModel: profile.preferredModel,
+    },
+    {
+      id: person.id,
+      fullName: person.fullName,
+      firstName: person.firstName,
+      dob: person.dob,
+      relationship: person.relationship,
+    },
+  );
+  if (!body) return { ok: false, error: 'generic' };
+  return { ok: true, body };
+}

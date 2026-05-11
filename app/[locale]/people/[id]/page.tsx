@@ -24,6 +24,9 @@ import { NumberCard } from '@/components/numerology/NumberCard';
 import { TopBar } from '@/components/layout/TopBar';
 import { Explainer } from '@/components/layout/Explainer';
 import { renderInlineMd } from '@/components/qa/inlineMd';
+import { PersonVibeButton } from '@/components/people/PersonVibeButton';
+import { getPersonVibeForDay } from '@/lib/db/repositories/personDailyVibe';
+import { generatePersonVibeAction } from '../actions';
 
 export const maxDuration = 60;
 export const dynamic = 'force-dynamic';
@@ -72,6 +75,12 @@ export default async function PersonDetailPage({
   // numbers that intersect the user's karmic lessons.
   const familyMatches = person.relationship === 'PARENT' ? compareToParent(me, them) : null;
   const familyCopy = (locale === 'id' ? idFamily : enFamily) as Record<string, string>;
+
+  // Vibe-of-the-day for this Person — read-only check for a cached row so the
+  // tap button surfaces instantly if today's briefing already ran. Generation
+  // itself only happens on user tap, never on render.
+  const cachedVibe = await getPersonVibeForDay(person.id, ctx.year, ctx.month, ctx.day);
+  const cachedVibeBody = cachedVibe && cachedVibe.locale === locale ? cachedVibe.body : null;
 
   // Relationship profile is AI-generated long-form prose. Cache-first.
   const relProfileText = await getOrGenerateRelationshipProfile(
@@ -361,6 +370,21 @@ export default async function PersonDetailPage({
           </Link>
         </section>
       </div>
+
+      <PersonVibeButton
+        personId={person.id}
+        cachedBody={cachedVibeBody}
+        action={generatePersonVibeAction}
+        labels={{
+          button: t('vibeButton'),
+          sheetTitle: t('vibeSheetTitle', { name: person.firstName }),
+          sheetHint: t('vibeSheetHint', { name: person.firstName }),
+          generate: t('vibeGenerate'),
+          loading: t('vibeLoading'),
+          error: t('vibeError'),
+          close: t('vibeClose'),
+        }}
+      />
     </main>
   );
 }
