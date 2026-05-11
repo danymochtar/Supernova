@@ -16,6 +16,10 @@ export async function getPersonVibeForDay(
   });
 }
 
+export async function deletePersonVibes(personId: string): Promise<void> {
+  await prisma.personDailyVibe.deleteMany({ where: { personId } });
+}
+
 export async function createPersonVibe(input: {
   userId: string;
   personId: string;

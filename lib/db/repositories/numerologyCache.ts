@@ -73,3 +73,20 @@ export async function setCachedJson(
     },
   });
 }
+
+/**
+ * Wipe every cached row whose `key` contains the given substring for this
+ * user. Used when a Person record is edited so AI bodies that bake in the
+ * person's name (relationship profile, pair narratives) regenerate fresh
+ * instead of showing the pre-edit text. Cache keys use `:${personId}:` as
+ * a natural delimiter, so passing the personId as the substring matches
+ * every related key.
+ */
+export async function deleteCachedByKeyContains(
+  userId: string,
+  substring: string,
+): Promise<void> {
+  await prisma.numerologyCache.deleteMany({
+    where: { userId, key: { contains: substring } },
+  });
+}

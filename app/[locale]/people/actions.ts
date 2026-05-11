@@ -11,6 +11,8 @@ import {
   getPerson,
   updatePerson,
 } from '@/lib/db/repositories/person';
+import { deleteCachedByKeyContains } from '@/lib/db/repositories/numerologyCache';
+import { deletePersonVibes } from '@/lib/db/repositories/personDailyVibe';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { profileFormSchema, type ProfileFormError } from '@/lib/profile/validate';
 
@@ -141,7 +143,19 @@ export async function updatePersonAction(formData: FormData): Promise<PersonActi
     notes: parsed.data.notes?.trim() || null,
   });
 
+  // Invalidate every AI body that bakes in this person's name/DOB. Cache keys
+  // for the relationship profile + pair narratives all embed `:${id}:`, so a
+  // substring delete wipes them in one query. Daily vibe rows are deleted by
+  // personId. Next page render regenerates fresh with the new name.
+  await Promise.all([
+    deleteCachedByKeyContains(session.user.id, `:${id}:`),
+    deletePersonVibes(id),
+  ]);
+
   revalidatePath(`/${localeChecked}/people`);
+  revalidatePath(`/${localeChecked}/people/${id}`);
+  revalidatePath(`/${localeChecked}/people/${id}/compatibility`);
+  revalidatePath(`/${localeChecked}/people/${id}/profile`);
   redirect(`/${localeChecked}/people/${id}`);
 }
 
