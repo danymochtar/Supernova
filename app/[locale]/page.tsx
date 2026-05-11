@@ -82,7 +82,7 @@ export default function HomePage({ params }: { params: { locale: string } }) {
           {FEATURES.map(({ key, icon: Icon }) => (
             <article
               key={key}
-              className="border-border rounded-2xl border bg-white/40 p-5 dark:bg-neutral-900/40"
+              className="border-border rounded-2xl border bg-surface-1 p-5"
             >
               <div className="bg-primary/10 text-primary mb-3 flex h-10 w-10 items-center justify-center rounded-xl">
                 <Icon className="h-5 w-5" aria-hidden />
@@ -112,7 +112,7 @@ export default function HomePage({ params }: { params: { locale: string } }) {
           {[1, 2, 3].map((n) => (
             <li
               key={n}
-              className="border-border flex gap-4 rounded-2xl border bg-white/40 p-5 dark:bg-neutral-900/40"
+              className="border-border flex gap-4 rounded-2xl border bg-surface-1 p-5"
             >
               <div className="bg-primary/10 text-primary font-serif flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-base font-semibold">
                 {n}

@@ -45,7 +45,7 @@ export function OnboardingForm({ defaultTimezone, timezones, action }: Props) {
       <fieldset className="space-y-3">
         <legend className="text-sm font-medium">{t('nameLabel')}</legend>
         <p className="text-muted-foreground text-xs">{t('nameHint')}</p>
-        <details className="border-border group rounded-xl border bg-white/40 px-3 py-2 text-xs dark:bg-neutral-900/40">
+        <details className="border-border group rounded-xl border bg-surface-1 px-3 py-2 text-xs">
           <summary className="press-soft text-muted-foreground hover:text-foreground flex cursor-pointer list-none items-center gap-2 [&::-webkit-details-marker]:hidden">
             <span className="text-accent transition-transform group-open:rotate-90">▸</span>
             {t('nameMethodologyTitle')}

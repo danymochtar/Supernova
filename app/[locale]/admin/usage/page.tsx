@@ -56,7 +56,7 @@ export default async function AdminUsagePage({
         </div>
 
         {/* Totals */}
-        <section className="border-border space-y-3 rounded-2xl border bg-white/40 p-6 dark:bg-neutral-900/40">
+        <section className="border-border space-y-3 rounded-2xl border bg-surface-1 p-6">
           <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider">
             Totals
           </p>

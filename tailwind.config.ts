@@ -30,6 +30,15 @@ const config: Config = {
           foreground: 'hsl(var(--accent-foreground))',
         },
         border: 'hsl(var(--border))',
+        surface: {
+          1: 'hsl(var(--surface-1))',
+          2: 'hsl(var(--surface-2))',
+          3: 'hsl(var(--surface-3))',
+        },
+        fill: {
+          1: 'hsl(var(--fill-1))',
+          2: 'hsl(var(--fill-2))',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',

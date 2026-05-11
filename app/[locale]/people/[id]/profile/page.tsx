@@ -76,7 +76,7 @@ export default async function RelationshipProfilePage({
             ))}
           </article>
         ) : (
-          <section className="border-border flex flex-col items-center gap-3 rounded-2xl border bg-white/40 p-6 text-center dark:bg-neutral-900/40">
+          <section className="border-border flex flex-col items-center gap-3 rounded-2xl border bg-surface-1 p-6 text-center">
             <Sparkles className="text-primary h-6 w-6" aria-hidden />
             <p className="text-muted-foreground text-sm">{t('fallback')}</p>
           </section>

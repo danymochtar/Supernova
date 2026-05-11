@@ -141,7 +141,7 @@ export default async function CareerPage({ params }: { params: { locale: string 
                 return (
                   <article
                     key={e.id}
-                    className="border-border rounded-2xl border bg-white/40 p-5 dark:bg-neutral-900/40"
+                    className="border-border rounded-2xl border bg-surface-1 p-5"
                   >
                     <header className="flex flex-wrap items-baseline justify-between gap-2">
                       <div className="min-w-0 flex-1">

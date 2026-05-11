@@ -20,7 +20,7 @@ export const dynamic = 'force-dynamic';
 const TONE_STYLES: Record<'harmony' | 'tension' | 'neutral', string> = {
   harmony: 'border-emerald-200 bg-emerald-50 dark:border-emerald-900/40 dark:bg-emerald-950/20',
   tension: 'border-amber-200 bg-amber-50 dark:border-amber-900/40 dark:bg-amber-950/20',
-  neutral: 'border-border bg-white/40 dark:bg-neutral-900/40',
+  neutral: 'border-border bg-surface-1',
 };
 
 const LANE_BAR_COLORS: Record<'harmony' | 'tension' | 'neutral', string> = {
@@ -95,7 +95,7 @@ export default async function CompatibilityPage({
         <p className="text-muted-foreground text-sm">{t('subtitle')}</p>
 
         {/* Lens explainer — what we count and why for this relationship */}
-        <section className="border-border rounded-2xl border bg-white/40 p-5 dark:bg-neutral-900/40">
+        <section className="border-border rounded-2xl border bg-surface-1 p-5">
           <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider">
             {t('lensTitle')}
           </p>

@@ -8,7 +8,7 @@ export default function JourneyLoading() {
       <div className="space-y-4">
         <div className="bg-muted h-5 w-40 animate-pulse rounded" />
         {[0, 1, 2, 3, 4].map((i) => (
-          <div key={i} className="border-border h-24 animate-pulse rounded-xl border bg-white/40 dark:bg-neutral-900/40" />
+          <div key={i} className="border-border h-24 animate-pulse rounded-xl border bg-surface-1" />
         ))}
       </div>
     </main>

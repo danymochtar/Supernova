@@ -108,7 +108,7 @@ function RatingCard({
   const style = RATING_STYLE[rating];
   return (
     <article
-      className={`border-border ring-1 ${style.ring} rounded-2xl border bg-white/40 p-5 dark:bg-neutral-900/40`}
+      className={`border-border ring-1 ${style.ring} rounded-2xl border bg-surface-1 p-5`}
     >
       <header className="mb-3 flex items-center justify-between gap-3">
         <h3 className="text-base font-semibold">{title}</h3>
@@ -276,7 +276,7 @@ export default async function TalentsPage({ params }: { params: { locale: string
                 return (
                   <li
                     key={e.id}
-                    className="border-border flex items-center gap-3 rounded-2xl border bg-white/40 p-4 dark:bg-neutral-900/40"
+                    className="border-border flex items-center gap-3 rounded-2xl border bg-surface-1 p-4"
                   >
                     <span
                       className="h-8 w-1 shrink-0 rounded-full"
@@ -348,7 +348,7 @@ export default async function TalentsPage({ params }: { params: { locale: string
         </div>
       </section>
 
-      <details className="border-border group rounded-2xl border bg-white/30 dark:bg-neutral-900/30">
+      <details className="border-border group rounded-2xl border bg-surface-2">
         <summary className="press-soft flex cursor-pointer list-none items-center justify-between gap-2 px-5 py-4 [&::-webkit-details-marker]:hidden">
           <div className="space-y-0.5">
             <h2 className="text-base font-semibold">{t('detailTitle')}</h2>
@@ -366,7 +366,7 @@ export default async function TalentsPage({ params }: { params: { locale: string
               {t('chartTitle')}
             </p>
             <p className="text-muted-foreground text-xs leading-relaxed">{t('chartHint')}</p>
-            <div className="border-border rounded-2xl border bg-white/40 p-4 dark:bg-neutral-900/40">
+            <div className="border-border rounded-2xl border bg-surface-1 p-4">
               <div className="flex h-40 items-stretch gap-1.5 sm:gap-3">
                 {dist.slices.map((s) => {
                   const heightPct = (s.percentage / maxChartPct) * 100;
@@ -416,7 +416,7 @@ export default async function TalentsPage({ params }: { params: { locale: string
                   return (
                     <details
                       key={s.digit}
-                      className="border-border group/d overflow-hidden rounded-xl border bg-white/40 dark:bg-neutral-900/40"
+                      className="border-border group/d overflow-hidden rounded-xl border bg-surface-1"
                     >
                       <summary className="press-soft flex cursor-pointer list-none items-center gap-3 px-4 py-3 [&::-webkit-details-marker]:hidden">
                         <span

@@ -74,7 +74,7 @@ export function UploadResumeForm({ action, labels }: Props) {
   return (
     <div className="space-y-2">
       <label
-        className={`border-border press-soft hover:bg-muted/40 flex cursor-pointer items-center justify-center gap-2 rounded-2xl border-2 border-dashed bg-white/40 px-6 py-5 text-sm font-medium transition dark:bg-neutral-900/40 ${
+        className={`border-border press-soft hover:bg-muted/40 flex cursor-pointer items-center justify-center gap-2 rounded-2xl border-2 border-dashed bg-surface-1 px-6 py-5 text-sm font-medium transition ${
           pending ? 'pointer-events-none opacity-60' : ''
         }`}
       >

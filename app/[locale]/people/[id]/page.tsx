@@ -118,7 +118,7 @@ export default async function PersonDetailPage({
       <TopBar title={person.fullName} backHref={`/${locale}/people`} />
       <div className="space-y-6 pb-6 sm:pb-10">
         {/* Identity card — no buttons; Edit + Delete live on the People list */}
-        <section className="border-border flex flex-col items-center gap-3 rounded-2xl border bg-white/40 p-6 text-center dark:bg-neutral-900/40">
+        <section className="border-border flex flex-col items-center gap-3 rounded-2xl border bg-surface-1 p-6 text-center">
           <div
             className="from-primary/30 to-accent/30 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br font-serif text-3xl font-semibold tracking-tight"
             aria-hidden
@@ -294,7 +294,7 @@ export default async function PersonDetailPage({
         {relProfileText ? (
           <section className="space-y-3">
             <h2 className="text-lg font-semibold">{tRel('title', { name: person.fullName })}</h2>
-            <details className="border-border group rounded-2xl border bg-white/40 p-5 dark:bg-neutral-900/40">
+            <details className="border-border group rounded-2xl border bg-surface-1 p-5">
               <summary className="press-soft flex cursor-pointer list-none items-start justify-between gap-3 [&::-webkit-details-marker]:hidden">
                 <p className="text-[15px] leading-relaxed text-neutral-800 dark:text-neutral-200">
                   {renderInlineMd(relSummary)}
@@ -321,7 +321,7 @@ export default async function PersonDetailPage({
           <h2 className="text-lg font-semibold">{t('dynamicTitle')}</h2>
           <Link
             href={`/${locale}/people/${person.id}/compatibility`}
-            className="border-border press-soft hover:bg-muted/30 group block rounded-2xl border bg-white/40 p-5 dark:bg-neutral-900/40"
+            className="border-border press-soft hover:bg-muted/30 group block rounded-2xl border bg-surface-1 p-5"
           >
             <div className="flex items-baseline justify-between gap-3">
               <div>

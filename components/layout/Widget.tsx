@@ -20,7 +20,7 @@ export function Widget({
   return (
     <details
       open={defaultOpen}
-      className="border-border group rounded-2xl border bg-white/30 dark:bg-neutral-900/30 [&[open]>summary]:border-b [&[open]>summary]:border-border"
+      className="border-border group rounded-2xl border bg-surface-2 [&[open]>summary]:border-b [&[open]>summary]:border-border"
     >
       <summary className="press flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4 [&::-webkit-details-marker]:hidden">
         <div>

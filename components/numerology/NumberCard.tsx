@@ -41,7 +41,7 @@ export function NumberCard({
 
   if (!explainable) {
     return (
-      <div className="border-border rounded-xl border bg-white/50 p-4 dark:bg-neutral-900/50">
+      <div className="border-border rounded-xl border bg-surface-1 p-4">
         {inner}
       </div>
     );
@@ -49,8 +49,8 @@ export function NumberCard({
 
   return (
     <div
-      className={`border-border press-soft overflow-hidden rounded-xl border bg-white/50 transition-colors dark:bg-neutral-900/50 ${
-        open ? 'ring-primary/30 ring-1' : 'hover:bg-white/70 dark:hover:bg-neutral-900/70'
+      className={`border-border press-soft overflow-hidden rounded-xl border bg-surface-1 transition-colors ${
+        open ? 'ring-primary/30 ring-1' : 'hover:bg-surface-2'
       }`}
     >
       <button

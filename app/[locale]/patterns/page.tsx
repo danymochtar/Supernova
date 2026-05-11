@@ -54,7 +54,7 @@ export default async function PatternsPage({ params }: { params: { locale: strin
         </section>
       ) : (
         <>
-          <section className="border-border rounded-2xl border bg-white/40 p-6 dark:bg-neutral-900/40">
+          <section className="border-border rounded-2xl border bg-surface-1 p-6">
             <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider">
               {t('overallTitle')}
             </p>
@@ -94,7 +94,7 @@ function BucketSection({
         <h2 className="text-lg font-semibold">{title}</h2>
         <p className="text-muted-foreground text-sm">{hint}</p>
       </div>
-      <div className="border-border space-y-2 rounded-xl border bg-white/40 p-4 dark:bg-neutral-900/40">
+      <div className="border-border space-y-2 rounded-xl border bg-surface-1 p-4">
         {buckets.map((b) => {
           const pct = (b.count / max) * 100;
           const ratingHue = Math.max(0, Math.min(120, ((b.avg - 1) / 4) * 120));

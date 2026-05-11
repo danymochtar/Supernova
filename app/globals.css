@@ -15,6 +15,14 @@
     --accent-foreground: 230 30% 10%;
     --border: 220 15% 86%;
     --radius: 0.75rem;
+
+    /* iOS-style 3-level surface ladder + 2-level interactive fill.
+     * Neutral on purpose: brand identity stays on gradients + primary/accent. */
+    --surface-1: 220 28% 100%;
+    --surface-2: 220 25% 96%;
+    --surface-3: 220 22% 92%;
+    --fill-1:    220 15% 88%;
+    --fill-2:    220 12% 80%;
   }
 
   .dark {
@@ -28,6 +36,12 @@
     --accent: 38 90% 60%;
     --accent-foreground: 230 35% 6%;
     --border: 230 14% 20%;
+
+    --surface-1: 230 28% 12%;
+    --surface-2: 230 26% 16%;
+    --surface-3: 230 24% 20%;
+    --fill-1:    230 18% 22%;
+    --fill-2:    230 16% 28%;
   }
 
   * {
@@ -105,6 +119,15 @@
   /* Card press feedback — slightly less aggressive scale than button press. */
   .press-soft {
     @apply transition-transform duration-100 ease-out active:scale-[0.99];
+  }
+
+  /* iOS spring easing curves. Apply to floating menus / sheets that should
+   * feel like UIKit. */
+  .ios-ease {
+    transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .ios-spring-out {
+    transition-timing-function: cubic-bezier(0.32, 1.35, 0.32, 1);
   }
 
   /* Hide scrollbar but keep scroll. */

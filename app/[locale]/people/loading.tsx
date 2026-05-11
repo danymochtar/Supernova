@@ -8,7 +8,7 @@ export default function PeopleLoading() {
       </div>
       <div className="space-y-3">
         {[0, 1].map((i) => (
-          <div key={i} className="border-border h-16 animate-pulse rounded-xl border bg-white/40 dark:bg-neutral-900/40" />
+          <div key={i} className="border-border h-16 animate-pulse rounded-xl border bg-surface-1" />
         ))}
       </div>
     </main>

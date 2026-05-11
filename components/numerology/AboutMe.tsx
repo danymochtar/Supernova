@@ -93,7 +93,7 @@ export function AboutMe({
 }: Props) {
   if (!data) {
     return (
-      <section className="border-border space-y-3 rounded-2xl border bg-white/30 p-6 dark:bg-neutral-900/30">
+      <section className="border-border space-y-3 rounded-2xl border bg-surface-2 p-6">
         <header className="space-y-2">
           <h2 className="text-lg font-semibold">{title}</h2>
           <p className="text-muted-foreground text-sm">{subtitle}</p>

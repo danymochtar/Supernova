@@ -71,7 +71,7 @@ export function DateBrowser({
         type="button"
         onClick={openPicker}
         aria-label={pickLabel}
-        className={`press-soft border-border hover:bg-muted/40 inline-flex h-9 w-9 items-center justify-center rounded-full border bg-white/40 dark:bg-neutral-900/40 ${
+        className={`press-soft border-border hover:bg-muted/40 inline-flex h-9 w-9 items-center justify-center rounded-full border bg-surface-1 ${
           isPreview ? 'border-amber-500/50 text-amber-600 dark:text-amber-300' : 'text-muted-foreground hover:text-foreground'
         }`}
       >

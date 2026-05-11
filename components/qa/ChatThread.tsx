@@ -145,8 +145,17 @@ export function ChatThread({
   const [replyTo, setReplyTo] = useState<ChatTurn | null>(null);
   const [pairMenu, setPairMenu] = useState<{
     turn: ChatTurn;
-    anchor: { x: number; y: number; openUp: boolean };
+    anchor: {
+      x: number;
+      y: number;
+      openUp: boolean;
+      /** Where the menu visually emerges from (relative to its own box).
+       *  Drives the zoom-in animation's transform-origin so it scales from
+       *  the tapped bubble, not from the menu's top-left corner. */
+      origin: string;
+    };
   } | null>(null);
+  const pressedTurnId = pairMenu?.turn.id ?? null;
   const [, startDelete] = useTransition();
   // Journal multi-select. \`selectMode\` makes every persisted turn tappable
   // to toggle inclusion; the floating action bar at the bottom commits the
@@ -482,7 +491,7 @@ export function ChatThread({
                     key={p}
                     type="button"
                     onClick={() => setInput(p)}
-                    className="border-border press hover:bg-muted/40 rounded-xl border bg-white/40 px-4 py-3 text-left text-sm dark:bg-neutral-900/40"
+                    className="border-border press hover:bg-muted/40 rounded-xl border bg-surface-1 px-4 py-3 text-left text-sm"
                   >
                     {p}
                   </button>
@@ -501,6 +510,7 @@ export function ChatThread({
                   answer={tn.answer}
                   attachments={tn.attachments}
                   onOpenImage={(src, name) => setViewingImage({ src, name })}
+                  pressed={pressedTurnId === tn.id}
                   onLongPress={
                     selectMode
                       ? undefined
@@ -508,13 +518,33 @@ export function ChatThread({
                           const vh = window.innerHeight;
                           const vw = window.innerWidth;
                           const MENU_WIDTH = 240;
-                          const openUp = rect.bottom > vh * 0.55;
+                          const MENU_HEIGHT = 180; // ~3 rows × 52 + dividers
+                          const margin = 12;
+                          const availableBelow = vh - rect.bottom - margin;
+                          const availableAbove = rect.top - margin;
+                          // Prefer below; flip up only when below truly can't
+                          // hold the menu AND above can.
+                          const openUp =
+                            availableBelow < MENU_HEIGHT &&
+                            availableAbove >= MENU_HEIGHT;
                           const x = Math.max(
-                            12,
-                            Math.min(rect.left, vw - MENU_WIDTH - 12),
+                            margin,
+                            Math.min(rect.left, vw - MENU_WIDTH - margin),
                           );
                           const y = openUp ? rect.top : rect.bottom;
-                          setPairMenu({ turn: tn, anchor: { x, y, openUp } });
+                          // Animation origin: anchor near the bubble corner
+                          // closest to the menu. Bubble center-x relative to
+                          // the menu's own left edge gives the right axis.
+                          const bubbleCenterX = rect.left + rect.width / 2;
+                          const originX = Math.max(
+                            12,
+                            Math.min(MENU_WIDTH - 12, bubbleCenterX - x),
+                          );
+                          const origin = `${originX}px ${openUp ? '100%' : '0%'}`;
+                          setPairMenu({
+                            turn: tn,
+                            anchor: { x, y, openUp, origin },
+                          });
                         }
                   }
                   selectMode={selectMode}
@@ -558,17 +588,18 @@ export function ChatThread({
         <div
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-[55]"
+          className="animate-in fade-in fixed inset-0 z-[55] duration-150"
           onClick={() => setPairMenu(null)}
         >
           <div
-            className="border-border bg-background/95 absolute w-[240px] overflow-hidden rounded-2xl border shadow-2xl supports-[backdrop-filter]:bg-background/85 supports-[backdrop-filter]:backdrop-blur-xl"
+            className="border-border bg-background/95 animate-in zoom-in-95 fade-in ios-ease absolute w-[240px] overflow-hidden rounded-2xl border shadow-2xl duration-150 supports-[backdrop-filter]:bg-background/85 supports-[backdrop-filter]:backdrop-blur-xl"
             style={{
               left: pairMenu.anchor.x,
               top: pairMenu.anchor.openUp ? 'auto' : pairMenu.anchor.y + 8,
               bottom: pairMenu.anchor.openUp
                 ? `calc(100dvh - ${pairMenu.anchor.y - 8}px)`
                 : 'auto',
+              transformOrigin: pairMenu.anchor.origin,
             }}
             onClick={(e) => e.stopPropagation()}
           >
@@ -621,7 +652,7 @@ export function ChatThread({
 
       {/* Journal "added" toast — auto-clears after a few seconds. */}
       {journalToast ? (
-        <div className="border-border bg-background fixed inset-x-0 bottom-24 z-50 mx-auto flex max-w-sm items-center gap-2 rounded-full border px-4 py-2 text-sm shadow-lg">
+        <div className="border-border bg-surface-1 animate-in slide-in-from-bottom-4 fade-in ios-ease fixed inset-x-0 bottom-24 z-50 mx-auto flex max-w-sm items-center gap-2 rounded-full border px-4 py-2 text-sm shadow-lg duration-300">
           <BookmarkPlus className="text-primary h-4 w-4" aria-hidden />
           <span>{journalToast}</span>
         </div>
@@ -635,7 +666,7 @@ export function ChatThread({
           aria-modal="true"
           aria-label={viewingImage.name}
           onClick={() => setViewingImage(null)}
-          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/85 p-4"
+          className="animate-in fade-in fixed inset-0 z-[60] flex items-center justify-center bg-black/85 p-4 duration-200"
         >
           <button
             type="button"
@@ -697,7 +728,7 @@ export function ChatThread({
           type="button"
           onClick={scrollToBottom}
           aria-label={t('scrollToBottom')}
-          className="border-border bg-background/95 text-foreground fixed right-4 z-30 flex h-10 w-10 items-center justify-center rounded-full border shadow-lg supports-[backdrop-filter]:bg-background/80 supports-[backdrop-filter]:backdrop-blur"
+          className="border-border bg-surface-1/95 text-foreground animate-in zoom-in-90 fade-in ios-ease fixed right-4 z-30 flex h-10 w-10 items-center justify-center rounded-full border shadow-lg duration-200 supports-[backdrop-filter]:bg-surface-1/85 supports-[backdrop-filter]:backdrop-blur"
           style={{ bottom: 'calc(8rem + env(safe-area-inset-bottom))' }}
         >
           <ArrowDown className="h-5 w-5" aria-hidden />
@@ -842,6 +873,7 @@ function Pair({
   answer,
   streaming,
   onLongPress,
+  pressed,
   selectMode,
   selected,
   onToggleSelect,
@@ -854,8 +886,14 @@ function Pair({
   streaming?: boolean;
   /** Fires on a tap-and-hold on touch, or a right-click on desktop. The
    *  ChatThread parent opens an action sheet (reply / journal / delete)
-   *  in response — chat-app convention, replaces the per-message icon row. */
+   *  in response — chat-app convention, replaces the per-message icon row.
+   *  Receives the AI-bubble's bounding rect (not the whole Pair wrapper)
+   *  so the popover anchors to the visible message even when the Pair has
+   *  tall image attachments above it. */
   onLongPress?: (rect: DOMRect) => void;
+  /** When true, the AI bubble scales down + dims — visual cue that the
+   *  long-press fired while the menu opens. iOS-Messages convention. */
+  pressed?: boolean;
   selectMode?: boolean;
   selected?: boolean;
   onToggleSelect?: () => void;
@@ -874,11 +912,16 @@ function Pair({
   const visibleQuestion = (question ?? '').replace(/\[(?:image|pdf|text):[^\]]*\]\s*/gi, '').trim();
   const longPressTimer = useRef<number | null>(null);
   const longPressFired = useRef(false);
+  const answerBubbleRef = useRef<HTMLDivElement | null>(null);
 
-  function startLongPress(e: React.TouchEvent<HTMLDivElement>) {
+  function startLongPress() {
     if (selectMode || streaming || !onLongPress) return;
-    // Capture the rect now — the event ref may be released before the timer fires.
-    const rect = e.currentTarget.getBoundingClientRect();
+    // Capture the AI bubble's rect specifically — the wrapper's rect would
+    // include image attachments above it, falsely flipping the popover up
+    // for image-heavy mid-screen messages.
+    const bubble = answerBubbleRef.current;
+    if (!bubble) return;
+    const rect = bubble.getBoundingClientRect();
     longPressFired.current = false;
     if (longPressTimer.current) window.clearTimeout(longPressTimer.current);
     longPressTimer.current = window.setTimeout(() => {
@@ -911,7 +954,9 @@ function Pair({
       onContextMenu={(e) => {
         if (!onLongPress || selectMode) return;
         e.preventDefault();
-        onLongPress(e.currentTarget.getBoundingClientRect());
+        const bubble = answerBubbleRef.current;
+        const rect = bubble?.getBoundingClientRect() ?? e.currentTarget.getBoundingClientRect();
+        onLongPress(rect);
       }}
       onTouchStart={startLongPress}
       onTouchEnd={cancelLongPress}
@@ -976,7 +1021,12 @@ function Pair({
         );
       })()}
       <div className="flex justify-start">
-        <div className="border-border max-w-[80%] whitespace-pre-wrap rounded-2xl rounded-tl-md border bg-white/60 px-4 py-2.5 text-sm dark:bg-neutral-900/60">
+        <div
+          ref={answerBubbleRef}
+          className={`border-border bg-surface-1 ios-ease max-w-[80%] whitespace-pre-wrap rounded-2xl rounded-tl-md border px-4 py-2.5 text-sm shadow-sm transition-all duration-150 ${
+            pressed ? 'scale-[0.97] opacity-90' : ''
+          }`}
+        >
           {renderInlineMd(answer)}
           {streaming ? (
             answer.length === 0 ? (

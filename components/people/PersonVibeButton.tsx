@@ -60,11 +60,11 @@ export function PersonVibeButton({ personId, cachedBody, action, labels }: Props
           role="dialog"
           aria-modal="true"
           aria-label={labels.sheetTitle}
-          className="fixed inset-0 z-[60] flex items-end justify-center bg-black/40 backdrop-blur-sm sm:items-center"
+          className="animate-in fade-in fixed inset-0 z-[60] flex items-end justify-center bg-black/40 backdrop-blur-sm duration-150 sm:items-center"
           onClick={() => setOpen(false)}
         >
           <div
-            className="bg-background border-border w-full max-w-md rounded-t-3xl border-t shadow-2xl sm:rounded-3xl sm:border"
+            className="bg-surface-1 border-border animate-in slide-in-from-bottom-12 fade-in ios-ease w-full max-w-md rounded-t-3xl border-t shadow-2xl duration-300 sm:rounded-3xl sm:border sm:slide-in-from-bottom-4"
             style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
             onClick={(e) => e.stopPropagation()}
           >

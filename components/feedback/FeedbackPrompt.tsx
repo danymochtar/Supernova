@@ -40,7 +40,7 @@ export function FeedbackPrompt({ locale, initial, action }: Props) {
   }
 
   return (
-    <section className="border-border space-y-3 rounded-2xl border bg-white/40 p-6 dark:bg-neutral-900/40">
+    <section className="border-border space-y-3 rounded-2xl border bg-surface-1 p-6">
       <header className="space-y-1">
         <h2 className="text-lg font-semibold">{t('title')}</h2>
         <p className="text-muted-foreground text-sm">{t('subtitle')}</p>

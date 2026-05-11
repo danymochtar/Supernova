@@ -8,7 +8,7 @@
  */
 export function Explainer({ title, body }: { title: string; body: string }) {
   return (
-    <details className="border-border group rounded-lg border bg-white/30 px-3 py-2 text-xs dark:bg-neutral-900/30">
+    <details className="border-border group rounded-lg border bg-surface-2 px-3 py-2 text-xs">
       <summary className="text-muted-foreground flex cursor-pointer list-none items-center gap-1.5 font-medium [&::-webkit-details-marker]:hidden">
         <span className="text-accent transition-transform group-open:rotate-90">▸</span>
         <span>{title}</span>

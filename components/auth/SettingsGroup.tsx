@@ -23,7 +23,7 @@ export function SettingsGroup({
           {hint ? <p className="text-muted-foreground mt-0.5 text-xs">{hint}</p> : null}
         </div>
       ) : null}
-      <div className="border-border divide-border/60 overflow-hidden rounded-2xl border bg-white/40 dark:bg-neutral-900/40 divide-y">
+      <div className="border-border divide-border/60 overflow-hidden rounded-2xl border bg-surface-1 divide-y">
         {children}
       </div>
     </section>

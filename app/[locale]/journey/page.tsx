@@ -160,7 +160,7 @@ export default async function JourneyPage({ params }: { params: { locale: string
             * tagline (mobile, full text), synthesis paragraphs, three tips,
             * then the affirmation. */}
           {yearOutlook ? (
-            <div className="border-border/60 space-y-4 border-t px-6 py-5 bg-white/50 dark:bg-neutral-900/30">
+            <div className="border-border/60 space-y-4 border-t px-6 py-5 bg-surface-1">
               {yearOutlook.tagline ? (
                 <p className="font-serif text-xl font-semibold leading-tight tracking-tight text-foreground sm:text-2xl">
                   {yearOutlook.tagline}
@@ -254,7 +254,7 @@ export default async function JourneyPage({ params }: { params: { locale: string
         </div>
 
         {/* 1→9 cycle progression dots */}
-        <div className="border-border space-y-1.5 rounded-xl border bg-white/40 p-4 dark:bg-neutral-900/40">
+        <div className="border-border space-y-1.5 rounded-xl border bg-surface-1 p-4">
           <div className="flex items-center gap-1.5">
             {Array.from({ length: 9 }, (_, i) => {
               const pos = i + 1;
@@ -288,7 +288,7 @@ export default async function JourneyPage({ params }: { params: { locale: string
                 return (
                   <article
                     key={y.year}
-                    className="border-border w-[80%] shrink-0 snap-start rounded-xl border bg-white/40 p-4 dark:bg-neutral-900/40 sm:w-[52%] md:w-[40%]"
+                    className="border-border w-[80%] shrink-0 snap-start rounded-xl border bg-surface-1 p-4 sm:w-[52%] md:w-[40%]"
                   >
                     <header className="flex items-baseline justify-between gap-3">
                       <div className="flex items-baseline gap-2">
@@ -333,7 +333,7 @@ export default async function JourneyPage({ params }: { params: { locale: string
                   className={`w-[80%] shrink-0 snap-start rounded-xl border p-4 sm:w-[44%] md:w-[32%] ${
                     row.isActive
                       ? 'border-primary/50 bg-primary/5 ring-1 ring-primary/30'
-                      : 'border-border bg-white/40 dark:bg-neutral-900/40'
+                      : 'border-border bg-surface-1'
                   }`}
                 >
                   <header className="space-y-1">
@@ -482,7 +482,7 @@ export default async function JourneyPage({ params }: { params: { locale: string
                   return (
                     <article
                       key={frame.age}
-                      className="border-border w-[80%] shrink-0 snap-start rounded-xl border bg-white/40 p-4 dark:bg-neutral-900/40 sm:w-[52%] md:w-[40%]"
+                      className="border-border w-[80%] shrink-0 snap-start rounded-xl border bg-surface-1 p-4 sm:w-[52%] md:w-[40%]"
                     >
                       <header className="flex items-baseline justify-between gap-3">
                         <div className="flex items-baseline gap-2">
@@ -575,7 +575,7 @@ function TransitChip({
   ageLabel: string;
 }) {
   return (
-    <div className="border-border rounded-xl border bg-white/60 p-4 dark:bg-neutral-900/60">
+    <div className="border-border rounded-xl border bg-surface-1 p-4">
       <p className="text-muted-foreground text-[10px] font-semibold uppercase tracking-[0.18em]">
         {label}
       </p>

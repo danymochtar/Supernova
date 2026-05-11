@@ -8,7 +8,7 @@ export default function AskLoading() {
       <div className="space-y-3 pt-6">
         {[0, 1, 2].map((i) => (
           <div key={i} className="flex justify-start">
-            <div className="border-border h-12 w-3/4 animate-pulse rounded-2xl rounded-tl-md border bg-white/40 dark:bg-neutral-900/40" />
+            <div className="border-border h-12 w-3/4 animate-pulse rounded-2xl rounded-tl-md border bg-surface-1" />
           </div>
         ))}
       </div>

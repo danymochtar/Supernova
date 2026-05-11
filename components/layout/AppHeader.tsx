@@ -21,7 +21,7 @@ export function AppHeader({
           href={`/${locale}/me`}
           aria-label={settingsLabel}
           title={settingsLabel}
-          className="border-border press text-muted-foreground hover:text-foreground hover:bg-muted/40 inline-flex h-9 w-9 items-center justify-center rounded-full border bg-white/40 transition-colors dark:bg-neutral-900/40"
+          className="border-border press text-muted-foreground hover:text-foreground hover:bg-muted/40 inline-flex h-9 w-9 items-center justify-center rounded-full border bg-surface-1 transition-colors"
         >
           <Settings2 className="h-4 w-4" aria-hidden />
         </Link>

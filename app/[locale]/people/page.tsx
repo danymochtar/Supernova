@@ -96,7 +96,7 @@ export default async function PeoplePage({
               <p className="text-muted-foreground px-1 text-[11px] font-semibold uppercase tracking-[0.18em]">
                 {t(`relationship.${group.relationship}`)}
               </p>
-              <div className="border-border divide-border/60 overflow-hidden rounded-2xl border bg-white/30 dark:bg-neutral-900/30 divide-y">
+              <div className="border-border divide-border/60 overflow-hidden rounded-2xl border bg-surface-2 divide-y">
                 {group.rows.map((p) => {
                   const age = ageAt(p.dob, ctx);
                   const initials = `${p.firstName.charAt(0)}${p.lastName?.charAt(0) ?? ''}`.toUpperCase()

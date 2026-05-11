@@ -17,7 +17,7 @@ export default function DashboardLoading() {
       </div>
 
       {/* About me skeleton */}
-      <div className="border-border space-y-2 rounded-2xl border bg-white/30 p-6 dark:bg-neutral-900/30">
+      <div className="border-border space-y-2 rounded-2xl border bg-surface-2 p-6">
         <div className="bg-muted h-5 w-24 animate-pulse rounded" />
         <div className="bg-muted h-3 w-3/4 animate-pulse rounded" />
         <div className="space-y-2 pt-3">
@@ -32,7 +32,7 @@ export default function DashboardLoading() {
         <div className="bg-muted h-5 w-20 animate-pulse rounded" />
         <div className="grid grid-cols-3 gap-3">
           {[0, 1, 2].map((i) => (
-            <div key={i} className="border-border h-24 animate-pulse rounded-xl border bg-white/40 dark:bg-neutral-900/40" />
+            <div key={i} className="border-border h-24 animate-pulse rounded-xl border bg-surface-1" />
           ))}
         </div>
       </div>
@@ -42,7 +42,7 @@ export default function DashboardLoading() {
         <div className="bg-muted h-5 w-24 animate-pulse rounded" />
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
           {[0, 1, 2, 3, 4].map((i) => (
-            <div key={i} className="border-border h-28 animate-pulse rounded-xl border bg-white/40 dark:bg-neutral-900/40" />
+            <div key={i} className="border-border h-28 animate-pulse rounded-xl border bg-surface-1" />
           ))}
         </div>
       </div>

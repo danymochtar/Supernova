@@ -36,7 +36,7 @@ export default async function AccountPage({ params }: { params: { locale: string
           <p className="text-muted-foreground text-sm">{t('subtitle')}</p>
         </header>
 
-        <section className="border-border rounded-2xl border bg-white/40 p-5 dark:bg-neutral-900/40">
+        <section className="border-border rounded-2xl border bg-surface-1 p-5">
           <ChangeEmailForm
             currentEmail={session.user.email}
             labels={{
@@ -49,7 +49,7 @@ export default async function AccountPage({ params }: { params: { locale: string
           />
         </section>
 
-        <section className="border-border rounded-2xl border bg-white/40 p-5 dark:bg-neutral-900/40">
+        <section className="border-border rounded-2xl border bg-surface-1 p-5">
           <ChangePasswordForm
             labels={{
               title: t('passwordTitle'),

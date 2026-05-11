@@ -47,7 +47,7 @@ export function JournalEntryCard({
     .filter(Boolean);
 
   return (
-    <article className="border-border group relative space-y-3 rounded-2xl border bg-white/40 p-5 dark:bg-neutral-900/40">
+    <article className="border-border group relative space-y-3 rounded-2xl border bg-surface-1 p-5">
       <button
         type="button"
         onClick={onDelete}
@@ -94,7 +94,7 @@ export function JournalEntryCard({
               <div className="bg-primary/10 text-foreground rounded-xl rounded-tl-md px-3 py-2 text-xs whitespace-pre-wrap">
                 {s.question}
               </div>
-              <div className="border-border whitespace-pre-wrap rounded-xl rounded-tl-md border bg-white/40 px-3 py-2 text-xs leading-relaxed text-neutral-800 dark:bg-neutral-900/40 dark:text-neutral-200">
+              <div className="border-border whitespace-pre-wrap rounded-xl rounded-tl-md border bg-surface-1 px-3 py-2 text-xs leading-relaxed text-neutral-800 dark:text-neutral-200">
                 {renderInlineMd(s.answer)}
               </div>
             </div>
