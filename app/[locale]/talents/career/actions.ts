@@ -16,7 +16,11 @@ import {
   type CareerInput,
 } from '@/lib/db/repositories/career';
 
-const MAX_PDF_BYTES = 8 * 1024 * 1024; // 8 MB raw — comfortable headroom under the 10mb action body cap
+// 4 MB raw — sits just under Vercel's 4.5 MB serverless function body cap.
+// Even with serverActions.bodySizeLimit set higher in next.config, the
+// platform limit applies in production and rejects the request before the
+// action runs.
+const MAX_PDF_BYTES = 4 * 1024 * 1024;
 
 export type UploadResumeResult =
   | { ok: true; count: number }

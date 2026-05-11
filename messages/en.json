@@ -626,7 +626,7 @@
     "careerSuccess": "Parsed successfully.",
     "careerErrorNoFile": "Pick a file first.",
     "careerErrorWrongType": "File must be a PDF.",
-    "careerErrorTooLarge": "File too large. Max 8 MB.",
+    "careerErrorTooLarge": "File too large. Max 4 MB (hosting limit).",
     "careerErrorParseFailed": "Couldn't read the résumé. Try another file or make sure the PDF is readable (not a blurry scan).",
     "careerErrorNoRoles": "No work experience found. Make sure your résumé has an Experience / Work History section.",
     "careerErrorGeneric": "Failed to process. Try again shortly.",

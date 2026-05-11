@@ -19,6 +19,12 @@ interface Props {
   };
 }
 
+// Vercel's serverless function body limit is 4.5 MB even when Next's
+// serverActions.bodySizeLimit is set higher — the platform rejects the
+// upload before the action runs, which would surface as a React render
+// crash rather than a clean error. Cap the client a hair below that.
+const CLIENT_MAX_BYTES = 4 * 1024 * 1024;
+
 const ERROR_KEY: Record<Exclude<UploadResumeResult, { ok: true }>['error'], keyof Props['labels']> = {
   unauth: 'errorGeneric',
   no_profile: 'errorGeneric',
@@ -39,12 +45,27 @@ export function UploadResumeForm({ action, labels }: Props) {
     const file = e.target.files?.[0];
     if (!file) return;
     setError(null);
+    if (file.size > CLIENT_MAX_BYTES) {
+      setError(labels.errorTooLarge);
+      if (inputRef.current) inputRef.current.value = '';
+      return;
+    }
     const fd = new FormData();
     fd.append('resume', file);
     start(async () => {
-      const res = await action(fd);
-      if (!res.ok) {
-        setError(labels[ERROR_KEY[res.error]]);
+      try {
+        const res = await action(fd);
+        if (!res.ok) {
+          setError(labels[ERROR_KEY[res.error]]);
+          if (inputRef.current) inputRef.current.value = '';
+        }
+      } catch (err) {
+        // Network/platform-layer failures (e.g., Vercel rejecting the body
+        // before the action runs) throw rather than returning a result.
+        // Catch so we render a clean message instead of triggering the
+        // root error boundary.
+        console.error('[upload] action threw', err);
+        setError(labels.errorGeneric);
         if (inputRef.current) inputRef.current.value = '';
       }
     });

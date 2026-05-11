@@ -626,7 +626,7 @@
     "careerSuccess": "Berhasil di-parse.",
     "careerErrorNoFile": "Pilih file dulu.",
     "careerErrorWrongType": "File harus PDF.",
-    "careerErrorTooLarge": "File kebesaran. Maks 8 MB.",
+    "careerErrorTooLarge": "File kebesaran. Maks 4 MB (limit hosting).",
     "careerErrorParseFailed": "Gagal baca resume. Coba file lain atau pastikan PDF-nya readable (bukan scan blur).",
     "careerErrorNoRoles": "Nggak ketemu pekerjaan di resume. Pastikan ada Experience / Work History section.",
     "careerErrorGeneric": "Gagal proses. Coba lagi sebentar.",
