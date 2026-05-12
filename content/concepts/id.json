@@ -1,0 +1,89 @@
+{
+  "intro": "Numerologi yang Supernova pakai mengikuti tradisi Pythagorean — setiap huruf di alfabet punya nilai 1 sampai 9, dan setiap angka membawa karakter berbeda. Dari nama lengkap (sesuai akta lahir) dan tanggal lahir kamu, kita hitung lima angka inti + beberapa lapisan tambahan. Ini bukan ramalan — lebih ke peta dirimu sendiri. Halaman ini menjelaskan tiap istilah yang muncul di app, ditulis dalam bahasa sehari-hari.",
+
+  "sections": [
+    {
+      "id": "core5",
+      "title": "Lima angka inti",
+      "tagline": "Fondasi utama profil numerologi kamu",
+      "body": "**Life Path** dihitung dari tanggal lahir penuh. Ini misi atau arah hidup kamu — pelajaran besar yang berulang sepanjang hidup. Mau dia jalanin atau dia hindari, tema ini bakal terus muncul.\n\n**Expression** (kadang disebut Destiny) dihitung dari semua huruf di nama lengkap. Ini bakat dan cara kamu muncul ke dunia — apa yang natural buat kamu lakuin, apa yang orang lihat kamu kuasai.\n\n**Soul Urge** (Heart's Desire) dihitung dari huruf vokal di nama. Ini kerinduan terdalam — apa yang sebenernya bikin kamu damai atau tergerak, meskipun mungkin gak selalu kamu tunjukin ke luar.\n\n**Personality** dihitung dari huruf konsonan. Ini kesan pertama yang orang tangkap — \"baju luar\" energimu sebelum mereka kenal kamu lebih dalam.\n\n**Birthday** = angka tanggal lahir (1-31). Bumbu khas yang nemenin hidup kamu — talenta spesifik yang muncul lewat hari kamu lahir."
+    },
+
+    {
+      "id": "masterNumbers",
+      "title": "Master Numbers (11, 22, 33)",
+      "tagline": "Angka tunggal yang \"dipertahankan\" — energi besar tapi berat",
+      "body": "Biasanya kita reduce angka sampai jadi single digit (mis. 29 → 2+9 = 11 → 1+1 = 2). Tapi tiga angka — **11, 22, 33** — disebut Master Numbers dan TIDAK di-reduce ke 2/4/6, karena tradisi numerologi melihatnya sebagai versi \"amplified\" dari angka tersebut.\n\n**11** = intuisi tinggi, visi, kepekaan spiritual. Versi intens dari 2.\n\n**22** = arsitek besar, kemampuan bangun sesuatu skala besar. Versi intens dari 4.\n\n**33** = pengabdian + cinta universal. Sangat jarang. Versi intens dari 6.\n\nKalau angka inti kamu master number, di Supernova kita tulis dua-duanya — misal Life Path \"29/11/2\" artinya compound 29 → master 11, kalau di-reduce penuh jadi 2. Master number bukan otomatis \"lebih baik\" — dia bawa potensi besar tapi juga tekanan yang lebih berat. Banyak orang dengan master number ngerasa hidupnya seperti latihan lifetime."
+    },
+
+    {
+      "id": "karmicDebt",
+      "title": "Karmic Debt (13, 14, 16, 19)",
+      "tagline": "Compound number yang menandakan pelajaran berat",
+      "body": "Karmic Debt = empat compound number spesifik: **13, 14, 16, 19**. Kalau hitungan kamu menghasilkan salah satu compound ini sebelum di-reduce (misal Life Path 31 → 4, biasa; tapi 22 → 4 lewat 13 itu berbeda), tradisi numerologi (terutama Decoz) baca itu sebagai pelajaran karmik yang kamu bawa.\n\n**13/4** = kerja keras buat bangun fondasi. Hasil instan jarang datang; tapi kalau kamu konsisten, hasilnya solid.\n\n**14/5** = belajar kontrol diri di tengah kebebasan. Godaan eksesnya banyak; pelajarannya: gunakan kebebasan dengan kesadaran.\n\n**16/7** = ego dan struktur lama harus runtuh sebelum diri sejati muncul. Banyak ngebatin sendirian, banyak transformasi.\n\n**19/1** = belajar berdiri sendiri tanpa nge-step on orang lain. Independent leadership yang tetap hormati interdependensi.\n\nKarmic Debt **bukan hukuman**. Dia sinyal area di mana pelajaran datangnya lebih intens — biasanya growth-nya juga lebih dalam di situ. Supernova nampilin badge \"karmic\" di samping angka yang kena (bisa dimatiin di Settings kalau ngerasa kelabel)."
+    },
+
+    {
+      "id": "karmicLessons",
+      "title": "Karmic Lessons",
+      "tagline": "Angka 1-9 yang ABSEN dari nama kamu — area yang perlu kamu kembangkan sadar",
+      "body": "Karmic Lessons beda dari Karmic Debt — sering ketuker. Karmic Lessons adalah angka 1-9 yang **tidak muncul sama sekali** di huruf-huruf nama lengkap kamu.\n\nSetiap angka 1-9 menyimbolkan satu domain kehidupan. Kalau angka itu ada di nama kamu, kamu \"akrab\" dengan domainnya — datang natural. Kalau tidak ada, domain itu adalah area yang **perlu kamu kembangkan secara sadar** karena tidak datang otomatis.\n\nContoh: kalau angka 5 absen, kamu mungkin terlalu kaku dengan rutinitas — pelajarannya: belajar adaptasi & let go. Kalau 7 absen, kamu mungkin terlalu di permukaan — pelajaran: belajar masuk ke dalam.\n\nKaryanya: bukan kekurangan, melainkan kompas growth. Beberapa orang tidak punya Karmic Lessons (semua 1-9 ada di nama mereka) — itu bukan otomatis hidup mudah, cuma pelajarannya datang lewat saluran lain (Pinnacle, Challenge, Essence)."
+    },
+
+    {
+      "id": "bridge",
+      "title": "Bridge Numbers",
+      "tagline": "Selisih antara dua angka inti — seberapa mulus dua sisi diri kamu nyatu",
+      "body": "Bridge Number (tradisi Decoz) ngeliat **selisih** antara dua angka inti. Supernova nampilin dua bridge utama:\n\n**Life Path × Expression** = selaras gak antara misi hidup kamu (Life Path) dan bakat natural kamu (Expression)? Kalau gap-nya kecil, kerjaan kamu ngalir mendukung tujuan hidup. Kalau gap-nya besar, kamu mungkin sering ngerasa \"yang aku jago bukan yang aku pengen\".\n\n**Soul Urge × Personality** = ke-cerminan gak inner self (Soul Urge) di tampilan luar (Personality)? Kalau gap-nya kecil, orang yang baru kenal kamu nangkep kamu apa adanya. Kalau gap-nya besar, ada gap antara \"siapa aku sebenernya\" vs \"siapa yang orang lihat\".\n\nBridge **kecil (0-2)** = ngalir, hampir tanpa friction.\nBridge **moderat (3-5)** = butuh kompromi rutin.\nBridge **besar (6-8)** = dua sisi tarik-menarik kuat — integrasi butuh kerja sadar, tapi pertumbuhan paling dalam justru lahir di sini."
+    },
+
+    {
+      "id": "minor",
+      "title": "Minor Numbers (dari nama panggilan)",
+      "tagline": "Lapisan day-to-day kamu — kalau kamu dipanggil dengan nickname",
+      "body": "Lima angka inti dihitung dari nama akta. Minor Numbers dihitung dari **nama panggilan / call-by name** — yang biasanya orang pakai sehari-hari (mis. \"Dany\" di Indonesia, \"Mike\" dari \"Michael\").\n\nMereka mencerminkan **diri sosial** — bagaimana energimu muncul saat publik manggil kamu dengan nama itu. Profil inti dari nama akta tetap fondasi yang lebih dalam; Minor adalah lapisan day-to-day di atasnya.\n\nTiga komponen:\n• **Minor Expression** = bakat & cara muncul versi panggilan\n• **Minor Soul Urge** = motivasi yang dibawa ke ranah publik (dari vokal nama panggilan)\n• **Minor Personality** = kesan pertama yang ditangkap publik (dari konsonan nama panggilan)\n\nKalau kamu gak punya nickname (selalu dipanggil pakai nama lengkap), Minor Numbers gak muncul — profil inti aja udah cukup."
+    },
+
+    {
+      "id": "personalCycles",
+      "title": "Personal Year, Month, Day",
+      "tagline": "Tema yang lagi aktif sekarang — bergerak dalam siklus 1→9",
+      "body": "Selain angka statis (Life Path, dll), numerologi juga ngeliat **tema yang lagi aktif**. Dia bergerak dalam siklus 1→9 yang berulang seumur hidup.\n\n**Personal Year (PY)** = tema utama 12 bulan ke depan. Dihitung dari (bulan lahir + tanggal lahir + tahun sekarang), reset tiap 1 Januari di timezone kamu. Tahun 1 = mulai sesuatu baru. Tahun 5 = perubahan & gerak. Tahun 9 = penyelesaian sebelum siklus baru.\n\n**Personal Month (PM)** = (PY + bulan sekarang). Reset tiap awal bulan.\n\n**Personal Day (PD)** = (PM + tanggal hari ini). Reset tiap hari. Ini yang dipakai buat \"vibe hari ini\" di dashboard.\n\nKalau compound PY/PM/PD kamu 13/14/16/19, ada karmic debt yang nambah dimensi pelajaran ke periode itu."
+    },
+
+    {
+      "id": "pinnacleChallenge",
+      "title": "Pinnacle & Challenge",
+      "tagline": "Empat babak besar hidup — tema dominan + ujian utama",
+      "body": "**Pinnacle** = empat babak besar hidup kamu, masing-masing bawa tema dominan selama bertahun-tahun.\n\n**Babak 1** berlangsung dari lahir sampai usia `(36 − Life Path reduced)`. Misal Life Path 1: Babak 1 sampai usia 35. Babak 2, 3, 4 berikutnya tiap-tiap 9 tahun.\n\nTiap Pinnacle datang **berpasangan dengan Challenge** — kekurangan atau ujian utama yang dilatih di babak itu.\n\n• Pinnacle ngasih tau apa yang \"dimasak\" hidup di babak itu.\n• Challenge ngasih tau apa yang harus kamu **latih atau lawan** di babak itu.\n\nKalau lagi di Babak 2 dengan Pinnacle 6 + Challenge 1, artinya: tema babak ini soal care & responsibility (Pinnacle 6), dan ujian yang sering muncul adalah belajar independence tanpa kehilangan empati (Challenge 1)."
+    },
+
+    {
+      "id": "periodCycle",
+      "title": "Period Cycle (Tiga Gelombang Besar)",
+      "tagline": "Backdrop energetik di belakang Pinnacle",
+      "body": "Beda dari Pinnacle (4 babak tema), Period Cycle adalah **3 gelombang besar backdrop** hidup kamu — energi yang ngewarnai panggung tiap fase.\n\n**Gelombang 1 — Formative** (~lahir-28 tahun) dari **bulan lahir** kamu. Energi pondasi: siapa kamu di-shape.\n\n**Gelombang 2 — Productive** (~28-56) dari **tanggal lahir**. Energi produktivitas: kontribusi kamu ke dunia.\n\n**Gelombang 3 — Harvest** (~56+) dari **tahun lahir**. Energi harvest: refleksi, legacy, kebijaksanaan.\n\nBatas usia geser tergantung Life Path kamu (rumus Decoz). Pinnacle = TEMA babak. Period Cycle = BACKDROP energetik di belakangnya."
+    },
+
+    {
+      "id": "essence",
+      "title": "Essence Cycle",
+      "tagline": "Tahun-tahun yang dimasak oleh huruf-huruf nama kamu",
+      "body": "Essence Cycle adalah lapisan paling **personal** — dia ngebaca huruf-huruf di nama kamu satu per satu.\n\nTiap huruf \"hidup\" sebanyak nilai Pythagorean-nya. Mis. D = 4 → aktif 4 tahun. Y = 7 → aktif 7 tahun. Saat satu huruf selesai, huruf berikutnya di nama itu mulai.\n\nTiga aliran berjalan **paralel**:\n• **Physical Transit** dari nama depan — fisik, kerja, manifestasi\n• **Mental Transit** dari middle name (kalau ada) — pikiran, ide, keputusan\n• **Spiritual Transit** dari nama belakang — inner growth, relasi, koneksi\n\n**Essence tahun ini** = jumlah huruf yang lagi aktif di tiga aliran itu. Kalau hasilnya compound 13/14/16/19, itu **dipertahankan** (tidak di-reduce) — sinyal tahun yang bawa pelajaran khusus."
+    },
+
+    {
+      "id": "talents",
+      "title": "Talenta & Vokasi",
+      "tagline": "Profil distribusi digit di nama kamu",
+      "body": "Tiap huruf di alfabet punya nilai 1-9. Nama lengkap kamu adalah kumpulan huruf, jadi distribusi digit-nya bisa dihitung — angka mana yang **dominan** (sering muncul), angka mana yang **muncul tipis**, angka mana yang **absen total**.\n\nDistribusi ini bisa dipetakan ke kelompok talenta:\n• **Mind** (1, 5, 7) — pikiran, kemandirian, riset\n• **Creative** (3, 6, 9) — ekspresi, care, visi besar\n• **Structure** (2, 4, 8) — kolaborasi, sistem, eksekusi\n\nDan ke **vokasi** — bidang kerja yang struktur digit-nya cocok sama distribusi kamu (mis. Business & Management, Medicine & Education, Arts & Communication, dll).\n\nRating **High/Medium/Low** di tiap kelompok = seberapa kuat sinyalnya di nama kamu. Bukan ramalan karir — lebih ke kompas: bidang yang akan terasa natural vs bidang yang butuh kerja ekstra."
+    },
+
+    {
+      "id": "compatibility",
+      "title": "Skor Kompatibilitas",
+      "tagline": "Bagaimana dua chart \"ngobrol\" satu sama lain",
+      "body": "Skor 0-100, dihitung dari pasangan angka inti kamu × orang lain. Authoritative reference: Decoz/McCants matrix.\n\nLima band:\n• **Berat** (< 40) — energi sering tabrakan, tapi friksinya bisa jadi growth zone\n• **Cukup** (40-60) — ada area selaras + area gesek, butuh kompromi sadar\n• **Baik** (60-75) — alur dasar nyaman, sesekali penyesuaian\n• **Kuat** (75-90) — banyak selaras, dinamika natural\n• **Langka** (90+) — kombinasi yang jarang ditemukan, sangat selaras\n\n**Lens** = perspektif relasi. Pasangan, keluarga, teman, rekan kerja punya bobot komponen berbeda. Soal Soul Urge (kerinduan terdalam) misalnya, dihitung penuh buat pasangan & keluarga tapi tidak buat teman/rekan kerja — karena pertemanan jarang menyentuh lapisan itu.\n\n**Modifier** = pola spesial yang muncul di luar skor angka — mis. \"sama-sama bawa master number\", \"karmic debt di kedua sisi\", \"old soul\". Mereka nambahin warna naratif, gak nge-overwrite skor utama."
+    }
+  ]
+}

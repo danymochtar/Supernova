@@ -16,6 +16,8 @@
     "subtitle": "Profile, language, patterns, and other settings.",
     "profile": "Profile",
     "editProfile": "Edit profile",
+    "concepts": "Learn the numerology concepts",
+    "conceptsHint": "Karmic debt, master number, bridge — every term explained.",
     "patterns": "Your daily patterns",
     "patternsHint": "See mood + theme trends after ≥14 days of logging.",
     "signOut": "Sign out of your account",
@@ -736,5 +738,10 @@
     "errorSameEmail": "New email is the same as the current one.",
     "errorWeakPassword": "New password is too short (min 8 characters).",
     "errorGeneric": "Couldn't save. Try again in a moment."
+  },
+  "concepts": {
+    "title": "Numerology concepts",
+    "subtitle": "Plain-language explanations of every term that shows up in Supernova — so nothing feels opaque.",
+    "footer": "Numerology is a tool for reflection, not prediction. Use it as a compass to know yourself more deeply."
   }
 }

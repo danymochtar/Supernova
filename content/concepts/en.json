@@ -1,0 +1,89 @@
+{
+  "intro": "Supernova uses Pythagorean numerology — every letter in the alphabet has a value 1 through 9, and every number carries a different character. From your full birth-certificate name and date of birth, we calculate five core numbers plus several additional layers. This isn't fortune-telling; it's a map of yourself. This page explains every term that shows up in the app, in plain language.",
+
+  "sections": [
+    {
+      "id": "core5",
+      "title": "The five core numbers",
+      "tagline": "The foundation of your numerology profile",
+      "body": "**Life Path** is calculated from your full date of birth. It's your life's mission or direction — the big lesson that recurs throughout your life. Whether you embrace it or avoid it, this theme keeps showing up.\n\n**Expression** (sometimes Destiny) is calculated from every letter in your full name. It's your natural talents and how you show up in the world — what comes naturally to you, what people see you mastering.\n\n**Soul Urge** (Heart's Desire) is calculated from the vowels in your name. It's your deepest longing — what truly settles or moves you, even if you don't always show it outwardly.\n\n**Personality** is calculated from the consonants. It's the first impression people pick up — the \"outer shell\" of your energy before they know you deeper.\n\n**Birthday** = the day of the month you were born (1-31). A specific spice that accompanies your whole life — a talent that comes through your birth day itself."
+    },
+
+    {
+      "id": "masterNumbers",
+      "title": "Master Numbers (11, 22, 33)",
+      "tagline": "Compound numbers that are NOT reduced — amplified, but heavy",
+      "body": "Normally we reduce numbers down to a single digit (e.g. 29 → 2+9 = 11 → 1+1 = 2). But three numbers — **11, 22, 33** — are called Master Numbers and are NOT reduced further to 2/4/6, because numerology tradition sees them as \"amplified\" versions of those numbers.\n\n**11** = high intuition, vision, spiritual sensitivity. Intense version of 2.\n\n**22** = master builder, capacity to construct at a large scale. Intense version of 4.\n\n**33** = devotion + universal love. Very rare. Intense version of 6.\n\nIf one of your core numbers is a master number, Supernova writes it as the compound + master — e.g. Life Path \"29/11/2\" means compound 29 → master 11, which would fully reduce to 2. A master number isn't automatically \"better\" — it carries great potential but also heavier pressure. Many people with master numbers feel their life is a lifetime practice."
+    },
+
+    {
+      "id": "karmicDebt",
+      "title": "Karmic Debt (13, 14, 16, 19)",
+      "tagline": "Specific compound numbers that signal a heavy lesson",
+      "body": "Karmic Debt = four specific compound numbers: **13, 14, 16, 19**. If your calculation produces one of these compounds before reducing (e.g. Life Path 31 → 4 is ordinary; but Life Path 22 → 4 via 13 is different), numerology tradition (especially Decoz) reads that as a karmic lesson you're carrying.\n\n**13/4** = hard work building a foundation. Instant results are rare; but consistency yields solid outcomes.\n\n**14/5** = learning self-control inside freedom. Temptation toward excess is real; the lesson is to use freedom with awareness.\n\n**16/7** = old ego and structures must crumble before the true self emerges. Lots of inner work, lots of transformation.\n\n**19/1** = learning to stand on your own without stepping on others. Independent leadership that still honors interdependence.\n\nKarmic Debt is **not a punishment**. It's a signal of areas where the lesson is more intense — and typically where the growth is deeper too. Supernova shows a \"karmic\" badge next to affected numbers (can be turned off in Settings if it feels labeling)."
+    },
+
+    {
+      "id": "karmicLessons",
+      "title": "Karmic Lessons",
+      "tagline": "Digits 1-9 that are ABSENT from your name — areas you'll grow into consciously",
+      "body": "Karmic Lessons are different from Karmic Debt — the two often get confused. Karmic Lessons are digits 1 through 9 that **do not appear at all** in the letters of your full name.\n\nEach digit 1-9 symbolizes one domain of life. If the digit IS in your name, you're \"familiar\" with that domain — it comes naturally. If it's NOT there, that domain is an area you'll need to **develop consciously**, because it doesn't come automatically.\n\nExample: if the digit 5 is absent, you might be too rigid with routine — the lesson: learn adaptation & letting go. If 7 is absent, you may stay too surface — the lesson: learn to go inward.\n\nIts work: not a deficiency, but a growth compass. Some people have no Karmic Lessons (all 1-9 are present in their name) — that doesn't automatically mean an easy life; their lessons come through other channels (Pinnacle, Challenge, Essence)."
+    },
+
+    {
+      "id": "bridge",
+      "title": "Bridge Numbers",
+      "tagline": "The gap between two core numbers — how smoothly two sides of you integrate",
+      "body": "Bridge Number (Decoz tradition) looks at the **difference** between two core numbers. Supernova shows two main bridges:\n\n**Life Path × Expression** = is your life mission (Life Path) aligned with your natural talents (Expression)? Small gap = your work flows in service of your purpose. Large gap = you may often feel \"what I'm good at isn't what I want\".\n\n**Soul Urge × Personality** = does the inner self (Soul Urge) show up in the outer impression (Personality)? Small gap = people who just met you grasp you as you are. Large gap = there's distance between \"who I really am\" vs \"who people see\".\n\nBridge **small (0-2)** = flowing, almost no friction.\nBridge **moderate (3-5)** = routine compromise needed.\nBridge **large (6-8)** = the two sides pull strongly against each other — integration takes conscious work, but the deepest growth is often born here."
+    },
+
+    {
+      "id": "minor",
+      "title": "Minor Numbers (from your nickname)",
+      "tagline": "Your day-to-day layer — if people call you by a short name",
+      "body": "The five core numbers are calculated from your birth-certificate name. Minor Numbers are calculated from your **call-by name / nickname** — the one people use day-to-day (e.g. \"Mike\" from \"Michael\").\n\nThey reflect your **social self** — how your energy shows up when the public calls you by that name. The core profile from the legal name stays as a deeper foundation; the Minor layer is the everyday surface on top.\n\nThree components:\n• **Minor Expression** = talents & presence (nickname version)\n• **Minor Soul Urge** = motivation brought to the public realm (from the nickname's vowels)\n• **Minor Personality** = first impression the public picks up (from the nickname's consonants)\n\nIf you don't have a nickname (people always use your full name), Minor Numbers don't appear — the core profile is enough."
+    },
+
+    {
+      "id": "personalCycles",
+      "title": "Personal Year, Month, Day",
+      "tagline": "The theme that's currently active — moves in a 1→9 cycle",
+      "body": "Besides static numbers (Life Path, etc.), numerology also tracks the **theme currently in play**. It moves in a 1→9 cycle that repeats throughout life.\n\n**Personal Year (PY)** = the main theme for the next 12 months. Calculated from (birth month + birth day + current year), resets every January 1 in your timezone. Year 1 = start something new. Year 5 = change & motion. Year 9 = completion before a fresh cycle.\n\n**Personal Month (PM)** = (PY + current month). Resets at the start of each month.\n\n**Personal Day (PD)** = (PM + today's day). Resets daily. This is what powers \"today's vibe\" on the dashboard.\n\nIf your PY/PM/PD compound lands on 13/14/16/19, karmic debt adds an extra dimension of lesson to that period."
+    },
+
+    {
+      "id": "pinnacleChallenge",
+      "title": "Pinnacle & Challenge",
+      "tagline": "Four life chapters — dominant theme + main test",
+      "body": "**Pinnacle** = four big chapters of your life, each carrying a dominant theme for several years.\n\n**Chapter 1** runs from birth until age `(36 − reduced Life Path)`. E.g. Life Path 1: Chapter 1 until age 35. Chapters 2, 3, 4 each span 9 years after.\n\nEach Pinnacle comes **paired with a Challenge** — the main shortcoming or test that gets trained in that chapter.\n\n• Pinnacle tells you what's \"being cooked\" in that chapter.\n• Challenge tells you what to **train or wrestle with** in that chapter.\n\nIf you're in Chapter 2 with Pinnacle 6 + Challenge 1, the theme is care & responsibility (Pinnacle 6), and the recurring test is learning independence without losing empathy (Challenge 1)."
+    },
+
+    {
+      "id": "periodCycle",
+      "title": "Period Cycle (Three Major Waves)",
+      "tagline": "The energetic backdrop behind the Pinnacles",
+      "body": "Unlike Pinnacle (4 themed chapters), Period Cycle is the **3 major energetic waves** of your life — the energy coloring each stage's backdrop.\n\n**Wave 1 — Formative** (~birth-28) from your **birth month**. Foundation energy: who you are getting shaped.\n\n**Wave 2 — Productive** (~28-56) from your **birth day**. Productivity energy: your contribution to the world.\n\n**Wave 3 — Harvest** (~56+) from your **birth year**. Harvest energy: reflection, legacy, wisdom.\n\nAge boundaries shift slightly based on your Life Path (Decoz formula). Pinnacle = THEME of the chapter. Period Cycle = ENERGETIC BACKDROP behind it."
+    },
+
+    {
+      "id": "essence",
+      "title": "Essence Cycle",
+      "tagline": "Years cooked by the letters of your name",
+      "body": "Essence Cycle is the most **personal** layer — it reads the letters of your name one by one.\n\nEach letter \"lives\" for as many years as its Pythagorean value. E.g. D = 4 → active 4 years. Y = 7 → active 7 years. When one letter finishes, the next letter in that name begins.\n\nThree streams run **in parallel**:\n• **Physical Transit** from the first name — physical, work, manifestation\n• **Mental Transit** from the middle name (if any) — thoughts, ideas, decisions\n• **Spiritual Transit** from the last name — inner growth, relationships, connection\n\n**This year's Essence** = the sum of the currently-active letters across the three streams. If the result is a compound 13/14/16/19, it is **preserved** (not reduced) — a signal that the year carries a specific lesson."
+    },
+
+    {
+      "id": "talents",
+      "title": "Talents & Vocations",
+      "tagline": "The digit distribution profile of your name",
+      "body": "Each letter has a value 1-9. Your full name is a collection of letters, so the digit distribution can be measured — which digits are **dominant** (appear often), which are **thin**, which are **completely absent**.\n\nThis distribution maps to talent groups:\n• **Mind** (1, 5, 7) — thought, independence, research\n• **Creative** (3, 6, 9) — expression, care, big vision\n• **Structure** (2, 4, 8) — collaboration, systems, execution\n\nAnd to **vocations** — work fields whose digit structure matches your distribution (e.g. Business & Management, Medicine & Education, Arts & Communication, etc.).\n\nThe **High/Medium/Low** rating on each group = how strong the signal is in your name. Not a career prediction — more of a compass: fields that will feel natural vs fields that need extra work."
+    },
+
+    {
+      "id": "compatibility",
+      "title": "Compatibility Score",
+      "tagline": "How two charts \"talk\" to each other",
+      "body": "Score 0-100, calculated from the pairings of your core numbers × the other person's. Authoritative reference: Decoz/McCants matrix.\n\nFive bands:\n• **Tough** (< 40) — energies often collide, but the friction can be growth territory\n• **Fair** (40-60) — some aligned areas + some friction, conscious compromise needed\n• **Good** (60-75) — base flow is comfortable, occasional adjustments\n• **Strong** (75-90) — lots of alignment, natural dynamic\n• **Rare** (90+) — uncommon combination, deeply aligned\n\n**Lens** = the relationship perspective. Partner, family, friend, colleague each weight components differently. Soul Urge (deepest longing), for example, counts fully for partner & family but not for friend/colleague — because friendships rarely touch that layer.\n\n**Modifier** = special patterns that appear beyond the raw score — e.g. \"both carrying a master number\", \"shared karmic debt\", \"old soul\". They add narrative color, not overriding the main score."
+    }
+  ]
+}

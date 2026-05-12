@@ -16,6 +16,8 @@
     "subtitle": "Profil, bahasa, pola, dan pengaturan lainnya.",
     "profile": "Profil",
     "editProfile": "Ubah profil",
+    "concepts": "Pelajari konsep numerologi",
+    "conceptsHint": "Karmic debt, master number, bridge — semua istilah dijelasin di sini.",
     "patterns": "Pola harianmu",
     "patternsHint": "Lihat tren mood dan tema setelah ≥14 hari catatan.",
     "signOut": "Keluar dari akun",
@@ -736,5 +738,10 @@
     "errorSameEmail": "Email baru sama kayak yang sekarang.",
     "errorWeakPassword": "Password baru terlalu pendek (min 8 karakter).",
     "errorGeneric": "Gagal nyimpen. Coba lagi sebentar."
+  },
+  "concepts": {
+    "title": "Konsep numerologi",
+    "subtitle": "Penjelasan lengkap tiap istilah yang muncul di Supernova — biar gak bingung.",
+    "footer": "Numerologi adalah alat refleksi, bukan ramalan. Pakai sebagai kompas buat kenal diri lebih dalam."
   }
 }

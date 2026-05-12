@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import {
   BarChart3,
+  BookOpen,
   ChevronDown,
   ChevronRight,
   LogOut,
@@ -169,6 +170,12 @@ export default async function MePage({ params }: { params: { locale: string } })
 
       {/* Navigation */}
       <SettingsGroup title={t('groupNavigation')}>
+        <NavRow
+          href={`/${locale}/me/concepts`}
+          icon={BookOpen}
+          title={t('concepts')}
+          hint={t('conceptsHint')}
+        />
         <NavRow
           href={`/${locale}/patterns`}
           icon={BarChart3}
