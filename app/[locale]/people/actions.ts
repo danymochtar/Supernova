@@ -149,7 +149,7 @@ export async function updatePersonAction(formData: FormData): Promise<PersonActi
   // personId. Next page render regenerates fresh with the new name.
   await Promise.all([
     deleteCachedByKeyContains(session.user.id, `:${id}:`),
-    deletePersonVibes(id),
+    deletePersonVibes(session.user.id, id),
   ]);
 
   revalidatePath(`/${localeChecked}/people`);

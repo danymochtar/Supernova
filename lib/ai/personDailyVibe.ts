@@ -51,7 +51,7 @@ export async function generatePersonDailyVibe(
 ): Promise<string | null> {
   const ctx = contextFromInstant(new Date(), user.timezone);
 
-  const cached = await getPersonVibeForDay(person.id, ctx.year, ctx.month, ctx.day);
+  const cached = await getPersonVibeForDay(user.id, person.id, ctx.year, ctx.month, ctx.day);
   if (cached && cached.locale === user.locale) return cached.body;
 
   const me = buildCoreProfile(user.fullName, user.dob);
@@ -136,7 +136,7 @@ export async function generatePersonDailyVibe(
     });
   } catch (err) {
     // Race: another tap inserted first. Re-fetch and return that row.
-    const existing = await getPersonVibeForDay(person.id, ctx.year, ctx.month, ctx.day);
+    const existing = await getPersonVibeForDay(user.id, person.id, ctx.year, ctx.month, ctx.day);
     if (existing) return existing.body;
     console.error('[personVibe] persist failed', err);
     return null;

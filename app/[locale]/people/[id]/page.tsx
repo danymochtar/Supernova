@@ -71,7 +71,7 @@ export default async function PersonDetailPage({
   // Vibe-of-the-day for this Person — read-only check for a cached row so the
   // tap button surfaces instantly if today's briefing already ran. Generation
   // itself only happens on user tap, never on render.
-  const cachedVibe = await getPersonVibeForDay(person.id, ctx.year, ctx.month, ctx.day);
+  const cachedVibe = await getPersonVibeForDay(session.user.id, person.id, ctx.year, ctx.month, ctx.day);
   const cachedVibeBody = cachedVibe && cachedVibe.locale === locale ? cachedVibe.body : null;
 
   // Relationship profile is AI-generated long-form prose. Cache-first.

@@ -11,14 +11,14 @@ const withPWA = nextPwa({
   buildExcludes: [/middleware-manifest\.json$/],
   runtimeCaching: [
     {
+      // Pages contain per-user data (dashboard, people, journey, etc.) so we
+      // never cache navigations. The cost: no offline HTML fallback. The
+      // benefit: no risk of one user's page leaking to another on a shared
+      // device or after sign-out. Static assets below still cache normally,
+      // so PWA install + brand chrome still works offline.
       urlPattern: ({ request, url }) =>
         url.origin === self.location.origin && request.mode === 'navigate',
-      handler: 'NetworkFirst',
-      options: {
-        cacheName: 'supernova-pages',
-        networkTimeoutSeconds: 4,
-        expiration: { maxEntries: 32, maxAgeSeconds: 24 * 60 * 60 },
-      },
+      handler: 'NetworkOnly',
     },
     {
       urlPattern: /\/_next\/static\/.*/,

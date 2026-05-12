@@ -5,19 +5,25 @@ function toDayMarker(year: number, month: number, day: number): Date {
   return new Date(Date.UTC(year, month - 1, day));
 }
 
+// Defense-in-depth: both lookups + deletes scope by userId in addition to
+// personId. Person.id is a cuid and Person.userId is FK-locked, so a row
+// can only belong to one user — but the extra filter means a stray caller
+// can't accidentally read or wipe another user's row by passing a leaked
+// personId. Returns null on cross-user attempts.
 export async function getPersonVibeForDay(
+  userId: string,
   personId: string,
   year: number,
   month: number,
   day: number,
 ): Promise<PersonDailyVibe | null> {
-  return prisma.personDailyVibe.findUnique({
-    where: { personId_date: { personId, date: toDayMarker(year, month, day) } },
+  return prisma.personDailyVibe.findFirst({
+    where: { userId, personId, date: toDayMarker(year, month, day) },
   });
 }
 
-export async function deletePersonVibes(personId: string): Promise<void> {
-  await prisma.personDailyVibe.deleteMany({ where: { personId } });
+export async function deletePersonVibes(userId: string, personId: string): Promise<void> {
+  await prisma.personDailyVibe.deleteMany({ where: { userId, personId } });
 }
 
 export async function createPersonVibe(input: {
@@ -43,3 +49,4 @@ export async function createPersonVibe(input: {
     },
   });
 }
+
