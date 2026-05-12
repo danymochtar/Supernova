@@ -427,6 +427,8 @@
     "notes": "Catatan",
     "age": "{age} tahun",
     "profileSummary": "Ringkasan profil",
+    "detailNumbersTitle": "Detail angka",
+    "detailNumbersHint": "Tap buat liat semua angka inti, minor, dan bridge dia.",
     "vibeButton": "Cek vibe hari ini",
     "vibeSheetTitle": "Vibe {name} hari ini",
     "vibeSheetHint": "Briefing singkat berdasarkan numerologi {name} & kamu hari ini.",

@@ -117,18 +117,20 @@ export default async function PersonDetailPage({
   return (
     <main className="container max-w-2xl px-4 sm:px-6">
       <TopBar title={person.fullName} backHref={`/${locale}/people`} />
-      <div className="space-y-6 pb-6 sm:pb-10">
-        {/* Identity card — no buttons; Edit + Delete live on the People list */}
-        <section className="border-border flex flex-col items-center gap-3 rounded-2xl border bg-surface-1 p-6 text-center">
+      <div className="space-y-5 pb-6 sm:pb-10">
+        {/* Compact identity hero — avatar left, name + meta right on a single
+         * row. Tighter than the centered card so the compat score below it
+         * stays in viewport without a long scroll. */}
+        <section className="border-border flex items-center gap-4 rounded-2xl border bg-surface-1 p-4">
           <div
-            className="from-primary/30 to-accent/30 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br font-serif text-3xl font-semibold tracking-tight"
+            className="from-primary/30 to-accent/30 flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gradient-to-br font-serif text-xl font-semibold tracking-tight"
             aria-hidden
           >
             {initials}
           </div>
-          <div className="space-y-0.5">
-            <p className="text-lg font-semibold">{person.fullName}</p>
-            <p className="text-muted-foreground text-sm">
+          <div className="min-w-0 flex-1 space-y-0.5">
+            <p className="truncate text-base font-semibold">{person.fullName}</p>
+            <p className="text-muted-foreground text-xs">
               {t(`relationship.${person.relationship}`)} · {t('age', { age })}
               {' · '}
               <span className="tabular-nums">
@@ -137,6 +139,61 @@ export default async function PersonDetailPage({
               </span>
             </p>
           </div>
+        </section>
+
+        {/* Compat at-a-glance — moved up so the most action-relevant data
+         * point is visible without scrolling past the numerical ladder. */}
+        <section className="space-y-3">
+          <h2 className="text-lg font-semibold">{t('dynamicTitle')}</h2>
+          <Link
+            href={`/${locale}/people/${person.id}/compatibility`}
+            className="border-border press-soft hover:bg-muted/30 group block rounded-2xl border bg-surface-1 p-5"
+          >
+            <div className="flex items-baseline justify-between gap-3">
+              <div>
+                <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider">
+                  {tCompat('scoreTitle')}
+                </p>
+                <p className="mt-1">
+                  <span className="font-mono text-3xl font-semibold tabular-nums">
+                    {score.overall}
+                  </span>
+                  <span className="text-muted-foreground text-sm"> / 100</span>
+                </p>
+              </div>
+              <div className="text-right">
+                <p className="text-sm font-medium uppercase tracking-wider">
+                  {tCompat(`band.${score.band}`)}
+                </p>
+                <ChevronRight className="text-muted-foreground ml-auto mt-1 h-4 w-4 transition group-hover:translate-x-0.5" aria-hidden />
+              </div>
+            </div>
+
+            {topPatterns.length > 0 ? (
+              <div className="border-border/60 mt-4 space-y-2 border-t pt-4">
+                {topPatterns.map((p) => (
+                  <div key={p.key} className="space-y-0.5">
+                    <p className="flex items-baseline gap-2 text-sm font-medium">
+                      <span
+                        className={`inline-block h-1.5 w-1.5 rounded-full ${
+                          p.tone === 'harmony'
+                            ? 'bg-emerald-500'
+                            : p.tone === 'tension'
+                              ? 'bg-amber-500'
+                              : 'bg-muted-foreground/50'
+                        }`}
+                        aria-hidden
+                      />
+                      {p.title}
+                    </p>
+                    <p className="text-muted-foreground line-clamp-2 pl-3.5 text-xs leading-relaxed">
+                      {p.body}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            ) : null}
+          </Link>
         </section>
 
         {person.notes ? (
@@ -148,89 +205,31 @@ export default async function PersonDetailPage({
           </section>
         ) : null}
 
-        {/* Ringkasan profil — full carousel of all 5 core components, tap a
-         * card to reveal that number's meaning. Mirrors the dashboard
-         * About Me carousel pattern for consistency. */}
-        <section className="space-y-3">
-          <h2 className="text-lg font-semibold">{t('profileSummary')}</h2>
-          <div className="-mx-4 sm:-mx-6">
-            <div className="scroll-px-4 sm:scroll-px-6 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-3 sm:px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-              {profileCards.map((card) => (
-                <div key={card.key} className="w-[78%] shrink-0 snap-start sm:w-[44%] md:w-[32%]">
-                  <NumberCard
-                    label={card.label}
-                    result={card.result}
-                    locale={locale}
-                    type={card.key}
-                    meaning={meaningFor(card.key, card.result, locale)}
-                    comingSoonLabel={tDash('meaningComingSoon')}
-                  />
+        {/* AI relationship profile — paragraph 1 leads with "Tentang {them}"
+         * (always visible); the rest sits behind a native <details>. */}
+        {relProfileText ? (
+          <section className="space-y-3">
+            <h2 className="text-lg font-semibold">{tRel('title', { name: person.fullName })}</h2>
+            <details className="border-border group rounded-2xl border bg-surface-1 p-5">
+              <summary className="press-soft flex cursor-pointer list-none items-start justify-between gap-3 [&::-webkit-details-marker]:hidden">
+                <p className="text-[15px] leading-relaxed text-neutral-800 dark:text-neutral-200">
+                  {renderInlineMd(relSummary)}
+                </p>
+                <ChevronRight
+                  className="text-muted-foreground mt-1 h-4 w-4 shrink-0 transition-transform group-open:rotate-90"
+                  aria-hidden
+                />
+              </summary>
+              {relRest.length > 0 ? (
+                <div className="border-border/60 mt-4 space-y-3 border-t pt-4 text-[15px] leading-relaxed text-neutral-800 dark:text-neutral-200">
+                  {relRest.map((p, i) => (
+                    <p key={i}>{renderInlineMd(p)}</p>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
-          {minor ? (
-            <div className="space-y-3">
-              <Explainer
-                title={tDash('explainerLearnMore')}
-                body={tDash('minorExplainer')}
-              />
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                <NumberCard
-                  label={t('minorExpression')}
-                  result={minor.minorExpression}
-                  locale={locale}
-                  type="expression"
-                  meaning={meaningFor('expression', minor.minorExpression, locale)}
-                  comingSoonLabel={tDash('meaningComingSoon')}
-                />
-                <NumberCard
-                  label={t('minorSoulUrge')}
-                  result={minor.minorSoulUrge}
-                  locale={locale}
-                  type="soulUrge"
-                  meaning={meaningFor('soulUrge', minor.minorSoulUrge, locale)}
-                  comingSoonLabel={tDash('meaningComingSoon')}
-                />
-                <NumberCard
-                  label={t('minorPersonality')}
-                  result={minor.minorPersonality}
-                  locale={locale}
-                  type="personality"
-                  meaning={meaningFor('personality', minor.minorPersonality, locale)}
-                  comingSoonLabel={tDash('meaningComingSoon')}
-                />
-              </div>
-            </div>
-          ) : null}
-
-          <div className="space-y-3">
-            <Explainer
-              title={tDash('explainerLearnMore')}
-              body={tDash('bridgeExplainer')}
-            />
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              <NumberCard
-                label={t('bridgeLifePathExpression')}
-                hint={t('bridgeLifePathExpressionHint')}
-                result={bridge.lifePathExpression}
-                locale={locale}
-                type="bridge"
-                meaning={meaningFor('bridge', bridge.lifePathExpression, locale)}
-                comingSoonLabel={tDash('meaningComingSoon')}
-              />
-              <NumberCard
-                label={t('bridgeSoulUrgePersonality')}
-                hint={t('bridgeSoulUrgePersonalityHint')}
-                result={bridge.soulUrgePersonality}
-                locale={locale}
-                type="bridge"
-                meaning={meaningFor('bridge', bridge.soulUrgePersonality, locale)}
-                comingSoonLabel={tDash('meaningComingSoon')}
-              />
-            </div>
-          </div>
-        </section>
+              ) : null}
+            </details>
+          </section>
+        ) : null}
 
         {familyMatches ? (
           <section className="space-y-3">
@@ -289,87 +288,102 @@ export default async function PersonDetailPage({
           </section>
         ) : null}
 
-        {/* Relationship profile — summary always visible, full text behind
-         * a native <details> disclosure. AI-generated, cached per (person,
-         * relation, locale). */}
-        {relProfileText ? (
-          <section className="space-y-3">
-            <h2 className="text-lg font-semibold">{tRel('title', { name: person.fullName })}</h2>
-            <details className="border-border group rounded-2xl border bg-surface-1 p-5">
-              <summary className="press-soft flex cursor-pointer list-none items-start justify-between gap-3 [&::-webkit-details-marker]:hidden">
-                <p className="text-[15px] leading-relaxed text-neutral-800 dark:text-neutral-200">
-                  {renderInlineMd(relSummary)}
-                </p>
-                <ChevronRight
-                  className="text-muted-foreground mt-1 h-4 w-4 shrink-0 transition-transform group-open:rotate-90"
-                  aria-hidden
-                />
-              </summary>
-              {relRest.length > 0 ? (
-                <div className="border-border/60 mt-4 space-y-3 border-t pt-4 text-[15px] leading-relaxed text-neutral-800 dark:text-neutral-200">
-                  {relRest.map((p, i) => (
-                    <p key={i}>{renderInlineMd(p)}</p>
-                  ))}
-                </div>
-              ) : null}
-            </details>
-          </section>
-        ) : null}
-
-        {/* Dinamika hubungan — single tappable card that drills into the
-         * full compatibility page. */}
-        <section className="space-y-3">
-          <h2 className="text-lg font-semibold">{t('dynamicTitle')}</h2>
-          <Link
-            href={`/${locale}/people/${person.id}/compatibility`}
-            className="border-border press-soft hover:bg-muted/30 group block rounded-2xl border bg-surface-1 p-5"
-          >
-            <div className="flex items-baseline justify-between gap-3">
-              <div>
-                <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider">
-                  {tCompat('scoreTitle')}
-                </p>
-                <p className="mt-1">
-                  <span className="font-mono text-3xl font-semibold tabular-nums">
-                    {score.overall}
-                  </span>
-                  <span className="text-muted-foreground text-sm"> / 100</span>
-                </p>
-              </div>
-              <div className="text-right">
-                <p className="text-sm font-medium uppercase tracking-wider">
-                  {tCompat(`band.${score.band}`)}
-                </p>
-                <ChevronRight className="text-muted-foreground ml-auto mt-1 h-4 w-4 transition group-hover:translate-x-0.5" aria-hidden />
-              </div>
+        {/* Detail angka — collapsed by default. The full numerical ladder
+         * (5 core + 3 minor + 2 bridge) lives behind one tap so the page
+         * reads as prose first, math second. */}
+        <details className="border-border group rounded-2xl border bg-surface-1">
+          <summary className="press-soft flex cursor-pointer list-none items-start justify-between gap-3 px-5 py-4 [&::-webkit-details-marker]:hidden">
+            <div className="space-y-0.5">
+              <p className="text-sm font-semibold">{t('detailNumbersTitle')}</p>
+              <p className="text-muted-foreground text-xs">{t('detailNumbersHint')}</p>
             </div>
-
-            {topPatterns.length > 0 ? (
-              <div className="border-border/60 mt-4 space-y-2 border-t pt-4">
-                {topPatterns.map((p) => (
-                  <div key={p.key} className="space-y-0.5">
-                    <p className="flex items-baseline gap-2 text-sm font-medium">
-                      <span
-                        className={`inline-block h-1.5 w-1.5 rounded-full ${
-                          p.tone === 'harmony'
-                            ? 'bg-emerald-500'
-                            : p.tone === 'tension'
-                              ? 'bg-amber-500'
-                              : 'bg-muted-foreground/50'
-                        }`}
-                        aria-hidden
-                      />
-                      {p.title}
-                    </p>
-                    <p className="text-muted-foreground line-clamp-2 pl-3.5 text-xs leading-relaxed">
-                      {p.body}
-                    </p>
+            <ChevronRight
+              className="text-muted-foreground mt-1 h-4 w-4 shrink-0 transition-transform group-open:rotate-90"
+              aria-hidden
+            />
+          </summary>
+          <div className="border-border/60 space-y-4 border-t px-5 py-5">
+            {/* Core carousel — 5 cards, tap to expand meaning */}
+            <div className="-mx-5">
+              <div className="scroll-px-5 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                {profileCards.map((card) => (
+                  <div key={card.key} className="w-[78%] shrink-0 snap-start sm:w-[44%] md:w-[32%]">
+                    <NumberCard
+                      label={card.label}
+                      result={card.result}
+                      locale={locale}
+                      type={card.key}
+                      meaning={meaningFor(card.key, card.result, locale)}
+                      comingSoonLabel={tDash('meaningComingSoon')}
+                    />
                   </div>
                 ))}
               </div>
+            </div>
+
+            {minor ? (
+              <div className="space-y-3">
+                <Explainer
+                  title={tDash('explainerLearnMore')}
+                  body={tDash('minorExplainer')}
+                />
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                  <NumberCard
+                    label={t('minorExpression')}
+                    result={minor.minorExpression}
+                    locale={locale}
+                    type="expression"
+                    meaning={meaningFor('expression', minor.minorExpression, locale)}
+                    comingSoonLabel={tDash('meaningComingSoon')}
+                  />
+                  <NumberCard
+                    label={t('minorSoulUrge')}
+                    result={minor.minorSoulUrge}
+                    locale={locale}
+                    type="soulUrge"
+                    meaning={meaningFor('soulUrge', minor.minorSoulUrge, locale)}
+                    comingSoonLabel={tDash('meaningComingSoon')}
+                  />
+                  <NumberCard
+                    label={t('minorPersonality')}
+                    result={minor.minorPersonality}
+                    locale={locale}
+                    type="personality"
+                    meaning={meaningFor('personality', minor.minorPersonality, locale)}
+                    comingSoonLabel={tDash('meaningComingSoon')}
+                  />
+                </div>
+              </div>
             ) : null}
-          </Link>
-        </section>
+
+            <div className="space-y-3">
+              <Explainer
+                title={tDash('explainerLearnMore')}
+                body={tDash('bridgeExplainer')}
+              />
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <NumberCard
+                  label={t('bridgeLifePathExpression')}
+                  hint={t('bridgeLifePathExpressionHint')}
+                  result={bridge.lifePathExpression}
+                  locale={locale}
+                  type="bridge"
+                  meaning={meaningFor('bridge', bridge.lifePathExpression, locale)}
+                  comingSoonLabel={tDash('meaningComingSoon')}
+                />
+                <NumberCard
+                  label={t('bridgeSoulUrgePersonality')}
+                  hint={t('bridgeSoulUrgePersonalityHint')}
+                  result={bridge.soulUrgePersonality}
+                  locale={locale}
+                  type="bridge"
+                  meaning={meaningFor('bridge', bridge.soulUrgePersonality, locale)}
+                  comingSoonLabel={tDash('meaningComingSoon')}
+                />
+              </div>
+            </div>
+          </div>
+        </details>
 
         {/* Edit + Delete — bottom of the page so they're explicit but out
           * of the way. Editing wipes cached AI bodies for this Person via
