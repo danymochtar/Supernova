@@ -36,6 +36,7 @@ interface ProfileLike {
   id: string;
   fullName: string;
   firstName: string;
+  nickname: string | null;
   dob: BirthDate;
   timezone: string;
   locale: 'id' | 'en';
@@ -97,10 +98,13 @@ export async function getOrGenerateDailyReading(
 
   const personalYearBA = personalYearBirthdayAnchored(profile.dob, ctx);
 
+  // Address the user by their call name (nickname || firstName) in prose,
+  // not the full legal name from the numerology calculation.
+  const callName = profile.nickname?.trim() || profile.firstName;
   const promptInput: DailyPromptInput = {
     locale: profile.locale,
-    fullName: profile.fullName,
-    firstName: profile.firstName,
+    fullName: callName,
+    firstName: callName,
     todayLocal: { year: ctx.year, month: ctx.month, day: ctx.day, weekday },
     age,
     dayTitle: dayTitleFor(cycles.personalDay.reduced, profile.locale),

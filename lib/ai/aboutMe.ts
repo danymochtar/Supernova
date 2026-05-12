@@ -17,7 +17,7 @@ import { getCachedJson, setCachedJson } from '@/lib/db/repositories/numerologyCa
 // in English so users who picked EN before the lockdown see ID copy. New
 // entries are always ID since profile.locale is now coerced to 'id'. When
 // EN is reintroduced, switch to a locale-suffixed key (\`aboutMe-v6:${locale}\`).
-const CACHE_KEY = 'aboutMe-v5';
+const CACHE_KEY = 'aboutMe-v6';
 
 /**
  * Cache-first structured About Me. Profile name + DOB never change so the

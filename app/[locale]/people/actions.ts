@@ -14,6 +14,7 @@ import {
 import { deleteCachedByKeyContains } from '@/lib/db/repositories/numerologyCache';
 import { deletePersonVibes } from '@/lib/db/repositories/personDailyVibe';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { displayName } from '@/lib/profile/displayName';
 import { profileFormSchema, type ProfileFormError } from '@/lib/profile/validate';
 
 // Per-user cap on the number of Person rows. Was 1 in the locked plan as a
@@ -199,7 +200,8 @@ export async function generatePersonVibeAction({
     {
       id: session.user.id,
       fullName: profile.fullName,
-      firstName: profile.firstName,
+      // displayName = nickname || firstName — the prose address form.
+      firstName: displayName(profile),
       dob: profile.dob,
       timezone: profile.timezone,
       locale: profile.locale,
@@ -208,7 +210,7 @@ export async function generatePersonVibeAction({
     {
       id: person.id,
       fullName: person.fullName,
-      firstName: person.firstName,
+      firstName: displayName(person),
       dob: person.dob,
       relationship: person.relationship,
     },

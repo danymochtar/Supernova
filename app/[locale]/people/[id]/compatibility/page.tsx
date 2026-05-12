@@ -8,6 +8,7 @@ import { buildCoreProfile } from '@/lib/numerology';
 import { compatibilityScore, type LaneScore } from '@/lib/compatibility/score';
 import { renderInlineMd } from '@/components/qa/inlineMd';
 import { detectPatterns } from '@/lib/compatibility/patterns';
+import { displayName } from '@/lib/profile/displayName';
 import type { CoreKey } from '@/lib/compatibility/lens';
 import { getOrGeneratePairNarratives } from '@/lib/ai/relationship';
 import { CompoundReduced } from '@/components/numerology/CompoundReduced';
@@ -68,6 +69,9 @@ export default async function CompatibilityPage({
   const me = buildCoreProfile(userProfile.fullName, userProfile.dob);
   const them = buildCoreProfile(person.fullName, person.dob);
 
+  const theirName = displayName(person);
+  const myName = displayName(userProfile);
+
   const score = compatibilityScore(me, them, person.relationship);
   const patterns = detectPatterns(me, them, locale, person.relationship);
 
@@ -78,8 +82,8 @@ export default async function CompatibilityPage({
     {
       locale,
       relationship: person.relationship,
-      meName: userProfile.fullName,
-      themName: person.fullName,
+      meName: myName,
+      themName: theirName,
       lanes: score.lanes,
       patternTitles: patterns.map((p) => p.title),
     },
@@ -88,7 +92,7 @@ export default async function CompatibilityPage({
   return (
     <main className="container max-w-3xl px-4 sm:px-6">
       <TopBar
-        title={t('title', { name: person.fullName })}
+        title={t('title', { name: theirName })}
         backHref={`/${locale}/people/${person.id}`}
       />
       <div className="space-y-8 pb-6 sm:pb-10">

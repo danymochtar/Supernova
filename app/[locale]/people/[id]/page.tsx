@@ -16,6 +16,7 @@ import {
 import { compareToParent } from '@/lib/numerology/familyTree';
 import { compatibilityScore } from '@/lib/compatibility/score';
 import { getOrGenerateRelationshipProfile } from '@/lib/ai/relationship';
+import { displayName } from '@/lib/profile/displayName';
 import { meaningFor } from '@/lib/numerology/meanings';
 import idFamily from '@/content/family/id.json';
 import enFamily from '@/content/family/en.json';
@@ -58,6 +59,12 @@ export default async function PersonDetailPage({
 
   const score = compatibilityScore(me, them, person.relationship);
 
+  // Display name = nickname when present, otherwise firstName. Drives all
+  // UI prose + AI prompts so the model addresses people by their call
+  // name instead of the full legal name from numerology calculations.
+  const theirName = displayName(person);
+  const myName = displayName(userProfile);
+
   const minor = minorNumbers(person.nickname);
   const bridge = bridges(them);
   const initials = `${person.firstName.charAt(0)}${person.lastName?.charAt(0) ?? ''}`.toUpperCase();
@@ -82,8 +89,8 @@ export default async function PersonDetailPage({
     {
       locale,
       relationship: person.relationship,
-      meName: userProfile.fullName,
-      themName: person.fullName,
+      meName: myName,
+      themName: theirName,
       me,
       them,
     },
@@ -107,7 +114,7 @@ export default async function PersonDetailPage({
 
   return (
     <main className="container max-w-2xl px-4 sm:px-6">
-      <TopBar title={person.fullName} backHref={`/${locale}/people`} />
+      <TopBar title={theirName} backHref={`/${locale}/people`} />
       <div className="space-y-6 pb-6 sm:pb-10">
         {/* Identity hero — gradient brand card matching the talents/journey
          * hero language. Bigger avatar, name in serif, relationship as
@@ -125,7 +132,7 @@ export default async function PersonDetailPage({
                 {t(`relationship.${person.relationship}`)}
               </p>
               <p className="font-serif truncate text-xl font-semibold leading-tight tracking-tight sm:text-2xl">
-                {person.fullName}
+                {theirName}
               </p>
               <p className="text-muted-foreground text-xs">
                 {t('age', { age })}
@@ -191,7 +198,7 @@ export default async function PersonDetailPage({
 
         {relRest.length > 0 ? (
           <section className="space-y-3">
-            <h2 className="text-lg font-semibold">{tRel('title', { name: person.fullName })}</h2>
+            <h2 className="text-lg font-semibold">{tRel('title', { name: theirName })}</h2>
             <div className="border-border space-y-3 rounded-2xl border bg-surface-1 p-5 text-[15px] leading-relaxed text-neutral-800 dark:text-neutral-200">
               {relRest.map((p, i) => (
                 <p key={i}>{renderInlineMd(p)}</p>
@@ -209,7 +216,7 @@ export default async function PersonDetailPage({
             />
             {familyMatches.shared.length === 0 && familyMatches.inheritedLessons.length === 0 ? (
               <p className="text-muted-foreground text-sm italic">
-                {t('familyTreeEmpty', { name: person.firstName })}
+                {t('familyTreeEmpty', { name: theirName })}
               </p>
             ) : (
               <div className="space-y-4">
@@ -236,7 +243,7 @@ export default async function PersonDetailPage({
                 {familyMatches.inheritedLessons.length > 0 ? (
                   <div className="border-border space-y-2 rounded-2xl border bg-amber-50/40 p-4 dark:bg-amber-950/15">
                     <p className="text-muted-foreground text-[11px] font-semibold uppercase tracking-[0.18em]">
-                      {t('familyTreeInheritedLabel', { name: person.firstName })}
+                      {t('familyTreeInheritedLabel', { name: theirName })}
                     </p>
                     <ul className="space-y-2">
                       {familyMatches.inheritedLessons.map((n) => (
@@ -368,7 +375,7 @@ export default async function PersonDetailPage({
           <DeletePersonButton
             personId={person.id}
             locale={locale}
-            confirmLabel={t('deletePersonConfirm', { name: person.firstName })}
+            confirmLabel={t('deletePersonConfirm', { name: theirName })}
             buttonLabel={t('deletePerson')}
             action={deletePersonAction}
           />
@@ -381,8 +388,8 @@ export default async function PersonDetailPage({
         action={generatePersonVibeAction}
         labels={{
           button: t('vibeButton'),
-          sheetTitle: t('vibeSheetTitle', { name: person.firstName }),
-          sheetHint: t('vibeSheetHint', { name: person.firstName }),
+          sheetTitle: t('vibeSheetTitle', { name: theirName }),
+          sheetHint: t('vibeSheetHint', { name: theirName }),
           generate: t('vibeGenerate'),
           loading: t('vibeLoading'),
           error: t('vibeError'),

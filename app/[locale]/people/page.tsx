@@ -8,6 +8,7 @@ import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { listPeople, type PersonView } from '@/lib/db/repositories/person';
 import { ageAt, contextFromInstant } from '@/lib/numerology';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { displayName } from '@/lib/profile/displayName';
 import { deletePersonAction } from './actions';
 
 const PEOPLE_LIMIT = 999;
@@ -116,9 +117,11 @@ export default async function PeoplePage({
                   const age = ageAt(p.dob, ctx);
                   const initials = `${p.firstName.charAt(0)}${p.lastName?.charAt(0) ?? ''}`.toUpperCase()
                     || p.firstName.slice(0, 2).toUpperCase();
-                  const subline = p.nickname
-                    ? `${t('ageShort', { age })} · ${p.nickname}`
-                    : t('ageShort', { age });
+                  const primary = displayName(p);
+                  // Surface the full legal name as subline only when it
+                  // differs from the display name — keeps identification
+                  // in reach without making the row read formal.
+                  const hasFullName = p.fullName.trim() !== primary;
                   return (
                     <div key={p.id} className="flex items-stretch hover:bg-muted/30 transition-colors">
                       <Link
@@ -132,8 +135,11 @@ export default async function PeoplePage({
                           {initials}
                         </div>
                         <div className="min-w-0 flex-1">
-                          <p className="truncate font-medium">{p.fullName}</p>
-                          <p className="text-muted-foreground truncate text-xs">{subline}</p>
+                          <p className="truncate font-medium">{primary}</p>
+                          <p className="text-muted-foreground truncate text-xs">
+                            {t('ageShort', { age })}
+                            {hasFullName ? ` · ${p.fullName}` : ''}
+                          </p>
                         </div>
                         {!editMode ? (
                           <ChevronRight className="text-muted-foreground h-4 w-4 shrink-0" aria-hidden />
@@ -143,8 +149,8 @@ export default async function PeoplePage({
                         <>
                           <Link
                             href={`/${locale}/people/${p.id}/edit`}
-                            aria-label={t('editPerson', { name: p.fullName })}
-                            title={t('editPerson', { name: p.fullName })}
+                            aria-label={t('editPerson', { name: primary })}
+                            title={t('editPerson', { name: primary })}
                             className="text-muted-foreground hover:bg-muted/40 hover:text-foreground border-border flex w-11 items-center justify-center border-l transition-colors"
                           >
                             <Pencil className="h-4 w-4" aria-hidden />
@@ -154,7 +160,7 @@ export default async function PeoplePage({
                             <input type="hidden" name="locale" value={locale} />
                             <button
                               type="submit"
-                              aria-label={t('deletePerson', { name: p.fullName })}
+                              aria-label={t('deletePerson', { name: primary })}
                               className="text-muted-foreground hover:bg-red-50 hover:text-red-700 dark:hover:bg-red-950/40 dark:hover:text-red-400 border-border flex w-11 items-center justify-center border-l transition-colors"
                             >
                               <Trash2 className="h-4 w-4" aria-hidden />

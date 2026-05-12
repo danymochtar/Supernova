@@ -18,8 +18,8 @@ import {
 } from '@/lib/db/repositories/numerologyCache';
 import { logUsage } from '@/lib/db/repositories/usage';
 
-const PAIRS_VERSION = 'v3';
-const PROFILE_VERSION = 'v4';
+const PAIRS_VERSION = 'v4';
+const PROFILE_VERSION = 'v5';
 
 // Per-Anthropic-call timeout. Sits below the 60s function timeout so we
 // can retry once if the first call stalls. The SDK default is 600s which

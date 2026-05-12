@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
+import { displayName } from '@/lib/profile/displayName';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import {
   bridges,
@@ -142,7 +143,9 @@ export default async function DashboardPage({
       : Promise.resolve([] as Awaited<ReturnType<typeof getTurnsBetween>>),
     getOrGenerateAboutMe(session.user.id, {
       locale,
-      fullName: profile.fullName,
+      // Use the user's call name (nickname || firstName) so the prose
+      // addresses them naturally instead of by full legal name.
+      fullName: displayName(profile),
       core: {
         lifePath: core.lifePath,
         expression: core.expression,
