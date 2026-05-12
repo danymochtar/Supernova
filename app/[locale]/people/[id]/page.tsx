@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { redirect, notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, Pencil } from 'lucide-react';
 import { getSession } from '@/lib/auth/requireSession';
 import { getPerson } from '@/lib/db/repositories/person';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
@@ -25,8 +25,9 @@ import { TopBar } from '@/components/layout/TopBar';
 import { Explainer } from '@/components/layout/Explainer';
 import { renderInlineMd } from '@/components/qa/inlineMd';
 import { PersonVibeButton } from '@/components/people/PersonVibeButton';
+import { DeletePersonButton } from '@/components/people/DeletePersonButton';
 import { getPersonVibeForDay } from '@/lib/db/repositories/personDailyVibe';
-import { generatePersonVibeAction } from '../actions';
+import { deletePersonAction, generatePersonVibeAction } from '../actions';
 
 export const maxDuration = 60;
 export const dynamic = 'force-dynamic';
@@ -368,6 +369,26 @@ export default async function PersonDetailPage({
               </div>
             ) : null}
           </Link>
+        </section>
+
+        {/* Edit + Delete — bottom of the page so they're explicit but out
+          * of the way. Editing wipes cached AI bodies for this Person via
+          * updatePersonAction so the next render regenerates fresh. */}
+        <section className="flex flex-col gap-3 pt-4 sm:flex-row sm:justify-end">
+          <Link
+            href={`/${locale}/people/${person.id}/edit`}
+            className="press border-border bg-surface-1 hover:bg-muted/40 inline-flex items-center justify-center gap-2 rounded-full border px-4 py-2.5 text-sm font-medium"
+          >
+            <Pencil className="h-4 w-4" aria-hidden />
+            {t('editProfile')}
+          </Link>
+          <DeletePersonButton
+            personId={person.id}
+            locale={locale}
+            confirmLabel={t('deletePersonConfirm', { name: person.firstName })}
+            buttonLabel={t('deletePerson')}
+            action={deletePersonAction}
+          />
         </section>
       </div>
 
