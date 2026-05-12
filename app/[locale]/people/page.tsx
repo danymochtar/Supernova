@@ -51,35 +51,50 @@ export default async function PeoplePage({
       className="container max-w-3xl space-y-6 px-4 pb-6 sm:px-6 sm:pb-10"
       style={{ paddingTop: 'calc(env(safe-area-inset-top) + 1.5rem)' }}
     >
-      <header className="space-y-3 pt-2">
-        <div className="flex flex-wrap items-start justify-between gap-3">
-          <div className="space-y-1">
-            <h1 className="font-serif text-2xl font-semibold tracking-tight">{t('title')}</h1>
-            <p className="text-muted-foreground text-sm">{t('subtitle')}</p>
-          </div>
-          {!atLimit ? (
-            <Link
-              href={`/${locale}/people/new`}
-              className="bg-primary text-primary-foreground press inline-flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-sm font-medium"
-            >
-              <Plus className="h-4 w-4" aria-hidden />
-              {t('addCta')}
-            </Link>
-          ) : null}
-        </div>
-        {people.length > 0 ? (
-          <div className="flex justify-end">
-            <Link
-              href={editMode ? `/${locale}/people` : `/${locale}/people?edit=1`}
-              className={`text-xs font-medium underline-offset-4 hover:underline ${
-                editMode ? 'text-primary' : 'text-muted-foreground'
-              }`}
-            >
-              {editMode ? t('editModeDone') : t('editMode')}
-            </Link>
-          </div>
-        ) : null}
+      <header className="space-y-1 pt-2">
+        <h1 className="font-serif text-2xl font-semibold tracking-tight">{t('title')}</h1>
+        <p className="text-muted-foreground text-sm">{t('subtitle')}</p>
       </header>
+
+      {people.length > 0 ? (
+        <section className="border-primary/40 from-primary/10 ring-primary/20 flex items-center gap-4 overflow-hidden rounded-3xl border-2 bg-gradient-to-br to-accent/15 p-5 ring-1 dark:to-accent/15">
+          <div className="bg-primary/15 text-primary flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl">
+            <HeartHandshake className="h-5 w-5" aria-hidden />
+          </div>
+          <div className="min-w-0 flex-1">
+            <p className="text-primary text-[11px] font-semibold uppercase tracking-[0.18em]">
+              {t('heroEyebrow', { count: people.length })}
+            </p>
+            <p className="font-serif text-base font-semibold leading-tight tracking-tight sm:text-lg">
+              {t('heroTitle', { count: people.length })}
+            </p>
+          </div>
+        </section>
+      ) : null}
+
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        {!atLimit ? (
+          <Link
+            href={`/${locale}/people/new`}
+            className="bg-primary text-primary-foreground press inline-flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-sm font-medium"
+          >
+            <Plus className="h-4 w-4" aria-hidden />
+            {t('addCta')}
+          </Link>
+        ) : (
+          <span aria-hidden />
+        )}
+        {people.length > 0 ? (
+          <Link
+            href={editMode ? `/${locale}/people` : `/${locale}/people?edit=1`}
+            className={`text-xs font-medium underline-offset-4 hover:underline ${
+              editMode ? 'text-primary' : 'text-muted-foreground'
+            }`}
+          >
+            {editMode ? t('editModeDone') : t('editMode')}
+          </Link>
+        ) : null}
+      </div>
 
       {people.length === 0 ? (
         <section className="border-border flex flex-col items-center gap-3 rounded-2xl border-2 border-dashed p-10 text-center">

@@ -367,6 +367,8 @@
   "people": {
     "title": "Orang-orang",
     "subtitle": "Lihat profil & kompatibilitas orang penting di hidup kamu.",
+    "heroEyebrow": "{count} orang di lingkaran kamu",
+    "heroTitle": "Setiap orang bawa angka, vibe, dan dinamika mereka sendiri.",
     "backToDashboard": "Kembali ke dashboard",
     "addCta": "Tambah orang",
     "editPerson": "Ubah {name}",

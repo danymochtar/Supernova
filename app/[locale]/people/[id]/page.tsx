@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { redirect, notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-import { ChevronRight, Pencil } from 'lucide-react';
+import { ChevronRight, Pencil, HeartHandshake } from 'lucide-react';
 import { getSession } from '@/lib/auth/requireSession';
 import { getPerson } from '@/lib/db/repositories/person';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
@@ -108,54 +108,62 @@ export default async function PersonDetailPage({
   return (
     <main className="container max-w-2xl px-4 sm:px-6">
       <TopBar title={person.fullName} backHref={`/${locale}/people`} />
-      <div className="space-y-5 pb-6 sm:pb-10">
-        {/* Compact identity hero — avatar left, name + meta right on a single
-         * row. Tighter than the centered card so the compat score below it
-         * stays in viewport without a long scroll. */}
-        <section className="border-border flex items-center gap-4 rounded-2xl border bg-surface-1 p-4">
-          <div
-            className="from-primary/30 to-accent/30 flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gradient-to-br font-serif text-xl font-semibold tracking-tight"
-            aria-hidden
-          >
-            {initials}
-          </div>
-          <div className="min-w-0 flex-1 space-y-0.5">
-            <p className="truncate text-base font-semibold">{person.fullName}</p>
-            <p className="text-muted-foreground text-xs">
-              {t(`relationship.${person.relationship}`)} · {t('age', { age })}
-              {' · '}
-              <span className="tabular-nums">
-                {person.dob.year}-{String(person.dob.month).padStart(2, '0')}-
-                {String(person.dob.day).padStart(2, '0')}
-              </span>
-            </p>
+      <div className="space-y-6 pb-6 sm:pb-10">
+        {/* Identity hero — gradient brand card matching the talents/journey
+         * hero language. Bigger avatar, name in serif, relationship as
+         * eyebrow + age/DOB on the meta line. */}
+        <section className="border-primary/40 from-primary/10 ring-primary/20 overflow-hidden rounded-3xl border-2 bg-gradient-to-br to-accent/15 p-6 ring-1 dark:to-accent/15">
+          <div className="flex items-center gap-4">
+            <div
+              className="from-primary/40 to-accent/40 ring-primary/20 flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-gradient-to-br font-serif text-xl font-semibold tracking-tight ring-1"
+              aria-hidden
+            >
+              {initials}
+            </div>
+            <div className="min-w-0 flex-1 space-y-1">
+              <p className="text-primary text-[11px] font-semibold uppercase tracking-[0.18em]">
+                {t(`relationship.${person.relationship}`)}
+              </p>
+              <p className="font-serif truncate text-xl font-semibold leading-tight tracking-tight sm:text-2xl">
+                {person.fullName}
+              </p>
+              <p className="text-muted-foreground text-xs">
+                {t('age', { age })}
+                {' · '}
+                <span className="tabular-nums">
+                  {person.dob.year}-{String(person.dob.month).padStart(2, '0')}-
+                  {String(person.dob.day).padStart(2, '0')}
+                </span>
+              </p>
+            </div>
           </div>
         </section>
 
-        {/* Compat at-a-glance — score + band + chevron only. Detected
-         * patterns live on the /compatibility detail page so this card
-         * stays clean and the same info doesn't read twice. */}
+        {/* Compat at-a-glance — soft brand gradient + heart icon. Score
+         * + band + chevron only; patterns live on the /compatibility
+         * detail page. */}
         <Link
           href={`/${locale}/people/${person.id}/compatibility`}
-          className="border-border press-soft hover:bg-muted/30 group flex items-center justify-between gap-3 rounded-2xl border bg-surface-1 p-5"
+          className="border-border press-soft hover:bg-muted/40 group flex items-center gap-4 rounded-2xl border bg-gradient-to-br from-primary/5 to-accent/5 p-5 transition dark:from-primary/15 dark:to-accent/15"
         >
-          <div>
-            <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider">
+          <div className="bg-primary/15 text-primary flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl">
+            <HeartHandshake className="h-5 w-5" aria-hidden />
+          </div>
+          <div className="min-w-0 flex-1">
+            <p className="text-muted-foreground text-[11px] font-semibold uppercase tracking-[0.18em]">
               {tCompat('scoreTitle')}
             </p>
-            <p className="mt-1">
-              <span className="font-mono text-3xl font-semibold tabular-nums">
+            <p className="mt-1 flex items-baseline gap-2">
+              <span className="font-serif text-3xl font-semibold tabular-nums">
                 {score.overall}
               </span>
-              <span className="text-muted-foreground text-sm"> / 100</span>
+              <span className="text-muted-foreground text-xs">/ 100</span>
+              <span className="text-primary ml-auto text-xs font-semibold uppercase tracking-wider">
+                {tCompat(`band.${score.band}`)}
+              </span>
             </p>
           </div>
-          <div className="flex items-center gap-2">
-            <p className="text-sm font-medium uppercase tracking-wider">
-              {tCompat(`band.${score.band}`)}
-            </p>
-            <ChevronRight className="text-muted-foreground h-4 w-4 transition group-hover:translate-x-0.5" aria-hidden />
-          </div>
+          <ChevronRight className="text-muted-foreground h-4 w-4 shrink-0 transition group-hover:translate-x-0.5" aria-hidden />
         </Link>
 
         {person.notes ? (
