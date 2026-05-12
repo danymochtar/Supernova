@@ -3,61 +3,72 @@ import { bridges, type NumerologyResult } from '@/lib/numerology';
 import { lensFor, pickResult, type CoreKey, type Lane } from './lens';
 
 /**
- * Pythagorean compatibility score for a single number pair, 0-100.
+ * Pythagorean compatibility score for a single digit pair, 0-100.
  *
- * Tables synthesized from Decoz, Millman, and Glynis McCants. The score
- * is symmetric on (a, b) — only the digit pair matters. Cross-component
- * pairs (my Expression vs their Soul Urge) reuse the same table; what
- * differs is the interpretation, surfaced by the UI.
+ * Verdict table synthesizes McCants's "Three Vibrational Families" + Decoz's
+ * Life-Path-pair narratives:
  *
- * - Same digit, cross component: 82 — clean fit (giver matches receiver,
- *   no stagnation risk because roles are differentiated)
- * - Same digit, same component: 76 — deep resonance, with stagnation /
- *   competition risk depending on number
- * - Listed harmonious pairs: 75 — supportive, complementary
- * - Neutral pairs: 60 — workable, neither boost nor friction
- * - Listed challenging pairs: 42 — friction; can become growth ground
- *   but starts hard
+ *   Mind family:      1, 5, 7   (cerebral, independent, freedom-seeking)
+ *   Creative family:  3, 6, 9   (expressive, emotional, humanitarian)
+ *   Structure family: 2, 4, 8   (practical, security-seeking, methodical)
  *
- * Compared to the previous tier (80/78/70/55/45) we tightened so that
- * harmonics carry more weight (matchness lifts when the chemistry is
- * actually there) without flattening friction.
+ * In-family pairs are Natural Matches by default; Decoz narratives refine
+ * within-family pairs that carry tension (1-7) or same-number power
+ * struggles (1-1 / 8-8). Cross-family pairs use Decoz's explicit
+ * Compatible / Highly Favorable / Challenge calls.
+ *
+ * Master numbers (11/22/33) reduce to their root (2/4/6) BEFORE the lookup,
+ * per World Numerology / Decoz convention for the compatibility layer.
+ * Master vibration is preserved separately by the `masters` modifier so it
+ * still elevates the score; this just keeps the digit-pair tier honest.
+ *
+ * Tiers:
+ *   88  Natural Match            (in-family) or strong cross-family Decoz favorable
+ *   80  Highly Favorable         (e.g. 1-3, 2-6, 2-7, 3-5)
+ *   72  Compatible / Favorable   (e.g. 4-7, 8-9)
+ *   68  Workable                 (cross-family, no friction, no spark)
+ *   60  Neutral                  (e.g. 1-9, 7-9, 7-7)
+ *   50  Mixed / Volatile         (e.g. 3-7 "two weeks or a lifetime", 3-3)
+ *   42  Challenge                (e.g. 2-5, 3-4, 4-5, 5-6, 6-7, 5-8, 7-8)
+ *   36  Power-Struggle           (1-1, 1-8, 8-8 — command-energy clashes)
+ *
+ * Cross-component pairs (my Expression vs their Soul Urge etc.) get a small
+ * +4 lift since giver/receiver pairings differentiate roles and avoid the
+ * stagnation risk of same-component sameness.
  */
-const HARMONY: Record<number, number[]> = {
-  1: [3, 5, 6, 9],
-  2: [4, 6, 8],
-  3: [1, 5, 6, 9],
-  4: [2, 6, 7, 8],
-  5: [1, 3, 7],
-  6: [1, 2, 3, 4, 8, 9],
-  7: [4, 5, 9],
-  8: [2, 4, 6],
-  9: [1, 3, 6, 9],
-};
 
-const FRICTION: Record<number, number[]> = {
-  1: [4, 7, 8],
-  2: [1, 5, 7],
-  3: [4, 7, 8],
-  4: [1, 3, 5, 9],
-  5: [2, 4, 6, 8],
-  6: [5, 7],
-  7: [1, 2, 3, 6, 8],
-  8: [1, 3, 5, 7],
-  9: [2, 4, 5, 7, 8],
-};
+function toRoot(reduced: number): number {
+  if (reduced === 11) return 2;
+  if (reduced === 22) return 4;
+  if (reduced === 33) return 6;
+  return reduced;
+}
+
+// Symmetric verdict matrix indexed by digit 1-9. Same value at [a][b] and
+// [b][a]. Derived by hand from the doc's pair-by-pair table.
+const VERDICT: ReadonlyArray<ReadonlyArray<number>> = [
+  /* 0 placeholder */ [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  /* 1 */ [0, 36, 68, 80, 68, 88, 68, 80, 36, 60],
+  /* 2 */ [0, 68, 80, 68, 88, 42, 80, 80, 88, 68],
+  /* 3 */ [0, 80, 68, 50, 38, 80, 88, 50, 50, 88],
+  /* 4 */ [0, 68, 88, 38, 68, 38, 68, 72, 88, 60],
+  /* 5 */ [0, 88, 42, 80, 38, 76, 42, 88, 42, 70],
+  /* 6 */ [0, 68, 80, 88, 68, 42, 80, 42, 70, 88],
+  /* 7 */ [0, 80, 80, 50, 72, 88, 42, 60, 42, 62],
+  /* 8 */ [0, 36, 88, 50, 88, 42, 70, 42, 38, 70],
+  /* 9 */ [0, 60, 68, 88, 60, 70, 88, 62, 70, 70],
+];
 
 export function pairScore(
   a: NumerologyResult,
   b: NumerologyResult,
   cross = false,
 ): number {
-  const x = a.reduced;
-  const y = b.reduced;
-  if (x === y) return cross ? 82 : 76;
-  if (HARMONY[x]?.includes(y)) return 75;
-  if (FRICTION[x]?.includes(y)) return 42;
-  return 60;
+  const x = toRoot(a.reduced);
+  const y = toRoot(b.reduced);
+  if (x < 1 || x > 9 || y < 1 || y > 9) return 60;
+  const base = VERDICT[x]![y] ?? 60;
+  return cross ? Math.min(100, base + 4) : base;
 }
 
 export interface CoreLite {
