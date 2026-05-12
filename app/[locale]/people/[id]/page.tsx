@@ -15,7 +15,6 @@ import {
 } from '@/lib/numerology';
 import { compareToParent } from '@/lib/numerology/familyTree';
 import { compatibilityScore } from '@/lib/compatibility/score';
-import { detectPatterns } from '@/lib/compatibility/patterns';
 import { getOrGenerateRelationshipProfile } from '@/lib/ai/relationship';
 import { meaningFor } from '@/lib/numerology/meanings';
 import idFamily from '@/content/family/id.json';
@@ -58,14 +57,6 @@ export default async function PersonDetailPage({
   const age = ageAt(person.dob, ctx);
 
   const score = compatibilityScore(me, them, person.relationship);
-  const patterns = detectPatterns(me, them, locale, person.relationship);
-  const topPatterns = patterns
-    .slice()
-    .sort((a, b) => {
-      const order: Record<string, number> = { harmony: 0, tension: 1, neutral: 2 };
-      return (order[a.tone] ?? 9) - (order[b.tone] ?? 9);
-    })
-    .slice(0, 2);
 
   const minor = minorNumbers(person.nickname);
   const bridge = bridges(them);
@@ -141,60 +132,31 @@ export default async function PersonDetailPage({
           </div>
         </section>
 
-        {/* Compat at-a-glance — moved up so the most action-relevant data
-         * point is visible without scrolling past the numerical ladder. */}
-        <section className="space-y-3">
-          <h2 className="text-lg font-semibold">{t('dynamicTitle')}</h2>
-          <Link
-            href={`/${locale}/people/${person.id}/compatibility`}
-            className="border-border press-soft hover:bg-muted/30 group block rounded-2xl border bg-surface-1 p-5"
-          >
-            <div className="flex items-baseline justify-between gap-3">
-              <div>
-                <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider">
-                  {tCompat('scoreTitle')}
-                </p>
-                <p className="mt-1">
-                  <span className="font-mono text-3xl font-semibold tabular-nums">
-                    {score.overall}
-                  </span>
-                  <span className="text-muted-foreground text-sm"> / 100</span>
-                </p>
-              </div>
-              <div className="text-right">
-                <p className="text-sm font-medium uppercase tracking-wider">
-                  {tCompat(`band.${score.band}`)}
-                </p>
-                <ChevronRight className="text-muted-foreground ml-auto mt-1 h-4 w-4 transition group-hover:translate-x-0.5" aria-hidden />
-              </div>
-            </div>
-
-            {topPatterns.length > 0 ? (
-              <div className="border-border/60 mt-4 space-y-2 border-t pt-4">
-                {topPatterns.map((p) => (
-                  <div key={p.key} className="space-y-0.5">
-                    <p className="flex items-baseline gap-2 text-sm font-medium">
-                      <span
-                        className={`inline-block h-1.5 w-1.5 rounded-full ${
-                          p.tone === 'harmony'
-                            ? 'bg-emerald-500'
-                            : p.tone === 'tension'
-                              ? 'bg-amber-500'
-                              : 'bg-muted-foreground/50'
-                        }`}
-                        aria-hidden
-                      />
-                      {p.title}
-                    </p>
-                    <p className="text-muted-foreground line-clamp-2 pl-3.5 text-xs leading-relaxed">
-                      {p.body}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            ) : null}
-          </Link>
-        </section>
+        {/* Compat at-a-glance — score + band + chevron only. Detected
+         * patterns live on the /compatibility detail page so this card
+         * stays clean and the same info doesn't read twice. */}
+        <Link
+          href={`/${locale}/people/${person.id}/compatibility`}
+          className="border-border press-soft hover:bg-muted/30 group flex items-center justify-between gap-3 rounded-2xl border bg-surface-1 p-5"
+        >
+          <div>
+            <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider">
+              {tCompat('scoreTitle')}
+            </p>
+            <p className="mt-1">
+              <span className="font-mono text-3xl font-semibold tabular-nums">
+                {score.overall}
+              </span>
+              <span className="text-muted-foreground text-sm"> / 100</span>
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            <p className="text-sm font-medium uppercase tracking-wider">
+              {tCompat(`band.${score.band}`)}
+            </p>
+            <ChevronRight className="text-muted-foreground h-4 w-4 transition group-hover:translate-x-0.5" aria-hidden />
+          </div>
+        </Link>
 
         {person.notes ? (
           <section className="border-border rounded-xl border bg-amber-50/60 p-4 text-sm dark:border-amber-900/40 dark:bg-amber-950/20">
@@ -205,29 +167,28 @@ export default async function PersonDetailPage({
           </section>
         ) : null}
 
-        {/* AI relationship profile — paragraph 1 leads with "Tentang {them}"
-         * (always visible); the rest sits behind a native <details>. */}
-        {relProfileText ? (
+        {/* AI body split into two flat cards: portrait ("Ringkasan profil")
+         * + relational dynamics ("Profil hubungan…"). Two boxes read
+         * cleaner than one collapsed block — user always sees both. */}
+        {relSummary ? (
+          <section className="space-y-3">
+            <h2 className="text-lg font-semibold">{t('profileSummary')}</h2>
+            <div className="border-border rounded-2xl border bg-surface-1 p-5">
+              <p className="text-[15px] leading-relaxed text-neutral-800 dark:text-neutral-200">
+                {renderInlineMd(relSummary)}
+              </p>
+            </div>
+          </section>
+        ) : null}
+
+        {relRest.length > 0 ? (
           <section className="space-y-3">
             <h2 className="text-lg font-semibold">{tRel('title', { name: person.fullName })}</h2>
-            <details className="border-border group rounded-2xl border bg-surface-1 p-5">
-              <summary className="press-soft flex cursor-pointer list-none items-start justify-between gap-3 [&::-webkit-details-marker]:hidden">
-                <p className="text-[15px] leading-relaxed text-neutral-800 dark:text-neutral-200">
-                  {renderInlineMd(relSummary)}
-                </p>
-                <ChevronRight
-                  className="text-muted-foreground mt-1 h-4 w-4 shrink-0 transition-transform group-open:rotate-90"
-                  aria-hidden
-                />
-              </summary>
-              {relRest.length > 0 ? (
-                <div className="border-border/60 mt-4 space-y-3 border-t pt-4 text-[15px] leading-relaxed text-neutral-800 dark:text-neutral-200">
-                  {relRest.map((p, i) => (
-                    <p key={i}>{renderInlineMd(p)}</p>
-                  ))}
-                </div>
-              ) : null}
-            </details>
+            <div className="border-border space-y-3 rounded-2xl border bg-surface-1 p-5 text-[15px] leading-relaxed text-neutral-800 dark:text-neutral-200">
+              {relRest.map((p, i) => (
+                <p key={i}>{renderInlineMd(p)}</p>
+              ))}
+            </div>
           </section>
         ) : null}
 
