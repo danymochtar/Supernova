@@ -476,10 +476,17 @@ export function ChatThread({
     >
       <div
         ref={scrollRef}
-        className={`flex-1 overflow-y-auto pb-[8.5rem] ${selectMode ? 'pt-16' : ''}`}
+        className={`flex-1 overflow-y-auto ${selectMode ? 'pt-16' : ''}`}
       >
-        {turns.length === 0 && !pending ? (
-          <div className="flex flex-col items-center gap-5 py-10 text-center">
+        {/* Bottom-pin the content: with a short thread the messages sit
+         * just above the composer instead of stuck at the top of a tall
+         * scroll container leaving a giant empty gap. justify-end +
+         * min-h-full + flex-col makes overflow still work normally —
+         * when content exceeds the container, justify-end is ignored
+         * and the scroll position handles it. */}
+        <div className="flex min-h-full flex-col justify-end pb-[8.5rem]">
+          {turns.length === 0 && !pending ? (
+            <div className="flex flex-col items-center gap-5 py-10 text-center">
             <div className="bg-primary/10 text-primary flex h-14 w-14 items-center justify-center rounded-full">
               <Sparkles className="h-6 w-6" aria-hidden />
             </div>
@@ -579,7 +586,8 @@ export function ChatThread({
           </div>
         ) : null}
 
-        <div ref={bottomRef} />
+          <div ref={bottomRef} />
+        </div>
       </div>
 
       {/* iOS-style long-press popover — floats next to the tapped bubble,
