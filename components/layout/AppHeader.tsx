@@ -15,7 +15,7 @@ export function AppHeader({
   return (
     <header className="flex items-center justify-between pt-2">
       <h1 className="font-serif text-3xl font-semibold tracking-tight sm:text-4xl">Supernova</h1>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
         {leading}
         <Link
           href={`/${locale}/me`}

@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useTransition } from 'react';
+import { useTransition } from 'react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { ArrowLeft, Calendar } from 'lucide-react';
 
@@ -23,7 +23,6 @@ export function DateBrowser({
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [pending, start] = useTransition();
-  const inputRef = useRef<HTMLInputElement | null>(null);
   const isPreview = selectedIso !== todayIso;
 
   function navigate(iso: string) {
@@ -34,24 +33,6 @@ export function DateBrowser({
     start(() => {
       router.push(qs ? `${pathname}?${qs}` : pathname);
     });
-  }
-
-  function openPicker() {
-    const el = inputRef.current;
-    if (!el) return;
-    // showPicker() is the modern API (iOS 16.4+, Chromium); fall back to
-    // focus() + click() for older Safari/Firefox so the native widget still
-    // opens.
-    if (typeof el.showPicker === 'function') {
-      try {
-        el.showPicker();
-        return;
-      } catch {
-        /* falls through */
-      }
-    }
-    el.focus();
-    el.click();
   }
 
   return (
@@ -67,30 +48,29 @@ export function DateBrowser({
           <ArrowLeft className="h-4 w-4" aria-hidden />
         </button>
       ) : null}
-      <button
-        type="button"
-        onClick={openPicker}
-        aria-label={pickLabel}
-        className={`press-soft border-border hover:bg-muted/40 inline-flex h-9 w-9 items-center justify-center rounded-full border bg-surface-1 ${
+      {/* Native <input type="date"> as the tap target — most reliable
+       * pattern across iOS Safari versions (showPicker() silently fails
+       * on some older iOS builds). The visible circle below is purely
+       * decorative; the input sits on top of it at opacity-0 and grabs
+       * the tap so iOS opens its native picker directly. */}
+      <div
+        className={`press-soft border-border hover:bg-muted/40 relative inline-flex h-9 w-9 items-center justify-center rounded-full border bg-surface-1 ${
           isPreview ? 'border-amber-500/50 text-amber-600 dark:text-amber-300' : 'text-muted-foreground hover:text-foreground'
         }`}
       >
         <Calendar className="h-4 w-4" aria-hidden />
-      </button>
-      {/* sr-only-style hidden input — must remain in the DOM (and not display:none)
-        * so showPicker()/click() can dispatch the native widget. Sized to 1px so
-        * it can't claim any touch target adjacent to the visible button. */}
-      <input
-        ref={inputRef}
-        type="date"
-        value={selectedIso}
-        min={todayIso}
-        max={maxIso}
-        onChange={(e) => navigate(e.target.value)}
-        aria-hidden
-        tabIndex={-1}
-        className="pointer-events-none absolute h-px w-px opacity-0"
-      />
+        <input
+          type="date"
+          value={selectedIso}
+          min={todayIso}
+          max={maxIso}
+          onChange={(e) => navigate(e.target.value)}
+          aria-label={pickLabel}
+          title={pickLabel}
+          className="absolute inset-0 cursor-pointer opacity-0"
+        />
+      </div>
     </div>
   );
 }
+
