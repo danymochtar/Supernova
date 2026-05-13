@@ -16,8 +16,13 @@ export function TopBar({
 }) {
   return (
     <header
-      className="border-border bg-background/95 sticky top-0 z-30 -mx-4 mb-4 flex items-center gap-2 border-b px-4 backdrop-blur sm:-mx-6 sm:px-6 supports-[backdrop-filter]:bg-background/80"
+      // No more negative -mx-* — sticky used to bleed horizontally past
+      // dense card content on scroll. Internal padding instead so the
+      // bar respects its parent's bounds.
+      className="border-border bg-background/95 sticky top-0 z-20 mb-4 flex items-center gap-2 border-b backdrop-blur supports-[backdrop-filter]:bg-background/80"
       style={{
+        paddingLeft: 'max(1rem, env(safe-area-inset-left))',
+        paddingRight: 'max(1rem, env(safe-area-inset-right))',
         paddingTop: 'env(safe-area-inset-top)',
         minHeight: 'calc(3.5rem + env(safe-area-inset-top))',
       }}
@@ -26,7 +31,7 @@ export function TopBar({
         <Link
           href={backHref}
           aria-label="Back"
-          className="hover:bg-muted/40 -ml-2 flex h-9 w-9 items-center justify-center rounded-full"
+          className="press border-border bg-surface-1 text-muted-foreground hover:text-foreground hover:bg-muted/40 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border"
         >
           <ChevronLeft className="h-5 w-5" aria-hidden />
         </Link>

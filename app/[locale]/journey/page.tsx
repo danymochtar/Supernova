@@ -17,10 +17,13 @@ import {
 } from '@/lib/numerology';
 import { meaningFor } from '@/lib/numerology/meanings';
 import type { NumerologyResult } from '@/lib/numerology';
+import { Suspense } from 'react';
 import { CompoundReduced } from '@/components/numerology/CompoundReduced';
 import { Explainer } from '@/components/layout/Explainer';
-import { renderInlineMd } from '@/components/qa/inlineMd';
-import { getOrGenerateYearOutlook } from '@/lib/ai/yearOutlook';
+import {
+  YearOutlookBody,
+  YearOutlookBodyFallback,
+} from '@/components/journey/YearOutlookSection';
 import { ChevronDown } from 'lucide-react';
 
 export default async function JourneyPage({ params }: { params: { locale: string } }) {
@@ -99,7 +102,9 @@ export default async function JourneyPage({ params }: { params: { locale: string
   // outlook becomes null, the hero just doesn't show the narrative section.
   const activePinnacleRange = pinnacleRows[activePinnacleSlot - 1]?.range ?? '';
   const activeCycleRange = cycleRows[activeCycleSlot - 1]?.range ?? '';
-  const yearOutlook = await getOrGenerateYearOutlook(session.user.id, {
+  // Outlook input is built here, fetched inside <YearOutlookBody> below
+  // so the AI call lives behind its own Suspense boundary.
+  const outlookInput = {
     locale,
     firstName: profile.firstName,
     year: ctx.year,
@@ -111,7 +116,7 @@ export default async function JourneyPage({ params }: { params: { locale: string
     cycle: { slot: activeCycleSlot, result: activeCycleResult, ageRange: activeCycleRange },
     essence: { letters: essenceNow.letters, result: essenceNow.essence },
     preferredModel: profile.preferredModel,
-  });
+  };
 
   function firstSentence(s: string | null): string {
     if (!s) return '';
@@ -141,68 +146,29 @@ export default async function JourneyPage({ params }: { params: { locale: string
           <summary className="press-soft flex cursor-pointer list-none items-baseline justify-between gap-2 bg-gradient-to-r from-primary/15 to-accent/15 px-6 py-3 [&::-webkit-details-marker]:hidden">
             <p className="text-primary flex flex-1 items-baseline gap-2 text-[11px] font-semibold uppercase tracking-[0.18em]">
               <span>{t('summaryTitle', { year: ctx.year })}</span>
-              {yearOutlook?.tagline ? (
-                <span className="text-muted-foreground hidden truncate normal-case tracking-normal sm:inline">
-                  · {yearOutlook.tagline}
-                </span>
-              ) : null}
             </p>
             <span className="text-muted-foreground flex shrink-0 items-baseline gap-2 tabular-nums normal-case tracking-normal text-[11px] font-semibold uppercase">
               <span>{t('age')} {age}</span>
               <ChevronDown
-                className="text-primary/70 h-4 w-4 self-center transition-transform group-open:rotate-180"
+                className="text-primary/70 h-4 w-4 self-center transition-transform ios-ease group-open:rotate-180"
                 aria-hidden
               />
             </span>
           </summary>
 
-          {/* Outlook reveal — only renders when generation succeeded. The
-            * tagline (mobile, full text), synthesis paragraphs, three tips,
-            * then the affirmation. */}
-          {yearOutlook ? (
-            <div className="border-border/60 space-y-4 border-t px-6 py-5 bg-surface-1">
-              {yearOutlook.tagline ? (
-                <p className="font-serif text-xl font-semibold leading-tight tracking-tight text-foreground sm:text-2xl">
-                  {yearOutlook.tagline}
-                </p>
-              ) : null}
-
-              {yearOutlook.synthesis ? (
-                <div className="space-y-2.5 text-[15px] leading-relaxed text-neutral-800 dark:text-neutral-200">
-                  {yearOutlook.synthesis.split(/\n\s*\n/).map((p, i) => (
-                    <p key={i}>{renderInlineMd(p.trim())}</p>
-                  ))}
-                </div>
-              ) : null}
-
-              {yearOutlook.tips.length > 0 ? (
-                <div className="space-y-2">
-                  <p className="text-muted-foreground text-[11px] font-semibold uppercase tracking-[0.18em]">
-                    {t('outlookTipsLabel')}
-                  </p>
-                  <ul className="space-y-1.5 text-sm leading-relaxed text-neutral-800 dark:text-neutral-200">
-                    {yearOutlook.tips.map((tip, i) => (
-                      <li key={i} className="flex gap-2">
-                        <span className="text-primary mt-0.5 shrink-0">·</span>
-                        <span>{renderInlineMd(tip)}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
-
-              {yearOutlook.affirmation ? (
-                <div className="border-accent/60 border-l-[3px] bg-accent/5 px-4 py-3 dark:bg-accent/10">
-                  <p className="text-muted-foreground mb-1 text-[11px] font-semibold uppercase tracking-[0.18em]">
-                    {t('outlookAffirmationLabel')}
-                  </p>
-                  <p className="font-serif text-base italic leading-snug text-neutral-800 dark:text-neutral-100">
-                    {renderInlineMd(yearOutlook.affirmation)}
-                  </p>
-                </div>
-              ) : null}
-            </div>
-          ) : null}
+          {/* Outlook body streams in its own Suspense boundary so the
+            * deterministic forecast rows below paint instantly. Cache
+            * hits resolve sync and skip the skeleton. */}
+          <Suspense fallback={<YearOutlookBodyFallback />}>
+            <YearOutlookBody
+              userId={session.user.id}
+              input={outlookInput}
+              labels={{
+                outlookTipsLabel: t('outlookTipsLabel'),
+                outlookAffirmationLabel: t('outlookAffirmationLabel'),
+              }}
+            />
+          </Suspense>
         </details>
 
         <div className="divide-border/60 divide-y px-6 py-5">

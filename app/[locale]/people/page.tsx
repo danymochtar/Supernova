@@ -9,7 +9,7 @@ import { listPeople, type PersonView } from '@/lib/db/repositories/person';
 import { ageAt, contextFromInstant } from '@/lib/numerology';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { displayName } from '@/lib/profile/displayName';
-import { deletePersonAction } from './actions';
+import { deletePersonFormAction } from './actions';
 
 const PEOPLE_LIMIT = 999;
 
@@ -155,7 +155,7 @@ export default async function PeoplePage({
                           >
                             <Pencil className="h-4 w-4" aria-hidden />
                           </Link>
-                          <form action={deletePersonAction} className="flex items-stretch">
+                          <form action={deletePersonFormAction} className="flex items-stretch">
                             <input type="hidden" name="id" value={p.id} />
                             <input type="hidden" name="locale" value={locale} />
                             <button

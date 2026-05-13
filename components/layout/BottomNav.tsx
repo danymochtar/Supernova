@@ -38,7 +38,7 @@ export function BottomNav({ locale, labels }: { locale: Locale; labels: Record<T
   return (
     <nav
       aria-label="Primary"
-      className="border-border bg-background/95 fixed inset-x-0 bottom-0 z-40 border-t backdrop-blur supports-[backdrop-filter]:bg-background/80"
+      className="border-border bg-background/95 fixed inset-x-0 bottom-0 z-30 border-t backdrop-blur supports-[backdrop-filter]:bg-background/80"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
       <ul className="mx-auto grid max-w-2xl grid-cols-6">

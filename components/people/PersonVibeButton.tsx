@@ -50,7 +50,7 @@ export function PersonVibeButton({ personId, cachedBody, action, labels }: Props
         type="button"
         onClick={onOpen}
         aria-label={labels.button}
-        className="from-primary to-accent text-primary-foreground press fixed bottom-24 right-4 z-30 inline-flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br shadow-lg"
+        className="from-primary to-accent text-primary-foreground press fixed bottom-24 right-4 z-40 inline-flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br shadow-lg"
       >
         <Sparkles className="h-6 w-6" aria-hidden />
       </button>
@@ -60,7 +60,7 @@ export function PersonVibeButton({ personId, cachedBody, action, labels }: Props
           role="dialog"
           aria-modal="true"
           aria-label={labels.sheetTitle}
-          className="animate-in fade-in fixed inset-0 z-[60] flex items-end justify-center bg-black/40 backdrop-blur-sm duration-150 sm:items-center"
+          className="animate-in fade-in fixed inset-0 z-50 flex items-end justify-center bg-black/40 backdrop-blur-sm duration-150 sm:items-center"
           onClick={() => setOpen(false)}
         >
           <div

@@ -45,6 +45,12 @@ const config: Config = {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      // Extend the z-index ladder one rung above default 50 so fullscreen
+      // overlays (image viewer) can sit cleanly above popovers + sheets.
+      // See the ladder docs in app/globals.css.
+      zIndex: {
+        60: '60',
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],

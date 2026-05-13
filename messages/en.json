@@ -428,6 +428,7 @@
     "editProfile": "Edit profile",
     "deletePerson": "Remove from list",
     "deletePersonConfirm": "Remove {name} from your list? This can't be undone.",
+    "deletePersonError": "Couldn't delete. Refresh the page or make sure you're still signed in.",
     "notes": "Notes",
     "age": "Age {age}",
     "profileSummary": "Profile summary",

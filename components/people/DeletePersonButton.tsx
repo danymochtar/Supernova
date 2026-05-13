@@ -2,6 +2,7 @@
 
 import { useTransition } from 'react';
 import { Trash2 } from 'lucide-react';
+import type { DeletePersonResult } from '@/app/[locale]/people/actions';
 
 interface Props {
   personId: string;
@@ -9,7 +10,9 @@ interface Props {
   /** Pre-localized confirm copy with the name already interpolated. */
   confirmLabel: string;
   buttonLabel: string;
-  action: (formData: FormData) => Promise<void>;
+  /** Pre-localized error label shown if the action returns ok:false. */
+  errorLabel: string;
+  action: (formData: FormData) => Promise<DeletePersonResult>;
 }
 
 export function DeletePersonButton({
@@ -17,6 +20,7 @@ export function DeletePersonButton({
   locale,
   confirmLabel,
   buttonLabel,
+  errorLabel,
   action,
 }: Props) {
   const [pending, start] = useTransition();
@@ -27,7 +31,14 @@ export function DeletePersonButton({
     fd.set('id', personId);
     fd.set('locale', locale);
     start(async () => {
-      await action(fd);
+      const result = await action(fd);
+      // On success the action throws NEXT_REDIRECT and we never get here.
+      // Any other return means the server explicitly refused (auth /
+      // not-found / generic) — surface as an alert so the user knows
+      // it didn't silently no-op.
+      if (result && !result.ok) {
+        window.alert(errorLabel);
+      }
     });
   }
 

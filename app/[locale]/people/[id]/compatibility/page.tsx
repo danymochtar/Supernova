@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { redirect, notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { getSession } from '@/lib/auth/requireSession';
@@ -6,11 +7,13 @@ import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { buildCoreProfile } from '@/lib/numerology';
 import { compatibilityScore, type LaneScore } from '@/lib/compatibility/score';
-import { renderInlineMd } from '@/components/qa/inlineMd';
 import { detectPatterns } from '@/lib/compatibility/patterns';
 import { displayName } from '@/lib/profile/displayName';
 import type { CoreKey } from '@/lib/compatibility/lens';
-import { getOrGeneratePairNarratives } from '@/lib/ai/relationship';
+import {
+  PairNarrativesSection,
+  PairNarrativesFallback,
+} from '@/components/people/PairNarrativesSection';
 import { CompoundReduced } from '@/components/numerology/CompoundReduced';
 import { TopBar } from '@/components/layout/TopBar';
 
@@ -75,19 +78,15 @@ export default async function CompatibilityPage({
   const score = compatibilityScore(me, them, person.relationship);
   const patterns = detectPatterns(me, them, locale, person.relationship);
 
-  const narratives = await getOrGeneratePairNarratives(
-    session.user.id,
-    person.id,
-    userProfile.preferredModel,
-    {
-      locale,
-      relationship: person.relationship,
-      meName: myName,
-      themName: theirName,
-      lanes: score.lanes,
-      patternTitles: patterns.map((p) => p.title),
-    },
-  );
+  // Per-pair narrative labels — pre-resolved here so the Suspense
+  // boundary doesn't need to call useTranslations.
+  const narrativeLabels = {
+    title: t('pairsTitle'),
+    subtitle: t('pairsSubtitle'),
+    narrativePending: t('narrativePending'),
+    laneLabel: (lane: LaneScore) =>
+      laneLabel(lane.meKey, lane.themKey, lane.cross, tDash, t),
+  };
 
   return (
     <main className="container max-w-3xl px-4 sm:px-6">
@@ -207,43 +206,31 @@ export default async function CompatibilityPage({
           </section>
         ) : null}
 
-        {/* Per-pair narratives — AI-generated, covers same + cross lanes */}
-        <section className="space-y-4">
-          <div>
-            <h2 className="text-lg font-semibold">{t('pairsTitle')}</h2>
-            <p className="text-muted-foreground text-sm">{t('pairsSubtitle')}</p>
-          </div>
-          <div className="space-y-3">
-            {score.lanes.map((lane) => {
-              const narrative = narratives[lane.key];
-              return (
-                <article
-                  key={lane.key}
-                  className="border-border space-y-2 rounded-xl border p-5"
-                >
-                  <header className="flex flex-wrap items-baseline justify-between gap-2">
-                    <h3 className="text-base font-semibold">
-                      {laneLabel(lane.meKey, lane.themKey, lane.cross, tDash, t)}
-                    </h3>
-                    <div className="text-muted-foreground flex items-center gap-2 text-sm">
-                      <CompoundReduced result={lane.meResult} locale={locale} size="sm" />
-                      <span className="text-xs">×</span>
-                      <CompoundReduced result={lane.themResult} locale={locale} size="sm" />
-                      <span className="ml-2 font-mono text-xs tabular-nums">{lane.score}/100</span>
-                    </div>
-                  </header>
-                  {narrative ? (
-                    <p className="text-sm leading-relaxed text-neutral-800 dark:text-neutral-200">
-                      {renderInlineMd(narrative)}
-                    </p>
-                  ) : (
-                    <p className="text-muted-foreground text-sm italic">{t('narrativePending')}</p>
-                  )}
-                </article>
-              );
-            })}
-          </div>
-        </section>
+        {/* Per-pair narratives — AI-generated, covers same + cross lanes.
+         * Suspense-wrapped so the score + patterns + modifiers above
+         * paint instantly; per-lane prose streams in. */}
+        <Suspense
+          fallback={
+            <PairNarrativesFallback
+              lanes={score.lanes}
+              locale={locale}
+              labels={narrativeLabels}
+            />
+          }
+        >
+          <PairNarrativesSection
+            userId={session.user.id}
+            personId={person.id}
+            preferredModel={userProfile.preferredModel}
+            locale={locale}
+            relationship={person.relationship}
+            meName={myName}
+            themName={theirName}
+            lanes={score.lanes}
+            patternTitles={patterns.map((p) => p.title)}
+            labels={narrativeLabels}
+          />
+        </Suspense>
 
         <p className="text-muted-foreground text-xs">{t('disclaimer')}</p>
       </div>

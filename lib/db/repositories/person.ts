@@ -110,10 +110,12 @@ export async function updatePerson(
   id: string,
   input: PersonInput,
 ): Promise<PersonView | null> {
-  const existing = await prisma.person.findUnique({ where: { id } });
-  if (!existing || existing.userId !== userId) return null;
-  const row = await prisma.person.update({
-    where: { id },
+  // Single round-trip: updateMany filters by (id, userId) so ownership is
+  // enforced at the query level, then we read back the row to return its
+  // full shape. `count === 0` means either the row doesn't exist or it
+  // belongs to a different user — surfaced as null to the caller.
+  const result = await prisma.person.updateMany({
+    where: { id, userId },
     data: {
       firstName: input.firstName,
       middleName: input.middleName?.trim() || null,
@@ -124,12 +126,14 @@ export async function updatePerson(
       notes: input.notes?.trim() || null,
     },
   });
-  return toView(row);
+  if (result.count === 0) return null;
+  const row = await prisma.person.findUnique({ where: { id } });
+  return row ? toView(row) : null;
 }
 
 export async function deletePerson(userId: string, id: string): Promise<boolean> {
-  const row = await prisma.person.findUnique({ where: { id } });
-  if (!row || row.userId !== userId) return false;
-  await prisma.person.delete({ where: { id } });
-  return true;
+  // Same defense-in-depth pattern: scope the delete by (id, userId) so a
+  // stray caller passing the wrong userId can't wipe another user's row.
+  const result = await prisma.person.deleteMany({ where: { id, userId } });
+  return result.count > 0;
 }

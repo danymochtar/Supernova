@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Z-index hierarchy — single documented ladder so floating surfaces
+ * stack predictably and tap-target audits stay grep-able. NEVER use
+ * arbitrary z-[NN] values; pick the matching rung below.
+ *
+ *   z-10  — cards / inline content elevated above body
+ *   z-20  — sticky TopBar + AppHeader
+ *   z-30  — bottom nav
+ *   z-40  — floating FABs (PersonVibeButton, scroll-to-latest, chat composer)
+ *   z-50  — popovers / sheets / modals / toasts
+ *   z-60  — fullscreen overlays (image viewer)
+ */
+
 @layer base {
   :root {
     /* Light theme — Supernova brand: midnight blue primary, warm amber accent. */
@@ -138,6 +151,13 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+}
+
+/* Shimmer keyframes — Skeleton primitive sweeps a gradient across a
+ * surface-2 placeholder while AI streaming is in flight. JS-free. */
+@keyframes shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 /* Per-user karmic-debt visibility — toggled by adding `hide-karmic` to the

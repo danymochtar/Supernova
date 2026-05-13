@@ -428,6 +428,7 @@
     "editProfile": "Ubah profil",
     "deletePerson": "Hapus dari daftar",
     "deletePersonConfirm": "Yakin hapus {name} dari daftar? Aksi ini gak bisa di-undo.",
+    "deletePersonError": "Gagal hapus. Coba refresh halamannya, atau pastikan kamu masih login.",
     "notes": "Catatan",
     "age": "{age} tahun",
     "profileSummary": "Ringkasan profil",

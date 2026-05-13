@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { getSession } from '@/lib/auth/requireSession';
@@ -12,7 +13,7 @@ import {
   personalCycles,
 } from '@/lib/numerology';
 import { NumberCard } from '@/components/numerology/NumberCard';
-import { AboutMe } from '@/components/numerology/AboutMe';
+import { AboutMeAsync, AboutMeSkeleton } from '@/components/numerology/AboutMeAsync';
 import { KarmicLessonsList } from '@/components/numerology/KarmicLessonsList';
 import { AppHeader } from '@/components/layout/AppHeader';
 import { Widget } from '@/components/layout/Widget';
@@ -23,7 +24,6 @@ import { FeedbackPrompt } from '@/components/feedback/FeedbackPrompt';
 import { getFeedbackForLocalDay } from '@/lib/db/repositories/feedback';
 import { getTurnsBetween } from '@/lib/db/repositories/qa';
 import { meaningFor } from '@/lib/numerology/meanings';
-import { getOrGenerateAboutMe } from '@/lib/ai/aboutMe';
 import { getOrGenerateDailyReading } from '@/lib/ai/dailyReading';
 import { submitFeedback } from './feedbackActions';
 
@@ -111,7 +111,12 @@ export default async function DashboardPage({
   const tReading = await getTranslations({ locale, namespace: 'reading' });
 
   const session = await getSession();
-  if (!session) redirect(`/${locale}/login`);
+  if (!session) {
+    redirect(`/${locale}/login`);
+  }
+  // Pull userId once so nested closures (renderWidget) don't lose the
+  // narrowing across the function boundary.
+  const userId = session.user.id;
 
   const profile = await getProfileByUserId(session.user.id);
   if (!profile) redirect(`/${locale}/welcome`);
@@ -130,10 +135,10 @@ export default async function DashboardPage({
   const todayEnd = new Date(todayStart);
   todayEnd.setUTCDate(todayEnd.getUTCDate() + 1);
 
-  // Each (user, date) gets its own AI reading so the title + body reflect the
-  // exact compound combination — different compounds with the same reduced PD
-  // (e.g. PD 12/3 vs 30/3) must read distinctly. Cached after first generation.
-  const [readingBody, todayFeedback, todaysChatTurns, aboutMeData] = await Promise.all([
+  // Daily reading + day-bound DB queries — these block the page render
+  // because the reading is the lede. AboutMe is split into its own
+  // Suspense boundary below so the reading paints first.
+  const [readingBody, todayFeedback, todaysChatTurns] = await Promise.all([
     getOrGenerateDailyReading(session.user.id, profile, isPreview ? { targetCtx: ctx } : undefined),
     !isPreview
       ? getFeedbackForLocalDay(session.user.id, today.year, today.month, today.day)
@@ -141,22 +146,23 @@ export default async function DashboardPage({
     !isPreview
       ? getTurnsBetween(session.user.id, todayStart, todayEnd)
       : Promise.resolve([] as Awaited<ReturnType<typeof getTurnsBetween>>),
-    getOrGenerateAboutMe(session.user.id, {
-      locale,
-      // Use the user's call name (nickname || firstName) so the prose
-      // addresses them naturally instead of by full legal name.
-      fullName: displayName(profile),
-      core: {
-        lifePath: core.lifePath,
-        expression: core.expression,
-        soulUrge: core.soulUrge,
-        personality: core.personality,
-        birthday: core.birthday,
-      },
-      karmicLessons: core.karmicLessons,
-      preferredModel: profile.preferredModel,
-    }),
   ]);
+
+  // AboutMe AI input — passed to <AboutMeAsync> inside <Suspense>. Cache
+  // hits resolve instantly; cold cache streams behind the skeleton.
+  const aboutMeInput = {
+    locale,
+    fullName: displayName(profile),
+    core: {
+      lifePath: core.lifePath,
+      expression: core.expression,
+      soulUrge: core.soulUrge,
+      personality: core.personality,
+      birthday: core.birthday,
+    },
+    karmicLessons: core.karmicLessons,
+    preferredModel: profile.preferredModel,
+  };
 
   const showFeedbackPrompt = !isPreview && todaysChatTurns.length === 0;
 
@@ -218,56 +224,63 @@ export default async function DashboardPage({
         ) : null;
       case 'aboutMe':
         return (
-          <AboutMe
+          <Suspense
             key={id}
-            title={t('aboutMeTitle')}
-            subtitle={t('aboutMeSubtitle')}
-            data={aboutMeData}
-            fallback={t('aboutMeFallback')}
-            cardLabels={{
-              lifePath: t('lifePath'),
-              expression: t('expression'),
-              soulUrge: t('soulUrge'),
-              personality: t('personality'),
-              birthday: t('birthday'),
-              karmicLessons: t('karmicLessonsTitle'),
-            }}
-            numbers={{
-              lifePath: core.lifePath,
-              expression: core.expression,
-              soulUrge: core.soulUrge,
-              personality: core.personality,
-              birthday: core.birthday,
-              karmicLessons: core.karmicLessons,
-            }}
-            locale={locale}
-            explainer={{
-              title: t('explainerLearnMore'),
-              body: t('aboutMeExplainer'),
-            }}
-            minor={minor}
-            minorLabels={{
-              expression: t('minorExpression'),
-              soulUrge: t('minorSoulUrge'),
-              personality: t('minorPersonality'),
-            }}
-            minorExplainer={{
-              title: t('explainerLearnMore'),
-              body: t('minorExplainer'),
-            }}
-            bridge={bridge}
-            bridgeLabels={{
-              lifePathExpression: t('bridgeLifePathExpression'),
-              lifePathExpressionHint: t('bridgeLifePathExpressionHint'),
-              soulUrgePersonality: t('bridgeSoulUrgePersonality'),
-              soulUrgePersonalityHint: t('bridgeSoulUrgePersonalityHint'),
-            }}
-            bridgeExplainer={{
-              title: t('explainerLearnMore'),
-              body: t('bridgeExplainer'),
-            }}
-            comingSoonLabel={t('meaningComingSoon')}
-          />
+            fallback={
+              <AboutMeSkeleton title={t('aboutMeTitle')} subtitle={t('aboutMeSubtitle')} />
+            }
+          >
+            <AboutMeAsync
+              userId={userId}
+              input={aboutMeInput}
+              title={t('aboutMeTitle')}
+              subtitle={t('aboutMeSubtitle')}
+              fallback={t('aboutMeFallback')}
+              cardLabels={{
+                lifePath: t('lifePath'),
+                expression: t('expression'),
+                soulUrge: t('soulUrge'),
+                personality: t('personality'),
+                birthday: t('birthday'),
+                karmicLessons: t('karmicLessonsTitle'),
+              }}
+              numbers={{
+                lifePath: core.lifePath,
+                expression: core.expression,
+                soulUrge: core.soulUrge,
+                personality: core.personality,
+                birthday: core.birthday,
+                karmicLessons: core.karmicLessons,
+              }}
+              locale={locale}
+              explainer={{
+                title: t('explainerLearnMore'),
+                body: t('aboutMeExplainer'),
+              }}
+              minor={minor}
+              minorLabels={{
+                expression: t('minorExpression'),
+                soulUrge: t('minorSoulUrge'),
+                personality: t('minorPersonality'),
+              }}
+              minorExplainer={{
+                title: t('explainerLearnMore'),
+                body: t('minorExplainer'),
+              }}
+              bridge={bridge}
+              bridgeLabels={{
+                lifePathExpression: t('bridgeLifePathExpression'),
+                lifePathExpressionHint: t('bridgeLifePathExpressionHint'),
+                soulUrgePersonality: t('bridgeSoulUrgePersonality'),
+                soulUrgePersonalityHint: t('bridgeSoulUrgePersonalityHint'),
+              }}
+              bridgeExplainer={{
+                title: t('explainerLearnMore'),
+                body: t('bridgeExplainer'),
+              }}
+              comingSoonLabel={t('meaningComingSoon')}
+            />
+          </Suspense>
         );
       case 'karmic':
         return (

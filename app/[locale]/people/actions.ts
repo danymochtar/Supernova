@@ -160,15 +160,33 @@ export async function updatePersonAction(formData: FormData): Promise<PersonActi
   redirect(`/${localeChecked}/people/${id}`);
 }
 
-export async function deletePersonAction(formData: FormData): Promise<void> {
+export type DeletePersonResult =
+  | { ok: true }
+  | { ok: false; error: 'unauth' | 'not_found' | 'generic' };
+
+/**
+ * Thin Promise<void> wrapper around deletePersonAction for use with
+ * `<form action={...}>`. The list page submit just kicks off the redirect
+ * and doesn't surface failures (the button-based delete on the detail
+ * page is the path that needs error visibility).
+ */
+export async function deletePersonFormAction(formData: FormData): Promise<void> {
+  await deletePersonAction(formData);
+}
+
+export async function deletePersonAction(
+  formData: FormData,
+): Promise<DeletePersonResult> {
   const session = await getSession();
-  if (!session) return;
+  if (!session) return { ok: false, error: 'unauth' };
   const id = String(formData.get('id') ?? '');
   const locale = String(formData.get('locale') ?? 'id');
   const localeChecked: Locale = isLocale(locale) ? locale : 'id';
-  if (!id) return;
-  await deletePerson(session.user.id, id);
+  if (!id) return { ok: false, error: 'not_found' };
+  const removed = await deletePerson(session.user.id, id);
+  if (!removed) return { ok: false, error: 'not_found' };
   revalidatePath(`/${localeChecked}/people`);
+  // redirect() throws — control never returns past this line on success.
   redirect(`/${localeChecked}/people`);
 }
 

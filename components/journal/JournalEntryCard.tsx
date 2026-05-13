@@ -54,7 +54,10 @@ export function JournalEntryCard({
         disabled={pending}
         aria-label={labels.delete}
         title={labels.delete}
-        className="text-muted-foreground hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 absolute right-3 top-3 rounded-full p-1.5 opacity-0 transition group-hover:opacity-100 disabled:opacity-30 sm:opacity-40"
+        // Always visible at low opacity on touch — no hover state on
+        // mobile, so the hover-only pattern hid the delete affordance
+        // entirely. Hover/active still brighten it.
+        className="press-soft text-muted-foreground hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 absolute right-3 top-3 rounded-full p-1.5 opacity-40 transition group-hover:opacity-100 disabled:opacity-20"
       >
         <Trash2 className="h-3.5 w-3.5" aria-hidden />
       </button>
@@ -80,7 +83,7 @@ export function JournalEntryCard({
           >
             {labels.sources} ({sources.length})
             <ChevronDown
-              className={`h-3 w-3 transition-transform ${showSources ? 'rotate-180' : ''}`}
+              className={`h-3 w-3 transition-transform ios-ease ${showSources ? 'rotate-180' : ''}`}
               aria-hidden
             />
           </button>

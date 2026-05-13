@@ -1,7 +1,8 @@
 import Link from 'next/link';
+import { Suspense } from 'react';
 import { redirect, notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-import { ChevronRight, Pencil, HeartHandshake } from 'lucide-react';
+import { ChevronRight, ChevronDown, Pencil, HeartHandshake } from 'lucide-react';
 import { getSession } from '@/lib/auth/requireSession';
 import { getPerson } from '@/lib/db/repositories/person';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
@@ -15,7 +16,10 @@ import {
 } from '@/lib/numerology';
 import { compareToParent } from '@/lib/numerology/familyTree';
 import { compatibilityScore } from '@/lib/compatibility/score';
-import { getOrGenerateRelationshipProfile } from '@/lib/ai/relationship';
+import {
+  RelationshipProfileSection,
+  RelationshipProfileFallback,
+} from '@/components/people/RelationshipProfileSection';
 import { displayName } from '@/lib/profile/displayName';
 import { meaningFor } from '@/lib/numerology/meanings';
 import idFamily from '@/content/family/id.json';
@@ -23,7 +27,6 @@ import enFamily from '@/content/family/en.json';
 import { NumberCard } from '@/components/numerology/NumberCard';
 import { TopBar } from '@/components/layout/TopBar';
 import { Explainer } from '@/components/layout/Explainer';
-import { renderInlineMd } from '@/components/qa/inlineMd';
 import { PersonVibeButton } from '@/components/people/PersonVibeButton';
 import { DeletePersonButton } from '@/components/people/DeletePersonButton';
 import { getPersonVibeForDay } from '@/lib/db/repositories/personDailyVibe';
@@ -81,26 +84,10 @@ export default async function PersonDetailPage({
   const cachedVibe = await getPersonVibeForDay(session.user.id, person.id, ctx.year, ctx.month, ctx.day);
   const cachedVibeBody = cachedVibe && cachedVibe.locale === locale ? cachedVibe.body : null;
 
-  // Relationship profile is AI-generated long-form prose. Cache-first.
-  const relProfileText = await getOrGenerateRelationshipProfile(
-    session.user.id,
-    person.id,
-    userProfile.preferredModel,
-    {
-      locale,
-      relationship: person.relationship,
-      meName: myName,
-      themName: theirName,
-      me,
-      them,
-    },
-  );
-  const relParagraphs = (relProfileText ?? '')
-    .split(/\n\s*\n/)
-    .map((p) => p.trim())
-    .filter(Boolean);
-  const relSummary = relParagraphs[0] ?? '';
-  const relRest = relParagraphs.slice(1);
+  const relLabels = {
+    profileSummary: t('profileSummary'),
+    profileTitle: tRel('title', { name: theirName }),
+  };
 
   // Carousel cards for ringkasan profil — five core components, each with
   // its own click-to-expand meaning (NumberCard handles that internally).
@@ -183,29 +170,24 @@ export default async function PersonDetailPage({
         ) : null}
 
         {/* AI body split into two flat cards: portrait ("Ringkasan profil")
-         * + relational dynamics ("Profil hubungan…"). Two boxes read
-         * cleaner than one collapsed block — user always sees both. */}
-        {relSummary ? (
-          <section className="space-y-3">
-            <h2 className="text-lg font-semibold">{t('profileSummary')}</h2>
-            <div className="border-border rounded-2xl border bg-surface-1 p-5">
-              <p className="text-[15px] leading-relaxed text-neutral-800 dark:text-neutral-200">
-                {renderInlineMd(relSummary)}
-              </p>
-            </div>
-          </section>
-        ) : null}
-
-        {relRest.length > 0 ? (
-          <section className="space-y-3">
-            <h2 className="text-lg font-semibold">{tRel('title', { name: theirName })}</h2>
-            <div className="border-border space-y-3 rounded-2xl border bg-surface-1 p-5 text-[15px] leading-relaxed text-neutral-800 dark:text-neutral-200">
-              {relRest.map((p, i) => (
-                <p key={i}>{renderInlineMd(p)}</p>
-              ))}
-            </div>
-          </section>
-        ) : null}
+         * + relational dynamics ("Profil hubungan…"). Suspense-wrapped so
+         * the static hero + compat score above paint instantly while
+         * Anthropic streams. Cache hits resolve synchronously and skip
+         * the skeleton entirely. */}
+        <Suspense fallback={<RelationshipProfileFallback labels={relLabels} />}>
+          <RelationshipProfileSection
+            userId={session.user.id}
+            personId={person.id}
+            preferredModel={userProfile.preferredModel}
+            locale={locale}
+            relationship={person.relationship}
+            meName={myName}
+            themName={theirName}
+            me={me}
+            them={them}
+            labels={relLabels}
+          />
+        </Suspense>
 
         {familyMatches ? (
           <section className="space-y-3">
@@ -273,8 +255,8 @@ export default async function PersonDetailPage({
               <p className="text-sm font-semibold">{t('detailNumbersTitle')}</p>
               <p className="text-muted-foreground text-xs">{t('detailNumbersHint')}</p>
             </div>
-            <ChevronRight
-              className="text-muted-foreground mt-1 h-4 w-4 shrink-0 transition-transform group-open:rotate-90"
+            <ChevronDown
+              className="text-muted-foreground mt-1 h-4 w-4 shrink-0 transition-transform ios-ease group-open:rotate-180"
               aria-hidden
             />
           </summary>
@@ -377,6 +359,7 @@ export default async function PersonDetailPage({
             locale={locale}
             confirmLabel={t('deletePersonConfirm', { name: theirName })}
             buttonLabel={t('deletePerson')}
+            errorLabel={t('deletePersonError')}
             action={deletePersonAction}
           />
         </section>

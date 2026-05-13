@@ -588,7 +588,7 @@ export function ChatThread({
         <div
           role="dialog"
           aria-modal="true"
-          className="animate-in fade-in fixed inset-0 z-[55] duration-150"
+          className="animate-in fade-in fixed inset-0 z-50 duration-150"
           onClick={() => setPairMenu(null)}
         >
           <div
@@ -666,7 +666,7 @@ export function ChatThread({
           aria-modal="true"
           aria-label={viewingImage.name}
           onClick={() => setViewingImage(null)}
-          className="animate-in fade-in fixed inset-0 z-[60] flex items-center justify-center bg-black/85 p-4 duration-200"
+          className="animate-in fade-in fixed inset-0 z-60 flex items-center justify-center bg-black/85 p-4 duration-200"
         >
           <button
             type="button"
@@ -728,7 +728,7 @@ export function ChatThread({
           type="button"
           onClick={scrollToBottom}
           aria-label={t('scrollToBottom')}
-          className="border-border bg-surface-1/95 text-foreground animate-in zoom-in-90 fade-in ios-ease fixed right-4 z-30 flex h-10 w-10 items-center justify-center rounded-full border shadow-lg duration-200 supports-[backdrop-filter]:bg-surface-1/85 supports-[backdrop-filter]:backdrop-blur"
+          className="border-border bg-surface-1/95 text-foreground animate-in zoom-in-90 fade-in ios-ease fixed right-4 z-40 flex h-10 w-10 items-center justify-center rounded-full border shadow-lg duration-200 supports-[backdrop-filter]:bg-surface-1/85 supports-[backdrop-filter]:backdrop-blur"
           style={{ bottom: 'calc(8rem + env(safe-area-inset-bottom))' }}
         >
           <ArrowDown className="h-5 w-5" aria-hidden />
@@ -741,7 +741,7 @@ export function ChatThread({
           e.preventDefault();
           send();
         }}
-        className="border-border bg-background/95 fixed inset-x-3 z-30 mx-auto max-w-3xl space-y-2 rounded-3xl border px-3 py-2.5 shadow-lg supports-[backdrop-filter]:bg-background/80 supports-[backdrop-filter]:backdrop-blur sm:inset-x-4 sm:px-4 sm:py-3"
+        className="border-border bg-background/95 fixed inset-x-3 z-40 mx-auto max-w-3xl space-y-2 rounded-3xl border px-3 py-2.5 shadow-lg supports-[backdrop-filter]:bg-background/80 supports-[backdrop-filter]:backdrop-blur sm:inset-x-4 sm:px-4 sm:py-3"
         style={{ bottom: 'calc(3.5rem + env(safe-area-inset-bottom) + 0.5rem)' }}
       >
         {/* Reply quote chip — shown when the user tapped Reply on a previous turn. */}

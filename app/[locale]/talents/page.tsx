@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-import { ArrowRight, Briefcase, ChevronRight, Sparkles, Star } from 'lucide-react';
+import { Briefcase, ChevronRight, Sparkles, Star } from 'lucide-react';
 import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { isLocale, type Locale } from '@/lib/i18n/config';
@@ -228,7 +228,7 @@ export default async function TalentsPage({ params }: { params: { locale: string
               className="text-primary press-soft inline-flex items-center gap-1 text-xs font-medium hover:underline"
             >
               {t('careerSeeAll')}
-              <ChevronRight className="h-3.5 w-3.5" aria-hidden />
+              <ChevronRight className="h-4 w-4" aria-hidden />
             </Link>
           ) : null}
         </div>
@@ -245,7 +245,7 @@ export default async function TalentsPage({ params }: { params: { locale: string
               <p className="text-sm font-semibold">{t('careerCardTitle')}</p>
               <p className="text-muted-foreground text-xs leading-relaxed">{t('careerCardHint')}</p>
             </div>
-            <ArrowRight className="text-muted-foreground h-4 w-4 shrink-0" aria-hidden />
+            <ChevronRight className="text-muted-foreground h-4 w-4 shrink-0" aria-hidden />
           </Link>
         ) : (
           <div className="space-y-3">

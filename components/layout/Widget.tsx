@@ -27,7 +27,7 @@ export function Widget({
           <h2 className="text-base font-semibold">{title}</h2>
           {hint ? <p className="text-muted-foreground mt-0.5 text-xs">{hint}</p> : null}
         </div>
-        <ChevronDown className="text-muted-foreground h-5 w-5 transition-transform group-open:rotate-180" aria-hidden />
+        <ChevronDown className="text-muted-foreground h-4 w-4 transition-transform ios-ease group-open:rotate-180" aria-hidden />
       </summary>
       <div className="px-5 py-4">{children}</div>
     </details>
