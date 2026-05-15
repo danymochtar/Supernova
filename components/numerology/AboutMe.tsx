@@ -183,7 +183,7 @@ export function AboutMe({
               {renderInlineMd(data.minorNarrative)}
             </p>
           ) : null}
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <div className="grid grid-cols-3 gap-2">
             <NumberCard
               label={minorLabels.expression}
               result={minor.minorExpression}
@@ -191,6 +191,7 @@ export function AboutMe({
               type="expression"
               meaning={meaningFor('expression', minor.minorExpression, locale)}
               comingSoonLabel={comingSoonLabel}
+              compact
             />
             <NumberCard
               label={minorLabels.soulUrge}
@@ -199,6 +200,7 @@ export function AboutMe({
               type="soulUrge"
               meaning={meaningFor('soulUrge', minor.minorSoulUrge, locale)}
               comingSoonLabel={comingSoonLabel}
+              compact
             />
             <NumberCard
               label={minorLabels.personality}
@@ -207,6 +209,7 @@ export function AboutMe({
               type="personality"
               meaning={meaningFor('personality', minor.minorPersonality, locale)}
               comingSoonLabel={comingSoonLabel}
+              compact
             />
           </div>
         </div>
@@ -222,7 +225,7 @@ export function AboutMe({
               {renderInlineMd(data.bridgeNarrative)}
             </p>
           ) : null}
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <div className="grid grid-cols-2 gap-2">
             <NumberCard
               label={bridgeLabels.lifePathExpression}
               hint={bridgeLabels.lifePathExpressionHint}
@@ -231,6 +234,7 @@ export function AboutMe({
               type="bridge"
               meaning={meaningFor('bridge', bridge.lifePathExpression, locale)}
               comingSoonLabel={comingSoonLabel}
+              compact
             />
             <NumberCard
               label={bridgeLabels.soulUrgePersonality}
@@ -240,6 +244,7 @@ export function AboutMe({
               type="bridge"
               meaning={meaningFor('bridge', bridge.soulUrgePersonality, locale)}
               comingSoonLabel={comingSoonLabel}
+              compact
             />
           </div>
         </div>
