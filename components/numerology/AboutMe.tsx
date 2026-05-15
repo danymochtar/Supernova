@@ -171,8 +171,14 @@ export function AboutMe({
 
       {minor && minorLabels ? (
         <div className="space-y-3">
+          {/* Narrative first, numbers second — without the lead context the
+            * Minor numbers read as "what are these?". Show the explainer
+            * body as a visible intro paragraph instead of hiding it behind
+            * a tap-to-expand disclosure. */}
           {minorExplainer ? (
-            <Explainer title={minorExplainer.title} body={minorExplainer.body} />
+            <p className="text-muted-foreground text-sm leading-relaxed">
+              {minorExplainer.body}
+            </p>
           ) : null}
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             <NumberCard
@@ -206,7 +212,9 @@ export function AboutMe({
       {bridge && bridgeLabels ? (
         <div className="space-y-3">
           {bridgeExplainer ? (
-            <Explainer title={bridgeExplainer.title} body={bridgeExplainer.body} />
+            <p className="text-muted-foreground text-sm leading-relaxed">
+              {bridgeExplainer.body}
+            </p>
           ) : null}
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <NumberCard
