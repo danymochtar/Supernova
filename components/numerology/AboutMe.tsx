@@ -171,13 +171,16 @@ export function AboutMe({
 
       {minor && minorLabels ? (
         <div className="space-y-3">
-          {/* Narrative first, numbers second — without the lead context the
-            * Minor numbers read as "what are these?". Show the explainer
-            * body as a visible intro paragraph instead of hiding it behind
-            * a tap-to-expand disclosure. */}
           {minorExplainer ? (
-            <p className="text-muted-foreground text-sm leading-relaxed">
-              {minorExplainer.body}
+            <Explainer title={minorExplainer.title} body={minorExplainer.body} />
+          ) : null}
+          {/* AI-generated narrative speaking to THIS user's specific Minor
+            * numbers in plain language — lands between the collapsed
+            * concept disclosure and the raw cards so the user actually
+            * understands what they're looking at before scanning digits. */}
+          {data.minorNarrative ? (
+            <p className="text-[15px] leading-relaxed text-neutral-800 dark:text-neutral-200">
+              {renderInlineMd(data.minorNarrative)}
             </p>
           ) : null}
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -212,8 +215,11 @@ export function AboutMe({
       {bridge && bridgeLabels ? (
         <div className="space-y-3">
           {bridgeExplainer ? (
-            <p className="text-muted-foreground text-sm leading-relaxed">
-              {bridgeExplainer.body}
+            <Explainer title={bridgeExplainer.title} body={bridgeExplainer.body} />
+          ) : null}
+          {data.bridgeNarrative ? (
+            <p className="text-[15px] leading-relaxed text-neutral-800 dark:text-neutral-200">
+              {renderInlineMd(data.bridgeNarrative)}
             </p>
           ) : null}
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">

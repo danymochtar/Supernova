@@ -1,4 +1,4 @@
-import { bridges, formatNumerology, type NumerologyResult } from '@/lib/numerology';
+import { bridges, formatNumerology, type MinorNumbers, type NumerologyResult } from '@/lib/numerology';
 
 export interface AboutMeInput {
   locale: 'id' | 'en';
@@ -10,6 +10,10 @@ export interface AboutMeInput {
     personality: NumerologyResult;
     birthday: NumerologyResult;
   };
+  /** Minor numbers from the call-name (nickname || firstName). When the
+   * user hasn't set a nickname, the caller may pass null and the model
+   * will omit the minorNarrative card. */
+  minor: MinorNumbers | null;
   karmicLessons: number[];
   preferredModel?: string | null;
 }
@@ -23,17 +27,19 @@ function r(x: NumerologyResult): string {
 
 export function buildAboutMeSystem(locale: 'id' | 'en'): string {
   if (locale === 'id') {
-    return `Kamu adalah pendamping numerologi Supernova. Tugas: tulis profil holistik dalam bentuk JSON terstruktur — satu sintesis pembuka + satu kartu pendek per komponen inti.
+    return `Kamu adalah pendamping numerologi Supernova. Tugas: tulis profil holistik dalam bentuk JSON terstruktur — satu sintesis pembuka + satu kartu pendek per komponen inti + dua narasi pendek untuk Minor dan Bridge.
 
-Bahasa: Bahasa Indonesia santai (pakai "kamu", BUKAN "Anda"). Boleh code-mix — istilah numerologi seperti "Life Path", "Expression", "Soul Urge", "Personality", "Birthday", "Karmic Lessons", "master number", "karmic debt" TETAP dalam Bahasa Inggris supaya maknanya tidak hilang. Sisanya Indonesia.
+Bahasa: Bahasa Indonesia santai (pakai "kamu", BUKAN "Anda"). Boleh code-mix — istilah numerologi seperti "Life Path", "Expression", "Soul Urge", "Personality", "Birthday", "Karmic Lessons", "Minor", "Bridge", "master number", "karmic debt" TETAP dalam Bahasa Inggris supaya maknanya tidak hilang. Sisanya Indonesia.
 
 Konten:
 - "synthesis": 2-3 kalimat sintesis identitas inti — siapa orang ini secara keseluruhan. Sebut nama depannya sekali. JANGAN sebut angka spesifik.
-- Tiap kartu: 2-3 kalimat. Hangat, reflektif, langsung. Jelaskan MAKNA komponennya — bukan angkanya. Boleh sebut nama komponen ("Life Path-mu mendorong…", "Soul Urge-mu rindu…"), tapi jangan tulis angka mentah.
+- Tiap kartu inti: 2-3 kalimat. Hangat, reflektif, langsung. Jelaskan MAKNA komponennya — bukan angkanya.
 - Kartu "karmicLessons" hanya muncul kalau ada karmic lessons.
+- "minorNarrative": 2-3 kalimat — jelaskan MAKNA Minor Numbers spesifik orang ini (cara dia muncul di hubungan sehari-hari saat dipanggil dengan call-name) pakai bahasa manusia yang gampang dicerna. Bandingkan secara halus dengan core dari nama akta — di mana ada selisih, di mana selaras. Hanya muncul kalau <profile> punya minor block.
+- "bridgeNarrative": 2-3 kalimat — jelaskan apa artinya Bridge Numbers orang ini buat hidupnya: seberapa selaras misi vs bakat (Life Path × Expression), dan inner self vs outer presentation (Soul Urge × Personality). Pakai bahasa manusia, bukan istilah teknis numerologi. Selalu muncul.
 
 Aturan:
-- JANGAN sebut angka apa pun (mis. "Life Path 5", "Expression 22").
+- JANGAN sebut angka apa pun di output (mis. "Life Path 5", "Bridge 4").
 - JANGAN markdown, bullet, heading, emoji.
 - JANGAN nasihat medis/hukum/finansial. JANGAN janji masa depan.
 - Selalu grounded di angka di <profile>.
@@ -48,20 +54,24 @@ Output WAJIB JSON valid, tanpa teks lain:
     "personality": "...",
     "birthday": "...",
     "karmicLessons": "..."
-  }
+  },
+  "minorNarrative": "...",
+  "bridgeNarrative": "..."
 }`;
   }
-  return `You are Supernova's numerology companion. Task: write a holistic profile as structured JSON — one opening synthesis + one short card per core component.
+  return `You are Supernova's numerology companion. Task: write a holistic profile as structured JSON — one opening synthesis + one short card per core component + two short narratives for Minor and Bridge.
 
 Style: warm, personal ("You…"), reflective but direct.
 
 Content:
 - "synthesis": 2-3 sentences synthesizing core identity — who this person is overall. Mention their first name once. DO NOT name any specific number.
-- Each card: 2-3 sentences. Explain the MEANING of the component — not the digit. You may name the component itself ("Your Life Path pulls you…", "Your Soul Urge longs for…") but never write the raw number.
+- Each core card: 2-3 sentences. Explain the MEANING of the component — not the digit.
 - The "karmicLessons" card only appears when karmic lessons are present.
+- "minorNarrative": 2-3 sentences — explain the MEANING of this person's specific Minor Numbers (how they show up in day-to-day interactions when people call them by their call-name) in plain, easy-to-digest language. Gently compare to the legal-name core: where there's friction, where alignment. Only included when <profile> has a minor block.
+- "bridgeNarrative": 2-3 sentences — explain what this person's Bridge Numbers mean for their life: how aligned mission and talent are (Life Path × Expression), and inner self vs outer presentation (Soul Urge × Personality). Plain language, not technical numerology jargon. Always included.
 
 Rules:
-- DO NOT name any number (e.g. "Life Path 5", "Expression 22").
+- DO NOT name any number in the output (e.g. "Life Path 5", "Bridge 4").
 - NO markdown, bullets, headings, emoji.
 - NO medical, legal, or financial advice. No future predictions.
 - Always grounded in the numbers in <profile>.
@@ -76,7 +86,9 @@ Output MUST be valid JSON, nothing else:
     "personality": "...",
     "birthday": "...",
     "karmicLessons": "..."
-  }
+  },
+  "minorNarrative": "...",
+  "bridgeNarrative": "..."
 }`;
 }
 
@@ -84,6 +96,15 @@ export function buildAboutMeUser(input: AboutMeInput): string {
   const km = input.karmicLessons.length ? input.karmicLessons.join(', ') : 'none';
   const includeKarmic = input.karmicLessons.length > 0;
   const br = bridges(input.core);
+  const minorBlock = input.minor
+    ? `
+
+Minor Numbers (computed from call-name, the day-to-day social self):
+- Minor Expression: ${r(input.minor.minorExpression)}
+- Minor Soul Urge: ${r(input.minor.minorSoulUrge)}
+- Minor Personality: ${r(input.minor.minorPersonality)}
+The Minor numbers describe how this person shows up when people use their nickname / call-name in everyday life. The core numbers above (from the full legal name) remain the deeper foundation. Use the Minor block to color "minorNarrative" — call out subtle differences vs the core where helpful.`
+    : '';
   return `<profile>
 name: ${input.fullName}
 
@@ -99,14 +120,14 @@ Karmic Lessons: ${km}
 Bridge Numbers (gap between paired core numbers — informs how easily two facets integrate):
 - Life Path × Expression bridge: ${br.lifePathExpression.reduced} (talent ↔ mission alignment)
 - Soul Urge × Personality bridge: ${br.soulUrgePersonality.reduced} (inner self ↔ outer presentation alignment)
-Use these as INTERNAL signals to color the synthesis tone — small bridges = smooth integration, large bridges = the person is stretched between two facets and growth lives in the gap. Do NOT mention bridge numbers literally in the output.
+Use these to write "bridgeNarrative" in plain human language — small bridges = smooth integration, large bridges = the person is stretched between two facets and growth lives in the gap. Also let them subtly color the opening synthesis tone. Do NOT mention bridge numbers literally in the output.${minorBlock}
 </profile>
 
 Return JSON. ${
     includeKarmic
-      ? 'Include all six cards (synthesis + 5 component cards + karmicLessons).'
-      : 'Omit the "karmicLessons" key entirely (no karmic lessons present).'
-  } No numbers in any string.`;
+      ? 'Include all six core cards (synthesis + 5 component cards + karmicLessons) plus bridgeNarrative.'
+      : 'Omit the "karmicLessons" key entirely (no karmic lessons present). Always include bridgeNarrative.'
+  } ${input.minor ? 'Include "minorNarrative".' : 'Omit "minorNarrative" entirely.'} No numbers in any string.`;
 }
 
 export interface ParsedAboutMe {
@@ -119,6 +140,13 @@ export interface ParsedAboutMe {
     birthday: string;
     karmicLessons: string;
   }>;
+  /** Plain-language narrative explaining the user's Minor numbers in the
+   * context of their day-to-day social self. Only present when minor
+   * numbers were supplied in the input. */
+  minorNarrative?: string;
+  /** Plain-language narrative for the two Bridge gaps (LP×Expr, SU×Pers).
+   * Always present unless the model failed to emit it. */
+  bridgeNarrative?: string;
 }
 
 export function parseAboutMe(raw: string): ParsedAboutMe | null {
@@ -136,8 +164,16 @@ export function parseAboutMe(raw: string): ParsedAboutMe | null {
       const v = (rawCards as Record<string, unknown>)[k];
       if (typeof v === 'string' && v.trim()) cards[k] = v.trim();
     }
+    const minorNarrative =
+      typeof (obj as Record<string, unknown>).minorNarrative === 'string'
+        ? ((obj as Record<string, unknown>).minorNarrative as string).trim() || undefined
+        : undefined;
+    const bridgeNarrative =
+      typeof (obj as Record<string, unknown>).bridgeNarrative === 'string'
+        ? ((obj as Record<string, unknown>).bridgeNarrative as string).trim() || undefined
+        : undefined;
     if (!synthesis && Object.keys(cards).length === 0) return null;
-    return { synthesis, cards };
+    return { synthesis, cards, minorNarrative, bridgeNarrative };
   } catch {
     return null;
   }

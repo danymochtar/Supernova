@@ -160,6 +160,7 @@ export default async function DashboardPage({
       personality: core.personality,
       birthday: core.birthday,
     },
+    minor,
     karmicLessons: core.karmicLessons,
     preferredModel: profile.preferredModel,
   };
