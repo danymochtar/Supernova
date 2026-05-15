@@ -149,3 +149,33 @@ export async function updatePersonalNotes(userId: string, notes: string | null):
     data: { personalNotes: notes && notes.trim() ? notes.trim() : null },
   });
 }
+
+/**
+ * Append-mode write — used by the settings page where each submission
+ * adds a new note instead of replacing the saved body. Existing notes
+ * stay in place with an `\n\n---\n\n` separator. If the combined length
+ * exceeds `maxChars`, the OLDEST content is dropped from the front so
+ * the newest entry always fits.
+ */
+export async function appendPersonalNotes(
+  userId: string,
+  entry: string,
+  maxChars = 4000,
+): Promise<void> {
+  const trimmed = entry.trim();
+  if (!trimmed) return;
+  const row = await prisma.profile.findUnique({
+    where: { userId },
+    select: { personalNotes: true },
+  });
+  const existing = row?.personalNotes?.trim() ?? '';
+  const combined = existing ? `${existing}\n\n---\n\n${trimmed}` : trimmed;
+  const final =
+    combined.length > maxChars
+      ? combined.slice(combined.length - maxChars)
+      : combined;
+  await prisma.profile.update({
+    where: { userId },
+    data: { personalNotes: final },
+  });
+}

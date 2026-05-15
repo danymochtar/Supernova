@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { getSession } from '@/lib/auth/requireSession';
 import { prisma } from '@/lib/db/prisma';
 import {
-  updatePersonalNotes,
+  appendPersonalNotes,
   updatePreferences,
 } from '@/lib/db/repositories/profile';
 import { isLocale, type Locale } from '@/lib/i18n/config';
@@ -28,7 +28,11 @@ export async function savePersonalNotes(formData: FormData): Promise<NotesAction
   });
   if (!parsed.success) return { ok: false, error: 'invalid' };
 
-  await updatePersonalNotes(session.user.id, parsed.data.notes ?? null);
+  // Append-mode: each submission adds the entry to the existing notes
+  // body (with an `\n\n---\n\n` separator) rather than replacing it,
+  // so the user can drop in additional context over time without
+  // re-typing what's already saved.
+  await appendPersonalNotes(session.user.id, parsed.data.notes ?? '');
   const localeChecked: Locale = isLocale(parsed.data.locale) ? parsed.data.locale : 'id';
   revalidatePath(`/${localeChecked}/me`);
   return { ok: true };

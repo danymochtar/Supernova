@@ -127,9 +127,7 @@ export default async function MePage({ params }: { params: { locale: string } })
               <div className="min-w-0 flex-1 space-y-0.5">
                 <p className="text-sm font-medium">{t('notesTitle')}</p>
                 <p className="text-muted-foreground truncate text-xs">
-                  {profile.personalNotes
-                    ? t('notesStatusSaved', { count: profile.personalNotes.length })
-                    : t('notesStatusEmpty')}
+                  {profile.personalNotes ? t('notesStatusSaved') : t('notesStatusEmpty')}
                 </p>
               </div>
             </div>
@@ -140,11 +138,7 @@ export default async function MePage({ params }: { params: { locale: string } })
           </summary>
           <div className="space-y-3 px-5 pb-4">
             <p className="text-muted-foreground text-xs">{t('notesHint')}</p>
-            <PersonalNotesForm
-              locale={locale}
-              initial={profile.personalNotes}
-              action={savePersonalNotes}
-            />
+            <PersonalNotesForm locale={locale} action={savePersonalNotes} />
           </div>
         </details>
       </SettingsGroup>
