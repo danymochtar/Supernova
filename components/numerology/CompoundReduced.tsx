@@ -10,7 +10,7 @@ const KARMIC_LABELS: Record<13 | 14 | 16 | 19, { id: string; en: string }> = {
 
 const BADGE_LABELS = {
   master: { id: 'master', en: 'master' },
-  karmic: { id: 'karmik', en: 'karmic' },
+  karmic: { id: 'karmic', en: 'karmic' },
 };
 
 export function CompoundReduced({
