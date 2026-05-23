@@ -774,6 +774,8 @@
     "actionsLabel": "Action item منجزة",
     "xTimes": "{count, plural, =1 {1×} other {#×}}",
     "actionsSub": "{done} من {total}",
-    "alsoThemes": "ظهر أيضًا:"
+    "alsoThemes": "ظهر أيضًا:",
+    "completionByEmotionTitle": "عندما تكون مشاعرك هكذا، إليك ما تفعله:",
+    "completionByEmotionRow": "عندما تكون {emotion}"
   }
 }

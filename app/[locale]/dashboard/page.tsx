@@ -177,6 +177,7 @@ export default async function DashboardPage({
           topEmotions: digestRaw.topEmotions,
           actionsDone: digestRaw.actionsDone,
           actionsOpen: digestRaw.actionsOpen,
+          completionByEmotion: digestRaw.completionByEmotion,
         }
       : null;
 

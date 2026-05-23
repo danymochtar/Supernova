@@ -774,6 +774,8 @@
     "actionsLabel": "完了したアクションアイテム",
     "xTimes": "{count, plural, =1 {1回} other {#回}}",
     "actionsSub": "{total}件中{done}件",
-    "alsoThemes": "こちらにも登場："
+    "alsoThemes": "こちらにも登場：",
+    "completionByEmotionTitle": "こんな感情のとき、こう動こう：",
+    "completionByEmotionRow": "あなたが{emotion}のとき"
   }
 }

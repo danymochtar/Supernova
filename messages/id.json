@@ -119,7 +119,9 @@
     "actionsLabel": "Action item kelar",
     "xTimes": "{count, plural, =1 {1×} other {#×}}",
     "actionsSub": "{done} dari {total}",
-    "alsoThemes": "Juga muncul:"
+    "alsoThemes": "Juga muncul:",
+    "completionByEmotionTitle": "Pas emosinya begini, eksekusinya:",
+    "completionByEmotionRow": "Pas lo lagi {emotion}"
   },
   "home": {
     "eyebrow": "Pendamping numerologi",

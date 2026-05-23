@@ -238,6 +238,14 @@ export interface DigestCount {
   count: number;
 }
 
+export interface EmotionCompletion {
+  emotion: string;
+  /** Action items completed across entries that carried this emotion. */
+  done: number;
+  /** Total action items across entries that carried this emotion. */
+  total: number;
+}
+
 export interface JournalDigest {
   /** ISO date string of the earliest day in the window (YYYY-MM-DD). */
   sinceDate: string;
@@ -251,6 +259,12 @@ export interface JournalDigest {
   actionsDone: number;
   /** Sum of still-open action items in the window. */
   actionsOpen: number;
+  /** Action-item completion rate grouped by the parent entry's emotion.
+   * The MVP behavioral-activation signal: "when you felt anxious, you
+   * shipped 2 of 5; when you felt clear, 4 of 4." Sorted by total desc
+   * then alphabetical so the highest-volume emotion leads. Only emotions
+   * that produced at least one action item are included. */
+  completionByEmotion: EmotionCompletion[];
 }
 
 /**
@@ -280,6 +294,11 @@ export async function getJournalDigest(
 
   const themeCounts = new Map<string, number>();
   const emotionCounts = new Map<string, number>();
+  // Per-emotion action completion: emotion → { done, total }. Only filled
+  // when an entry both has an emotion label AND has at least one action
+  // item; emotions without action items don't move the behavioral-activation
+  // needle and would just inflate the "no signal" rows.
+  const byEmotion = new Map<string, { done: number; total: number }>();
   let actionsDone = 0;
   let actionsOpen = 0;
 
@@ -291,9 +310,20 @@ export async function getJournalDigest(
       emotionCounts.set(row.emotion, (emotionCounts.get(row.emotion) ?? 0) + 1);
     }
     const items = decodeActionItems(row.actionItems);
+    let entryDone = 0;
+    let entryTotal = 0;
     for (const it of items) {
       if (it.completed) actionsDone += 1;
       else actionsOpen += 1;
+      entryTotal += 1;
+      if (it.completed) entryDone += 1;
+    }
+    if (row.emotion && entryTotal > 0) {
+      const prev = byEmotion.get(row.emotion) ?? { done: 0, total: 0 };
+      byEmotion.set(row.emotion, {
+        done: prev.done + entryDone,
+        total: prev.total + entryTotal,
+      });
     }
   }
 
@@ -308,6 +338,10 @@ export async function getJournalDigest(
     totalEntries: rows.length,
     topThemes: toTop(themeCounts),
     topEmotions: toTop(emotionCounts),
+    completionByEmotion: Array.from(byEmotion.entries())
+      .map(([emotion, v]) => ({ emotion, done: v.done, total: v.total }))
+      .sort((a, b) => (b.total - a.total) || a.emotion.localeCompare(b.emotion))
+      .slice(0, 4),
     actionsDone,
     actionsOpen,
   };

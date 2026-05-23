@@ -7,6 +7,7 @@ export interface JournalDigestLite {
   topEmotions: { name: string; count: number }[];
   actionsDone: number;
   actionsOpen: number;
+  completionByEmotion: { emotion: string; done: number; total: number }[];
 }
 
 interface Props {
@@ -87,6 +88,36 @@ export function JournalDigestWidget({ digest, days }: Props) {
               .join(', ')}
           </span>
         </p>
+      ) : null}
+
+      {/* Behavioral activation insight — per-emotion completion. Only
+        * renders when there's at least one emotion bucket with action
+        * items; "when you felt anxious, 2 of 5 done" is the readable
+        * form. Capped to the top 3 in the list to keep it scannable. */}
+      {digest.completionByEmotion.length > 0 ? (
+        <div className="border-border/60 space-y-1 border-t pt-3">
+          <p className="text-muted-foreground text-[10px] font-semibold uppercase tracking-wider">
+            {t('completionByEmotionTitle')}
+          </p>
+          <ul className="space-y-0.5 text-[12px]">
+            {digest.completionByEmotion.slice(0, 3).map((row) => {
+              const pct = row.total > 0 ? Math.round((row.done / row.total) * 100) : 0;
+              return (
+                <li
+                  key={row.emotion}
+                  className="text-muted-foreground flex items-center justify-between gap-2"
+                >
+                  <span className="capitalize">
+                    {t('completionByEmotionRow', { emotion: row.emotion })}
+                  </span>
+                  <span className="tabular-nums">
+                    {row.done}/{row.total} · {pct}%
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       ) : null}
     </section>
   );

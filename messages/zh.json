@@ -774,6 +774,8 @@
     "actionsLabel": "已完成的 action item",
     "xTimes": "{count, plural, =1 {1×} other {#×}}",
     "actionsSub": "{total} 个中的 {done} 个",
-    "alsoThemes": "也出现了："
+    "alsoThemes": "也出现了：",
+    "completionByEmotionTitle": "当你是这种情绪时，这样去执行：",
+    "completionByEmotionRow": "当你正处于{emotion}的时候"
   }
 }

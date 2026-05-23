@@ -774,6 +774,8 @@
     "actionsLabel": "Action items done",
     "xTimes": "{count, plural, =1 {1×} other {#×}}",
     "actionsSub": "{done} of {total}",
-    "alsoThemes": "Also showing up:"
+    "alsoThemes": "Also showing up:",
+    "completionByEmotionTitle": "When you're feeling this way, here's how to execute:",
+    "completionByEmotionRow": "When you're feeling {emotion}"
   }
 }

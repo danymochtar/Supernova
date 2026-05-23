@@ -774,6 +774,8 @@
     "actionsLabel": "Action item siap",
     "xTimes": "{count, plural, =1 {1×} other {#×}}",
     "actionsSub": "{done} daripada {total}",
-    "alsoThemes": "Turut muncul:"
+    "alsoThemes": "Turut muncul:",
+    "completionByEmotionTitle": "Bila emosinya macam ni, eksekusinya:",
+    "completionByEmotionRow": "Bila kamu tengah {emotion}"
   }
 }
