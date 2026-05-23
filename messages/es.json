@@ -313,7 +313,8 @@
     "noEntriesThisMonth": "Aún no hay entradas este mes.",
     "entryCount": "{count, plural, =0 {sin entradas} =1 {1 entrada} other {# entradas}}",
     "reframeTitle": "Reflexión Supernova",
-    "actionItemsTitle": "Lo que puedes hacer"
+    "actionItemsTitle": "Lo que puedes hacer",
+    "addToCalendar": "Añádelo al calendario"
   },
   "feedback": {
     "title": "¿Cómo va tu día?",
@@ -762,7 +763,8 @@
     "markDone": "Marcar como hecho",
     "today": "Hoy",
     "yesterday": "Ayer",
-    "daysAgo": "hace {count} días"
+    "daysAgo": "hace {count} días",
+    "addToCalendar": "Añádelo al calendario"
   },
   "digest": {
     "title": "Patrón de los últimos {days} días",

@@ -3,7 +3,7 @@
 import { useOptimistic, useTransition } from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { ArrowRight, Check, ListTodo } from 'lucide-react';
+import { ArrowRight, CalendarPlus, Check, ListTodo } from 'lucide-react';
 import type { Locale } from '@/lib/i18n/config';
 import type { ToggleActionItemResult } from '@/app/[locale]/journal/actions';
 
@@ -114,6 +114,15 @@ export function FollowUpWidget({ locale, items, toggleAction }: Props) {
               </div>
               <ArrowRight className="text-muted-foreground mt-1 h-3.5 w-3.5 shrink-0" aria-hidden />
             </Link>
+            <a
+              href={`/api/journal/ics?entryId=${item.entryId}&itemId=${item.id}`}
+              download
+              aria-label={t('addToCalendar')}
+              title={t('addToCalendar')}
+              className="press-soft text-muted-foreground hover:text-primary hover:bg-muted/40 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg transition-colors"
+            >
+              <CalendarPlus className="h-3.5 w-3.5" aria-hidden />
+            </a>
           </li>
         ))}
       </ul>

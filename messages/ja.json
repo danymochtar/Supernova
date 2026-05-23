@@ -313,7 +313,8 @@
     "noEntriesThisMonth": "今月はまだエントリーがないみたい。",
     "entryCount": "{count, plural, =0 {エントリーなし} =1 {1件のエントリー} other {#件のエントリー}}",
     "reframeTitle": "Supernovaのリフレクション",
-    "actionItemsTitle": "あなたにできること"
+    "actionItemsTitle": "あなたにできること",
+    "addToCalendar": "カレンダーに追加"
   },
   "feedback": {
     "title": "今日はどんな一日だった？",
@@ -762,7 +763,8 @@
     "markDone": "完了にする",
     "today": "今日",
     "yesterday": "昨日",
-    "daysAgo": "{count}日前"
+    "daysAgo": "{count}日前",
+    "addToCalendar": "カレンダーに追加"
   },
   "digest": {
     "title": "過去{days}日間のパターン",

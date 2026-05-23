@@ -148,6 +148,7 @@ export function JournalView({ locale, entries, deleteAction, toggleAction }: Pro
     sources: t('sourcesToggle'),
     reframeTitle: t('reframeTitle'),
     actionItemsTitle: t('actionItemsTitle'),
+    addToCalendar: t('addToCalendar'),
   };
 
   return (
@@ -305,6 +306,7 @@ function ListView({
     sources: string;
     reframeTitle: string;
     actionItemsTitle: string;
+    addToCalendar: string;
   };
 }) {
   // Same per-day grouping the original page rendered, just inside the

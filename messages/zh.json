@@ -313,7 +313,8 @@
     "noEntriesThisMonth": "这个月还没有任何条目。",
     "entryCount": "{count, plural, =0 {没有条目} =1 {1 条条目} other {# 条条目}}",
     "reframeTitle": "Supernova 反思",
-    "actionItemsTitle": "你可以做的事"
+    "actionItemsTitle": "你可以做的事",
+    "addToCalendar": "添加到日历"
   },
   "feedback": {
     "title": "你今天过得怎么样？",
@@ -762,7 +763,8 @@
     "markDone": "标记为已完成",
     "today": "今天",
     "yesterday": "昨天",
-    "daysAgo": "{count} 天前"
+    "daysAgo": "{count} 天前",
+    "addToCalendar": "添加到日历"
   },
   "digest": {
     "title": "最近 {days} 天的模式",

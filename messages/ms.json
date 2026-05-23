@@ -313,7 +313,8 @@
     "noEntriesThisMonth": "Belum ada entri bulan ni.",
     "entryCount": "{count, plural, =0 {tiada entri} =1 {1 entri} other {# entri}}",
     "reframeTitle": "Refleksi Supernova",
-    "actionItemsTitle": "Yang boleh kamu lakukan"
+    "actionItemsTitle": "Yang boleh kamu lakukan",
+    "addToCalendar": "Tambah ke kalendar"
   },
   "feedback": {
     "title": "Macam mana hari kamu?",
@@ -762,7 +763,8 @@
     "markDone": "Tanda selesai",
     "today": "Hari ini",
     "yesterday": "Semalam",
-    "daysAgo": "{count} hari lalu"
+    "daysAgo": "{count} hari lalu",
+    "addToCalendar": "Tambah ke kalendar"
   },
   "digest": {
     "title": "Pola {days} hari terakhir",

@@ -313,7 +313,8 @@
     "noEntriesThisMonth": "No entries this month yet.",
     "entryCount": "{count, plural, =0 {no entries} =1 {1 entry} other {# entries}}",
     "reframeTitle": "Supernova Reflection",
-    "actionItemsTitle": "What you can do"
+    "actionItemsTitle": "What you can do",
+    "addToCalendar": "Add to calendar"
   },
   "feedback": {
     "title": "How was your day?",
@@ -762,7 +763,8 @@
     "markDone": "Mark as done",
     "today": "Today",
     "yesterday": "Yesterday",
-    "daysAgo": "{count} days ago"
+    "daysAgo": "{count} days ago",
+    "addToCalendar": "Add to calendar"
   },
   "digest": {
     "title": "Last {days}-day pattern",

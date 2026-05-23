@@ -313,7 +313,8 @@
     "noEntriesThisMonth": "لا توجد إدخالات في هذا الشهر بعد.",
     "entryCount": "{count, plural, =0 {لا توجد إدخالات} =1 {إدخال واحد} =2 {إدخالان} few {# إدخالات} many {# إدخالاً} other {# إدخال}}",
     "reframeTitle": "تأمّلات Supernova",
-    "actionItemsTitle": "ما يمكنك فعله"
+    "actionItemsTitle": "ما يمكنك فعله",
+    "addToCalendar": "أضِفه إلى التقويم"
   },
   "feedback": {
     "title": "كيف كان يومك؟",
@@ -762,7 +763,8 @@
     "markDone": "وضع علامة \"تم\"",
     "today": "اليوم",
     "yesterday": "أمس",
-    "daysAgo": "قبل {count} يوم"
+    "daysAgo": "قبل {count} يوم",
+    "addToCalendar": "أضِفه إلى التقويم"
   },
   "digest": {
     "title": "نمط آخر {days} يوم",

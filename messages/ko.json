@@ -313,7 +313,8 @@
     "noEntriesThisMonth": "이번 달에는 아직 기록이 없어요.",
     "entryCount": "{count, plural, =0 {기록 없음} =1 {기록 1개} other {기록 #개}}",
     "reframeTitle": "Supernova 회고",
-    "actionItemsTitle": "당신이 할 수 있는 것"
+    "actionItemsTitle": "당신이 할 수 있는 것",
+    "addToCalendar": "캘린더에 추가하기"
   },
   "feedback": {
     "title": "오늘 하루는 어땠어요?",
@@ -762,7 +763,8 @@
     "markDone": "완료 표시하기",
     "today": "오늘",
     "yesterday": "어제",
-    "daysAgo": "{count}일 전"
+    "daysAgo": "{count}일 전",
+    "addToCalendar": "캘린더에 추가하기"
   },
   "digest": {
     "title": "최근 {days}일 패턴",

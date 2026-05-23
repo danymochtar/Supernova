@@ -1,7 +1,7 @@
 'use client';
 
 import { useOptimistic, useState, useTransition } from 'react';
-import { Check, ChevronDown, Sparkles, Trash2 } from 'lucide-react';
+import { CalendarPlus, Check, ChevronDown, Sparkles, Trash2 } from 'lucide-react';
 import type {
   DeleteJournalResult,
   ToggleActionItemResult,
@@ -41,6 +41,7 @@ interface Props {
     sources: string;
     reframeTitle: string;
     actionItemsTitle: string;
+    addToCalendar: string;
   };
 }
 
@@ -147,13 +148,13 @@ export function JournalEntryCard({
           </p>
           <ul className="space-y-1.5">
             {items.map((item) => (
-              <li key={item.id}>
+              <li key={item.id} className="-mx-2 flex items-start gap-1">
                 <button
                   type="button"
                   onClick={() => onToggle(item.id, item.completed)}
                   disabled={pending}
                   aria-pressed={item.completed}
-                  className="press-soft hover:bg-muted/40 -mx-2 flex w-full items-start gap-2.5 rounded-lg px-2 py-1.5 text-left text-sm leading-snug transition-colors"
+                  className="press-soft hover:bg-muted/40 flex flex-1 items-start gap-2.5 rounded-lg px-2 py-1.5 text-left text-sm leading-snug transition-colors"
                 >
                   <span
                     aria-hidden
@@ -176,6 +177,22 @@ export function JournalEntryCard({
                     {item.title}
                   </span>
                 </button>
+                {item.completed ? null : (
+                  // <a> with download attribute kicks the .ics file straight
+                  // into the device's calendar handler. On iOS Safari that's
+                  // Apple Calendar's "Add Event" sheet; on desktop Chrome it
+                  // downloads the file which the user opens in their default
+                  // calendar.
+                  <a
+                    href={`/api/journal/ics?entryId=${id}&itemId=${item.id}`}
+                    download
+                    aria-label={labels.addToCalendar}
+                    title={labels.addToCalendar}
+                    className="press-soft text-muted-foreground hover:text-primary hover:bg-muted/40 mt-0.5 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg transition-colors"
+                  >
+                    <CalendarPlus className="h-3.5 w-3.5" aria-hidden />
+                  </a>
+                )}
               </li>
             ))}
           </ul>
