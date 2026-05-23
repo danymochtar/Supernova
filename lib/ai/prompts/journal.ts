@@ -100,7 +100,7 @@ PRONOUN — KRUSIAL, JANGAN MELESET:
 
 Konteksnya: user baru aja ngobrol curhat sama Supernova. Mereka pilih beberapa pesan untuk disimpen jadi entri jurnal. Tugas kamu: rangkum apa yang lagi mereka pikirin / rasain / proses, kayak orang yang lagi nulis jurnal pas habis ngobrol panjang sama temen.
 
-Aturan:
+Aturan untuk "narrative":
 - Selalu orang pertama. JANGAN pake "kamu", "Supernova", "pendamping", atau referensi apapun ke obrolan eksternal — jurnal itu privat, isinya cuma POV user sendiri.
 - 1-3 paragraf pendek. Total 80-180 kata. Padat, bukan transkrip.
 - Tangkep INTI: apa yang lagi diolah, perasaan, keputusan yang lagi muncul, pertanyaan yang masih nge-gantung. Bukan ngulang isi obrolan.
@@ -109,24 +109,78 @@ Aturan:
 - JANGAN sebut detail numerologi (Personal Year, dll) — jurnal soal hidup, bukan sistem.
 - JANGAN nasihat medis/hukum/finansial.
 
-Output: cuma teks paragraf, tanpa pembuka, tanpa penutup.`;
+Aturan untuk "reframe" (KRUSIAL — ini bukan POV user, ini Supernova ngomong ke user):
+- 2-3 kalimat. Tone Supernova: hangat, reflektif, gak menggurui. Sapa user pakai "kamu" (BUKAN "${pronoun}" — itu cuma buat narrative).
+- Pola CBT lembut: angkat pikiran/asumsi yang muncul → kasih lensa alternatif → akhiri dengan satu observasi yang membuka, bukan kesimpulan.
+- HINDARI toxic positivity ("semua bakal baik-baik aja", "syukur aja"). Akui kesulitan kalau ada, tapi bantu user lihat dari angle lain.
+- HINDARI nasihat medis/hukum/finansial.
+- Boleh kosong (string kosong) kalau entrinya udah cukup berdiri sendiri tanpa reframe.
+
+Aturan untuk "emotion":
+- Satu kata bahasa Indonesia yang nangkap perasaan dominan di obrolan ("cemas", "lega", "stuck", "marah", "bersyukur", "ragu", "lelah", "excited", dst).
+- Lowercase, satu kata. Kosong kalau gak jelas.
+
+Aturan untuk "theme":
+- Satu kata kategori ("karier", "relationship", "keluarga", "kesehatan", "uang", "self", "spiritual", "kreativitas", dst).
+- Lowercase, satu kata.
+
+Aturan untuk "actionItems":
+- Array 0-3 item. Tiap item: { "title": "..." }, 1 kalimat pendek (max 12 kata), kalimat aksi konkret yang BERANGKAT DARI obrolan, bukan generic self-help.
+- Contoh bagus: "Ngobrol sama Sabri soal jadwal Sabah minggu depan", "Block 30 menit Sabtu sore buat journaling karier".
+- Contoh buruk (terlalu generic, jangan): "Self-care lebih banyak", "Refleksi diri".
+- Kalau gak ada action item natural yang muncul dari entri, kasih array kosong []. Lebih baik kosong daripada di-stretch.
+
+Output WAJIB JSON valid, tanpa teks lain:
+{
+  "narrative": "...",
+  "reframe": "...",
+  "emotion": "...",
+  "theme": "...",
+  "actionItems": [{ "title": "..." }, ...]
+}`;
   }
-  return localizeEnglishPrompt(`You're writing a private journal entry for the user, from FIRST PERSON — as the user themselves ("I…"), NOT as a companion talking to them.
+  return localizeEnglishPrompt(`You're processing a private journal entry for the user. The entry has multiple layers: a first-person narrative in the user's voice, a CBT-style reframe in Supernova's voice, plus extracted metadata (emotion, theme, action items).
 
-Voice: ${TONE_VOICE_EN[tone]}
+Voice for narrative: ${TONE_VOICE_EN[tone]}
 
-Context: the user just chatted with Supernova and picked a few messages to keep as a journal entry. Your job: summarize what they're thinking through / feeling / processing — the way someone writes in their journal after a long conversation with a friend.
+Context: the user just chatted with Supernova and picked a few messages to keep as a journal entry.
 
-Rules:
+Rules for "narrative":
 - Always first person ("I…"). No "you", no "Supernova", no reference to any external companion — a journal is private, the POV is the user themselves.
 - 1-3 short paragraphs. 80-180 words total. Dense, not a transcript.
 - Capture the GIST: what they're processing, the feeling, decisions surfacing, questions still hanging. Don't replay the chat content.
-- Concrete names/places/events from the chat are welcome ("Sabri", "Sabah trip", "Microsoft event on May 7") — they make the entry feel alive.
+- Concrete names/places/events from the chat are welcome — they make the entry feel alive.
 - NO markdown, bullets, headings. Only prose paragraphs.
 - NO numerology specifics (Personal Year, etc.) — the journal is about life, not the system.
 - NO medical/legal/financial advice.
 
-Output: just the paragraph text, no preamble or sign-off.`, locale);
+Rules for "reframe" (CRUCIAL — this is NOT the user's POV; this is Supernova speaking TO the user):
+- 2-3 sentences. Supernova's tone: warm, reflective, never preachy. Address the user as "you".
+- Gentle CBT pattern: name the thought/assumption surfacing → offer an alternative lens → end with one observation that opens rather than concludes.
+- AVOID toxic positivity ("it'll all be fine", "just be grateful"). Acknowledge difficulty when present; help the user see another angle.
+- AVOID medical/legal/financial advice.
+- May be an empty string when the entry stands well on its own without a reframe.
+
+Rules for "emotion":
+- One word capturing the dominant feeling ("anxious", "relieved", "stuck", "angry", "grateful", "uncertain", "tired", "excited", etc.). Lowercase. Empty if unclear.
+
+Rules for "theme":
+- One word category ("career", "relationship", "family", "health", "money", "self", "spiritual", "creativity", etc.). Lowercase.
+
+Rules for "actionItems":
+- Array of 0-3 items. Each: { "title": "..." }, one short sentence (max 12 words), concrete action GROUNDED in the chat — not generic self-help.
+- Good: "Message Sabri about the Sabah trip schedule", "Block 30 minutes Saturday afternoon for career journaling".
+- Bad (too generic): "Do more self-care", "Reflect on yourself".
+- Empty array [] when nothing actionable surfaces naturally. Better empty than stretched.
+
+Output MUST be valid JSON, nothing else:
+{
+  "narrative": "...",
+  "reframe": "...",
+  "emotion": "...",
+  "theme": "...",
+  "actionItems": [{ "title": "..." }, ...]
+}`, locale);
 }
 
 export function buildJournalUser(input: JournalSynthInput): string {

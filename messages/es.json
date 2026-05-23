@@ -311,7 +311,9 @@
     "nextMonth": "Mes siguiente",
     "selectDayHint": "Toca una fecha con punto para ver la entrada.",
     "noEntriesThisMonth": "Aún no hay entradas este mes.",
-    "entryCount": "{count, plural, =0 {sin entradas} =1 {1 entrada} other {# entradas}}"
+    "entryCount": "{count, plural, =0 {sin entradas} =1 {1 entrada} other {# entradas}}",
+    "reframeTitle": "Reflexión Supernova",
+    "actionItemsTitle": "Lo que puedes hacer"
   },
   "feedback": {
     "title": "¿Cómo va tu día?",

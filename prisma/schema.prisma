@@ -351,6 +351,22 @@ model JournalEntry {
   rangeEnd   DateTime
   // Optional extra note the user adds when journaling (future use).
   note       String?
+  // CBT-style 2-3 sentence gentle reframe of what came up in the entry,
+  // generated alongside the narrative. Voiced as Supernova (not the user)
+  // — contrasts the first-person narrative above so the user sees both
+  // "what I'm processing" and "how it looks from outside".
+  reframe    String?
+  // Primary emotion label ("anxious", "grateful", "stuck", etc.) extracted
+  // by the AI. Used for pattern surfacing across entries.
+  emotion    String?
+  // Primary theme label ("work", "relationship", "health", "family", etc.).
+  theme      String?
+  // Action items extracted from the entry. JSON array of:
+  //   { id, title, completed, completedAt?, createdAt }
+  // Each item is a concrete, achievable thing the user can do. Stored
+  // inline because they're tightly coupled to the entry and the MVP
+  // doesn't need to query across all open items yet.
+  actionItems Json     @default("[]")
   addedAt    DateTime @default(now())
 
   @@index([userId, addedAt(sort: Desc)])

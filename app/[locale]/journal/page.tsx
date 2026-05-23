@@ -7,7 +7,7 @@ import { listJournal } from '@/lib/db/repositories/journal';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getLocaleConfig } from '@/lib/i18n/locales';
 import { JournalView, type JournalEntryLite } from '@/components/journal/JournalView';
-import { deleteJournalAction } from './actions';
+import { deleteJournalAction, toggleActionItemAction } from './actions';
 
 export const dynamic = 'force-dynamic';
 
@@ -37,6 +37,14 @@ export default async function JournalPage({ params }: { params: { locale: string
     return {
       id: e.id,
       narrative: e.narrative,
+      reframe: e.reframe,
+      emotion: e.emotion,
+      theme: e.theme,
+      actionItems: e.actionItems.map((it) => ({
+        id: it.id,
+        title: it.title,
+        completed: it.completed,
+      })),
       sources: e.sources.map((s) => ({ question: s.question, answer: s.answer })),
       dayKey: range.toISOString().slice(0, 10),
       year: range.getUTCFullYear(),
@@ -72,7 +80,12 @@ export default async function JournalPage({ params }: { params: { locale: string
           </Link>
         </section>
       ) : (
-        <JournalView locale={locale} entries={lite} deleteAction={deleteJournalAction} />
+        <JournalView
+          locale={locale}
+          entries={lite}
+          deleteAction={deleteJournalAction}
+          toggleAction={toggleActionItemAction}
+        />
       )}
     </main>
   );

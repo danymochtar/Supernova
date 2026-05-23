@@ -311,7 +311,9 @@
     "nextMonth": "다음 달",
     "selectDayHint": "점이 있는 날짜를 탭하면 기록을 볼 수 있어요.",
     "noEntriesThisMonth": "이번 달에는 아직 기록이 없어요.",
-    "entryCount": "{count, plural, =0 {기록 없음} =1 {기록 1개} other {기록 #개}}"
+    "entryCount": "{count, plural, =0 {기록 없음} =1 {기록 1개} other {기록 #개}}",
+    "reframeTitle": "Supernova 회고",
+    "actionItemsTitle": "당신이 할 수 있는 것"
   },
   "feedback": {
     "title": "오늘 하루는 어땠어요?",

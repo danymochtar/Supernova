@@ -5,8 +5,14 @@ import { useTranslations } from 'next-intl';
 import { CalendarDays, ChevronLeft, ChevronRight, List } from 'lucide-react';
 import type { Locale } from '@/lib/i18n/config';
 import { getLocaleConfig } from '@/lib/i18n/locales';
-import type { DeleteJournalResult } from '@/app/[locale]/journal/actions';
-import { JournalEntryCard } from '@/components/journal/JournalEntryCard';
+import type {
+  DeleteJournalResult,
+  ToggleActionItemResult,
+} from '@/app/[locale]/journal/actions';
+import {
+  JournalEntryCard,
+  type JournalActionItemLite,
+} from '@/components/journal/JournalEntryCard';
 
 interface EntrySourceLite {
   question: string;
@@ -16,6 +22,10 @@ interface EntrySourceLite {
 export interface JournalEntryLite {
   id: string;
   narrative: string;
+  reframe: string | null;
+  emotion: string | null;
+  theme: string | null;
+  actionItems: JournalActionItemLite[];
   sources: EntrySourceLite[];
   /** ISO date string in UTC (yyyy-mm-dd) — pre-computed server-side so
    * the client doesn't have to redo timezone math per entry. */
@@ -37,6 +47,11 @@ interface Props {
   locale: Locale;
   entries: JournalEntryLite[];
   deleteAction: (input: { id: string }) => Promise<DeleteJournalResult>;
+  toggleAction: (input: {
+    entryId: string;
+    itemId: string;
+    completed: boolean;
+  }) => Promise<ToggleActionItemResult>;
 }
 
 type ViewMode = 'calendar' | 'list';
@@ -51,7 +66,7 @@ function firstDow(year: number, month: number): number {
   return (sun0 + 6) % 7;
 }
 
-export function JournalView({ locale, entries, deleteAction }: Props) {
+export function JournalView({ locale, entries, deleteAction, toggleAction }: Props) {
   const t = useTranslations('journal');
   const [mode, setMode] = useState<ViewMode>('calendar');
 
@@ -131,6 +146,8 @@ export function JournalView({ locale, entries, deleteAction }: Props) {
     addedAt: t('addedAt'),
     delete: t('delete'),
     sources: t('sourcesToggle'),
+    reframeTitle: t('reframeTitle'),
+    actionItemsTitle: t('actionItemsTitle'),
   };
 
   return (
@@ -246,9 +263,14 @@ export function JournalView({ locale, entries, deleteAction }: Props) {
                   key={entry.id}
                   id={entry.id}
                   narrative={entry.narrative}
+                  reframe={entry.reframe}
+                  emotion={entry.emotion}
+                  theme={entry.theme}
+                  actionItems={entry.actionItems}
                   sources={entry.sources}
                   addedDate={entry.addedLabel}
                   deleteAction={deleteAction}
+                  toggleAction={toggleAction}
                   labels={entryLabels}
                 />
               ))}
@@ -262,7 +284,7 @@ export function JournalView({ locale, entries, deleteAction }: Props) {
           )}
         </div>
       ) : (
-        <ListView entries={entries} deleteAction={deleteAction} labels={entryLabels} />
+        <ListView entries={entries} deleteAction={deleteAction} toggleAction={toggleAction} labels={entryLabels} />
       )}
     </div>
   );
@@ -271,11 +293,19 @@ export function JournalView({ locale, entries, deleteAction }: Props) {
 function ListView({
   entries,
   deleteAction,
+  toggleAction,
   labels,
 }: {
   entries: JournalEntryLite[];
   deleteAction: Props['deleteAction'];
-  labels: { addedAt: string; delete: string; sources: string };
+  toggleAction: Props['toggleAction'];
+  labels: {
+    addedAt: string;
+    delete: string;
+    sources: string;
+    reframeTitle: string;
+    actionItemsTitle: string;
+  };
 }) {
   // Same per-day grouping the original page rendered, just inside the
   // client-side mode switch.
@@ -301,9 +331,14 @@ function ListView({
               key={entry.id}
               id={entry.id}
               narrative={entry.narrative}
+              reframe={entry.reframe}
+              emotion={entry.emotion}
+              theme={entry.theme}
+              actionItems={entry.actionItems}
               sources={entry.sources}
               addedDate={entry.addedLabel}
               deleteAction={deleteAction}
+              toggleAction={toggleAction}
               labels={labels}
             />
           ))}

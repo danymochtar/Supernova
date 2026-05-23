@@ -6,6 +6,8 @@ import { getSession } from '@/lib/auth/requireSession';
 import {
   createJournalEntry,
   deleteJournalEntry,
+  toggleActionItem,
+  type JournalActionItem,
   type JournalSourceSnapshot,
 } from '@/lib/db/repositories/journal';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
@@ -113,6 +115,10 @@ export async function addToJournalAction(input: { turnIds: string[] }): Promise<
       sources,
       rangeStart: rows[0]!.createdAt,
       rangeEnd: rows[rows.length - 1]!.createdAt,
+      reframe: synth.reframe || null,
+      emotion: synth.emotion || null,
+      theme: synth.theme || null,
+      actionItemDrafts: synth.actionItems,
     });
     revalidatePath('/[locale]/journal', 'page');
     return { ok: true, added: 1, skipped: 0 };
@@ -130,4 +136,31 @@ export async function deleteJournalAction(input: { id: string }): Promise<Delete
   const ok = await deleteJournalEntry(session.user.id, input.id);
   if (ok) revalidatePath('/[locale]/journal', 'page');
   return { ok };
+}
+
+export type ToggleActionItemResult =
+  | { ok: true; item: JournalActionItem }
+  | { ok: false; error: 'unauth' | 'not_found' };
+
+/**
+ * Toggle a single action item's completed state inside a journal entry.
+ * Repo-side scoped by (entryId, userId) so passing a leaked entryId
+ * from another user returns not_found.
+ */
+export async function toggleActionItemAction(input: {
+  entryId: string;
+  itemId: string;
+  completed: boolean;
+}): Promise<ToggleActionItemResult> {
+  const session = await getSession();
+  if (!session) return { ok: false, error: 'unauth' };
+  const item = await toggleActionItem(
+    session.user.id,
+    input.entryId,
+    input.itemId,
+    input.completed,
+  );
+  if (!item) return { ok: false, error: 'not_found' };
+  revalidatePath('/[locale]/journal', 'page');
+  return { ok: true, item };
 }

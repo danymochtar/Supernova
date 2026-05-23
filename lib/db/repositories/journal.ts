@@ -1,4 +1,5 @@
 import type { JournalEntry, Prisma } from '@prisma/client';
+import { randomUUID } from 'crypto';
 import { prisma } from '@/lib/db/prisma';
 
 export interface JournalSourceSnapshot {
@@ -6,6 +7,17 @@ export interface JournalSourceSnapshot {
   question: string;
   answer: string;
   createdAt: string; // ISO
+}
+
+export interface JournalActionItem {
+  /** Stable id so the client can toggle a specific item. cuid-style. */
+  id: string;
+  title: string;
+  completed: boolean;
+  /** ISO timestamp set when the user marks the item done. Null otherwise. */
+  completedAt: string | null;
+  /** ISO of when the AI extracted the item. */
+  createdAt: string;
 }
 
 export interface JournalEntryView {
@@ -16,29 +28,55 @@ export interface JournalEntryView {
   rangeStart: Date;
   rangeEnd: Date;
   note: string | null;
+  reframe: string | null;
+  emotion: string | null;
+  theme: string | null;
+  actionItems: JournalActionItem[];
   addedAt: Date;
 }
 
+function decodeSources(v: Prisma.JsonValue): JournalSourceSnapshot[] {
+  if (!Array.isArray(v)) return [];
+  return (v as unknown as JournalSourceSnapshot[]).filter(
+    (s): s is JournalSourceSnapshot =>
+      !!s &&
+      typeof s === 'object' &&
+      typeof s.turnId === 'string' &&
+      typeof s.question === 'string' &&
+      typeof s.answer === 'string',
+  );
+}
+
+function decodeActionItems(v: Prisma.JsonValue): JournalActionItem[] {
+  if (!Array.isArray(v)) return [];
+  return (v as unknown as Partial<JournalActionItem>[])
+    .map((it): JournalActionItem | null => {
+      if (!it || typeof it !== 'object') return null;
+      if (typeof it.id !== 'string' || typeof it.title !== 'string') return null;
+      return {
+        id: it.id,
+        title: it.title,
+        completed: Boolean(it.completed),
+        completedAt: typeof it.completedAt === 'string' ? it.completedAt : null,
+        createdAt: typeof it.createdAt === 'string' ? it.createdAt : new Date().toISOString(),
+      };
+    })
+    .filter((it): it is JournalActionItem => it !== null);
+}
+
 function toView(row: JournalEntry): JournalEntryView {
-  // Prisma types `sources` as Prisma.JsonValue. Decode permissively.
-  const sources: JournalSourceSnapshot[] = Array.isArray(row.sources)
-    ? (row.sources as unknown as JournalSourceSnapshot[]).filter(
-        (s): s is JournalSourceSnapshot =>
-          !!s &&
-          typeof s === 'object' &&
-          typeof s.turnId === 'string' &&
-          typeof s.question === 'string' &&
-          typeof s.answer === 'string',
-      )
-    : [];
   return {
     id: row.id,
     userId: row.userId,
     narrative: row.narrative,
-    sources,
+    sources: decodeSources(row.sources),
     rangeStart: row.rangeStart,
     rangeEnd: row.rangeEnd,
     note: row.note,
+    reframe: row.reframe,
+    emotion: row.emotion,
+    theme: row.theme,
+    actionItems: decodeActionItems(row.actionItems),
     addedAt: row.addedAt,
   };
 }
@@ -49,9 +87,23 @@ export interface CreateJournalInput {
   sources: JournalSourceSnapshot[];
   rangeStart: Date;
   rangeEnd: Date;
+  reframe?: string | null;
+  emotion?: string | null;
+  theme?: string | null;
+  /** Raw action item drafts from the AI; the repo assigns ids + timestamps. */
+  actionItemDrafts?: Array<{ title: string }>;
 }
 
 export async function createJournalEntry(input: CreateJournalInput): Promise<JournalEntryView> {
+  const now = new Date().toISOString();
+  const items: JournalActionItem[] = (input.actionItemDrafts ?? []).map((d) => ({
+    id: randomUUID(),
+    title: d.title,
+    completed: false,
+    completedAt: null,
+    createdAt: now,
+  }));
+
   const row = await prisma.journalEntry.create({
     data: {
       userId: input.userId,
@@ -59,6 +111,10 @@ export async function createJournalEntry(input: CreateJournalInput): Promise<Jou
       sources: input.sources as unknown as Prisma.InputJsonValue,
       rangeStart: input.rangeStart,
       rangeEnd: input.rangeEnd,
+      reframe: input.reframe?.trim() || null,
+      emotion: input.emotion?.trim() || null,
+      theme: input.theme?.trim() || null,
+      actionItems: items as unknown as Prisma.InputJsonValue,
     },
   });
   return toView(row);
@@ -76,4 +132,37 @@ export async function listJournal(userId: string, limit = 200): Promise<JournalE
 export async function deleteJournalEntry(userId: string, id: string): Promise<boolean> {
   const result = await prisma.journalEntry.deleteMany({ where: { id, userId } });
   return result.count > 0;
+}
+
+/**
+ * Flip an action item's completed state inside a specific journal entry.
+ * Scoped by (entryId, userId) so a stray caller can't mutate another
+ * user's items. Returns the updated item, or null if entry/item not
+ * found.
+ */
+export async function toggleActionItem(
+  userId: string,
+  entryId: string,
+  itemId: string,
+  completed: boolean,
+): Promise<JournalActionItem | null> {
+  const row = await prisma.journalEntry.findFirst({
+    where: { id: entryId, userId },
+    select: { actionItems: true },
+  });
+  if (!row) return null;
+  const items = decodeActionItems(row.actionItems);
+  const idx = items.findIndex((it) => it.id === itemId);
+  if (idx < 0) return null;
+  const now = new Date().toISOString();
+  items[idx] = {
+    ...items[idx]!,
+    completed,
+    completedAt: completed ? now : null,
+  };
+  await prisma.journalEntry.updateMany({
+    where: { id: entryId, userId },
+    data: { actionItems: items as unknown as Prisma.InputJsonValue },
+  });
+  return items[idx]!;
 }

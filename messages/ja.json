@@ -311,7 +311,9 @@
     "nextMonth": "次の月",
     "selectDayHint": "ドットがある日付をタップすると、エントリーが見られるよ。",
     "noEntriesThisMonth": "今月はまだエントリーがないみたい。",
-    "entryCount": "{count, plural, =0 {エントリーなし} =1 {1件のエントリー} other {#件のエントリー}}"
+    "entryCount": "{count, plural, =0 {エントリーなし} =1 {1件のエントリー} other {#件のエントリー}}",
+    "reframeTitle": "Supernovaのリフレクション",
+    "actionItemsTitle": "あなたにできること"
   },
   "feedback": {
     "title": "今日はどんな一日だった？",

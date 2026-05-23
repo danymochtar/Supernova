@@ -311,7 +311,9 @@
     "nextMonth": "Bulan berikutnya",
     "selectDayHint": "Tap tanggal yang ada titik buat lihat entri.",
     "noEntriesThisMonth": "Belum ada entri di bulan ini.",
-    "entryCount": "{count, plural, =0 {tidak ada entri} =1 {1 entri} other {# entri}}"
+    "entryCount": "{count, plural, =0 {tidak ada entri} =1 {1 entri} other {# entri}}",
+    "reframeTitle": "Refleksi Supernova",
+    "actionItemsTitle": "Yang bisa kamu lakuin"
   },
   "feedback": {
     "title": "Bagaimana hari kamu?",

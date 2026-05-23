@@ -311,7 +311,9 @@
     "nextMonth": "Next month",
     "selectDayHint": "Tap a dotted date to see the entry.",
     "noEntriesThisMonth": "No entries this month yet.",
-    "entryCount": "{count, plural, =0 {no entries} =1 {1 entry} other {# entries}}"
+    "entryCount": "{count, plural, =0 {no entries} =1 {1 entry} other {# entries}}",
+    "reframeTitle": "Supernova Reflection",
+    "actionItemsTitle": "What you can do"
   },
   "feedback": {
     "title": "How was your day?",

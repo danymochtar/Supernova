@@ -311,7 +311,9 @@
     "nextMonth": "下个月",
     "selectDayHint": "点一下有圆点的日期看看条目。",
     "noEntriesThisMonth": "这个月还没有任何条目。",
-    "entryCount": "{count, plural, =0 {没有条目} =1 {1 条条目} other {# 条条目}}"
+    "entryCount": "{count, plural, =0 {没有条目} =1 {1 条条目} other {# 条条目}}",
+    "reframeTitle": "Supernova 反思",
+    "actionItemsTitle": "你可以做的事"
   },
   "feedback": {
     "title": "你今天过得怎么样？",

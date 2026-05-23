@@ -311,7 +311,9 @@
     "nextMonth": "الشهر التالي",
     "selectDayHint": "اضغط على التاريخ الذي عليه نقطة لرؤية الإدخال.",
     "noEntriesThisMonth": "لا توجد إدخالات في هذا الشهر بعد.",
-    "entryCount": "{count, plural, =0 {لا توجد إدخالات} =1 {إدخال واحد} =2 {إدخالان} few {# إدخالات} many {# إدخالاً} other {# إدخال}}"
+    "entryCount": "{count, plural, =0 {لا توجد إدخالات} =1 {إدخال واحد} =2 {إدخالان} few {# إدخالات} many {# إدخالاً} other {# إدخال}}",
+    "reframeTitle": "تأمّلات Supernova",
+    "actionItemsTitle": "ما يمكنك فعله"
   },
   "feedback": {
     "title": "كيف كان يومك؟",

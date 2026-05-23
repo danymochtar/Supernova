@@ -1,8 +1,11 @@
 'use client';
 
-import { useState, useTransition } from 'react';
-import { ChevronDown, Trash2 } from 'lucide-react';
-import type { DeleteJournalResult } from '@/app/[locale]/journal/actions';
+import { useOptimistic, useState, useTransition } from 'react';
+import { Check, ChevronDown, Sparkles, Trash2 } from 'lucide-react';
+import type {
+  DeleteJournalResult,
+  ToggleActionItemResult,
+} from '@/app/[locale]/journal/actions';
 import { renderInlineMd } from '@/components/qa/inlineMd';
 
 interface SourceLite {
@@ -10,34 +13,73 @@ interface SourceLite {
   answer: string;
 }
 
+export interface JournalActionItemLite {
+  id: string;
+  title: string;
+  completed: boolean;
+}
+
 interface Props {
   id: string;
   narrative: string;
+  reframe?: string | null;
+  emotion?: string | null;
+  theme?: string | null;
+  actionItems?: JournalActionItemLite[];
   sources: SourceLite[];
   /** When the user journaled this entry — different from the chat date. */
   addedDate: string;
   deleteAction: (input: { id: string }) => Promise<DeleteJournalResult>;
+  toggleAction: (input: {
+    entryId: string;
+    itemId: string;
+    completed: boolean;
+  }) => Promise<ToggleActionItemResult>;
   labels: {
     addedAt: string;
     delete: string;
     sources: string;
+    reframeTitle: string;
+    actionItemsTitle: string;
   };
 }
 
 export function JournalEntryCard({
   id,
   narrative,
+  reframe,
+  emotion,
+  theme,
+  actionItems = [],
   sources,
   addedDate,
   deleteAction,
+  toggleAction,
   labels,
 }: Props) {
   const [pending, startTransition] = useTransition();
   const [showSources, setShowSources] = useState(false);
 
+  // Optimistic completed-state so the checkbox flips instantly on tap;
+  // the server action reconciles afterwards.
+  const [items, setOptimisticItems] = useOptimistic(
+    actionItems,
+    (state: JournalActionItemLite[], action: { itemId: string; completed: boolean }) =>
+      state.map((it) =>
+        it.id === action.itemId ? { ...it, completed: action.completed } : it,
+      ),
+  );
+
   function onDelete() {
     startTransition(async () => {
       await deleteAction({ id });
+    });
+  }
+
+  function onToggle(itemId: string, current: boolean) {
+    startTransition(async () => {
+      setOptimisticItems({ itemId, completed: !current });
+      await toggleAction({ entryId: id, itemId, completed: !current });
     });
   }
 
@@ -47,21 +89,35 @@ export function JournalEntryCard({
     .filter(Boolean);
 
   return (
-    <article className="border-border group relative space-y-3 rounded-2xl border bg-surface-1 p-5">
+    <article className="border-border group relative space-y-4 rounded-2xl border bg-surface-1 p-5">
       <button
         type="button"
         onClick={onDelete}
         disabled={pending}
         aria-label={labels.delete}
         title={labels.delete}
-        // Always visible at low opacity on touch — no hover state on
-        // mobile, so the hover-only pattern hid the delete affordance
-        // entirely. Hover/active still brighten it.
         className="press-soft text-muted-foreground hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 absolute right-3 top-3 rounded-full p-1.5 opacity-40 transition group-hover:opacity-100 disabled:opacity-20"
       >
         <Trash2 className="h-3.5 w-3.5" aria-hidden />
       </button>
 
+      {/* Emotion + theme chips — silent metadata, surfaces patterns over time */}
+      {(emotion || theme) ? (
+        <div className="flex flex-wrap gap-1.5">
+          {emotion ? (
+            <span className="bg-fill-1 text-muted-foreground rounded-full px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider">
+              {emotion}
+            </span>
+          ) : null}
+          {theme ? (
+            <span className="bg-fill-2 text-muted-foreground rounded-full px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider">
+              {theme}
+            </span>
+          ) : null}
+        </div>
+      ) : null}
+
+      {/* First-person narrative — user's voice */}
       <div className="font-serif space-y-3 pr-8 text-[15px] leading-relaxed text-neutral-800 dark:text-neutral-200">
         {paragraphs.length > 0 ? (
           paragraphs.map((p, i) => <p key={i}>{renderInlineMd(p)}</p>)
@@ -69,6 +125,62 @@ export function JournalEntryCard({
           <p className="text-muted-foreground italic">…</p>
         )}
       </div>
+
+      {/* Reframe — Supernova's voice, gentle CBT-style alternative lens */}
+      {reframe ? (
+        <div className="border-accent/40 bg-accent/5 dark:bg-accent/10 space-y-1.5 rounded-xl border-l-[3px] px-4 py-3">
+          <div className="text-accent-foreground/70 flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.18em]">
+            <Sparkles className="h-3 w-3" aria-hidden />
+            {labels.reframeTitle}
+          </div>
+          <p className="text-[14px] leading-relaxed italic text-neutral-700 dark:text-neutral-300">
+            {renderInlineMd(reframe)}
+          </p>
+        </div>
+      ) : null}
+
+      {/* Action items — checklist, optimistic toggle */}
+      {items.length > 0 ? (
+        <div className="space-y-2">
+          <p className="text-muted-foreground text-[10px] font-semibold uppercase tracking-[0.18em]">
+            {labels.actionItemsTitle}
+          </p>
+          <ul className="space-y-1.5">
+            {items.map((item) => (
+              <li key={item.id}>
+                <button
+                  type="button"
+                  onClick={() => onToggle(item.id, item.completed)}
+                  disabled={pending}
+                  aria-pressed={item.completed}
+                  className="press-soft hover:bg-muted/40 -mx-2 flex w-full items-start gap-2.5 rounded-lg px-2 py-1.5 text-left text-sm leading-snug transition-colors"
+                >
+                  <span
+                    aria-hidden
+                    className={
+                      'mt-0.5 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded border transition-colors ' +
+                      (item.completed
+                        ? 'bg-primary border-primary text-primary-foreground'
+                        : 'border-border bg-surface-2')
+                    }
+                  >
+                    {item.completed ? <Check className="h-3 w-3" aria-hidden /> : null}
+                  </span>
+                  <span
+                    className={
+                      item.completed
+                        ? 'text-muted-foreground line-through'
+                        : 'text-neutral-800 dark:text-neutral-200'
+                    }
+                  >
+                    {item.title}
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
 
       <div className="flex items-center justify-between gap-3">
         <p className="text-muted-foreground text-[11px]">
