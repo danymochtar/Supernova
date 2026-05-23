@@ -304,7 +304,14 @@
     "emptyCta": "話すを開く",
     "addedAt": "保存済み",
     "delete": "ジャーナルから削除",
-    "sourcesToggle": "元の会話を見る"
+    "sourcesToggle": "元の会話を見る",
+    "viewCalendar": "カレンダー",
+    "viewList": "リスト",
+    "prevMonth": "前の月",
+    "nextMonth": "次の月",
+    "selectDayHint": "ドットがある日付をタップすると、エントリーが見られるよ。",
+    "noEntriesThisMonth": "今月はまだエントリーがないみたい。",
+    "entryCount": "{count, plural, =0 {エントリーなし} =1 {1件のエントリー} other {#件のエントリー}}"
   },
   "feedback": {
     "title": "今日はどんな一日だった？",

@@ -304,7 +304,14 @@
     "emptyCta": "Abrir Curhat",
     "addedAt": "Guardado",
     "delete": "Eliminar del Diario",
-    "sourcesToggle": "Ver conversación original"
+    "sourcesToggle": "Ver conversación original",
+    "viewCalendar": "Calendario",
+    "viewList": "Lista",
+    "prevMonth": "Mes anterior",
+    "nextMonth": "Mes siguiente",
+    "selectDayHint": "Toca una fecha con punto para ver la entrada.",
+    "noEntriesThisMonth": "Aún no hay entradas este mes.",
+    "entryCount": "{count, plural, =0 {sin entradas} =1 {1 entrada} other {# entradas}}"
   },
   "feedback": {
     "title": "¿Cómo va tu día?",

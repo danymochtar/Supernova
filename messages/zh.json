@@ -304,7 +304,14 @@
     "emptyCta": "去聊聊",
     "addedAt": "已保存",
     "delete": "从日记中删除",
-    "sourcesToggle": "查看原始对话"
+    "sourcesToggle": "查看原始对话",
+    "viewCalendar": "日历",
+    "viewList": "列表",
+    "prevMonth": "上个月",
+    "nextMonth": "下个月",
+    "selectDayHint": "点一下有圆点的日期看看条目。",
+    "noEntriesThisMonth": "这个月还没有任何条目。",
+    "entryCount": "{count, plural, =0 {没有条目} =1 {1 条条目} other {# 条条目}}"
   },
   "feedback": {
     "title": "你今天过得怎么样？",

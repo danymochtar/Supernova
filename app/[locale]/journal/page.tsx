@@ -5,20 +5,11 @@ import { BookOpen, MessageCircle } from 'lucide-react';
 import { getSession } from '@/lib/auth/requireSession';
 import { listJournal } from '@/lib/db/repositories/journal';
 import { isLocale, type Locale } from '@/lib/i18n/config';
-import { JournalEntryCard } from '@/components/journal/JournalEntryCard';
+import { getLocaleConfig } from '@/lib/i18n/locales';
+import { JournalView, type JournalEntryLite } from '@/components/journal/JournalView';
 import { deleteJournalAction } from './actions';
 
 export const dynamic = 'force-dynamic';
-
-const LONG_DAY_ID = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-const LONG_MONTH_ID = [
-  'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-  'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',
-];
-
-function formatDayId(d: Date): string {
-  return `${LONG_DAY_ID[d.getUTCDay()]}, ${d.getUTCDate()} ${LONG_MONTH_ID[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
-}
 
 export default async function JournalPage({ params }: { params: { locale: string } }) {
   const locale: Locale = isLocale(params.locale) ? params.locale : 'id';
@@ -29,19 +20,32 @@ export default async function JournalPage({ params }: { params: { locale: string
 
   const entries = await listJournal(session.user.id, 200);
 
-  // Group entries by the chat-day they came from (rangeStart day in UTC).
-  // Within a group keep journaling order — most-recently-added first.
-  type Entry = (typeof entries)[number];
-  const groups = new Map<string, Entry[]>();
-  for (const e of entries) {
-    const key = e.rangeStart.toISOString().slice(0, 10);
-    const arr = groups.get(key);
-    if (arr) arr.push(e);
-    else groups.set(key, [e]);
-  }
-  const orderedGroups = Array.from(groups.entries()).sort(([a], [b]) =>
-    a < b ? 1 : a > b ? -1 : 0,
-  );
+  // Pre-format the locale-aware date strings server-side so the client
+  // component can stay focused on layout + interactions and doesn't have
+  // to ship the Intl bundles itself.
+  const intlTag = getLocaleConfig(locale).intlTag;
+  const groupFmt = new Intl.DateTimeFormat(intlTag, {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
+  const lite: JournalEntryLite[] = entries.map((e) => {
+    const range = e.rangeStart;
+    const added = e.addedAt;
+    return {
+      id: e.id,
+      narrative: e.narrative,
+      sources: e.sources.map((s) => ({ question: s.question, answer: s.answer })),
+      dayKey: range.toISOString().slice(0, 10),
+      year: range.getUTCFullYear(),
+      month: range.getUTCMonth() + 1,
+      day: range.getUTCDate(),
+      addedLabel: groupFmt.format(added),
+      groupLabel: groupFmt.format(range),
+    };
+  });
 
   return (
     <main
@@ -68,33 +72,7 @@ export default async function JournalPage({ params }: { params: { locale: string
           </Link>
         </section>
       ) : (
-        <div className="space-y-8">
-          {orderedGroups.map(([dayKey, dayEntries]) => {
-            const groupDate = formatDayId(dayEntries[0]!.rangeStart);
-            return (
-              <section key={dayKey} className="space-y-3">
-                <p className="text-muted-foreground px-1 text-[11px] font-semibold uppercase tracking-[0.18em]">
-                  {groupDate}
-                </p>
-                {dayEntries.map((entry) => (
-                  <JournalEntryCard
-                    key={entry.id}
-                    id={entry.id}
-                    narrative={entry.narrative}
-                    sources={entry.sources.map((s) => ({ question: s.question, answer: s.answer }))}
-                    addedDate={formatDayId(entry.addedAt)}
-                    deleteAction={deleteJournalAction}
-                    labels={{
-                      addedAt: t('addedAt'),
-                      delete: t('delete'),
-                      sources: t('sourcesToggle'),
-                    }}
-                  />
-                ))}
-              </section>
-            );
-          })}
-        </div>
+        <JournalView locale={locale} entries={lite} deleteAction={deleteJournalAction} />
       )}
     </main>
   );
