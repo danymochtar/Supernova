@@ -763,5 +763,15 @@
     "today": "Hoy",
     "yesterday": "Ayer",
     "daysAgo": "hace {count} días"
+  },
+  "digest": {
+    "title": "Patrón de los últimos {days} días",
+    "subtitle": "{count, plural, =0 {Aún sin entradas} =1 {1 entrada registrada} other {# entradas registradas}}",
+    "topTheme": "Tema dominante",
+    "topEmotion": "Emoción dominante",
+    "actionsLabel": "Action items completados",
+    "xTimes": "{count, plural, =1 {1×} other {#×}}",
+    "actionsSub": "{done} de {total}",
+    "alsoThemes": "También aparece:"
   }
 }

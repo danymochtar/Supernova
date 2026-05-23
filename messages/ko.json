@@ -763,5 +763,15 @@
     "today": "오늘",
     "yesterday": "어제",
     "daysAgo": "{count}일 전"
+  },
+  "digest": {
+    "title": "최근 {days}일 패턴",
+    "subtitle": "{count, plural, =0 {아직 기록된 항목이 없어요} =1 {1개의 항목이 기록됨} other {#개의 항목이 기록됨}}",
+    "topTheme": "주요 테마",
+    "topEmotion": "주요 감정",
+    "actionsLabel": "완료된 action item",
+    "xTimes": "{count, plural, =1 {1회} other {#회}}",
+    "actionsSub": "{total}개 중 {done}개",
+    "alsoThemes": "함께 나타난 것들:"
   }
 }

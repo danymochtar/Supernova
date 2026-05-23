@@ -763,5 +763,15 @@
     "today": "Hari ini",
     "yesterday": "Semalam",
     "daysAgo": "{count} hari lalu"
+  },
+  "digest": {
+    "title": "Pola {days} hari terakhir",
+    "subtitle": "{count, plural, =0 {Belum ada entri} =1 {1 entri direkodkan} other {# entri direkodkan}}",
+    "topTheme": "Tema dominan",
+    "topEmotion": "Emosi dominan",
+    "actionsLabel": "Action item siap",
+    "xTimes": "{count, plural, =1 {1×} other {#×}}",
+    "actionsSub": "{done} daripada {total}",
+    "alsoThemes": "Turut muncul:"
   }
 }

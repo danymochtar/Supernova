@@ -230,3 +230,85 @@ export async function listOpenActionItems(
   }
   return out;
 }
+
+export interface DigestCount {
+  /** The label as stored on JournalEntry — lowercase, single word. */
+  name: string;
+  /** How many entries in the window carried this label. */
+  count: number;
+}
+
+export interface JournalDigest {
+  /** ISO date string of the earliest day in the window (YYYY-MM-DD). */
+  sinceDate: string;
+  /** Total entries in the window. */
+  totalEntries: number;
+  /** Top 3 themes by count, ties broken alphabetically. */
+  topThemes: DigestCount[];
+  /** Top 3 emotions by count, ties broken alphabetically. */
+  topEmotions: DigestCount[];
+  /** Sum of completed action items in the window. */
+  actionsDone: number;
+  /** Sum of still-open action items in the window. */
+  actionsOpen: number;
+}
+
+/**
+ * Deterministic weekly-ish snapshot of the user's journal activity.
+ * Reads the `emotion` / `theme` columns + the actionItems JSON for
+ * entries added in the last `sinceDays` days and rolls them into
+ * counts + action-completion stats. No AI — fast and predictable so
+ * the dashboard widget can paint instantly.
+ *
+ * Returns null when there's nothing to summarize (no entries in the
+ * window) so the caller can hide the widget cleanly.
+ */
+export async function getJournalDigest(
+  userId: string,
+  sinceDays = 7,
+): Promise<JournalDigest | null> {
+  const since = new Date();
+  since.setUTCDate(since.getUTCDate() - sinceDays);
+
+  const rows = await prisma.journalEntry.findMany({
+    where: { userId, addedAt: { gte: since } },
+    orderBy: { addedAt: 'desc' },
+    select: { emotion: true, theme: true, actionItems: true },
+  });
+
+  if (rows.length === 0) return null;
+
+  const themeCounts = new Map<string, number>();
+  const emotionCounts = new Map<string, number>();
+  let actionsDone = 0;
+  let actionsOpen = 0;
+
+  for (const row of rows) {
+    if (row.theme) {
+      themeCounts.set(row.theme, (themeCounts.get(row.theme) ?? 0) + 1);
+    }
+    if (row.emotion) {
+      emotionCounts.set(row.emotion, (emotionCounts.get(row.emotion) ?? 0) + 1);
+    }
+    const items = decodeActionItems(row.actionItems);
+    for (const it of items) {
+      if (it.completed) actionsDone += 1;
+      else actionsOpen += 1;
+    }
+  }
+
+  const toTop = (m: Map<string, number>): DigestCount[] =>
+    Array.from(m.entries())
+      .map(([name, count]) => ({ name, count }))
+      .sort((a, b) => (b.count - a.count) || a.name.localeCompare(b.name))
+      .slice(0, 3);
+
+  return {
+    sinceDate: since.toISOString().slice(0, 10),
+    totalEntries: rows.length,
+    topThemes: toTop(themeCounts),
+    topEmotions: toTop(emotionCounts),
+    actionsDone,
+    actionsOpen,
+  };
+}

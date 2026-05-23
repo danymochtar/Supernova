@@ -110,6 +110,16 @@
     "yesterday": "Kemarin",
     "daysAgo": "{count} hari lalu"
   },
+  "digest": {
+    "title": "Pola {days} hari terakhir",
+    "subtitle": "{count, plural, =0 {Belum ada entri} =1 {1 entri tercatat} other {# entri tercatat}}",
+    "topTheme": "Tema dominan",
+    "topEmotion": "Emosi dominan",
+    "actionsLabel": "Action item kelar",
+    "xTimes": "{count, plural, =1 {1×} other {#×}}",
+    "actionsSub": "{done} dari {total}",
+    "alsoThemes": "Juga muncul:"
+  },
   "home": {
     "eyebrow": "Pendamping numerologi",
     "title": "Numerologi yang nyambung sama hidupmu",

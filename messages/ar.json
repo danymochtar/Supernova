@@ -763,5 +763,15 @@
     "today": "اليوم",
     "yesterday": "أمس",
     "daysAgo": "قبل {count} يوم"
+  },
+  "digest": {
+    "title": "نمط آخر {days} يوم",
+    "subtitle": "{count, plural, =0 {لا توجد إدخالات بعد} =1 {تم تسجيل إدخال واحد} other {تم تسجيل # إدخال}}",
+    "topTheme": "الموضوع المهيمن",
+    "topEmotion": "المشاعر المهيمنة",
+    "actionsLabel": "Action item منجزة",
+    "xTimes": "{count, plural, =1 {1×} other {#×}}",
+    "actionsSub": "{done} من {total}",
+    "alsoThemes": "ظهر أيضًا:"
   }
 }

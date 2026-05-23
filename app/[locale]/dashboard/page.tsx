@@ -26,16 +26,22 @@ import { getTurnsBetween } from '@/lib/db/repositories/qa';
 import { meaningFor } from '@/lib/numerology/meanings';
 import { getOrGenerateDailyReading } from '@/lib/ai/dailyReading';
 import { submitFeedback } from './feedbackActions';
-import { listOpenActionItems } from '@/lib/db/repositories/journal';
+import { getJournalDigest, listOpenActionItems } from '@/lib/db/repositories/journal';
 import { FollowUpWidget, type OpenActionItemLite } from '@/components/journal/FollowUpWidget';
+import {
+  JournalDigestWidget,
+  type JournalDigestLite,
+} from '@/components/journal/JournalDigestWidget';
 import { toggleActionItemAction } from '@/app/[locale]/journal/actions';
 
-type WidgetId = 'reading' | 'followUp' | 'aboutMe' | 'karmic' | 'feedback';
+type WidgetId = 'reading' | 'followUp' | 'digest' | 'aboutMe' | 'karmic' | 'feedback';
 
 // Fixed dashboard widget order. Follow-up surfaces right after the day's
 // reading — once the user has read the morning summary, the next-most-
 // actionable item is their pending commitments from past journal entries.
-const WIDGET_ORDER: WidgetId[] = ['reading', 'followUp', 'aboutMe', 'karmic', 'feedback'];
+// The weekly digest sits below: zoomed-out picture (last 7d themes +
+// emotions + action completion) right after the granular action list.
+const WIDGET_ORDER: WidgetId[] = ['reading', 'followUp', 'digest', 'aboutMe', 'karmic', 'feedback'];
 
 const LONG_DAY_ID = ['MINGGU', 'SENIN', 'SELASA', 'RABU', 'KAMIS', 'JUMAT', 'SABTU'];
 const LONG_MONTH_ID = [
@@ -156,6 +162,24 @@ export default async function DashboardPage({
     !isPreview ? listOpenActionItems(session.user.id, 14, 5) : Promise.resolve([]),
   ]);
 
+  // Weekly digest — separate await because it's not on the page's critical
+  // path (suppressed when <3 entries) and lets the cold-cache widget fall
+  // through quickly when there's nothing to show.
+  const DIGEST_DAYS = 7;
+  const digestRaw = !isPreview
+    ? await getJournalDigest(session.user.id, DIGEST_DAYS)
+    : null;
+  const digest: JournalDigestLite | null =
+    digestRaw && digestRaw.totalEntries >= 3
+      ? {
+          totalEntries: digestRaw.totalEntries,
+          topThemes: digestRaw.topThemes,
+          topEmotions: digestRaw.topEmotions,
+          actionsDone: digestRaw.actionsDone,
+          actionsOpen: digestRaw.actionsOpen,
+        }
+      : null;
+
   // Project to the widget's shape — pre-compute days-ago so the client
   // doesn't have to redo the date math per render.
   const followUpItems: OpenActionItemLite[] = openActionItems.map((it) => {
@@ -247,6 +271,10 @@ export default async function DashboardPage({
             toggleAction={toggleActionItemAction}
           />
         );
+      case 'digest':
+        return digest ? (
+          <JournalDigestWidget key={id} digest={digest} days={DIGEST_DAYS} />
+        ) : null;
       case 'feedback':
         return showFeedbackPrompt ? (
           <FeedbackPrompt

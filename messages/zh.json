@@ -763,5 +763,15 @@
     "today": "今天",
     "yesterday": "昨天",
     "daysAgo": "{count} 天前"
+  },
+  "digest": {
+    "title": "最近 {days} 天的模式",
+    "subtitle": "{count, plural, =0 {还没有记录} =1 {1 条记录} other {# 条记录}}",
+    "topTheme": "主导主题",
+    "topEmotion": "主导情绪",
+    "actionsLabel": "已完成的 action item",
+    "xTimes": "{count, plural, =1 {1×} other {#×}}",
+    "actionsSub": "{total} 个中的 {done} 个",
+    "alsoThemes": "也出现了："
   }
 }
