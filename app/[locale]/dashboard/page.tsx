@@ -26,12 +26,16 @@ import { getTurnsBetween } from '@/lib/db/repositories/qa';
 import { meaningFor } from '@/lib/numerology/meanings';
 import { getOrGenerateDailyReading } from '@/lib/ai/dailyReading';
 import { submitFeedback } from './feedbackActions';
+import { listOpenActionItems } from '@/lib/db/repositories/journal';
+import { FollowUpWidget, type OpenActionItemLite } from '@/components/journal/FollowUpWidget';
+import { toggleActionItemAction } from '@/app/[locale]/journal/actions';
 
-type WidgetId = 'reading' | 'aboutMe' | 'karmic' | 'feedback';
+type WidgetId = 'reading' | 'followUp' | 'aboutMe' | 'karmic' | 'feedback';
 
-// Fixed dashboard widget order. The end-of-day feedback prompt sits last so
-// the more reference-heavy About Me + Karmic blocks aren't pushed down by it.
-const WIDGET_ORDER: WidgetId[] = ['reading', 'aboutMe', 'karmic', 'feedback'];
+// Fixed dashboard widget order. Follow-up surfaces right after the day's
+// reading — once the user has read the morning summary, the next-most-
+// actionable item is their pending commitments from past journal entries.
+const WIDGET_ORDER: WidgetId[] = ['reading', 'followUp', 'aboutMe', 'karmic', 'feedback'];
 
 const LONG_DAY_ID = ['MINGGU', 'SENIN', 'SELASA', 'RABU', 'KAMIS', 'JUMAT', 'SABTU'];
 const LONG_MONTH_ID = [
@@ -138,7 +142,7 @@ export default async function DashboardPage({
   // Daily reading + day-bound DB queries — these block the page render
   // because the reading is the lede. AboutMe is split into its own
   // Suspense boundary below so the reading paints first.
-  const [readingBody, todayFeedback, todaysChatTurns] = await Promise.all([
+  const [readingBody, todayFeedback, todaysChatTurns, openActionItems] = await Promise.all([
     getOrGenerateDailyReading(session.user.id, profile, isPreview ? { targetCtx: ctx } : undefined),
     !isPreview
       ? getFeedbackForLocalDay(session.user.id, today.year, today.month, today.day)
@@ -146,7 +150,27 @@ export default async function DashboardPage({
     !isPreview
       ? getTurnsBetween(session.user.id, todayStart, todayEnd)
       : Promise.resolve([] as Awaited<ReturnType<typeof getTurnsBetween>>),
+    // Follow-up widget data: open action items from the last 14 days,
+    // capped at 5. Suppressed on date-preview pages — the loop-back only
+    // makes sense in real time, not when browsing future-day readings.
+    !isPreview ? listOpenActionItems(session.user.id, 14, 5) : Promise.resolve([]),
   ]);
+
+  // Project to the widget's shape — pre-compute days-ago so the client
+  // doesn't have to redo the date math per render.
+  const followUpItems: OpenActionItemLite[] = openActionItems.map((it) => {
+    const ms = Date.now() - it.entryAddedAt.getTime();
+    const daysAgo = Math.max(0, Math.floor(ms / 86_400_000));
+    return {
+      id: it.id,
+      title: it.title,
+      entryId: it.entryId,
+      entryAddedAt: it.entryAddedAt.toISOString(),
+      entryEmotion: it.entryEmotion,
+      entryTheme: it.entryTheme,
+      daysAgo,
+    };
+  });
 
   // AboutMe AI input — passed to <AboutMeAsync> inside <Suspense>. Cache
   // hits resolve instantly; cold cache streams behind the skeleton.
@@ -212,6 +236,15 @@ export default async function DashboardPage({
               affirmation: tReading('affirmation'),
               fallback: tReading('fallback'),
             }}
+          />
+        );
+      case 'followUp':
+        return (
+          <FollowUpWidget
+            key={id}
+            locale={locale}
+            items={followUpItems}
+            toggleAction={toggleActionItemAction}
           />
         );
       case 'feedback':

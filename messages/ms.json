@@ -755,5 +755,13 @@
     "title": "Konsep numerologi",
     "subtitle": "Penjelasan lengkap setiap istilah yang muncul di Supernova — supaya tak keliru.",
     "footer": "Numerologi adalah alat refleksi, bukan ramalan. Guna sebagai kompas untuk kenal diri lebih dalam."
+  },
+  "followUp": {
+    "title": "Follow-up dari jurnal",
+    "subtitle": "Yang kamu cakap nak buat — masih tersangkut?",
+    "markDone": "Tanda selesai",
+    "today": "Hari ini",
+    "yesterday": "Semalam",
+    "daysAgo": "{count} hari lalu"
   }
 }

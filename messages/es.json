@@ -755,5 +755,13 @@
     "title": "Conceptos de numerología",
     "subtitle": "Explicación completa de cada término que aparece en Supernova — para que no te pierdas.",
     "footer": "La numerología es una herramienta de reflexión, no una predicción. Úsala como brújula para conocerte más a fondo."
+  },
+  "followUp": {
+    "title": "Follow-up del journal",
+    "subtitle": "Eso que dijiste que ibas a hacer — ¿sigue pendiente?",
+    "markDone": "Marcar como hecho",
+    "today": "Hoy",
+    "yesterday": "Ayer",
+    "daysAgo": "hace {count} días"
   }
 }

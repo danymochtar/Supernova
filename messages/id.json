@@ -102,6 +102,14 @@
     "aboutMe": "Tentang kamu",
     "karmic": "Karmic Lessons"
   },
+  "followUp": {
+    "title": "Follow-up dari jurnal",
+    "subtitle": "Yang lo bilang mau lakuin — masih nyangkut?",
+    "markDone": "Tandai selesai",
+    "today": "Hari ini",
+    "yesterday": "Kemarin",
+    "daysAgo": "{count} hari lalu"
+  },
   "home": {
     "eyebrow": "Pendamping numerologi",
     "title": "Numerologi yang nyambung sama hidupmu",

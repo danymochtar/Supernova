@@ -755,5 +755,13 @@
     "title": "Numerology 개념",
     "subtitle": "Supernova에 나오는 모든 용어를 자세히 설명해드려요 — 더 이상 헷갈리지 않게요.",
     "footer": "Numerology는 예언이 아니라 자기 성찰 도구예요. 자신을 더 깊이 알아가는 나침반으로 활용해보세요."
+  },
+  "followUp": {
+    "title": "저널 후속 체크인",
+    "subtitle": "하겠다고 했던 그거 — 아직 마음에 걸려 있나요?",
+    "markDone": "완료 표시하기",
+    "today": "오늘",
+    "yesterday": "어제",
+    "daysAgo": "{count}일 전"
   }
 }

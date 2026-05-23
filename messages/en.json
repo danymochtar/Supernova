@@ -755,5 +755,13 @@
     "title": "Numerology concepts",
     "subtitle": "Plain-language explanations of every term that shows up in Supernova — so nothing feels opaque.",
     "footer": "Numerology is a tool for reflection, not prediction. Use it as a compass to know yourself more deeply."
+  },
+  "followUp": {
+    "title": "Journal follow-up",
+    "subtitle": "That thing you said you'd do — still on your mind?",
+    "markDone": "Mark as done",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "daysAgo": "{count} days ago"
   }
 }

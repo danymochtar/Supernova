@@ -166,3 +166,67 @@ export async function toggleActionItem(
   });
   return items[idx]!;
 }
+
+export interface OpenActionItem {
+  /** The action item itself. */
+  id: string;
+  title: string;
+  createdAt: string;
+  /** Parent entry context — gives the widget a tap-target back to the
+   * full journal entry + a few cues for the "X days ago" line. */
+  entryId: string;
+  entryAddedAt: Date;
+  entryEmotion: string | null;
+  entryTheme: string | null;
+}
+
+/**
+ * Flat list of UNCOMPLETED action items from journal entries added in the
+ * last `sinceDays` days. Sorted by entry recency — newest entries first —
+ * so the dashboard "follow-up" widget surfaces the most relevant pending
+ * commitments. Capped at `maxItems` across all entries.
+ *
+ * We filter actionItems in JS (it's a JSON column) rather than via a JSON
+ * path query — the entry set is small (a few weeks of entries), keeps the
+ * query simple, and lets the dashboard render the same shape regardless
+ * of how Postgres indexes the JSON.
+ */
+export async function listOpenActionItems(
+  userId: string,
+  sinceDays = 14,
+  maxItems = 5,
+): Promise<OpenActionItem[]> {
+  const since = new Date();
+  since.setUTCDate(since.getUTCDate() - sinceDays);
+
+  const rows = await prisma.journalEntry.findMany({
+    where: { userId, addedAt: { gte: since } },
+    orderBy: { addedAt: 'desc' },
+    select: {
+      id: true,
+      addedAt: true,
+      emotion: true,
+      theme: true,
+      actionItems: true,
+    },
+  });
+
+  const out: OpenActionItem[] = [];
+  for (const row of rows) {
+    const items = decodeActionItems(row.actionItems);
+    for (const it of items) {
+      if (it.completed) continue;
+      out.push({
+        id: it.id,
+        title: it.title,
+        createdAt: it.createdAt,
+        entryId: row.id,
+        entryAddedAt: row.addedAt,
+        entryEmotion: row.emotion,
+        entryTheme: row.theme,
+      });
+      if (out.length >= maxItems) return out;
+    }
+  }
+  return out;
+}
