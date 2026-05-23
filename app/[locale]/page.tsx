@@ -3,22 +3,27 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import {
   ArrowRight,
-  BookOpen,
+  Briefcase,
   Compass,
   Heart,
-  MessageCircle,
   Sparkles,
+  Sun,
+  User,
 } from 'lucide-react';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { notFound } from 'next/navigation';
 import { Starfield } from '@/components/layout/Starfield';
 
-const FEATURES = [
-  { key: 'daily', icon: Sparkles },
-  { key: 'chat', icon: MessageCircle },
+// Supernova as a persona — six life aspects she helps with. Order is
+// intentional: life (broad) → journey (time) → career (output) →
+// personal (inward) → relationships (outward) → reflection (loop).
+const ASPECTS = [
+  { key: 'life', icon: Sun },
   { key: 'journey', icon: Compass },
-  { key: 'people', icon: Heart },
-  { key: 'journal', icon: BookOpen },
+  { key: 'career', icon: Briefcase },
+  { key: 'personal', icon: User },
+  { key: 'relationships', icon: Heart },
+  { key: 'reflection', icon: Sparkles },
 ] as const;
 
 export default function HomePage({ params }: { params: { locale: string } }) {
@@ -79,7 +84,7 @@ export default function HomePage({ params }: { params: { locale: string } }) {
           </p>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
-          {FEATURES.map(({ key, icon: Icon }) => (
+          {ASPECTS.map(({ key, icon: Icon }) => (
             <article
               key={key}
               className="border-border rounded-2xl border bg-surface-1 p-5"
@@ -88,10 +93,10 @@ export default function HomePage({ params }: { params: { locale: string } }) {
                 <Icon className="h-5 w-5" aria-hidden />
               </div>
               <h3 className="mb-1 text-base font-semibold">
-                {t(`feature_${key}_title`)}
+                {t(`aspect_${key}_title`)}
               </h3>
               <p className="text-muted-foreground text-sm leading-relaxed">
-                {t(`feature_${key}_body`)}
+                {t(`aspect_${key}_body`)}
               </p>
             </article>
           ))}
