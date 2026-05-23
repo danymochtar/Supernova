@@ -2,6 +2,7 @@ import type { Locale } from '@/lib/i18n/config';
 import { listPeople } from '@/lib/db/repositories/person';
 import { getReadingForLocalDay } from '@/lib/db/repositories/reading';
 import { getRecentFeedback } from '@/lib/db/repositories/feedback';
+import { listOpenActionItems } from '@/lib/db/repositories/journal';
 import { aggregate, promptSummary } from '@/lib/patterns/aggregate';
 import {
   ageAt,
@@ -55,6 +56,11 @@ export interface SmartContext {
   reading?: string;
   /** Only present when the question asks about patterns / mood / habits. */
   patterns?: string;
+  /** Stale open action items from past journal entries — items where the
+   * user wrote down an intention 3+ days ago and hasn't checked it off.
+   * Surfaced to the model so it can naturally follow up, without the user
+   * having to remember to ask. */
+  followUps?: string;
   /** What was loaded — surfaced in dev logs for debugging. */
   loaded: string[];
 }
@@ -123,12 +129,16 @@ today's cycles: Personal Year=${r(cycles.personalYear)}, Personal Month=${r(cycl
   const since = new Date(Date.UTC(ctx.year, ctx.month - 1, ctx.day));
   since.setUTCDate(since.getUTCDate() - 30);
 
-  const [people, reading, feedback] = await Promise.all([
+  const [people, reading, feedback, openActionItems] = await Promise.all([
     listPeople(userId),
     wantReading ? getReadingForLocalDay(userId, ctx.year, ctx.month, ctx.day) : Promise.resolve(null),
     wantPatterns
       ? getRecentFeedback(userId, since)
       : Promise.resolve([] as Awaited<ReturnType<typeof getRecentFeedback>>),
+    // Always pulled — the model is told to follow up sparingly (and only
+    // when natural), but it needs to KNOW the items exist. Cheap query;
+    // most users have 0-5 open items at any given time.
+    listOpenActionItems(userId, 14, 5),
   ]);
 
   if (people.length > 0) {
@@ -171,6 +181,33 @@ today's cycles: Personal Year=${r(cycles.personalYear)}, Personal Month=${r(cycl
       result.patterns = text;
       loaded.push('patterns');
     }
+  }
+
+  // Stale follow-ups: action items the user wrote down 3+ days ago and
+  // hasn't completed. Each item carries the entry's age in days + theme
+  // tag so the model can decide if it's worth surfacing in THIS reply.
+  // `nowMs` reuses today (we computed `todayMs` earlier for birthday math).
+  const nowMs = Date.UTC(ctx.year, ctx.month - 1, ctx.day);
+  const stale = openActionItems
+    .map((it) => {
+      const addedUtc = Date.UTC(
+        it.entryAddedAt.getUTCFullYear(),
+        it.entryAddedAt.getUTCMonth(),
+        it.entryAddedAt.getUTCDate(),
+      );
+      const daysAgo = Math.max(0, Math.floor((nowMs - addedUtc) / 86_400_000));
+      return { ...it, daysAgo };
+    })
+    .filter((it) => it.daysAgo >= 3);
+
+  if (stale.length > 0) {
+    result.followUps = stale
+      .map((it) => {
+        const tag = it.entryTheme ? ` [theme: ${it.entryTheme}]` : '';
+        return `- ${it.daysAgo}d ago: "${it.title}"${tag}`;
+      })
+      .join('\n');
+    loaded.push('followUps');
   }
 
   return result;
@@ -307,6 +344,9 @@ export function composeContextBlock(c: SmartContext, personalNotes?: string | nu
   }
   if (c.patterns) {
     parts.push(`<recent_patterns>\n${c.patterns}\n</recent_patterns>`);
+  }
+  if (c.followUps) {
+    parts.push(`<follow_ups>\n${c.followUps}\n</follow_ups>`);
   }
   return parts.join('\n\n');
 }
