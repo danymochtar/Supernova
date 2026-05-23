@@ -84,9 +84,12 @@ export async function countPeople(userId: string): Promise<number> {
 }
 
 export async function getPerson(userId: string, id: string): Promise<PersonView | null> {
-  const row = await prisma.person.findUnique({ where: { id } });
-  if (!row || row.userId !== userId) return null;
-  return toView(row);
+  // Scope by (id, userId) at the query — defense-in-depth so even a leaked
+  // person.id can't surface another user's row. A `findUnique({ where: { id } })`
+  // + post-fetch ownership check would also work, but doing the filter at
+  // the DB level avoids ever holding the foreign row in memory.
+  const row = await prisma.person.findFirst({ where: { id, userId } });
+  return row ? toView(row) : null;
 }
 
 export async function createPerson(userId: string, input: PersonInput): Promise<PersonView> {
@@ -127,7 +130,9 @@ export async function updatePerson(
     },
   });
   if (result.count === 0) return null;
-  const row = await prisma.person.findUnique({ where: { id } });
+  // Re-scoped read-back even though updateMany already proved ownership —
+  // keeps every prisma call in this file uniformly userId-bound.
+  const row = await prisma.person.findFirst({ where: { id, userId } });
   return row ? toView(row) : null;
 }
 
