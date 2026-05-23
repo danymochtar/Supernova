@@ -82,7 +82,9 @@
     "groupNavigation": "Navigation",
     "groupData": "Data",
     "groupAccount": "Account",
-    "appVersion": "Supernova MVP"
+    "appVersion": "Supernova MVP",
+    "languageTitle": "Language",
+    "languageHint": "Language for the interface and AI readings."
   },
   "layoutEditor": {
     "title": "Customize home",

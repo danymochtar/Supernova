@@ -1,4 +1,5 @@
 import type { Relationship } from '@prisma/client';
+import type { Locale } from '@/lib/i18n/config';
 import type { CoreLite } from '@/lib/compatibility/score';
 import { getOrGenerateRelationshipProfile } from '@/lib/ai/relationship';
 import { renderInlineMd } from '@/components/qa/inlineMd';
@@ -8,7 +9,7 @@ interface Props {
   userId: string;
   personId: string;
   preferredModel: string | null;
-  locale: 'id' | 'en';
+  locale: Locale;
   relationship: Relationship;
   meName: string;
   themName: string;

@@ -1,4 +1,5 @@
 import type Anthropic from '@anthropic-ai/sdk';
+import type { Locale } from '@/lib/i18n/config';
 import { anthropic, model } from '@/lib/ai/client';
 import {
   buildSystemPrompt,
@@ -27,7 +28,7 @@ interface ProfileLike {
   firstName: string;
   dob: BirthDate;
   timezone: string;
-  locale: 'id' | 'en';
+  locale: Locale;
   preferredModel: string | null;
 }
 

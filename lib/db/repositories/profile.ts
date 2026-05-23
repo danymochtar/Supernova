@@ -1,4 +1,6 @@
 import type { Profile as ProfileRow } from '@prisma/client';
+import { isLocale, type Locale } from '@/lib/i18n/config';
+import { DEFAULT_LOCALE } from '@/lib/i18n/locales';
 import { prisma } from '@/lib/db/prisma';
 import type { BirthDate } from '@/lib/numerology/types';
 
@@ -9,7 +11,7 @@ export interface ProfileInput {
   nickname?: string | null;
   dob: BirthDate;
   timezone: string;
-  locale: 'id' | 'en';
+  locale: Locale;
 }
 
 export type Theme = 'light' | 'dark' | 'auto';
@@ -26,7 +28,7 @@ export interface ProfileView {
   fullName: string;
   dob: BirthDate;
   timezone: string;
-  locale: 'id' | 'en';
+  locale: Locale;
   personalNotes: string | null;
   theme: Theme;
   tone: Tone;
@@ -98,10 +100,10 @@ export async function getProfileByUserId(userId: string): Promise<ProfileView | 
 }
 
 function toView(row: ProfileRow): ProfileView {
-  // EN is currently disabled at the routing level — coerce any stored 'en'
-  // values back to 'id' so AI prompts don't speak EN to a user who only
-  // sees ID chrome. Remove this coercion when EN is re-enabled.
-  const locale: 'id' | 'en' = 'id';
+  // Validate against the registry — older rows may have legacy 'en' values
+  // from before the EN lockdown, and once we re-enable EN those become
+  // valid again. Anything outside the supported set falls back to ID.
+  const locale: Locale = isLocale(row.locale) ? row.locale : DEFAULT_LOCALE;
   const theme: Theme =
     row.theme === 'light' || row.theme === 'dark' ? row.theme : 'auto';
   const tone: Tone =
@@ -132,6 +134,7 @@ function toView(row: ProfileRow): ProfileView {
 export interface PreferenceUpdate {
   theme?: Theme;
   tone?: Tone;
+  locale?: Locale;
   showKarmicDebt?: boolean;
   preferredModel?: string | null;
   reminderEnabled?: boolean;

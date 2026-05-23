@@ -1,4 +1,5 @@
 import type { Locale } from '@/lib/i18n/config';
+import { pickLocalized } from '@/lib/i18n/locales';
 
 export type TimeOfDay = 'morning' | 'midday' | 'afternoon' | 'evening' | 'night';
 
@@ -10,7 +11,10 @@ export function timeOfDay(hour: number): TimeOfDay {
   return 'night';
 }
 
-const COPY: Record<Locale, Record<TimeOfDay, { word: string; greeting: string }>> = {
+// Greeting copy is curated per-locale where we have it; locales without
+// an entry fall back to ID via pickLocalized. The translation script
+// will fill these in for non-ID locales after generation.
+const COPY: Partial<Record<Locale, Record<TimeOfDay, { word: string; greeting: string }>>> = {
   id: {
     morning: { word: 'Pagi', greeting: 'Selamat pagi' },
     midday: { word: 'Siang', greeting: 'Selamat siang' },
@@ -28,5 +32,5 @@ const COPY: Record<Locale, Record<TimeOfDay, { word: string; greeting: string }>
 };
 
 export function greetingFor(hour: number, locale: Locale): { word: string; greeting: string } {
-  return COPY[locale][timeOfDay(hour)];
+  return pickLocalized(COPY, locale)[timeOfDay(hour)];
 }

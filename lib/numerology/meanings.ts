@@ -4,7 +4,11 @@ import enPack from '@/content/meanings/en.json';
 
 type Pack = Record<string, string>;
 
-const PACKS: Record<Locale, Pack> = {
+// Deterministic meaning packs — currently shipped for ID + EN. Other
+// locales fall through to ID via the `??` at the call site. When more
+// language packs are added, drop them in `content/meanings/{code}.json`
+// and add the import here.
+const PACKS: Partial<Record<Locale, Pack>> = {
   id: idPack as Pack,
   en: enPack as Pack,
 };
@@ -40,7 +44,7 @@ export function meaningFor(
   result: { compound: number; reduced: number; isMaster: boolean },
   locale: Locale,
 ): string | null {
-  const pack = PACKS[locale] ?? PACKS.id;
+  const pack = PACKS[locale] ?? PACKS.id!;
   const masterKey = `${type}:${result.compound}`;
   if (result.isMaster && pack[masterKey]) return pack[masterKey];
   return pack[`${type}:${result.reduced}`] ?? null;

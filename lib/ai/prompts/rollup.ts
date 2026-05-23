@@ -1,3 +1,6 @@
+import type { Locale } from '@/lib/i18n/config';
+import { localizeEnglishPrompt } from './_localize';
+
 /**
  * Summarization prompts for the hierarchical chat history rollup.
  *
@@ -17,7 +20,7 @@ const TARGETS: Record<RollupKind, { max: number; words: string }> = {
   monthly: { max: 800, words: '250-350' },
 };
 
-export function rollupSystemPrompt(kind: RollupKind, locale: 'id' | 'en'): string {
+export function rollupSystemPrompt(kind: RollupKind, locale: Locale): string {
   const t = TARGETS[kind];
   if (locale === 'id') {
     return `Kamu nulis ringkasan jurnal ${kind === 'daily' ? 'harian' : kind === 'weekly' ? 'mingguan' : 'bulanan'} dari riwayat percakapan user dengan pendamping numerologi.
@@ -32,7 +35,7 @@ Aturan:
 
 Output: paragraf aja, tanpa pembuka.`;
   }
-  return `You write ${kind} journal summaries from a user's chat history with their numerology companion.
+  return localizeEnglishPrompt(`You write ${kind} journal summaries from a user's chat history with their numerology companion.
 
 Rules:
 - Write in first person ("I..."). Not "the user" or "you".
@@ -42,7 +45,7 @@ Rules:
 - NO markdown, bullets, or headings. Plain prose paragraphs only.
 - Skip pleasantries; jump straight in.
 
-Output: just the paragraph(s), no preamble.`;
+Output: just the paragraph(s), no preamble.`, locale);
 }
 
 export function rollupMaxTokens(kind: RollupKind): number {

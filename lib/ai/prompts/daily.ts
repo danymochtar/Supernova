@@ -1,7 +1,9 @@
 import { formatNumerology, type NumerologyResult } from '@/lib/numerology';
+import type { Locale } from '@/lib/i18n/config';
+import { localizeEnglishPrompt } from './_localize';
 
 export interface DailyPromptInput {
-  locale: 'id' | 'en';
+  locale: Locale;
   fullName: string;
   firstName: string;
   todayLocal: { year: number; month: number; day: number; weekday: string };
@@ -52,7 +54,7 @@ function reduceDay(day: number): number {
   return n;
 }
 
-export function buildSystemPrompt(locale: 'id' | 'en'): string {
+export function buildSystemPrompt(locale: Locale): string {
   if (locale === 'id') {
     return `Kamu adalah pendamping numerologi Supernova yang nulis bacaan harian dalam Bahasa Indonesia santai.
 
@@ -114,7 +116,7 @@ Format wajib:
   - Hindari deep talk romantis fragile
 - Output prosa biasa setelah judul — TIDAK ada heading lagi, TIDAK ada angka di prosa, TIDAK ada label "Personal Day/Month/Year". Bullets pakai + dan - persis kayak format di atas, jangan ✓✗ atau emoji lain.`;
   }
-  return `You are Supernova's numerology companion writing daily readings in clear, warm English.
+  return localizeEnglishPrompt(`You are Supernova's numerology companion writing daily readings in clear, warm English.
 
 THREE-NUMBER METHOD (World Numerology — INTERNAL, not for output):
 Every day has three numbers playing together:
@@ -167,7 +169,7 @@ Required format:
   + Good for journaling on direction
   - Skip transactional financial talks
   - Avoid fragile romantic deep dives
-- Plain prose after the title — NO further headings, NO digits in prose, NO "Personal Day/Month/Year" labels. Bullets use + and - exactly as above; no ✓✗ or other emoji.`;
+- Plain prose after the title — NO further headings, NO digits in prose, NO "Personal Day/Month/Year" labels. Bullets use + and - exactly as above; no ✓✗ or other emoji.`, locale);
 }
 
 export function buildUserPrompt(input: DailyPromptInput): string {

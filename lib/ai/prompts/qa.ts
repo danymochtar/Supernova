@@ -1,7 +1,9 @@
 import { formatNumerology, type NumerologyResult } from '@/lib/numerology';
+import type { Locale } from '@/lib/i18n/config';
+import { localizeEnglishPrompt } from './_localize';
 
 export interface QaPromptContext {
-  locale: 'id' | 'en';
+  locale: Locale;
   fullName: string;
   todayLocal: { year: number; month: number; day: number; weekday: string };
   age: number;
@@ -33,7 +35,7 @@ function r(x: NumerologyResult): string {
   return tags.length ? `${formatNumerology(x)} (${tags.join(', ')})` : formatNumerology(x);
 }
 
-export function buildQaSystemPrompt(locale: 'id' | 'en'): string {
+export function buildQaSystemPrompt(locale: Locale): string {
   if (locale === 'id') {
     return `Kamu adalah pendamping numerologi Supernova. Tugas kamu jawab pertanyaan user tentang numerologi mereka dalam Bahasa Indonesia santai.
 
@@ -48,7 +50,7 @@ Aturan:
 - Kalau pertanyaannya nggak nyambung sama numerologi, jawab singkat aja dan arahin balik ke tema numerologi.
 - Format respons: Markdown ringan — paragraf biasa, **tebal** buat nama angka, nggak perlu heading.`;
   }
-  return `You are Supernova's numerology companion. Your task is to answer the user's questions about their numerology in clear, supportive English.
+  return localizeEnglishPrompt(`You are Supernova's numerology companion. Your task is to answer the user's questions about their numerology in clear, supportive English.
 
 Strict rules:
 - Always ground your answers in the numbers in <profile>. Never invent numbers or change the math.
@@ -58,7 +60,7 @@ Strict rules:
 - Avoid astrology, tarot, or other systems — stay within Pythagorean numerology.
 - If the question is unrelated to numerology, answer briefly and steer back to numerology themes.
 - Write in a warm, concise voice (2-4 paragraphs), practical.
-- Format responses as light Markdown: plain paragraphs, **bold** for number names, no headings needed.`;
+- Format responses as light Markdown: plain paragraphs, **bold** for number names, no headings needed.`, locale);
 }
 
 export function buildQaProfileBlock(ctx: QaPromptContext): string {

@@ -1,7 +1,9 @@
 import { bridges, formatNumerology, type MinorNumbers, type NumerologyResult } from '@/lib/numerology';
+import type { Locale } from '@/lib/i18n/config';
+import { localizeEnglishPrompt } from './_localize';
 
 export interface AboutMeInput {
-  locale: 'id' | 'en';
+  locale: Locale;
   fullName: string;
   core: {
     lifePath: NumerologyResult;
@@ -25,7 +27,7 @@ function r(x: NumerologyResult): string {
   return tags.length ? `${formatNumerology(x)} (${tags.join(', ')})` : formatNumerology(x);
 }
 
-export function buildAboutMeSystem(locale: 'id' | 'en'): string {
+export function buildAboutMeSystem(locale: Locale): string {
   if (locale === 'id') {
     return `Kamu adalah pendamping numerologi Supernova. Tugas: tulis profil holistik dalam bentuk JSON terstruktur — satu sintesis pembuka + satu kartu pendek per komponen inti + dua narasi pendek untuk Minor dan Bridge.
 
@@ -59,7 +61,7 @@ Output WAJIB JSON valid, tanpa teks lain:
   "bridgeNarrative": "..."
 }`;
   }
-  return `You are Supernova's numerology companion. Task: write a holistic profile as structured JSON — one opening synthesis + one short card per core component + two short narratives for Minor and Bridge.
+  return localizeEnglishPrompt(`You are Supernova's numerology companion. Task: write a holistic profile as structured JSON — one opening synthesis + one short card per core component + two short narratives for Minor and Bridge.
 
 Style: warm, personal ("You…"), reflective but direct.
 
@@ -89,7 +91,7 @@ Output MUST be valid JSON, nothing else:
   },
   "minorNarrative": "...",
   "bridgeNarrative": "..."
-}`;
+}`, locale);
 }
 
 export function buildAboutMeUser(input: AboutMeInput): string {

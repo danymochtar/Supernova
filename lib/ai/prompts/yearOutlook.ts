@@ -1,7 +1,9 @@
 import { formatNumerology, type NumerologyResult } from '@/lib/numerology';
+import type { Locale } from '@/lib/i18n/config';
+import { localizeEnglishPrompt } from './_localize';
 
 export interface YearOutlookInput {
-  locale: 'id' | 'en';
+  locale: Locale;
   firstName: string;
   year: number;
   age: number;
@@ -21,7 +23,7 @@ function r(x: NumerologyResult): string {
   return tags.length ? `${formatNumerology(x)} (${tags.join(', ')})` : formatNumerology(x);
 }
 
-export function buildYearOutlookSystem(locale: 'id' | 'en'): string {
+export function buildYearOutlookSystem(locale: Locale): string {
   if (locale === 'id') {
     return `Kamu pendamping numerologi Supernova. Tugas: rangkum tahun yang lagi dijalani user dalam JSON terstruktur — sintesis pendek dari 4 lapisan (Personal Year, Pinnacle/Challenge aktif, Period Cycle aktif, Essence Cycle), plus tagline, beberapa tips praktis, dan satu afirmasi.
 
@@ -47,7 +49,7 @@ Output WAJIB JSON valid, tanpa teks lain:
   "affirmation": "..."
 }`;
   }
-  return `You are Supernova's numerology companion. Task: summarize the user's running year as structured JSON — a short synthesis weaving the four layers (Personal Year, active Pinnacle/Challenge, active Period Cycle, Essence Cycle), plus a tagline, a few practical tips, and one affirmation.
+  return localizeEnglishPrompt(`You are Supernova's numerology companion. Task: summarize the user's running year as structured JSON — a short synthesis weaving the four layers (Personal Year, active Pinnacle/Challenge, active Period Cycle, Essence Cycle), plus a tagline, a few practical tips, and one affirmation.
 
 Style: warm, personal ("You…"), reflective but direct.
 
@@ -69,7 +71,7 @@ Output MUST be valid JSON, nothing else:
   "synthesis": "...",
   "tips": ["...", "...", "..."],
   "affirmation": "..."
-}`;
+}`, locale);
 }
 
 export function buildYearOutlookUser(input: YearOutlookInput): string {

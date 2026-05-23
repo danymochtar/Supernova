@@ -3,6 +3,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { getLocaleConfig } from '@/lib/i18n/locales';
 import { BottomNav } from '@/components/layout/BottomNav';
 import { ThemeProvider } from '@/components/layout/ThemeProvider';
 import { getSession } from '@/lib/auth/requireSession';
@@ -76,9 +77,10 @@ export default async function LocaleLayout({
   const initialTheme = profile?.theme ?? 'auto';
 
   const htmlClass = profile?.showKarmicDebt === false ? 'hide-karmic' : '';
+  const dir = getLocaleConfig(locale).dir;
 
   return (
-    <html lang={locale} className={htmlClass} suppressHydrationWarning>
+    <html lang={locale} dir={dir} className={htmlClass} suppressHydrationWarning>
       <body className="bg-background text-foreground min-h-screen antialiased">
         <ThemeProvider defaultTheme={initialTheme}>
           <NextIntlClientProvider locale={locale} messages={messages}>

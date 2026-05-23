@@ -1,4 +1,5 @@
 import type { DailyReading, Prisma } from '@prisma/client';
+import type { Locale } from '@/lib/i18n/config';
 import { prisma } from '@/lib/db/prisma';
 
 /** Date stored at UTC midnight so the unique (userId, date) key is stable. */
@@ -33,7 +34,7 @@ export interface CreateReadingInput {
   year: number;
   month: number;
   day: number;
-  locale: 'id' | 'en';
+  locale: Locale;
   body: string;
   contextSnapshot: Prisma.InputJsonValue;
   inputTokens: number;

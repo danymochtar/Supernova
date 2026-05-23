@@ -1,16 +1,19 @@
 'use client';
 
 import { useState, useTransition } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
-import { AlertTriangle, Bell, Brain, Download, Palette, Sparkles, Trash2 } from 'lucide-react';
+import { AlertTriangle, Bell, Brain, Download, Languages, Palette, Sparkles, Trash2 } from 'lucide-react';
 import type { Locale } from '@/lib/i18n/config';
+import { LOCALES, LOCALE_CODES } from '@/lib/i18n/locales';
 import {
   setTheme,
   setTone,
   setShowKarmicDebt,
   setPreferredModel,
   setReminder,
+  setLocaleAction,
   exportUserData,
   deleteAccount,
 } from '@/app/[locale]/me/actions';
@@ -336,6 +339,54 @@ export function DeleteRow({ locale }: { locale: Locale }) {
           </div>
         </form>
       )}
+    </Row>
+  );
+}
+
+export function LanguageRow({
+  initial,
+  currentLocale,
+}: {
+  initial: Locale;
+  currentLocale: Locale;
+}) {
+  const t = useTranslations('me');
+  const router = useRouter();
+  const pathname = usePathname();
+  const [value, setValue] = useState<Locale>(initial);
+  const [, startTransition] = useTransition();
+
+  function pick(next: Locale) {
+    if (next === value) return;
+    setValue(next);
+    startTransition(async () => {
+      await setLocaleAction(next);
+      // The URL carries the locale segment — swap it so the new bundle
+      // takes effect immediately without a full reload.
+      const segments = pathname.split('/');
+      if (segments[1] === currentLocale) segments[1] = next;
+      router.push(segments.join('/'));
+      router.refresh();
+    });
+  }
+
+  return (
+    <Row icon={Languages} title={t('languageTitle')} hint={t('languageHint')}>
+      <select
+        value={value}
+        onChange={(e) => pick(e.target.value as Locale)}
+        className="border-border bg-surface-1 focus:ring-primary rounded-full border px-3 py-2 text-sm focus:outline-none focus:ring-2"
+        dir="auto"
+      >
+        {LOCALE_CODES.map((code) => {
+          const cfg = LOCALES[code]!;
+          return (
+            <option key={code} value={code}>
+              {cfg.flag} {cfg.nativeName}
+            </option>
+          );
+        })}
+      </select>
     </Row>
   );
 }

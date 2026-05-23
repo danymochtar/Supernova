@@ -1,4 +1,5 @@
 import type Anthropic from '@anthropic-ai/sdk';
+import type { Locale } from '@/lib/i18n/config';
 import type { Prisma } from '@prisma/client';
 import { anthropic, model } from '@/lib/ai/client';
 import {
@@ -39,11 +40,11 @@ interface ProfileLike {
   nickname: string | null;
   dob: BirthDate;
   timezone: string;
-  locale: 'id' | 'en';
+  locale: Locale;
   preferredModel: string | null;
 }
 
-function dayTitleFor(reduced: number, locale: 'id' | 'en'): string {
+function dayTitleFor(reduced: number, locale: Locale): string {
   const pack = (locale === 'id' ? idMeanings : enMeanings) as Record<string, string>;
   return pack[`personalDayTitle:${reduced}`] ?? '';
 }

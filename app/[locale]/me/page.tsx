@@ -24,6 +24,7 @@ import {
   DeleteRow,
   ExportRow,
   KarmicRow,
+  LanguageRow,
   ModelRow,
   ReminderRow,
   ThemeRow,
@@ -143,9 +144,10 @@ export default async function MePage({ params }: { params: { locale: string } })
         </details>
       </SettingsGroup>
 
-      {/* Appearance */}
+      {/* Appearance + language */}
       <SettingsGroup title={t('groupAppearance')}>
         <ThemeRow initial={profile.theme} />
+        <LanguageRow initial={profile.locale} currentLocale={locale} />
       </SettingsGroup>
 
       {/* AI */}

@@ -1,4 +1,6 @@
 import type { Tone } from '@/lib/db/repositories/profile';
+import type { Locale } from '@/lib/i18n/config';
+import { localizeEnglishPrompt } from './_localize';
 
 export interface JournalSourceTurn {
   question: string;
@@ -54,7 +56,7 @@ const PRONOUN_REGISTER_ID: Record<UserPronoun, string> = {
 };
 
 export interface JournalSynthInput {
-  locale: 'id' | 'en';
+  locale: Locale;
   firstName: string;
   tone: Tone;
   pronoun: UserPronoun;
@@ -76,7 +78,7 @@ const TONE_VOICE_EN: Record<Tone, string> = {
 };
 
 export function buildJournalSystem(
-  locale: 'id' | 'en',
+  locale: Locale,
   tone: Tone,
   pronoun: UserPronoun,
 ): string {
@@ -109,7 +111,7 @@ Aturan:
 
 Output: cuma teks paragraf, tanpa pembuka, tanpa penutup.`;
   }
-  return `You're writing a private journal entry for the user, from FIRST PERSON — as the user themselves ("I…"), NOT as a companion talking to them.
+  return localizeEnglishPrompt(`You're writing a private journal entry for the user, from FIRST PERSON — as the user themselves ("I…"), NOT as a companion talking to them.
 
 Voice: ${TONE_VOICE_EN[tone]}
 
@@ -124,7 +126,7 @@ Rules:
 - NO numerology specifics (Personal Year, etc.) — the journal is about life, not the system.
 - NO medical/legal/financial advice.
 
-Output: just the paragraph text, no preamble or sign-off.`;
+Output: just the paragraph text, no preamble or sign-off.`, locale);
 }
 
 export function buildJournalUser(input: JournalSynthInput): string {

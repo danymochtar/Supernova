@@ -1,4 +1,5 @@
 import { personalCycles } from '@/lib/numerology';
+import type { Locale } from '@/lib/i18n/config';
 import type { BirthDate } from '@/lib/numerology/types';
 import type { FeedbackRating } from '@prisma/client';
 
@@ -69,7 +70,7 @@ export function aggregate(
   rows: FeedbackRow[],
   dob: BirthDate,
   windowDays: number,
-  weekdayLocale: 'id' | 'en' = 'id',
+  weekdayLocale: Locale = 'id',
 ): PatternsSummary {
   if (rows.length === 0) {
     return {

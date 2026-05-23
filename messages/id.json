@@ -42,6 +42,8 @@
     "theme_light": "Terang",
     "theme_dark": "Gelap",
     "theme_auto": "Auto",
+    "languageTitle": "Bahasa",
+    "languageHint": "Bahasa untuk antarmuka dan bacaan AI.",
     "toneTitle": "Nada AI",
     "toneHint": "Cara AI ngomong sama kamu — chat, bacaan harian, About You semua ikut.",
     "tone_warm": "Hangat",

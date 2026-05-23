@@ -10,6 +10,7 @@ import {
   updatePreferences,
 } from '@/lib/db/repositories/profile';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { LOCALE_CODES } from '@/lib/i18n/locales';
 
 const schema = z.object({
   notes: z.string().max(4000).optional(),
@@ -45,6 +46,21 @@ export async function savePersonalNotes(formData: FormData): Promise<NotesAction
 const themeEnum = z.enum(['light', 'dark', 'auto']);
 const toneEnum = z.enum(['warm', 'direct', 'playful']);
 const modelEnum = z.enum(['default', 'claude-sonnet-4-6', 'claude-opus-4-7', 'claude-haiku-4-5']);
+
+const localeEnum = z.enum(LOCALE_CODES as unknown as [string, ...string[]]);
+
+/**
+ * Persist a language choice on the user's profile. The client is
+ * responsible for navigating to the new `/[locale]/…` URL after this
+ * succeeds — the action only writes to the DB.
+ */
+export async function setLocaleAction(locale: Locale): Promise<void> {
+  const session = await getSession();
+  if (!session) return;
+  const parsed = localeEnum.safeParse(locale);
+  if (!parsed.success) return;
+  await updatePreferences(session.user.id, { locale: parsed.data as Locale });
+}
 
 export async function setTheme(theme: 'light' | 'dark' | 'auto'): Promise<void> {
   const session = await getSession();

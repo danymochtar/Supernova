@@ -1,9 +1,11 @@
 import type { Relationship } from '@prisma/client';
 import type { CoreLite } from '@/lib/compatibility/score';
 import type { LaneScore } from '@/lib/compatibility/score';
+import type { Locale } from '@/lib/i18n/config';
+import { localizeEnglishPrompt } from './_localize';
 
 export interface RelationshipPromptInput {
-  locale: 'id' | 'en';
+  locale: Locale;
   relationship: Relationship;
   meName: string;
   themName: string;
@@ -43,7 +45,7 @@ const COMP_LABEL_ID: Record<string, string> = {
   birthday: 'Birthday',
 };
 
-function laneLine(l: LaneScore, locale: 'id' | 'en'): string {
+function laneLine(l: LaneScore, locale: Locale): string {
   const meLabel = COMP_LABEL_ID[l.meKey] ?? l.meKey;
   const themLabel = COMP_LABEL_ID[l.themKey] ?? l.themKey;
   const meSide = locale === 'id' ? `${meLabel} kamu` : `your ${meLabel}`;
@@ -56,7 +58,7 @@ function laneLine(l: LaneScore, locale: 'id' | 'en'): string {
 
 // ─── Per-pair narratives (one short paragraph per lane) ─────────────────────
 
-export function buildPairsSystem(locale: 'id' | 'en'): string {
+export function buildPairsSystem(locale: Locale): string {
   if (locale === 'id') {
     return `Kamu adalah pendamping numerologi Supernova. Tugas: tulis narasi pendek untuk tiap pasangan angka antara dua orang, dalam Bahasa Indonesia santai (pakai "kamu", bukan "Anda"), berdasar tradisi Pythagorean.
 
@@ -69,7 +71,7 @@ Aturan:
 - JANGAN sebut angka apa pun di output.
 - Output WAJIB JSON valid, format: {"narratives": {"<lane_key>": "narasi…", ...}}. Tidak ada teks lain di luar JSON.`;
   }
-  return `You are Supernova's numerology companion. Task: write a short narrative for each number pairing between two people, in clear English, grounded in Pythagorean tradition.
+  return localizeEnglishPrompt(`You are Supernova's numerology companion. Task: write a short narrative for each number pairing between two people, in clear English, grounded in Pythagorean tradition.
 
 Rules:
 - Each narrative 2-3 sentences. Warm, honest, practical.
@@ -77,7 +79,7 @@ Rules:
 - "Cross" pairs (e.g. your Expression vs their Soul Urge) describe an asymmetric dynamic: what one side brings vs what the other yearns for. Name this dynamic explicitly.
 - No future predictions. No medical, legal, or financial advice.
 - DO NOT mention any numbers in the output.
-- Output MUST be valid JSON, shape: {"narratives": {"<lane_key>": "narrative…", ...}}. No prose outside the JSON.`;
+- Output MUST be valid JSON, shape: {"narratives": {"<lane_key>": "narrative…", ...}}. No prose outside the JSON.`, locale);
 }
 
 export function buildPairsUser(input: RelationshipPromptInput): string {
@@ -149,7 +151,7 @@ export function parsePairs(raw: string): ParsedPairs {
 
 // ─── Long-form relationship profile (about-me style, no numbers) ────────────
 
-export function buildProfileSystem(locale: 'id' | 'en'): string {
+export function buildProfileSystem(locale: Locale): string {
   if (locale === 'id') {
     return `Kamu adalah pendamping numerologi Supernova yang nulis profil hubungan dalam Bahasa Indonesia santai (pakai "kamu").
 
@@ -170,7 +172,7 @@ Aturan:
 
 Format: prosa biasa, paragraf dipisah baris kosong. TIDAK ada heading, bullet, atau tag.`;
   }
-  return `You are Supernova's numerology companion writing relationship profiles in clear, warm English.
+  return localizeEnglishPrompt(`You are Supernova's numerology companion writing relationship profiles in clear, warm English.
 
 Task: based on two people's core numbers and the type of relationship between them, write a profile that introduces **the person** first, then the dynamic between you.
 
@@ -186,11 +188,11 @@ Rules:
 - Warm, honest, practical. Avoid astrology/tarot/other systems.
 - No future predictions. No medical, legal, or financial advice.
 
-Format: plain prose, paragraphs separated by blank lines. NO headings, bullets, or tags.`;
+Format: plain prose, paragraphs separated by blank lines. NO headings, bullets, or tags.`, locale);
 }
 
 export interface ProfilePromptInput {
-  locale: 'id' | 'en';
+  locale: Locale;
   relationship: Relationship;
   meName: string;
   themName: string;

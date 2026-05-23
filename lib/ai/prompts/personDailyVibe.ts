@@ -1,8 +1,10 @@
 import { formatNumerology, type NumerologyResult } from '@/lib/numerology';
 import type { Relationship } from '@prisma/client';
+import type { Locale } from '@/lib/i18n/config';
+import { localizeEnglishPrompt } from './_localize';
 
 export interface VibePromptInput {
-  locale: 'id' | 'en';
+  locale: Locale;
   date: { year: number; month: number; day: number; weekday: string };
   relationship: Relationship;
   meFirstName: string;
@@ -94,7 +96,7 @@ const RELATIONSHIP_GUIDE_EN: Record<Relationship, string> = {
     'Acquaintance: surface-level. OK: pleasantries, small talk, clarifying meeting context. Avoid: deep disclosure, commitments, long-range planning, oversharing. When their vibe is off: polite + short.',
 };
 
-export function buildSystemPrompt(locale: 'id' | 'en'): string {
+export function buildSystemPrompt(locale: Locale): string {
   if (locale === 'id') {
     return `Kamu adalah pendamping numerologi Supernova yang ngasih briefing singkat tentang vibe orang lain hari ini relatif ke user.
 
@@ -143,7 +145,7 @@ ATURAN:
 - Sebut nama orang itu (first name) minimal sekali biar berasa direct.
 - JANGAN nyaranin medis, hukum, atau finansial spesifik.`;
   }
-  return `You are Supernova's numerology companion giving the user a short briefing on a specific person's vibe today, relative to them.
+  return localizeEnglishPrompt(`You are Supernova's numerology companion giving the user a short briefing on a specific person's vibe today, relative to them.
 
 GOAL: help the user decide whether/how to interact with this person today — meet up, message, push for a serious conversation, give them space.
 
@@ -182,7 +184,7 @@ RULES:
 - Don't use the words "numerology", "vibration", "master", "karmic debt" explicitly.
 - Use possibility language; no certain predictions.
 - Mention the target person's first name at least once.
-- No specific medical, legal, or financial advice.`;
+- No specific medical, legal, or financial advice.`, locale);
 }
 
 export function buildUserPrompt(input: VibePromptInput): string {
