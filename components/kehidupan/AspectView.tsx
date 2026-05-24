@@ -54,7 +54,6 @@ export async function AspectView({
 
   return (
     <div className="space-y-3">
-      <h2 className="font-serif text-xl font-semibold tracking-tight">{t('title')}</h2>
       <Suspense fallback={<AspectReadingSkeleton subtitle={t('subtitle')} />}>
         <AspectReadingAsync
           userId={profile.userId}

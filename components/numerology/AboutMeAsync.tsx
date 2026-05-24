@@ -69,7 +69,7 @@ export function AboutMeSkeleton({
   return (
     <section className="space-y-3">
       <div className="space-y-1">
-        <h2 className="font-serif text-xl font-semibold tracking-tight">{title}</h2>
+        {title ? <h2 className="font-serif text-xl font-semibold tracking-tight">{title}</h2> : null}
         <p className="text-muted-foreground text-sm">{subtitle}</p>
       </div>
       <div className="border-border space-y-3 rounded-2xl border bg-surface-1 p-5">

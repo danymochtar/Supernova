@@ -95,7 +95,7 @@ export function AboutMe({
     return (
       <section className="border-border space-y-3 rounded-2xl border bg-surface-2 p-6">
         <header className="space-y-2">
-          <h2 className="text-lg font-semibold">{title}</h2>
+          {title ? <h2 className="text-lg font-semibold">{title}</h2> : null}
           <p className="text-muted-foreground text-sm">{subtitle}</p>
           {explainer ? <Explainer title={explainer.title} body={explainer.body} /> : null}
         </header>
@@ -113,7 +113,7 @@ export function AboutMe({
   return (
     <section className="space-y-4">
       <header className="space-y-2 px-1">
-        <h2 className="text-lg font-semibold">{title}</h2>
+        {title ? <h2 className="text-lg font-semibold">{title}</h2> : null}
         <p className="text-muted-foreground text-sm">{subtitle}</p>
         {explainer ? <Explainer title={explainer.title} body={explainer.body} /> : null}
       </header>

@@ -38,20 +38,23 @@ export default async function KehidupanPage({
       className="container max-w-3xl space-y-5 px-4 pb-6 sm:px-6 sm:pb-10"
       style={{ paddingTop: 'calc(env(safe-area-inset-top) + 1rem)' }}
     >
-      {/* Compact header — the sub-tabs ARE the page identity (and the
-        * bottom nav already highlights "Kehidupan"), so no big redundant
-        * page title eating vertical space. Each sub-view renders its own
-        * section heading. */}
-      <KehidupanTabs
-        active={tab}
-        basePath={`/${locale}/kehidupan`}
-        labels={{
-          tentang: t('tabTentang'),
-          perjalanan: t('tabPerjalanan'),
-          percintaan: t('tabPercintaan'),
-          keuangan: t('tabKeuangan'),
-        }}
-      />
+      {/* Single page title ("Kehidupan") + the tabs under it. The active
+        * sub-view no longer repeats its name as a big heading (the tab
+        * pill already labels it), so there's one clean title instead of
+        * a Kehidupan / tab / heading stutter. */}
+      <header className="space-y-3 pt-1">
+        <h1 className="font-serif text-2xl font-semibold tracking-tight">{t('title')}</h1>
+        <KehidupanTabs
+          active={tab}
+          basePath={`/${locale}/kehidupan`}
+          labels={{
+            tentang: t('tabTentang'),
+            perjalanan: t('tabPerjalanan'),
+            percintaan: t('tabPercintaan'),
+            keuangan: t('tabKeuangan'),
+          }}
+        />
+      </header>
 
       {tab === 'perjalanan' ? (
         <PerjalananView profile={profile} locale={locale} />

@@ -52,12 +52,12 @@ export async function TentangView({
   return (
     <div className="space-y-6">
       <Suspense
-        fallback={<AboutMeSkeleton title={t('aboutMeTitle')} subtitle={t('aboutMeSubtitle')} />}
+        fallback={<AboutMeSkeleton title="" subtitle={t('aboutMeSubtitle')} />}
       >
         <AboutMeAsync
           userId={profile.userId}
           input={aboutMeInput}
-          title={t('aboutMeTitle')}
+          title=""
           subtitle={t('aboutMeSubtitle')}
           fallback={t('aboutMeFallback')}
           cardLabels={{
