@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
@@ -99,7 +100,16 @@ export function LoginForm({ locale }: { locale: Locale }) {
         />
         {mode === 'signUp' ? (
           <p className="text-muted-foreground text-xs">{t('passwordHint')}</p>
-        ) : null}
+        ) : (
+          <div className="text-right">
+            <Link
+              href={`/${locale}/forgot-password`}
+              className="text-muted-foreground hover:text-foreground text-xs underline-offset-4 hover:underline"
+            >
+              {t('forgotPassword')}
+            </Link>
+          </div>
+        )}
       </div>
 
       <button

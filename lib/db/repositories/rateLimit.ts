@@ -12,7 +12,7 @@ import { prisma } from '@/lib/db/prisma';
  */
 export async function checkAndIncrement(args: {
   userId: string;
-  bucket: 'qa';
+  bucket: 'qa' | 'pwreset';
   limit: number;
 }): Promise<{ allowed: boolean; count: number }> {
   const now = new Date();
