@@ -84,7 +84,9 @@
     "groupAccount": "Akaun",
     "appVersion": "Supernova MVP",
     "languageTitle": "Bahasa",
-    "languageHint": "Bahasa untuk antara muka dan bacaan AI."
+    "languageHint": "Bahasa untuk antara muka dan bacaan AI.",
+    "autoJournalTitle": "Auto-journaling daripada curhat",
+    "autoJournalHint": "Curhat dari hari-hari lepas auto dikelompokkan ikut topik jadi entri jurnal. Boleh generate manual juga dari halaman Jurnal."
   },
   "layoutEditor": {
     "title": "Susun laman utama",
@@ -316,7 +318,12 @@
     "entryCount": "{count, plural, =0 {tiada entri} =1 {1 entri} other {# entri}}",
     "reframeTitle": "Refleksi Supernova",
     "actionItemsTitle": "Yang boleh kamu lakukan",
-    "addToCalendar": "Tambah ke kalendar"
+    "addToCalendar": "Tambah ke kalendar",
+    "autoGenCta": "Generate dari curhat lepas",
+    "autoGenRunning": "Tengah susun…",
+    "autoGenDone": "{count, plural, =1 {1 entri baru dari curhat lepas} other {# entri baru dari curhat lepas}}",
+    "autoGenNone": "Semua curhat lepas dah masuk jurnal.",
+    "autoGenError": "Gagal generate. Cuba lagi."
   },
   "feedback": {
     "title": "Macam mana hari kamu?",

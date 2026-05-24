@@ -84,7 +84,9 @@
     "groupAccount": "Account",
     "appVersion": "Supernova MVP",
     "languageTitle": "Language",
-    "languageHint": "Language for the interface and AI readings."
+    "languageHint": "Language for the interface and AI readings.",
+    "autoJournalTitle": "Auto-journaling from your chats",
+    "autoJournalHint": "Your past chats get auto-grouped by topic into journal entries. You can also generate them manually from the Journal page."
   },
   "layoutEditor": {
     "title": "Customize home",
@@ -316,7 +318,12 @@
     "entryCount": "{count, plural, =0 {no entries} =1 {1 entry} other {# entries}}",
     "reframeTitle": "Supernova Reflection",
     "actionItemsTitle": "What you can do",
-    "addToCalendar": "Add to calendar"
+    "addToCalendar": "Add to calendar",
+    "autoGenCta": "Generate from past chats",
+    "autoGenRunning": "Putting it together…",
+    "autoGenDone": "{count, plural, =1 {1 new entry from past chats} other {# new entries from past chats}}",
+    "autoGenNone": "All your past chats are already journaled.",
+    "autoGenError": "Couldn't generate. Try again."
   },
   "feedback": {
     "title": "How was your day?",

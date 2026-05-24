@@ -84,7 +84,9 @@
     "groupAccount": "账号",
     "appVersion": "Supernova MVP",
     "languageTitle": "语言",
-    "languageHint": "界面和 AI 解读使用的语言。"
+    "languageHint": "界面和 AI 解读使用的语言。",
+    "autoJournalTitle": "从倾诉自动生成日记",
+    "autoJournalHint": "把过去几天的倾诉自动按主题整理成日记条目。也可以在日记页面手动生成。"
   },
   "layoutEditor": {
     "title": "整理首页",
@@ -316,7 +318,12 @@
     "entryCount": "{count, plural, =0 {没有条目} =1 {1 条条目} other {# 条条目}}",
     "reframeTitle": "Supernova 反思",
     "actionItemsTitle": "你可以做的事",
-    "addToCalendar": "添加到日历"
+    "addToCalendar": "添加到日历",
+    "autoGenCta": "从过去的倾诉生成",
+    "autoGenRunning": "整理中…",
+    "autoGenDone": "{count, plural, =1 {从过去的倾诉中新增 1 条} other {从过去的倾诉中新增 # 条}}",
+    "autoGenNone": "所有过去的倾诉都已整理成日记。",
+    "autoGenError": "生成失败，再试一次。"
   },
   "feedback": {
     "title": "你今天过得怎么样？",

@@ -84,7 +84,9 @@
     "groupAccount": "アカウント",
     "appVersion": "Supernova MVP",
     "languageTitle": "言語",
-    "languageHint": "インターフェースとAI解説で使う言語です。"
+    "languageHint": "インターフェースとAI解説で使う言語です。",
+    "autoJournalTitle": "Curhatから自動ジャーナル作成",
+    "autoJournalHint": "これまでのCurhatをトピックごとに自動でまとめて、ジャーナルのエントリーにします。ジャーナルページから手動でも生成できますよ。"
   },
   "layoutEditor": {
     "title": "ホームをカスタマイズ",
@@ -316,7 +318,12 @@
     "entryCount": "{count, plural, =0 {エントリーなし} =1 {1件のエントリー} other {#件のエントリー}}",
     "reframeTitle": "Supernovaのリフレクション",
     "actionItemsTitle": "あなたにできること",
-    "addToCalendar": "カレンダーに追加"
+    "addToCalendar": "カレンダーに追加",
+    "autoGenCta": "これまでのCurhatから生成",
+    "autoGenRunning": "作成中…",
+    "autoGenDone": "{count, plural, other {これまでのCurhatから新しいエントリーが#件できました}}",
+    "autoGenNone": "これまでのCurhatはすべてジャーナル化済みです。",
+    "autoGenError": "生成に失敗しました。もう一度試してみてください。"
   },
   "feedback": {
     "title": "今日はどんな一日だった？",

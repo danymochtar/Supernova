@@ -34,6 +34,7 @@ export interface ProfileView {
   tone: Tone;
   showKarmicDebt: boolean;
   preferredModel: string | null;
+  autoJournal: boolean;
   reminderEnabled: boolean;
   reminderTime: string | null;
   createdAt: Date;
@@ -124,6 +125,7 @@ function toView(row: ProfileRow): ProfileView {
     tone,
     showKarmicDebt: row.showKarmicDebt,
     preferredModel: row.preferredModel,
+    autoJournal: row.autoJournal,
     reminderEnabled: row.reminderEnabled,
     reminderTime: row.reminderTime,
     createdAt: row.createdAt,
@@ -137,6 +139,7 @@ export interface PreferenceUpdate {
   locale?: Locale;
   showKarmicDebt?: boolean;
   preferredModel?: string | null;
+  autoJournal?: boolean;
   reminderEnabled?: boolean;
   reminderTime?: string | null;
 }

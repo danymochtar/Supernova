@@ -164,3 +164,32 @@ export async function toggleActionItemAction(input: {
   revalidatePath('/[locale]/journal', 'page');
   return { ok: true, item };
 }
+
+export type GenerateAutoJournalResult =
+  | { ok: true; created: number; daysProcessed: number }
+  | { ok: false; error: 'unauth' | 'no_profile' | 'generic' };
+
+/**
+ * Backfill / auto-generate journal entries from past chat conversations.
+ * Clusters each complete past day by topic and synthesizes one entry per
+ * substantive cluster. Idempotent — turns already covered by an existing
+ * entry are skipped, so it never overwrites previously-journaled
+ * dates/events. Used both by the manual "generate from past chats"
+ * button and the auto-trigger when the autoJournal setting is on.
+ */
+export async function generateAutoJournalAction(): Promise<GenerateAutoJournalResult> {
+  const session = await getSession();
+  if (!session) return { ok: false, error: 'unauth' };
+  const profile = await getProfileByUserId(session.user.id);
+  if (!profile) return { ok: false, error: 'no_profile' };
+
+  try {
+    const { autoJournalFromChat } = await import('@/lib/ai/autoJournal');
+    const result = await autoJournalFromChat(profile, { sinceDays: 30, maxDays: 7 });
+    if (result.created > 0) revalidatePath('/[locale]/journal', 'page');
+    return { ok: true, created: result.created, daysProcessed: result.daysProcessed };
+  } catch (err) {
+    console.error('[journal] auto-generate failed', err);
+    return { ok: false, error: 'generic' };
+  }
+}

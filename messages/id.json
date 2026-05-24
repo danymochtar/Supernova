@@ -51,6 +51,8 @@
     "tone_playful": "Santai",
     "karmicTitle": "Tampilkan tanda Karmic Debt",
     "karmicHint": "Kalau lebih nyaman tanpa label \"karmic\" di angka, matikan aja.",
+    "autoJournalTitle": "Auto-journaling dari curhat",
+    "autoJournalHint": "Curhat dari hari-hari lalu otomatis dikelompokin per topik jadi entri jurnal. Bisa di-generate manual juga dari halaman Jurnal.",
     "karmicShown": "Ditampilkan",
     "karmicHidden": "Disembunyikan",
     "modelTitle": "Model AI",
@@ -337,7 +339,12 @@
     "entryCount": "{count, plural, =0 {tidak ada entri} =1 {1 entri} other {# entri}}",
     "reframeTitle": "Refleksi Supernova",
     "actionItemsTitle": "Yang bisa kamu lakuin",
-    "addToCalendar": "Tambahin ke kalender"
+    "addToCalendar": "Tambahin ke kalender",
+    "autoGenCta": "Generate dari curhat lalu",
+    "autoGenRunning": "Lagi nyusun…",
+    "autoGenDone": "{count, plural, =1 {1 entri baru dari curhat lalu} other {# entri baru dari curhat lalu}}",
+    "autoGenNone": "Semua curhat lalu udah ke-journal.",
+    "autoGenError": "Gagal generate. Coba lagi."
   },
   "feedback": {
     "title": "Bagaimana hari kamu?",

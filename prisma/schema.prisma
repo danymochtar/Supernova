@@ -149,6 +149,10 @@ model Profile {
   showKarmicDebt  Boolean  @default(true)
   // Optional model override for chat/daily/aboutMe (power-user setting).
   preferredModel  String?
+  // Auto-journaling: when on, chat conversations from complete past days
+  // are auto-clustered by topic + turned into journal entries without the
+  // user manually selecting messages. Off by default — opt-in.
+  autoJournal     Boolean  @default(false)
   // Local-time reminder ("HH:mm" in user's timezone) — delivery via web push.
   reminderEnabled Boolean  @default(false)
   reminderTime    String?

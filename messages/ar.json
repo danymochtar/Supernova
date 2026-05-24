@@ -84,7 +84,9 @@
     "groupAccount": "الحساب",
     "appVersion": "Supernova MVP",
     "languageTitle": "اللغة",
-    "languageHint": "اللغة المستخدمة في الواجهة وقراءات الذكاء الاصطناعي."
+    "languageHint": "اللغة المستخدمة في الواجهة وقراءات الذكاء الاصطناعي.",
+    "autoJournalTitle": "تدوين تلقائي من فضفضاتك",
+    "autoJournalHint": "فضفضاتك من الأيام السابقة تتجمّع تلقائيًا حسب الموضوع وتتحوّل إلى مدخلات يوميات. تقدر تولّدها يدويًا كمان من صفحة اليوميات."
   },
   "layoutEditor": {
     "title": "ترتيب الصفحة الرئيسية",
@@ -316,7 +318,12 @@
     "entryCount": "{count, plural, =0 {لا توجد إدخالات} =1 {إدخال واحد} =2 {إدخالان} few {# إدخالات} many {# إدخالاً} other {# إدخال}}",
     "reframeTitle": "تأمّلات Supernova",
     "actionItemsTitle": "ما يمكنك فعله",
-    "addToCalendar": "أضِفه إلى التقويم"
+    "addToCalendar": "أضِفه إلى التقويم",
+    "autoGenCta": "توليد من فضفضاتك السابقة",
+    "autoGenRunning": "جاري الترتيب…",
+    "autoGenDone": "{count, plural, =1 {مدخل جديد واحد من فضفضاتك السابقة} other {# مدخلات جديدة من فضفضاتك السابقة}}",
+    "autoGenNone": "كل فضفضاتك السابقة اتحوّلت لمدخلات.",
+    "autoGenError": "فشل التوليد. حاول مرة ثانية."
   },
   "feedback": {
     "title": "كيف كان يومك؟",

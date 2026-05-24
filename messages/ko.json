@@ -84,7 +84,9 @@
     "groupAccount": "계정",
     "appVersion": "Supernova MVP",
     "languageTitle": "언어",
-    "languageHint": "인터페이스와 AI 리딩에 사용되는 언어예요."
+    "languageHint": "인터페이스와 AI 리딩에 사용되는 언어예요.",
+    "autoJournalTitle": "대화에서 자동 저널 생성",
+    "autoJournalHint": "지난 며칠간의 대화가 주제별로 자동 정리되어 저널 항목이 돼요. 저널 페이지에서 직접 생성할 수도 있어요."
   },
   "layoutEditor": {
     "title": "홈 구성",
@@ -316,7 +318,12 @@
     "entryCount": "{count, plural, =0 {기록 없음} =1 {기록 1개} other {기록 #개}}",
     "reframeTitle": "Supernova 회고",
     "actionItemsTitle": "당신이 할 수 있는 것",
-    "addToCalendar": "캘린더에 추가하기"
+    "addToCalendar": "캘린더에 추가하기",
+    "autoGenCta": "지난 대화로 생성하기",
+    "autoGenRunning": "정리하는 중…",
+    "autoGenDone": "{count, plural, =1 {지난 대화에서 새 항목 1개} other {지난 대화에서 새 항목 #개}}",
+    "autoGenNone": "지난 대화는 모두 저널로 정리됐어요.",
+    "autoGenError": "생성에 실패했어요. 다시 시도해 주세요."
   },
   "feedback": {
     "title": "오늘 하루는 어땠어요?",

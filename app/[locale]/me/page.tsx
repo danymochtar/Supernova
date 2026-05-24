@@ -21,6 +21,7 @@ import { PersonalNotesForm } from '@/components/auth/PersonalNotesForm';
 import { SettingsGroup } from '@/components/auth/SettingsGroup';
 import { TopBar } from '@/components/layout/TopBar';
 import {
+  AutoJournalRow,
   DeleteRow,
   ExportRow,
   KarmicRow,
@@ -155,6 +156,7 @@ export default async function MePage({ params }: { params: { locale: string } })
         <ToneRow initial={profile.tone} />
         <ModelRow initial={profile.preferredModel} />
         <KarmicRow initial={profile.showKarmicDebt} />
+        <AutoJournalRow initial={profile.autoJournal} />
       </SettingsGroup>
 
       {/* Reminder */}

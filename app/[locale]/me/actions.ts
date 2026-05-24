@@ -84,6 +84,12 @@ export async function setShowKarmicDebt(show: boolean): Promise<void> {
   await updatePreferences(session.user.id, { showKarmicDebt: Boolean(show) });
 }
 
+export async function setAutoJournal(enabled: boolean): Promise<void> {
+  const session = await getSession();
+  if (!session) return;
+  await updatePreferences(session.user.id, { autoJournal: Boolean(enabled) });
+}
+
 export async function setPreferredModel(model: string): Promise<void> {
   const session = await getSession();
   if (!session) return;

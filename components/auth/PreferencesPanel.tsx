@@ -4,13 +4,14 @@ import { useState, useTransition } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
-import { AlertTriangle, Bell, Brain, Download, Languages, Palette, Sparkles, Trash2 } from 'lucide-react';
+import { AlertTriangle, Bell, Brain, Download, Languages, NotebookPen, Palette, Sparkles, Trash2 } from 'lucide-react';
 import type { Locale } from '@/lib/i18n/config';
 import { LOCALES, LOCALE_CODES } from '@/lib/i18n/locales';
 import {
   setTheme,
   setTone,
   setShowKarmicDebt,
+  setAutoJournal,
   setPreferredModel,
   setReminder,
   setLocaleAction,
@@ -176,6 +177,25 @@ export function KarmicRow({ initial }: { initial: boolean }) {
   return (
     <Row icon={AlertTriangle} title={t('karmicTitle')} hint={t('karmicHint')}>
       <Toggle on={value} onChange={toggle} ariaLabel={t('karmicTitle')} />
+    </Row>
+  );
+}
+
+export function AutoJournalRow({ initial }: { initial: boolean }) {
+  const t = useTranslations('me');
+  const [value, setValue] = useState(initial);
+  const [, startTransition] = useTransition();
+
+  function toggle(v: boolean) {
+    setValue(v);
+    startTransition(() => {
+      setAutoJournal(v);
+    });
+  }
+
+  return (
+    <Row icon={NotebookPen} title={t('autoJournalTitle')} hint={t('autoJournalHint')}>
+      <Toggle on={value} onChange={toggle} ariaLabel={t('autoJournalTitle')} />
     </Row>
   );
 }

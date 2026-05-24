@@ -4,10 +4,12 @@ import { getTranslations } from 'next-intl/server';
 import { BookOpen, MessageCircle } from 'lucide-react';
 import { getSession } from '@/lib/auth/requireSession';
 import { listJournal } from '@/lib/db/repositories/journal';
+import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { getLocaleConfig } from '@/lib/i18n/locales';
 import { JournalView, type JournalEntryLite } from '@/components/journal/JournalView';
-import { deleteJournalAction, toggleActionItemAction } from './actions';
+import { AutoJournalControl } from '@/components/journal/AutoJournalControl';
+import { deleteJournalAction, toggleActionItemAction, generateAutoJournalAction } from './actions';
 
 export const dynamic = 'force-dynamic';
 
@@ -18,7 +20,11 @@ export default async function JournalPage({ params }: { params: { locale: string
   const session = await getSession();
   if (!session) redirect(`/${locale}/login`);
 
-  const entries = await listJournal(session.user.id, 200);
+  const [entries, profile] = await Promise.all([
+    listJournal(session.user.id, 200),
+    getProfileByUserId(session.user.id),
+  ]);
+  const autoJournalEnabled = profile?.autoJournal ?? false;
 
   // Pre-format the locale-aware date strings server-side so the client
   // component can stay focused on layout + interactions and doesn't have
@@ -60,9 +66,18 @@ export default async function JournalPage({ params }: { params: { locale: string
       className="container max-w-3xl space-y-6 px-4 pb-6 sm:px-6 sm:pb-10"
       style={{ paddingTop: 'calc(env(safe-area-inset-top) + 1.5rem)' }}
     >
-      <header className="space-y-1 pt-2">
-        <h1 className="font-serif text-2xl font-semibold tracking-tight">{t('title')}</h1>
-        <p className="text-muted-foreground text-sm">{t('subtitle')}</p>
+      <header className="space-y-3 pt-2">
+        <div className="space-y-1">
+          <h1 className="font-serif text-2xl font-semibold tracking-tight">{t('title')}</h1>
+          <p className="text-muted-foreground text-sm">{t('subtitle')}</p>
+        </div>
+        {/* Backfill control — always available so the user can pull past
+          * chats into journal entries on demand; auto-fires once per
+          * session when the autoJournal setting is on. */}
+        <AutoJournalControl
+          autoEnabled={autoJournalEnabled}
+          generateAction={generateAutoJournalAction}
+        />
       </header>
 
       {entries.length === 0 ? (
