@@ -40,6 +40,7 @@ Rules:
 - If the whole day is really just one topic, return one cluster. If it's all trivial, return an empty clusters array.
 - Each cluster needs a short "topic" label (2-5 words) in ${cfg.nativeName} naming the event — e.g. "Masalah deadline kerjaan", "Obrolan sama partner soal liburan", "Catch-up sama Sabri". This is internal metadata; keep it concrete and specific to what actually happened.
 - A cluster is only worth keeping if it has real substance (a feeling, a situation, a decision). Skip clusters that are just logistics with no emotional or reflective content.
+- In the "topic" label, preserve the user's exact person references — don't resolve ambiguous ones. "bf Azhar" / "bf-nya Azhar" (Azhar's boyfriend) must NOT become just "Azhar"; "kakak Sarah" must not become "Sarah". If you can't tell who's who, keep the label generic ("Mikirin hadiah ulang tahun") rather than guessing a name/role.
 
 Output MUST be valid JSON, nothing else:
 {

@@ -105,6 +105,7 @@ Aturan untuk "narrative":
 - 1-3 paragraf pendek. Total 80-180 kata. Padat, bukan transkrip.
 - Tangkep INTI: apa yang lagi diolah, perasaan, keputusan yang lagi muncul, pertanyaan yang masih nge-gantung. Bukan ngulang isi obrolan.
 - Boleh sebut nama orang/tempat/event spesifik kalau muncul di obrolan (misal "Sabri", "trip Sabah", "event Microsoft 7 Mei") — itu yang bikin entri kerasa hidup.
+- SIAPA ITU SIAPA — KRUSIAL, jangan sampai salah: salah nyebut relasi/identitas orang itu kesalahan paling fatal di jurnal. Pakai PERSIS frasa user buat nyebut orang. Kalau user nulis "bf Azhar" / "bf-nya Azhar" (= pacarnya Azhar), JANGAN ringkas jadi "Azhar" — yang dimaksud orang yang BEDA. "kakak Sarah" jangan jadi "Sarah". Kalau di obrolan ambigu siapa yang dimaksud, biarin ambigu juga di jurnal — JANGAN nebak atau ngarang struktur relasi yang nggak eksplisit. JANGAN promosiin orang yang cuma disebut jadi peran relasi (pacar/kakak/bos) yang nggak pernah dinyatakan user.
 - JANGAN pake markdown, bullet, heading. Cuma paragraf prosa.
 - JANGAN sebut detail numerologi (Personal Year, dll) — jurnal soal hidup, bukan sistem.
 - JANGAN nasihat medis/hukum/finansial.
@@ -150,6 +151,7 @@ Rules for "narrative":
 - 1-3 short paragraphs. 80-180 words total. Dense, not a transcript.
 - Capture the GIST: what they're processing, the feeling, decisions surfacing, questions still hanging. Don't replay the chat content.
 - Concrete names/places/events from the chat are welcome — they make the entry feel alive.
+- WHO IS WHO — CRITICAL, never get it wrong: misattributing a person's identity or relationship role is the most damaging mistake a journal can make. Use the user's EXACT phrasing for people. If they wrote "Azhar's bf" / "bf-nya Azhar" (= Azhar's boyfriend), do NOT shrink it to "Azhar" — that's a DIFFERENT person. "Sarah's brother" must not become "Sarah". If the chat is ambiguous about who's who, keep the journal ambiguous the same way — do NOT guess or invent a relationship structure that wasn't explicit. Never promote a merely-mentioned person into a relationship role (partner/sibling/boss) the user never stated.
 - NO markdown, bullets, headings. Only prose paragraphs.
 - NO numerology specifics (Personal Year, etc.) — the journal is about life, not the system.
 - NO medical/legal/financial advice.
