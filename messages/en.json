@@ -9,7 +9,8 @@
     "talents": "Talents",
     "chat": "Chat",
     "people": "People",
-    "journal": "Journal"
+    "journal": "Journal",
+    "life": "Life"
   },
   "me": {
     "title": "Me",
@@ -253,7 +254,8 @@
     "number": "Number",
     "now": "Now",
     "settingsLink": "Settings & profile",
-    "meaningComingSoon": "We're still curating the description for this number. Meanwhile the number on the card is a deterministic calculation — you can ask the AI on \"Ask AI\" for deeper context."
+    "meaningComingSoon": "We're still curating the description for this number. Meanwhile the number on the card is a deterministic calculation — you can ask the AI on \"Ask AI\" for deeper context.",
+    "age": "Age"
   },
   "reading": {
     "title": "Daily reading",
@@ -789,5 +791,10 @@
     "alsoThemes": "Also showing up:",
     "completionByEmotionTitle": "When you're feeling this way, here's how to execute:",
     "completionByEmotionRow": "When you're feeling {emotion}"
+  },
+  "kehidupan": {
+    "title": "Life",
+    "tabTentang": "About You",
+    "tabPerjalanan": "Journey"
   }
 }

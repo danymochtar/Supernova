@@ -9,7 +9,8 @@
     "talents": "天赋",
     "chat": "倾诉",
     "people": "人物",
-    "journal": "日记"
+    "journal": "日记",
+    "life": "生活"
   },
   "me": {
     "title": "我的",
@@ -253,7 +254,8 @@
     "number": "数字",
     "now": "当前",
     "settingsLink": "设置与档案",
-    "meaningComingSoon": "这个数字的解读我们还在准备中。在此期间，卡片上的数字是确定性的计算结果 —— 你可以到「Tanya AI」页面问 AI 来获得更深入的背景信息。"
+    "meaningComingSoon": "这个数字的解读我们还在准备中。在此期间，卡片上的数字是确定性的计算结果 —— 你可以到「Tanya AI」页面问 AI 来获得更深入的背景信息。",
+    "age": "年龄"
   },
   "reading": {
     "title": "每日解读",
@@ -789,5 +791,10 @@
     "alsoThemes": "也出现了：",
     "completionByEmotionTitle": "当你是这种情绪时，这样去执行：",
     "completionByEmotionRow": "当你正处于{emotion}的时候"
+  },
+  "kehidupan": {
+    "title": "生活",
+    "tabTentang": "关于你",
+    "tabPerjalanan": "旅程"
   }
 }

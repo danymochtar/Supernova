@@ -5,11 +5,16 @@
   },
   "nav": {
     "home": "Beranda",
-    "journey": "Perjalanan",
+    "life": "Kehidupan",
     "talents": "Talenta",
     "chat": "Curhat",
     "people": "Orang",
     "journal": "Jurnal"
+  },
+  "kehidupan": {
+    "title": "Kehidupan",
+    "tabTentang": "Tentang Kamu",
+    "tabPerjalanan": "Perjalanan"
   },
   "me": {
     "title": "Saya",
@@ -270,6 +275,7 @@
     "karmicLessonsNone": "Tidak ada — semua energi 1–9 hadir di nama kamu.",
     "fullJourneyTitle": "Perjalanan lengkap",
     "stage": "Babak",
+    "age": "Usia",
     "ageRange": "Rentang usia",
     "number": "Angka",
     "now": "Saat ini",

@@ -1,23 +1,15 @@
-import { Suspense } from 'react';
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
-import { displayName } from '@/lib/profile/displayName';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import {
-  bridges,
-  buildCoreProfile,
   contextFromInstant,
-  minorNumbers,
   personalCycles,
 } from '@/lib/numerology';
 import { NumberCard } from '@/components/numerology/NumberCard';
-import { AboutMeAsync, AboutMeSkeleton } from '@/components/numerology/AboutMeAsync';
-import { KarmicLessonsList } from '@/components/numerology/KarmicLessonsList';
+import { ProfileCard } from '@/components/numerology/ProfileCard';
 import { AppHeader } from '@/components/layout/AppHeader';
-import { Widget } from '@/components/layout/Widget';
-import { Explainer } from '@/components/layout/Explainer';
 import { DailyReadingView } from '@/components/reading/DailyReadingView';
 import { DateBrowser } from '@/components/reading/DateBrowser';
 import { FeedbackPrompt } from '@/components/feedback/FeedbackPrompt';
@@ -34,14 +26,14 @@ import {
 } from '@/components/journal/JournalDigestWidget';
 import { toggleActionItemAction } from '@/app/[locale]/journal/actions';
 
-type WidgetId = 'reading' | 'followUp' | 'digest' | 'aboutMe' | 'karmic' | 'feedback';
+type WidgetId = 'reading' | 'followUp' | 'digest' | 'feedback';
 
-// Fixed dashboard widget order. Follow-up surfaces right after the day's
-// reading — once the user has read the morning summary, the next-most-
-// actionable item is their pending commitments from past journal entries.
-// The weekly digest sits below: zoomed-out picture (last 7d themes +
-// emotions + action completion) right after the granular action list.
-const WIDGET_ORDER: WidgetId[] = ['reading', 'followUp', 'digest', 'aboutMe', 'karmic', 'feedback'];
+// Fixed dashboard widget order. The compact ProfileCard sits above all
+// of these (rendered separately, not as a widget). The heavy "About You"
+// + Karmic blocks moved to the Kehidupan tab — Beranda stays light:
+// daily reading, then pending follow-ups, then the weekly digest, then
+// the end-of-day feedback prompt.
+const WIDGET_ORDER: WidgetId[] = ['reading', 'followUp', 'digest', 'feedback'];
 
 const LONG_DAY_ID = ['MINGGU', 'SENIN', 'SELASA', 'RABU', 'KAMIS', 'JUMAT', 'SABTU'];
 const LONG_MONTH_ID = [
@@ -124,14 +116,10 @@ export default async function DashboardPage({
   if (!session) {
     redirect(`/${locale}/login`);
   }
-  // Pull userId once so nested closures (renderWidget) don't lose the
-  // narrowing across the function boundary.
-  const userId = session.user.id;
 
   const profile = await getProfileByUserId(session.user.id);
   if (!profile) redirect(`/${locale}/welcome`);
 
-  const core = buildCoreProfile(profile.fullName, profile.dob);
   const today = contextFromInstant(new Date(), profile.timezone);
   const todayIso = isoOf(today);
   const maxIso = shiftIso(todayIso, PREVIEW_WINDOW_DAYS);
@@ -139,8 +127,6 @@ export default async function DashboardPage({
   const isPreview = selectedIso !== todayIso;
   const ctx = isPreview ? ctxFromIso(selectedIso) : today;
   const cycles = personalCycles(profile.dob, ctx);
-  const minor = minorNumbers(profile.nickname);
-  const bridge = bridges(core);
   const todayStart = new Date(Date.UTC(today.year, today.month - 1, today.day));
   const todayEnd = new Date(todayStart);
   todayEnd.setUTCDate(todayEnd.getUTCDate() + 1);
@@ -196,23 +182,6 @@ export default async function DashboardPage({
       daysAgo,
     };
   });
-
-  // AboutMe AI input — passed to <AboutMeAsync> inside <Suspense>. Cache
-  // hits resolve instantly; cold cache streams behind the skeleton.
-  const aboutMeInput = {
-    locale,
-    fullName: displayName(profile),
-    core: {
-      lifePath: core.lifePath,
-      expression: core.expression,
-      soulUrge: core.soulUrge,
-      personality: core.personality,
-      birthday: core.birthday,
-    },
-    minor,
-    karmicLessons: core.karmicLessons,
-    preferredModel: profile.preferredModel,
-  };
 
   const showFeedbackPrompt = !isPreview && todaysChatTurns.length === 0;
 
@@ -285,82 +254,6 @@ export default async function DashboardPage({
             initial={todayFeedback ? { note: todayFeedback.note } : null}
           />
         ) : null;
-      case 'aboutMe':
-        return (
-          <Suspense
-            key={id}
-            fallback={
-              <AboutMeSkeleton title={t('aboutMeTitle')} subtitle={t('aboutMeSubtitle')} />
-            }
-          >
-            <AboutMeAsync
-              userId={userId}
-              input={aboutMeInput}
-              title={t('aboutMeTitle')}
-              subtitle={t('aboutMeSubtitle')}
-              fallback={t('aboutMeFallback')}
-              cardLabels={{
-                lifePath: t('lifePath'),
-                expression: t('expression'),
-                soulUrge: t('soulUrge'),
-                personality: t('personality'),
-                birthday: t('birthday'),
-                karmicLessons: t('karmicLessonsTitle'),
-              }}
-              numbers={{
-                lifePath: core.lifePath,
-                expression: core.expression,
-                soulUrge: core.soulUrge,
-                personality: core.personality,
-                birthday: core.birthday,
-                karmicLessons: core.karmicLessons,
-              }}
-              locale={locale}
-              explainer={{
-                title: t('explainerLearnMore'),
-                body: t('aboutMeExplainer'),
-              }}
-              minor={minor}
-              minorLabels={{
-                expression: t('minorExpression'),
-                soulUrge: t('minorSoulUrge'),
-                personality: t('minorPersonality'),
-              }}
-              minorExplainer={{
-                title: t('explainerLearnMore'),
-                body: t('minorExplainer'),
-              }}
-              bridge={bridge}
-              bridgeLabels={{
-                lifePathExpression: t('bridgeLifePathExpression'),
-                lifePathExpressionHint: t('bridgeLifePathExpressionHint'),
-                soulUrgePersonality: t('bridgeSoulUrgePersonality'),
-                soulUrgePersonalityHint: t('bridgeSoulUrgePersonalityHint'),
-              }}
-              bridgeExplainer={{
-                title: t('explainerLearnMore'),
-                body: t('bridgeExplainer'),
-              }}
-              comingSoonLabel={t('meaningComingSoon')}
-            />
-          </Suspense>
-        );
-      case 'karmic':
-        return (
-          <Widget key={id} title={t('karmicLessonsTitle')} hint={t('karmicLessonsHint')} defaultOpen={false}>
-            <div className="space-y-3">
-              <Explainer title={t('explainerLearnMore')} body={t('karmicLessonsExplainer')} />
-              <KarmicLessonsList
-                lessons={core.karmicLessons.map((n) => ({
-                  number: n,
-                  meaning: meaningFor('karmicLesson', { compound: n, reduced: n, isMaster: false }, locale),
-                }))}
-                emptyLabel={t('karmicLessonsNone')}
-                comingSoonLabel={t('meaningComingSoon')}
-              />
-            </div>
-          </Widget>
-        );
       default:
         return null;
     }
@@ -384,6 +277,10 @@ export default async function DashboardPage({
           />
         }
       />
+
+      {!isPreview ? (
+        <ProfileCard profile={profile} locale={locale} ageLabel={t('age')} />
+      ) : null}
 
       {WIDGET_ORDER.map((id) => renderWidget(id))}
     </main>

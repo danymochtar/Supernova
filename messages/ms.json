@@ -9,7 +9,8 @@
     "talents": "Bakat",
     "chat": "Luah Hati",
     "people": "Orang",
-    "journal": "Jurnal"
+    "journal": "Jurnal",
+    "life": "Kehidupan"
   },
   "me": {
     "title": "Saya",
@@ -253,7 +254,8 @@
     "number": "Angka",
     "now": "Sekarang",
     "settingsLink": "Tetapan & profil",
-    "meaningComingSoon": "Penjelasan untuk angka ini sedang kami siapkan. Sementara itu, angka pada kad adalah pengiraan deterministik — kamu boleh tanya AI di halaman \"Tanya AI\" untuk konteks lebih dalam."
+    "meaningComingSoon": "Penjelasan untuk angka ini sedang kami siapkan. Sementara itu, angka pada kad adalah pengiraan deterministik — kamu boleh tanya AI di halaman \"Tanya AI\" untuk konteks lebih dalam.",
+    "age": "Usia"
   },
   "reading": {
     "title": "Bacaan harian",
@@ -789,5 +791,10 @@
     "alsoThemes": "Turut muncul:",
     "completionByEmotionTitle": "Bila emosinya macam ni, eksekusinya:",
     "completionByEmotionRow": "Bila kamu tengah {emotion}"
+  },
+  "kehidupan": {
+    "title": "Kehidupan",
+    "tabTentang": "Tentang Kamu",
+    "tabPerjalanan": "Perjalanan"
   }
 }

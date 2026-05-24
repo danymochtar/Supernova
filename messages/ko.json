@@ -9,7 +9,8 @@
     "talents": "재능",
     "chat": "털어놓기",
     "people": "사람들",
-    "journal": "저널"
+    "journal": "저널",
+    "life": "인생"
   },
   "me": {
     "title": "나",
@@ -253,7 +254,8 @@
     "number": "숫자",
     "now": "현재",
     "settingsLink": "설정 & 프로필",
-    "meaningComingSoon": "이 숫자에 대한 설명을 준비 중이에요. 그동안, 카드에 있는 숫자는 결정론적 계산 결과예요 — 더 깊은 맥락이 궁금하다면 \"AI에게 묻기\" 페이지에서 물어볼 수 있어요."
+    "meaningComingSoon": "이 숫자에 대한 설명을 준비 중이에요. 그동안, 카드에 있는 숫자는 결정론적 계산 결과예요 — 더 깊은 맥락이 궁금하다면 \"AI에게 묻기\" 페이지에서 물어볼 수 있어요.",
+    "age": "나이"
   },
   "reading": {
     "title": "오늘의 리딩",
@@ -789,5 +791,10 @@
     "alsoThemes": "함께 나타난 것들:",
     "completionByEmotionTitle": "감정이 이럴 때, 이렇게 실행해보세요:",
     "completionByEmotionRow": "당신이 {emotion} 상태일 때"
+  },
+  "kehidupan": {
+    "title": "인생",
+    "tabTentang": "당신에 대하여",
+    "tabPerjalanan": "여정"
   }
 }

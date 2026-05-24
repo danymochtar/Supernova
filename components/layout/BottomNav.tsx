@@ -6,7 +6,7 @@ import { BookOpen, Compass, Gem, Heart, MessageCircle, Sparkles } from 'lucide-r
 import type { Locale } from '@/lib/i18n/config';
 
 interface Tab {
-  key: 'home' | 'journey' | 'talents' | 'chat' | 'people' | 'journal';
+  key: 'home' | 'life' | 'talents' | 'chat' | 'people' | 'journal';
   href: (locale: Locale) => string;
   icon: typeof Sparkles;
   /** Path prefixes that count as "active" for this tab. */
@@ -15,7 +15,9 @@ interface Tab {
 
 const TABS: Tab[] = [
   { key: 'home', href: (l) => `/${l}/dashboard`, icon: Sparkles, matches: ['/dashboard'] },
-  { key: 'journey', href: (l) => `/${l}/journey`, icon: Compass, matches: ['/journey'] },
+  // "Kehidupan" merges the self-portrait (About You) + life trajectory
+  // (the old Journey). /journey still redirects here, so keep it in matches.
+  { key: 'life', href: (l) => `/${l}/kehidupan`, icon: Compass, matches: ['/kehidupan', '/journey'] },
   { key: 'talents', href: (l) => `/${l}/talents`, icon: Gem, matches: ['/talents'] },
   { key: 'chat', href: (l) => `/${l}/ask`, icon: MessageCircle, matches: ['/ask'] },
   { key: 'people', href: (l) => `/${l}/people`, icon: Heart, matches: ['/people'] },
@@ -25,7 +27,7 @@ const TABS: Tab[] = [
 // Routes where the bottom nav stays visible. Profile/settings/patterns moved
 // off the bottom nav (reachable via the gear icon in AppHeader) but the nav
 // still shows on those pages so users have a quick way back.
-const APP_ROUTES = ['/dashboard', '/journey', '/talents', '/ask', '/people', '/journal', '/patterns', '/me', '/profile'];
+const APP_ROUTES = ['/dashboard', '/kehidupan', '/journey', '/talents', '/ask', '/people', '/journal', '/patterns', '/me', '/profile'];
 
 export function BottomNav({ locale, labels }: { locale: Locale; labels: Record<Tab['key'], string> }) {
   const pathname = usePathname();

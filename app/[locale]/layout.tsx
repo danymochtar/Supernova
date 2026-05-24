@@ -63,7 +63,7 @@ export default async function LocaleLayout({
 
   const navLabels = {
     home: t('home'),
-    journey: t('journey'),
+    life: t('life'),
     talents: t('talents'),
     chat: t('chat'),
     people: t('people'),
