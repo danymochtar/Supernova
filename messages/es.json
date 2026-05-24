@@ -299,7 +299,10 @@
     "journalCancel": "Cancelar",
     "journalCommit": "Añadir al Diario",
     "journalSaving": "Armando el diario…",
-    "journalSavedToast": "Guardado en el Diario"
+    "journalSavedToast": "Guardado en el Diario",
+    "suggestFollowUp": "¿Seguimos con \"{item}\"?",
+    "suggestTheme": "¿Hablamos más de {theme}?",
+    "suggestVibe": "Chequear mi vibe de hoy"
   },
   "journal": {
     "title": "Diario",

@@ -299,7 +299,10 @@
     "journalCancel": "취소",
     "journalCommit": "Jurnal에 추가",
     "journalSaving": "Jurnal 정리 중…",
-    "journalSavedToast": "Jurnal에 저장됨"
+    "journalSavedToast": "Jurnal에 저장됨",
+    "suggestFollowUp": "\"{item}\" 얘기 더 이어갈까요?",
+    "suggestTheme": "{theme} 얘기 좀 더 해볼까요?",
+    "suggestVibe": "오늘 제 vibe 체크해주세요"
   },
   "journal": {
     "title": "Jurnal",

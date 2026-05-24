@@ -299,7 +299,10 @@
     "journalCancel": "إلغاء",
     "journalCommit": "أضف إلى Jurnal",
     "journalSaving": "جارٍ تنظيم Jurnal…",
-    "journalSavedToast": "تم الحفظ في Jurnal"
+    "journalSavedToast": "تم الحفظ في Jurnal",
+    "suggestFollowUp": "نكمل عن \"{item}\"؟",
+    "suggestTheme": "نحكي عن {theme} أكثر؟",
+    "suggestVibe": "شوف الـ vibe تبعي اليوم"
   },
   "journal": {
     "title": "Jurnal",

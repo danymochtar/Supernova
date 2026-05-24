@@ -6,7 +6,14 @@ import { addToJournalAction } from '@/app/[locale]/journal/actions';
 import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { getRecentTurns } from '@/lib/db/repositories/qa';
+import { getJournalDigest, listOpenActionItems } from '@/lib/db/repositories/journal';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+
+/** Trim an action-item title to a chip-friendly length. */
+function chipTrim(s: string, max = 32): string {
+  const t = s.replace(/\s+/g, ' ').trim();
+  return t.length <= max ? t : `${t.slice(0, max - 1).trim()}…`;
+}
 
 export const dynamic = 'force-dynamic';
 
@@ -27,7 +34,28 @@ export default async function AskPage({ params }: { params: { locale: string } }
   const profile = await getProfileByUserId(session.user.id);
   if (!profile) redirect(`/${locale}/welcome`);
 
-  const recentTurns = await getRecentTurns(session.user.id, HISTORY_WINDOW);
+  const [recentTurns, digest, openItems] = await Promise.all([
+    getRecentTurns(session.user.id, HISTORY_WINDOW),
+    getJournalDigest(session.user.id, 14),
+    listOpenActionItems(session.user.id, 14, 2),
+  ]);
+
+  // Behavior-aware suggestion chips — built from what the user actually
+  // journals about (top themes) + anything they said they'd do but haven't
+  // (open follow-ups). Falls back to the generic starters in ChatThread
+  // when the user has no history yet (suggestions stays empty).
+  const suggestions: string[] = [];
+  if (openItems[0]) {
+    suggestions.push(t('suggestFollowUp', { item: chipTrim(openItems[0].title) }));
+  }
+  for (const th of (digest?.topThemes ?? []).slice(0, 2)) {
+    suggestions.push(t('suggestTheme', { theme: th.name }));
+  }
+  // Only surface the personalized set when there's genuine signal (a
+  // follow-up or at least one journaled theme). A lone vibe-check isn't
+  // "behavior-aware" enough to displace the curated starters.
+  if (suggestions.length > 0) suggestions.push(t('suggestVibe'));
+  const personalized = suggestions.slice(0, 4);
 
   return (
     <main
@@ -48,6 +76,7 @@ export default async function AskPage({ params }: { params: { locale: string } }
         }))}
         emptyHint={t('emptyHint')}
         starterPrompts={[t('starter1'), t('starter2'), t('starter3'), t('starter4')]}
+        suggestions={personalized}
         deleteAction={deleteTurnAction}
         journalAction={addToJournalAction}
       />

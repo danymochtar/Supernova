@@ -320,7 +320,10 @@
     "journalCancel": "Batal",
     "journalCommit": "Tambah ke Jurnal",
     "journalSaving": "Menyusun jurnal…",
-    "journalSavedToast": "Tersimpan ke Jurnal"
+    "journalSavedToast": "Tersimpan ke Jurnal",
+    "suggestFollowUp": "Lanjut soal \"{item}\"?",
+    "suggestTheme": "Cerita soal {theme} lagi?",
+    "suggestVibe": "Cek vibe gw hari ini"
   },
   "journal": {
     "title": "Jurnal",

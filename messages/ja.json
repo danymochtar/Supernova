@@ -299,7 +299,10 @@
     "journalCancel": "キャンセル",
     "journalCommit": "ジャーナルに追加",
     "journalSaving": "ジャーナルにまとめてるところ…",
-    "journalSavedToast": "ジャーナルに保存したよ"
+    "journalSavedToast": "ジャーナルに保存したよ",
+    "suggestFollowUp": "「{item}」について続ける？",
+    "suggestTheme": "{theme}についてもう少し話す？",
+    "suggestVibe": "今日のvibeをチェック"
   },
   "journal": {
     "title": "ジャーナル",

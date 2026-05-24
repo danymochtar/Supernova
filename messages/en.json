@@ -299,7 +299,10 @@
     "journalCancel": "Cancel",
     "journalCommit": "Add to Journal",
     "journalSaving": "Writing journal…",
-    "journalSavedToast": "Saved to Journal"
+    "journalSavedToast": "Saved to Journal",
+    "suggestFollowUp": "Keep going on \"{item}\"?",
+    "suggestTheme": "Tell me more about {theme}?",
+    "suggestVibe": "Check my vibe today"
   },
   "journal": {
     "title": "Journal",

@@ -299,7 +299,10 @@
     "journalCancel": "取消",
     "journalCommit": "添加到 Jurnal",
     "journalSaving": "正在整理日记……",
-    "journalSavedToast": "已保存到 Jurnal"
+    "journalSavedToast": "已保存到 Jurnal",
+    "suggestFollowUp": "继续聊「{item}」吗？",
+    "suggestTheme": "再聊聊 {theme} 吗？",
+    "suggestVibe": "看看我今天的 vibe"
   },
   "journal": {
     "title": "日记",

@@ -112,6 +112,11 @@ interface Props {
   emptyHint: string;
   /** Short example prompts shown as tappable chips when the thread is empty. */
   starterPrompts?: string[];
+  /** Behavior-aware suggestion chips derived from the user's recent
+   * journal themes + open follow-ups. Shown above the composer when the
+   * input is empty so they stay reachable mid-conversation, not just on
+   * an empty thread. Falls back to starterPrompts when absent. */
+  suggestions?: string[];
   /** Server action to delete a persisted turn. */
   deleteAction?: (input: { id: string }) => Promise<DeleteTurnResult>;
   /** Server action to snapshot turns into the journal. */
@@ -122,6 +127,7 @@ export function ChatThread({
   initialTurns,
   emptyHint,
   starterPrompts = [],
+  suggestions = [],
   deleteAction,
   journalAction,
 }: Props) {
@@ -491,9 +497,9 @@ export function ChatThread({
               <Sparkles className="h-6 w-6" aria-hidden />
             </div>
             <p className="text-muted-foreground max-w-sm text-sm">{emptyHint}</p>
-            {starterPrompts.length > 0 ? (
+            {(suggestions.length > 0 ? suggestions : starterPrompts).length > 0 ? (
               <div className="flex w-full max-w-md flex-col gap-2">
-                {starterPrompts.map((p) => (
+                {(suggestions.length > 0 ? suggestions : starterPrompts).map((p) => (
                   <button
                     key={p}
                     type="button"
@@ -752,6 +758,27 @@ export function ChatThread({
         className="border-border bg-background/95 fixed inset-x-3 z-40 mx-auto max-w-3xl space-y-2 rounded-3xl border px-3 py-2.5 shadow-lg supports-[backdrop-filter]:bg-background/80 supports-[backdrop-filter]:backdrop-blur sm:inset-x-4 sm:px-4 sm:py-3"
         style={{ bottom: 'calc(3.5rem + env(safe-area-inset-bottom) + 0.5rem)' }}
       >
+        {/* Behavior-aware suggestion chips — reachable mid-conversation
+          * when the input is idle. Hidden once the user starts typing, is
+          * replying, or while a response streams, so they never get in
+          * the way. Tap fills the composer (doesn't auto-send) so the
+          * user can tweak before sending. Empty thread shows them in the
+          * empty-state block instead. */}
+        {suggestions.length > 0 && turns.length > 0 && !pending && !replyTo && input.trim() === '' ? (
+          <div className="no-scrollbar -mx-1 flex gap-2 overflow-x-auto px-1 pb-0.5">
+            {suggestions.map((s) => (
+              <button
+                key={s}
+                type="button"
+                onClick={() => setInput(s)}
+                className="border-border press-soft hover:bg-muted/40 shrink-0 whitespace-nowrap rounded-full border bg-surface-1 px-3 py-1.5 text-xs text-muted-foreground"
+              >
+                {s}
+              </button>
+            ))}
+          </div>
+        ) : null}
+
         {/* Reply quote chip — shown when the user tapped Reply on a previous turn. */}
         {replyTo ? (
           <div className="border-border bg-muted/40 group relative flex items-start gap-2 rounded-lg border-l-2 border-l-primary px-3 py-2 text-xs">
