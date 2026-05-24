@@ -796,6 +796,27 @@
   "kehidupan": {
     "title": "生活",
     "tabTentang": "关于你",
-    "tabPerjalanan": "旅程"
+    "tabPerjalanan": "旅程",
+    "tabPercintaan": "爱情",
+    "tabKeuangan": "财务"
+  },
+  "love": {
+    "title": "爱情",
+    "subtitle": "你的爱情风格，从你自己的数字解读 — 不是和某个特定的人合不合的问题。",
+    "fallback": "现在还没法生成爱情解读。等下再试试吧。",
+    "whatHeartWantsTitle": "你内心真正在找的",
+    "howYouLoveTitle": "你爱人的方式",
+    "partnerArchetypeTitle": "和你合拍的类型",
+    "romanceSeasonTitle": "今年的爱情季节",
+    "growthEdgeTitle": "成长的空间"
+  },
+  "finance": {
+    "title": "财务",
+    "subtitle": "你和金钱、财运的关系，从你的数字解读 — 是关于心态，不是投资建议。",
+    "fallback": "现在还没法生成财务解读。等下再试试吧。",
+    "moneyNatureTitle": "你赚钱的方式",
+    "moneyStyleTitle": "你打理金钱的风格",
+    "financialSeasonTitle": "今年的财务季节",
+    "abundanceEdgeTitle": "财运上的成长空间"
   }
 }

@@ -6,6 +6,7 @@ import { isLocale, type Locale } from '@/lib/i18n/config';
 import { KehidupanTabs, type KehidupanTab } from '@/components/kehidupan/KehidupanTabs';
 import { TentangView } from '@/components/kehidupan/TentangView';
 import { PerjalananView } from '@/components/kehidupan/PerjalananView';
+import { AspectView } from '@/components/kehidupan/AspectView';
 
 export const dynamic = 'force-dynamic';
 
@@ -28,7 +29,9 @@ export default async function KehidupanPage({
   // Default sub-view is the self-portrait. Only the active tab's data +
   // AI generation runs, since each tab is its own server render keyed by
   // the ?tab= query param.
-  const tab: KehidupanTab = searchParams.tab === 'perjalanan' ? 'perjalanan' : 'tentang';
+  const raw = searchParams.tab;
+  const tab: KehidupanTab =
+    raw === 'perjalanan' || raw === 'percintaan' || raw === 'keuangan' ? raw : 'tentang';
 
   return (
     <main
@@ -40,12 +43,21 @@ export default async function KehidupanPage({
         <KehidupanTabs
           active={tab}
           basePath={`/${locale}/kehidupan`}
-          labels={{ tentang: t('tabTentang'), perjalanan: t('tabPerjalanan') }}
+          labels={{
+            tentang: t('tabTentang'),
+            perjalanan: t('tabPerjalanan'),
+            percintaan: t('tabPercintaan'),
+            keuangan: t('tabKeuangan'),
+          }}
         />
       </header>
 
       {tab === 'perjalanan' ? (
         <PerjalananView profile={profile} locale={locale} />
+      ) : tab === 'percintaan' ? (
+        <AspectView profile={profile} locale={locale} aspectId="love" />
+      ) : tab === 'keuangan' ? (
+        <AspectView profile={profile} locale={locale} aspectId="finance" />
       ) : (
         <TentangView profile={profile} locale={locale} />
       )}

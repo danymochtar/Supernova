@@ -796,6 +796,27 @@
   "kehidupan": {
     "title": "人生",
     "tabTentang": "あなたについて",
-    "tabPerjalanan": "旅"
+    "tabPerjalanan": "旅",
+    "tabPercintaan": "恋愛",
+    "tabKeuangan": "お金"
+  },
+  "love": {
+    "title": "恋愛",
+    "subtitle": "あなた自身の数字から読み解く、あなたの愛し方 — 特定の誰かとの相性ではなく。",
+    "fallback": "今は恋愛リーディングを作れないみたい。また後でのぞいてみてね。",
+    "whatHeartWantsTitle": "あなたの心が求めているもの",
+    "howYouLoveTitle": "あなたの愛し方",
+    "partnerArchetypeTitle": "あなたと響き合うタイプ",
+    "romanceSeasonTitle": "今年の恋愛シーズン",
+    "growthEdgeTitle": "成長できるところ"
+  },
+  "finance": {
+    "title": "お金",
+    "subtitle": "あなたの数字から読み解く、お金や豊かさとの付き合い方 — 投資アドバイスじゃなくて、マインドセットの話。",
+    "fallback": "今は金運リーディングを作れないみたい。また後でのぞいてみてね。",
+    "moneyNatureTitle": "あなたの稼ぎ方",
+    "moneyStyleTitle": "あなたのお金の扱い方",
+    "financialSeasonTitle": "今年の金運シーズン",
+    "abundanceEdgeTitle": "豊かさにまつわる成長ポイント"
   }
 }

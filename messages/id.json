@@ -14,7 +14,28 @@
   "kehidupan": {
     "title": "Kehidupan",
     "tabTentang": "Tentang Kamu",
-    "tabPerjalanan": "Perjalanan"
+    "tabPerjalanan": "Perjalanan",
+    "tabPercintaan": "Percintaan",
+    "tabKeuangan": "Keuangan"
+  },
+  "love": {
+    "title": "Percintaan",
+    "subtitle": "Gaya cinta kamu, dibaca dari angka kamu sendiri — bukan kecocokan sama orang tertentu.",
+    "fallback": "Bacaan percintaan belum bisa dibuat sekarang. Coba lagi nanti, ya.",
+    "whatHeartWantsTitle": "Yang hati kamu cari",
+    "howYouLoveTitle": "Cara kamu mencintai",
+    "partnerArchetypeTitle": "Tipe yang nyambung sama kamu",
+    "romanceSeasonTitle": "Musim percintaan tahun ini",
+    "growthEdgeTitle": "Ruang tumbuh"
+  },
+  "finance": {
+    "title": "Keuangan",
+    "subtitle": "Hubungan kamu sama uang & rezeki, dibaca dari angka kamu — soal mindset, bukan nasihat investasi.",
+    "fallback": "Bacaan keuangan belum bisa dibuat sekarang. Coba lagi nanti, ya.",
+    "moneyNatureTitle": "Cara kamu menghasilkan",
+    "moneyStyleTitle": "Gaya kamu ngurus uang",
+    "financialSeasonTitle": "Musim finansial tahun ini",
+    "abundanceEdgeTitle": "Ruang tumbuh soal rezeki"
   },
   "me": {
     "title": "Saya",

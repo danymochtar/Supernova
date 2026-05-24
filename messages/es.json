@@ -796,6 +796,27 @@
   "kehidupan": {
     "title": "Vida",
     "tabTentang": "Sobre ti",
-    "tabPerjalanan": "Camino"
+    "tabPerjalanan": "Camino",
+    "tabPercintaan": "Amor",
+    "tabKeuangan": "Finanzas"
+  },
+  "love": {
+    "title": "Amor",
+    "subtitle": "Tu estilo en el amor, leído desde tus propios números — no es compatibilidad con alguien específico.",
+    "fallback": "La lectura de amor no se puede generar ahora mismo. Inténtalo de nuevo más tarde.",
+    "whatHeartWantsTitle": "Lo que tu corazón busca",
+    "howYouLoveTitle": "Cómo amas",
+    "partnerArchetypeTitle": "El tipo que conecta contigo",
+    "romanceSeasonTitle": "Tu temporada amorosa este año",
+    "growthEdgeTitle": "Espacio para crecer"
+  },
+  "finance": {
+    "title": "Finanzas",
+    "subtitle": "Tu relación con el dinero y la abundancia, leída desde tus números — es sobre mindset, no consejos de inversión.",
+    "fallback": "La lectura financiera no se puede generar ahora mismo. Inténtalo de nuevo más tarde.",
+    "moneyNatureTitle": "Cómo generas ingresos",
+    "moneyStyleTitle": "Tu estilo para manejar el dinero",
+    "financialSeasonTitle": "Tu temporada financiera este año",
+    "abundanceEdgeTitle": "Espacio para crecer en la abundancia"
   }
 }

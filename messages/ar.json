@@ -796,6 +796,27 @@
   "kehidupan": {
     "title": "الحياة",
     "tabTentang": "عنك",
-    "tabPerjalanan": "الرحلة"
+    "tabPerjalanan": "الرحلة",
+    "tabPercintaan": "الحب والعلاقات",
+    "tabKeuangan": "المال والرزق"
+  },
+  "love": {
+    "title": "الحب والعلاقات",
+    "subtitle": "أسلوبك في الحب، مقروء من أرقامك أنت — ليس توافقًا مع شخص معيّن.",
+    "fallback": "قراءة الحب غير متاحة الآن. جرّب مرة أخرى لاحقًا.",
+    "whatHeartWantsTitle": "ما الذي يبحث عنه قلبك",
+    "howYouLoveTitle": "طريقتك في الحب",
+    "partnerArchetypeTitle": "النوع الذي ينسجم معك",
+    "romanceSeasonTitle": "موسم الحب هذا العام",
+    "growthEdgeTitle": "مساحة للنمو"
+  },
+  "finance": {
+    "title": "المال والرزق",
+    "subtitle": "علاقتك بالمال والرزق، مقروءة من أرقامك — الموضوع عن العقلية، وليس نصيحة استثمارية.",
+    "fallback": "قراءة المال غير متاحة الآن. جرّب مرة أخرى لاحقًا.",
+    "moneyNatureTitle": "طريقتك في كسب المال",
+    "moneyStyleTitle": "أسلوبك في إدارة المال",
+    "financialSeasonTitle": "موسمك المالي هذا العام",
+    "abundanceEdgeTitle": "مساحة للنمو في الرزق"
   }
 }

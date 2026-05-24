@@ -796,6 +796,27 @@
   "kehidupan": {
     "title": "Kehidupan",
     "tabTentang": "Tentang Kamu",
-    "tabPerjalanan": "Perjalanan"
+    "tabPerjalanan": "Perjalanan",
+    "tabPercintaan": "Percintaan",
+    "tabKeuangan": "Kewangan"
+  },
+  "love": {
+    "title": "Percintaan",
+    "subtitle": "Gaya cinta kamu, dibaca daripada nombor kamu sendiri — bukan kesesuaian dengan orang tertentu.",
+    "fallback": "Bacaan percintaan belum boleh dijana sekarang. Cuba lagi nanti, ya.",
+    "whatHeartWantsTitle": "Apa yang hati kamu cari",
+    "howYouLoveTitle": "Cara kamu mencintai",
+    "partnerArchetypeTitle": "Jenis orang yang klik dengan kamu",
+    "romanceSeasonTitle": "Musim percintaan tahun ini",
+    "growthEdgeTitle": "Ruang untuk berkembang"
+  },
+  "finance": {
+    "title": "Kewangan",
+    "subtitle": "Hubungan kamu dengan duit & rezeki, dibaca daripada nombor kamu — soal mindset, bukan nasihat pelaburan.",
+    "fallback": "Bacaan kewangan belum boleh dijana sekarang. Cuba lagi nanti, ya.",
+    "moneyNatureTitle": "Cara kamu hasilkan duit",
+    "moneyStyleTitle": "Gaya kamu uruskan duit",
+    "financialSeasonTitle": "Musim kewangan tahun ini",
+    "abundanceEdgeTitle": "Ruang berkembang soal rezeki"
   }
 }

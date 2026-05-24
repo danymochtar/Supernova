@@ -1,50 +1,54 @@
 'use client';
 
 import Link from 'next/link';
-import { Compass, Sparkles } from 'lucide-react';
+import { Compass, Heart, Sparkles, Wallet } from 'lucide-react';
 
-export type KehidupanTab = 'tentang' | 'perjalanan';
+export type KehidupanTab = 'tentang' | 'perjalanan' | 'percintaan' | 'keuangan';
 
 interface Props {
   /** Current active tab. */
   active: KehidupanTab;
   /** Base path without query, e.g. "/id/kehidupan". */
   basePath: string;
-  labels: { tentang: string; perjalanan: string };
+  labels: Record<KehidupanTab, string>;
 }
 
 /**
- * Segmented control switching between the two Kehidupan sub-views. Uses
+ * Segmented control switching between the Kehidupan sub-views. Uses
  * <Link> + a `?tab=` query param (not client state) so each view is its
  * own server render — deep-linkable, and only the active view's AI runs.
- * Mirrors the calendar/list toggle styling in JournalView.
+ * Horizontally scrollable since four labels overflow a mobile row.
  */
 export function KehidupanTabs({ active, basePath, labels }: Props) {
-  const items: { key: KehidupanTab; label: string; icon: typeof Sparkles }[] = [
-    { key: 'tentang', label: labels.tentang, icon: Sparkles },
-    { key: 'perjalanan', label: labels.perjalanan, icon: Compass },
+  const items: { key: KehidupanTab; icon: typeof Sparkles }[] = [
+    { key: 'tentang', icon: Sparkles },
+    { key: 'perjalanan', icon: Compass },
+    { key: 'percintaan', icon: Heart },
+    { key: 'keuangan', icon: Wallet },
   ];
   return (
-    <div className="border-border bg-surface-1 inline-flex rounded-full border p-1">
-      {items.map(({ key, label, icon: Icon }) => {
-        const isActive = key === active;
-        return (
-          <Link
-            key={key}
-            href={key === 'tentang' ? basePath : `${basePath}?tab=${key}`}
-            scroll={false}
-            aria-current={isActive ? 'page' : undefined}
-            className={`press-soft inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-medium transition-colors ${
-              isActive
-                ? 'bg-primary text-primary-foreground'
-                : 'text-muted-foreground hover:text-foreground'
-            }`}
-          >
-            <Icon className="h-3.5 w-3.5" aria-hidden />
-            {label}
-          </Link>
-        );
-      })}
+    <div className="no-scrollbar -mx-4 flex gap-2 overflow-x-auto px-4 sm:mx-0 sm:px-0">
+      <div className="border-border bg-surface-1 inline-flex shrink-0 rounded-full border p-1">
+        {items.map(({ key, icon: Icon }) => {
+          const isActive = key === active;
+          return (
+            <Link
+              key={key}
+              href={key === 'tentang' ? basePath : `${basePath}?tab=${key}`}
+              scroll={false}
+              aria-current={isActive ? 'page' : undefined}
+              className={`press-soft inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-3.5 py-1.5 text-xs font-medium transition-colors ${
+                isActive
+                  ? 'bg-primary text-primary-foreground'
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
+            >
+              <Icon className="h-3.5 w-3.5" aria-hidden />
+              {labels[key]}
+            </Link>
+          );
+        })}
+      </div>
     </div>
   );
 }

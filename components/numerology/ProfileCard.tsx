@@ -4,26 +4,14 @@ import type { Locale } from '@/lib/i18n/config';
 import { getLocaleConfig } from '@/lib/i18n/locales';
 import type { ProfileView } from '@/lib/db/repositories/profile';
 import { ageAt, contextFromInstant } from '@/lib/numerology';
-import { getCachedAboutMe } from '@/lib/ai/aboutMe';
-
-/** First sentence of the synthesis, trimmed for a one-line teaser. */
-function teaserOf(synthesis: string, max = 120): string {
-  const firstStop = synthesis.search(/[.!?](\s|$)/);
-  const lead = firstStop > 0 ? synthesis.slice(0, firstStop + 1) : synthesis;
-  const t = lead.replace(/\s+/g, ' ').trim();
-  return t.length <= max ? t : `${t.slice(0, max - 1).trim()}…`;
-}
 
 /**
  * Compact identity card on Beranda. Replaces the heavy About You widget
  * that used to live here — taps through to the full self-portrait under
  * Kehidupan. No profile photo (no upload infra); a gradient + initials
- * avatar carries the "cakep" visual instead.
- *
- * The synthesis teaser is READ-ONLY from cache (getCachedAboutMe) so the
- * dashboard never fires an AI call just to fill this line — if About You
- * hasn't been generated yet (user never opened Kehidupan), the teaser is
- * simply omitted and the card still shows avatar + name + DOB.
+ * avatar carries the "cakep" visual instead. Identity only — avatar +
+ * full name + birth date + a "read more" CTA; the synthesis/detail all
+ * lives behind the tap.
  */
 export async function ProfileCard({
   profile,
@@ -55,9 +43,6 @@ export async function ProfileCard({
     timeZone: 'UTC',
   }).format(new Date(Date.UTC(profile.dob.year, profile.dob.month - 1, profile.dob.day)));
 
-  const cached = await getCachedAboutMe(profile.userId);
-  const teaser = cached?.synthesis ? teaserOf(cached.synthesis) : null;
-
   return (
     <Link
       href={`/${locale}/kehidupan`}
@@ -77,11 +62,6 @@ export async function ProfileCard({
           <p className="text-muted-foreground text-xs">
             {ageLabel} {age} · <span className="tabular-nums">{dobLabel}</span>
           </p>
-          {teaser ? (
-            <p className="text-muted-foreground mt-1 line-clamp-2 text-[13px] leading-snug">
-              {teaser}
-            </p>
-          ) : null}
         </div>
       </div>
       {/* Explicit "read more" affordance — clearer than a bare chevron that

@@ -796,6 +796,27 @@
   "kehidupan": {
     "title": "Life",
     "tabTentang": "About You",
-    "tabPerjalanan": "Journey"
+    "tabPerjalanan": "Journey",
+    "tabPercintaan": "Love",
+    "tabKeuangan": "Finances"
+  },
+  "love": {
+    "title": "Love",
+    "subtitle": "Your love style, read from your own numbers — not your compatibility with someone specific.",
+    "fallback": "Your love reading can't be generated right now. Try again in a bit.",
+    "whatHeartWantsTitle": "What your heart's looking for",
+    "howYouLoveTitle": "How you love",
+    "partnerArchetypeTitle": "The type that clicks with you",
+    "romanceSeasonTitle": "Your love season this year",
+    "growthEdgeTitle": "Room to grow"
+  },
+  "finance": {
+    "title": "Finances",
+    "subtitle": "Your relationship with money & abundance, read from your numbers — it's about mindset, not investment advice.",
+    "fallback": "Your finance reading can't be generated right now. Try again in a bit.",
+    "moneyNatureTitle": "How you earn",
+    "moneyStyleTitle": "Your money management style",
+    "financialSeasonTitle": "Your financial season this year",
+    "abundanceEdgeTitle": "Room to grow around abundance"
   }
 }
