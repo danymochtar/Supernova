@@ -255,7 +255,8 @@
     "now": "Now",
     "settingsLink": "Settings & profile",
     "meaningComingSoon": "We're still curating the description for this number. Meanwhile the number on the card is a deterministic calculation — you can ask the AI on \"Ask AI\" for deeper context.",
-    "age": "Age"
+    "age": "Age",
+    "profileCardCta": "Read more of your profile"
   },
   "reading": {
     "title": "Daily reading",

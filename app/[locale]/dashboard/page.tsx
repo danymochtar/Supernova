@@ -279,7 +279,12 @@ export default async function DashboardPage({
       />
 
       {!isPreview ? (
-        <ProfileCard profile={profile} locale={locale} ageLabel={t('age')} />
+        <ProfileCard
+          profile={profile}
+          locale={locale}
+          ageLabel={t('age')}
+          readMoreLabel={t('profileCardCta')}
+        />
       ) : null}
 
       {WIDGET_ORDER.map((id) => renderWidget(id))}

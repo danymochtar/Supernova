@@ -255,7 +255,8 @@
     "now": "Sekarang",
     "settingsLink": "Tetapan & profil",
     "meaningComingSoon": "Penjelasan untuk angka ini sedang kami siapkan. Sementara itu, angka pada kad adalah pengiraan deterministik — kamu boleh tanya AI di halaman \"Tanya AI\" untuk konteks lebih dalam.",
-    "age": "Usia"
+    "age": "Usia",
+    "profileCardCta": "Baca profil lebih lanjut"
   },
   "reading": {
     "title": "Bacaan harian",

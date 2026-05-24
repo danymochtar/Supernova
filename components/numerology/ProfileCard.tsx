@@ -3,7 +3,6 @@ import { ChevronRight } from 'lucide-react';
 import type { Locale } from '@/lib/i18n/config';
 import { getLocaleConfig } from '@/lib/i18n/locales';
 import type { ProfileView } from '@/lib/db/repositories/profile';
-import { displayName } from '@/lib/profile/displayName';
 import { ageAt, contextFromInstant } from '@/lib/numerology';
 import { getCachedAboutMe } from '@/lib/ai/aboutMe';
 
@@ -30,13 +29,19 @@ export async function ProfileCard({
   profile,
   locale,
   ageLabel,
+  readMoreLabel,
 }: {
   profile: ProfileView;
   locale: Locale;
   /** Pre-localized "age" word, e.g. "Usia". */
   ageLabel: string;
+  /** Pre-localized "read more" CTA, e.g. "Baca profil lebih lanjut". */
+  readMoreLabel: string;
 }) {
-  const name = displayName(profile);
+  // The home identity card shows the FULL legal name (not the nickname /
+  // displayName used elsewhere) — it's the user's own profile header, so
+  // the complete name reads right here.
+  const name = profile.fullName;
   const initials =
     `${profile.firstName.charAt(0)}${profile.lastName?.charAt(0) ?? ''}`.toUpperCase() || '·';
 
@@ -56,31 +61,38 @@ export async function ProfileCard({
   return (
     <Link
       href={`/${locale}/kehidupan`}
-      className="press-soft border-primary/40 from-primary/10 ring-primary/20 group flex items-center gap-4 overflow-hidden rounded-3xl border-2 bg-gradient-to-br to-accent/15 p-5 ring-1 transition dark:to-accent/15"
+      className="press-soft border-primary/40 from-primary/10 ring-primary/20 group block overflow-hidden rounded-3xl border-2 bg-gradient-to-br to-accent/15 p-5 ring-1 transition dark:to-accent/15"
     >
-      <div
-        className="from-primary/40 to-accent/40 ring-primary/20 flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gradient-to-br font-serif text-lg font-semibold tracking-tight ring-1"
-        aria-hidden
-      >
-        {initials}
-      </div>
-      <div className="min-w-0 flex-1 space-y-0.5">
-        <p className="font-serif truncate text-lg font-semibold leading-tight tracking-tight">
-          {name}
-        </p>
-        <p className="text-muted-foreground text-xs">
-          {ageLabel} {age} · <span className="tabular-nums">{dobLabel}</span>
-        </p>
-        {teaser ? (
-          <p className="text-muted-foreground mt-1 line-clamp-2 text-[13px] leading-snug">
-            {teaser}
+      <div className="flex items-center gap-4">
+        <div
+          className="from-primary/40 to-accent/40 ring-primary/20 flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gradient-to-br font-serif text-lg font-semibold tracking-tight ring-1"
+          aria-hidden
+        >
+          {initials}
+        </div>
+        <div className="min-w-0 flex-1 space-y-0.5">
+          <p className="font-serif truncate text-lg font-semibold leading-tight tracking-tight">
+            {name}
           </p>
-        ) : null}
+          <p className="text-muted-foreground text-xs">
+            {ageLabel} {age} · <span className="tabular-nums">{dobLabel}</span>
+          </p>
+          {teaser ? (
+            <p className="text-muted-foreground mt-1 line-clamp-2 text-[13px] leading-snug">
+              {teaser}
+            </p>
+          ) : null}
+        </div>
       </div>
-      <ChevronRight
-        className="text-muted-foreground h-4 w-4 shrink-0 transition group-hover:translate-x-0.5"
-        aria-hidden
-      />
+      {/* Explicit "read more" affordance — clearer than a bare chevron that
+        * the card opens the full profile detail under Kehidupan. */}
+      <div className="border-primary/15 mt-3 flex items-center justify-end gap-1 border-t pt-3 text-xs font-medium text-primary">
+        <span>{readMoreLabel}</span>
+        <ChevronRight
+          className="h-3.5 w-3.5 transition group-hover:translate-x-0.5"
+          aria-hidden
+        />
+      </div>
     </Link>
   );
 }
