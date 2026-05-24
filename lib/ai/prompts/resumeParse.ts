@@ -30,7 +30,7 @@ Output STRICT JSON only — no commentary, no markdown fence. Schema:
       "endDate": "YYYY-MM-DD|null",
       "current": true|false,
       "summary": "string|null",
-      "vocation": "business" | "medicineEducation" | "legalPolitics" | "artsDesign" | "salesPr" | "scienceEngineering" | "agriculture"
+      "vocation": "business" | "medicineEducation" | "legalPolitics" | "artsDesign" | "salesPr" | "scienceEngineering" | "operations"
     }
   ]
 }
@@ -53,8 +53,8 @@ The 7 buckets:
 - legalPolitics: lawyer, paralegal, judge, politician, advocate, regulator, policy, government
 - salesPr: sales, marketing, advertising, PR, growth, brand, account exec, pre-sales, customer-facing pipeline / quota / deal-closing roles, partner ecosystem growth
 - artsDesign: designer, writer, performer, photographer, filmmaker, illustrator, musician — IC creative roles
-- scienceEngineering: HANDS-ON technical work — software engineer, data engineer/scientist, researcher, devops, IT operator, technician, ML engineer, programmer who actually ships code or designs systems
-- agriculture: farming, gardening, horticulture, environmental, nature work
+- scienceEngineering: HANDS-ON technical work — software engineer, data engineer/scientist, researcher, devops, IT operator, technician, ML/AI engineer, cybersecurity, programmer who actually ships code or designs systems
+- operations: keeping things running for people — project/program manager, operations, customer success/support (NOT quota-carrying), community manager, people/HR ops, administration, coordination, logistics, delivery/process roles measured on delivery, retention, or smooth execution rather than revenue/quota (salesPr) or shipped code (scienceEngineering)
 
 DISAMBIGUATION FOR TECH-TITLED ROLES (the common trap):
 

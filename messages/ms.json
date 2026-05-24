@@ -720,53 +720,53 @@
     "vocationsHint": "Aptitude kamu merentas tujuh bidang kerjaya — dikira dari proporsi digit kamu, bukan teka-teka. Kalau rasa tersilap jalur, listing ni boleh bagi idea area baru.",
     "vocations": {
       "business": {
-        "title": "Bisnes & pengurusan",
-        "subTraits": "Eksekutif, lead pasukan, buat keputusan tegas, fokus hasil, ownership",
+        "title": "Bisnis & kepimpinan",
+        "subTraits": "Pengasas, pengurusan, perunding, produk, strategi, kewangan, pemilikan",
         "high": "Skor tinggi: kamu ada naluri eksekutif yang kuat — boleh lead pasukan, buat keputusan tegas, fokus pada hasil. Sesuai untuk posisi management, ownership, atau peranan yang minta accountability tinggi.",
         "medium": "Skor sederhana: kamu boleh handle business setting bila perlu, tapi bukan jalur paling natural. Mungkin lebih sesuai jadi spesialis di bidang tertentu daripada generalist manager.",
         "low": "Skor rendah: business / management bukan strong suit kamu. Bukan bermakna tak boleh, cuma perlu effort lebih untuk di-translate ke peranan macam tu."
       },
       "medicineEducation": {
-        "title": "Perubatan & pendidikan",
-        "subTraits": "Doktor, jururawat, terapis, cikgu, pensyarah, kaunselor",
+        "title": "Kesihatan, wellness & pendidikan",
+        "subTraits": "Doktor, jururawat, terapis, ahli psikologi, jurulatih wellness, guru, edtech, pelatih",
         "high": "Skor tinggi: kamu natural dalam profesion yang tuntut ambil berat pasal orang. Kombinasi sensitiviti + analitikal buat kamu sesuai mengajar atau merawat. Sesuai dalam perubatan, kejururawatan, terapi, atau pendidikan.",
         "medium": "Skor sederhana: kamu boleh dalam profesion caring kalau motivasi kamu kuat, tapi bukan calling utama.",
         "low": "Skor rendah: profesion caring intensif macam doktor / cikgu bukan natural fit. Lebih sesuai dalam peranan yang tak emotionally heavy."
       },
       "legalPolitics": {
-        "title": "Undang-undang & politik",
-        "subTraits": "Peguam, hakim, ahli politik, advokat, regulator, mediator awam",
+        "title": "Undang-undang & dasar awam",
+        "subTraits": "Peguam, legaltech, dasar awam, advokat, pengawal selia, tadbir urus, mediator",
         "high": "Skor tinggi: kombinasi authority, struktur, dan rasa keadilan buat kamu sesuai dalam undang-undang atau politik. Boleh berhujah tajam, baca sistem, dan stand by prinsip.",
         "medium": "Skor sederhana: kamu boleh dalam area legal/politik kalau topiknya in line, tapi bukan default jalur.",
         "low": "Skor rendah: bidang ni terlalu adversarial atau structured untuk kamu. Lagi baik area yang lebih fluid."
       },
       "artsDesign": {
-        "title": "Seni & reka bentuk",
-        "subTraits": "Penulis, designer, performer, jurugambar, sineas, seniman visual, music maker, illustrator",
+        "title": "Kreatif, kandungan & reka bentuk",
+        "subTraits": "Pereka UI/UX, content creator, video, penulis, jurugambar, ilustrator, jenama, muzik",
         "high": "Skor tinggi: bakat kamu dalam artistik & design memang kuat. Boleh jadi penulis, designer, performer, atau pekerja kreatif lain yang perlukan sensitiviti estetik.",
         "medium": "Skor sederhana: kamu hargai seni & ada momen kreatif, tapi bukan jalur sepenuh masa. Sesuai jadi side practice.",
         "low": "Skor rendah: artistik bukan area natural kamu. Kalau minat, dekati lewat appreciation atau hobi — bukan kerjaya."
       },
       "salesPr": {
-        "title": "Sales, advertising & PR",
-        "subTraits": "Sales, marketing, advertising, public relations, brand ambassador",
+        "title": "Pemasaran, jualan & PR",
+        "subTraits": "Pemasaran digital, media sosial, growth, jenama, content marketing, PR, jualan",
         "high": "Skor tinggi: charm, pujukan, dan komunikasi pantas kamu kuat. Sesuai dalam sales, advertising, PR, atau apa-apa yang perlukan baca audience cepat dan deliver mesej yang nyangkut.",
         "medium": "Skor sederhana: kamu boleh kerja dalam area ni kalau passionate dengan produknya, tapi bukan jalur natural.",
         "low": "Skor rendah: extrovert-driven profession macam sales kemungkinan rasa exhausting untuk kamu. Sesuai dalam area yang lebih internal atau analitikal."
       },
       "scienceEngineering": {
-        "title": "Sains, engineering & pembinaan",
-        "subTraits": "Engineer, penyelidik, programmer, arkitek, kontraktor, saintis, technician, data analyst",
+        "title": "Teknologi, data & kejuruteraan",
+        "subTraits": "Jurutera perisian, data scientist, AI/ML, keselamatan siber, penyelidik, juruteknik, jurutera",
         "high": "Skor tinggi: kombinasi praktikal + analitikal + hasil buat kamu sesuai dalam STEM / engineering / construction. Suka pattern, sistem, dan bina benda nyata.",
         "medium": "Skor sederhana: kamu boleh dalam area teknikal kalau minat dengan bahannya, tapi bukan default talent.",
         "low": "Skor rendah: pendekatan structured-engineering bukan style kamu. Mungkin lebih selesa dalam area yang lebih intuitive."
       },
-      "agriculture": {
-        "title": "Pertanian & berkebun",
-        "subTraits": "Petani, penternak, gardener, hortikulturis, pekerja alam, environmental",
-        "high": "Skor tinggi: kamu ada bakat untuk kerja dengan alam, tumbuhan, atau aktiviti tangan-tangan yang grounded. Boleh farming, gardening, atau apa-apa yang minta kesabaran dengan proses semula jadi.",
-        "medium": "Skor sederhana: kamu boleh enjoy aktiviti di alam, tapi bukan calling utama. Hobi yang sihat.",
-        "low": "Skor rendah: aktiviti yang bergantung pada alam & kesabaran panjang kurang sesuai. Lebih ke environment yang dinamik."
+      "operations": {
+        "title": "Operasi & pengurusan projek",
+        "subTraits": "Pengurus projek, operasi, customer success, pengurus komuniti, HR, penyelaras, admin",
+        "high": "Skor tinggi: kamu hebat memastikan segala-galanya berjalan lancar untuk orang ramai — mengatur proses, menyelaras pasukan, memastikan semua terkawal. Sangat sesuai untuk pengurusan projek/program, operasi, customer success, atau komuniti — peranan yang menggabungkan struktur dengan keprihatinan terhadap orang.",
+        "medium": "Skor sederhana: kamu boleh memegang peranan operasi bila perlu, tetapi ia bukan satu-satunya laluan. Mungkin lebih menyerlah bila digabungkan dengan bidang lain yang kamu kuat.",
+        "low": "Skor rendah: operasi dan penyelarasan jangka panjang bukan zon selesa kamu. Bukan mustahil — cuma perlukan lebih usaha."
       }
     }
   },

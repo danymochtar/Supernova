@@ -720,53 +720,53 @@
     "vocationsHint": "Tu aptitud cruza siete campos profesionales — calculada desde la proporción de tus dígitos, no adivinada. Si sientes que estás en el camino equivocado, este listado puede darte ideas de nuevas áreas.",
     "vocations": {
       "business": {
-        "title": "Negocios y management",
-        "subTraits": "Ejecutivo, liderar equipos, tomar decisiones firmes, foco en resultados, ownership",
+        "title": "Negocios y liderazgo",
+        "subTraits": "Fundador, gestión, consultoría, producto, estrategia, finanzas, ownership",
         "high": "Puntuación alta: tienes un instinto ejecutivo fuerte — puedes liderar equipos, decidir con firmeza, enfocarte en resultados. Encajas en posiciones de management, ownership o roles que exijan mucha accountability.",
         "medium": "Puntuación media: puedes manejar un entorno de negocios si hace falta, pero no es tu carril más natural. Quizá encajas mejor como especialista en algo concreto que como manager generalista.",
         "low": "Puntuación baja: business / management no es tu fuerte. No significa que no puedas, solo que requiere más esfuerzo traducirte a ese tipo de rol."
       },
       "medicineEducation": {
-        "title": "Medicina y educación",
-        "subTraits": "Médico, enfermero, terapeuta, profesor, docente universitario, consejero",
+        "title": "Salud, bienestar y educación",
+        "subTraits": "Médico, enfermería, terapeuta, psicólogo, coach de bienestar, docente, edtech, formador",
         "high": "Puntuación alta: eres natural en profesiones que exigen cuidado real por las personas. La combinación sensibilidad + análisis te hace bueno enseñando o cuidando. Encajas en medicina, enfermería, terapia o educación.",
         "medium": "Puntuación media: puedes ejercer una profesión de cuidado si tu motivación es fuerte, pero no es tu calling principal.",
         "low": "Puntuación baja: profesiones de cuidado intensivo como médico / profesor no son un fit natural. Mejor en roles que no sean tan emocionalmente pesados."
       },
       "legalPolitics": {
-        "title": "Derecho y política",
-        "subTraits": "Abogado, juez, político, activista, regulador, mediador público",
+        "title": "Derecho y política pública",
+        "subTraits": "Abogado, legaltech, política pública, defensor, regulador, gobernanza, mediador",
         "high": "Puntuación alta: la combinación de autoridad, estructura y sentido de justicia te hace encajar en derecho o política. Puedes argumentar con filo, leer sistemas y mantenerte firme en tus principios.",
         "medium": "Puntuación media: puedes moverte en el área legal/política si el tema te resuena, pero no es tu carril por defecto.",
         "low": "Puntuación baja: este campo es demasiado adversarial o estructurado para ti. Mejor un área más fluida."
       },
       "artsDesign": {
-        "title": "Arte y diseño",
-        "subTraits": "Escritor, diseñador, performer, fotógrafo, cineasta, artista visual, music maker, ilustrador",
+        "title": "Creatividad, contenido y diseño",
+        "subTraits": "Diseñador UI/UX, content creator, video, escritor, fotógrafo, ilustrador, marca, música",
         "high": "Puntuación alta: tu talento artístico y de diseño es fuerte. Puedes ser escritor, diseñador, performer u otro creativo que necesite sensibilidad estética.",
         "medium": "Puntuación media: aprecias el arte y tienes momentos creativos, pero no como camino full time. Encaja como práctica paralela.",
         "low": "Puntuación baja: lo artístico no es tu área natural. Si te interesa, acércate desde la apreciación o el hobby — no como carrera."
       },
       "salesPr": {
-        "title": "Ventas, publicidad y PR",
-        "subTraits": "Sales, marketing, publicidad, public relations, brand ambassador",
+        "title": "Marketing, ventas y RR. PP.",
+        "subTraits": "Marketing digital, redes sociales, growth, marca, marketing de contenidos, RR. PP., ventas",
         "high": "Puntuación alta: tu encanto, persuasión y comunicación ágil son fuertes. Encajas en ventas, publicidad, PR o cualquier cosa que requiera leer a la audiencia rápido y entregar un mensaje que conecte.",
         "medium": "Puntuación media: puedes trabajar en esta área si te apasiona el producto, pero no es tu carril natural.",
         "low": "Puntuación baja: profesiones tan extrovertidas como ventas probablemente te resulten agotadoras. Mejor un área más interna o analítica."
       },
       "scienceEngineering": {
-        "title": "Ciencia, ingeniería y construcción",
-        "subTraits": "Ingeniero, investigador, programador, arquitecto, contratista, científico, técnico, data analyst",
+        "title": "Tecnología, datos e ingeniería",
+        "subTraits": "Ingeniero de software, data scientist, IA/ML, ciberseguridad, investigador, técnico, ingeniero",
         "high": "Puntuación alta: la combinación práctico + analítico + orientado a resultados te hace encajar en STEM / ingeniería / construcción. Te gustan los patrones, los sistemas y construir cosas reales.",
         "medium": "Puntuación media: puedes moverte en lo técnico si el tema te interesa, pero no es tu talento por defecto.",
         "low": "Puntuación baja: el enfoque estructurado de la ingeniería no es tu estilo. Quizá te sientas más cómodo en algo más intuitivo."
       },
-      "agriculture": {
-        "title": "Agricultura y jardinería",
-        "subTraits": "Agricultor, ganadero, jardinero, horticultor, trabajador de la naturaleza, ambientalista",
-        "high": "Puntuación alta: tienes talento para trabajar con la naturaleza, las plantas o actividades manuales con los pies en la tierra. Puedes dedicarte a la agricultura, jardinería o cualquier cosa que pida paciencia con los procesos naturales.",
-        "medium": "Puntuación media: puedes disfrutar actividades al aire libre, pero no es tu calling principal. Un hobby saludable.",
-        "low": "Puntuación baja: las actividades que dependen de la naturaleza y la paciencia larga no encajan tanto. Mejor entornos más dinámicos."
+      "operations": {
+        "title": "Operaciones y gestión de proyectos",
+        "subTraits": "Project manager, operaciones, customer success, community manager, RR. HH., coordinador, admin",
+        "high": "Puntuación alta: se te da genial hacer que las cosas funcionen sin fricciones para la gente — organizar procesos, coordinar equipos, mantener todo en marcha. Encajas muy bien en gestión de proyectos/programas, operaciones, customer success o comunidad — roles que combinan estructura con un cuidado real por las personas.",
+        "medium": "Puntuación media: puedes asumir un rol operativo cuando hace falta, pero no es tu única vía. Quizá brilles más combinándolo con otro campo en el que seas fuerte.",
+        "low": "Puntuación baja: las operaciones y la coordinación a largo plazo no son tu zona de confort. No es imposible, solo cuesta más sostenerlo."
       }
     }
   },

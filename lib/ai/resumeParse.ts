@@ -14,7 +14,7 @@ const VOCATION_IDS: TalentVocationId[] = [
   'artsDesign',
   'salesPr',
   'scienceEngineering',
-  'agriculture',
+  'operations',
 ];
 
 function isVocation(v: unknown): v is TalentVocationId {

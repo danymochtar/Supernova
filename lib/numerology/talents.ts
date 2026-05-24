@@ -367,7 +367,7 @@ export type TalentVocationId =
   | 'artsDesign'
   | 'salesPr'
   | 'scienceEngineering'
-  | 'agriculture';
+  | 'operations';
 
 export interface TalentVocationDef {
   id: TalentVocationId;
@@ -406,9 +406,12 @@ export const TALENT_VOCATIONS: TalentVocationDef[] = [
     digits: { 4: 1.0, 7: 0.7, 8: 0.4 },
   },
   {
-    id: 'agriculture',
-    // Earthbound work, nurturing patience, slow-burn.
-    digits: { 4: 1.0, 6: 0.7, 2: 0.3 },
+    id: 'operations',
+    // Keeping things running for people: process + service + coordination.
+    // The 4/6/2 blend that used to read as "agriculture" is, for a digital-
+    // era audience, the energy of operations / project & people management /
+    // customer success / community — structured execution in service of others.
+    digits: { 4: 1.0, 6: 0.7, 2: 0.6 },
   },
 ];
 
@@ -446,7 +449,7 @@ const VOCATION_TO_GROUPS: Record<TalentVocationId, TalentGroupId[]> = {
   artsDesign: ['artistic', 'innerSelf', 'sensitive', 'enjoyLife'],
   salesPr: ['enjoyLife', 'workWithOthers', 'generousCaring', 'individualism'],
   scienceEngineering: ['practical', 'innerSelf', 'perseverance'],
-  agriculture: ['practical', 'humanitarian', 'sensitive'],
+  operations: ['practical', 'workWithOthers', 'generousCaring', 'perseverance'],
 };
 
 export function vocationContributingGroups(vocationId: string): TalentGroupId[] {
@@ -485,5 +488,5 @@ export const VOCATION_COLOR: Record<TalentVocationId, string> = {
   artsDesign: '#eab308',
   salesPr: '#f97316',
   scienceEngineering: '#3b82f6',
-  agriculture: '#84cc16',
+  operations: '#14b8a6',
 };
