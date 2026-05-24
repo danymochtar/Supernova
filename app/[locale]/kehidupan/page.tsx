@@ -35,22 +35,23 @@ export default async function KehidupanPage({
 
   return (
     <main
-      className="container max-w-3xl space-y-6 px-4 pb-6 sm:px-6 sm:pb-10"
-      style={{ paddingTop: 'calc(env(safe-area-inset-top) + 1.5rem)' }}
+      className="container max-w-3xl space-y-5 px-4 pb-6 sm:px-6 sm:pb-10"
+      style={{ paddingTop: 'calc(env(safe-area-inset-top) + 1rem)' }}
     >
-      <header className="space-y-3 pt-2">
-        <h1 className="font-serif text-2xl font-semibold tracking-tight">{t('title')}</h1>
-        <KehidupanTabs
-          active={tab}
-          basePath={`/${locale}/kehidupan`}
-          labels={{
-            tentang: t('tabTentang'),
-            perjalanan: t('tabPerjalanan'),
-            percintaan: t('tabPercintaan'),
-            keuangan: t('tabKeuangan'),
-          }}
-        />
-      </header>
+      {/* Compact header — the sub-tabs ARE the page identity (and the
+        * bottom nav already highlights "Kehidupan"), so no big redundant
+        * page title eating vertical space. Each sub-view renders its own
+        * section heading. */}
+      <KehidupanTabs
+        active={tab}
+        basePath={`/${locale}/kehidupan`}
+        labels={{
+          tentang: t('tabTentang'),
+          perjalanan: t('tabPerjalanan'),
+          percintaan: t('tabPercintaan'),
+          keuangan: t('tabKeuangan'),
+        }}
+      />
 
       {tab === 'perjalanan' ? (
         <PerjalananView profile={profile} locale={locale} />
