@@ -128,16 +128,16 @@
     "aspect_reflection_body": "의미 있는 이야기들이 당신만의 목소리로 자동 정리되어 저널이 돼요. 언제든 다시 돌아와 얼마나 멀리 왔는지 확인해 보세요.",
     "eyebrow": "당신의 매일을 함께하는 동반자",
     "title": "삶의 여섯 가지 면을 이해해주는 친구",
-    "subtitle": "삶, 여정, 커리어, 개인, 관계, 그리고 자기 성찰 — Supernova가 이 여섯 공간을 매일 함께 탐색해드려요. 당신만의 numerology에 조용히 닻을 내리고 있어서 뻔한 조언이 아닌, 살아있는 대화처럼 느껴질 거예요.",
     "featuresEyebrow": "Supernova가 도와드리는 것",
     "featuresTitle": "그가 이해하는 여섯 가지 면",
-    "featuresSubtitle": "삶의 각 면마다 던지는 질문이 달라요 — Supernova는 뻔한 인생 조언 대신, 각각에 꼭 맞는 방식으로 응답해드려요.",
     "step_2_body": "전체 이름(출생증명서 기준), 생년월일, 시간대. Supernova가 바로 당신을 알아봐요 — 복잡한 설정 없이요.",
     "step_3_body": "Supernova가 아침에 인사를 건네요. 언제든 무엇이든 물어보세요. 소중한 순간들은 필요할 때 꺼내볼 수 있게 저장돼요.",
     "trustNote": "Supernova 뒤에는 결정론적인 Pythagorean numerology(Decoz / Millman / McCants)가 있어요 — 점치는 게 아니고, 점성술도 아니에요. AI는 숫자를 당신의 삶과 연결되는 언어로 옮겨줄 뿐, 지어내지 않아요. 프라이버시는 안전하게 지켜지고, 당신의 데이터는 판매되지 않아요.",
     "bottomCtaTitle": "내일 아침, 당신을 이해하는 친구와 함께 시작해보세요",
     "bottomCtaBody": "삶의 여섯 가지 면, 하나의 동반자. 매일 아침 약 30초로 오늘의 vibe를 체크해요 — 나머지 시간은 당신의 하루를 살아가는 데 쓰세요.",
-    "footer": "Supernova · 매일의 동반자 · Bahasa Indonesia"
+    "footer": "Supernova · 매일의 동반자 · Bahasa Indonesia",
+    "subtitle": "삶, 여정, 커리어, 개인, 관계, 그리고 자기 성찰 — Supernova가 이 여섯 가지 공간에서 매일 당신과 함께해요. 당신만의 숫자에서 읽어내서, 모든 인사이트가 당신의 삶에 딱 맞게 느껴지도록.",
+    "featuresSubtitle": "삶의 각 영역마다 다른 질문이 있고, Supernova는 각각을 자기만의 방식으로 만나요."
   },
   "login": {
     "back": "홈으로 돌아가기",
@@ -802,21 +802,21 @@
   },
   "love": {
     "title": "연애",
-    "subtitle": "특정 상대와의 궁합이 아닌, 당신 자신의 숫자로 읽어보는 연애 스타일이에요.",
     "fallback": "지금은 연애 리딩을 불러올 수 없어요. 잠시 후 다시 시도해 주세요.",
     "whatHeartWantsTitle": "당신의 마음이 찾고 있는 것",
     "howYouLoveTitle": "당신이 사랑하는 방식",
     "partnerArchetypeTitle": "당신과 잘 맞는 타입",
     "romanceSeasonTitle": "올해의 연애 시즌",
-    "growthEdgeTitle": "성장할 공간"
+    "growthEdgeTitle": "성장할 공간",
+    "subtitle": "당신이 사랑하는 방식 — 마음이 찾고 있는 것부터 관계 안에서 어떻게 존재하는지까지."
   },
   "finance": {
     "title": "재정",
-    "subtitle": "투자 조언이 아니라 마인드셋 이야기예요. 당신의 숫자로 읽어보는 돈과 풍요에 대한 관계랍니다.",
     "fallback": "지금은 재정 리딩을 불러올 수 없어요. 잠시 후 다시 시도해 주세요.",
     "moneyNatureTitle": "당신이 돈을 버는 방식",
     "moneyStyleTitle": "당신이 돈을 다루는 스타일",
     "financialSeasonTitle": "올해의 재정 시즌",
-    "abundanceEdgeTitle": "풍요에 관한 성장 공간"
+    "abundanceEdgeTitle": "풍요에 관한 성장 공간",
+    "subtitle": "돈과 풍요로움과의 관계 — 당신의 숫자에서 읽어낸 재정의 리듬."
   }
 }

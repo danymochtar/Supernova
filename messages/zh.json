@@ -128,16 +128,16 @@
     "aspect_reflection_body": "有意义的倾诉会自动汇总成日记，用你自己的声音记录。随时回来看看，你已经走了多远。",
     "eyebrow": "你的每日陪伴",
     "title": "懂你生活六个面向的朋友",
-    "subtitle": "生活、旅程、事业、个人、关系，还有自我反思 — Supernova 帮你每天在这六个空间里游走，悄悄地以你自己的 numerology 为锚，让一切感觉鲜活，而不是千篇一律。",
     "featuresEyebrow": "Supernova 能帮你什么",
     "featuresTitle": "她懂的六个面向",
-    "featuresSubtitle": "生活每个面向都有不同的疑问 — Supernova 用合适的方式陪你聊每一个，不是泛泛的人生建议。",
     "step_2_body": "全名（按出生证明）、生日、时区。Supernova 立刻认识你 — 不用冗长设置。",
     "step_3_body": "Supernova 一早跟你打招呼。随时想问什么都行。需要的时候帮你留住有意义的瞬间。",
     "trustNote": "Supernova 背后是确定性的 Pythagorean numerology（Decoz / Millman / McCants）— 不是猜测，也不是占星。AI 只是把数字翻译成跟你生活有共鸣的语言，不会瞎编。隐私有保障，你的数据不会被卖。",
     "bottomCtaTitle": "明天早晨，从一个懂你的朋友开始",
     "bottomCtaBody": "生活六个面向，一个陪伴。每天早上大约 30 秒看看 vibe — 剩下的时间，去过你自己的日子。",
-    "footer": "Supernova · 每日陪伴 · 简体中文"
+    "footer": "Supernova · 每日陪伴 · 简体中文",
+    "subtitle": "生活、旅程、事业、个人、关系，还有自我反思——Supernova 每天在这六个空间陪着你，从你自己的数字出发解读，让每个洞察都贴合你的生活。",
+    "featuresSubtitle": "生活的每一面都有不同的问题，Supernova 用它独特的方式去回应每一个。"
   },
   "login": {
     "back": "返回首页",
@@ -802,21 +802,21 @@
   },
   "love": {
     "title": "爱情",
-    "subtitle": "你的爱情风格，从你自己的数字解读 — 不是和某个特定的人合不合的问题。",
     "fallback": "现在还没法生成爱情解读。等下再试试吧。",
     "whatHeartWantsTitle": "你内心真正在找的",
     "howYouLoveTitle": "你爱人的方式",
     "partnerArchetypeTitle": "和你合拍的类型",
     "romanceSeasonTitle": "今年的爱情季节",
-    "growthEdgeTitle": "成长的空间"
+    "growthEdgeTitle": "成长的空间",
+    "subtitle": "你爱的方式——从你内心追寻的，到你如何出现在一段关系里。"
   },
   "finance": {
     "title": "财务",
-    "subtitle": "你和金钱、财运的关系，从你的数字解读 — 是关于心态，不是投资建议。",
     "fallback": "现在还没法生成财务解读。等下再试试吧。",
     "moneyNatureTitle": "你赚钱的方式",
     "moneyStyleTitle": "你打理金钱的风格",
     "financialSeasonTitle": "今年的财务季节",
-    "abundanceEdgeTitle": "财运上的成长空间"
+    "abundanceEdgeTitle": "财运上的成长空间",
+    "subtitle": "你与金钱和财运的关系——你的财务节奏，从你的数字里读出来。"
   }
 }

@@ -128,16 +128,16 @@
     "aspect_reflection_body": "Luahan yang bermakna auto ter-rangkum jadi jurnal guna voice kamu sendiri. Balik bila-bila masa untuk lihat sejauh mana kamu dah berjalan.",
     "eyebrow": "Teman harian kamu",
     "title": "Kawan yang faham enam sisi hidup kamu",
-    "subtitle": "Kehidupan, perjalanan, kerjaya, peribadi, hubungan, dan refleksi diri — Supernova bantu kamu navigasi enam ruang itu setiap hari, di-anchor secara senyap pada numerologi kamu sendiri supaya rasa hidup, bukan generic.",
     "featuresEyebrow": "Apa yang Supernova bantu",
     "featuresTitle": "Enam sisi yang dia faham",
-    "featuresSubtitle": "Setiap sisi hidup ada soalan berbeza — Supernova layan setiap satu dengan cara yang sesuai, bukan generic life-advice.",
     "step_2_body": "Nama penuh (ikut sijil kelahiran), tarikh lahir, zon waktu. Supernova terus kenal kamu — tak perlu setup panjang.",
     "step_3_body": "Supernova sapa kamu awal pagi. Tanya apa-apa bila-bila masa. Simpan momen yang bermakna bila kamu perlu.",
     "trustNote": "Di sebalik Supernova ada numerologi Pythagorean yang deterministik (Decoz / Millman / McCants) — bukan teka-teki, bukan astrologi. AI cuma terjemah angka jadi bahasa yang nyambung dengan hidup kamu, tak mengarang. Privasi terjaga, data kamu tak dijual.",
     "bottomCtaTitle": "Mula pagi esok dengan kawan yang faham",
     "bottomCtaBody": "Enam sisi hidup, satu teman. Sekitar 30 saat setiap pagi untuk check vibe — selebihnya untuk kamu jalani hari kamu sendiri.",
-    "footer": "Supernova · Teman harian · Bahasa Melayu"
+    "footer": "Supernova · Teman harian · Bahasa Melayu",
+    "subtitle": "Kehidupan, perjalanan, kerjaya, peribadi, hubungan, dan refleksi diri — Supernova temankan kamu di enam ruang tu setiap hari, baca dari angka kamu sendiri supaya setiap insight terasa pas dengan hidup kamu.",
+    "featuresSubtitle": "Setiap sisi hidup ada soalan yang berbeza, dan Supernova jumpa setiap satu dengan caranya tersendiri."
   },
   "login": {
     "back": "Kembali ke laman utama",
@@ -802,21 +802,21 @@
   },
   "love": {
     "title": "Percintaan",
-    "subtitle": "Gaya cinta kamu, dibaca daripada nombor kamu sendiri — bukan kesesuaian dengan orang tertentu.",
     "fallback": "Bacaan percintaan belum boleh dijana sekarang. Cuba lagi nanti, ya.",
     "whatHeartWantsTitle": "Apa yang hati kamu cari",
     "howYouLoveTitle": "Cara kamu mencintai",
     "partnerArchetypeTitle": "Jenis orang yang klik dengan kamu",
     "romanceSeasonTitle": "Musim percintaan tahun ini",
-    "growthEdgeTitle": "Ruang untuk berkembang"
+    "growthEdgeTitle": "Ruang untuk berkembang",
+    "subtitle": "Cara kamu menyayangi, dari apa yang hati kamu cari sampai macam mana kamu hadir dalam sesebuah hubungan."
   },
   "finance": {
     "title": "Kewangan",
-    "subtitle": "Hubungan kamu dengan duit & rezeki, dibaca daripada nombor kamu — soal mindset, bukan nasihat pelaburan.",
     "fallback": "Bacaan kewangan belum boleh dijana sekarang. Cuba lagi nanti, ya.",
     "moneyNatureTitle": "Cara kamu hasilkan duit",
     "moneyStyleTitle": "Gaya kamu uruskan duit",
     "financialSeasonTitle": "Musim kewangan tahun ini",
-    "abundanceEdgeTitle": "Ruang berkembang soal rezeki"
+    "abundanceEdgeTitle": "Ruang berkembang soal rezeki",
+    "subtitle": "Cara kamu relate dengan duit & rezeki — ritma kewangan kamu, dibaca dari angka kamu."
   }
 }

@@ -20,7 +20,9 @@ import { getCachedJson, setCachedJson } from '@/lib/db/repositories/numerologyCa
 // v7: added minorNarrative + bridgeNarrative plain-language paragraphs so
 // the Minor + Bridge sections lead with human-language context before
 // showing the raw cards. Old v6 blobs regenerate on next access.
-const CACHE_KEY = 'aboutMe-v7';
+// v8: natural-voice pass — kill the "[Name] adalah sosok yang…" opener +
+// "X — bukan Y" AI tells, and lengthen the synthesis. Old v7 regenerates.
+const CACHE_KEY = 'aboutMe-v8';
 
 /**
  * Read-only cache fetch — never generates. Used by the Beranda ProfileCard

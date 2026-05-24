@@ -20,7 +20,7 @@
   },
   "love": {
     "title": "Percintaan",
-    "subtitle": "Gaya cinta kamu, dibaca dari angka kamu sendiri — bukan kecocokan sama orang tertentu.",
+    "subtitle": "Cara kamu mencintai, dari yang hati kamu cari sampai gimana kamu hadir di sebuah hubungan.",
     "fallback": "Bacaan percintaan belum bisa dibuat sekarang. Coba lagi nanti, ya.",
     "whatHeartWantsTitle": "Yang hati kamu cari",
     "howYouLoveTitle": "Cara kamu mencintai",
@@ -30,7 +30,7 @@
   },
   "finance": {
     "title": "Keuangan",
-    "subtitle": "Hubungan kamu sama uang & rezeki, dibaca dari angka kamu — soal mindset, bukan nasihat investasi.",
+    "subtitle": "Cara kamu relate sama uang & rezeki — ritme finansial kamu, dibaca dari angka kamu.",
     "fallback": "Bacaan keuangan belum bisa dibuat sekarang. Coba lagi nanti, ya.",
     "moneyNatureTitle": "Cara kamu menghasilkan",
     "moneyStyleTitle": "Gaya kamu ngurus uang",
@@ -154,12 +154,12 @@
   "home": {
     "eyebrow": "Pendamping harian kamu",
     "title": "Teman yang ngerti enam sisi hidupmu",
-    "subtitle": "Kehidupan, perjalanan, karir, personal, hubungan, sama refleksi diri — Supernova bantu kamu navigasi enam ruang itu setiap hari, di-anchor diam-diam di numerologi kamu sendiri biar berasa hidup, bukan generic.",
+    "subtitle": "Kehidupan, perjalanan, karir, personal, hubungan, sama refleksi diri — Supernova nemenin kamu di enam ruang itu tiap hari, ngebaca dari angka kamu sendiri biar tiap insight kerasa pas sama hidup kamu.",
     "cta": "Mulai sekarang",
     "ctaSub": "Gratis. Cuma butuh email.",
     "featuresEyebrow": "Apa yang Supernova bantu",
     "featuresTitle": "Enam sisi yang dia paham",
-    "featuresSubtitle": "Tiap sisi hidup punya pertanyaan beda — Supernova ngeladenin masing-masing dengan cara yang pas, bukan generic life-advice.",
+    "featuresSubtitle": "Tiap sisi hidup punya pertanyaan beda, dan Supernova nemuin masing-masing dengan caranya sendiri.",
     "aspect_life_title": "Kehidupan",
     "aspect_life_body": "Vibe harian, ritme yang nyambung sama energi kamu, momen-momen kecil yang sering kelewat — Supernova bantu kamu ngerasa hadir di hari kamu sendiri.",
     "aspect_journey_title": "Perjalanan",

@@ -128,16 +128,16 @@
     "aspect_reflection_body": "意味のあるつぶやきが、あなた自身の声でジャーナルに自動でまとまります。いつでも戻ってきて、どれだけ歩いてきたか振り返れます。",
     "eyebrow": "あなたの毎日のパートナー",
     "title": "人生の6つの側面をわかってくれる友達",
-    "subtitle": "ライフ、ジャーニー、キャリア、パーソナル、関係性、そして自己内省 — Supernovaはこの6つの空間を毎日ナビゲートしてくれる、あなた自身のnumerologyに静かに根ざしているから、ジェネリックじゃなくて生きてる感覚で寄り添ってくれる。",
     "featuresEyebrow": "Supernovaがサポートしてくれること",
     "featuresTitle": "彼女が理解する6つの側面",
-    "featuresSubtitle": "人生の各側面には違う問いがある — Supernovaは一般的なライフアドバイスじゃなく、それぞれにちょうど合った形で応えてくれる。",
     "step_2_body": "フルネーム（出生証明書通り）、生年月日、タイムゾーン。Supernovaがすぐにあなたを知ってくれる — 長いセットアップは不要。",
     "step_3_body": "Supernovaが朝に挨拶してくれる。いつでも何でも聞いていい。大事な瞬間は必要なときのために残しておける。",
     "trustNote": "Supernovaの裏側にあるのは決定論的なPythagorean numerology（Decoz / Millman / McCants）— 当てずっぽうでも占星術でもない。AIは数字をあなたの人生に響く言葉に翻訳するだけで、作り話はしない。プライバシーは守られて、データが売られることもない。",
     "bottomCtaTitle": "明日の朝、わかってくれる友達と一緒に始めよう",
     "bottomCtaBody": "人生の6つの側面、ひとりのパートナー。毎朝30秒くらいでvibeをチェック — あとはあなた自身の一日を生きる時間。",
-    "footer": "Supernova · 毎日のパートナー · インドネシア語"
+    "footer": "Supernova · 毎日のパートナー · インドネシア語",
+    "subtitle": "人生、旅路、キャリア、自分自身、人間関係、そして内省 — Supernovaはこの6つの領域であなたに毎日寄り添い、あなた自身の数字から読み解くから、どのインサイトもあなたの人生にしっくりくる。",
+    "featuresSubtitle": "人生のそれぞれの側面には違う問いがあって、Supernovaはそのひとつひとつに、それぞれのやり方で寄り添っていく。"
   },
   "login": {
     "back": "ホームに戻る",
@@ -802,21 +802,21 @@
   },
   "love": {
     "title": "恋愛",
-    "subtitle": "あなた自身の数字から読み解く、あなたの愛し方 — 特定の誰かとの相性ではなく。",
     "fallback": "今は恋愛リーディングを作れないみたい。また後でのぞいてみてね。",
     "whatHeartWantsTitle": "あなたの心が求めているもの",
     "howYouLoveTitle": "あなたの愛し方",
     "partnerArchetypeTitle": "あなたと響き合うタイプ",
     "romanceSeasonTitle": "今年の恋愛シーズン",
-    "growthEdgeTitle": "成長できるところ"
+    "growthEdgeTitle": "成長できるところ",
+    "subtitle": "あなたの愛し方 — 心が求めるものから、関係の中でどう寄り添うかまで。"
   },
   "finance": {
     "title": "お金",
-    "subtitle": "あなたの数字から読み解く、お金や豊かさとの付き合い方 — 投資アドバイスじゃなくて、マインドセットの話。",
     "fallback": "今は金運リーディングを作れないみたい。また後でのぞいてみてね。",
     "moneyNatureTitle": "あなたの稼ぎ方",
     "moneyStyleTitle": "あなたのお金の扱い方",
     "financialSeasonTitle": "今年の金運シーズン",
-    "abundanceEdgeTitle": "豊かさにまつわる成長ポイント"
+    "abundanceEdgeTitle": "豊かさにまつわる成長ポイント",
+    "subtitle": "お金や巡りとの向き合い方 — あなたの数字から読み解く、金運のリズム。"
   }
 }

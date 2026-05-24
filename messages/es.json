@@ -128,16 +128,16 @@
     "aspect_reflection_body": "Las conversaciones que importan se resumen automáticamente en un diario con tu propia voz. Vuelve cuando quieras a ver qué tan lejos has llegado.",
     "eyebrow": "Tu compañero diario",
     "title": "Un amigo que entiende los seis lados de tu vida",
-    "subtitle": "Vida, viaje, carrera, personal, relaciones y reflexión interior — Supernova te ayuda a navegar esos seis espacios cada día, anclado silenciosamente en tu propia numerología para que se sienta vivo, no genérico.",
     "featuresEyebrow": "En qué te ayuda Supernova",
     "featuresTitle": "Los seis lados que entiende",
-    "featuresSubtitle": "Cada lado de la vida tiene sus propias preguntas — Supernova atiende cada uno a su manera, no con consejos genéricos.",
     "step_2_body": "Nombre completo (como en tu acta de nacimiento), fecha de nacimiento, zona horaria. Supernova te conoce al instante — sin setup largo.",
     "step_3_body": "Supernova te saluda por la mañana. Pregúntale lo que sea, cuando sea. Guarda los momentos que importan cuando los necesites.",
     "trustNote": "Detrás de Supernova hay numerología pitagórica determinista (Decoz / Millman / McCants) — no son adivinanzas, no es astrología. La IA solo traduce los números a un lenguaje que conecta con tu vida, sin inventar. Tu privacidad está protegida, tus datos no se venden.",
     "bottomCtaTitle": "Empieza mañana por la mañana con un amigo que te entiende",
     "bottomCtaBody": "Seis lados de la vida, un solo compañero. Unos 30 segundos cada mañana para chequear el vibe — el resto es para vivir tu día.",
-    "footer": "Supernova · Compañero diario · Español"
+    "footer": "Supernova · Compañero diario · Español",
+    "subtitle": "Vida, viaje, carrera, personal, relaciones y reflexión propia — Supernova te acompaña en esos seis espacios cada día, leyendo desde tus propios números para que cada insight encaje con tu vida.",
+    "featuresSubtitle": "Cada lado de la vida tiene preguntas distintas, y Supernova se encuentra con cada una a su manera."
   },
   "login": {
     "back": "Volver al inicio",
@@ -802,21 +802,21 @@
   },
   "love": {
     "title": "Amor",
-    "subtitle": "Tu estilo en el amor, leído desde tus propios números — no es compatibilidad con alguien específico.",
     "fallback": "La lectura de amor no se puede generar ahora mismo. Inténtalo de nuevo más tarde.",
     "whatHeartWantsTitle": "Lo que tu corazón busca",
     "howYouLoveTitle": "Cómo amas",
     "partnerArchetypeTitle": "El tipo que conecta contigo",
     "romanceSeasonTitle": "Tu temporada amorosa este año",
-    "growthEdgeTitle": "Espacio para crecer"
+    "growthEdgeTitle": "Espacio para crecer",
+    "subtitle": "Cómo amas tú, desde lo que tu corazón busca hasta cómo te muestras en una relación."
   },
   "finance": {
     "title": "Finanzas",
-    "subtitle": "Tu relación con el dinero y la abundancia, leída desde tus números — es sobre mindset, no consejos de inversión.",
     "fallback": "La lectura financiera no se puede generar ahora mismo. Inténtalo de nuevo más tarde.",
     "moneyNatureTitle": "Cómo generas ingresos",
     "moneyStyleTitle": "Tu estilo para manejar el dinero",
     "financialSeasonTitle": "Tu temporada financiera este año",
-    "abundanceEdgeTitle": "Espacio para crecer en la abundancia"
+    "abundanceEdgeTitle": "Espacio para crecer en la abundancia",
+    "subtitle": "Cómo te relacionas con el dinero y la abundancia — tu ritmo financiero, leído desde tus números."
   }
 }

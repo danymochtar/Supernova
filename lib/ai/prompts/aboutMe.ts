@@ -1,6 +1,7 @@
 import { bridges, formatNumerology, type MinorNumbers, type NumerologyResult } from '@/lib/numerology';
 import type { Locale } from '@/lib/i18n/config';
 import { localizeEnglishPrompt } from './_localize';
+import { VOICE_ID, VOICE_EN } from './_voice';
 
 export interface AboutMeInput {
   locale: Locale;
@@ -33,12 +34,14 @@ export function buildAboutMeSystem(locale: Locale): string {
 
 Bahasa: Bahasa Indonesia santai (pakai "kamu", BUKAN "Anda"). Boleh code-mix — istilah numerologi seperti "Life Path", "Expression", "Soul Urge", "Personality", "Birthday", "Karmic Lessons", "Minor", "Bridge", "master number", "karmic debt" TETAP dalam Bahasa Inggris supaya maknanya tidak hilang. Sisanya Indonesia.
 
+${VOICE_ID}
+
 Konten:
-- "synthesis": 2-3 kalimat sintesis identitas inti — siapa orang ini secara keseluruhan. Sebut nama depannya sekali. JANGAN sebut angka spesifik.
-- Tiap kartu inti: 2-3 kalimat. Hangat, reflektif, langsung. Jelaskan MAKNA komponennya — bukan angkanya.
+- "synthesis": 4-5 kalimat, satu paragraf utuh yang ngalir — potret identitas inti orang ini: gimana dia bergerak di dunia, apa yang ngegerakin dia, ketegangan/keunikan yang bikin dia "dia". Lebih kaya dari sekadar daftar sifat. Sebut nama depannya sekali, di tempat yang natural (nggak harus di awal). JANGAN sebut angka spesifik.
+- Tiap kartu inti: 2-3 kalimat. Hangat, reflektif, langsung. Jelaskan MAKNA komponennya, bukan angkanya.
 - Kartu "karmicLessons" hanya muncul kalau ada karmic lessons.
-- "minorNarrative": 2-3 kalimat — jelaskan MAKNA Minor Numbers spesifik orang ini (cara dia muncul di hubungan sehari-hari saat dipanggil dengan call-name) pakai bahasa manusia yang gampang dicerna. Bandingkan secara halus dengan core dari nama akta — di mana ada selisih, di mana selaras. Hanya muncul kalau <profile> punya minor block.
-- "bridgeNarrative": 2-3 kalimat — jelaskan apa artinya Bridge Numbers orang ini buat hidupnya: seberapa selaras misi vs bakat (Life Path × Expression), dan inner self vs outer presentation (Soul Urge × Personality). Pakai bahasa manusia, bukan istilah teknis numerologi. Selalu muncul.
+- "minorNarrative": 2-3 kalimat — jelaskan MAKNA Minor Numbers spesifik orang ini (cara dia muncul di hubungan sehari-hari saat dipanggil dengan call-name) pakai bahasa manusia yang gampang dicerna. Singgung halus di mana beda/selaras sama core dari nama akta. Hanya muncul kalau <profile> punya minor block.
+- "bridgeNarrative": 2-3 kalimat — jelaskan apa artinya Bridge Numbers orang ini buat hidupnya: seberapa selaras misi & bakat (Life Path × Expression), dan inner self & tampilan luar (Soul Urge × Personality). Pakai bahasa manusia. Selalu muncul.
 
 Aturan:
 - JANGAN sebut angka apa pun di output (mis. "Life Path 5", "Bridge 4").
@@ -65,9 +68,11 @@ Output WAJIB JSON valid, tanpa teks lain:
 
 Style: warm, personal ("You…"), reflective but direct.
 
+${VOICE_EN}
+
 Content:
-- "synthesis": 2-3 sentences synthesizing core identity — who this person is overall. Mention their first name once. DO NOT name any specific number.
-- Each core card: 2-3 sentences. Explain the MEANING of the component — not the digit.
+- "synthesis": 4-5 sentences, one flowing paragraph — a fuller portrait of core identity: how this person moves through the world, what drives them, the tension/signature that makes them *them*. Richer than a list of traits. Mention their first name once, somewhere natural (not necessarily the opening). DO NOT name any specific number.
+- Each core card: 2-3 sentences. Explain the MEANING of the component, not the digit.
 - The "karmicLessons" card only appears when karmic lessons are present.
 - "minorNarrative": 2-3 sentences — explain the MEANING of this person's specific Minor Numbers (how they show up in day-to-day interactions when people call them by their call-name) in plain, easy-to-digest language. Gently compare to the legal-name core: where there's friction, where alignment. Only included when <profile> has a minor block.
 - "bridgeNarrative": 2-3 sentences — explain what this person's Bridge Numbers mean for their life: how aligned mission and talent are (Life Path × Expression), and inner self vs outer presentation (Soul Urge × Personality). Plain language, not technical numerology jargon. Always included.

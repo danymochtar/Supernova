@@ -128,16 +128,16 @@
     "aspect_reflection_body": "Meaningful vents automatically turn into journal entries in your own voice. Come back anytime to see how far you've come.",
     "eyebrow": "Your daily companion",
     "title": "A friend who gets the six sides of your life",
-    "subtitle": "Life, journey, career, personal, relationships, and self-reflection — Supernova helps you navigate these six spaces every day, quietly anchored in your own numerology so it feels alive, not generic.",
     "featuresEyebrow": "What Supernova helps with",
     "featuresTitle": "The six sides it understands",
-    "featuresSubtitle": "Every side of life has different questions — Supernova meets each one its own way, not with generic life advice.",
     "step_2_body": "Full name (as on your birth certificate), date of birth, time zone. Supernova gets to know you instantly — no long setup.",
     "step_3_body": "Supernova says hi in the morning. Ask anything, anytime. Save the moments that matter when you need them.",
     "trustNote": "Behind Supernova sits deterministic Pythagorean numerology (Decoz / Millman / McCants) — not guesswork, not astrology. The AI just translates the numbers into language that connects with your life, no making things up. Your privacy is safe, your data isn't sold.",
     "bottomCtaTitle": "Start tomorrow morning with a friend who gets it",
     "bottomCtaBody": "Six sides of life, one companion. About 30 seconds each morning to check the vibe — the rest is for living your own day.",
-    "footer": "Supernova · Daily companion · English"
+    "footer": "Supernova · Daily companion · English",
+    "subtitle": "Life, journey, career, personal, relationships, and self-reflection — Supernova's with you in those six spaces every day, reading from your own numbers so every insight actually fits your life.",
+    "featuresSubtitle": "Every side of life asks different questions, and Supernova meets each one in its own way."
   },
   "login": {
     "back": "Back to home",
@@ -802,21 +802,21 @@
   },
   "love": {
     "title": "Love",
-    "subtitle": "Your love style, read from your own numbers — not your compatibility with someone specific.",
     "fallback": "Your love reading can't be generated right now. Try again in a bit.",
     "whatHeartWantsTitle": "What your heart's looking for",
     "howYouLoveTitle": "How you love",
     "partnerArchetypeTitle": "The type that clicks with you",
     "romanceSeasonTitle": "Your love season this year",
-    "growthEdgeTitle": "Room to grow"
+    "growthEdgeTitle": "Room to grow",
+    "subtitle": "How you love — from what your heart's searching for to how you show up in a relationship."
   },
   "finance": {
     "title": "Finances",
-    "subtitle": "Your relationship with money & abundance, read from your numbers — it's about mindset, not investment advice.",
     "fallback": "Your finance reading can't be generated right now. Try again in a bit.",
     "moneyNatureTitle": "How you earn",
     "moneyStyleTitle": "Your money management style",
     "financialSeasonTitle": "Your financial season this year",
-    "abundanceEdgeTitle": "Room to grow around abundance"
+    "abundanceEdgeTitle": "Room to grow around abundance",
+    "subtitle": "How you relate to money & abundance — your financial rhythm, read through your numbers."
   }
 }
