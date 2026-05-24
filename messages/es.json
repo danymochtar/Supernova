@@ -283,8 +283,7 @@
     "now": "Actual",
     "settingsLink": "Ajustes y perfil",
     "meaningComingSoon": "Estamos preparando la explicación de este número. Mientras tanto, el número en la tarjeta es un cálculo determinístico — puedes preguntarle a la AI en la página \"Pregunta a la AI\" para más contexto.",
-    "age": "Edad",
-    "profileCardCta": "Lee más del perfil"
+    "age": "Edad"
   },
   "reading": {
     "title": "Lectura diaria",

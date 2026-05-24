@@ -14,8 +14,7 @@ import { Explainer } from '@/components/layout/Explainer';
  * "Tentang Kamu" sub-view of the Kehidupan page — the full self-portrait:
  * AI synthesis + core-number carousel + Minor + Bridge (the AboutMe block
  * that used to live on the dashboard) plus the standalone Karmic Lessons
- * list. Moved off Beranda so the dashboard stays light; the compact
- * ProfileCard there links here.
+ * list. Moved off Beranda so the dashboard stays light.
  *
  * Async server component: computes core/minor/bridge deterministically,
  * then renders AboutMeAsync inside its own Suspense boundary (cache-first;

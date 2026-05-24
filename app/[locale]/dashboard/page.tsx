@@ -8,7 +8,6 @@ import {
   personalCycles,
 } from '@/lib/numerology';
 import { NumberCard } from '@/components/numerology/NumberCard';
-import { ProfileCard } from '@/components/numerology/ProfileCard';
 import { AppHeader } from '@/components/layout/AppHeader';
 import { DailyReadingView } from '@/components/reading/DailyReadingView';
 import { DateBrowser } from '@/components/reading/DateBrowser';
@@ -28,11 +27,10 @@ import { toggleActionItemAction } from '@/app/[locale]/journal/actions';
 
 type WidgetId = 'reading' | 'followUp' | 'digest' | 'feedback';
 
-// Fixed dashboard widget order. The compact ProfileCard sits above all
-// of these (rendered separately, not as a widget). The heavy "About You"
-// + Karmic blocks moved to the Kehidupan tab — Beranda stays light:
-// daily reading, then pending follow-ups, then the weekly digest, then
-// the end-of-day feedback prompt.
+// Fixed dashboard widget order. The heavy "About You" + Karmic blocks
+// moved to the Kehidupan tab — Beranda stays light: daily reading, then
+// pending follow-ups, then the weekly digest, then the end-of-day
+// feedback prompt.
 const WIDGET_ORDER: WidgetId[] = ['reading', 'followUp', 'digest', 'feedback'];
 
 const LONG_DAY_ID = ['MINGGU', 'SENIN', 'SELASA', 'RABU', 'KAMIS', 'JUMAT', 'SABTU'];
@@ -277,15 +275,6 @@ export default async function DashboardPage({
           />
         }
       />
-
-      {!isPreview ? (
-        <ProfileCard
-          profile={profile}
-          locale={locale}
-          ageLabel={t('age')}
-          readMoreLabel={t('profileCardCta')}
-        />
-      ) : null}
 
       {WIDGET_ORDER.map((id) => renderWidget(id))}
     </main>

@@ -25,16 +25,6 @@ import { getCachedJson, setCachedJson } from '@/lib/db/repositories/numerologyCa
 const CACHE_KEY = 'aboutMe-v8';
 
 /**
- * Read-only cache fetch — never generates. Used by the Beranda ProfileCard
- * to show a synthesis teaser ONLY when About You was already generated
- * (e.g. from a prior Kehidupan visit), so the dashboard never fires a
- * cold-cache AI call just to populate a one-line teaser.
- */
-export async function getCachedAboutMe(userId: string): Promise<ParsedAboutMe | null> {
-  return getCachedJson<ParsedAboutMe>(userId, CACHE_KEY);
-}
-
-/**
  * Cache-first structured About Me. Profile name + DOB never change so the
  * cached row is good for the lifetime of the account. Returns `null` only
  * when generation fails on a cold cache — caller should render a graceful
