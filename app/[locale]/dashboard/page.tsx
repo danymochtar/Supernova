@@ -50,23 +50,35 @@ function formatDateLong(ctx: { year: number; month: number; day: number }, local
 }
 
 // World Numerology's "today's numbers are X, Y, Z, W" framing — PD as star.
-// Slot 1 = single-digit reduction (master days like 11 still show "2" here),
-// slot 2 = compound, slots 3-4 = compound's tens/ones digits.
-function wnDayNumbers(pd: { compound: number; reduced: number }): number[] {
-  if (pd.compound < 10) return [pd.compound];
-  let single = pd.reduced;
-  while (single >= 10) {
+// The Personal Day is (Personal Month reduced) + (day-of-month), so WN
+// surfaces the two reduced addends that build it. For Dany on 25 May 2026:
+// PM 1 + date 25→7 = 8 → "8, 26, 1, 7".
+//   slot 1 = single-digit Personal Day (master days like 11 still show "2"),
+//   slot 2 = compound Personal Day,
+//   slot 3 = Personal Month (first addend, as stored),
+//   slot 4 = day-of-month reduced to a single digit (second addend).
+// slots 3 + 4 reduce back to slot 1.
+function reduceToSingle(n: number): number {
+  let x = Math.abs(n);
+  while (x >= 10) {
     let s = 0;
-    let x = single;
-    while (x > 0) {
-      s += x % 10;
-      x = Math.floor(x / 10);
+    let v = x;
+    while (v > 0) {
+      s += v % 10;
+      v = Math.floor(v / 10);
     }
-    single = s;
+    x = s;
   }
-  const tens = Math.floor(pd.compound / 10);
-  const ones = pd.compound % 10;
-  return [single, pd.compound, tens, ones];
+  return x;
+}
+
+function wnDayNumbers(
+  pd: { compound: number; reduced: number },
+  personalMonthReduced: number,
+  dayOfMonth: number,
+): number[] {
+  if (pd.compound < 10) return [pd.compound];
+  return [reduceToSingle(pd.reduced), pd.compound, personalMonthReduced, reduceToSingle(dayOfMonth)];
 }
 
 const PREVIEW_WINDOW_DAYS = 90;
@@ -192,7 +204,7 @@ export default async function DashboardPage({
               body={readingBody}
             dateLabel={formatDateLong(ctx, locale)}
             dayTitle={meaningFor('personalDayTitle', cycles.personalDay, locale) ?? ''}
-            todaysNumbers={wnDayNumbers(cycles.personalDay)}
+            todaysNumbers={wnDayNumbers(cycles.personalDay, cycles.personalMonth.reduced, ctx.day)}
             showAffirmation={!isPreview}
             showLabel={tReading('showNumbers')}
             hideLabel={tReading('hideNumbers')}
