@@ -1,6 +1,6 @@
 export * from './types';
 export { LETTER_VALUES, letterValue } from './letterMap';
-export { reducePreservingMasters, makeResult } from './reduce';
+export { reducePreservingMasters, reduceToDigit, makeResult, makeCycleResult } from './reduce';
 export { yRole, isYVowel } from './yVowel';
 export {
   lifePath,

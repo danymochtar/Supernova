@@ -6,6 +6,7 @@ import { isLocale, type Locale } from '@/lib/i18n/config';
 import {
   contextFromInstant,
   personalCycles,
+  reduceToDigit,
 } from '@/lib/numerology';
 import { NumberCard } from '@/components/numerology/NumberCard';
 import { AppHeader } from '@/components/layout/AppHeader';
@@ -58,27 +59,13 @@ function formatDateLong(ctx: { year: number; month: number; day: number }, local
 //   slot 3 = Personal Month (first addend, as stored),
 //   slot 4 = day-of-month reduced to a single digit (second addend).
 // slots 3 + 4 reduce back to slot 1.
-function reduceToSingle(n: number): number {
-  let x = Math.abs(n);
-  while (x >= 10) {
-    let s = 0;
-    let v = x;
-    while (v > 0) {
-      s += v % 10;
-      v = Math.floor(v / 10);
-    }
-    x = s;
-  }
-  return x;
-}
-
 function wnDayNumbers(
   pd: { compound: number; reduced: number },
   personalMonthReduced: number,
   dayOfMonth: number,
 ): number[] {
   if (pd.compound < 10) return [pd.compound];
-  return [reduceToSingle(pd.reduced), pd.compound, personalMonthReduced, reduceToSingle(dayOfMonth)];
+  return [reduceToDigit(pd.reduced), pd.compound, personalMonthReduced, reduceToDigit(dayOfMonth)];
 }
 
 const PREVIEW_WINDOW_DAYS = 90;

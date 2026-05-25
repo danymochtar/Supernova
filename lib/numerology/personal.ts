@@ -1,5 +1,5 @@
 import { toZonedTime } from 'date-fns-tz';
-import { makeResult, reducePreservingMasters } from './reduce';
+import { makeCycleResult, makeResult, reducePreservingMasters, reduceToDigit } from './reduce';
 import type { BirthDate, NumerologyResult, PersonalCycles } from './types';
 
 export interface PersonalContext {
@@ -48,23 +48,29 @@ export function personalYearBirthdayAnchored(
   return personalYear(dob, cycleStartYear);
 }
 
-/** Personal Month = reduce(PY.reduced + currentMonth). */
+/**
+ * Personal Month = reduceToDigit(PY-as-single-digit + currentMonth).
+ *
+ * Reduced to a single digit (masters NOT preserved) to match World
+ * Numerology: a month summing to 11 is a "2 month", not an "11 month". The
+ * Personal Year feeds in as a single digit so the cascade stays 1–9.
+ */
 export function personalMonth(dob: BirthDate, ctx: PersonalContext): NumerologyResult {
   const py = personalYear(dob, ctx.year);
-  return makeResult(py.reduced + ctx.month);
+  return makeCycleResult(reduceToDigit(py.reduced) + ctx.month);
 }
 
-/** Personal Day = reduce(PM.reduced + currentDay). */
+/** Personal Day = reduceToDigit(PM-single-digit + currentDay). Single-digit. */
 export function personalDay(dob: BirthDate, ctx: PersonalContext): NumerologyResult {
   const pm = personalMonth(dob, ctx);
-  return makeResult(pm.reduced + ctx.day);
+  return makeCycleResult(pm.reduced + ctx.day);
 }
 
 /** All three personal cycles for a given (year, month, day) in user's tz. */
 export function personalCycles(dob: BirthDate, ctx: PersonalContext): PersonalCycles {
   const py = personalYear(dob, ctx.year);
-  const pm = makeResult(py.reduced + ctx.month);
-  const pd = makeResult(pm.reduced + ctx.day);
+  const pm = makeCycleResult(reduceToDigit(py.reduced) + ctx.month);
+  const pd = makeCycleResult(pm.reduced + ctx.day);
   return { personalYear: py, personalMonth: pm, personalDay: pd };
 }
 

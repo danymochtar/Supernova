@@ -46,6 +46,39 @@ describe('personalMonth and personalDay cascade', () => {
   });
 });
 
+// World Numerology reference (real user: Dany Mochtar, 17 May 1995, PY 2026 = 5).
+// Personal cycles are single-digit: a month/day summing to a master (11/22/33)
+// reduces to 2/4/6, it is NOT preserved as a master.
+describe('personal cycles match World Numerology (single-digit, no master)', () => {
+  const realDany = { year: 1995, month: 5, day: 17 };
+
+  it('2026-05-25 → PM 10/1, PD 26/8', () => {
+    const ctx = { year: 2026, month: 5, day: 25 };
+    expect(personalYear(realDany, 2026).reduced).toBe(5);
+    const pm = personalMonth(realDany, ctx);
+    expect([pm.compound, pm.reduced]).toEqual([10, 1]);
+    const pd = personalDay(realDany, ctx);
+    expect([pd.compound, pd.reduced]).toEqual([26, 8]);
+  });
+
+  it('2026-06-30 → PM 11 reduces to 2 (not master), PD 32/5', () => {
+    const ctx = { year: 2026, month: 6, day: 30 };
+    const pm = personalMonth(realDany, ctx);
+    expect([pm.compound, pm.reduced, pm.isMaster]).toEqual([11, 2, false]);
+    const pd = personalDay(realDany, ctx);
+    expect([pd.compound, pd.reduced]).toEqual([32, 5]);
+  });
+
+  it('2026-08-23 → PM 13/4 (karmic debt 13), PD 27/9', () => {
+    const ctx = { year: 2026, month: 8, day: 23 };
+    const pm = personalMonth(realDany, ctx);
+    expect([pm.compound, pm.reduced]).toEqual([13, 4]);
+    expect(pm.karmicDebt).toBe(13);
+    const pd = personalDay(realDany, ctx);
+    expect([pd.compound, pd.reduced]).toEqual([27, 9]);
+  });
+});
+
 describe('contextFromInstant', () => {
   it('Asia/Jakarta returns Jakarta-local Y/M/D for a UTC instant', () => {
     // 2026-01-01 00:30 UTC → 2026-01-01 07:30 in Jakarta (UTC+7) — same date
