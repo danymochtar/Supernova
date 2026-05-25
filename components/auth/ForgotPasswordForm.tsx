@@ -36,7 +36,7 @@ export function ForgotPasswordForm({ locale }: { locale: Locale }) {
     try {
       const res = await startRecovery({ email });
       if (!res.ok) {
-        setErrorMsg(t('errorRate'));
+        setErrorMsg(res.error === 'rate' ? t('errorRate') : t('errorGeneric'));
         return;
       }
       if (!res.available) {

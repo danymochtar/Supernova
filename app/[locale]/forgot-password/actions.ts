@@ -16,7 +16,7 @@ import {
 export type StartResult =
   | { ok: true; available: true; token: string; slots: Relationship[] }
   | { ok: true; available: false }
-  | { ok: false; error: 'rate' };
+  | { ok: false; error: 'rate' | 'generic' };
 
 const startSchema = z.object({ email: z.string().email().max(320) });
 
@@ -50,13 +50,18 @@ export async function startRecovery(input: { email: string }): Promise<StartResu
   if (!parsed.success) return { ok: true, available: false };
   if (ipThrottled()) return { ok: false, error: 'rate' };
 
-  const userId = await findUserIdByEmail(parsed.data.email);
-  if (!userId) return { ok: true, available: false };
+  try {
+    const userId = await findUserIdByEmail(parsed.data.email);
+    if (!userId) return { ok: true, available: false };
 
-  const challenge = await buildChallenge(userId);
-  if (!challenge) return { ok: true, available: false };
+    const challenge = await buildChallenge(userId);
+    if (!challenge) return { ok: true, available: false };
 
-  return { ok: true, available: true, token: challenge.token, slots: challenge.slots };
+    return { ok: true, available: true, token: challenge.token, slots: challenge.slots };
+  } catch (err) {
+    console.error('[forgot-password] startRecovery failed', err);
+    return { ok: false, error: 'generic' };
+  }
 }
 
 export type ResetResult =
@@ -83,18 +88,23 @@ export async function submitReset(input: {
   const payload = readChallenge(parsed.data.token);
   if (!payload) return { ok: false, error: 'expired' };
 
-  // Strong brute-force gate keyed to the resolved user. Counts every attempt
-  // (right or wrong) so guessing is bounded; locks out for the rest of the day.
-  const gate = await checkAndIncrement({
-    userId: payload.userId,
-    bucket: 'pwreset',
-    limit: MAX_ATTEMPTS,
-  });
-  if (!gate.allowed) return { ok: false, error: 'locked' };
+  try {
+    // Strong brute-force gate keyed to the resolved user. Counts every attempt
+    // (right or wrong) so guessing is bounded; locks out for the rest of the day.
+    const gate = await checkAndIncrement({
+      userId: payload.userId,
+      bucket: 'pwreset',
+      limit: MAX_ATTEMPTS,
+    });
+    if (!gate.allowed) return { ok: false, error: 'locked' };
 
-  const verified = await verifyAnswers(payload.userId, payload.slots, parsed.data.answers);
-  if (!verified) return { ok: false, error: 'wrong' };
+    const verified = await verifyAnswers(payload.userId, payload.slots, parsed.data.answers);
+    if (!verified) return { ok: false, error: 'wrong' };
 
-  await setUserPassword(payload.userId, parsed.data.newPassword);
-  return { ok: true };
+    await setUserPassword(payload.userId, parsed.data.newPassword);
+    return { ok: true };
+  } catch (err) {
+    console.error('[forgot-password] submitReset failed', err);
+    return { ok: false, error: 'generic' };
+  }
 }

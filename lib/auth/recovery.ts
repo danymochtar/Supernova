@@ -1,5 +1,5 @@
+import { createCipheriv, createDecipheriv, createHash, randomBytes } from 'node:crypto';
 import type { Relationship } from '@prisma/client';
-import { encryptJson, decryptJson } from '@/lib/crypto/aes';
 import { auth } from '@/lib/auth/server';
 import { listPeople } from '@/lib/db/repositories/person';
 
@@ -46,6 +46,38 @@ function normalize(s: string): string {
     .trim();
 }
 
+// The challenge token is sealed with a key derived from BETTER_AUTH_SECRET
+// (always set — the whole auth layer depends on it) rather than a separate
+// encryption key, so recovery never breaks on a missing standalone env var.
+// AES-256-GCM gives authenticated encryption: the client can neither read nor
+// tamper with which questions it must answer.
+function tokenKey(): Buffer {
+  const secret = process.env.BETTER_AUTH_SECRET;
+  if (!secret) throw new Error('BETTER_AUTH_SECRET is not set');
+  return createHash('sha256').update(secret).digest();
+}
+
+function sealToken(payload: TokenPayload): string {
+  const iv = randomBytes(12);
+  const cipher = createCipheriv('aes-256-gcm', tokenKey(), iv);
+  const ct = Buffer.concat([cipher.update(JSON.stringify(payload), 'utf8'), cipher.final()]);
+  const tag = cipher.getAuthTag();
+  return [iv.toString('base64url'), tag.toString('base64url'), ct.toString('base64url')].join('.');
+}
+
+function openToken(token: string): TokenPayload | null {
+  try {
+    const [ivB, tagB, ctB] = token.split('.');
+    if (!ivB || !tagB || !ctB) return null;
+    const decipher = createDecipheriv('aes-256-gcm', tokenKey(), Buffer.from(ivB, 'base64url'));
+    decipher.setAuthTag(Buffer.from(tagB, 'base64url'));
+    const pt = Buffer.concat([decipher.update(Buffer.from(ctB, 'base64url')), decipher.final()]);
+    return JSON.parse(pt.toString('utf8')) as TokenPayload;
+  } catch {
+    return null;
+  }
+}
+
 /** Resolve a userId from an email without leaking existence to callers. */
 export async function findUserIdByEmail(email: string): Promise<string | null> {
   const ctx = await auth.$context;
@@ -74,13 +106,13 @@ export async function buildChallenge(userId: string): Promise<RecoveryChallenge 
 
   const chosen = slots.slice(0, MAX_QUESTIONS);
   const payload: TokenPayload = { userId, slots: chosen, exp: Date.now() + TOKEN_TTL_MS };
-  return { token: encryptJson(payload), slots: chosen };
+  return { token: sealToken(payload), slots: chosen };
 }
 
 /** Decrypt + validate a challenge token. Returns null if forged/expired. */
 export function readChallenge(token: string): TokenPayload | null {
   try {
-    const p = decryptJson<TokenPayload>(token);
+    const p = openToken(token);
     if (
       !p ||
       typeof p.userId !== 'string' ||
