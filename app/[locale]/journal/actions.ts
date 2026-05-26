@@ -167,7 +167,10 @@ export async function toggleActionItemAction(input: {
     input.completed,
   );
   if (!item) return { ok: false, error: 'not_found' };
+  // The follow-up widget lives on the dashboard, so revalidate both — without
+  // this, the checked row reappears once the optimistic state resets.
   revalidatePath('/[locale]/journal', 'page');
+  revalidatePath('/[locale]/dashboard', 'page');
   return { ok: true, item };
 }
 
