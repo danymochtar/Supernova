@@ -332,7 +332,10 @@
     "journalSavedToast": "Jurnal에 저장됨",
     "suggestFollowUp": "\"{item}\" 얘기 더 이어갈까요?",
     "suggestTheme": "{theme} 얘기 좀 더 해볼까요?",
-    "suggestVibe": "오늘 제 vibe 체크해주세요"
+    "suggestVibe": "오늘 제 vibe 체크해주세요",
+    "shortcut": "{topic} 이야기하기",
+    "shortcutHome": "이야기 나누기",
+    "topicDismiss": "주제 지우기"
   },
   "journal": {
     "title": "Jurnal",
@@ -356,7 +359,9 @@
     "autoGenRunning": "정리하는 중…",
     "autoGenDone": "{count, plural, =1 {지난 대화에서 새 항목 1개} other {지난 대화에서 새 항목 #개}}",
     "autoGenNone": "지난 대화는 모두 저널로 정리됐어요.",
-    "autoGenError": "생성에 실패했어요. 다시 시도해 주세요."
+    "autoGenError": "생성에 실패했어요. 다시 시도해 주세요.",
+    "viewCategory": "카테고리",
+    "categoryOther": "기타"
   },
   "feedback": {
     "title": "오늘 하루는 어땠어요?",
@@ -518,7 +523,8 @@
       "FRIEND": "친구",
       "COLLEAGUE": "직장 동료",
       "OTHER": "기타"
-    }
+    },
+    "curhatAbout": "{name} 이야기하기"
   },
   "relationshipProfile": {
     "title": "{name}와의 관계 프로필",
@@ -845,5 +851,13 @@
     "financialSeasonTitle": "올해의 재정 시즌",
     "abundanceEdgeTitle": "풍요에 관한 성장 공간",
     "subtitle": "돈과 풍요로움과의 관계 — 당신의 숫자에서 읽어낸 재정의 리듬."
+  },
+  "categories": {
+    "pribadi": "개인",
+    "perjalanan": "인생 여정",
+    "percintaan": "연애",
+    "keuangan": "금전",
+    "karier": "커리어",
+    "relationship": "관계"
   }
 }

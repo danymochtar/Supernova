@@ -332,7 +332,10 @@
     "journalSavedToast": "已保存到 Jurnal",
     "suggestFollowUp": "继续聊「{item}」吗？",
     "suggestTheme": "再聊聊 {theme} 吗？",
-    "suggestVibe": "看看我今天的 vibe"
+    "suggestVibe": "看看我今天的 vibe",
+    "shortcut": "聊聊{topic}",
+    "shortcutHome": "聊聊吧",
+    "topicDismiss": "清除话题"
   },
   "journal": {
     "title": "日记",
@@ -356,7 +359,9 @@
     "autoGenRunning": "整理中…",
     "autoGenDone": "{count, plural, =1 {从过去的倾诉中新增 1 条} other {从过去的倾诉中新增 # 条}}",
     "autoGenNone": "所有过去的倾诉都已整理成日记。",
-    "autoGenError": "生成失败，再试一次。"
+    "autoGenError": "生成失败，再试一次。",
+    "viewCategory": "分类",
+    "categoryOther": "其他"
   },
   "feedback": {
     "title": "你今天过得怎么样？",
@@ -518,7 +523,8 @@
       "FRIEND": "朋友",
       "COLLEAGUE": "同事",
       "OTHER": "其他"
-    }
+    },
+    "curhatAbout": "聊聊{name}"
   },
   "relationshipProfile": {
     "title": "你与 {name} 的关系 profile",
@@ -845,5 +851,13 @@
     "financialSeasonTitle": "今年的财务季节",
     "abundanceEdgeTitle": "财运上的成长空间",
     "subtitle": "你与金钱和财运的关系——你的财务节奏，从你的数字里读出来。"
+  },
+  "categories": {
+    "pribadi": "个人",
+    "perjalanan": "人生旅程",
+    "percintaan": "爱情",
+    "keuangan": "财务",
+    "karier": "事业",
+    "relationship": "关系"
   }
 }

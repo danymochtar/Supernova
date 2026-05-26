@@ -13,6 +13,8 @@ import {
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { synthesizeJournalNarrative } from '@/lib/ai/journal';
 import { detectUserPronoun } from '@/lib/ai/prompts/journal';
+import { deriveCategory } from '@/lib/curhat/categories';
+import { topicFromSnapshot } from '@/lib/curhat/snapshot';
 import { prisma } from '@/lib/db/prisma';
 
 export type AddToJournalResult =
@@ -69,9 +71,12 @@ export async function addToJournalAction(input: { turnIds: string[] }): Promise<
       personId: null,
     },
     orderBy: { createdAt: 'asc' },
-    select: { id: true, question: true, answer: true, createdAt: true },
+    select: { id: true, question: true, answer: true, createdAt: true, contextSnapshot: true },
   });
   if (rows.length === 0) return { ok: false, error: 'no_turns' };
+
+  // Capability tag for the entry = dominant topic across the source turns.
+  const category = deriveCategory(rows.map((r) => topicFromSnapshot(r.contextSnapshot)));
 
   const sources: JournalSourceSnapshot[] = rows.map((r) => ({
     turnId: r.id,
@@ -118,6 +123,7 @@ export async function addToJournalAction(input: { turnIds: string[] }): Promise<
       reframe: synth.reframe || null,
       emotion: synth.emotion || null,
       theme: synth.theme || null,
+      category,
       actionItemDrafts: synth.actionItems,
     });
     revalidatePath('/[locale]/journal', 'page');

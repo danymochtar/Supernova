@@ -121,6 +121,15 @@ interface Props {
   deleteAction?: (input: { id: string }) => Promise<DeleteTurnResult>;
   /** Server action to snapshot turns into the journal. */
   journalAction?: (input: { turnIds: string[] }) => Promise<AddToJournalResult>;
+  /** Capability tag the chat was opened with (from a per-page shortcut).
+   * Shown as a dismissible chip and sent with each turn so the resulting
+   * journal entry inherits the category. */
+  activeTopic?: string;
+  /** Localized label for the active topic chip. */
+  activeTopicLabel?: string;
+  /** Saved person to focus on — only meaningful when activeTopic is
+   * 'relationship'. Sent with each turn while the topic chip is active. */
+  aboutPersonId?: string;
 }
 
 export function ChatThread({
@@ -130,8 +139,12 @@ export function ChatThread({
   suggestions = [],
   deleteAction,
   journalAction,
+  activeTopic,
+  activeTopicLabel,
+  aboutPersonId,
 }: Props) {
   const t = useTranslations('chat');
+  const [topic, setTopic] = useState<string | null>(activeTopic ?? null);
   const [turns, setTurns] = useState<ChatTurn[]>(initialTurns);
   const [pending, setPending] = useState<{
     question: string;
@@ -337,6 +350,8 @@ export function ChatThread({
             mediaType: a.mediaType,
             data: a.data,
           })),
+          topic: topic ?? undefined,
+          aboutPersonId: topic === 'relationship' ? aboutPersonId : undefined,
         }),
         signal: controller.signal,
       });
@@ -758,6 +773,25 @@ export function ChatThread({
         className="border-border bg-background/95 fixed inset-x-3 z-40 mx-auto max-w-3xl space-y-2 rounded-3xl border px-3 py-2.5 shadow-lg supports-[backdrop-filter]:bg-background/80 supports-[backdrop-filter]:backdrop-blur sm:inset-x-4 sm:px-4 sm:py-3"
         style={{ bottom: 'calc(3.5rem + env(safe-area-inset-bottom) + 0.5rem)' }}
       >
+        {/* Active-topic chip — shown when the chat was opened via a per-page
+          * "Curhat soal ini" shortcut. Dismissible; while active, each turn is
+          * tagged so the journal entry inherits the capability category. */}
+        {topic ? (
+          <div className="flex">
+            <span className="bg-primary/10 text-primary inline-flex items-center gap-1.5 rounded-full py-1 pl-3 pr-1.5 text-xs font-medium">
+              {activeTopicLabel ?? topic}
+              <button
+                type="button"
+                onClick={() => setTopic(null)}
+                aria-label={t('topicDismiss')}
+                className="press hover:bg-primary/15 inline-flex h-5 w-5 items-center justify-center rounded-full"
+              >
+                <X className="h-3 w-3" aria-hidden />
+              </button>
+            </span>
+          </div>
+        ) : null}
+
         {/* Behavior-aware suggestion chips — reachable mid-conversation
           * when the input is idle. Hidden once the user starts typing, is
           * replying, or while a response streams, so they never get in

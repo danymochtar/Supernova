@@ -10,6 +10,8 @@ import { synthesizeJournalNarrative } from '@/lib/ai/journal';
 import { detectUserPronoun } from '@/lib/ai/prompts/journal';
 import { prisma } from '@/lib/db/prisma';
 import { createJournalEntry } from '@/lib/db/repositories/journal';
+import { deriveCategory } from '@/lib/curhat/categories';
+import { topicFromSnapshot } from '@/lib/curhat/snapshot';
 import { logUsage } from '@/lib/db/repositories/usage';
 import type { ProfileView } from '@/lib/db/repositories/profile';
 
@@ -76,7 +78,7 @@ export async function autoJournalFromChat(
   const turns = await prisma.qaHistory.findMany({
     where: { userId, personId: null, createdAt: { gte: since } },
     orderBy: { createdAt: 'asc' },
-    select: { id: true, question: true, answer: true, createdAt: true },
+    select: { id: true, question: true, answer: true, createdAt: true, contextSnapshot: true },
   });
 
   const todayKey = localDayKey(new Date(), profile.timezone);
@@ -197,6 +199,8 @@ export async function autoJournalFromChat(
           // Prefer the cluster's topic label as the theme when the synth
           // didn't emit one — it's already a concrete per-event label.
           theme: synth.theme || cluster.topic || null,
+          // Capability tag = dominant curhat topic across the cluster's turns.
+          category: deriveCategory(rows.map((r) => topicFromSnapshot(r.contextSnapshot))),
           actionItemDrafts: synth.actionItems,
         });
         created += 1;

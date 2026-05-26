@@ -2,9 +2,10 @@
 
 import { useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { CalendarDays, ChevronLeft, ChevronRight, List } from 'lucide-react';
+import { CalendarDays, ChevronLeft, ChevronRight, List, Tags } from 'lucide-react';
 import type { Locale } from '@/lib/i18n/config';
 import { getLocaleConfig } from '@/lib/i18n/locales';
+import { CATEGORY_ORDER, isCategory } from '@/lib/curhat/categories';
 import type {
   DeleteJournalResult,
   ToggleActionItemResult,
@@ -25,6 +26,8 @@ export interface JournalEntryLite {
   reframe: string | null;
   emotion: string | null;
   theme: string | null;
+  /** Curhat capability tag (pribadi/perjalanan/.../relationship) or null. */
+  category: string | null;
   actionItems: JournalActionItemLite[];
   sources: EntrySourceLite[];
   /** ISO date string in UTC (yyyy-mm-dd) — pre-computed server-side so
@@ -54,7 +57,7 @@ interface Props {
   }) => Promise<ToggleActionItemResult>;
 }
 
-type ViewMode = 'calendar' | 'list';
+type ViewMode = 'calendar' | 'list' | 'category';
 
 function daysInMonth(year: number, month: number): number {
   return new Date(Date.UTC(year, month, 0)).getUTCDate();
@@ -68,7 +71,10 @@ function firstDow(year: number, month: number): number {
 
 export function JournalView({ locale, entries, deleteAction, toggleAction }: Props) {
   const t = useTranslations('journal');
+  const tCat = useTranslations('categories');
   const [mode, setMode] = useState<ViewMode>('calendar');
+  // Resolve a category value to its display label ("Lainnya" when untagged).
+  const catLabel = (c: string | null): string => (isCategory(c) ? tCat(c) : t('categoryOther'));
 
   // Bucket entries by day for both views.
   const byDay = useMemo(() => {
@@ -181,6 +187,19 @@ export function JournalView({ locale, entries, deleteAction, toggleAction }: Pro
           <List className="h-3.5 w-3.5" aria-hidden />
           {t('viewList')}
         </button>
+        <button
+          type="button"
+          onClick={() => setMode('category')}
+          aria-pressed={mode === 'category'}
+          className={`press-soft inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
+            mode === 'category'
+              ? 'bg-primary text-primary-foreground'
+              : 'text-muted-foreground hover:text-foreground'
+          }`}
+        >
+          <Tags className="h-3.5 w-3.5" aria-hidden />
+          {t('viewCategory')}
+        </button>
       </div>
 
       {mode === 'calendar' ? (
@@ -267,6 +286,7 @@ export function JournalView({ locale, entries, deleteAction, toggleAction }: Pro
                   reframe={entry.reframe}
                   emotion={entry.emotion}
                   theme={entry.theme}
+                  categoryLabel={entry.category ? catLabel(entry.category) : null}
                   actionItems={entry.actionItems}
                   sources={entry.sources}
                   addedDate={entry.addedLabel}
@@ -284,11 +304,34 @@ export function JournalView({ locale, entries, deleteAction, toggleAction }: Pro
             </p>
           )}
         </div>
+      ) : mode === 'list' ? (
+        <ListView
+          entries={entries}
+          deleteAction={deleteAction}
+          toggleAction={toggleAction}
+          labels={entryLabels}
+          catLabel={catLabel}
+        />
       ) : (
-        <ListView entries={entries} deleteAction={deleteAction} toggleAction={toggleAction} labels={entryLabels} />
+        <CategoryView
+          entries={entries}
+          deleteAction={deleteAction}
+          toggleAction={toggleAction}
+          labels={entryLabels}
+          catLabel={catLabel}
+        />
       )}
     </div>
   );
+}
+
+interface EntryListLabels {
+  addedAt: string;
+  delete: string;
+  sources: string;
+  reframeTitle: string;
+  actionItemsTitle: string;
+  addToCalendar: string;
 }
 
 function ListView({
@@ -296,18 +339,13 @@ function ListView({
   deleteAction,
   toggleAction,
   labels,
+  catLabel,
 }: {
   entries: JournalEntryLite[];
   deleteAction: Props['deleteAction'];
   toggleAction: Props['toggleAction'];
-  labels: {
-    addedAt: string;
-    delete: string;
-    sources: string;
-    reframeTitle: string;
-    actionItemsTitle: string;
-    addToCalendar: string;
-  };
+  labels: EntryListLabels;
+  catLabel: (c: string | null) => string;
 }) {
   // Same per-day grouping the original page rendered, just inside the
   // client-side mode switch.
@@ -329,6 +367,69 @@ function ListView({
             {dayEntries[0]!.groupLabel}
           </p>
           {dayEntries.map((entry) => (
+            <JournalEntryCard
+              key={entry.id}
+              id={entry.id}
+              narrative={entry.narrative}
+              reframe={entry.reframe}
+              emotion={entry.emotion}
+              theme={entry.theme}
+              categoryLabel={entry.category ? catLabel(entry.category) : null}
+              actionItems={entry.actionItems}
+              sources={entry.sources}
+              addedDate={entry.addedLabel}
+              deleteAction={deleteAction}
+              toggleAction={toggleAction}
+              labels={labels}
+            />
+          ))}
+        </section>
+      ))}
+    </div>
+  );
+}
+
+/**
+ * Group entries by capability category, ordered by CATEGORY_ORDER with
+ * untagged entries ("Lainnya") last. The section header carries the
+ * category, so cards here omit the per-card chip.
+ */
+function CategoryView({
+  entries,
+  deleteAction,
+  toggleAction,
+  labels,
+  catLabel,
+}: {
+  entries: JournalEntryLite[];
+  deleteAction: Props['deleteAction'];
+  toggleAction: Props['toggleAction'];
+  labels: EntryListLabels;
+  catLabel: (c: string | null) => string;
+}) {
+  const OTHER = '__other__';
+  const groups = useMemo(() => {
+    const m = new Map<string, JournalEntryLite[]>();
+    for (const e of entries) {
+      const key = isCategory(e.category) ? e.category : OTHER;
+      const arr = m.get(key);
+      if (arr) arr.push(e);
+      else m.set(key, [e]);
+    }
+    const ordered: Array<[string, JournalEntryLite[]]> = [];
+    for (const c of CATEGORY_ORDER) if (m.has(c)) ordered.push([c, m.get(c)!]);
+    if (m.has(OTHER)) ordered.push([OTHER, m.get(OTHER)!]);
+    return ordered;
+  }, [entries]);
+
+  return (
+    <div className="space-y-8">
+      {groups.map(([key, groupEntries]) => (
+        <section key={key} className="space-y-3">
+          <p className="text-muted-foreground px-1 text-[11px] font-semibold uppercase tracking-[0.18em]">
+            {key === OTHER ? catLabel(null) : catLabel(key)} · {groupEntries.length}
+          </p>
+          {groupEntries.map((entry) => (
             <JournalEntryCard
               key={entry.id}
               id={entry.id}

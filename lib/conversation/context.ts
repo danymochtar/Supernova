@@ -1,4 +1,5 @@
 import type { Locale } from '@/lib/i18n/config';
+import type { Category } from '@/lib/curhat/categories';
 import { listPeople } from '@/lib/db/repositories/person';
 import { getReadingForLocalDay } from '@/lib/db/repositories/reading';
 import { getRecentFeedback } from '@/lib/db/repositories/feedback';
@@ -61,6 +62,9 @@ export interface SmartContext {
    * Surfaced to the model so it can naturally follow up, without the user
    * having to remember to ask. */
   followUps?: string;
+  /** When the curhat was opened tagged to a specific saved person (the
+   * "Curhat soal {nama}" shortcut), the model is told to center on them. */
+  focusPerson?: string;
   /** What was loaded — surfaced in dev logs for debugging. */
   loaded: string[];
 }
@@ -73,10 +77,14 @@ interface LoadOpts {
   /** Local context for "today". */
   ctx: { year: number; month: number; day: number };
   dob: BirthDate;
+  /** When set (relationship-curhat shortcut), focus the reply on this saved
+   * person. They're already in the always-loaded people list, so this only
+   * adds a focus hint — no extra query. */
+  forcePersonId?: string;
 }
 
 export async function loadSmartContext(opts: LoadOpts): Promise<SmartContext> {
-  const { userId, locale, profile, question, ctx, dob } = opts;
+  const { userId, locale, profile, question, ctx, dob, forcePersonId } = opts;
   const loaded: string[] = ['base'];
 
   // ---- Base (always) -----------------------------------------------------
@@ -162,6 +170,15 @@ today's cycles: Personal Year=${r(cycles.personalYear)}, Personal Month=${r(cycl
       })
       .join('\n');
     loaded.push('people');
+
+    if (forcePersonId) {
+      const focus = people.find((p) => p.id === forcePersonId);
+      if (focus) {
+        const nick = focus.nickname ? ` ("${focus.nickname}")` : '';
+        result.focusPerson = `${focus.fullName}${nick} — ${focus.relationship.toLowerCase()}`;
+        loaded.push('focusPerson');
+      }
+    }
   }
 
   if (wantReading && reading) {
@@ -348,5 +365,33 @@ export function composeContextBlock(c: SmartContext, personalNotes?: string | nu
   if (c.followUps) {
     parts.push(`<follow_ups>\n${c.followUps}\n</follow_ups>`);
   }
+  if (c.focusPerson) {
+    parts.push(
+      `<focus_person>\nThis chat was opened to talk about ${c.focusPerson}. Center your reply on them unless the user steers elsewhere.\n</focus_person>`,
+    );
+  }
   return parts.join('\n\n');
+}
+
+const TOPIC_HINT_LABEL: Record<Category, { id: string; en: string }> = {
+  pribadi: { id: 'diri sendiri / pribadi', en: 'their personal self' },
+  perjalanan: { id: 'perjalanan hidup / siklus waktu', en: 'their life journey / timing cycles' },
+  percintaan: { id: 'percintaan', en: 'love & romance' },
+  keuangan: { id: 'keuangan / hubungan sama uang', en: 'money & finances' },
+  karier: { id: 'karier / talenta', en: 'career & talents' },
+  relationship: { id: 'hubungan sama orang tertentu', en: 'a specific relationship' },
+};
+
+/**
+ * One-line on-topic nudge for a curhat opened via a capability shortcut.
+ * Goes in the per-user (non-cached) context block, never the static prompt.
+ */
+export function activeTopicHint(topic: Category, locale: Locale): string {
+  const label = TOPIC_HINT_LABEL[topic];
+  const area = locale === 'id' ? label.id : label.en;
+  const body =
+    locale === 'id'
+      ? `User buka obrolan ini buat ngomongin ${area}. Jaga jawaban tetep nyambung ke area itu kecuali dia jelas ganti topik.`
+      : `The user opened this chat to talk about ${area}. Keep replies oriented to that life area unless they clearly steer elsewhere.`;
+  return `<active_topic>\n${body}\n</active_topic>`;
 }

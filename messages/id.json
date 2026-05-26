@@ -378,7 +378,10 @@
     "journalSavedToast": "Tersimpan ke Jurnal",
     "suggestFollowUp": "Lanjut soal \"{item}\"?",
     "suggestTheme": "Cerita soal {theme} lagi?",
-    "suggestVibe": "Cek vibe gw hari ini"
+    "suggestVibe": "Cek vibe gw hari ini",
+    "shortcut": "Curhat soal {topic}",
+    "shortcutHome": "Curhat yuk",
+    "topicDismiss": "Lepas topik"
   },
   "journal": {
     "title": "Jurnal",
@@ -402,7 +405,9 @@
     "autoGenRunning": "Lagi nyusun…",
     "autoGenDone": "{count, plural, =1 {1 entri baru dari curhat lalu} other {# entri baru dari curhat lalu}}",
     "autoGenNone": "Semua curhat lalu udah ke-journal.",
-    "autoGenError": "Gagal generate. Coba lagi."
+    "autoGenError": "Gagal generate. Coba lagi.",
+    "viewCategory": "Kategori",
+    "categoryOther": "Lainnya"
   },
   "feedback": {
     "title": "Bagaimana hari kamu?",
@@ -564,7 +569,8 @@
       "FRIEND": "Teman",
       "COLLEAGUE": "Rekan kerja",
       "OTHER": "Lainnya"
-    }
+    },
+    "curhatAbout": "Curhat soal {name}"
   },
   "relationshipProfile": {
     "title": "Profil hubungan dengan {name}",
@@ -844,5 +850,13 @@
     "title": "Konsep numerologi",
     "subtitle": "Penjelasan lengkap tiap istilah yang muncul di Supernova — biar gak bingung.",
     "footer": "Numerologi adalah alat refleksi, bukan ramalan. Pakai sebagai kompas buat kenal diri lebih dalam."
+  },
+  "categories": {
+    "pribadi": "Pribadi",
+    "perjalanan": "Perjalanan",
+    "percintaan": "Percintaan",
+    "keuangan": "Keuangan",
+    "karier": "Karier",
+    "relationship": "Hubungan"
   }
 }

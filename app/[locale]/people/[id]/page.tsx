@@ -28,6 +28,7 @@ import { NumberCard } from '@/components/numerology/NumberCard';
 import { TopBar } from '@/components/layout/TopBar';
 import { Explainer } from '@/components/layout/Explainer';
 import { PersonVibeButton } from '@/components/people/PersonVibeButton';
+import { CurhatShortcut } from '@/components/curhat/CurhatShortcut';
 import { DeletePersonButton } from '@/components/people/DeletePersonButton';
 import { getPersonVibeForDay } from '@/lib/db/repositories/personDailyVibe';
 import { deletePersonAction, generatePersonVibeAction } from '../actions';
@@ -159,6 +160,18 @@ export default async function PersonDetailPage({
           </div>
           <ChevronRight className="text-muted-foreground h-4 w-4 shrink-0 transition group-hover:translate-x-0.5" aria-hidden />
         </Link>
+
+        {/* Inline curhat shortcut — opens the chat tagged to this person.
+          * Distinct from the Vibes FAB (read-only daily insight); this is an
+          * interactive conversation. Kept inline (not a second FAB). */}
+        <div className="flex">
+          <CurhatShortcut
+            locale={locale}
+            topic="relationship"
+            personId={person.id}
+            label={t('curhatAbout', { name: theirName })}
+          />
+        </div>
 
         {person.notes ? (
           <section className="border-border rounded-xl border bg-amber-50/60 p-4 text-sm dark:border-amber-900/40 dark:bg-amber-950/20">

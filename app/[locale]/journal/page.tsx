@@ -46,6 +46,7 @@ export default async function JournalPage({ params }: { params: { locale: string
       reframe: e.reframe,
       emotion: e.emotion,
       theme: e.theme,
+      category: e.category,
       actionItems: e.actionItems.map((it) => ({
         id: it.id,
         title: it.title,

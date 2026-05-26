@@ -332,7 +332,10 @@
     "journalSavedToast": "ジャーナルに保存したよ",
     "suggestFollowUp": "「{item}」について続ける？",
     "suggestTheme": "{theme}についてもう少し話す？",
-    "suggestVibe": "今日のvibeをチェック"
+    "suggestVibe": "今日のvibeをチェック",
+    "shortcut": "{topic}について話す",
+    "shortcutHome": "話してみる",
+    "topicDismiss": "トピックを外す"
   },
   "journal": {
     "title": "ジャーナル",
@@ -356,7 +359,9 @@
     "autoGenRunning": "作成中…",
     "autoGenDone": "{count, plural, other {これまでのCurhatから新しいエントリーが#件できました}}",
     "autoGenNone": "これまでのCurhatはすべてジャーナル化済みです。",
-    "autoGenError": "生成に失敗しました。もう一度試してみてください。"
+    "autoGenError": "生成に失敗しました。もう一度試してみてください。",
+    "viewCategory": "カテゴリー",
+    "categoryOther": "その他"
   },
   "feedback": {
     "title": "今日はどんな一日だった？",
@@ -518,7 +523,8 @@
       "FRIEND": "友達",
       "COLLEAGUE": "同僚",
       "OTHER": "その他"
-    }
+    },
+    "curhatAbout": "{name}について話す"
   },
   "relationshipProfile": {
     "title": "{name}との関係性プロファイル",
@@ -845,5 +851,13 @@
     "financialSeasonTitle": "今年の金運シーズン",
     "abundanceEdgeTitle": "豊かさにまつわる成長ポイント",
     "subtitle": "お金や巡りとの向き合い方 — あなたの数字から読み解く、金運のリズム。"
+  },
+  "categories": {
+    "pribadi": "自分のこと",
+    "perjalanan": "人生の歩み",
+    "percintaan": "恋愛",
+    "keuangan": "お金",
+    "karier": "キャリア",
+    "relationship": "人間関係"
   }
 }

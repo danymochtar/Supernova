@@ -332,7 +332,10 @@
     "journalSavedToast": "تم الحفظ في Jurnal",
     "suggestFollowUp": "نكمل عن \"{item}\"؟",
     "suggestTheme": "نحكي عن {theme} أكثر؟",
-    "suggestVibe": "شوف الـ vibe تبعي اليوم"
+    "suggestVibe": "شوف الـ vibe تبعي اليوم",
+    "shortcut": "تحدّث عن {topic}",
+    "shortcutHome": "لنتحدّث",
+    "topicDismiss": "إزالة الموضوع"
   },
   "journal": {
     "title": "Jurnal",
@@ -356,7 +359,9 @@
     "autoGenRunning": "جاري الترتيب…",
     "autoGenDone": "{count, plural, =1 {مدخل جديد واحد من فضفضاتك السابقة} other {# مدخلات جديدة من فضفضاتك السابقة}}",
     "autoGenNone": "كل فضفضاتك السابقة اتحوّلت لمدخلات.",
-    "autoGenError": "فشل التوليد. حاول مرة ثانية."
+    "autoGenError": "فشل التوليد. حاول مرة ثانية.",
+    "viewCategory": "الفئة",
+    "categoryOther": "أخرى"
   },
   "feedback": {
     "title": "كيف كان يومك؟",
@@ -518,7 +523,8 @@
       "FRIEND": "صديق",
       "COLLEAGUE": "زميل عمل",
       "OTHER": "أخرى"
-    }
+    },
+    "curhatAbout": "تحدّث عن {name}"
   },
   "relationshipProfile": {
     "title": "ملف العلاقة مع {name}",
@@ -845,5 +851,13 @@
     "financialSeasonTitle": "موسمك المالي هذا العام",
     "abundanceEdgeTitle": "مساحة للنمو في الرزق",
     "subtitle": "علاقتك بالمال والرزق — إيقاعك المالي، مقروءاً من أرقامك."
+  },
+  "categories": {
+    "pribadi": "شخصي",
+    "perjalanan": "مسار الحياة",
+    "percintaan": "الحب",
+    "keuangan": "المال",
+    "karier": "المسيرة المهنية",
+    "relationship": "العلاقات"
   }
 }

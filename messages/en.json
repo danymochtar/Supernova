@@ -332,7 +332,10 @@
     "journalSavedToast": "Saved to Journal",
     "suggestFollowUp": "Keep going on \"{item}\"?",
     "suggestTheme": "Tell me more about {theme}?",
-    "suggestVibe": "Check my vibe today"
+    "suggestVibe": "Check my vibe today",
+    "shortcut": "Talk about {topic}",
+    "shortcutHome": "Start a curhat",
+    "topicDismiss": "Clear topic"
   },
   "journal": {
     "title": "Journal",
@@ -356,7 +359,9 @@
     "autoGenRunning": "Putting it together…",
     "autoGenDone": "{count, plural, =1 {1 new entry from past chats} other {# new entries from past chats}}",
     "autoGenNone": "All your past chats are already journaled.",
-    "autoGenError": "Couldn't generate. Try again."
+    "autoGenError": "Couldn't generate. Try again.",
+    "viewCategory": "Category",
+    "categoryOther": "Other"
   },
   "feedback": {
     "title": "How was your day?",
@@ -518,7 +523,8 @@
       "FRIEND": "Friend",
       "COLLEAGUE": "Colleague",
       "OTHER": "Other"
-    }
+    },
+    "curhatAbout": "Talk about {name}"
   },
   "relationshipProfile": {
     "title": "Relationship profile with {name}",
@@ -845,5 +851,13 @@
     "financialSeasonTitle": "Your financial season this year",
     "abundanceEdgeTitle": "Room to grow around abundance",
     "subtitle": "How you relate to money & abundance — your financial rhythm, read through your numbers."
+  },
+  "categories": {
+    "pribadi": "Personal",
+    "perjalanan": "Journey",
+    "percintaan": "Love",
+    "keuangan": "Money",
+    "karier": "Career",
+    "relationship": "Relationship"
   }
 }

@@ -31,6 +31,7 @@ export interface JournalEntryView {
   reframe: string | null;
   emotion: string | null;
   theme: string | null;
+  category: string | null;
   actionItems: JournalActionItem[];
   addedAt: Date;
 }
@@ -76,6 +77,7 @@ function toView(row: JournalEntry): JournalEntryView {
     reframe: row.reframe,
     emotion: row.emotion,
     theme: row.theme,
+    category: row.category,
     actionItems: decodeActionItems(row.actionItems),
     addedAt: row.addedAt,
   };
@@ -90,6 +92,8 @@ export interface CreateJournalInput {
   reframe?: string | null;
   emotion?: string | null;
   theme?: string | null;
+  /** Curhat capability tag derived from the source turns' topic. */
+  category?: string | null;
   /** Raw action item drafts from the AI; the repo assigns ids + timestamps. */
   actionItemDrafts?: Array<{ title: string }>;
 }
@@ -114,6 +118,7 @@ export async function createJournalEntry(input: CreateJournalInput): Promise<Jou
       reframe: input.reframe?.trim() || null,
       emotion: input.emotion?.trim() || null,
       theme: input.theme?.trim() || null,
+      category: input.category?.trim() || null,
       actionItems: items as unknown as Prisma.InputJsonValue,
     },
   });

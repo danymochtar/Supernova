@@ -332,7 +332,10 @@
     "journalSavedToast": "Guardado en el Diario",
     "suggestFollowUp": "¿Seguimos con \"{item}\"?",
     "suggestTheme": "¿Hablamos más de {theme}?",
-    "suggestVibe": "Chequear mi vibe de hoy"
+    "suggestVibe": "Chequear mi vibe de hoy",
+    "shortcut": "Hablar sobre {topic}",
+    "shortcutHome": "Conversemos",
+    "topicDismiss": "Quitar tema"
   },
   "journal": {
     "title": "Diario",
@@ -356,7 +359,9 @@
     "autoGenRunning": "Organizando…",
     "autoGenDone": "{count, plural, =1 {1 entrada nueva desde desahogos pasados} other {# entradas nuevas desde desahogos pasados}}",
     "autoGenNone": "Todos tus desahogos pasados ya están en el diario.",
-    "autoGenError": "Falló la generación. Inténtalo de nuevo."
+    "autoGenError": "Falló la generación. Inténtalo de nuevo.",
+    "viewCategory": "Categoría",
+    "categoryOther": "Otros"
   },
   "feedback": {
     "title": "¿Cómo va tu día?",
@@ -518,7 +523,8 @@
       "FRIEND": "Amistad",
       "COLLEAGUE": "Colega de trabajo",
       "OTHER": "Otro"
-    }
+    },
+    "curhatAbout": "Hablar sobre {name}"
   },
   "relationshipProfile": {
     "title": "Perfil de relación con {name}",
@@ -845,5 +851,13 @@
     "financialSeasonTitle": "Tu temporada financiera este año",
     "abundanceEdgeTitle": "Espacio para crecer en la abundancia",
     "subtitle": "Cómo te relacionas con el dinero y la abundancia — tu ritmo financiero, leído desde tus números."
+  },
+  "categories": {
+    "pribadi": "Personal",
+    "perjalanan": "Trayectoria",
+    "percintaan": "Amor",
+    "keuangan": "Dinero",
+    "karier": "Carrera",
+    "relationship": "Relación"
   }
 }

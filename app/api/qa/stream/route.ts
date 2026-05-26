@@ -9,12 +9,14 @@ import { logUsage } from '@/lib/db/repositories/usage';
 import { anthropic, model } from '@/lib/ai/client';
 import { chatSystemPrompt } from '@/lib/ai/prompts/conversation';
 import {
+  activeTopicHint,
   chatPaceNote,
   composeContextBlock,
   dateFactAnchor,
   loadSmartContext,
   localDateLabel,
 } from '@/lib/conversation/context';
+import { isCategory } from '@/lib/curhat/categories';
 import { contextFromInstant } from '@/lib/numerology';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 
@@ -47,6 +49,11 @@ const attachmentSchema = z.object({
 const bodySchema = z.object({
   question: z.string().trim().max(4000),
   attachments: z.array(attachmentSchema).max(4).optional(),
+  /** Curhat capability tag set by a per-page shortcut. Validated against the
+   *  known category set in code (not via z.enum) to keep typing simple. */
+  topic: z.string().max(40).optional(),
+  /** Saved person to focus on (only honored when topic === 'relationship'). */
+  aboutPersonId: z.string().min(1).max(64).optional(),
 }).refine(
   (b) => b.question.length > 0 || (b.attachments && b.attachments.length > 0),
   { message: 'empty_message' },
@@ -122,6 +129,12 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'invalid_question' }, { status: 400 });
   }
   const { question, attachments = [] } = parsed.data;
+  // Capability tag from a per-page shortcut. aboutPersonId is only honored for
+  // relationship-curhat, and is used solely to focus context — it is NEVER
+  // written to QaHistory.personId (that stays null so the turn rehydrates in
+  // the main thread and is journalable).
+  const topic = isCategory(parsed.data.topic) ? parsed.data.topic : undefined;
+  const aboutPersonId = topic === 'relationship' ? parsed.data.aboutPersonId : undefined;
 
   const locale: Locale = isLocale(profile.locale) ? profile.locale : 'id';
   const ctx = contextFromInstant(new Date(), profile.timezone);
@@ -138,6 +151,7 @@ export async function POST(req: Request) {
         question,
         ctx,
         dob: profile.dob,
+        forcePersonId: aboutPersonId,
       }),
     ]);
   } catch (err) {
@@ -162,7 +176,11 @@ export async function POST(req: Request) {
   const lastTurnAt =
     recentTurns.length > 0 ? recentTurns[recentTurns.length - 1]!.createdAt : null;
   const paceNote = chatPaceNote(lastTurnAt, new Date(), locale);
-  const contextBlock = [composeContextBlock(smart, profile.personalNotes), paceNote]
+  const contextBlock = [
+    composeContextBlock(smart, profile.personalNotes),
+    topic ? activeTopicHint(topic, locale) : null,
+    paceNote,
+  ]
     .filter(Boolean)
     .join('\n\n');
 
@@ -279,6 +297,10 @@ export async function POST(req: Request) {
         let savedTurnId: string | null = null;
         if (!aborted && answer.length > 0) {
           try {
+            // NOTE: personId stays null here (saveTurn never sets it) — even
+            // for relationship-curhat — so the turn stays in the main thread
+            // and is journalable. The topic + aboutPersonId live in the
+            // snapshot only, and drive the journal entry's category.
             const saved = await saveTurn({
               userId,
               question: persistedQuestion,
@@ -286,6 +308,8 @@ export async function POST(req: Request) {
               contextSnapshot: {
                 loaded: smart.loaded,
                 attachments: attachments.map((a) => ({ kind: a.kind, name: a.name, mediaType: a.mediaType })),
+                topic: topic ?? null,
+                aboutPersonId: aboutPersonId ?? null,
               } as unknown as Prisma.InputJsonValue,
             });
             savedTurnId = saved.id;

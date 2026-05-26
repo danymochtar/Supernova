@@ -25,6 +25,8 @@ interface Props {
   reframe?: string | null;
   emotion?: string | null;
   theme?: string | null;
+  /** Capability tag label (already localized). Shown as a brand-tinted chip. */
+  categoryLabel?: string | null;
   actionItems?: JournalActionItemLite[];
   sources: SourceLite[];
   /** When the user journaled this entry — different from the chat date. */
@@ -51,6 +53,7 @@ export function JournalEntryCard({
   reframe,
   emotion,
   theme,
+  categoryLabel,
   actionItems = [],
   sources,
   addedDate,
@@ -102,9 +105,14 @@ export function JournalEntryCard({
         <Trash2 className="h-3.5 w-3.5" aria-hidden />
       </button>
 
-      {/* Emotion + theme chips — silent metadata, surfaces patterns over time */}
-      {(emotion || theme) ? (
+      {/* Capability + emotion + theme chips — silent metadata, surfaces patterns over time */}
+      {(categoryLabel || emotion || theme) ? (
         <div className="flex flex-wrap gap-1.5">
+          {categoryLabel ? (
+            <span className="bg-primary/10 text-primary rounded-full px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider">
+              {categoryLabel}
+            </span>
+          ) : null}
           {emotion ? (
             <span className="bg-fill-1 text-muted-foreground rounded-full px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider">
               {emotion}

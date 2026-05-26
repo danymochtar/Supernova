@@ -8,6 +8,7 @@ import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { getRecentTurns } from '@/lib/db/repositories/qa';
 import { getJournalDigest, listOpenActionItems } from '@/lib/db/repositories/journal';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { isCategory } from '@/lib/curhat/categories';
 
 /** Trim an action-item title to a chip-friendly length. */
 function chipTrim(s: string, max = 32): string {
@@ -24,12 +25,25 @@ export const dynamic = 'force-dynamic';
  */
 const HISTORY_WINDOW = 50;
 
-export default async function AskPage({ params }: { params: { locale: string } }) {
+export default async function AskPage({
+  params,
+  searchParams,
+}: {
+  params: { locale: string };
+  searchParams: { topic?: string; personId?: string };
+}) {
   const locale: Locale = isLocale(params.locale) ? params.locale : 'id';
   const t = await getTranslations({ locale, namespace: 'chat' });
+  const tCat = await getTranslations({ locale, namespace: 'categories' });
 
   const session = await getSession();
   if (!session) redirect(`/${locale}/login`);
+
+  // Capability tag from a per-page "Curhat soal ini" shortcut. Validated
+  // against the known set; personId only kept for relationship-curhat.
+  const activeTopic = isCategory(searchParams.topic) ? searchParams.topic : undefined;
+  const aboutPersonId =
+    activeTopic === 'relationship' && searchParams.personId ? searchParams.personId : undefined;
 
   const profile = await getProfileByUserId(session.user.id);
   if (!profile) redirect(`/${locale}/welcome`);
@@ -79,6 +93,9 @@ export default async function AskPage({ params }: { params: { locale: string } }
         suggestions={personalized}
         deleteAction={deleteTurnAction}
         journalAction={addToJournalAction}
+        activeTopic={activeTopic}
+        activeTopicLabel={activeTopic ? tCat(activeTopic) : undefined}
+        aboutPersonId={aboutPersonId}
       />
     </main>
   );

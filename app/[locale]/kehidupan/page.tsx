@@ -7,6 +7,8 @@ import { KehidupanTabs, type KehidupanTab } from '@/components/kehidupan/Kehidup
 import { TentangView } from '@/components/kehidupan/TentangView';
 import { PerjalananView } from '@/components/kehidupan/PerjalananView';
 import { AspectView } from '@/components/kehidupan/AspectView';
+import { CurhatShortcut } from '@/components/curhat/CurhatShortcut';
+import { categoryForKehidupanTab } from '@/lib/curhat/categories';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,6 +21,8 @@ export default async function KehidupanPage({
 }) {
   const locale: Locale = isLocale(params.locale) ? params.locale : 'id';
   const t = await getTranslations({ locale, namespace: 'kehidupan' });
+  const tChat = await getTranslations({ locale, namespace: 'chat' });
+  const tCat = await getTranslations({ locale, namespace: 'categories' });
 
   const session = await getSession();
   if (!session) redirect(`/${locale}/login`);
@@ -54,6 +58,13 @@ export default async function KehidupanPage({
             keuangan: t('tabKeuangan'),
           }}
         />
+        <div className="flex">
+          <CurhatShortcut
+            locale={locale}
+            topic={categoryForKehidupanTab(tab)}
+            label={tChat('shortcut', { topic: tCat(categoryForKehidupanTab(tab)) })}
+          />
+        </div>
       </header>
 
       {tab === 'perjalanan' ? (

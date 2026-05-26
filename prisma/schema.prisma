@@ -365,6 +365,10 @@ model JournalEntry {
   emotion    String?
   // Primary theme label ("work", "relationship", "health", "family", etc.).
   theme      String?
+  // Curhat capability tag, derived from the topic of the source chat turns
+  // (pribadi / perjalanan / percintaan / keuangan / karier / relationship).
+  // Null for entries with no tagged source — grouped under "Lainnya".
+  category   String?
   // Action items extracted from the entry. JSON array of:
   //   { id, title, completed, completedAt?, createdAt }
   // Each item is a concrete, achievable thing the user can do. Stored

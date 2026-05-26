@@ -332,7 +332,10 @@
     "journalSavedToast": "Tersimpan ke Jurnal",
     "suggestFollowUp": "Sambung cerita pasal \"{item}\"?",
     "suggestTheme": "Cerita lagi pasal {theme}?",
-    "suggestVibe": "Check vibe aku hari ni"
+    "suggestVibe": "Check vibe aku hari ni",
+    "shortcut": "Curhat tentang {topic}",
+    "shortcutHome": "Jom curhat",
+    "topicDismiss": "Buang topik"
   },
   "journal": {
     "title": "Jurnal",
@@ -356,7 +359,9 @@
     "autoGenRunning": "Tengah susun…",
     "autoGenDone": "{count, plural, =1 {1 entri baru dari curhat lepas} other {# entri baru dari curhat lepas}}",
     "autoGenNone": "Semua curhat lepas dah masuk jurnal.",
-    "autoGenError": "Gagal generate. Cuba lagi."
+    "autoGenError": "Gagal generate. Cuba lagi.",
+    "viewCategory": "Kategori",
+    "categoryOther": "Lain-lain"
   },
   "feedback": {
     "title": "Macam mana hari kamu?",
@@ -518,7 +523,8 @@
       "FRIEND": "Kawan",
       "COLLEAGUE": "Rakan sekerja",
       "OTHER": "Lain-lain"
-    }
+    },
+    "curhatAbout": "Curhat tentang {name}"
   },
   "relationshipProfile": {
     "title": "Profil hubungan dengan {name}",
@@ -845,5 +851,13 @@
     "financialSeasonTitle": "Musim kewangan tahun ini",
     "abundanceEdgeTitle": "Ruang berkembang soal rezeki",
     "subtitle": "Cara kamu relate dengan duit & rezeki — ritma kewangan kamu, dibaca dari angka kamu."
+  },
+  "categories": {
+    "pribadi": "Peribadi",
+    "perjalanan": "Perjalanan",
+    "percintaan": "Percintaan",
+    "keuangan": "Kewangan",
+    "karier": "Kerjaya",
+    "relationship": "Hubungan"
   }
 }

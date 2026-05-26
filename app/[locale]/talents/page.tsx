@@ -16,6 +16,7 @@ import {
   type TalentRating,
 } from '@/lib/numerology/talents';
 import { loadCareerEntriesScored } from '@/lib/numerology/career';
+import { CurhatShortcut } from '@/components/curhat/CurhatShortcut';
 import idMeanings from '@/content/meanings/id.json';
 import enMeanings from '@/content/meanings/en.json';
 
@@ -131,6 +132,8 @@ function RatingCard({
 export default async function TalentsPage({ params }: { params: { locale: string } }) {
   const locale: Locale = isLocale(params.locale) ? params.locale : 'id';
   const t = await getTranslations({ locale, namespace: 'talents' });
+  const tChat = await getTranslations({ locale, namespace: 'chat' });
+  const tCat = await getTranslations({ locale, namespace: 'categories' });
 
   const session = await getSession();
   if (!session) redirect(`/${locale}/login`);
@@ -163,9 +166,16 @@ export default async function TalentsPage({ params }: { params: { locale: string
       className="container max-w-3xl space-y-6 px-4 pb-6 sm:px-6 sm:pb-10"
       style={{ paddingTop: 'calc(env(safe-area-inset-top) + 1.5rem)' }}
     >
-      <header className="space-y-1 pt-2">
+      <header className="space-y-2 pt-2">
         <h1 className="font-serif text-2xl font-semibold tracking-tight">{t('title')}</h1>
         <p className="text-muted-foreground text-sm">{t('subtitle')}</p>
+        <div className="flex pt-1">
+          <CurhatShortcut
+            locale={locale}
+            topic="karier"
+            label={tChat('shortcut', { topic: tCat('karier') })}
+          />
+        </div>
       </header>
 
       <section className="border-primary/40 from-primary/10 ring-primary/20 space-y-4 overflow-hidden rounded-3xl border-2 bg-gradient-to-br to-accent/15 p-6 ring-1 dark:to-accent/15">

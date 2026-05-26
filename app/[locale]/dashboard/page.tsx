@@ -10,6 +10,7 @@ import {
 } from '@/lib/numerology';
 import { NumberCard } from '@/components/numerology/NumberCard';
 import { AppHeader } from '@/components/layout/AppHeader';
+import { CurhatShortcut } from '@/components/curhat/CurhatShortcut';
 import { DailyReadingView } from '@/components/reading/DailyReadingView';
 import { DateBrowser } from '@/components/reading/DateBrowser';
 import { FeedbackPrompt } from '@/components/feedback/FeedbackPrompt';
@@ -108,6 +109,7 @@ export default async function DashboardPage({
   const locale: Locale = isLocale(params.locale) ? params.locale : 'id';
   const t = await getTranslations({ locale, namespace: 'dashboard' });
   const tReading = await getTranslations({ locale, namespace: 'reading' });
+  const tChat = await getTranslations({ locale, namespace: 'chat' });
 
   const session = await getSession();
   if (!session) {
@@ -274,6 +276,12 @@ export default async function DashboardPage({
           />
         }
       />
+
+      {!isPreview ? (
+        <div className="flex">
+          <CurhatShortcut locale={locale} topic="pribadi" label={tChat('shortcutHome')} />
+        </div>
+      ) : null}
 
       {WIDGET_ORDER.map((id) => renderWidget(id))}
     </main>
