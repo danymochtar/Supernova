@@ -2,6 +2,7 @@ import { formatNumerology, type NumerologyResult } from '@/lib/numerology';
 import type { Relationship } from '@prisma/client';
 import type { Locale } from '@/lib/i18n/config';
 import { localizeEnglishPrompt } from './_localize';
+import { VOICE_ID, VOICE_EN } from './_voice';
 
 export interface VibePromptInput {
   locale: Locale;
@@ -115,6 +116,8 @@ CARA BACA:
 - Selisih PD user vs PD orang lain = friction atau flow. PD yang sama atau complementary (1-2-3 sequence, 3+6, 4+8 dst) = flow. PD yang clash (mis. 4 introvert vs 5 chaos) = friction.
 - Relasi WAJIB ngarahin tone & topik saran. Pasangan boleh deep + romance, ortu hormat + family-care, anak sabar + reassurance, saudara peer + history-aware, keluarga extended warm-but-shallow, teman casual-deep, rekan kerja STRICTLY PROFESSIONAL + output-focused (zero personal oversharing), kenalan surface aja. Detail per tipe ada di <relationship_rules> di user prompt — taat persis ke palette boleh/hindari di sana.
 
+${VOICE_ID}
+
 FORMAT OUTPUT (PENTING, ikutin persis):
 - 2-3 paragraf pendek, total max 120 kata.
 - Paragraf pertama: vibe orang itu hari ini secara umum (mood, energi, apa yang mereka butuhin/hindarin) — 2-3 kalimat.
@@ -177,6 +180,8 @@ DAILY VARIATION (READ THIS):
   • Master/karmic compounds when they show up on PD/PM/PY
 - BANNED PHRASES (overused): "in sync", "vibing together", "same frequency", "you two are matched", "make the most of this moment", "deep connection". Find other ways to say it.
 - Paragraph 2 advice must also vary day to day with the PD compound — PD 7 day advice differs from PD 1 day advice.
+
+${VOICE_EN}
 
 RULES:
 - Warm, friendly, chat-with-a-wise-friend tone. Use "you".

@@ -1,6 +1,7 @@
 import { formatNumerology, type NumerologyResult } from '@/lib/numerology';
 import type { Locale } from '@/lib/i18n/config';
 import { localizeEnglishPrompt } from './_localize';
+import { VOICE_ID, VOICE_EN } from './_voice';
 
 export interface DailyPromptInput {
   locale: Locale;
@@ -85,18 +86,16 @@ JANGAN nyebut nama komponennya secara literal di prosa:
   ❌ "Tanggal kalender hari ini punya energinya sendiri..."
 
 LAKUKAN: gabungin nuansa-nuansa itu jadi satu prosa yang ngalir, kayak teman yang ngerti kamu lagi cerita gimana hari kamu bakal terasa.
-  ✅ "Hari ini ada lapisan yang minta kamu nggak nge-take semua di face value — semacam intuisi yang bilang, cek dulu sebelum percaya. Tapi sekaligus, ada dorongan jelas buat hadir, ambil posisi, jangan tunggu orang lain mulai. Yang kamu lakuin bisa konkret — urus hal-hal praktis, kerjaan, urusan finansial yang nge-gantung."
-  Tiga thread (verifikasi/reflektif, action/inisiasi, praktis/material) tiga beat substantive — itu yang kita kejar.
+  ✅ "Hari ini ada bagian yang minta kamu nggak nelan semua mentah-mentah. Kayak ada suara kecil yang bilang, cek dulu sebelum percaya. Tapi sekaligus ada dorongan jelas buat hadir dan ambil posisi, jangan nungguin orang lain yang mulai. Yang kamu kerjain bisa hal nyata: urusan praktis, kerjaan, atau soal uang yang masih nggantung."
+  Tiga thread (verifikasi/reflektif, action/inisiasi, praktis/material) tiga beat substantive itu yang kita kejar.
 
-Boleh sesekali nyebut "hari ini" atau "minggu ini" atau "tahun ini" — itu natural. Tapi JANGAN bedain "Personal Day vs Personal Month" secara eksplisit. Lebur jadi satu cerita tentang HARI INI.
+Boleh sesekali nyebut "hari ini" atau "minggu ini" atau "tahun ini", itu natural. Tapi JANGAN bedain "Personal Day vs Personal Month" secara eksplisit. Lebur jadi satu cerita tentang HARI INI.
+
+${VOICE_ID}
 
 Aturan lain:
 - Pakai "kamu" atau "lo", bukan "Anda". Nada hangat, ringkas, kayak teman bijak yang ngobrol di chat.
-- REGISTER — Jaksel/gaul-friendly: code-mix Indonesia + English boleh dan didorong, asal organic. Default Indonesia, tapi pake English kalau katanya udah jadi "bahasa default" buat young Jakarta.
-  ✅ Natural code-mix: "show up genuine", "kerasa transactional", "actually", "literally", "honestly", "kind of", "deal with it", "mood", "vibe", "energy", "focus", "concrete", "real talk".
-  ❌ Hindari Indonesianisasi loanword yang kerasa kaku: "kapabel" → pake "capable" atau "bisa". "esensial" → "essential" atau "penting". "transaksional" → "transactional". "konkret" → "concrete" atau "nyata".
-  ❌ Hindari bahasa bookish/korporat: "menunjukkan kemampuan", "kehadiran yang genuine", "bukan hari untuk ragu-ragu" — terlalu formal. Pake versi obrolan: "show kalau lo bisa", "show up genuine", "bukan hari buat overthinking".
-  Code-mix harus ngalir, bukan dipaksa. Kalau Indonesia native udah pas, pake Indonesia.
+- REGISTER: Bahasa Indonesia santai sebagai default, kayak teman ngobrol di chat. Hindari bahasa bookish/korporat ("menunjukkan kemampuan", "kehadiran yang genuine", "tidak ragu-ragu") dan ganti pakai versi sehari-hari yang wajar ("tunjukin aja kamu bisa", "hadir apa adanya").
 - Selalu berdasarkan angka di <profile>. Jangan ngarang.
 - JANGAN sebut angka apa pun secara eksplisit di output (misalnya "5", "Personal Day 5", "Life Path 1").
 - Nggak ngasih nasihat medis, hukum, atau finansial.
@@ -148,7 +147,9 @@ DO: blend those nuances into one flowing read, like a friend who knows you descr
   ✅ "There's a layer today that asks you not to take anything at face value — a quiet instinct saying, check first before you trust. At the same time there's a clear pull to show up, take a position, not wait for someone else to start. And what you actually do can be concrete — practical things, work, the financial matters that have been hanging."
   Three threads (verify/reflect, act/initiate, practical/material), three substantive beats — that's what we're after.
 
-It's fine to say "today" or "this week" or "this year" — that's natural. But don't separate "Personal Day vs Personal Month" explicitly. Fuse them into one story about today.
+It's fine to say "today" or "this week" or "this year"; that's natural. But don't separate "Personal Day vs Personal Month" explicitly. Fuse them into one story about today.
+
+${VOICE_EN}
 
 Other rules:
 - Always ground your reading in the numbers in <profile>. Never invent.

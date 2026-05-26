@@ -3,6 +3,7 @@ import type { CoreLite } from '@/lib/compatibility/score';
 import type { LaneScore } from '@/lib/compatibility/score';
 import type { Locale } from '@/lib/i18n/config';
 import { localizeEnglishPrompt } from './_localize';
+import { VOICE_ID, VOICE_EN } from './_voice';
 
 export interface RelationshipPromptInput {
   locale: Locale;
@@ -158,9 +159,11 @@ export function buildProfileSystem(locale: Locale): string {
 Tugas: berdasar angka inti dua orang dan jenis hubungan mereka, tulis profil yang ngajak pembaca kenal **orang itu** dulu sebelum masuk ke dinamika hubungan kalian.
 
 Struktur (WAJIB diikutin, ~280-380 kata total):
-- **Paragraf 1 — Tentang dia**: 2-3 kalimat ngegambarin SIAPA dia sebagai pribadi berdasar Life Path / Expression / Soul Urge / Personality dia. Bentuk: "[Nama] adalah seseorang yang..." atau "Dia bawa energi yang...". JANGAN sebut "kamu", JANGAN bahas relasi kalian disini — paragraf ini murni potret orang itu. Pembaca kalau berhenti baca di sini sudah dapat gambaran utuh siapa orang ini.
+- **Paragraf 1 — Tentang dia**: 2-3 kalimat ngegambarin SIAPA dia sebagai pribadi berdasar Life Path / Expression / Soul Urge / Personality dia. Buka dengan cara yang hidup (observasi konkret, gambaran, atau ketegangan); JANGAN pakai rumus "[Nama] adalah seseorang yang...". JANGAN sebut "kamu", JANGAN bahas relasi kalian di sini, paragraf ini murni potret orang itu. Pembaca kalau berhenti baca di sini sudah dapat gambaran utuh siapa orang ini.
 - **Paragraf 2-3 — Dinamika**: bagaimana hubungan ini terasa, di mana kekuatannya, di mana titik gesekan yang lembut. Mulai paragraf 2 dengan transisi ke relasi ("Antara kalian...", "Sama kamu...", "Dalam konteks [hubungan]...").
 - **Paragraf 4 — Penutup**: 1 paragraf pendek (2-3 kalimat) naming apa yang bikin dinamika kalian terasa khas atau apa yang patut dijaga.
+
+${VOICE_ID}
 
 Aturan:
 - Boleh code-mix: istilah seperti "Life Path", "Expression", "Soul Urge", "Personality", "Birthday", "master number", "karmic debt" TETAP dalam Bahasa Inggris.
@@ -177,9 +180,11 @@ Format: prosa biasa, paragraf dipisah baris kosong. TIDAK ada heading, bullet, a
 Task: based on two people's core numbers and the type of relationship between them, write a profile that introduces **the person** first, then the dynamic between you.
 
 Required structure (follow exactly, ~280-380 words total):
-- **Paragraph 1 — About them**: 2-3 sentences describing WHO they are as a person, derived from their Life Path / Expression / Soul Urge / Personality. Shape: "[Name] is someone who..." or "They carry an energy of...". Do NOT use "you" or frame as the relationship yet — this paragraph is pure portrait. A reader stopping here should already have a sense of who this person is.
+- **Paragraph 1 — About them**: 2-3 sentences describing WHO they are as a person, derived from their Life Path / Expression / Soul Urge / Personality. Open in a lively way (a concrete observation, image, or tension); do NOT use the "[Name] is someone who..." formula. Do NOT use "you" or frame as the relationship yet, this paragraph is pure portrait. A reader stopping here should already have a sense of who this person is.
 - **Paragraphs 2-3 — The dynamic**: how this relationship feels, where its strengths sit, gentle friction points. Open paragraph 2 with a transition into the relationship ("Between you two...", "With you...", "In the context of [relationship]...").
 - **Paragraph 4 — Closing**: one short paragraph (2-3 sentences) naming what makes this dynamic distinctive or what's worth protecting.
+
+${VOICE_EN}
 
 Rules:
 - Adjust to relationship type. Partner, family, friend, colleague have different dynamics — different components are relevant. For friend/colleague, don't reach into the deepest yearning (Soul Urge) — that's partner/family territory.

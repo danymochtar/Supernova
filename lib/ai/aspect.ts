@@ -14,9 +14,9 @@ import { getCachedJson, setCachedJson } from '@/lib/db/repositories/numerologyCa
 // Cache key carries the aspect + calendar year: the "*Season" field is
 // Personal-Year-dependent, so the bundle refreshes once per year. Bump
 // the version when the prompt schema changes.
-// v2: natural-voice pass (varied openers, no "X — bukan Y" tells).
+// v3: stronger un-AI voice (no em-dash, no negation framing, no English flexing).
 function cacheKey(aspectId: AspectId, year: number): string {
-  return `aspect-v2:${aspectId}:${year}`;
+  return `aspect-v3:${aspectId}:${year}`;
 }
 
 /** Read-only cache fetch — never generates. */

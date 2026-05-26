@@ -1,5 +1,6 @@
 import type { Locale } from '@/lib/i18n/config';
 import { localizeEnglishPrompt } from './_localize';
+import { VOICE_ID, VOICE_EN } from './_voice';
 
 /**
  * Summarization prompts for the hierarchical chat history rollup.
@@ -33,6 +34,8 @@ Aturan:
 - JANGAN pakai markdown, bullet, atau heading. Cuma paragraf prosa.
 - Skip basa-basi; langsung ke isi.
 
+${VOICE_ID}
+
 Output: paragraf aja, tanpa pembuka.`;
   }
   return localizeEnglishPrompt(`You write ${kind} journal summaries from a user's chat history with their numerology companion.
@@ -44,6 +47,8 @@ Rules:
 - DO NOT repeat specific numerology details (numbers, calculations) — those live elsewhere.
 - NO markdown, bullets, or headings. Plain prose paragraphs only.
 - Skip pleasantries; jump straight in.
+
+${VOICE_EN}
 
 Output: just the paragraph(s), no preamble.`, locale);
 }

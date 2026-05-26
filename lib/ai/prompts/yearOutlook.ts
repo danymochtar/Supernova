@@ -1,6 +1,7 @@
 import { formatNumerology, type NumerologyResult } from '@/lib/numerology';
 import type { Locale } from '@/lib/i18n/config';
 import { localizeEnglishPrompt } from './_localize';
+import { VOICE_ID, VOICE_EN } from './_voice';
 
 export interface YearOutlookInput {
   locale: Locale;
@@ -35,6 +36,8 @@ Konten:
 - "tips": array 3 string. Tiap tip 1 kalimat aksi praktis — apa yang baik dilakukan / dihindari tahun ini. Spesifik, nggak generik.
 - "affirmation": satu kalimat afirmasi orang-pertama ("Aku..."), 8-15 kata, present tense, sesuai vibe tahun.
 
+${VOICE_ID}
+
 Aturan:
 - JANGAN sebut angka apapun (mis. "Personal Year 5", "Pinnacle 3"). Terjemahin ke makna/feel.
 - JANGAN markdown, bullet, heading, emoji.
@@ -58,6 +61,8 @@ Content:
 - "synthesis": 2-3 dense paragraphs (100-160 words total). Weave all four layers into one year-narrative — how this Personal Year interacts with the active Pinnacle/Challenge, the Period Cycle framing this decade, and the Essence flowing from the user's name letters. Mention their first name once. DO NOT name any specific number.
 - "tips": an array of 3 strings. Each tip is one sentence of practical action — what to lean into or avoid this year. Specific, not generic.
 - "affirmation": one first-person affirmation sentence ("I…"), 8-15 words, present tense, matching the year's vibe.
+
+${VOICE_EN}
 
 Rules:
 - DO NOT name any number (e.g. "Personal Year 5", "Pinnacle 3"). Translate into meaning/feel.

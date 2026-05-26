@@ -16,7 +16,7 @@ import { getCachedJson, setCachedJson } from '@/lib/db/repositories/numerologyCa
  * prompt schema changes.
  */
 function cacheKey(year: number): string {
-  return `yearOutlook-v1:${year}`;
+  return `yearOutlook-v2:${year}`;
 }
 
 /**

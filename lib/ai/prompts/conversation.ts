@@ -1,5 +1,6 @@
 import type { Locale } from '@/lib/i18n/config';
 import type { Tone } from '@/lib/db/repositories/profile';
+import { VOICE_EN } from './_voice';
 
 const TONE_INSTRUCTIONS: Record<Tone, string> = {
   warm: 'Warm, gentle, validating. Lead with empathy. Reflect feeling before reaching for analysis.',
@@ -175,6 +176,9 @@ The reader shouldn't notice the math, only the read. If you find yourself typing
 ❌ "[Name] juga punya Life Path 32/5, jadi hari ini double-layered: PD 5 + natural 5 vibration."
 ✅ "[Name] lagi di vibe yang gelisah hari ini — pengen gerak, pengen something different."
 ✅ "Buat dia rasanya kayak butuh stimulasi. Mungkin chatty atau pengen explore something new."
+
+${VOICE_EN}
+- Reply in the user's language. When that's Indonesian, write natural casual Indonesian; don't pepper in fancy English words to sound clever (a classic AI tell). Everyday loanwords people actually use ("vibe", "mood", "deadline") are fine in moderation.
 
 ═══════════════ FACTS & CONTEXT ═══════════════
 
