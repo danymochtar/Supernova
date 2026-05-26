@@ -4,13 +4,13 @@
     "tagline": "Tu guía diaria de numerología."
   },
   "nav": {
-    "home": "Inicio",
+    "home": "Home",
     "journey": "Viaje",
-    "talents": "Talentos",
-    "chat": "Desahógate",
-    "people": "Personas",
-    "journal": "Diario",
-    "life": "Vida"
+    "talents": "Talents",
+    "chat": "Chat",
+    "people": "People",
+    "journal": "Journal",
+    "life": "Life"
   },
   "me": {
     "title": "Yo",
@@ -300,7 +300,7 @@
     "previewBadge": "Vista previa"
   },
   "chat": {
-    "title": "Desahógate con Supernova",
+    "title": "Chat",
     "subtitle": "Un lugar para contar, pensar en voz alta o pedir perspectiva. Recuerdo nuestras charlas — diarias, semanales y hasta mensuales.",
     "back": "Volver al dashboard",
     "placeholder": "Escribe lo que sea…",
@@ -340,15 +340,15 @@
     "quickClose": "Cerrar"
   },
   "journal": {
-    "title": "Diario",
+    "title": "Journal",
     "subtitle": "Los mensajes que elegiste guardar — un lugar para releer los momentos que importan.",
     "emptyHint": "Aún no hay nada en el Diario. Cuando estés conversando, toca el ícono + en el mensaje que quieras recordar.",
     "emptyCta": "Abrir Curhat",
     "addedAt": "Guardado",
     "delete": "Eliminar del Diario",
     "sourcesToggle": "Ver conversación original",
-    "viewCalendar": "Calendario",
-    "viewList": "Lista",
+    "viewCalendar": "Calendar",
+    "viewList": "List",
     "prevMonth": "Mes anterior",
     "nextMonth": "Mes siguiente",
     "selectDayHint": "Toca una fecha con punto para ver la entrada.",
@@ -362,7 +362,7 @@
     "autoGenDone": "{count, plural, =1 {1 entrada nueva desde desahogos pasados} other {# entradas nuevas desde desahogos pasados}}",
     "autoGenNone": "Todos tus desahogos pasados ya están en el diario.",
     "autoGenError": "Falló la generación. Inténtalo de nuevo.",
-    "viewCategory": "Categoría",
+    "viewCategory": "Category",
     "categoryOther": "Otros"
   },
   "feedback": {
@@ -428,7 +428,7 @@
     "essenceExplainer": "El Essence Cycle es la capa más personal — lee las letras de tu nombre. Cada letra \"vive\" tantos años como su valor pitagórico (D=4 → 4 años, Y=7 → 7 años, etc). Tres corrientes corren en paralelo: Physical (nombre, vinculado a lo físico y al trabajo), Mental (middle name, si lo hay — vinculado a la mente), Spiritual (apellido, al crecimiento interno y relaciones). Essence = suma de las letras activas. El karmic debt 13/14/16/19 se mantiene, no se reduce — es señal de un año que trae una lección especial."
   },
   "people": {
-    "title": "Personas",
+    "title": "People",
     "subtitle": "Mira los perfiles y la compatibilidad de las personas importantes en tu vida.",
     "heroEyebrow": "{count} personas en tu círculo",
     "heroTitle": "Cada persona trae sus propios números, vibra y dinámica.",
@@ -585,7 +585,7 @@
     "disclaimer": "Puntaje y patrones calculados de forma determinista desde sus números (tradición Pythagorean — Decoz, Millman) con la lente del tipo de relación. La numerología es una herramienta de reflexión, no una predicción."
   },
   "talents": {
-    "title": "Talento",
+    "title": "Talents",
     "subtitle": "Perfil de rasgos y talentos desde la proporción de letras en tu nombre completo.",
     "heroEyebrow": "Tu perfil de talento",
     "heroTitleWithTop": "Energía más fuerte: {top}",
@@ -829,11 +829,11 @@
     "completionByEmotionRow": "Cuando estás {emotion}"
   },
   "kehidupan": {
-    "title": "Vida",
-    "tabTentang": "Sobre ti",
-    "tabPerjalanan": "Camino",
-    "tabPercintaan": "Amor",
-    "tabKeuangan": "Finanzas"
+    "title": "Life",
+    "tabTentang": "About",
+    "tabPerjalanan": "Journey",
+    "tabPercintaan": "Love",
+    "tabKeuangan": "Money"
   },
   "love": {
     "title": "Amor",

@@ -300,7 +300,7 @@
     "previewBadge": "Preview"
   },
   "chat": {
-    "title": "Talk to Supernova",
+    "title": "Chat",
     "subtitle": "A place to vent, think out loud, or ask for perspective. I remember our conversation — daily, weekly, and monthly.",
     "back": "Back to dashboard",
     "placeholder": "Write anything…",
@@ -830,10 +830,10 @@
   },
   "kehidupan": {
     "title": "Life",
-    "tabTentang": "About You",
+    "tabTentang": "About",
     "tabPerjalanan": "Journey",
     "tabPercintaan": "Love",
-    "tabKeuangan": "Finances"
+    "tabKeuangan": "Money"
   },
   "love": {
     "title": "Love",

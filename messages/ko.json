@@ -4,13 +4,13 @@
     "tagline": "당신의 데일리 numerology 가이드."
   },
   "nav": {
-    "home": "홈",
+    "home": "Home",
     "journey": "여정",
-    "talents": "재능",
-    "chat": "털어놓기",
-    "people": "사람들",
-    "journal": "저널",
-    "life": "인생"
+    "talents": "Talents",
+    "chat": "Chat",
+    "people": "People",
+    "journal": "Journal",
+    "life": "Life"
   },
   "me": {
     "title": "나",
@@ -300,7 +300,7 @@
     "previewBadge": "미리보기"
   },
   "chat": {
-    "title": "Supernova에게 털어놓기",
+    "title": "Chat",
     "subtitle": "이야기하고, 깊게 생각하고, 새로운 관점을 얻는 공간이에요. 우리 대화는 기억해둘게요 — 매일, 매주, 매달.",
     "back": "대시보드로 돌아가기",
     "placeholder": "뭐든 적어보세요…",
@@ -340,15 +340,15 @@
     "quickClose": "닫기"
   },
   "journal": {
-    "title": "Jurnal",
+    "title": "Journal",
     "subtitle": "저장하려고 선택한 메시지들 — 의미 있던 순간을 다시 펼쳐 보는 곳이에요.",
     "emptyHint": "아직 Jurnal에 담긴 게 없어요. 털어놓는 중에 기억하고 싶은 메시지의 + 아이콘을 눌러보세요.",
     "emptyCta": "Curhat 열기",
     "addedAt": "저장됨",
     "delete": "Jurnal에서 삭제",
     "sourcesToggle": "원본 대화 보기",
-    "viewCalendar": "캘린더",
-    "viewList": "리스트",
+    "viewCalendar": "Calendar",
+    "viewList": "List",
     "prevMonth": "이전 달",
     "nextMonth": "다음 달",
     "selectDayHint": "점이 있는 날짜를 탭하면 기록을 볼 수 있어요.",
@@ -362,7 +362,7 @@
     "autoGenDone": "{count, plural, =1 {지난 대화에서 새 항목 1개} other {지난 대화에서 새 항목 #개}}",
     "autoGenNone": "지난 대화는 모두 저널로 정리됐어요.",
     "autoGenError": "생성에 실패했어요. 다시 시도해 주세요.",
-    "viewCategory": "카테고리",
+    "viewCategory": "Category",
     "categoryOther": "기타"
   },
   "feedback": {
@@ -428,7 +428,7 @@
     "essenceExplainer": "Essence Cycle은 가장 개인적인 레이어예요 — 당신 이름의 글자들을 직접 읽어내요. 각 글자는 Pythagorean 값만큼 \"살아있어요\" (D=4 → 4년, Y=7 → 7년…). 세 흐름이 동시에 흘러요: Physical(이름, 몸과 일에 연결), Mental(미들네임, 있다면 — 사고에 연결), Spiritual(성, 내면 성장과 관계에 연결). Essence = 활성 글자들의 합. Karmic debt 13/14/16/19는 축약하지 않고 그대로 둬요 — 특별한 배움을 가져오는 해라는 신호니까요."
   },
   "people": {
-    "title": "사람들",
+    "title": "People",
     "subtitle": "당신 인생에서 중요한 사람들의 프로필과 궁합을 확인하세요.",
     "heroEyebrow": "당신 곁의 {count}명",
     "heroTitle": "사람마다 각자의 숫자, 바이브, 그리고 다이내믹을 가지고 있어요.",
@@ -585,7 +585,7 @@
     "disclaimer": "점수와 패턴은 두 사람의 숫자에서 결정론적으로 계산해요(Pythagorean 전통 — Decoz, Millman), 관계 유형별 렌즈를 적용해서요. 수비학은 예언이 아니라 성찰의 도구예요."
   },
   "talents": {
-    "title": "재능",
+    "title": "Talents",
     "subtitle": "당신의 풀네임 글자 비율에서 도출한 성향 & 재능 프로필이에요.",
     "heroEyebrow": "당신의 재능 프로필",
     "heroTitleWithTop": "가장 강한 에너지: {top}",
@@ -829,11 +829,11 @@
     "completionByEmotionRow": "당신이 {emotion} 상태일 때"
   },
   "kehidupan": {
-    "title": "인생",
-    "tabTentang": "당신에 대하여",
-    "tabPerjalanan": "여정",
-    "tabPercintaan": "연애",
-    "tabKeuangan": "재정"
+    "title": "Life",
+    "tabTentang": "About",
+    "tabPerjalanan": "Journey",
+    "tabPercintaan": "Love",
+    "tabKeuangan": "Money"
   },
   "love": {
     "title": "연애",

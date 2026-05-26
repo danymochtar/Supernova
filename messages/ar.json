@@ -4,13 +4,13 @@
     "tagline": "دليلك اليومي في علم الأعداد."
   },
   "nav": {
-    "home": "الرئيسية",
+    "home": "Home",
     "journey": "الرحلة",
-    "talents": "المواهب",
-    "chat": "فضفض",
-    "people": "الأشخاص",
-    "journal": "اليوميات",
-    "life": "الحياة"
+    "talents": "Talents",
+    "chat": "Chat",
+    "people": "People",
+    "journal": "Journal",
+    "life": "Life"
   },
   "me": {
     "title": "أنا",
@@ -300,7 +300,7 @@
     "previewBadge": "معاينة"
   },
   "chat": {
-    "title": "تحدّث مع Supernova",
+    "title": "Chat",
     "subtitle": "مكان للبوح، التفكير بصوت عالٍ، أو طلب وجهة نظر. أتذكّر محادثاتنا — اليومية والأسبوعية وحتى الشهرية.",
     "back": "العودة إلى لوحة التحكم",
     "placeholder": "اكتب أي شيء…",
@@ -340,15 +340,15 @@
     "quickClose": "إغلاق"
   },
   "journal": {
-    "title": "Jurnal",
+    "title": "Journal",
     "subtitle": "الرسائل التي اخترت حفظها — مكان للعودة وقراءة اللحظات المهمة.",
     "emptyHint": "لا يوجد شيء في Jurnal بعد. أثناء المحادثة، اضغط على أيقونة + للرسائل التي تريد تذكّرها.",
     "emptyCta": "افتح المحادثة",
     "addedAt": "محفوظ",
     "delete": "احذف من Jurnal",
     "sourcesToggle": "اعرض المحادثة الأصلية",
-    "viewCalendar": "التقويم",
-    "viewList": "قائمة",
+    "viewCalendar": "Calendar",
+    "viewList": "List",
     "prevMonth": "الشهر السابق",
     "nextMonth": "الشهر التالي",
     "selectDayHint": "اضغط على التاريخ الذي عليه نقطة لرؤية الإدخال.",
@@ -362,7 +362,7 @@
     "autoGenDone": "{count, plural, =1 {مدخل جديد واحد من فضفضاتك السابقة} other {# مدخلات جديدة من فضفضاتك السابقة}}",
     "autoGenNone": "كل فضفضاتك السابقة اتحوّلت لمدخلات.",
     "autoGenError": "فشل التوليد. حاول مرة ثانية.",
-    "viewCategory": "الفئة",
+    "viewCategory": "Category",
     "categoryOther": "أخرى"
   },
   "feedback": {
@@ -428,7 +428,7 @@
     "essenceExplainer": "Essence Cycle هو الطبقة الأكثر شخصية — يقرأ الأحرف الموجودة في اسمك. كل حرف \"ينبض بالحياة\" بمقدار قيمته في Pythagorean (D=4 → 4 سنوات، Y=7 → 7 سنوات، وهكذا). ثلاثة تيارات تجري بالتوازي: Physical (الاسم الأول، يرتبط بالجسد والعمل)، Mental (الاسم الأوسط، إن وُجد — يرتبط بالعقل)، Spiritual (الاسم الأخير، يرتبط بالنمو الداخلي والعلاقات). Essence = مجموع الأحرف النشطة. karmic debt 13/14/16/19 يبقى كما هو ولا يُبسَّط — إنه إشارة لسنة تحمل درسًا خاصًا."
   },
   "people": {
-    "title": "الأشخاص",
+    "title": "People",
     "subtitle": "اطّلع على ملفات وتوافق الأشخاص المهمين في حياتك.",
     "heroEyebrow": "{count} شخصًا في دائرتك",
     "heroTitle": "كل شخص يحمل أرقامه، vibe الخاصة به، وديناميكياته.",
@@ -585,7 +585,7 @@
     "disclaimer": "النتيجة والأنماط محسوبة بشكل حتمي من أرقامكما (تقليد Pythagorean — Decoz, Millman) بعدسة خاصة بكل نوع علاقة. علم الأعداد أداة تأمل، لا تنبؤ."
   },
   "talents": {
-    "title": "المواهب",
+    "title": "Talents",
     "subtitle": "ملف الصفات والمواهب من نسب الحروف في اسمك الكامل.",
     "heroEyebrow": "ملف مواهبك",
     "heroTitleWithTop": "أقوى طاقة: {top}",
@@ -829,11 +829,11 @@
     "completionByEmotionRow": "عندما تكون {emotion}"
   },
   "kehidupan": {
-    "title": "الحياة",
-    "tabTentang": "عنك",
-    "tabPerjalanan": "الرحلة",
-    "tabPercintaan": "الحب والعلاقات",
-    "tabKeuangan": "المال والرزق"
+    "title": "Life",
+    "tabTentang": "About",
+    "tabPerjalanan": "Journey",
+    "tabPercintaan": "Love",
+    "tabKeuangan": "Money"
   },
   "love": {
     "title": "الحب والعلاقات",

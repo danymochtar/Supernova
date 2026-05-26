@@ -4,13 +4,13 @@
     "tagline": "你的每日数字命理指南。"
   },
   "nav": {
-    "home": "首页",
+    "home": "Home",
     "journey": "旅程",
-    "talents": "天赋",
-    "chat": "倾诉",
-    "people": "人物",
-    "journal": "日记",
-    "life": "生活"
+    "talents": "Talents",
+    "chat": "Chat",
+    "people": "People",
+    "journal": "Journal",
+    "life": "Life"
   },
   "me": {
     "title": "我的",
@@ -300,7 +300,7 @@
     "previewBadge": "预览"
   },
   "chat": {
-    "title": "和 Supernova 聊聊",
+    "title": "Chat",
     "subtitle": "一个倾诉、深思或寻求视角的地方。我会记得我们聊过的——每天、每周，甚至每月。",
     "back": "返回仪表盘",
     "placeholder": "写点什么吧……",
@@ -340,15 +340,15 @@
     "quickClose": "关闭"
   },
   "journal": {
-    "title": "日记",
+    "title": "Journal",
     "subtitle": "你选择保存下来的消息——一个可以回头读那些有意义瞬间的地方。",
     "emptyHint": "日记里还没有内容。聊天时，点一下消息上的 + 图标，把想记住的留下来。",
     "emptyCta": "去聊聊",
     "addedAt": "已保存",
     "delete": "从日记中删除",
     "sourcesToggle": "查看原始对话",
-    "viewCalendar": "日历",
-    "viewList": "列表",
+    "viewCalendar": "Calendar",
+    "viewList": "List",
     "prevMonth": "上个月",
     "nextMonth": "下个月",
     "selectDayHint": "点一下有圆点的日期看看条目。",
@@ -362,7 +362,7 @@
     "autoGenDone": "{count, plural, =1 {从过去的倾诉中新增 1 条} other {从过去的倾诉中新增 # 条}}",
     "autoGenNone": "所有过去的倾诉都已整理成日记。",
     "autoGenError": "生成失败，再试一次。",
-    "viewCategory": "分类",
+    "viewCategory": "Category",
     "categoryOther": "其他"
   },
   "feedback": {
@@ -428,7 +428,7 @@
     "essenceExplainer": "Essence Cycle 是最贴身的一层 — 它读取的是你名字里的字母。每个字母会按它的 Pythagorean 数值「存活」相应的年数（D=4 → 4 年，Y=7 → 7 年，以此类推）。三条流并行流动：Physical（first name，关乎身体与工作）、Mental（middle name，如果有的话 — 关乎思维）、Spiritual（last name，关乎内在成长与关系）。Essence = 当前活跃字母的总和。Karmic debt 13/14/16/19 会被保留，不简化 — 那是某一年带着特别功课的信号。"
   },
   "people": {
-    "title": "人脉",
+    "title": "People",
     "subtitle": "查看你生命中重要的人的档案和兼容性。",
     "heroEyebrow": "你的圈子里有 {count} 人",
     "heroTitle": "每个人都带着自己的数字、氛围和能量动态。",
@@ -585,7 +585,7 @@
     "disclaimer": "分数与模式由你们的数字以确定性方式计算（Pythagorean 传统——Decoz、Millman），并根据关系类型套上对应的视角。数字命理是一种反思的工具，不是预言。"
   },
   "talents": {
-    "title": "天赋",
+    "title": "Talents",
     "subtitle": "由你全名中字母比例得出的性格与才华 profile。",
     "heroEyebrow": "你的天赋 profile",
     "heroTitleWithTop": "最强的能量：{top}",
@@ -829,11 +829,11 @@
     "completionByEmotionRow": "当你正处于{emotion}的时候"
   },
   "kehidupan": {
-    "title": "生活",
-    "tabTentang": "关于你",
-    "tabPerjalanan": "旅程",
-    "tabPercintaan": "爱情",
-    "tabKeuangan": "财务"
+    "title": "Life",
+    "tabTentang": "About",
+    "tabPerjalanan": "Journey",
+    "tabPercintaan": "Love",
+    "tabKeuangan": "Money"
   },
   "love": {
     "title": "爱情",

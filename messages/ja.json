@@ -4,13 +4,13 @@
     "tagline": "あなたの毎日のNumerologyガイド。"
   },
   "nav": {
-    "home": "ホーム",
+    "home": "Home",
     "journey": "ジャーニー",
-    "talents": "才能",
-    "chat": "おしゃべり",
-    "people": "人々",
-    "journal": "ジャーナル",
-    "life": "人生"
+    "talents": "Talents",
+    "chat": "Chat",
+    "people": "People",
+    "journal": "Journal",
+    "life": "Life"
   },
   "me": {
     "title": "マイページ",
@@ -300,7 +300,7 @@
     "previewBadge": "プレビュー"
   },
   "chat": {
-    "title": "Supernovaに話す",
+    "title": "Chat",
     "subtitle": "気持ちを話したり、考えを整理したり、視点をもらえる場所。デイリー、ウィークリー、マンスリーの会話、ちゃんと覚えてるよ。",
     "back": "ダッシュボードに戻る",
     "placeholder": "なんでも書いてみて…",
@@ -340,15 +340,15 @@
     "quickClose": "閉じる"
   },
   "journal": {
-    "title": "ジャーナル",
+    "title": "Journal",
     "subtitle": "あとで読み返したいメッセージを集める場所 — 大事な瞬間に戻ってこれるように。",
     "emptyHint": "まだジャーナルは空っぽ。話してる途中で「これは覚えておきたい」と思ったら、メッセージの + アイコンをタップしてね。",
     "emptyCta": "話すを開く",
     "addedAt": "保存済み",
     "delete": "ジャーナルから削除",
     "sourcesToggle": "元の会話を見る",
-    "viewCalendar": "カレンダー",
-    "viewList": "リスト",
+    "viewCalendar": "Calendar",
+    "viewList": "List",
     "prevMonth": "前の月",
     "nextMonth": "次の月",
     "selectDayHint": "ドットがある日付をタップすると、エントリーが見られるよ。",
@@ -362,7 +362,7 @@
     "autoGenDone": "{count, plural, other {これまでのCurhatから新しいエントリーが#件できました}}",
     "autoGenNone": "これまでのCurhatはすべてジャーナル化済みです。",
     "autoGenError": "生成に失敗しました。もう一度試してみてください。",
-    "viewCategory": "カテゴリー",
+    "viewCategory": "Category",
     "categoryOther": "その他"
   },
   "feedback": {
@@ -428,7 +428,7 @@
     "essenceExplainer": "Essence Cycleは一番パーソナルなレイヤー — あなたの名前の文字を読み取ります。各文字はPythagorean値の分だけ「生きる」（D=4 → 4年、Y=7 → 7年、など）。3つの流れが並行して進みます: Physical（ファーストネーム、身体と仕事に関係）、Mental（ミドルネーム、あれば — 思考に関係）、Spiritual（ラストネーム、内面の成長と人間関係に関係）。Essence = アクティブな文字の合計値。karmic debt 13/14/16/19はそのまま残り、reduceされません — それは特別な学びをもたらす年のサインです。"
   },
   "people": {
-    "title": "人々",
+    "title": "People",
     "subtitle": "あなたの人生の大切な人のプロフィールと相性をチェック。",
     "heroEyebrow": "あなたのサークルに{count}人",
     "heroTitle": "それぞれが自分の数字、vibe、ダイナミクスを持っています。",
@@ -585,7 +585,7 @@
     "disclaimer": "スコアとパターンは、二人の数字からPythagoreanの伝統（Decoz、Millman）に基づき、関係性の種類のレンズを通して決定論的に計算されているよ。数秘術は予言ではなく、内省のためのツール。"
   },
   "talents": {
-    "title": "才能",
+    "title": "Talents",
     "subtitle": "フルネームの文字の比率から導かれる、あなたの性質と才能のプロファイル。",
     "heroEyebrow": "あなたの才能プロファイル",
     "heroTitleWithTop": "最も強いエネルギー：{top}",
@@ -829,11 +829,11 @@
     "completionByEmotionRow": "あなたが{emotion}のとき"
   },
   "kehidupan": {
-    "title": "人生",
-    "tabTentang": "あなたについて",
-    "tabPerjalanan": "旅",
-    "tabPercintaan": "恋愛",
-    "tabKeuangan": "お金"
+    "title": "Life",
+    "tabTentang": "About",
+    "tabPerjalanan": "Journey",
+    "tabPercintaan": "Love",
+    "tabKeuangan": "Money"
   },
   "love": {
     "title": "恋愛",

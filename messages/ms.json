@@ -4,13 +4,13 @@
     "tagline": "Panduan numerologi harian kamu."
   },
   "nav": {
-    "home": "Laman Utama",
+    "home": "Home",
     "journey": "Perjalanan",
-    "talents": "Bakat",
-    "chat": "Luah Hati",
-    "people": "Orang",
-    "journal": "Jurnal",
-    "life": "Kehidupan"
+    "talents": "Talents",
+    "chat": "Chat",
+    "people": "People",
+    "journal": "Journal",
+    "life": "Life"
   },
   "me": {
     "title": "Saya",
@@ -300,7 +300,7 @@
     "previewBadge": "Preview"
   },
   "chat": {
-    "title": "Luah pada Supernova",
+    "title": "Chat",
     "subtitle": "Tempat bercerita, berfikir panjang, atau minta perspektif. Aku ingat sembang kita — harian, mingguan, sampailah bulanan.",
     "back": "Kembali ke dashboard",
     "placeholder": "Tulis apa-apa…",
@@ -340,15 +340,15 @@
     "quickClose": "Tutup"
   },
   "journal": {
-    "title": "Jurnal",
+    "title": "Journal",
     "subtitle": "Mesej-mesej yang kamu pilih untuk disimpan — tempat balik baca momen yang bermakna.",
     "emptyHint": "Belum ada apa-apa dalam Jurnal. Masa tengah luah, tap ikon + pada mesej yang kamu nak ingat.",
     "emptyCta": "Buka Luah",
     "addedAt": "Disimpan",
     "delete": "Buang dari Jurnal",
     "sourcesToggle": "Lihat sembang asal",
-    "viewCalendar": "Kalendar",
-    "viewList": "Senarai",
+    "viewCalendar": "Calendar",
+    "viewList": "List",
     "prevMonth": "Bulan sebelumnya",
     "nextMonth": "Bulan seterusnya",
     "selectDayHint": "Tap tarikh yang ada titik untuk lihat entri.",
@@ -362,7 +362,7 @@
     "autoGenDone": "{count, plural, =1 {1 entri baru dari curhat lepas} other {# entri baru dari curhat lepas}}",
     "autoGenNone": "Semua curhat lepas dah masuk jurnal.",
     "autoGenError": "Gagal generate. Cuba lagi.",
-    "viewCategory": "Kategori",
+    "viewCategory": "Category",
     "categoryOther": "Lain-lain"
   },
   "feedback": {
@@ -428,7 +428,7 @@
     "essenceExplainer": "Essence Cycle adalah lapisan paling personal — ia membaca huruf-huruf dalam nama kamu. Setiap huruf \"hidup\" seberapa banyak nilai Pythagorean-nya (D=4 → 4 tahun, Y=7 → 7 tahun, dsb). Tiga aliran berjalan selari: Physical (nama depan, kaitan dengan fizikal & kerja), Mental (middle name, kalau ada — kaitan dengan fikiran), Spiritual (nama belakang, kaitan dengan inner growth & hubungan). Essence = jumlah huruf aktif. Karmic debt 13/14/16/19 dikekalkan, tak di-reduce — itu isyarat tahun yang bawa pengajaran khusus."
   },
   "people": {
-    "title": "Orang-orang",
+    "title": "People",
     "subtitle": "Lihat profil & kompatibiliti orang penting dalam hidup kamu.",
     "heroEyebrow": "{count} orang dalam lingkaran kamu",
     "heroTitle": "Setiap orang bawa angka, vibe, dan dinamik mereka sendiri.",
@@ -585,7 +585,7 @@
     "disclaimer": "Skor & pola dikira secara deterministik daripada angka kamu berdua (tradisi Pythagorean — Decoz, Millman) dengan lensa setiap jenis hubungan. Numerologi adalah alat refleksi, bukan ramalan."
   },
   "talents": {
-    "title": "Talenta",
+    "title": "Talents",
     "subtitle": "Profil sifat & bakat daripada proporsi huruf dalam nama penuh kamu.",
     "heroEyebrow": "Profil talenta kamu",
     "heroTitleWithTop": "Energi paling kuat: {top}",
@@ -829,11 +829,11 @@
     "completionByEmotionRow": "Bila kamu tengah {emotion}"
   },
   "kehidupan": {
-    "title": "Kehidupan",
-    "tabTentang": "Tentang Kamu",
-    "tabPerjalanan": "Perjalanan",
-    "tabPercintaan": "Percintaan",
-    "tabKeuangan": "Kewangan"
+    "title": "Life",
+    "tabTentang": "About",
+    "tabPerjalanan": "Journey",
+    "tabPercintaan": "Love",
+    "tabKeuangan": "Money"
   },
   "love": {
     "title": "Percintaan",
