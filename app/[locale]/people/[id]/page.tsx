@@ -161,18 +161,6 @@ export default async function PersonDetailPage({
           <ChevronRight className="text-muted-foreground h-4 w-4 shrink-0 transition group-hover:translate-x-0.5" aria-hidden />
         </Link>
 
-        {/* Inline curhat shortcut — opens the chat tagged to this person.
-          * Distinct from the Vibes FAB (read-only daily insight); this is an
-          * interactive conversation. Kept inline (not a second FAB). */}
-        <div className="flex">
-          <CurhatShortcut
-            locale={locale}
-            topic="relationship"
-            personId={person.id}
-            label={t('curhatAbout', { name: theirName })}
-          />
-        </div>
-
         {person.notes ? (
           <section className="border-border rounded-xl border bg-amber-50/60 p-4 text-sm dark:border-amber-900/40 dark:bg-amber-950/20">
             <p className="text-muted-foreground mb-1 text-[11px] font-semibold uppercase tracking-wider">
@@ -391,6 +379,17 @@ export default async function PersonDetailPage({
           error: t('vibeError'),
           close: t('vibeClose'),
         }}
+      />
+
+      {/* Curhat FAB — stacked above the Vibes FAB (which sits at bottom-24)
+        * so the two don't overlap. Vibes = read-only daily insight; this =
+        * an interactive conversation tagged to this person. */}
+      <CurhatShortcut
+        locale={locale}
+        topic="relationship"
+        personId={person.id}
+        label={t('curhatAbout', { name: theirName })}
+        className="bottom-44 right-4"
       />
     </main>
   );

@@ -277,13 +277,11 @@ export default async function DashboardPage({
         }
       />
 
-      {!isPreview ? (
-        <div className="flex">
-          <CurhatShortcut locale={locale} topic="pribadi" label={tChat('shortcutHome')} />
-        </div>
-      ) : null}
-
       {WIDGET_ORDER.map((id) => renderWidget(id))}
+
+      {!isPreview ? (
+        <CurhatShortcut locale={locale} topic="pribadi" label={tChat('shortcutHome')} />
+      ) : null}
     </main>
   );
 }

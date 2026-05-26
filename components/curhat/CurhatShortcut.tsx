@@ -4,21 +4,24 @@ import type { Category } from '@/lib/curhat/categories';
 import type { Locale } from '@/lib/i18n/config';
 
 /**
- * Subtle "Curhat soal ini" shortcut — one per capability page. Deep-links to
- * the Curhat tab pre-tagged with a category (and an optional person to focus
- * on), so the chat opens with a topic chip and the resulting journal entry
- * inherits the category. Server component (plain Link), no client JS.
+ * Floating "curhat" button — one per capability page. A fixed chat-icon FAB
+ * that deep-links to the Curhat tab pre-tagged with a category (and an
+ * optional person to focus on), so the chat opens with a topic chip and the
+ * resulting journal entry inherits the category. Plain server Link (no client
+ * JS). `className` overrides position — used on the person page to stack this
+ * above the Vibes FAB instead of overlapping it.
  */
 export function CurhatShortcut({
   locale,
   topic,
   personId,
   label,
-  className = '',
+  className = 'bottom-24 right-4',
 }: {
   locale: Locale;
   topic: Category;
   personId?: string;
+  /** Accessible label (also the screen-reader description of the icon). */
   label: string;
   className?: string;
 }) {
@@ -29,10 +32,11 @@ export function CurhatShortcut({
   return (
     <Link
       href={href}
-      className={`press-soft border-border text-primary hover:bg-muted/40 inline-flex items-center gap-1.5 rounded-full border bg-surface-1 px-3 py-1.5 text-xs font-medium transition-colors ${className}`}
+      aria-label={label}
+      title={label}
+      className={`from-primary to-accent text-primary-foreground press fixed z-40 inline-flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br shadow-lg ${className}`}
     >
-      <MessageCircle className="h-3.5 w-3.5" aria-hidden />
-      {label}
+      <MessageCircle className="h-6 w-6" aria-hidden />
     </Link>
   );
 }

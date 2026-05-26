@@ -58,13 +58,6 @@ export default async function KehidupanPage({
             keuangan: t('tabKeuangan'),
           }}
         />
-        <div className="flex">
-          <CurhatShortcut
-            locale={locale}
-            topic={categoryForKehidupanTab(tab)}
-            label={tChat('shortcut', { topic: tCat(categoryForKehidupanTab(tab)) })}
-          />
-        </div>
       </header>
 
       {tab === 'perjalanan' ? (
@@ -76,6 +69,12 @@ export default async function KehidupanPage({
       ) : (
         <TentangView profile={profile} locale={locale} />
       )}
+
+      <CurhatShortcut
+        locale={locale}
+        topic={categoryForKehidupanTab(tab)}
+        label={tChat('shortcut', { topic: tCat(categoryForKehidupanTab(tab)) })}
+      />
     </main>
   );
 }
