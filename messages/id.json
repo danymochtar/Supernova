@@ -381,7 +381,9 @@
     "suggestVibe": "Cek vibe gw hari ini",
     "shortcut": "Curhat soal {topic}",
     "shortcutHome": "Curhat yuk",
-    "topicDismiss": "Lepas topik"
+    "topicDismiss": "Lepas topik",
+    "quickOpenFull": "Buka full",
+    "quickClose": "Tutup"
   },
   "journal": {
     "title": "Jurnal",

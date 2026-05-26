@@ -335,7 +335,9 @@
     "suggestVibe": "今日のvibeをチェック",
     "shortcut": "{topic}について話す",
     "shortcutHome": "話してみる",
-    "topicDismiss": "トピックを外す"
+    "topicDismiss": "トピックを外す",
+    "quickOpenFull": "全画面で開く",
+    "quickClose": "閉じる"
   },
   "journal": {
     "title": "ジャーナル",

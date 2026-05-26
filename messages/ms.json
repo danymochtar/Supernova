@@ -335,7 +335,9 @@
     "suggestVibe": "Check vibe aku hari ni",
     "shortcut": "Curhat tentang {topic}",
     "shortcutHome": "Jom curhat",
-    "topicDismiss": "Buang topik"
+    "topicDismiss": "Buang topik",
+    "quickOpenFull": "Buka penuh",
+    "quickClose": "Tutup"
   },
   "journal": {
     "title": "Jurnal",

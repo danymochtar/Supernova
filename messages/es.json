@@ -335,7 +335,9 @@
     "suggestVibe": "Chequear mi vibe de hoy",
     "shortcut": "Hablar sobre {topic}",
     "shortcutHome": "Conversemos",
-    "topicDismiss": "Quitar tema"
+    "topicDismiss": "Quitar tema",
+    "quickOpenFull": "Abrir completo",
+    "quickClose": "Cerrar"
   },
   "journal": {
     "title": "Diario",

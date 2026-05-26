@@ -335,7 +335,9 @@
     "suggestVibe": "看看我今天的 vibe",
     "shortcut": "聊聊{topic}",
     "shortcutHome": "聊聊吧",
-    "topicDismiss": "清除话题"
+    "topicDismiss": "清除话题",
+    "quickOpenFull": "打开完整",
+    "quickClose": "关闭"
   },
   "journal": {
     "title": "日记",

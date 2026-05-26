@@ -335,7 +335,9 @@
     "suggestVibe": "Check my vibe today",
     "shortcut": "Talk about {topic}",
     "shortcutHome": "Start a curhat",
-    "topicDismiss": "Clear topic"
+    "topicDismiss": "Clear topic",
+    "quickOpenFull": "Open full",
+    "quickClose": "Close"
   },
   "journal": {
     "title": "Journal",

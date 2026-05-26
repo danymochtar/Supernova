@@ -335,7 +335,9 @@
     "suggestVibe": "شوف الـ vibe تبعي اليوم",
     "shortcut": "تحدّث عن {topic}",
     "shortcutHome": "لنتحدّث",
-    "topicDismiss": "إزالة الموضوع"
+    "topicDismiss": "إزالة الموضوع",
+    "quickOpenFull": "فتح كامل",
+    "quickClose": "إغلاق"
   },
   "journal": {
     "title": "Jurnal",

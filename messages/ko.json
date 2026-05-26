@@ -335,7 +335,9 @@
     "suggestVibe": "오늘 제 vibe 체크해주세요",
     "shortcut": "{topic} 이야기하기",
     "shortcutHome": "이야기 나누기",
-    "topicDismiss": "주제 지우기"
+    "topicDismiss": "주제 지우기",
+    "quickOpenFull": "전체 열기",
+    "quickClose": "닫기"
   },
   "journal": {
     "title": "Jurnal",
