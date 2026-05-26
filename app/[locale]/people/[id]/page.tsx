@@ -370,7 +370,7 @@ export default async function PersonDetailPage({
         personId={person.id}
         cachedBody={cachedVibeBody}
         action={generatePersonVibeAction}
-        fabClassName="bottom-24 right-[5.5rem]"
+        fabClassName="bottom-24 left-4"
         labels={{
           button: t('vibeButton'),
           sheetTitle: t('vibeSheetTitle', { name: theirName }),
@@ -382,9 +382,9 @@ export default async function PersonDetailPage({
         }}
       />
 
-      {/* Side-by-side FABs: curhat takes the right slot, Vibes sits to its
-        * left (bottom-24 right-[5.5rem]). Curhat = interactive conversation
-        * tagged to this person; Vibes = read-only daily insight. */}
+      {/* Opposite-corner FABs: curhat bottom-right, Vibes bottom-left, so
+        * they never overlap. Curhat = interactive conversation tagged to
+        * this person; Vibes = read-only daily insight. */}
       <CurhatShortcut
         locale={locale}
         topic="relationship"
