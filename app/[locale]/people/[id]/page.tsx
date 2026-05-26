@@ -370,6 +370,7 @@ export default async function PersonDetailPage({
         personId={person.id}
         cachedBody={cachedVibeBody}
         action={generatePersonVibeAction}
+        fabClassName="bottom-24 right-[5.5rem]"
         labels={{
           button: t('vibeButton'),
           sheetTitle: t('vibeSheetTitle', { name: theirName }),
@@ -381,15 +382,14 @@ export default async function PersonDetailPage({
         }}
       />
 
-      {/* Curhat FAB — stacked above the Vibes FAB (which sits at bottom-24)
-        * so the two don't overlap. Vibes = read-only daily insight; this =
-        * an interactive conversation tagged to this person. */}
+      {/* Side-by-side FABs: curhat takes the right slot, Vibes sits to its
+        * left (bottom-24 right-[5.5rem]). Curhat = interactive conversation
+        * tagged to this person; Vibes = read-only daily insight. */}
       <CurhatShortcut
         locale={locale}
         topic="relationship"
         personId={person.id}
         label={t('curhatAbout', { name: theirName })}
-        className="bottom-44 right-4"
       />
     </main>
   );

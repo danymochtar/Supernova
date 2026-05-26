@@ -11,6 +11,9 @@ interface Props {
    *  needing a server roundtrip on tap. */
   cachedBody: string | null;
   action: (input: { personId: string }) => Promise<PersonVibeResult>;
+  /** Position override for the FAB. Defaults to the bottom-right slot;
+   *  the person page moves it left so the curhat FAB takes the right slot. */
+  fabClassName?: string;
   labels: {
     button: string;
     sheetTitle: string;
@@ -22,7 +25,13 @@ interface Props {
   };
 }
 
-export function PersonVibeButton({ personId, cachedBody, action, labels }: Props) {
+export function PersonVibeButton({
+  personId,
+  cachedBody,
+  action,
+  fabClassName = 'bottom-24 right-4',
+  labels,
+}: Props) {
   const [open, setOpen] = useState(false);
   const [body, setBody] = useState<string | null>(cachedBody);
   const [error, setError] = useState<string | null>(null);
@@ -50,7 +59,7 @@ export function PersonVibeButton({ personId, cachedBody, action, labels }: Props
         type="button"
         onClick={onOpen}
         aria-label={labels.button}
-        className="from-primary to-accent text-primary-foreground press fixed bottom-24 right-4 z-40 inline-flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br shadow-lg"
+        className={`from-primary to-accent text-primary-foreground press fixed z-40 inline-flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br shadow-lg ${fabClassName}`}
       >
         <Sparkles className="h-6 w-6" aria-hidden />
       </button>
