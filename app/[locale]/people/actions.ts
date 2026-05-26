@@ -62,6 +62,7 @@ export async function createPersonAction(formData: FormData): Promise<PersonActi
     firstName: formData.get('firstName'),
     middleName: formData.get('middleName') ?? '',
     lastName: formData.get('lastName'),
+    nickname: formData.get('nickname') ?? '',
     dob: formData.get('dob'),
     timezone: 'UTC', // person doesn't carry a tz; satisfy schema
     locale: String(formData.get('locale') ?? 'id'),
@@ -70,7 +71,12 @@ export async function createPersonAction(formData: FormData): Promise<PersonActi
   });
   if (!parsed.success) {
     const path = parsed.error.issues[0]?.path[0];
-    if (path === 'firstName' || path === 'lastName' || path === 'middleName') {
+    if (
+      path === 'firstName' ||
+      path === 'lastName' ||
+      path === 'middleName' ||
+      path === 'nickname'
+    ) {
       return { ok: false, error: 'invalid_name' };
     }
     if (path === 'dob') return { ok: false, error: 'invalid_dob' };
