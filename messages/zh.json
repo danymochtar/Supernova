@@ -232,7 +232,7 @@
     "editProfile": "修改档案",
     "signOut": "退出登录",
     "aboutMeTitle": "关于你",
-    "aboutMeSubtitle": "滑动卡片来看你每一面的自己 —— 上方是综合解读，旁边是详细内容。",
+    "aboutMeSubtitle": "点按任意卡片，了解你这一面的更多细节。",
     "aboutMeFallback": "暂时无法生成摘要。请稍后刷新页面再试。",
     "aboutMeCardLabel": "关于你",
     "explainerLearnMore": "这是什么？了解概念",

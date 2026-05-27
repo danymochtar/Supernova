@@ -3,9 +3,8 @@ import type { ParsedAboutMe } from '@/lib/ai/prompts/aboutMe';
 import type { Bridges, MinorNumbers, NumerologyResult } from '@/lib/numerology';
 import type { Locale } from '@/lib/i18n/config';
 import { meaningFor } from '@/lib/numerology/meanings';
-import { Explainer } from '@/components/layout/Explainer';
+import { InfoPopover } from '@/components/layout/InfoPopover';
 import { renderInlineMd } from '@/components/qa/inlineMd';
-import { CompoundReduced } from './CompoundReduced';
 import { NumberCard } from './NumberCard';
 
 type CardKey = 'lifePath' | 'expression' | 'soulUrge' | 'personality' | 'birthday' | 'karmicLessons';
@@ -66,13 +65,12 @@ interface Props {
   comingSoonLabel?: string;
 }
 
-const CARD_ORDER = [
+const CORE_KEYS = [
   'lifePath',
   'expression',
   'soulUrge',
   'personality',
   'birthday',
-  'karmicLessons',
 ] as const;
 
 /**
@@ -105,77 +103,55 @@ export function AboutMe({
   if (!data) {
     return (
       <section className="border-border space-y-3 rounded-2xl border bg-surface-2 p-6">
-        <header className="space-y-2">
-          {title ? <h2 className="text-lg font-semibold">{title}</h2> : null}
-          <p className="text-muted-foreground text-sm">{subtitle}</p>
-          {explainer ? <Explainer title={explainer.title} body={explainer.body} /> : null}
+        <header className="flex items-start justify-between gap-2">
+          <div className="space-y-2">
+            {title ? <h2 className="text-lg font-semibold">{title}</h2> : null}
+            <p className="text-muted-foreground text-sm">{subtitle}</p>
+          </div>
+          {explainer ? <InfoPopover title={explainer.title} body={explainer.body} /> : null}
         </header>
         <p className="text-muted-foreground text-sm italic">{fallback}</p>
       </section>
     );
   }
 
-  const cards = CARD_ORDER.flatMap((key) => {
-    const body = data.cards[key];
-    if (!body) return [];
-    return [{ key, label: cardLabels[key], body }];
-  });
-
   return (
-    <section className="space-y-4">
-      <header className="space-y-2 px-1">
-        {title ? <h2 className="text-lg font-semibold">{title}</h2> : null}
-        <p className="text-muted-foreground text-sm">{subtitle}</p>
-        {explainer ? <Explainer title={explainer.title} body={explainer.body} /> : null}
-      </header>
+    <section className="space-y-5">
+      {title ? <h2 className="px-1 text-lg font-semibold">{title}</h2> : null}
 
       {data.synthesis ? (
-        <div className="border-border rounded-2xl border bg-gradient-to-br from-primary/5 to-accent/5 p-5 dark:from-primary/15 dark:to-accent/15">
+        <div className="border-border relative rounded-2xl border bg-gradient-to-br from-primary/5 to-accent/5 p-5 dark:from-primary/15 dark:to-accent/15">
+          {explainer ? (
+            <InfoPopover
+              title={explainer.title}
+              body={explainer.body}
+              className="absolute right-2.5 top-2.5"
+            />
+          ) : null}
           <Sparkles className="text-accent mb-2 h-4 w-4" aria-hidden />
-          <p className="text-[15px] leading-relaxed text-neutral-800 dark:text-neutral-200">
+          <p className="whitespace-pre-line text-[15px] leading-relaxed text-neutral-800 dark:text-neutral-200">
             {renderInlineMd(data.synthesis)}
           </p>
         </div>
       ) : null}
 
-      {cards.length > 0 ? (
-        <div className="-mx-4 sm:-mx-6">
-          <div className="scroll-px-4 sm:scroll-px-6 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-3 pt-1 sm:px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {cards.map((card) => {
-              const result =
-                numbers && card.key !== 'karmicLessons' ? numbers[card.key] : null;
-              const karmic =
-                numbers && card.key === 'karmicLessons' ? numbers.karmicLessons : null;
-              return (
-                <article
-                  key={card.key}
-                  className="border-border bg-card text-card-foreground w-[78%] shrink-0 snap-start space-y-3 rounded-2xl border p-5 sm:w-[60%] md:w-[44%]"
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <h3 className="min-w-0 font-serif text-xl font-semibold tracking-tight">
-                      {card.label}
-                    </h3>
-                    {result ? (
-                      <CompoundReduced result={result} locale={locale} size="lg" />
-                    ) : karmic && karmic.length > 0 ? (
-                      <div className="flex flex-wrap justify-end gap-1">
-                        {karmic.map((n) => (
-                          <span
-                            key={n}
-                            className="bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-200 rounded-full px-2 py-0.5 font-mono text-xs font-semibold tabular-nums"
-                          >
-                            {n}
-                          </span>
-                        ))}
-                      </div>
-                    ) : null}
-                  </div>
-                  <p className="text-sm leading-relaxed text-neutral-800 dark:text-neutral-200">
-                    {renderInlineMd(card.body)}
-                  </p>
-                </article>
-              );
-            })}
+      {numbers ? (
+        <div className="space-y-2">
+          {subtitle ? <p className="text-muted-foreground px-1 text-sm">{subtitle}</p> : null}
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+            {CORE_KEYS.map((key) => (
+              <NumberCard
+                key={key}
+                label={cardLabels[key]}
+                result={numbers[key]}
+                locale={locale}
+                type={key}
+                aiBody={data.cards[key] ?? null}
+                meaning={meaningFor(key, numbers[key], locale)}
+                comingSoonLabel={comingSoonLabel}
+                compact
+              />
+            ))}
           </div>
         </div>
       ) : null}
@@ -183,18 +159,18 @@ export function AboutMe({
       {minor && minorLabels ? (
         <div className="space-y-3">
           {minorTitle ? (
-            <header className="space-y-1 px-1">
-              <h3 className="text-base font-semibold">{minorTitle}</h3>
-              {minorHint ? <p className="text-muted-foreground text-xs">{minorHint}</p> : null}
+            <header className="flex items-start justify-between gap-2 px-1">
+              <div className="min-w-0 space-y-1">
+                <h3 className="text-base font-semibold">{minorTitle}</h3>
+                {minorHint ? <p className="text-muted-foreground text-xs">{minorHint}</p> : null}
+              </div>
+              {minorExplainer ? (
+                <InfoPopover title={minorExplainer.title} body={minorExplainer.body} />
+              ) : null}
             </header>
           ) : null}
-          {minorExplainer ? (
-            <Explainer title={minorExplainer.title} body={minorExplainer.body} />
-          ) : null}
-          {/* AI-generated narrative speaking to THIS user's specific Minor
-            * numbers in plain language — lands between the collapsed
-            * concept disclosure and the raw cards so the user actually
-            * understands what they're looking at before scanning digits. */}
+          {/* AI narrative for THIS user's Minor numbers, in plain language,
+            * so the meaning lands before they scan the digits. */}
           {data.minorNarrative ? (
             <p className="text-[15px] leading-relaxed text-neutral-800 dark:text-neutral-200">
               {renderInlineMd(data.minorNarrative)}
@@ -235,13 +211,15 @@ export function AboutMe({
       {bridge && bridgeLabels ? (
         <div className="space-y-3">
           {bridgeTitle ? (
-            <header className="space-y-1 px-1">
-              <h3 className="text-base font-semibold">{bridgeTitle}</h3>
-              {bridgeHint ? <p className="text-muted-foreground text-xs">{bridgeHint}</p> : null}
+            <header className="flex items-start justify-between gap-2 px-1">
+              <div className="min-w-0 space-y-1">
+                <h3 className="text-base font-semibold">{bridgeTitle}</h3>
+                {bridgeHint ? <p className="text-muted-foreground text-xs">{bridgeHint}</p> : null}
+              </div>
+              {bridgeExplainer ? (
+                <InfoPopover title={bridgeExplainer.title} body={bridgeExplainer.body} />
+              ) : null}
             </header>
-          ) : null}
-          {bridgeExplainer ? (
-            <Explainer title={bridgeExplainer.title} body={bridgeExplainer.body} />
           ) : null}
           {data.bridgeNarrative ? (
             <p className="text-[15px] leading-relaxed text-neutral-800 dark:text-neutral-200">

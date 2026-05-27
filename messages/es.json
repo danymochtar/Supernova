@@ -232,7 +232,7 @@
     "editProfile": "Editar perfil",
     "signOut": "Salir",
     "aboutMeTitle": "Sobre ti",
-    "aboutMeSubtitle": "Desliza las tarjetas para ver cada aspecto de ti — la síntesis arriba, los detalles al lado.",
+    "aboutMeSubtitle": "Toca cualquier tarjeta para leer más sobre ese aspecto de ti.",
     "aboutMeFallback": "No podemos generar el resumen en este momento. Vuelve a cargar la página en un rato.",
     "aboutMeCardLabel": "Sobre ti",
     "explainerLearnMore": "¿Qué es esto? Aprende el concepto",

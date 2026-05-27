@@ -232,7 +232,7 @@
     "editProfile": "プロフィールを編集",
     "signOut": "ログアウト",
     "aboutMeTitle": "あなたについて",
-    "aboutMeSubtitle": "カードをスワイプして、自分のいろんな側面を見てみてください — 上にシンセシス、横に詳細があります。",
+    "aboutMeSubtitle": "カードをタップすると、その側面の詳細が読めます。",
     "aboutMeFallback": "今は要約を作成できません。少し経ってからページを再読み込みしてみてください。",
     "aboutMeCardLabel": "あなたについて",
     "explainerLearnMore": "これは何？ コンセプトを学ぶ",

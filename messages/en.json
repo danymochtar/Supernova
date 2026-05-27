@@ -232,7 +232,7 @@
     "editProfile": "Edit profile",
     "signOut": "Sign out",
     "aboutMeTitle": "About you",
-    "aboutMeSubtitle": "Swipe through the cards — synthesis on top, each facet of you on the side.",
+    "aboutMeSubtitle": "Tap any card to read more about that aspect of you.",
     "aboutMeFallback": "Couldn't generate the summary right now. Try reloading the page in a moment.",
     "aboutMeCardLabel": "About you",
     "explainerLearnMore": "What is this? Learn the concept",

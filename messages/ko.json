@@ -232,7 +232,7 @@
     "editProfile": "프로필 수정",
     "signOut": "로그아웃",
     "aboutMeTitle": "당신에 대하여",
-    "aboutMeSubtitle": "카드를 넘기면서 당신의 각 면을 살펴보세요 — 위쪽엔 종합, 옆에는 세부 내용이 있어요.",
+    "aboutMeSubtitle": "카드를 누르면 그 면에 대한 자세한 설명이 나와요.",
     "aboutMeFallback": "지금은 요약을 만들 수 없어요. 잠시 후 페이지를 다시 불러와 주세요.",
     "aboutMeCardLabel": "당신에 대하여",
     "explainerLearnMore": "이게 뭐예요? 개념 알아보기",
