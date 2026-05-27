@@ -16,7 +16,9 @@
     "tabTentang": "About",
     "tabPerjalanan": "Journey",
     "tabPercintaan": "Love",
-    "tabKeuangan": "Money"
+    "tabKeuangan": "Money",
+    "bioCalled": "Dipanggil",
+    "bioBorn": "Lahir"
   },
   "love": {
     "title": "Percintaan",

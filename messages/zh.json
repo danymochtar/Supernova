@@ -838,7 +838,9 @@
     "tabTentang": "About",
     "tabPerjalanan": "Journey",
     "tabPercintaan": "Love",
-    "tabKeuangan": "Money"
+    "tabKeuangan": "Money",
+    "bioCalled": "昵称",
+    "bioBorn": "出生"
   },
   "love": {
     "title": "爱情",

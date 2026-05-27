@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import { getTranslations } from 'next-intl/server';
+import { Cake } from 'lucide-react';
 import type { Locale } from '@/lib/i18n/config';
 import type { ProfileView } from '@/lib/db/repositories/profile';
 import { bridges, buildCoreProfile, minorNumbers } from '@/lib/numerology';
@@ -28,6 +29,16 @@ export async function TentangView({
   locale: Locale;
 }) {
   const t = await getTranslations({ locale, namespace: 'dashboard' });
+  const tk = await getTranslations({ locale, namespace: 'kehidupan' });
+
+  const bornDate = new Date(Date.UTC(profile.dob.year, profile.dob.month - 1, profile.dob.day));
+  const bornLabel = new Intl.DateTimeFormat(locale, {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(bornDate);
+  const initial = profile.fullName.trim().charAt(0).toUpperCase();
 
   const core = buildCoreProfile(profile.fullName, profile.dob);
   const minor = minorNumbers(profile.nickname);
@@ -50,6 +61,27 @@ export async function TentangView({
 
   return (
     <div className="space-y-6">
+      <section className="border-border rounded-2xl border bg-surface-1 p-5">
+        <div className="flex items-center gap-4">
+          <div className="from-primary/20 to-accent/20 text-primary flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gradient-to-br text-xl font-semibold">
+            {initial}
+          </div>
+          <div className="min-w-0 flex-1">
+            <h2 className="truncate text-lg font-semibold">{profile.fullName}</h2>
+            {profile.nickname ? (
+              <p className="text-muted-foreground truncate text-sm">
+                {tk('bioCalled')} {profile.nickname}
+              </p>
+            ) : null}
+          </div>
+        </div>
+        <div className="border-border/60 text-muted-foreground mt-4 flex items-center gap-2 border-t pt-3 text-sm">
+          <Cake className="h-4 w-4 shrink-0" aria-hidden />
+          <span>{tk('bioBorn')}</span>
+          <span className="font-medium text-neutral-800 dark:text-neutral-200">{bornLabel}</span>
+        </div>
+      </section>
+
       <Suspense
         fallback={<AboutMeSkeleton title="" subtitle={t('aboutMeSubtitle')} />}
       >
