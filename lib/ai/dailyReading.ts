@@ -50,6 +50,23 @@ function dayTitleFor(reduced: number, locale: Locale): string {
 }
 
 /**
+ * A correctly-formatted reading never prints raw numbers in its title or
+ * greeting (numbers live in the staircase/cards, not the prose). Legacy or
+ * off-prompt readings sometimes leaked them (e.g. "A 1 DAY" titles, "today's
+ * numbers are 1, 28, 10…" greetings) — detect that so we regenerate.
+ */
+function leaksNumbersInHead(body: string): boolean {
+  const head = body
+    .trimStart()
+    .split(/\r?\n/)
+    .map((l) => l.trim())
+    .filter(Boolean)
+    .slice(0, 2)
+    .join(' ');
+  return /\d/.test(head);
+}
+
+/**
  * Cache-first daily reading. Returns the body string or `null` if generation
  * failed (caller should render a graceful fallback).
  *
@@ -65,14 +82,15 @@ export async function getOrGenerateDailyReading(
 
   const cached = await getReadingForLocalDay(userId, ctx.year, ctx.month, ctx.day);
   if (cached) {
-    // Regenerate when (a) locale changed since cache or (b) the cached body
-    // lacks the new "# Title" + "+/- vibe bullet" format. Costs one extra
-    // LLM call but spares users a stale layout that doesn't match the rest
-    // of the dashboard.
+    // Regenerate when (a) locale changed since cache, (b) the cached body
+    // lacks the new "# Title" + "+/- vibe bullet" format, or (c) the title /
+    // greeting leak raw numbers. Costs one extra LLM call but spares users a
+    // stale layout that doesn't match the rest of the dashboard.
     const stale =
       cached.locale !== profile.locale ||
       !cached.body.trimStart().startsWith('#') ||
-      !/^[+-]\s+\S/m.test(cached.body);
+      !/^[+-]\s+\S/m.test(cached.body) ||
+      leaksNumbersInHead(cached.body);
     if (!stale) return cached.body;
     await deleteReadingForLocalDay(userId, ctx.year, ctx.month, ctx.day);
   }

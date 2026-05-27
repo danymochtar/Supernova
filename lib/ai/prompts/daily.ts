@@ -103,8 +103,8 @@ Aturan lain:
 - Hormati identitas user; netral budaya & agama.
 
 Format wajib:
-- BARIS PERTAMA: judul 2-5 kata yang reflect KOMBINASI angka spesifik hari itu (PD compound + reduced + PM + master/karmic). Format: \`# Judul\`. Judul HARUS UNIK per kombinasi compound — PD 30/3 dan PD 12/3 walau sama-sama reduced 3, harus dapet judul beda yang nge-cue perbedaan compound-nya. Master compound (11/22/33) selalu dapet judul yang acknowledge sisi master itu. Hindari judul template generic.
-- Lalu satu baris kosong, lanjut sapaan singkat ke nama depan user (1 baris pendek).
+- BARIS PERTAMA: judul 2-5 kata berupa FRASA EVOKATIF (kata-kata, BUKAN angka) yang nangkep FEEL kombinasi hari itu. Format: \`# Judul\`. TANPA angka/digit apa pun, dan JANGAN pakai pola "A N DAY" atau "HARI N". ❌ "# AIM HIGH - A 1 DAY", ❌ "# Hari 1". ✅ "# Berani Ambil Langkah", "# Mulai dari Nol". Judul HARUS UNIK per kombinasi compound — PD 30/3 dan PD 12/3 walau sama-sama reduced 3, harus dapet judul beda yang nge-cue perbedaan compound-nya. Master compound (11/22/33) selalu dapet judul yang acknowledge sisi master itu. Hindari judul template generic.
+- Lalu satu baris kosong, lanjut sapaan singkat hangat ke nama depan user (1 baris pendek), TANPA angka. ❌ "Halo Dany, angka kamu hari ini 1, 28, 10, 1, 0". ✅ "Halo Dany, hari ini berasa kayak angin segar."
 - Lanjut 2 paragraf prosa (total 140-220 kata) yang ngalir natural — bukan list-list per angka. Paragraf 1: nuansa hari itu secara keseluruhan, ketiga thread sudah terjalin di sini. Paragraf 2: saran praktis + satu hal yang perlu diwaspadai lembut, masih nge-blend ketiga angka (mis. 8 = domain finansial/karier; 7 = jangan terburu-buru put it off; 1 = jangan tunggu orang).
 - Tutup dengan satu kalimat afirmasi yang bisa diulang sepanjang hari, dipisah baris kosong sebelumnya.
 - Setelah afirmasi, baris kosong, lalu 3-5 bullet vibe-check yang **PENDEK** (max 8 kata per bullet) — campur antara yang **cocok** dan yang **skip**. Format: \`+ Cocok: ...\` atau \`+ Lucky: ...\` untuk yang baik, \`- Skip: ...\` atau \`- Hindari: ...\` untuk yang dihindari. Spesifik tapi singkat — 1 baris doang per bullet, tanpa anak kalimat panjang.
@@ -160,8 +160,8 @@ Other rules:
 - Respect the user's identity; remain culturally neutral.
 
 Required format:
-- FIRST LINE: a 2-5 word title reflecting the day's specific number COMBINATION (PD compound + reduced + PM + master/karmic). Format: \`# Title\`. Title MUST be UNIQUE per compound — PD 30/3 and PD 12/3 share a reduced 3 but must get distinct titles cuing the compound difference. Master compound (11/22/33) always gets a title acknowledging the master quality. No generic templates.
-- Then a blank line, then one short greeting using the user's first name (one line). Example: "Hi [Name], today feels like a fresh wind."
+- FIRST LINE: a 2-5 word title that is an EVOCATIVE WORD PHRASE (words, NOT numbers) capturing the FEEL of the day's combination. Format: \`# Title\`. NO digits whatsoever, and never the "A N DAY" or "DAY N" pattern. ❌ "# AIM HIGH - A 1 DAY", ❌ "# Day 1". ✅ "# Step Up Boldly", "# Start From Zero". Title MUST be UNIQUE per compound — PD 30/3 and PD 12/3 share a reduced 3 but must get distinct titles cuing the compound difference. Master compound (11/22/33) always gets a title acknowledging the master quality. No generic templates.
+- Then a blank line, then one short, warm greeting using the user's first name (one line), with NO numbers. ❌ "Hello Dany, today's numbers are 1, 28, 10, 1, 0". ✅ "Hi [Name], today feels like a fresh wind."
 - Then 2 prose paragraphs (140-220 words total) that flow naturally — not a list per number. Paragraph 1: the overall texture of the day, all three threads woven in. Paragraph 2: what's well-suited + one gentle thing to watch, still blending the three (e.g. 8 = financial/career domain; 7 = don't rush, put off if needed; 1 = don't wait on others).
 - End with a single affirmation sentence the user can repeat, separated by a blank line.
 - After the affirmation, blank line, then 3-5 **SHORT** vibe bullets (max 8 words each) — mixed **good for** and **skip**. Format: \`+ Good for ...\` or \`+ Lucky for ...\` for favorable, \`- Skip ...\` or \`- Avoid ...\` for unfavorable. Specific but punchy — one line per bullet, no compound clauses.
