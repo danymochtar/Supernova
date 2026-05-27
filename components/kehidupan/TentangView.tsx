@@ -116,6 +116,8 @@ export async function TentangView({
             personality: t('minorPersonality'),
           }}
           minorExplainer={{ title: t('explainerLearnMore'), body: t('minorExplainer') }}
+          minorTitle={t('minorTitle')}
+          minorHint={t('minorHint')}
           bridge={bridge}
           bridgeLabels={{
             lifePathExpression: t('bridgeLifePathExpression'),
@@ -124,6 +126,8 @@ export async function TentangView({
             soulUrgePersonalityHint: t('bridgeSoulUrgePersonalityHint'),
           }}
           bridgeExplainer={{ title: t('explainerLearnMore'), body: t('bridgeExplainer') }}
+          bridgeTitle={t('bridgeTitle')}
+          bridgeHint={t('bridgeHint')}
           comingSoonLabel={t('meaningComingSoon')}
         />
       </Suspense>

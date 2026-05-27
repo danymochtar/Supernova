@@ -43,6 +43,10 @@ interface Props {
   };
   /** Optional Explainer for the Minor concept. */
   minorExplainer?: { title: string; body: string };
+  /** Section heading + one-line hint above the Minor block, mirroring the
+   * Karmic Lessons section so the user knows what this part is. */
+  minorTitle?: string;
+  minorHint?: string;
   /** Bridge Numbers — the gap between LP↔Expression and SU↔Personality.
    * Surfaced beneath the Minor block when present. */
   bridge?: Bridges | null;
@@ -55,6 +59,9 @@ interface Props {
   };
   /** Optional Explainer for the Bridge concept. */
   bridgeExplainer?: { title: string; body: string };
+  /** Section heading + one-line hint above the Bridge block. */
+  bridgeTitle?: string;
+  bridgeHint?: string;
   /** "Coming soon" string for unmapped meanings. */
   comingSoonLabel?: string;
 }
@@ -86,9 +93,13 @@ export function AboutMe({
   minor,
   minorLabels,
   minorExplainer,
+  minorTitle,
+  minorHint,
   bridge,
   bridgeLabels,
   bridgeExplainer,
+  bridgeTitle,
+  bridgeHint,
   comingSoonLabel,
 }: Props) {
   if (!data) {
@@ -171,6 +182,12 @@ export function AboutMe({
 
       {minor && minorLabels ? (
         <div className="space-y-3">
+          {minorTitle ? (
+            <header className="space-y-1 px-1">
+              <h3 className="text-base font-semibold">{minorTitle}</h3>
+              {minorHint ? <p className="text-muted-foreground text-xs">{minorHint}</p> : null}
+            </header>
+          ) : null}
           {minorExplainer ? (
             <Explainer title={minorExplainer.title} body={minorExplainer.body} />
           ) : null}
@@ -217,6 +234,12 @@ export function AboutMe({
 
       {bridge && bridgeLabels ? (
         <div className="space-y-3">
+          {bridgeTitle ? (
+            <header className="space-y-1 px-1">
+              <h3 className="text-base font-semibold">{bridgeTitle}</h3>
+              {bridgeHint ? <p className="text-muted-foreground text-xs">{bridgeHint}</p> : null}
+            </header>
+          ) : null}
           {bridgeExplainer ? (
             <Explainer title={bridgeExplainer.title} body={bridgeExplainer.body} />
           ) : null}

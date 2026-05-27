@@ -336,7 +336,11 @@
     "number": "Angka",
     "now": "Saat ini",
     "settingsLink": "Pengaturan & profil",
-    "meaningComingSoon": "Penjelasan untuk angka ini sedang kami siapkan. Sementara, angka di kartu adalah perhitungan deterministik — kamu bisa tanya AI di halaman \"Tanya AI\" untuk konteks lebih dalam."
+    "meaningComingSoon": "Penjelasan untuk angka ini sedang kami siapkan. Sementara, angka di kartu adalah perhitungan deterministik — kamu bisa tanya AI di halaman \"Tanya AI\" untuk konteks lebih dalam.",
+    "minorTitle": "Minor Numbers",
+    "bridgeTitle": "Bridge Numbers",
+    "minorHint": "Sisi sosial dari nama panggilanmu: gimana kamu muncul pas dipanggil sehari-hari.",
+    "bridgeHint": "Selisih antara dua angka inti: seberapa mulus dua sisi dirimu nyatu."
   },
   "reading": {
     "title": "Bacaan harian",

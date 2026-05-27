@@ -283,7 +283,11 @@
     "now": "当前",
     "settingsLink": "设置与档案",
     "meaningComingSoon": "这个数字的解读我们还在准备中。在此期间，卡片上的数字是确定性的计算结果 —— 你可以到「Tanya AI」页面问 AI 来获得更深入的背景信息。",
-    "age": "年龄"
+    "age": "年龄",
+    "minorTitle": "Minor Numbers",
+    "bridgeTitle": "Bridge Numbers",
+    "minorHint": "你日常称呼名字的社交面：别人眼中的你。",
+    "bridgeHint": "两个核心数字之间的差距：你的两面融合得有多顺。"
   },
   "reading": {
     "title": "每日解读",

@@ -283,7 +283,11 @@
     "now": "Sekarang",
     "settingsLink": "Tetapan & profil",
     "meaningComingSoon": "Penjelasan untuk angka ini sedang kami siapkan. Sementara itu, angka pada kad adalah pengiraan deterministik — kamu boleh tanya AI di halaman \"Tanya AI\" untuk konteks lebih dalam.",
-    "age": "Usia"
+    "age": "Usia",
+    "minorTitle": "Minor Numbers",
+    "bridgeTitle": "Bridge Numbers",
+    "minorHint": "Sisi sosial nama panggilanmu: bagaimana kamu tampil setiap hari.",
+    "bridgeHint": "Jurang antara dua nombor teras: betapa lancar dua sisi dirimu bersatu."
   },
   "reading": {
     "title": "Bacaan harian",

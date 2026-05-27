@@ -37,6 +37,8 @@ interface Props {
     personality: string;
   };
   minorExplainer: { title: string; body: string };
+  minorTitle?: string;
+  minorHint?: string;
   bridge: Bridges | null;
   bridgeLabels: {
     lifePathExpression: string;
@@ -45,6 +47,8 @@ interface Props {
     soulUrgePersonalityHint: string;
   };
   bridgeExplainer: { title: string; body: string };
+  bridgeTitle?: string;
+  bridgeHint?: string;
   comingSoonLabel: string;
 }
 
