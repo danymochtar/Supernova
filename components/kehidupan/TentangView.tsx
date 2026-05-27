@@ -69,9 +69,7 @@ export async function TentangView({
           <div className="min-w-0 flex-1">
             <h2 className="truncate text-lg font-semibold">{profile.fullName}</h2>
             {profile.nickname ? (
-              <p className="text-muted-foreground truncate text-sm">
-                {tk('bioCalled')} {profile.nickname}
-              </p>
+              <p className="text-muted-foreground truncate text-sm">{profile.nickname}</p>
             ) : null}
           </div>
         </div>
