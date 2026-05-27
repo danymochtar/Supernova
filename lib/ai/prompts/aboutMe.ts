@@ -39,7 +39,7 @@ ${VOICE_ID}
 Sudut pandang: tulis ke orang kedua, ngomong LANGSUNG ke "kamu". JANGAN pakai nama atau "dia" (ini bacaan tentang diri user sendiri).
 
 Konten:
-- "synthesis": 4-5 kalimat, satu paragraf utuh yang ngalir — potret identitas inti kamu: gimana kamu bergerak di dunia, apa yang ngegerakin kamu, ketegangan/keunikan yang bikin kamu jadi kamu. Lebih kaya dari sekadar daftar sifat. JANGAN sebut nama. JANGAN sebut angka spesifik.
+- "synthesis": potret identitas inti kamu yang DESKRIPTIF dan kaya, 6-9 kalimat (boleh dipecah jadi 2 paragraf). WAJIB buka tepat dengan frasa "Kamu adalah seorang yang " lalu lanjut ngegambarin: gimana kamu bergerak di dunia, apa yang ngegerakin kamu, kekuatan khas kamu, ketegangan/keunikan yang bikin kamu jadi kamu, dan gimana kamu kelihatan dari luar. (KHUSUS synthesis ini, abaikan aturan "buka dengan cara beda" di GAYA BAHASA — pembukaan "Kamu adalah seorang yang " sengaja distandarkan.) JANGAN sebut nama. JANGAN sebut angka spesifik.
 - Tiap kartu inti: 2-3 kalimat, ngomong langsung ke "kamu". Hangat, reflektif, langsung. Jelaskan MAKNA komponennya, bukan angkanya.
 - Kartu "karmicLessons" hanya muncul kalau ada karmic lessons.
 - "minorNarrative": 2-3 kalimat — jelaskan MAKNA Minor Numbers spesifik kamu (cara kamu muncul di hubungan sehari-hari saat dipanggil dengan call-name) pakai bahasa manusia yang gampang dicerna. Singgung halus di mana beda/selaras sama core dari nama akta. Hanya muncul kalau <profile> punya minor block.
@@ -75,7 +75,7 @@ Point of view: write in the second person, addressing "you" DIRECTLY. Do NOT use
 ${VOICE_EN}
 
 Content:
-- "synthesis": 4-5 sentences, one flowing paragraph — a fuller portrait of your core identity: how you move through the world, what drives you, the tension/signature that makes you *you*. Richer than a list of traits. Do NOT mention a name. DO NOT name any specific number.
+- "synthesis": a DESCRIPTIVE, rich portrait of your core identity, 6-9 sentences (up to 2 paragraphs). It MUST open exactly with the phrase "You are someone who " and then describe: how you move through the world, what drives you, your signature strengths, the tension/quirk that makes you *you*, and how you come across to others. (For this synthesis ONLY, ignore the "open differently" rule in VOICE — the "You are someone who " opener is intentionally standardized here.) Do NOT mention a name. DO NOT name any specific number.
 - Each core card: 2-3 sentences, speaking directly to "you". Explain the MEANING of the component, not the digit.
 - The "karmicLessons" card only appears when karmic lessons are present.
 - "minorNarrative": 2-3 sentences — explain the MEANING of your specific Minor Numbers (how you show up in day-to-day interactions when people call you by your call-name) in plain, easy-to-digest language. Gently compare to the legal-name core: where there's friction, where alignment. Only included when <profile> has a minor block.

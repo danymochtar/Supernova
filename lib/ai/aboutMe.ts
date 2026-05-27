@@ -22,7 +22,7 @@ import { getCachedJson, setCachedJson } from '@/lib/db/repositories/numerologyCa
 // showing the raw cards. Old v6 blobs regenerate on next access.
 // v8: natural-voice pass — kill the "[Name] adalah sosok yang…" opener +
 // "X — bukan Y" AI tells, and lengthen the synthesis. Old v7 regenerates.
-const CACHE_KEY = 'aboutMe-v10';
+const CACHE_KEY = 'aboutMe-v11';
 
 /**
  * Cache-first structured About Me. Profile name + DOB never change so the
