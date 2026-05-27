@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import type { Locale } from '@/lib/i18n/config';
 import type { PersonActionResult, createPersonAction, updatePersonAction } from '@/app/[locale]/people/actions';
 
-const RELATIONSHIPS = ['PARTNER', 'PARENT', 'CHILD', 'SIBLING', 'FAMILY', 'FRIEND', 'COLLEAGUE', 'OTHER'] as const;
+const RELATIONSHIPS = ['PARTNER', 'PARENT', 'CHILD', 'SIBLING', 'FAMILY', 'BEST_FRIEND', 'FRIEND', 'BUSINESS_PARTNER', 'COLLEAGUE', 'ACQUAINTANCE', 'OTHER'] as const;
 
 const ERROR_KEY: Record<Exclude<PersonActionResult, { ok: true }>['error'], string> = {
   unauth: 'errorGeneric',

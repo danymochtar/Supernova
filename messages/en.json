@@ -454,7 +454,10 @@
       "FAMILY": "Family",
       "FRIEND": "Friend",
       "COLLEAGUE": "Colleague",
-      "OTHER": "Other"
+      "OTHER": "Other",
+      "BUSINESS_PARTNER": "Business partner",
+      "BEST_FRIEND": "Close friend",
+      "ACQUAINTANCE": "Acquaintance"
     }
   },
   "peopleForm": {

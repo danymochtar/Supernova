@@ -454,7 +454,10 @@
       "FAMILY": "家族",
       "FRIEND": "友人",
       "COLLEAGUE": "同僚",
-      "OTHER": "その他"
+      "OTHER": "その他",
+      "BUSINESS_PARTNER": "ビジネスパートナー",
+      "BEST_FRIEND": "親友",
+      "ACQUAINTANCE": "知人"
     }
   },
   "peopleForm": {

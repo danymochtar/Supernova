@@ -454,7 +454,10 @@
       "FAMILY": "가족",
       "FRIEND": "친구",
       "COLLEAGUE": "동료",
-      "OTHER": "기타"
+      "OTHER": "기타",
+      "BUSINESS_PARTNER": "비즈니스 파트너",
+      "BEST_FRIEND": "절친",
+      "ACQUAINTANCE": "지인"
     }
   },
   "peopleForm": {

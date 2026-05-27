@@ -506,7 +506,10 @@
       "FAMILY": "Keluarga",
       "FRIEND": "Teman",
       "COLLEAGUE": "Rekan kerja",
-      "OTHER": "Lainnya"
+      "OTHER": "Lainnya",
+      "BUSINESS_PARTNER": "Partner bisnis",
+      "BEST_FRIEND": "Sahabat",
+      "ACQUAINTANCE": "Kenalan"
     }
   },
   "peopleForm": {

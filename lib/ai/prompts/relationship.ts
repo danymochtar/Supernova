@@ -24,7 +24,10 @@ const REL_LABEL_ID: Record<Relationship, string> = {
   FAMILY: 'keluarga',
   FRIEND: 'teman',
   COLLEAGUE: 'rekan kerja',
-  OTHER: 'kenalan',
+  OTHER: 'orang lain',
+  BUSINESS_PARTNER: 'partner bisnis',
+  BEST_FRIEND: 'sahabat',
+  ACQUAINTANCE: 'kenalan',
 };
 
 const REL_LABEL_EN: Record<Relationship, string> = {
@@ -35,7 +38,10 @@ const REL_LABEL_EN: Record<Relationship, string> = {
   FAMILY: 'family',
   FRIEND: 'friend',
   COLLEAGUE: 'colleague',
-  OTHER: 'acquaintance',
+  OTHER: 'other connection',
+  BUSINESS_PARTNER: 'business partner',
+  BEST_FRIEND: 'close friend',
+  ACQUAINTANCE: 'acquaintance',
 };
 
 const COMP_LABEL_ID: Record<string, string> = {

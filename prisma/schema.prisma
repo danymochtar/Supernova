@@ -101,6 +101,9 @@ enum Relationship {
   FRIEND
   COLLEAGUE
   OTHER
+  BUSINESS_PARTNER
+  BEST_FRIEND
+  ACQUAINTANCE
 }
 
 enum FeedbackRating {

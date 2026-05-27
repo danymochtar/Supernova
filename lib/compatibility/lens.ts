@@ -162,6 +162,11 @@ const LENSES: Record<Relationship, RelationshipLens> = {
   FRIEND: FRIEND_LENS,
   COLLEAGUE: COLLEAGUE_LENS,
   OTHER: OTHER_LENS,
+  // Business partner shares the professional COLLEAGUE lens; a close friend
+  // shares the FRIEND lens; an acquaintance is surface-level like OTHER.
+  BUSINESS_PARTNER: { ...COLLEAGUE_LENS, relationship: 'BUSINESS_PARTNER' },
+  BEST_FRIEND: { ...FRIEND_LENS, relationship: 'BEST_FRIEND' },
+  ACQUAINTANCE: { ...OTHER_LENS, relationship: 'ACQUAINTANCE' },
 };
 
 export function lensFor(relationship: Relationship): RelationshipLens {
@@ -178,9 +183,12 @@ const RELATIONSHIP_PRIORITY: Record<Relationship, number> = {
   CHILD: 2,
   SIBLING: 3,
   FAMILY: 4,
-  FRIEND: 5,
-  COLLEAGUE: 6,
-  OTHER: 7,
+  BEST_FRIEND: 5,
+  FRIEND: 6,
+  BUSINESS_PARTNER: 7,
+  COLLEAGUE: 8,
+  ACQUAINTANCE: 9,
+  OTHER: 10,
 };
 
 export function relationshipPriority(r: Relationship): number {

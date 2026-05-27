@@ -454,7 +454,10 @@
       "FAMILY": "العائلة",
       "FRIEND": "صديق",
       "COLLEAGUE": "زميل عمل",
-      "OTHER": "أخرى"
+      "OTHER": "أخرى",
+      "BUSINESS_PARTNER": "شريك عمل",
+      "BEST_FRIEND": "صديق مقرب",
+      "ACQUAINTANCE": "معرفة"
     }
   },
   "peopleForm": {

@@ -45,7 +45,10 @@ const RELATIONSHIP_LABEL_ID: Record<Relationship, string> = {
   FAMILY: 'keluarga',
   FRIEND: 'teman',
   COLLEAGUE: 'rekan kerja',
-  OTHER: 'kenalan',
+  OTHER: 'orang lain',
+  BUSINESS_PARTNER: 'partner bisnis',
+  BEST_FRIEND: 'sahabat',
+  ACQUAINTANCE: 'kenalan',
 };
 
 const RELATIONSHIP_LABEL_EN: Record<Relationship, string> = {
@@ -56,7 +59,10 @@ const RELATIONSHIP_LABEL_EN: Record<Relationship, string> = {
   FAMILY: 'family member',
   FRIEND: 'friend',
   COLLEAGUE: 'colleague',
-  OTHER: 'acquaintance',
+  OTHER: 'other connection',
+  BUSINESS_PARTNER: 'business partner',
+  BEST_FRIEND: 'close friend',
+  ACQUAINTANCE: 'acquaintance',
 };
 
 const RELATIONSHIP_GUIDE_ID: Record<Relationship, string> = {
@@ -74,8 +80,14 @@ const RELATIONSHIP_GUIDE_ID: Record<Relationship, string> = {
     'Teman: kasual deep talk OK kalau vibe-nya pas. Boleh: hangout, curhat dua arah, support emosional, bercanda. Hindari: transactional vibes (cuma ngehub kalau butuh), terlalu over-asking favors, dump masalah lo tanpa nanya kabar mereka dulu. Pas vibe-nya jelek: ringan dulu, jangan langsung serius.',
   COLLEAGUE:
     'Rekan kerja: TONE PROFESIONAL. Boleh: diskusi kerjaan, brainstorm project, networking, klarifikasi deliverables, ngobrol ringan soal kerja. Hindari: oversharing personal, ngomongin masalah relationship/keluarga lo, gosip kantor, politik, agama, advice medis/finansial. Pas vibe dia jelek: tetap output-focused, jangan masuk ke ranah emosional. Boundaries jelas.',
-  OTHER:
+  BUSINESS_PARTNER:
+    'Partner bisnis: tone profesional tapi ada kepercayaan & kepentingan bareng. Boleh: bahas strategi, duit/bagi hasil, visi usaha, ambil keputusan bareng, evaluasi jujur. Hindari: campur drama personal ke keputusan bisnis, asumsi tanpa data, nunda konflik yang perlu dibahas. Pas vibe dia turun: fokus ke yang konkret & actionable, tunda keputusan besar yang butuh dia hadir penuh.',
+  BEST_FRIEND:
+    'Sahabat: teman paling deket, trust tinggi. Boleh: deep talk apa aja, vulnerable, jujur yang sayang, support dua arah, ngakak bareng. Hindari: ngegampangin karena udah deket (tetep tanya kabar dulu), ngeremehin batas mereka, ngilang pas mereka butuh. Pas vibe-nya jelek: hadir beneran, dengerin, jangan buru-buru nge-fix.',
+  ACQUAINTANCE:
     'Kenalan: surface-level. Boleh: pleasantries, basa-basi, klarifikasi konteks ketemu. Hindari: deep disclosure, commitment, ngajak rencana jangka panjang, oversharing. Pas vibe-nya off: cukup polite + short.',
+  OTHER:
+    'Orang lain: hubungan yang belum jelas kategorinya. Default sopan & secukupnya, baca konteks dulu sebelum masuk lebih dalam. Hindari: asumsi kedekatan, oversharing. Pas vibe-nya off: ringkas & ramah.',
 };
 
 const RELATIONSHIP_GUIDE_EN: Record<Relationship, string> = {
@@ -93,8 +105,14 @@ const RELATIONSHIP_GUIDE_EN: Record<Relationship, string> = {
     "Friend: casual deep talk OK if the vibe matches. OK: hangouts, two-way venting, emotional support, jokes. Avoid: transactional vibes (only reaching out when you need something), over-asking for favors, dumping your stuff without checking on them first. When their vibe is bad: stay light first, don't go straight to serious.",
   COLLEAGUE:
     'Colleague: PROFESSIONAL TONE. OK: work discussion, project brainstorm, networking, deliverable clarifications, light work chat. Avoid: personal oversharing, your relationship/family drama, office gossip, politics, religion, medical/financial advice. When their vibe is bad: stay output-focused, do not move into emotional territory. Clear boundaries.',
-  OTHER:
+  BUSINESS_PARTNER:
+    'Business partner: professional but with shared stakes + trust. OK: strategy, money/profit-split, business vision, joint decisions, honest reviews. Avoid: letting personal drama drive business calls, assuming without data, sitting on conflicts that need airing. When their vibe dips: focus on concrete/actionable items, defer big decisions that need them fully present.',
+  BEST_FRIEND:
+    "Close friend: your tightest friend, high trust. OK: any deep talk, vulnerability, loving honesty, two-way support, big laughs. Avoid: taking them for granted because you're close (still check in first), steamrolling their boundaries, disappearing when they need you. When their vibe is bad: actually show up, listen, don't rush to fix.",
+  ACQUAINTANCE:
     'Acquaintance: surface-level. OK: pleasantries, small talk, clarifying meeting context. Avoid: deep disclosure, commitments, long-range planning, oversharing. When their vibe is off: polite + short.',
+  OTHER:
+    "Other connection: a relationship that doesn't fit a clear category. Default courteous and measured; read the context before going deeper. Avoid: assuming closeness, oversharing. When their vibe is off: brief and friendly.",
 };
 
 export function buildSystemPrompt(locale: Locale): string {

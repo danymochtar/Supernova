@@ -454,7 +454,10 @@
       "FAMILY": "家人",
       "FRIEND": "朋友",
       "COLLEAGUE": "同事",
-      "OTHER": "其他"
+      "OTHER": "其他",
+      "BUSINESS_PARTNER": "生意伙伴",
+      "BEST_FRIEND": "挚友",
+      "ACQUAINTANCE": "熟人"
     }
   },
   "peopleForm": {
