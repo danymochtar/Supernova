@@ -809,12 +809,17 @@
   },
   "followUp": {
     "title": "日记的后续追问",
-    "subtitle": "你之前说想做的事——还在心里挂着吗？",
+    "subtitle": "你说过要做的事，还放在心上吗？",
     "markDone": "标记为已完成",
     "today": "今天",
     "yesterday": "昨天",
     "daysAgo": "{count} 天前",
-    "addToCalendar": "添加到日历"
+    "addToCalendar": "添加到日历",
+    "respond": "回应",
+    "done": "完成",
+    "skip": "跳过",
+    "replyPlaceholder": "简短回复…",
+    "replySend": "发送"
   },
   "digest": {
     "title": "最近 {days} 天的模式",

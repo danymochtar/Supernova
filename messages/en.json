@@ -809,12 +809,17 @@
   },
   "followUp": {
     "title": "Journal follow-up",
-    "subtitle": "That thing you said you'd do — still on your mind?",
+    "subtitle": "Things you said you'd do. Still on your mind?",
     "markDone": "Mark as done",
     "today": "Today",
     "yesterday": "Yesterday",
     "daysAgo": "{count} days ago",
-    "addToCalendar": "Add to calendar"
+    "addToCalendar": "Add to calendar",
+    "respond": "Respond",
+    "done": "Done",
+    "skip": "Skip",
+    "replyPlaceholder": "Quick reply…",
+    "replySend": "Send"
   },
   "digest": {
     "title": "Last {days}-day pattern",

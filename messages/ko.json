@@ -809,12 +809,17 @@
   },
   "followUp": {
     "title": "저널 후속 체크인",
-    "subtitle": "하겠다고 했던 그거 — 아직 마음에 걸려 있나요?",
+    "subtitle": "하겠다고 한 일, 아직 마음에 있어요?",
     "markDone": "완료 표시하기",
     "today": "오늘",
     "yesterday": "어제",
     "daysAgo": "{count}일 전",
-    "addToCalendar": "캘린더에 추가하기"
+    "addToCalendar": "캘린더에 추가하기",
+    "respond": "응답",
+    "done": "완료",
+    "skip": "건너뛰기",
+    "replyPlaceholder": "짧은 답장…",
+    "replySend": "보내기"
   },
   "digest": {
     "title": "최근 {days}일 패턴",

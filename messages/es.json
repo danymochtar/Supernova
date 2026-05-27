@@ -809,12 +809,17 @@
   },
   "followUp": {
     "title": "Follow-up del journal",
-    "subtitle": "Eso que dijiste que ibas a hacer — ¿sigue pendiente?",
+    "subtitle": "Lo que dijiste que harías. ¿Sigue pendiente?",
     "markDone": "Marcar como hecho",
     "today": "Hoy",
     "yesterday": "Ayer",
     "daysAgo": "hace {count} días",
-    "addToCalendar": "Añádelo al calendario"
+    "addToCalendar": "Añádelo al calendario",
+    "respond": "Responder",
+    "done": "Hecho",
+    "skip": "Omitir",
+    "replyPlaceholder": "Respuesta corta…",
+    "replySend": "Enviar"
   },
   "digest": {
     "title": "Patrón de los últimos {days} días",

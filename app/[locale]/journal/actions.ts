@@ -6,6 +6,7 @@ import { getSession } from '@/lib/auth/requireSession';
 import {
   createJournalEntry,
   deleteJournalEntry,
+  respondActionItem,
   toggleActionItem,
   type JournalActionItem,
   type JournalSourceSnapshot,
@@ -147,6 +148,30 @@ export async function deleteJournalAction(input: { id: string }): Promise<Delete
 export type ToggleActionItemResult =
   | { ok: true; item: JournalActionItem }
   | { ok: false; error: 'unauth' | 'not_found' };
+
+export type RespondActionItemResult = ToggleActionItemResult;
+
+/**
+ * Respond to a follow-up: set a status (done / skip / open) and/or attach a
+ * short text reply. Powers the dashboard follow-up widget's expand-on-tap.
+ */
+export async function respondActionItemAction(input: {
+  entryId: string;
+  itemId: string;
+  status?: 'done' | 'skip' | 'open';
+  note?: string | null;
+}): Promise<RespondActionItemResult> {
+  const session = await getSession();
+  if (!session) return { ok: false, error: 'unauth' };
+  const item = await respondActionItem(session.user.id, input.entryId, input.itemId, {
+    status: input.status,
+    note: input.note,
+  });
+  if (!item) return { ok: false, error: 'not_found' };
+  revalidatePath('/[locale]/journal', 'page');
+  revalidatePath('/[locale]/dashboard', 'page');
+  return { ok: true, item };
+}
 
 /**
  * Toggle a single action item's completed state inside a journal entry.

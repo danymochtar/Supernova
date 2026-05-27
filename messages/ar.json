@@ -809,12 +809,17 @@
   },
   "followUp": {
     "title": "متابعة من المذكرة",
-    "subtitle": "الشيء اللي قلت إنك ناوي تعمله — لسه عالق؟",
+    "subtitle": "الأشياء التي قلت إنك ستفعلها. ما زالت في بالك؟",
     "markDone": "وضع علامة \"تم\"",
     "today": "اليوم",
     "yesterday": "أمس",
     "daysAgo": "قبل {count} يوم",
-    "addToCalendar": "أضِفه إلى التقويم"
+    "addToCalendar": "أضِفه إلى التقويم",
+    "respond": "رد",
+    "done": "تم",
+    "skip": "تخطٍّ",
+    "replyPlaceholder": "رد قصير…",
+    "replySend": "إرسال"
   },
   "digest": {
     "title": "نمط آخر {days} يوم",

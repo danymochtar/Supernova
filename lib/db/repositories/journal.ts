@@ -16,6 +16,13 @@ export interface JournalActionItem {
   completed: boolean;
   /** ISO timestamp set when the user marks the item done. Null otherwise. */
   completedAt: string | null;
+  /** User chose to let this go without doing it. Removed from open follow-ups
+   *  like a completed item, but tracked separately so we don't conflate
+   *  "did it" with "decided not to". */
+  skipped: boolean;
+  /** Optional free-text reply the user left on the item ("done, but…",
+   *  "not yet, waiting on X"). Kept even while the item stays open. */
+  note: string | null;
   /** ISO of when the AI extracted the item. */
   createdAt: string;
 }
@@ -59,6 +66,8 @@ function decodeActionItems(v: Prisma.JsonValue): JournalActionItem[] {
         title: it.title,
         completed: Boolean(it.completed),
         completedAt: typeof it.completedAt === 'string' ? it.completedAt : null,
+        skipped: Boolean(it.skipped),
+        note: typeof it.note === 'string' && it.note.trim() ? it.note : null,
         createdAt: typeof it.createdAt === 'string' ? it.createdAt : new Date().toISOString(),
       };
     })
@@ -105,6 +114,8 @@ export async function createJournalEntry(input: CreateJournalInput): Promise<Jou
     title: d.title,
     completed: false,
     completedAt: null,
+    skipped: false,
+    note: null,
     createdAt: now,
   }));
 
@@ -172,11 +183,60 @@ export async function toggleActionItem(
   return items[idx]!;
 }
 
+/**
+ * Respond to a follow-up action item: set a status (done / skip / leave open)
+ * and/or attach a free-text reply. Scoped by (entryId, userId). Returns the
+ * updated item, or null if not found.
+ */
+export async function respondActionItem(
+  userId: string,
+  entryId: string,
+  itemId: string,
+  input: { status?: 'done' | 'skip' | 'open'; note?: string | null },
+): Promise<JournalActionItem | null> {
+  const row = await prisma.journalEntry.findFirst({
+    where: { id: entryId, userId },
+    select: { actionItems: true },
+  });
+  if (!row) return null;
+  const items = decodeActionItems(row.actionItems);
+  const idx = items.findIndex((it) => it.id === itemId);
+  if (idx < 0) return null;
+  const current = items[idx]!;
+  const now = new Date().toISOString();
+  const next: JournalActionItem = { ...current };
+  if (input.status === 'done') {
+    next.completed = true;
+    next.completedAt = now;
+    next.skipped = false;
+  } else if (input.status === 'skip') {
+    next.skipped = true;
+    next.completed = false;
+    next.completedAt = null;
+  } else if (input.status === 'open') {
+    next.completed = false;
+    next.completedAt = null;
+    next.skipped = false;
+  }
+  if (input.note !== undefined) {
+    const trimmed = (input.note ?? '').trim();
+    next.note = trimmed.length > 0 ? trimmed.slice(0, 280) : null;
+  }
+  items[idx] = next;
+  await prisma.journalEntry.updateMany({
+    where: { id: entryId, userId },
+    data: { actionItems: items as unknown as Prisma.InputJsonValue },
+  });
+  return next;
+}
+
 export interface OpenActionItem {
   /** The action item itself. */
   id: string;
   title: string;
   createdAt: string;
+  /** Reply the user left without closing the item yet, if any. */
+  note: string | null;
   /** Parent entry context — gives the widget a tap-target back to the
    * full journal entry + a few cues for the "X days ago" line. */
   entryId: string;
@@ -220,11 +280,12 @@ export async function listOpenActionItems(
   for (const row of rows) {
     const items = decodeActionItems(row.actionItems);
     for (const it of items) {
-      if (it.completed) continue;
+      if (it.completed || it.skipped) continue;
       out.push({
         id: it.id,
         title: it.title,
         createdAt: it.createdAt,
+        note: it.note,
         entryId: row.id,
         entryAddedAt: row.addedAt,
         entryEmotion: row.emotion,

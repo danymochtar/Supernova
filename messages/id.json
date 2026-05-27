@@ -132,12 +132,17 @@
   },
   "followUp": {
     "title": "Follow-up dari jurnal",
-    "subtitle": "Yang lo bilang mau lakuin — masih nyangkut?",
+    "subtitle": "Yang lo bilang mau lakuin, masih nyangkut?",
     "markDone": "Tandai selesai",
     "addToCalendar": "Tambahin ke kalender",
     "today": "Hari ini",
     "yesterday": "Kemarin",
-    "daysAgo": "{count} hari lalu"
+    "daysAgo": "{count} hari lalu",
+    "respond": "Tanggapi",
+    "done": "Selesai",
+    "skip": "Lewati",
+    "replyPlaceholder": "Balas singkat…",
+    "replySend": "Kirim"
   },
   "digest": {
     "title": "Pola {days} hari terakhir",

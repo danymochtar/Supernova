@@ -809,12 +809,17 @@
   },
   "followUp": {
     "title": "ジャーナルからのフォローアップ",
-    "subtitle": "やるって言ってたこと — まだ気になってる？",
+    "subtitle": "やると言ったこと、まだ気になってる？",
     "markDone": "完了にする",
     "today": "今日",
     "yesterday": "昨日",
     "daysAgo": "{count}日前",
-    "addToCalendar": "カレンダーに追加"
+    "addToCalendar": "カレンダーに追加",
+    "respond": "対応",
+    "done": "完了",
+    "skip": "スキップ",
+    "replyPlaceholder": "短い返信…",
+    "replySend": "送信"
   },
   "digest": {
     "title": "過去{days}日間のパターン",

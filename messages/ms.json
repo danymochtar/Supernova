@@ -809,12 +809,17 @@
   },
   "followUp": {
     "title": "Follow-up dari jurnal",
-    "subtitle": "Yang kamu cakap nak buat — masih tersangkut?",
+    "subtitle": "Benda yang kamu kata nak buat. Masih tergantung?",
     "markDone": "Tanda selesai",
     "today": "Hari ini",
     "yesterday": "Semalam",
     "daysAgo": "{count} hari lalu",
-    "addToCalendar": "Tambah ke kalendar"
+    "addToCalendar": "Tambah ke kalendar",
+    "respond": "Balas",
+    "done": "Selesai",
+    "skip": "Langkau",
+    "replyPlaceholder": "Balas ringkas…",
+    "replySend": "Hantar"
   },
   "digest": {
     "title": "Pola {days} hari terakhir",

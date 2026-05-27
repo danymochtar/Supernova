@@ -25,7 +25,7 @@ import {
   JournalDigestWidget,
   type JournalDigestLite,
 } from '@/components/journal/JournalDigestWidget';
-import { toggleActionItemAction } from '@/app/[locale]/journal/actions';
+import { respondActionItemAction } from '@/app/[locale]/journal/actions';
 
 type WidgetId = 'reading' | 'followUp' | 'digest' | 'feedback';
 
@@ -178,6 +178,7 @@ export default async function DashboardPage({
       entryAddedAt: it.entryAddedAt.toISOString(),
       entryEmotion: it.entryEmotion,
       entryTheme: it.entryTheme,
+      note: it.note,
       daysAgo,
     };
   });
@@ -235,9 +236,8 @@ export default async function DashboardPage({
         return (
           <FollowUpWidget
             key={id}
-            locale={locale}
             items={followUpItems}
-            toggleAction={toggleActionItemAction}
+            respondAction={respondActionItemAction}
           />
         );
       case 'digest':
