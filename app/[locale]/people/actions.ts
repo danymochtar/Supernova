@@ -16,12 +16,11 @@ import { deletePersonVibes } from '@/lib/db/repositories/personDailyVibe';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { displayName } from '@/lib/profile/displayName';
 import { profileFormSchema, type ProfileFormError } from '@/lib/profile/validate';
+import { RELATIONSHIPS } from '@/lib/people/relationships';
 
 // Per-user cap on the number of Person rows. Was 1 in the locked plan as a
 // soft gate on free tier; user removed it for the MVP.
 const PEOPLE_LIMIT = 999;
-
-const RELATIONSHIPS = ['PARTNER', 'PARENT', 'CHILD', 'SIBLING', 'FAMILY', 'FRIEND', 'COLLEAGUE', 'OTHER'] as const;
 
 const personSchema = profileFormSchema.extend({
   relationship: z.enum(RELATIONSHIPS),
