@@ -51,126 +51,49 @@ const ALL_PATTERNS = new Set([
   'sharedKarmicLessons',
 ]);
 
-const PARTNER_LENS: RelationshipLens = {
-  relationship: 'PARTNER',
-  // Soul Urge weighted heavily — partners actually access each other's
-  // deepest yearnings. The cross pairs (Expression↔Soul Urge) are where
-  // the "I give what you crave" dynamic shows up.
+/**
+ * ONE relationship-independent compatibility lens. The "core" compatibility
+ * of two people is the same regardless of how they're labeled — the
+ * relationship type only flavors the written narrative/advice (handled in the
+ * AI prompts), never the number. Previously each relationship had its own
+ * lanes/modifiers, which made the same pair swing ~15-25 pts by label (family
+ * structurally inflated, colleague penalized).
+ *
+ * Weighting follows numerology's "three pillars": Life Path (primary),
+ * Expression, and Soul Urge carry the most weight, with Personality + Birthday
+ * as supporting layers, plus light Expression↔Soul Urge cross-pairs for the
+ * complementarity ("I give what you crave") read. Lane weights sum to 1.0.
+ */
+const CORE_LENS: RelationshipLens = {
+  relationship: 'OTHER', // placeholder; lensFor() stamps the real label
   lanes: [
-    { key: 'lp-lp',     meKey: 'lifePath',    themKey: 'lifePath',    weight: 0.18, cross: false },
-    { key: 'su-su',     meKey: 'soulUrge',    themKey: 'soulUrge',    weight: 0.18, cross: false },
-    { key: 'expr-su',   meKey: 'expression',  themKey: 'soulUrge',    weight: 0.15, cross: true  },
-    { key: 'su-expr',   meKey: 'soulUrge',    themKey: 'expression',  weight: 0.15, cross: true  },
-    { key: 'pers-pers', meKey: 'personality', themKey: 'personality', weight: 0.10, cross: false },
-    { key: 'expr-expr', meKey: 'expression',  themKey: 'expression',  weight: 0.12, cross: false },
-    { key: 'bd-bd',     meKey: 'birthday',    themKey: 'birthday',    weight: 0.12, cross: false },
-  ],
-  enabledPatterns: ALL_PATTERNS,
-  enabledModifiers: new Set(['masters', 'soulUrgeMatch', 'lifePathMirror', 'sharedKarmicDebt', 'oldSoul', 'complementaryKarmic', 'bridgeFit']),
-};
-
-const FAMILY_LENS: RelationshipLens = {
-  relationship: 'FAMILY',
-  // Family shares the deep stuff (LP, SU) but the persona/presentation
-  // (Personality) matters less — they see beneath the mask. Cross pairs
-  // are still meaningful: parents giving what kids yearn for, etc.
-  lanes: [
-    { key: 'lp-lp',     meKey: 'lifePath',    themKey: 'lifePath',    weight: 0.25, cross: false },
+    { key: 'lp-lp',     meKey: 'lifePath',    themKey: 'lifePath',    weight: 0.28, cross: false },
+    { key: 'expr-expr', meKey: 'expression',  themKey: 'expression',  weight: 0.22, cross: false },
     { key: 'su-su',     meKey: 'soulUrge',    themKey: 'soulUrge',    weight: 0.20, cross: false },
-    { key: 'expr-su',   meKey: 'expression',  themKey: 'soulUrge',    weight: 0.15, cross: true  },
-    { key: 'su-expr',   meKey: 'soulUrge',    themKey: 'expression',  weight: 0.15, cross: true  },
-    { key: 'lp-expr',   meKey: 'lifePath',    themKey: 'expression',  weight: 0.10, cross: true  },
-    { key: 'expr-lp',   meKey: 'expression',  themKey: 'lifePath',    weight: 0.10, cross: true  },
-    { key: 'bd-bd',     meKey: 'birthday',    themKey: 'birthday',    weight: 0.05, cross: false },
+    { key: 'pers-pers', meKey: 'personality', themKey: 'personality', weight: 0.12, cross: false },
+    { key: 'bd-bd',     meKey: 'birthday',    themKey: 'birthday',    weight: 0.08, cross: false },
+    { key: 'expr-su',   meKey: 'expression',  themKey: 'soulUrge',    weight: 0.05, cross: true  },
+    { key: 'su-expr',   meKey: 'soulUrge',    themKey: 'expression',  weight: 0.05, cross: true  },
   ],
   enabledPatterns: ALL_PATTERNS,
-  enabledModifiers: new Set(['masters', 'soulUrgeMatch', 'lifePathMirror', 'sharedKarmicDebt', 'oldSoul', 'complementaryKarmic', 'bridgeFit']),
-};
-
-const FRIEND_LENS: RelationshipLens = {
-  relationship: 'FRIEND',
-  // Friends meet on Expression (how we both show up) and Personality
-  // (vibe). Soul Urge isn't really accessed in friendship — drop it.
-  lanes: [
-    { key: 'lp-lp',     meKey: 'lifePath',    themKey: 'lifePath',    weight: 0.20, cross: false },
-    { key: 'expr-expr', meKey: 'expression',  themKey: 'expression',  weight: 0.30, cross: false },
-    { key: 'pers-pers', meKey: 'personality', themKey: 'personality', weight: 0.20, cross: false },
-    { key: 'lp-expr',   meKey: 'lifePath',    themKey: 'expression',  weight: 0.10, cross: true  },
-    { key: 'expr-lp',   meKey: 'expression',  themKey: 'lifePath',    weight: 0.10, cross: true  },
-    { key: 'bd-bd',     meKey: 'birthday',    themKey: 'birthday',    weight: 0.10, cross: false },
-  ],
-  // No Soul-Urge based patterns; freedom-vs-root applies but lighter.
-  enabledPatterns: new Set([
-    'sameLifePath',
-    'sameExpression',
-    'myLpTheirExpr',
-    'theirLpMyExpr',
-    'cycleBookends',
-    'freedomVsRoot',
-    'pairedReducedToNine',
-    'bothMasters',
-    'sharedKarmicLessons',
+  enabledModifiers: new Set([
+    'masters',
+    'soulUrgeMatch',
+    'lifePathMirror',
+    'sharedKarmicDebt',
+    'oldSoul',
+    'complementaryKarmic',
+    'bridgeFit',
   ]),
-  enabledModifiers: new Set(['masters', 'lifePathMirror', 'oldSoul', 'complementaryKarmic', 'bridgeFit']),
 };
 
-const COLLEAGUE_LENS: RelationshipLens = {
-  relationship: 'COLLEAGUE',
-  // At work it's about Expression (talents) and Personality (professional
-  // vibe). Life Path matters mainly as it intersects with the other's
-  // Expression — i.e. their work output supports my mission. No Soul Urge.
-  lanes: [
-    { key: 'expr-expr', meKey: 'expression',  themKey: 'expression',  weight: 0.30, cross: false },
-    { key: 'pers-pers', meKey: 'personality', themKey: 'personality', weight: 0.25, cross: false },
-    { key: 'lp-expr',   meKey: 'lifePath',    themKey: 'expression',  weight: 0.15, cross: true  },
-    { key: 'expr-lp',   meKey: 'expression',  themKey: 'lifePath',    weight: 0.15, cross: true  },
-    { key: 'bd-bd',     meKey: 'birthday',    themKey: 'birthday',    weight: 0.15, cross: false },
-  ],
-  enabledPatterns: new Set([
-    'sameExpression',
-    'myLpTheirExpr',
-    'theirLpMyExpr',
-    'pairedReducedToNine',
-    'bothMasters',
-  ]),
-  enabledModifiers: new Set(['masters', 'complementaryKarmic', 'bridgeFit']),
-};
-
-const OTHER_LENS: RelationshipLens = {
-  relationship: 'OTHER',
-  lanes: [
-    { key: 'lp-lp',     meKey: 'lifePath',    themKey: 'lifePath',    weight: 0.30, cross: false },
-    { key: 'expr-expr', meKey: 'expression',  themKey: 'expression',  weight: 0.25, cross: false },
-    { key: 'su-su',     meKey: 'soulUrge',    themKey: 'soulUrge',    weight: 0.20, cross: false },
-    { key: 'pers-pers', meKey: 'personality', themKey: 'personality', weight: 0.15, cross: false },
-    { key: 'bd-bd',     meKey: 'birthday',    themKey: 'birthday',    weight: 0.10, cross: false },
-  ],
-  enabledPatterns: ALL_PATTERNS,
-  enabledModifiers: new Set(['masters', 'soulUrgeMatch', 'lifePathMirror', 'oldSoul', 'complementaryKarmic', 'bridgeFit']),
-};
-
-// PARENT, CHILD, SIBLING all share the FAMILY lens — the dynamics are
-// deep, blood-tier, and access the same components (LP, Soul Urge,
-// cross Expression↔Soul Urge). The differences are narrative, not
-// numerical, and surface in the AI-generated relationship profile.
-const LENSES: Record<Relationship, RelationshipLens> = {
-  PARTNER: PARTNER_LENS,
-  PARENT: { ...FAMILY_LENS, relationship: 'PARENT' },
-  CHILD: { ...FAMILY_LENS, relationship: 'CHILD' },
-  SIBLING: { ...FAMILY_LENS, relationship: 'SIBLING' },
-  FAMILY: FAMILY_LENS,
-  FRIEND: FRIEND_LENS,
-  COLLEAGUE: COLLEAGUE_LENS,
-  OTHER: OTHER_LENS,
-  // Business partner shares the professional COLLEAGUE lens; a close friend
-  // shares the FRIEND lens; an acquaintance is surface-level like OTHER.
-  BUSINESS_PARTNER: { ...COLLEAGUE_LENS, relationship: 'BUSINESS_PARTNER' },
-  BEST_FRIEND: { ...FRIEND_LENS, relationship: 'BEST_FRIEND' },
-  ACQUAINTANCE: { ...OTHER_LENS, relationship: 'ACQUAINTANCE' },
-};
-
+/**
+ * Returns the core lens for every relationship — the score is
+ * relationship-independent. The passed `relationship` is stamped onto the
+ * lens only so consumers can still read the correct label.
+ */
 export function lensFor(relationship: Relationship): RelationshipLens {
-  return LENSES[relationship] ?? OTHER_LENS;
+  return { ...CORE_LENS, relationship };
 }
 
 /**

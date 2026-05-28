@@ -523,16 +523,6 @@
     "minorPersonality": "Minor Personality",
     "minorExplainer": "Minor Numbers 是用你平时被叫的昵称 / call-by name 计算出来的——不是身份证上的全名。它反映的是你的社交自我：当大家用那个名字叫你时，你的能量是怎么呈现出来的。三个部分：Minor Expression（才华与显现方式）、Minor Soul Urge（带到公共场合的动机，由元音决定）、Minor Personality（别人对你的第一印象，由辅音决定）。身份证全名算出来的核心 profile 仍然是更深层的根基——Minor 只是叠在上面的日常那层。点击每张卡片看具体数字的含义。",
     "bridgeExplainer": "Bridge Number（Decoz 传统）看的是两个核心数字之间的落差——你内在的两面整合得有多顺。主要有两个 bridge：(1) Life Path × Expression——天赋是否和人生使命同步；(2) Soul Urge × Personality——内在自我是否在外在呈现里被映照出来。小 bridge（0-2）= 流畅，几乎没有摩擦。中 bridge（3-5）= 日常需要一点妥协。大 bridge（6-8）= 两面之间拉扯很强——整合需要有意识地下功夫，但最深的成长往往就诞生在这里。点击卡片看每个 bridge 数字的含义。",
-    "relationship": {
-      "PARTNER": "伴侣",
-      "PARENT": "父母",
-      "CHILD": "子女",
-      "SIBLING": "兄弟姐妹",
-      "FAMILY": "家人",
-      "FRIEND": "朋友",
-      "COLLEAGUE": "同事",
-      "OTHER": "其他"
-    },
     "curhatAbout": "聊聊{name}"
   },
   "relationshipProfile": {

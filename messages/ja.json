@@ -523,16 +523,6 @@
     "minorPersonality": "Minor Personality",
     "minorExplainer": "Minor Numbersは、普段呼ばれているニックネームやcall-by name（戸籍上の名前ではなく日常で使われる名前）から計算するよ。社会的な自分を映すもの — その名前で呼ばれるときに、あなたのエネルギーがどう現れるか。3つの要素があるよ：Minor Expression（才能と現れ方）、Minor Soul Urge（公の場に持ち込まれる動機、母音から）、Minor Personality（第一印象、子音から）。戸籍上の名前から導かれるコアプロファイルは、より深い土台のまま残る — Minorはその上に乗る日常レイヤー。各カードをタップして、数字の意味を見てみてね。",
     "bridgeExplainer": "Bridge Number（Decozの伝統）は、コアの2つの数字の差を見るもの — あなたの中の2つの側面がどれだけスムーズに統合されているか。主なbridgeは2つ：(1) Life Path × Expression — 生まれ持った才能が人生の使命と調和しているか；(2) Soul Urge × Personality — 内なる自分が外見に反映されているか。小さいbridge（0-2）= 摩擦がほぼなく流れる。中くらいのbridge（3-5）= 日常的にちょっとした妥協が必要。大きいbridge（6-8）= 2つの側面が強く引っ張り合う — 統合には意識的な努力がいるけど、最も深い成長はここで生まれる。カードをタップして、各bridge数字の意味を見てね。",
-    "relationship": {
-      "PARTNER": "パートナー",
-      "PARENT": "親",
-      "CHILD": "子ども",
-      "SIBLING": "きょうだい",
-      "FAMILY": "家族",
-      "FRIEND": "友達",
-      "COLLEAGUE": "同僚",
-      "OTHER": "その他"
-    },
     "curhatAbout": "{name}について話す"
   },
   "relationshipProfile": {

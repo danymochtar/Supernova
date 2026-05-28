@@ -523,16 +523,6 @@
     "minorPersonality": "Minor Personality",
     "minorExplainer": "Minor Numbers는 출생증명서상의 이름이 아니라 평소에 불리는 애칭 / call-by name으로 계산해요. 사회적인 자아를 비춰주는 숫자죠 — 사람들이 그 이름으로 부를 때 당신의 에너지가 어떻게 드러나는지를 보여줘요. 세 가지 요소가 있어요: Minor Expression(재능과 표현 방식), Minor Soul Urge(공개적인 영역에서 드러나는 동기, 모음에서 산출), Minor Personality(첫인상, 자음에서 산출). 출생명에서 나온 코어 프로필은 여전히 더 깊은 토대로 남아 있고 — Minor는 그 위에 얹히는 일상의 레이어예요. 각 카드를 탭하면 해당 숫자의 의미를 볼 수 있어요.",
     "bridgeExplainer": "Bridge Number(Decoz 전통)는 두 코어 숫자 사이의 간극을 보는 거예요 — 당신의 두 측면이 얼마나 매끄럽게 통합되는지를요. 주요 bridge가 두 개 있어요: (1) Life Path × Expression — 타고난 재능이 삶의 미션과 조화로운가; (2) Soul Urge × Personality — 내면의 자아가 겉모습에 반영되는가. 작은 bridge(0–2) = 거의 마찰 없이 흐름. 중간 bridge(3–5) = 일상에서 약간의 타협이 필요해요. 큰 bridge(6–8) = 두 측면이 강하게 끌어당김 — 통합에 의식적인 노력이 필요하지만, 가장 깊은 성장은 바로 여기서 태어나요. 카드를 탭해서 각 bridge 숫자의 의미를 확인해 보세요.",
-    "relationship": {
-      "PARTNER": "연인/배우자",
-      "PARENT": "부모",
-      "CHILD": "자녀",
-      "SIBLING": "형제자매",
-      "FAMILY": "가족",
-      "FRIEND": "친구",
-      "COLLEAGUE": "직장 동료",
-      "OTHER": "기타"
-    },
     "curhatAbout": "{name} 이야기하기"
   },
   "relationshipProfile": {

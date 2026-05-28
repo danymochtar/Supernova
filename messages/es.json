@@ -523,16 +523,6 @@
     "minorPersonality": "Minor Personality",
     "minorExplainer": "Los Minor Numbers se calculan desde el nombre con el que te llaman / call-by name (el que usas a diario) — no el del acta. Reflejan tu yo social: cómo aparece tu energía cuando la gente te llama así en público. Tres componentes: Minor Expression (talento y forma de mostrarte), Minor Soul Urge (motivación que llevas al espacio público, desde las vocales), Minor Personality (primera impresión que captan, desde las consonantes). El perfil central desde el nombre de acta sigue siendo la base más profunda — los Minor son la capa del día a día encima. Toca cada tarjeta para ver el significado de su número.",
     "bridgeExplainer": "El Bridge Number (tradición Decoz) mira la brecha entre dos números centrales — qué tan fluido se integran dos lados de ti. Hay dos bridges principales: (1) Life Path × Expression — si tu talento natural va alineado con tu misión de vida; (2) Soul Urge × Personality — si tu yo interior se refleja en tu fachada exterior. Bridge pequeño (0-2) = fluye, casi sin fricción. Bridge moderado (3-5) = pide pequeños compromisos rutinarios. Bridge grande (6-8) = dos lados que jalan fuerte uno contra otro — integrarlos requiere trabajo consciente, pero justo ahí nace el crecimiento más profundo. Toca la tarjeta para ver el significado de cada número de bridge.",
-    "relationship": {
-      "PARTNER": "Pareja",
-      "PARENT": "Padre/madre",
-      "CHILD": "Hijo/hija",
-      "SIBLING": "Hermano/hermana",
-      "FAMILY": "Familia",
-      "FRIEND": "Amistad",
-      "COLLEAGUE": "Colega de trabajo",
-      "OTHER": "Otro"
-    },
     "curhatAbout": "Hablar sobre {name}"
   },
   "relationshipProfile": {

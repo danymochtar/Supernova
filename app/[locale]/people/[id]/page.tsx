@@ -43,6 +43,7 @@ export default async function PersonDetailPage({
 }) {
   const locale: Locale = isLocale(params.locale) ? params.locale : 'id';
   const t = await getTranslations({ locale, namespace: 'personDetail' });
+  const tRelLabel = await getTranslations({ locale, namespace: 'people.relationship' });
   const tDash = await getTranslations({ locale, namespace: 'dashboard' });
   const tCompat = await getTranslations({ locale, namespace: 'compatibility' });
   const tRel = await getTranslations({ locale, namespace: 'relationshipProfile' });
@@ -117,7 +118,7 @@ export default async function PersonDetailPage({
             </div>
             <div className="min-w-0 flex-1 space-y-1">
               <p className="text-primary text-[11px] font-semibold uppercase tracking-[0.18em]">
-                {t(`relationship.${person.relationship}`)}
+                {tRelLabel(person.relationship)}
               </p>
               <p className="font-serif truncate text-xl font-semibold leading-tight tracking-tight sm:text-2xl">
                 {theirName}

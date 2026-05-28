@@ -5,9 +5,9 @@ import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
 
 /**
- * Lightweight modal: a bottom sheet on mobile, a centered card on larger
- * screens. Closes on backdrop click or Escape, locks body scroll while
- * open, and portals to <body> so it escapes any clipped/scrolled ancestor.
+ * Lightweight modal: a centered, iOS-style window that scales in. Closes on
+ * backdrop click or Escape, locks body scroll while open, and portals to
+ * <body> so it escapes any clipped/scrolled ancestor.
  *
  * Deliberately dependency-free (no focus-trap library) — fine for the
  * short, informational dialogs we use it for. Renders nothing when closed.
@@ -43,7 +43,7 @@ export function Modal({
 
   return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-end justify-center sm:items-center"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
       role="dialog"
       aria-modal="true"
     >
@@ -51,7 +51,7 @@ export function Modal({
         className="animate-in fade-in absolute inset-0 bg-black/40 backdrop-blur-sm"
         onClick={onClose}
       />
-      <div className="border-border bg-surface-1 animate-in slide-in-from-bottom-4 sm:zoom-in-95 relative z-10 max-h-[85vh] w-full overflow-y-auto rounded-t-3xl border p-5 shadow-xl sm:max-w-lg sm:rounded-3xl">
+      <div className="border-border bg-surface-1 animate-in fade-in zoom-in-95 relative z-10 max-h-[85vh] w-full max-w-md overflow-y-auto rounded-3xl border p-5 shadow-2xl">
         <header className="mb-3 flex items-start justify-between gap-3">
           <div className="min-w-0 flex-1">{title}</div>
           <button

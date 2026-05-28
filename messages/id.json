@@ -575,16 +575,6 @@
     "minorPersonality": "Minor Personality",
     "minorExplainer": "Minor Numbers dihitung dari nama panggilan / call-by name (yang biasanya dipakai sehari-hari) — bukan nama akta. Mereka mencerminkan diri sosial: bagaimana energimu muncul saat publik memanggil kamu dengan nama itu. Tiga komponen: Minor Expression (bakat & cara muncul), Minor Soul Urge (motivasi yang dibawa ke ranah publik, dari vokal), Minor Personality (kesan pertama yang ditangkap, dari konsonan). Profil inti dari nama akta tetap fondasi yang lebih dalam — Minor adalah lapisan day-to-day di atasnya. Tap tiap kartu untuk lihat arti angkanya.",
     "bridgeExplainer": "Bridge Number (Decoz tradition) ngeliat selisih antara dua angka inti — seberapa mulus dua sisi diri kamu integrasi. Ada dua bridge utama: (1) Life Path × Expression — apakah bakat alami selaras sama misi hidup; (2) Soul Urge × Personality — apakah inner self ke-cerminan di tampilan luar. Bridge kecil (0-2) = ngalir, hampir tanpa friction. Bridge moderat (3-5) = perlu sedikit kompromi rutin. Bridge besar (6-8) = dua sisi tarik-menarik kuat — integrasi butuh kerja sadar, tapi pertumbuhan paling dalam justru lahir di sini. Tap kartu untuk arti tiap angka bridge.",
-    "relationship": {
-      "PARTNER": "Pasangan",
-      "PARENT": "Orang tua",
-      "CHILD": "Anak",
-      "SIBLING": "Saudara (kakak/adik)",
-      "FAMILY": "Keluarga",
-      "FRIEND": "Teman",
-      "COLLEAGUE": "Rekan kerja",
-      "OTHER": "Lainnya"
-    },
     "curhatAbout": "Curhat soal {name}"
   },
   "relationshipProfile": {
