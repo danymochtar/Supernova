@@ -213,7 +213,9 @@
     "errorInvalidName": "名字不能为空，且必须包含字母。",
     "errorInvalidDob": "出生日期无效。",
     "errorFutureDob": "出生日期不能是未来的日期。",
-    "errorInvalidTimezone": "时区无法识别。"
+    "errorInvalidTimezone": "时区无法识别。",
+    "languageLabel": "主要语言",
+    "languageHint": "用于解读、问候和 AI 对话的默认语言。之后可在设置中更改。"
   },
   "editProfile": {
     "title": "修改档案",

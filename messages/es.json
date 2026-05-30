@@ -213,7 +213,9 @@
     "errorInvalidName": "El nombre no puede estar vacío y debe contener letras.",
     "errorInvalidDob": "Fecha de nacimiento no válida.",
     "errorFutureDob": "La fecha de nacimiento no puede estar en el futuro.",
-    "errorInvalidTimezone": "Zona horaria no reconocida."
+    "errorInvalidTimezone": "Zona horaria no reconocida.",
+    "languageLabel": "Idioma principal",
+    "languageHint": "Idioma predeterminado para lecturas, saludos y chat con la IA. Puedes cambiarlo luego en Ajustes."
   },
   "editProfile": {
     "title": "Editar perfil",

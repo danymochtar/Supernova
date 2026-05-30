@@ -265,7 +265,9 @@
     "errorInvalidName": "Nama tidak boleh kosong dan harus mengandung huruf.",
     "errorInvalidDob": "Tanggal lahir tidak valid.",
     "errorFutureDob": "Tanggal lahir tidak boleh di masa depan.",
-    "errorInvalidTimezone": "Zona waktu tidak dikenali."
+    "errorInvalidTimezone": "Zona waktu tidak dikenali.",
+    "languageLabel": "Bahasa utama",
+    "languageHint": "Bahasa default buat bacaan, sapaan, dan obrolan AI. Bisa diganti nanti dari Pengaturan."
   },
   "editProfile": {
     "title": "Ubah profil",

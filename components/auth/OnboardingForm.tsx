@@ -2,10 +2,27 @@
 
 import { useState, useTransition } from 'react';
 import { useTranslations } from 'next-intl';
+import type { Locale } from '@/lib/i18n/config';
 import type { OnboardingActionResult } from '@/app/[locale]/welcome/actions';
+
+/**
+ * Native names for the 8 supported locales — shown in the language picker so
+ * users see "Bahasa Indonesia" / "中文" rather than ISO codes.
+ */
+const LANGUAGE_OPTIONS: { value: Locale; label: string }[] = [
+  { value: 'id', label: 'Bahasa Indonesia' },
+  { value: 'en', label: 'English' },
+  { value: 'ms', label: 'Bahasa Melayu' },
+  { value: 'zh', label: '中文' },
+  { value: 'ja', label: '日本語' },
+  { value: 'ko', label: '한국어' },
+  { value: 'es', label: 'Español' },
+  { value: 'ar', label: 'العربية' },
+];
 
 interface Props {
   defaultTimezone: string;
+  defaultLocale: Locale;
   timezones: { value: string; label: string }[];
   action: (formData: FormData) => Promise<OnboardingActionResult>;
 }
@@ -20,7 +37,7 @@ const ERROR_KEY: Record<Exclude<OnboardingActionResult, { ok: true }>['error'], 
   generic: 'errorGeneric',
 };
 
-export function OnboardingForm({ defaultTimezone, timezones, action }: Props) {
+export function OnboardingForm({ defaultTimezone, defaultLocale, timezones, action }: Props) {
   const t = useTranslations('welcome');
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
@@ -150,7 +167,24 @@ export function OnboardingForm({ defaultTimezone, timezones, action }: Props) {
         </select>
       </div>
 
-      <input type="hidden" name="locale" value="id" />
+      <div className="space-y-2">
+        <label htmlFor="locale" className="text-sm font-medium">
+          {t('languageLabel')}
+        </label>
+        <p className="text-muted-foreground text-xs">{t('languageHint')}</p>
+        <select
+          id="locale"
+          name="locale"
+          defaultValue={defaultLocale}
+          className="border-border focus:ring-primary w-full rounded-lg border bg-transparent px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
+        >
+          {LANGUAGE_OPTIONS.map((opt) => (
+            <option key={opt.value} value={opt.value}>
+              {opt.label}
+            </option>
+          ))}
+        </select>
+      </div>
 
       <button
         type="submit"

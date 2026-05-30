@@ -213,7 +213,9 @@
     "errorInvalidName": "Name can't be empty and must contain letters.",
     "errorInvalidDob": "Invalid date of birth.",
     "errorFutureDob": "Date of birth can't be in the future.",
-    "errorInvalidTimezone": "Unknown time zone."
+    "errorInvalidTimezone": "Unknown time zone.",
+    "languageLabel": "Primary language",
+    "languageHint": "Default language for readings, greetings, and AI chat. You can change it later in Settings."
   },
   "editProfile": {
     "title": "Edit profile",

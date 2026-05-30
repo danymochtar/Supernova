@@ -213,7 +213,9 @@
     "errorInvalidName": "이름은 비울 수 없고 글자가 포함되어야 해요.",
     "errorInvalidDob": "생년월일이 유효하지 않아요.",
     "errorFutureDob": "생년월일은 미래일 수 없어요.",
-    "errorInvalidTimezone": "인식할 수 없는 시간대예요."
+    "errorInvalidTimezone": "인식할 수 없는 시간대예요.",
+    "languageLabel": "기본 언어",
+    "languageHint": "리딩, 인사, AI 채팅에 사용할 기본 언어. 나중에 설정에서 바꿀 수 있어요."
   },
   "editProfile": {
     "title": "프로필 수정",

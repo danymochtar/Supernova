@@ -213,7 +213,9 @@
     "errorInvalidName": "Nama tak boleh kosong dan mesti ada huruf.",
     "errorInvalidDob": "Tarikh lahir tak sah.",
     "errorFutureDob": "Tarikh lahir tak boleh di masa depan.",
-    "errorInvalidTimezone": "Zon waktu tak dikenali."
+    "errorInvalidTimezone": "Zon waktu tak dikenali.",
+    "languageLabel": "Bahasa utama",
+    "languageHint": "Bahasa lalai untuk bacaan, sapaan, dan sembang AI. Boleh tukar nanti dalam Tetapan."
   },
   "editProfile": {
     "title": "Ubah profil",

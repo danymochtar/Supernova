@@ -213,7 +213,9 @@
     "errorInvalidName": "名前は空欄にできません。文字を含めてください。",
     "errorInvalidDob": "生年月日が無効です。",
     "errorFutureDob": "生年月日は未来の日付にできません。",
-    "errorInvalidTimezone": "タイムゾーンが認識できません。"
+    "errorInvalidTimezone": "タイムゾーンが認識できません。",
+    "languageLabel": "メイン言語",
+    "languageHint": "リーディング・あいさつ・AIチャットの既定言語。あとから設定で変更できます。"
   },
   "editProfile": {
     "title": "プロフィールを編集",
