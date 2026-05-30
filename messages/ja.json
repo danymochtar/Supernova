@@ -87,13 +87,7 @@
     "languageTitle": "言語",
     "languageHint": "インターフェースとAI解説で使う言語です。",
     "autoJournalTitle": "Curhatから自動ジャーナル作成",
-    "autoJournalHint": "これまでのCurhatをトピックごとに自動でまとめて、ジャーナルのエントリーにします。ジャーナルページから手動でも生成できますよ。",
-    "chatModeTitle": "チャットモード",
-    "chatModeHint": "Supernovaの応答スタイル：聞くだけ、深掘り、実践的アドバイス、リフレクティブな視点。チャット中いつでも直接変更できます。",
-    "chatMode_listen": "聞く",
-    "chatMode_probe": "深掘り",
-    "chatMode_practical": "実践",
-    "chatMode_reflective": "内省"
+    "autoJournalHint": "これまでのCurhatをトピックごとに自動でまとめて、ジャーナルのエントリーにします。ジャーナルページから手動でも生成できますよ。"
   },
   "layoutEditor": {
     "title": "ホームをカスタマイズ",

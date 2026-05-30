@@ -87,13 +87,7 @@
     "languageTitle": "Idioma",
     "languageHint": "Idioma para la interfaz y las lecturas de IA.",
     "autoJournalTitle": "Auto-journaling desde tus desahogos",
-    "autoJournalHint": "Tus desahogos de días pasados se agrupan automáticamente por tema en entradas de diario. También puedes generarlas manualmente desde la página de Diario.",
-    "chatModeTitle": "Modo de chat",
-    "chatModeHint": "Cómo responde Supernova: solo escuchar, indagar más, consejo práctico o perspectiva reflexiva. Puedes pedirlo distinto en cualquier momento.",
-    "chatMode_listen": "Escuchar",
-    "chatMode_probe": "Indagar",
-    "chatMode_practical": "Práctico",
-    "chatMode_reflective": "Reflexivo"
+    "autoJournalHint": "Tus desahogos de días pasados se agrupan automáticamente por tema en entradas de diario. También puedes generarlas manualmente desde la página de Diario."
   },
   "layoutEditor": {
     "title": "Organizar inicio",

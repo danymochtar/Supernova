@@ -242,7 +242,7 @@ export async function POST(req: Request) {
           system: [
             {
               type: 'text',
-              text: chatSystemPrompt(locale, profile.tone, profile.chatMode),
+              text: chatSystemPrompt(locale, profile.tone),
               cache_control: { type: 'ephemeral' },
             } as Anthropic.TextBlockParam,
             {

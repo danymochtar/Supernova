@@ -4,13 +4,12 @@ import { useState, useTransition } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
-import { AlertTriangle, Bell, Brain, Download, Languages, MessageCircle, NotebookPen, Palette, Sparkles, Trash2 } from 'lucide-react';
+import { AlertTriangle, Bell, Brain, Download, Languages, NotebookPen, Palette, Sparkles, Trash2 } from 'lucide-react';
 import type { Locale } from '@/lib/i18n/config';
 import { LOCALES, LOCALE_CODES } from '@/lib/i18n/locales';
 import {
   setTheme,
   setTone,
-  setChatMode,
   setShowKarmicDebt,
   setAutoJournal,
   setPreferredModel,
@@ -157,32 +156,6 @@ export function ToneRow({ initial }: { initial: 'warm' | 'direct' | 'playful' })
         value={value}
         options={['warm', 'direct', 'playful'] as const}
         labelFor={(v) => t(`tone_${v}`)}
-        onChange={pick}
-      />
-    </Row>
-  );
-}
-
-type ChatModeValue = 'listen' | 'probe' | 'practical' | 'reflective';
-
-export function ChatModeRow({ initial }: { initial: ChatModeValue }) {
-  const t = useTranslations('me');
-  const [value, setValue] = useState<ChatModeValue>(initial);
-  const [, startTransition] = useTransition();
-
-  function pick(v: ChatModeValue) {
-    setValue(v);
-    startTransition(() => {
-      setChatMode(v);
-    });
-  }
-
-  return (
-    <Row icon={MessageCircle} title={t('chatModeTitle')} hint={t('chatModeHint')}>
-      <Segmented<ChatModeValue>
-        value={value}
-        options={['listen', 'probe', 'practical', 'reflective'] as const}
-        labelFor={(v) => t(`chatMode_${v}`)}
         onChange={pick}
       />
     </Row>

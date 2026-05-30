@@ -45,7 +45,6 @@ export async function savePersonalNotes(formData: FormData): Promise<NotesAction
 
 const themeEnum = z.enum(['light', 'dark', 'auto']);
 const toneEnum = z.enum(['warm', 'direct', 'playful']);
-const chatModeEnum = z.enum(['listen', 'probe', 'practical', 'reflective']);
 const modelEnum = z.enum(['default', 'claude-sonnet-4-6', 'claude-opus-4-7', 'claude-haiku-4-5']);
 
 const localeEnum = z.enum(LOCALE_CODES as unknown as [string, ...string[]]);
@@ -77,16 +76,6 @@ export async function setTone(tone: 'warm' | 'direct' | 'playful'): Promise<void
   const parsed = toneEnum.safeParse(tone);
   if (!parsed.success) return;
   await updatePreferences(session.user.id, { tone: parsed.data });
-}
-
-export async function setChatMode(
-  mode: 'listen' | 'probe' | 'practical' | 'reflective',
-): Promise<void> {
-  const session = await getSession();
-  if (!session) return;
-  const parsed = chatModeEnum.safeParse(mode);
-  if (!parsed.success) return;
-  await updatePreferences(session.user.id, { chatMode: parsed.data });
 }
 
 export async function setShowKarmicDebt(show: boolean): Promise<void> {

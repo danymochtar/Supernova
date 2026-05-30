@@ -87,13 +87,7 @@
     "languageTitle": "Bahasa",
     "languageHint": "Bahasa untuk antara muka dan bacaan AI.",
     "autoJournalTitle": "Auto-journaling daripada curhat",
-    "autoJournalHint": "Curhat dari hari-hari lepas auto dikelompokkan ikut topik jadi entri jurnal. Boleh generate manual juga dari halaman Jurnal.",
-    "chatModeTitle": "Mod sembang",
-    "chatModeHint": "Cara Supernova balas: dengar saja, gali lebih dalam, beri nasihat praktikal, atau perspektif reflektif. Boleh minta lain dalam sembang.",
-    "chatMode_listen": "Dengar",
-    "chatMode_probe": "Gali",
-    "chatMode_practical": "Praktikal",
-    "chatMode_reflective": "Reflektif"
+    "autoJournalHint": "Curhat dari hari-hari lepas auto dikelompokkan ikut topik jadi entri jurnal. Boleh generate manual juga dari halaman Jurnal."
   },
   "layoutEditor": {
     "title": "Susun laman utama",

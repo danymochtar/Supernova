@@ -1,5 +1,5 @@
 import type { Locale } from '@/lib/i18n/config';
-import type { ChatMode, Tone } from '@/lib/db/repositories/profile';
+import type { Tone } from '@/lib/db/repositories/profile';
 import { VOICE_EN } from './_voice';
 
 const TONE_INSTRUCTIONS: Record<Tone, string> = {
@@ -8,28 +8,7 @@ const TONE_INSTRUCTIONS: Record<Tone, string> = {
   playful: 'Playful, lightly humorous, conversational like a witty friend. Don\'t force jokes; let them surface naturally. Stay grounded — playfulness sits on top of substance.',
 };
 
-/**
- * How deep / how much advice the user wants. Grounded in emotional-support
- * research: most people want validation first, and unsolicited advice
- * backfires. The user picks the default mode; if they explicitly ask for
- * advice mid-chat ("kasih masukan dong"), give it regardless of mode.
- */
-const CHAT_MODE_INSTRUCTIONS: Record<ChatMode, string> = {
-  listen:
-    'MODE — LISTEN: The user wants to be heard, not fixed. Validate the feeling, name it back accurately, ask gentle clarifying questions ("kerasa gimana?"), reflect what you heard. DO NOT give advice or action steps unless they explicitly ask ("kasih saran dong", "menurut lo gw harus apa"). If they vent, sit with it. Numerology stays subtle — a vibe, not a prescription.',
-  probe:
-    'MODE — PROBE: The user wants you to help them think out loud. Validate first, then ask one sharper question that opens a layer they haven\'t named yet ("apa yang paling bikin lo kepikiran soal itu?", "kalau X tiba-tiba beres, apa yang bakal beda buat lo?"). Stay curious, not interrogative. Still no advice unless asked — your job is to widen, not solve.',
-  practical:
-    'MODE — PRACTICAL: The user wants validation AND a usable next step. Lead with empathy (one or two lines), then offer ONE concrete, actionable thing they can try in the next 24-48h, anchored in their situation + numerology. Format: feel → tiny experiment. Don\'t pile on options; one clear move beats five vague ones.',
-  reflective:
-    'MODE — REFLECTIVE: The user wants validation AND big-picture perspective. Lead with empathy, then offer a framing/insight — what pattern this fits, what the numerology vibe says about the larger arc, what a wiser self might notice. Not action steps; meaning-making. Keep it grounded; one insight, not a lecture.',
-};
-
-export function chatSystemPrompt(
-  interfaceLocale: Locale = 'id',
-  tone: Tone = 'warm',
-  chatMode: ChatMode = 'listen',
-): string {
+export function chatSystemPrompt(interfaceLocale: Locale = 'id', tone: Tone = 'warm'): string {
   const langName = interfaceLocale === 'id' ? 'Indonesian (kamu, casual)' : 'English (casual)';
   const fallbackHint =
     interfaceLocale === 'id'
@@ -171,10 +150,6 @@ The <profile> block has \`today (timezone): YYYY-MM-DD\` and each user message i
 ═══════════════ STYLE ═══════════════
 
 TONE: ${TONE_INSTRUCTIONS[tone]}
-
-${CHAT_MODE_INSTRUCTIONS[chatMode]}
-
-If the user explicitly asks for advice ("kasih saran", "menurut lo gw harus apa", "gimana caranya"), give it regardless of mode — their explicit ask overrides the default.
 
 LANGUAGE:
 - Default reply language: ${langName}.

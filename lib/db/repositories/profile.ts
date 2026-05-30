@@ -16,14 +16,6 @@ export interface ProfileInput {
 
 export type Theme = 'light' | 'dark' | 'auto';
 export type Tone = 'warm' | 'direct' | 'playful';
-/**
- * How Supernova engages in chat:
- * - listen: pure validation, no advice unless explicitly asked (default; research-backed).
- * - probe: listen + ask deeper questions to help articulate, still no advice.
- * - practical: listen first, then concrete/actionable advice.
- * - reflective: listen + offer big-picture / theoretical perspective.
- */
-export type ChatMode = 'listen' | 'probe' | 'practical' | 'reflective';
 
 export interface ProfileView {
   id: string;
@@ -40,7 +32,6 @@ export interface ProfileView {
   personalNotes: string | null;
   theme: Theme;
   tone: Tone;
-  chatMode: ChatMode;
   showKarmicDebt: boolean;
   preferredModel: string | null;
   autoJournal: boolean;
@@ -118,10 +109,6 @@ function toView(row: ProfileRow): ProfileView {
     row.theme === 'light' || row.theme === 'dark' ? row.theme : 'auto';
   const tone: Tone =
     row.tone === 'direct' || row.tone === 'playful' ? row.tone : 'warm';
-  const chatMode: ChatMode =
-    row.chatMode === 'probe' || row.chatMode === 'practical' || row.chatMode === 'reflective'
-      ? row.chatMode
-      : 'listen';
   return {
     id: row.id,
     userId: row.userId,
@@ -136,7 +123,6 @@ function toView(row: ProfileRow): ProfileView {
     personalNotes: row.personalNotes,
     theme,
     tone,
-    chatMode,
     showKarmicDebt: row.showKarmicDebt,
     preferredModel: row.preferredModel,
     autoJournal: row.autoJournal,
@@ -150,7 +136,6 @@ function toView(row: ProfileRow): ProfileView {
 export interface PreferenceUpdate {
   theme?: Theme;
   tone?: Tone;
-  chatMode?: ChatMode;
   locale?: Locale;
   showKarmicDebt?: boolean;
   preferredModel?: string | null;
