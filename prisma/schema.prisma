@@ -148,6 +148,10 @@ model Profile {
   theme           String   @default("auto") // "light" | "dark" | "auto"
   // AI tone — affects chat / daily reading / About Me voice.
   tone            String   @default("warm") // "warm" | "direct" | "playful"
+  // Chat mode — how Supernova engages: pure listening vs probing vs advising.
+  // Research-backed default is "listen" (validate first); users who want
+  // deeper digging or advice opt in.
+  chatMode        String   @default("listen") // "listen" | "probe" | "practical" | "reflective"
   // UI preference: hide karmic-debt badges if the user finds them anxious.
   showKarmicDebt  Boolean  @default(true)
   // Optional model override for chat/daily/aboutMe (power-user setting).

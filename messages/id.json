@@ -113,7 +113,13 @@
     "groupNavigation": "Navigasi",
     "groupData": "Data",
     "groupAccount": "Akun",
-    "appVersion": "Supernova MVP"
+    "appVersion": "Supernova MVP",
+    "chatModeTitle": "Mode curhat",
+    "chatModeHint": "Gimana Supernova ngerespon: cuma dengerin, ngajak ngegali, kasih saran praktis, atau perspektif reflektif. Bilang langsung di chat kalau pengen lain dari mode default.",
+    "chatMode_listen": "Dengerin",
+    "chatMode_probe": "Gali",
+    "chatMode_practical": "Praktis",
+    "chatMode_reflective": "Reflektif"
   },
   "layoutEditor": {
     "title": "Susun beranda",

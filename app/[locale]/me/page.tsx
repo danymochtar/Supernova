@@ -28,6 +28,7 @@ import {
   LanguageRow,
   ModelRow,
   ReminderRow,
+  ChatModeRow,
   ThemeRow,
   ToneRow,
 } from '@/components/auth/PreferencesPanel';
@@ -154,6 +155,7 @@ export default async function MePage({ params }: { params: { locale: string } })
       {/* AI */}
       <SettingsGroup title={t('groupAi')}>
         <ToneRow initial={profile.tone} />
+        <ChatModeRow initial={profile.chatMode} />
         <ModelRow initial={profile.preferredModel} />
         <KarmicRow initial={profile.showKarmicDebt} />
         <AutoJournalRow initial={profile.autoJournal} />

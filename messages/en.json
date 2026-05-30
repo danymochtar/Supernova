@@ -87,7 +87,13 @@
     "languageTitle": "Language",
     "languageHint": "Language for the interface and AI readings.",
     "autoJournalTitle": "Auto-journaling from your chats",
-    "autoJournalHint": "Your past chats get auto-grouped by topic into journal entries. You can also generate them manually from the Journal page."
+    "autoJournalHint": "Your past chats get auto-grouped by topic into journal entries. You can also generate them manually from the Journal page.",
+    "chatModeTitle": "Chat mode",
+    "chatModeHint": "How Supernova responds: just listen, dig deeper, give practical advice, or reflective perspective. Ask directly in chat anytime to override.",
+    "chatMode_listen": "Listen",
+    "chatMode_probe": "Probe",
+    "chatMode_practical": "Practical",
+    "chatMode_reflective": "Reflective"
   },
   "layoutEditor": {
     "title": "Customize home",

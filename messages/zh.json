@@ -87,7 +87,13 @@
     "languageTitle": "语言",
     "languageHint": "界面和 AI 解读使用的语言。",
     "autoJournalTitle": "从倾诉自动生成日记",
-    "autoJournalHint": "把过去几天的倾诉自动按主题整理成日记条目。也可以在日记页面手动生成。"
+    "autoJournalHint": "把过去几天的倾诉自动按主题整理成日记条目。也可以在日记页面手动生成。",
+    "chatModeTitle": "聊天模式",
+    "chatModeHint": "Supernova 回应方式：仅倾听、深入追问、给实用建议、或反思视角。聊天时可随时直接要求改变。",
+    "chatMode_listen": "倾听",
+    "chatMode_probe": "追问",
+    "chatMode_practical": "实用",
+    "chatMode_reflective": "反思"
   },
   "layoutEditor": {
     "title": "整理首页",
