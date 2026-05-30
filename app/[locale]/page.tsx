@@ -11,8 +11,10 @@ import {
   User,
 } from 'lucide-react';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import type { LocaleCode } from '@/lib/i18n/locales';
 import { notFound } from 'next/navigation';
 import { Starfield } from '@/components/layout/Starfield';
+import { LocaleSwitcher } from '@/components/layout/LocaleSwitcher';
 
 // Supernova as a persona — six life aspects she helps with. Order is
 // intentional: life (broad) → journey (time) → career (output) →
@@ -39,6 +41,12 @@ export default function HomePage({ params }: { params: { locale: string } }) {
         style={{ paddingTop: 'calc(env(safe-area-inset-top) + 4rem)' }}
       >
         <Starfield className="text-foreground/30" />
+        <div
+          className="absolute right-4 z-20 sm:right-6"
+          style={{ top: 'calc(env(safe-area-inset-top) + 1rem)' }}
+        >
+          <LocaleSwitcher currentLocale={locale as LocaleCode} />
+        </div>
         <div className="relative flex flex-col items-center gap-7 text-center">
           <Image
             src="/icons/icon.svg"
