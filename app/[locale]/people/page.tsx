@@ -6,12 +6,31 @@ import type { Relationship } from '@prisma/client';
 import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { listPeople, type PersonView } from '@/lib/db/repositories/person';
-import { ageAt, contextFromInstant } from '@/lib/numerology';
+import { ageAt, buildCoreProfile, contextFromInstant } from '@/lib/numerology';
+import { compatibilityScore } from '@/lib/compatibility/score';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { displayName } from '@/lib/profile/displayName';
 import { deletePersonFormAction } from './actions';
 
 const PEOPLE_LIMIT = 999;
+
+/**
+ * Soft color tint per band — keeps the score chip scannable at a glance
+ * (warm = high, neutral = mid, cool/muted = low) without screaming.
+ */
+function bandTone(band: 'rare' | 'strong' | 'good' | 'fair' | 'low'): string {
+  switch (band) {
+    case 'rare':
+    case 'strong':
+      return 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-200';
+    case 'good':
+      return 'bg-primary/15 text-primary';
+    case 'fair':
+      return 'bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-200';
+    case 'low':
+      return 'bg-muted text-muted-foreground';
+  }
+}
 
 export default async function PeoplePage({
   params,
@@ -33,6 +52,9 @@ export default async function PeoplePage({
   const atLimit = people.length >= PEOPLE_LIMIT;
   const editMode = searchParams.edit === '1';
   const ctx = contextFromInstant(new Date(), profile.timezone);
+  // Build the user's core once and reuse for every row's compatibility score
+  // so the People list can show a quick "how do we fit" chip per person.
+  const me = buildCoreProfile(profile.fullName, profile.dob);
 
   // Group by relationship type. listPeople already returns rows sorted by
   // RELATIONSHIP_PRIORITY (closest first), so a single sequential pass
@@ -122,6 +144,8 @@ export default async function PeoplePage({
                   // differs from the display name — keeps identification
                   // in reach without making the row read formal.
                   const hasFullName = p.fullName.trim() !== primary;
+                  const them = buildCoreProfile(p.fullName, p.dob);
+                  const compat = compatibilityScore(me, them, p.relationship);
                   return (
                     <div key={p.id} className="flex items-stretch hover:bg-muted/30 transition-colors">
                       <Link
@@ -141,6 +165,12 @@ export default async function PeoplePage({
                             {hasFullName ? ` · ${p.fullName}` : ''}
                           </p>
                         </div>
+                        <span
+                          aria-label={`${compat.overall}/100`}
+                          className={`shrink-0 rounded-full px-2.5 py-0.5 font-mono text-xs font-semibold tabular-nums ${bandTone(compat.band)}`}
+                        >
+                          {compat.overall}
+                        </span>
                         {!editMode ? (
                           <ChevronRight className="text-muted-foreground h-4 w-4 shrink-0" aria-hidden />
                         ) : null}
