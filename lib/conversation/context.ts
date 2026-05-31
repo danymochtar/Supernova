@@ -32,6 +32,7 @@ const KEYWORDS = {
   reading: [
     'bacaan', 'reading', 'hari ini', 'today',
     'tema hari', 'fokus hari',
+    'energi', 'energy', 'vibe', 'momentum', 'timing',
   ],
   patterns: [
     'pola', 'pattern', 'biasanya', 'usually', 'sering', 'tend',
