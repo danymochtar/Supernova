@@ -81,7 +81,10 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} dir={dir} className={htmlClass} suppressHydrationWarning>
-      <body className="bg-background text-foreground min-h-screen antialiased">
+      {/* min-h-screen as fallback + min-h-dvh so the body tracks the
+        * dynamic viewport on iOS Safari — keeps `position: fixed`
+        * bottom nav stable when the URL bar collapses on scroll. */}
+      <body className="bg-background text-foreground min-h-screen min-h-dvh antialiased">
         <ThemeProvider defaultTheme={initialTheme}>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <div className="pb-[calc(theme(spacing.20)+env(safe-area-inset-bottom))]">
