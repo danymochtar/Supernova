@@ -7,6 +7,7 @@ import { bridges, buildCoreProfile, minorNumbers } from '@/lib/numerology';
 import { meaningFor } from '@/lib/numerology/meanings';
 import { displayName } from '@/lib/profile/displayName';
 import { AboutMeAsync, AboutMeSkeleton } from '@/components/numerology/AboutMeAsync';
+import { AboutFunFactAsync, AboutFunFactSkeleton } from '@/components/numerology/AboutFunFactAsync';
 import { KarmicLessonsList } from '@/components/numerology/KarmicLessonsList';
 import { Widget } from '@/components/layout/Widget';
 import { Explainer } from '@/components/layout/Explainer';
@@ -78,6 +79,9 @@ export async function TentangView({
           <span>{tk('bioBorn')}</span>
           <span className="font-medium text-neutral-800 dark:text-neutral-200">{bornLabel}</span>
         </div>
+        <Suspense fallback={<AboutFunFactSkeleton />}>
+          <AboutFunFactAsync userId={profile.userId} locale={locale} />
+        </Suspense>
       </section>
 
       <Suspense
