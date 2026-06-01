@@ -256,6 +256,44 @@ export interface OpenActionItem {
  * query simple, and lets the dashboard render the same shape regardless
  * of how Postgres indexes the JSON.
  */
+/**
+ * Heuristic: many AI-generated action items are scoped to a specific moment
+ * ("malam ini", "tonight", "Senin"). After that moment passes they're not
+ * follow-ups anymore — they're stale clutter. Returns true if the item's
+ * title contains a time marker AND the item is older than the marker's
+ * useful window.
+ *
+ * Conservative on purpose: durable intentions ("Definisiin buat diri sendiri
+ * effort yang gw anggap cukup") don't trip any of these patterns and stay
+ * visible until the user explicitly Done/Skip-s them.
+ */
+function isTimeBoundExpired(title: string, createdAt: Date, now: Date): boolean {
+  const ageDays = (now.getTime() - createdAt.getTime()) / 86_400_000;
+  const t = title.toLowerCase();
+  // "Right now / tonight / today" — give it 1.5 days of grace and then expire.
+  if (
+    /\b(malam ini|sore ini|pagi ini|siang ini|hari ini|sekarang|tadi|barusan|tonight|today|right now|this morning|this afternoon|this evening|earlier)\b/.test(
+      t,
+    )
+  ) {
+    return ageDays > 1.5;
+  }
+  // "Tomorrow" / "besok" — 2.5 day grace.
+  if (/\b(besok pagi|besok|esok|tomorrow)\b/.test(t)) {
+    return ageDays > 2.5;
+  }
+  // Weekday-anchored ("Senin sebelum tidur", "by Friday") or "this week"
+  // — give it ~7 days; after that the relevant weekday has passed.
+  if (
+    /\b(minggu ini|this week|senin|selasa|rabu|kamis|jumat|jum'at|sabtu|monday|tuesday|wednesday|thursday|friday|saturday|sunday)\b/.test(
+      t,
+    )
+  ) {
+    return ageDays > 7;
+  }
+  return false;
+}
+
 export async function listOpenActionItems(
   userId: string,
   sinceDays = 14,
@@ -276,11 +314,21 @@ export async function listOpenActionItems(
     },
   });
 
+  const now = new Date();
+  // Don't let a single chatty journal entry flood the widget — cap so the
+  // user sees a mix of contexts, not five items from the same conversation.
+  const MAX_PER_ENTRY = 2;
+  const perEntryCount = new Map<string, number>();
+
   const out: OpenActionItem[] = [];
   for (const row of rows) {
     const items = decodeActionItems(row.actionItems);
     for (const it of items) {
       if (it.completed || it.skipped) continue;
+      if (isTimeBoundExpired(it.title, new Date(it.createdAt), now)) continue;
+      const seen = perEntryCount.get(row.id) ?? 0;
+      if (seen >= MAX_PER_ENTRY) continue;
+      perEntryCount.set(row.id, seen + 1);
       out.push({
         id: it.id,
         title: it.title,
