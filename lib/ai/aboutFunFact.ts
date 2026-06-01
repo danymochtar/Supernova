@@ -6,8 +6,10 @@ import { listJournal } from '@/lib/db/repositories/journal';
 import { getCachedJson, setCachedJson } from '@/lib/db/repositories/numerologyCache';
 import { logUsage } from '@/lib/db/repositories/usage';
 
-// v1: first cut — 18-word pattern observation over last 20 journal entries.
-const CACHE_KEY = 'aboutFunFact-v1';
+// v1: pattern-lately framing — "belakangan kamu sering X".
+// v2: trait framing — switch from diary report ("kamu sering nemu jawaban...")
+// to who-you-are ("kamu tipe orang yang..."). Old v1 entries regenerate.
+const CACHE_KEY = 'aboutFunFact-v2';
 const TTL_DAYS = 5;
 const MIN_ENTRIES = 3;
 const SAMPLE_LIMIT = 20;
