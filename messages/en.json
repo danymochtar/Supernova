@@ -818,7 +818,9 @@
     "done": "Done",
     "skip": "Skip",
     "replyPlaceholder": "Quick reply…",
-    "replySend": "Send"
+    "replySend": "Send",
+    "popupTitle": "What's next for this?",
+    "chatItOut": "Talk it through"
   },
   "digest": {
     "title": "Last {days}-day pattern",

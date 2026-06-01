@@ -818,7 +818,9 @@
     "done": "完成",
     "skip": "跳过",
     "replyPlaceholder": "简短回复…",
-    "replySend": "发送"
+    "replySend": "发送",
+    "popupTitle": "接下来要怎么做？",
+    "chatItOut": "先聊一下"
   },
   "digest": {
     "title": "最近 {days} 天的模式",

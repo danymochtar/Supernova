@@ -143,7 +143,9 @@
     "done": "Selesai",
     "skip": "Lewati",
     "replyPlaceholder": "Balas singkat…",
-    "replySend": "Kirim"
+    "replySend": "Kirim",
+    "popupTitle": "Mau diapain lanjutannya?",
+    "chatItOut": "Curhatin dulu"
   },
   "digest": {
     "title": "Pola {days} hari terakhir",

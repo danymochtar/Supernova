@@ -818,7 +818,9 @@
     "done": "تم",
     "skip": "تخطٍّ",
     "replyPlaceholder": "رد قصير…",
-    "replySend": "إرسال"
+    "replySend": "إرسال",
+    "popupTitle": "ما الخطوة التالية لهذا؟",
+    "chatItOut": "تحدث عنه أولاً"
   },
   "digest": {
     "title": "نمط آخر {days} يوم",

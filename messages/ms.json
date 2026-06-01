@@ -818,7 +818,9 @@
     "done": "Selesai",
     "skip": "Langkau",
     "replyPlaceholder": "Balas ringkas…",
-    "replySend": "Hantar"
+    "replySend": "Hantar",
+    "popupTitle": "Mahu buat apa seterusnya?",
+    "chatItOut": "Bualkan dulu"
   },
   "digest": {
     "title": "Pola {days} hari terakhir",

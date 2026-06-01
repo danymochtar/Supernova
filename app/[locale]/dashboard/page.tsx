@@ -236,6 +236,7 @@ export default async function DashboardPage({
         return (
           <FollowUpWidget
             key={id}
+            locale={locale}
             items={followUpItems}
             respondAction={respondActionItemAction}
           />

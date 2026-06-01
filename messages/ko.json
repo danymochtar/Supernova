@@ -818,7 +818,9 @@
     "done": "완료",
     "skip": "건너뛰기",
     "replyPlaceholder": "짧은 답장…",
-    "replySend": "보내기"
+    "replySend": "보내기",
+    "popupTitle": "다음은 어떻게 할까요?",
+    "chatItOut": "먼저 얘기해 보기"
   },
   "digest": {
     "title": "최근 {days}일 패턴",

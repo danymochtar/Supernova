@@ -818,7 +818,9 @@
     "done": "Hecho",
     "skip": "Omitir",
     "replyPlaceholder": "Respuesta corta…",
-    "replySend": "Enviar"
+    "replySend": "Enviar",
+    "popupTitle": "¿Qué sigue con esto?",
+    "chatItOut": "Hablarlo antes"
   },
   "digest": {
     "title": "Patrón de los últimos {days} días",

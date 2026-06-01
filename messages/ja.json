@@ -818,7 +818,9 @@
     "done": "完了",
     "skip": "スキップ",
     "replyPlaceholder": "短い返信…",
-    "replySend": "送信"
+    "replySend": "送信",
+    "popupTitle": "このあとどうする？",
+    "chatItOut": "先に話す"
   },
   "digest": {
     "title": "過去{days}日間のパターン",
