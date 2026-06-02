@@ -1,6 +1,10 @@
 import type { Locale } from '@/lib/i18n/config';
 import idPack from '@/content/meanings/id.json';
 import enPack from '@/content/meanings/en.json';
+import loveIdPack from '@/content/meanings/love.id.json';
+import loveEnPack from '@/content/meanings/love.en.json';
+import financeIdPack from '@/content/meanings/finance.id.json';
+import financeEnPack from '@/content/meanings/finance.en.json';
 
 type Pack = Record<string, string>;
 
@@ -11,6 +15,17 @@ type Pack = Record<string, string>;
 const PACKS: Partial<Record<Locale, Pack>> = {
   id: idPack as Pack,
   en: enPack as Pack,
+};
+
+// Aspect-scoped overrides: same `{type}:{num}` key shape, but the prose is
+// framed for the love or money lens. When a key exists in the aspect pack
+// it wins over the generic pack — so Soul Urge 6 on Love reads about
+// craving warmth in a relationship, while on Money it reads about
+// craving financial security for the people you love.
+type Aspect = 'love' | 'finance';
+const ASPECT_PACKS: Record<Aspect, Partial<Record<Locale, Pack>>> = {
+  love: { id: loveIdPack as Pack, en: loveEnPack as Pack },
+  finance: { id: financeIdPack as Pack, en: financeEnPack as Pack },
 };
 
 export type MeaningType =
@@ -55,9 +70,23 @@ export function meaningFor(
   type: MeaningType,
   result: { compound: number; reduced: number; isMaster: boolean },
   locale: Locale,
+  options?: { aspect?: Aspect },
 ): string | null {
-  const pack = PACKS[locale] ?? PACKS.id!;
   const masterKey = `${type}:${result.compound}`;
+  const reducedKey = `${type}:${result.reduced}`;
+
+  // Aspect pack wins when it has an entry for this exact (type, number) pair.
+  // Falls through to the generic pack so we never blank out a card just
+  // because the aspect pack hasn't covered a master number yet.
+  if (options?.aspect) {
+    const aspectPack = ASPECT_PACKS[options.aspect][locale] ?? ASPECT_PACKS[options.aspect].id;
+    if (aspectPack) {
+      if (result.isMaster && aspectPack[masterKey]) return aspectPack[masterKey];
+      if (aspectPack[reducedKey]) return aspectPack[reducedKey];
+    }
+  }
+
+  const pack = PACKS[locale] ?? PACKS.id!;
   if (result.isMaster && pack[masterKey]) return pack[masterKey];
-  return pack[`${type}:${result.reduced}`] ?? null;
+  return pack[reducedKey] ?? null;
 }

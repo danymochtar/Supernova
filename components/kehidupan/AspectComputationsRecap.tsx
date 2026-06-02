@@ -83,7 +83,7 @@ export function AspectComputationsRecap({ locale, aspectId, core, personalYear, 
             result={c.result}
             locale={locale}
             type={c.type}
-            meaning={meaningFor(c.type, c.result, locale)}
+            meaning={meaningFor(c.type, c.result, locale, { aspect: aspectId })}
             comingSoonLabel={labels.comingSoon}
             compact
           />
