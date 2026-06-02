@@ -15,8 +15,10 @@ import { getCachedJson, setCachedJson } from '@/lib/db/repositories/numerologyCa
 // Personal-Year-dependent, so the bundle refreshes once per year. Bump
 // the version when the prompt schema changes.
 // v3: stronger un-AI voice (no em-dash, no negation framing, no English flexing).
-function cacheKey(aspectId: AspectId, year: number): string {
-  return `aspect-v4:${aspectId}:${year}`;
+// v5: cache key suffixed with the LOCALE so switching languages doesn't
+// surface a cached aspect reading in the old language.
+function cacheKey(aspectId: AspectId, year: number, locale: string): string {
+  return `aspect-v5:${aspectId}:${year}:${locale}`;
 }
 
 /** Read-only cache fetch — never generates. */
@@ -24,8 +26,9 @@ export async function getCachedAspect(
   userId: string,
   aspectId: AspectId,
   year: number,
+  locale: string,
 ): Promise<ParsedAspect | null> {
-  return getCachedJson<ParsedAspect>(userId, cacheKey(aspectId, year));
+  return getCachedJson<ParsedAspect>(userId, cacheKey(aspectId, year, locale));
 }
 
 /**
@@ -40,7 +43,7 @@ export async function getOrGenerateAspect(
   year: number,
   input: AspectInput,
 ): Promise<ParsedAspect | null> {
-  const key = cacheKey(aspectId, year);
+  const key = cacheKey(aspectId, year, input.locale);
   const cached = await getCachedJson<ParsedAspect>(userId, key);
   if (cached) return cached;
 

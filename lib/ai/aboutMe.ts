@@ -22,19 +22,26 @@ import { getCachedJson, setCachedJson } from '@/lib/db/repositories/numerologyCa
 // showing the raw cards. Old v6 blobs regenerate on next access.
 // v8: natural-voice pass — kill the "[Name] adalah sosok yang…" opener +
 // "X — bukan Y" AI tells, and lengthen the synthesis. Old v7 regenerates.
-const CACHE_KEY = 'aboutMe-v13';
+// v14: cache key now suffixed with the LOCALE (`aboutMe-v14:id` /
+// `aboutMe-v14:en` / …) so switching languages doesn't return prose in
+// the old language. Pre-v14 unsuffixed rows simply miss → regenerate.
+const CACHE_VERSION = 'aboutMe-v14';
+function cacheKey(locale: string): string {
+  return `${CACHE_VERSION}:${locale}`;
+}
 
 /**
  * Cache-first structured About Me. Profile name + DOB never change so the
- * cached row is good for the lifetime of the account. Returns `null` only
- * when generation fails on a cold cache — caller should render a graceful
- * fallback.
+ * cached row is good for the lifetime of the account (per locale). Returns
+ * `null` only when generation fails on a cold cache — caller should render
+ * a graceful fallback.
  */
 export async function getOrGenerateAboutMe(
   userId: string,
   input: AboutMeInput,
 ): Promise<ParsedAboutMe | null> {
-  const cached = await getCachedJson<ParsedAboutMe>(userId, CACHE_KEY);
+  const key = cacheKey(input.locale);
+  const cached = await getCachedJson<ParsedAboutMe>(userId, key);
   if (cached) return cached;
 
   const modelId = model('aboutMe', input.preferredModel);
@@ -55,7 +62,7 @@ export async function getOrGenerateAboutMe(
     const parsed = parseAboutMe(raw);
     if (!parsed) return null;
 
-    await setCachedJson(userId, CACHE_KEY, parsed, {
+    await setCachedJson(userId, key, parsed, {
       model: modelId,
       inputTokens: response.usage.input_tokens,
       outputTokens: response.usage.output_tokens,

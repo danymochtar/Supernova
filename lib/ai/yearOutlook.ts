@@ -15,8 +15,8 @@ import { getCachedJson, setCachedJson } from '@/lib/db/repositories/numerologyCa
  * narrative regenerates fresh. v1 prefix lets us bump in future when the
  * prompt schema changes.
  */
-function cacheKey(year: number): string {
-  return `yearOutlook-v2:${year}`;
+function cacheKey(year: number, locale: string): string {
+  return `yearOutlook-v3:${year}:${locale}`;
 }
 
 /**
@@ -31,7 +31,7 @@ export async function getOrGenerateYearOutlook(
   userId: string,
   input: YearOutlookInput,
 ): Promise<ParsedYearOutlook | null> {
-  const key = cacheKey(input.year);
+  const key = cacheKey(input.year, input.locale);
   const cached = await getCachedJson<ParsedYearOutlook>(userId, key);
   if (cached) return cached;
 
