@@ -53,20 +53,22 @@ function formatDateLong(ctx: { year: number; month: number; day: number }, local
 
 // World Numerology's "today's numbers are X, Y, Z, W" framing — PD as star.
 // The Personal Day is (Personal Month reduced) + (day-of-month), so WN
-// surfaces the two reduced addends that build it. For Dany on 25 May 2026:
-// PM 1 + date 25→7 = 8 → "8, 26, 1, 7".
-//   slot 1 = single-digit Personal Day (master days like 11 still show "2"),
-//   slot 2 = compound Personal Day,
-//   slot 3 = Personal Month (first addend, as stored),
-//   slot 4 = day-of-month reduced to a single digit (second addend).
-// slots 3 + 4 reduce back to slot 1.
+// surfaces the addends that build it. Three shapes:
+//   - compound ≠ reduced (master days like 11/2, or two-digit compounds
+//     like 28/1): [reduced, compound, PM, day-reduced] → 4 slots.
+//   - compound = reduced (single-digit PD): [reduced, PM, day-reduced]
+//     → 3 slots, still shows the building blocks so the staircase doesn't
+//     collapse to one lonely digit.
 function wnDayNumbers(
   pd: { compound: number; reduced: number },
   personalMonthReduced: number,
   dayOfMonth: number,
 ): number[] {
-  if (pd.compound < 10) return [pd.compound];
-  return [reduceToDigit(pd.reduced), pd.compound, personalMonthReduced, reduceToDigit(dayOfMonth)];
+  const dayReduced = reduceToDigit(dayOfMonth);
+  if (pd.compound !== pd.reduced) {
+    return [reduceToDigit(pd.reduced), pd.compound, personalMonthReduced, dayReduced];
+  }
+  return [pd.reduced, personalMonthReduced, dayReduced];
 }
 
 const PREVIEW_WINDOW_DAYS = 90;
