@@ -302,7 +302,17 @@
     "physical": "Physical",
     "mental": "Mental",
     "emotional": "Emotional",
-    "intuitive": "Intuitive"
+    "intuitive": "Intuitive",
+    "maturityExplainer": "The Maturity number gets stronger from your early 30s onward: this is the \"real you\" that surfaces once your life mission (Life Path) and natural toolkit (Expression) blend into one operating mode. Not a new goal — more like the baseline you settle into once you've grown up a bit.",
+    "hiddenPassionExplainer": "Hidden Passion is the digit (1-9) that appears most often in your birth name — the inclination you're pulled toward without having to push. If two or more tie for the top count, all of them show. Treat it as your built-in sweet spot: what you're naturally drawn to and usually a bit better at than average.",
+    "balanceExplainer": "The Balance number is built from the initials of each part of your birth name. It describes your default mode when you're knocked off-center — stress, conflict, getting triggered. Knowing your Balance is knowing your fastest path back to calm.",
+    "cornerstoneExplainer": "Your Cornerstone is the first letter of your first name. It captures how you typically open a new situation: how you take the first step, approach new people, walk into an opportunity. Your default opening move.",
+    "subconsciousSelfExplainer": "Subconscious Self = the count of digits 1-9 that show up in your birth name. Range 1-9. Higher means more \"inner resources\" you can reach for automatically. Lower (below 6) means a few areas demand more conscious effort to stay steady under pressure.",
+    "rationalThoughtExplainer": "Rational Thought = your default analytical mode: how your mind organizes information, what makes ideas \"click\" for you. Derived from your first name's letters plus your day of birth. Not IQ — more like thinking style.",
+    "physicalExplainer": "Plane of Expression — Physical. The sum of letter values in your name that fall into the \"body/action\" group (D, E, M, W). High = you tend to experience life through doing — moving, making, changing your physical surroundings. Low = physical action isn't your primary mode; another plane carries more weight.",
+    "mentalExplainer": "Plane of Expression — Mental. The sum of letters in the \"analysis/planning\" group (A, G, H, J, L, N, P). High = you think first by default, breaking problems into steps. Low = systematic reasoning isn't your primary mode.",
+    "emotionalExplainer": "Plane of Expression — Emotional. The sum of letters in the \"feeling/response\" group (B, I, O, R, S, T, X, Z). High = feeling is your primary compass; you pick up the mood of a room fast. Low = emotion is present but not the dominant way you navigate.",
+    "intuitiveExplainer": "Plane of Expression — Intuitive. The sum of letters in the \"knowing without thinking\" group (C, F, K, Q, U, V, Y). High = answers tend to arrive as hunches before logic catches up. Low = you lean on data + experience more than on gut leaps."
   },
   "reading": {
     "title": "Bacaan harian",

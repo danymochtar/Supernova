@@ -183,6 +183,18 @@ export async function TentangView({
           mental: t('mental'),
           emotional: t('emotional'),
           intuitive: t('intuitive'),
+          explainers: {
+            maturity: t('maturityExplainer'),
+            hiddenPassion: t('hiddenPassionExplainer'),
+            balance: t('balanceExplainer'),
+            cornerstone: t('cornerstoneExplainer'),
+            subconsciousSelf: t('subconsciousSelfExplainer'),
+            rationalThought: t('rationalThoughtExplainer'),
+            physical: t('physicalExplainer'),
+            mental: t('mentalExplainer'),
+            emotional: t('emotionalExplainer'),
+            intuitive: t('intuitiveExplainer'),
+          },
         }}
       />
     </div>

@@ -359,7 +359,17 @@
     "physical": "Physical",
     "mental": "Mental",
     "emotional": "Emotional",
-    "intuitive": "Intuitive"
+    "intuitive": "Intuitive",
+    "maturityExplainer": "Maturity number muncul makin kuat sekitar usia 30-35 ke atas: ini \"kamu yang sebenarnya\" setelah misi hidup (Life Path) dan toolkit alami (Expression) udah ke-blend jadi satu cara bergerak. Bukan tujuan baru — lebih kayak baseline yang nempel pas kamu udah matang.",
+    "hiddenPassionExplainer": "Hidden Passion adalah digit (1-9) yang paling sering muncul di nama akta kamu — alias inclination yang kamu tarik tanpa harus dorong. Kalau ada lebih dari satu yang seri di angka teratas, dua-duanya muncul. Treat ini sebagai sweet spot bawaan: hal yang kamu otomatis tertarik dan biasanya lebih lihai dari rata-rata.",
+    "balanceExplainer": "Balance number diambil dari inisial tiap bagian nama akta. Dia ngegambarin mode default kamu pas lagi off-balance — misalnya pas stres, kesal, atau ketrigger. Tahu Balance kamu = tahu jalan paling cepat balik ke tenang.",
+    "cornerstoneExplainer": "Cornerstone = huruf pertama nama depan kamu. Ngegambarin gimana kamu biasanya ngebuka situasi baru: mau ambil langkah pertama gimana, gimana kamu approach orang baru, gimana kamu masuk ke kesempatan. Move pembuka default kamu.",
+    "subconsciousSelfExplainer": "Subconscious Self = jumlah digit 1-9 yang muncul di nama akta kamu. Range 1-9. Makin tinggi, makin banyak \"sumber daya internal\" yang kamu bisa pakai otomatis tanpa mikir. Makin rendah (di bawah 6), beberapa area minta usaha sadar lebih banyak buat tetap stabil pas tekanan.",
+    "rationalThoughtExplainer": "Rational Thought = cara default kamu mikir secara analitis: gimana otak kamu nge-organize info, apa yang bikin sesuatu \"klik\". Diturunkan dari huruf nama depan + tanggal lahir. Bukan IQ — lebih ke gaya berpikir.",
+    "physicalExplainer": "Plane of Expression — Physical. Sum nilai huruf-huruf di nama yang masuk kategori \"tubuh/aksi\" (D, E, M, W). Skor tinggi = kamu cenderung ngerasain hidup lewat tindakan nyata: gerak, ngerjain, ngubah lingkungan fisik. Skor rendah = aksi nyata bukan moda utama, ada plane lain yang lebih kuat.",
+    "mentalExplainer": "Plane of Expression — Mental. Sum dari huruf-huruf \"analisis/perencanaan\" (A, G, H, J, L, N, P). Skor tinggi = kamu by default mikir dulu sebelum tindak, suka mecah masalah jadi langkah-langkah. Skor rendah = pemikiran sistematis bukan moda utama kamu.",
+    "emotionalExplainer": "Plane of Expression — Emotional. Sum dari huruf-huruf \"perasaan/respon\" (B, I, O, R, S, T, X, Z). Skor tinggi = perasaan jadi kompas utama, kamu nangkep mood ruangan dengan cepet. Skor rendah = perasaan ada, tapi bukan dominan dalam cara kamu navigasi situasi.",
+    "intuitiveExplainer": "Plane of Expression — Intuitive. Sum dari huruf-huruf \"tahu tanpa mikir\" (C, F, K, Q, U, V, Y). Skor tinggi = sering dapet jawaban lewat firasat / hunch sebelum logika nyusul. Skor rendah = lebih nyandar ke data + pengalaman ketimbang gut leap."
   },
   "reading": {
     "title": "Bacaan harian",
