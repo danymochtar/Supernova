@@ -9,6 +9,7 @@ import {
   AspectReadingAsync,
   AspectReadingSkeleton,
 } from '@/components/numerology/AspectReading';
+import { AspectComputationsRecap } from '@/components/kehidupan/AspectComputationsRecap';
 
 /**
  * Shared sub-view for a life-aspect reading (love / finance). Computes the
@@ -52,8 +53,28 @@ export async function AspectView({
   const headings: Record<string, string> = {};
   for (const { headingKey } of config.sections) headings[headingKey] = t(headingKey);
 
+  const recapLabels = {
+    sectionTitle: t('recapTitle'),
+    sectionHint: t('recapHint'),
+    comingSoon: t('recapComingSoon'),
+    lifePath: { label: t('recap_lifePath'), hint: t('recap_lifePathHint') },
+    expression: { label: t('recap_expression'), hint: t('recap_expressionHint') },
+    soulUrge: { label: t('recap_soulUrge'), hint: t('recap_soulUrgeHint') },
+    personality: { label: t('recap_personality'), hint: t('recap_personalityHint') },
+    personalYear: { label: t('recap_personalYear'), hint: t('recap_personalYearHint') },
+    bridge: { label: t('recap_bridge'), hint: t('recap_bridgeHint') },
+  };
+
   return (
-    <div className="space-y-3">
+    <div className="space-y-6">
+      <AspectComputationsRecap
+        locale={locale}
+        aspectId={aspectId}
+        core={input.core}
+        personalYear={py}
+        bridge={input.bridge}
+        labels={recapLabels}
+      />
       <Suspense fallback={<AspectReadingSkeleton subtitle={t('subtitle')} />}>
         <AspectReadingAsync
           userId={profile.userId}
