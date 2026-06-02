@@ -183,6 +183,8 @@ export async function TentangView({
           mental: t('mental'),
           emotional: t('emotional'),
           intuitive: t('intuitive'),
+          learnConcept: t('moreNumbersLearnConcept'),
+          comingSoon: t('meaningComingSoon'),
           explainers: {
             maturity: t('maturityExplainer'),
             hiddenPassion: t('hiddenPassionExplainer'),

@@ -1,10 +1,12 @@
 'use client';
 
 import { useState } from 'react';
+import { ChevronDown } from 'lucide-react';
 import type { Locale } from '@/lib/i18n/config';
 import type { Cornerstone } from '@/lib/numerology/cornerstone';
 import type { NumerologyResult } from '@/lib/numerology';
 import type { Planes } from '@/lib/numerology/planesOfExpression';
+import { meaningFor, type MeaningType } from '@/lib/numerology/meanings';
 import { CompoundReduced } from '@/components/numerology/CompoundReduced';
 import { Modal } from '@/components/layout/Modal';
 
@@ -19,6 +21,20 @@ type ConceptKey =
   | 'mental'
   | 'emotional'
   | 'intuitive';
+
+/** Mapping from a UI concept key to the MeaningType used for content lookup. */
+const CONCEPT_TO_MEANING: Record<ConceptKey, MeaningType> = {
+  maturity: 'maturity',
+  hiddenPassion: 'hiddenPassion',
+  balance: 'balance',
+  cornerstone: 'cornerstone',
+  subconsciousSelf: 'subconsciousSelf',
+  rationalThought: 'rationalThought',
+  physical: 'physicalPlane',
+  mental: 'mentalPlane',
+  emotional: 'emotionalPlane',
+  intuitive: 'intuitivePlane',
+};
 
 interface Props {
   locale: Locale;
@@ -36,8 +52,11 @@ interface Props {
     mental: string;
     emotional: string;
     intuitive: string;
-    /** "What is this?" body per concept, shown in the tap-to-detail modal. */
+    /** "What is this concept?" body per derivative — secondary info, behind a
+     *  disclosure. The primary modal body is the per-number meaning. */
     explainers: Record<ConceptKey, string>;
+    learnConcept: string;
+    comingSoon: string;
   };
   derivatives: {
     maturity: NumerologyResult;
@@ -52,14 +71,21 @@ interface Props {
 
 interface ModalState {
   concept: ConceptKey;
-  /** Pre-rendered value node shown at the top of the modal. */
+  /** Big value rendered at the top of the modal. */
   value: React.ReactNode;
+  /** Digits to look up per-number meanings for. Hidden Passion can have
+   *  multiple winners; everything else is a single digit. */
+  digits: number[];
+  /** Optional secondary subtitle below the value (e.g. letter for
+   *  Cornerstone). */
+  subtitle?: string;
 }
 
 /**
- * Decoz second-tier numerology surface — each row is tappable; the modal
- * explains what that concept means + shows the user's specific value
- * prominently so the dashboard stays scannable while still teaching.
+ * Decoz second-tier numerology surface. Tapping a row opens a modal:
+ *   1. Big value (the user's number).
+ *   2. Per-number meaning(s) — what this digit means for THEM in this concept.
+ *   3. Optional "Pelajari konsepnya" disclosure with the concept-level body.
  */
 export function MoreNumbersWidget({ locale, labels, derivatives: d }: Props) {
   const [open, setOpen] = useState<ModalState | null>(null);
@@ -78,6 +104,7 @@ export function MoreNumbersWidget({ locale, labels, derivatives: d }: Props) {
             setOpen({
               concept: 'maturity',
               value: <CompoundReduced result={d.maturity} locale={locale} size="lg" />,
+              digits: [singleDigit(d.maturity.reduced)],
             })
           }
         >
@@ -90,6 +117,7 @@ export function MoreNumbersWidget({ locale, labels, derivatives: d }: Props) {
             setOpen({
               concept: 'hiddenPassion',
               value: <HiddenPassionPills values={d.hiddenPassion} size="lg" />,
+              digits: d.hiddenPassion,
             })
           }
         >
@@ -102,6 +130,7 @@ export function MoreNumbersWidget({ locale, labels, derivatives: d }: Props) {
             setOpen({
               concept: 'balance',
               value: <CompoundReduced result={d.balance} locale={locale} size="lg" />,
+              digits: [singleDigit(d.balance.reduced)],
             })
           }
         >
@@ -114,6 +143,8 @@ export function MoreNumbersWidget({ locale, labels, derivatives: d }: Props) {
             setOpen({
               concept: 'cornerstone',
               value: <CornerstoneDisplay c={d.cornerstone} size="lg" />,
+              digits: d.cornerstone ? [d.cornerstone.value] : [],
+              subtitle: d.cornerstone ? `${labels.cornerstone} · ${d.cornerstone.letter}` : undefined,
             })
           }
         >
@@ -131,6 +162,7 @@ export function MoreNumbersWidget({ locale, labels, derivatives: d }: Props) {
                   <span className="text-muted-foreground text-lg"> / 9</span>
                 </span>
               ),
+              digits: [d.subconsciousSelf],
             })
           }
         >
@@ -146,6 +178,7 @@ export function MoreNumbersWidget({ locale, labels, derivatives: d }: Props) {
             setOpen({
               concept: 'rationalThought',
               value: <CompoundReduced result={d.rationalThought} locale={locale} size="lg" />,
+              digits: [singleDigit(d.rationalThought.reduced)],
             })
           }
         >
@@ -166,6 +199,7 @@ export function MoreNumbersWidget({ locale, labels, derivatives: d }: Props) {
               setOpen({
                 concept: 'physical',
                 value: <CompoundReduced result={d.planes.physical} locale={locale} size="lg" />,
+                digits: [singleDigit(d.planes.physical.reduced)],
               })
             }
           />
@@ -177,6 +211,7 @@ export function MoreNumbersWidget({ locale, labels, derivatives: d }: Props) {
               setOpen({
                 concept: 'mental',
                 value: <CompoundReduced result={d.planes.mental} locale={locale} size="lg" />,
+                digits: [singleDigit(d.planes.mental.reduced)],
               })
             }
           />
@@ -188,6 +223,7 @@ export function MoreNumbersWidget({ locale, labels, derivatives: d }: Props) {
               setOpen({
                 concept: 'emotional',
                 value: <CompoundReduced result={d.planes.emotional} locale={locale} size="lg" />,
+                digits: [singleDigit(d.planes.emotional.reduced)],
               })
             }
           />
@@ -199,6 +235,7 @@ export function MoreNumbersWidget({ locale, labels, derivatives: d }: Props) {
               setOpen({
                 concept: 'intuitive',
                 value: <CompoundReduced result={d.planes.intuitive} locale={locale} size="lg" />,
+                digits: [singleDigit(d.planes.intuitive.reduced)],
               })
             }
           />
@@ -209,19 +246,95 @@ export function MoreNumbersWidget({ locale, labels, derivatives: d }: Props) {
         open={open !== null}
         onClose={() => setOpen(null)}
         title={
-          open ? <h3 className="font-serif text-xl font-semibold tracking-tight">{labels[open.concept]}</h3> : null
+          open ? (
+            <h3 className="font-serif text-xl font-semibold tracking-tight">{labels[open.concept]}</h3>
+          ) : null
         }
       >
         {open ? (
-          <div className="space-y-4">
-            <div>{open.value}</div>
-            <p className="text-muted-foreground whitespace-pre-line text-sm leading-relaxed">
-              {labels.explainers[open.concept]}
-            </p>
-          </div>
+          <DetailBody
+            value={open.value}
+            digits={open.digits}
+            meaningType={CONCEPT_TO_MEANING[open.concept]}
+            locale={locale}
+            conceptBody={labels.explainers[open.concept]}
+            learnConceptLabel={labels.learnConcept}
+            comingSoonLabel={labels.comingSoon}
+            subtitle={open.subtitle}
+          />
         ) : null}
       </Modal>
     </section>
+  );
+}
+
+function DetailBody({
+  value,
+  digits,
+  meaningType,
+  locale,
+  conceptBody,
+  learnConceptLabel,
+  comingSoonLabel,
+  subtitle,
+}: {
+  value: React.ReactNode;
+  digits: number[];
+  meaningType: MeaningType;
+  locale: Locale;
+  conceptBody: string;
+  learnConceptLabel: string;
+  comingSoonLabel: string;
+  subtitle?: string;
+}) {
+  // Pull per-digit meanings; if digits is empty (no value), nothing to show.
+  const blurbs = digits
+    .map((d) => ({
+      digit: d,
+      text: meaningFor(meaningType, { compound: d, reduced: d, isMaster: false }, locale),
+    }))
+    .filter((b) => b.text);
+
+  return (
+    <div className="space-y-5">
+      <div className="space-y-1">
+        <div>{value}</div>
+        {subtitle ? <p className="text-muted-foreground text-xs">{subtitle}</p> : null}
+      </div>
+
+      {blurbs.length > 0 ? (
+        <ul className="space-y-3">
+          {blurbs.map((b) => (
+            <li
+              key={b.digit}
+              className={blurbs.length > 1 ? 'border-border/60 border-l-2 pl-3' : ''}
+            >
+              {blurbs.length > 1 ? (
+                <p className="text-primary font-mono text-xs font-semibold tabular-nums">{b.digit}</p>
+              ) : null}
+              <p className="text-[15px] leading-relaxed text-neutral-800 dark:text-neutral-200">
+                {b.text}
+              </p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="text-muted-foreground text-sm italic">{comingSoonLabel}</p>
+      )}
+
+      <details className="group">
+        <summary className="press-soft text-muted-foreground hover:text-foreground flex cursor-pointer list-none items-center gap-2 text-xs font-medium [&::-webkit-details-marker]:hidden">
+          <ChevronDown
+            className="h-3.5 w-3.5 transition-transform ios-ease group-open:rotate-180"
+            aria-hidden
+          />
+          <span>{learnConceptLabel}</span>
+        </summary>
+        <p className="text-muted-foreground mt-2 whitespace-pre-line text-sm leading-relaxed">
+          {conceptBody}
+        </p>
+      </details>
+    </div>
   );
 }
 
@@ -302,4 +415,19 @@ function CornerstoneDisplay({ c, size }: { c: Cornerstone | null; size: 'md' | '
       <span className={`text-muted-foreground font-mono tabular-nums ${value}`}>· {c.value}</span>
     </div>
   );
+}
+
+/** Reduce any compound-or-master to a single 1-9 digit. */
+function singleDigit(n: number): number {
+  let v = n;
+  while (v >= 10) {
+    let s = 0;
+    let x = v;
+    while (x > 0) {
+      s += x % 10;
+      x = Math.floor(x / 10);
+    }
+    v = s;
+  }
+  return v;
 }

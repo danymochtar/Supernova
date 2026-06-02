@@ -28,7 +28,19 @@ export type MeaningType =
   | 'essence'
   | 'bridge'
   | 'karmicLesson'
-  | 'personalDayTitle';
+  | 'personalDayTitle'
+  // Decoz second-tier derivatives — meaning is per the digit's energy
+  // applied to that concept. Looked up via meaningFor('maturity', n) etc.
+  | 'maturity'
+  | 'hiddenPassion'
+  | 'balance'
+  | 'cornerstone'
+  | 'subconsciousSelf'
+  | 'rationalThought'
+  | 'physicalPlane'
+  | 'mentalPlane'
+  | 'emotionalPlane'
+  | 'intuitivePlane';
 
 /**
  * Look up a deterministic meaning string for a given (type, reduced number)

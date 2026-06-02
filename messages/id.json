@@ -366,7 +366,8 @@
     "physicalExplainer": "Plane of Expression — Physical. Sum nilai huruf-huruf di nama yang masuk kategori \"tubuh/aksi\" (D, E, M, W). Skor tinggi = kamu cenderung ngerasain hidup lewat tindakan nyata: gerak, ngerjain, ngubah lingkungan fisik. Skor rendah = aksi nyata bukan moda utama, ada plane lain yang lebih kuat.",
     "mentalExplainer": "Plane of Expression — Mental. Sum dari huruf-huruf \"analisis/perencanaan\" (A, G, H, J, L, N, P). Skor tinggi = kamu by default mikir dulu sebelum tindak, suka mecah masalah jadi langkah-langkah. Skor rendah = pemikiran sistematis bukan moda utama kamu.",
     "emotionalExplainer": "Plane of Expression — Emotional. Sum dari huruf-huruf \"perasaan/respon\" (B, I, O, R, S, T, X, Z). Skor tinggi = perasaan jadi kompas utama, kamu nangkep mood ruangan dengan cepet. Skor rendah = perasaan ada, tapi bukan dominan dalam cara kamu navigasi situasi.",
-    "intuitiveExplainer": "Plane of Expression — Intuitive. Sum dari huruf-huruf \"tahu tanpa mikir\" (C, F, K, Q, U, V, Y). Skor tinggi = sering dapet jawaban lewat firasat / hunch sebelum logika nyusul. Skor rendah = lebih nyandar ke data + pengalaman ketimbang gut leap."
+    "intuitiveExplainer": "Plane of Expression — Intuitive. Sum dari huruf-huruf \"tahu tanpa mikir\" (C, F, K, Q, U, V, Y). Skor tinggi = sering dapet jawaban lewat firasat / hunch sebelum logika nyusul. Skor rendah = lebih nyandar ke data + pengalaman ketimbang gut leap.",
+    "moreNumbersLearnConcept": "Pelajari konsepnya"
   },
   "reading": {
     "title": "Bacaan harian",

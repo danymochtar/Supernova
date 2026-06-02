@@ -312,7 +312,8 @@
     "physicalExplainer": "Plane of Expression — Physical. The sum of letter values in your name that fall into the \"body/action\" group (D, E, M, W). High = you tend to experience life through doing — moving, making, changing your physical surroundings. Low = physical action isn't your primary mode; another plane carries more weight.",
     "mentalExplainer": "Plane of Expression — Mental. The sum of letters in the \"analysis/planning\" group (A, G, H, J, L, N, P). High = you think first by default, breaking problems into steps. Low = systematic reasoning isn't your primary mode.",
     "emotionalExplainer": "Plane of Expression — Emotional. The sum of letters in the \"feeling/response\" group (B, I, O, R, S, T, X, Z). High = feeling is your primary compass; you pick up the mood of a room fast. Low = emotion is present but not the dominant way you navigate.",
-    "intuitiveExplainer": "Plane of Expression — Intuitive. The sum of letters in the \"knowing without thinking\" group (C, F, K, Q, U, V, Y). High = answers tend to arrive as hunches before logic catches up. Low = you lean on data + experience more than on gut leaps."
+    "intuitiveExplainer": "Plane of Expression — Intuitive. The sum of letters in the \"knowing without thinking\" group (C, F, K, Q, U, V, Y). High = answers tend to arrive as hunches before logic catches up. Low = you lean on data + experience more than on gut leaps.",
+    "moreNumbersLearnConcept": "تعرف على المفهوم"
   },
   "reading": {
     "title": "قراءة اليوم",
