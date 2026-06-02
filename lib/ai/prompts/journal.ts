@@ -55,6 +55,15 @@ const PRONOUN_REGISTER_ID: Record<UserPronoun, string> = {
   saya: 'formal-tapi-natural — pake "saya" konsisten, tetap personal tapi nggak slang',
 };
 
+export interface OpenFollowUp {
+  /** The follow-up's title as it appears in the dashboard widget. */
+  title: string;
+  /** User's short reply on the item, if any (e.g. "udah subscribe gym kemarin"). */
+  note: string | null;
+  /** Days since the parent entry — used to weight relevance in the prompt. */
+  daysAgo: number;
+}
+
 export interface JournalSynthInput {
   locale: Locale;
   firstName: string;
@@ -62,6 +71,10 @@ export interface JournalSynthInput {
   pronoun: UserPronoun;
   /** Source chat turns in chronological order. */
   turns: JournalSourceTurn[];
+  /** Still-open follow-up items from recent journal entries (incl. any
+   *  short reply the user left on them). Lets the AI avoid re-proposing
+   *  an action the user already addressed in a reply. */
+  openFollowUps?: OpenFollowUp[];
   preferredModel?: string | null;
 }
 
@@ -129,6 +142,7 @@ Aturan untuk "actionItems":
 - Array 0-3 item. Tiap item: { "title": "..." }, 1 kalimat pendek (max 12 kata), kalimat aksi konkret yang BERANGKAT DARI obrolan, bukan generic self-help.
 - Contoh bagus: "Ngobrol sama Sabri soal jadwal Sabah minggu depan", "Block 30 menit Sabtu sore buat journaling karier".
 - Contoh buruk (terlalu generic, jangan): "Self-care lebih banyak", "Refleksi diri".
+- WAJIB cek <open_followups> di user message. JANGAN bikin item yang overlap dengan yang udah ada di sana — apalagi kalau reply-nya nunjukin udah selesai ("udah", "sudah", "selesai", "done"), lagi dijalanin, atau dipilih buat dilewat. Item baru harus genuinely beda, bukan ngulang.
 - Kalau gak ada action item natural yang muncul dari entri, kasih array kosong []. Lebih baik kosong daripada di-stretch.
 
 Output WAJIB JSON valid, tanpa teks lain:
@@ -173,6 +187,7 @@ Rules for "actionItems":
 - Array of 0-3 items. Each: { "title": "..." }, one short sentence (max 12 words), concrete action GROUNDED in the chat — not generic self-help.
 - Good: "Message Sabri about the Sabah trip schedule", "Block 30 minutes Saturday afternoon for career journaling".
 - Bad (too generic): "Do more self-care", "Reflect on yourself".
+- MUST check <open_followups> in the user message. Do NOT generate an item that overlaps with anything listed there — especially if the reply note implies it's done ("already", "did it", "sent", "subscribed", "selesai", "udah"), already in progress, or explicitly skipped. New items must be genuinely new ground, not a repeat.
 - Empty array [] when nothing actionable surfaces naturally. Better empty than stretched.
 
 Output MUST be valid JSON, nothing else:
@@ -198,9 +213,24 @@ export function buildJournalUser(input: JournalSynthInput): string {
       ? `Tulis dari POV ${input.firstName} pake "${input.pronoun}" KONSISTEN dari awal sampai akhir. Match register & gaya ngomong ${input.firstName} di obrolan di atas.`
       : `Write from ${input.firstName}'s POV in first person.`;
 
+  // Surface still-open follow-ups (+ any reply notes) so the model
+  // doesn't generate duplicate action items. Replies like "udah subscribe
+  // gym" should make us skip "Subscribe gym" as a new item.
+  const followUpsBlock = input.openFollowUps && input.openFollowUps.length > 0
+    ? `
+
+<open_followups>
+${input.openFollowUps
+  .map((f) => `- "${f.title}" (${f.daysAgo}d ago)${f.note ? ` — reply: "${f.note}"` : ''}`)
+  .join('\n')}
+</open_followups>
+
+These are action items already on ${input.firstName}'s plate from earlier entries. The "reply" notes are what they typed when checking in on each one. RULE: do NOT generate a new action item that overlaps with any of these — especially if the reply implies it's done ("udah/sudah/selesai/done/sent/already"), already in progress, or explicitly chosen not to pursue. New items must add genuinely new ground.`
+    : '';
+
   return `Source conversation (chronological):
 
-${turnLines}
+${turnLines}${followUpsBlock}
 
 ${pronounReminder}`;
 }

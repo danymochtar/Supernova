@@ -9,7 +9,7 @@ import {
 import { synthesizeJournalNarrative } from '@/lib/ai/journal';
 import { detectUserPronoun } from '@/lib/ai/prompts/journal';
 import { prisma } from '@/lib/db/prisma';
-import { createJournalEntry } from '@/lib/db/repositories/journal';
+import { createJournalEntry, listOpenActionItems } from '@/lib/db/repositories/journal';
 import { deriveCategory } from '@/lib/curhat/categories';
 import { topicFromSnapshot } from '@/lib/curhat/snapshot';
 import { logUsage } from '@/lib/db/repositories/usage';
@@ -163,6 +163,18 @@ export async function autoJournalFromChat(
 
     // Synthesize one entry per cluster. Each cluster's turns keep their
     // chronological order via the original dayTurns index.
+    // Open follow-ups + their reply notes — passed into every synthesis so
+    // the AI can avoid re-proposing an action item the user already said
+    // they did (e.g. "udah subscribe gym kemarin"). Fetched once per
+    // autoJournal run since clusters share the same user.
+    const openItems = await listOpenActionItems(userId, 14, 20);
+    const nowMs = Date.now();
+    const openFollowUps = openItems.map((it) => ({
+      title: it.title,
+      note: it.note,
+      daysAgo: Math.max(0, Math.floor((nowMs - it.entryAddedAt.getTime()) / 86_400_000)),
+    }));
+
     for (const cluster of clusters) {
       const sorted = [...cluster.turnIndexes].sort((a, b) => a - b);
       const rows = sorted.map((i) => dayTurns[i]!).filter(Boolean);
@@ -178,6 +190,7 @@ export async function autoJournalFromChat(
           answer: r.answer,
           at: contextLabel(r.createdAt, profile.timezone, profile.locale),
         })),
+        openFollowUps,
         preferredModel: profile.preferredModel,
       });
       if (!synth) continue;

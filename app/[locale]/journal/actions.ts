@@ -6,6 +6,7 @@ import { getSession } from '@/lib/auth/requireSession';
 import {
   createJournalEntry,
   deleteJournalEntry,
+  listOpenActionItems,
   respondActionItem,
   toggleActionItem,
   type JournalActionItem,
@@ -99,6 +100,17 @@ export async function addToJournalAction(input: { turnIds: string[] }): Promise<
   });
   const pronoun = detectUserPronoun(recentForPronoun);
 
+  // Pull open follow-ups + their reply notes so the journal AI doesn't
+  // re-propose action items the user already said they did. listOpen is
+  // already filtered for completed/skipped/time-expired.
+  const openItems = await listOpenActionItems(session.user.id, 14, 20);
+  const now = Date.now();
+  const openFollowUps = openItems.map((it) => ({
+    title: it.title,
+    note: it.note,
+    daysAgo: Math.max(0, Math.floor((now - it.entryAddedAt.getTime()) / 86_400_000)),
+  }));
+
   const synth = await synthesizeJournalNarrative(session.user.id, {
     locale: profile.locale,
     firstName: profile.firstName,
@@ -109,6 +121,7 @@ export async function addToJournalAction(input: { turnIds: string[] }): Promise<
       answer: r.answer,
       at: fmtTurnAt(r.createdAt, profile.timezone),
     })),
+    openFollowUps,
     preferredModel: profile.preferredModel,
   });
 
