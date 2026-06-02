@@ -286,9 +286,9 @@
     "settingsLink": "설정 & 프로필",
     "meaningComingSoon": "이 숫자에 대한 설명을 준비 중이에요. 그동안, 카드에 있는 숫자는 결정론적 계산 결과예요 — 더 깊은 맥락이 궁금하다면 \"AI에게 묻기\" 페이지에서 물어볼 수 있어요.",
     "age": "나이",
-    "minorTitle": "Minor Numbers",
+    "minorTitle": "애칭 숫자",
     "bridgeTitle": "Bridge Numbers",
-    "minorHint": "애칭에서 드러나는 사회적 모습. 일상에서의 인상.",
+    "minorHint": "애칭에서 드러나는 사회적 모습. 일상에서의 인상. (Decoz의 Minor와는 다릅니다.)",
     "bridgeHint": "두 핵심 숫자 사이의 간극. 두 면이 얼마나 매끄럽게 통합되는지.",
     "moreNumbersTitle": "추가 숫자",
     "moreNumbersHint": "Decoz 전통의 두 번째 층 — 본명에서 도출된 추가 시그니처.",
@@ -594,7 +594,9 @@
     "pairsTitle": "숫자 쌍별 디테일",
     "pairsSubtitle": "각 코어 숫자 쌍에 대한 짧은 내러티브예요.",
     "narrativePending": "내러티브를 준비 중이에요. 잠시 후 새로고침해 주세요.",
-    "disclaimer": "점수와 패턴은 두 사람의 숫자에서 결정론적으로 계산해요(Pythagorean 전통 — Decoz, Millman), 관계 유형별 렌즈를 적용해서요. 수비학은 예언이 아니라 성찰의 도구예요."
+    "disclaimer": "점수와 패턴은 두 사람의 숫자에서 결정론적으로 계산해요(Pythagorean 전통 — Decoz, Millman), 관계 유형별 렌즈를 적용해서요. 수비학은 예언이 아니라 성찰의 도구예요.",
+    "monthlyPairTitle": "이번 달 & 다음 달",
+    "monthlyPairPending": "페어 내러티브를 생성 중..."
   },
   "talents": {
     "title": "Talents",
@@ -853,7 +855,10 @@
     "tabPerjalanan": "Journey",
     "tabPercintaan": "Love",
     "tabKeuangan": "Money",
-    "bioBorn": "생년월일"
+    "bioBorn": "생년월일",
+    "dualityTitle": "Duality {year}",
+    "dualityHint": "Essence + Personal Year 쌍 — 올해 통합 중인 두 흐름.",
+    "monthlyStripTitle": "Personal Month {year}"
   },
   "love": {
     "title": "연애",

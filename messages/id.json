@@ -17,7 +17,10 @@
     "tabPerjalanan": "Journey",
     "tabPercintaan": "Love",
     "tabKeuangan": "Money",
-    "bioBorn": "Lahir"
+    "bioBorn": "Lahir",
+    "dualityTitle": "Duality {year}",
+    "dualityHint": "Pasangan Essence + Personal Year — dua arus yang lo lagi padu tahun ini.",
+    "monthlyStripTitle": "Personal Month {year}"
   },
   "love": {
     "title": "Percintaan",
@@ -340,9 +343,9 @@
     "now": "Saat ini",
     "settingsLink": "Pengaturan & profil",
     "meaningComingSoon": "Penjelasan untuk angka ini sedang kami siapkan. Sementara, angka di kartu adalah perhitungan deterministik — kamu bisa tanya AI di halaman \"Tanya AI\" untuk konteks lebih dalam.",
-    "minorTitle": "Minor Numbers",
+    "minorTitle": "Angka Panggilan",
     "bridgeTitle": "Bridge Numbers",
-    "minorHint": "Sisi sosial dari nama panggilanmu: gimana kamu muncul pas dipanggil sehari-hari.",
+    "minorHint": "Sisi sosial dari nama panggilanmu: gimana kamu muncul pas dipanggil sehari-hari. (Catatan: ini beda dari Minor versi Hans Decoz yang dihitung dari nama akta.)",
     "bridgeHint": "Selisih antara dua angka inti: seberapa mulus dua sisi dirimu nyatu.",
     "moreNumbersTitle": "Angka tambahan",
     "moreNumbersHint": "Lapis kedua dari tradisi Decoz — signature ekstra dari nama akta kamu.",
@@ -648,7 +651,9 @@
     "pairsTitle": "Detail per pasangan angka",
     "pairsSubtitle": "Narasi pendek untuk masing-masing pasangan inti.",
     "narrativePending": "Narasi sedang disiapkan. Refresh sebentar lagi.",
-    "disclaimer": "Skor & pola dihitung deterministik dari angka kalian (tradisi Pythagorean — Decoz, Millman) dengan lensa per jenis hubungan. Numerologi adalah alat refleksi, bukan ramalan."
+    "disclaimer": "Skor & pola dihitung deterministik dari angka kalian (tradisi Pythagorean — Decoz, Millman) dengan lensa per jenis hubungan. Numerologi adalah alat refleksi, bukan ramalan.",
+    "monthlyPairTitle": "Bulan ini & berikutnya",
+    "monthlyPairPending": "Narasi pasangan bulan ini sedang diproses..."
   },
   "talents": {
     "title": "Talents",

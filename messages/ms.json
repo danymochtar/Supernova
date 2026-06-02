@@ -286,9 +286,9 @@
     "settingsLink": "Tetapan & profil",
     "meaningComingSoon": "Penjelasan untuk angka ini sedang kami siapkan. Sementara itu, angka pada kad adalah pengiraan deterministik — kamu boleh tanya AI di halaman \"Tanya AI\" untuk konteks lebih dalam.",
     "age": "Usia",
-    "minorTitle": "Minor Numbers",
+    "minorTitle": "Nombor Panggilan",
     "bridgeTitle": "Bridge Numbers",
-    "minorHint": "Sisi sosial nama panggilanmu: bagaimana kamu tampil setiap hari.",
+    "minorHint": "Sisi sosial nama panggilanmu: bagaimana kamu tampil setiap hari. (Beza dengan Minor Decoz yang dari nama rasmi.)",
     "bridgeHint": "Jurang antara dua nombor teras: betapa lancar dua sisi dirimu bersatu.",
     "moreNumbersTitle": "Nombor tambahan",
     "moreNumbersHint": "Lapis kedua tradisi Decoz daripada nama lahir kamu.",
@@ -594,7 +594,9 @@
     "pairsTitle": "Detail setiap pasangan angka",
     "pairsSubtitle": "Naratif pendek untuk setiap pasangan inti.",
     "narrativePending": "Naratif sedang disediakan. Refresh sekejap lagi.",
-    "disclaimer": "Skor & pola dikira secara deterministik daripada angka kamu berdua (tradisi Pythagorean — Decoz, Millman) dengan lensa setiap jenis hubungan. Numerologi adalah alat refleksi, bukan ramalan."
+    "disclaimer": "Skor & pola dikira secara deterministik daripada angka kamu berdua (tradisi Pythagorean — Decoz, Millman) dengan lensa setiap jenis hubungan. Numerologi adalah alat refleksi, bukan ramalan.",
+    "monthlyPairTitle": "Bulan ini & seterusnya",
+    "monthlyPairPending": "Naratif pasangan sedang dijana..."
   },
   "talents": {
     "title": "Talents",
@@ -853,7 +855,10 @@
     "tabPerjalanan": "Journey",
     "tabPercintaan": "Love",
     "tabKeuangan": "Money",
-    "bioBorn": "Lahir"
+    "bioBorn": "Lahir",
+    "dualityTitle": "Duality {year}",
+    "dualityHint": "Gandingan Essence + Personal Year — dua arus yang sedang kamu satukan tahun ini.",
+    "monthlyStripTitle": "Personal Month {year}"
   },
   "love": {
     "title": "Percintaan",

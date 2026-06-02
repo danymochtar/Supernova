@@ -286,9 +286,9 @@
     "settingsLink": "Ajustes y perfil",
     "meaningComingSoon": "Estamos preparando la explicación de este número. Mientras tanto, el número en la tarjeta es un cálculo determinístico — puedes preguntarle a la AI en la página \"Pregunta a la AI\" para más contexto.",
     "age": "Edad",
-    "minorTitle": "Minor Numbers",
+    "minorTitle": "Números del apodo",
     "bridgeTitle": "Bridge Numbers",
-    "minorHint": "El lado social de tu apodo: cómo te perciben a diario.",
+    "minorHint": "El lado social de tu apodo: cómo te perciben a diario. (Distinto del Minor de Decoz, que viene del nombre legal.)",
     "bridgeHint": "La distancia entre dos números centrales: qué tan bien integras dos lados de ti.",
     "moreNumbersTitle": "Más números",
     "moreNumbersHint": "Segunda capa Decoz — firmas adicionales de tu nombre de nacimiento.",
@@ -594,7 +594,9 @@
     "pairsTitle": "Detalle por par de números",
     "pairsSubtitle": "Una narrativa corta para cada par central.",
     "narrativePending": "La narrativa se está preparando. Refresca en un momento.",
-    "disclaimer": "Puntaje y patrones calculados de forma determinista desde sus números (tradición Pythagorean — Decoz, Millman) con la lente del tipo de relación. La numerología es una herramienta de reflexión, no una predicción."
+    "disclaimer": "Puntaje y patrones calculados de forma determinista desde sus números (tradición Pythagorean — Decoz, Millman) con la lente del tipo de relación. La numerología es una herramienta de reflexión, no una predicción.",
+    "monthlyPairTitle": "Este mes y el próximo",
+    "monthlyPairPending": "Generando la narrativa de pareja..."
   },
   "talents": {
     "title": "Talents",
@@ -853,7 +855,10 @@
     "tabPerjalanan": "Journey",
     "tabPercintaan": "Love",
     "tabKeuangan": "Money",
-    "bioBorn": "Nació"
+    "bioBorn": "Nació",
+    "dualityTitle": "Duality {year}",
+    "dualityHint": "Par Essence + Personal Year — las dos corrientes que estás integrando este año.",
+    "monthlyStripTitle": "Personal Month {year}"
   },
   "love": {
     "title": "Amor",

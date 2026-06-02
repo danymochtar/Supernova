@@ -16,6 +16,7 @@ import {
 } from '@/components/people/PairNarrativesSection';
 import { CompoundReduced } from '@/components/numerology/CompoundReduced';
 import { TopBar } from '@/components/layout/TopBar';
+import { PairMonthlyForecastAsync } from '@/components/people/PairMonthlyForecastAsync';
 
 // AI narratives generation can take 15-25s on cold cache.
 export const maxDuration = 60;
@@ -175,6 +176,28 @@ export default async function CompatibilityPage({
             </div>
           ) : null}
         </section>
+
+        {/* Pair Monthly Compatibility — mirrors WN's Relationship Monthly Forecast.
+          * Streams the AI narratives inside its own Suspense so the score hero
+          * paints first. */}
+        <Suspense fallback={null}>
+          <PairMonthlyForecastAsync
+            userId={session.user.id}
+            personId={person.id}
+            locale={locale}
+            myDob={userProfile.dob}
+            themDob={person.dob}
+            myName={myName}
+            themName={theirName}
+            relationship={person.relationship}
+            preferredModel={userProfile.preferredModel}
+            timezone={userProfile.timezone}
+            labels={{
+              sectionTitle: t('monthlyPairTitle'),
+              pendingNote: t('monthlyPairPending'),
+            }}
+          />
+        </Suspense>
 
         {/* Detected patterns */}
         {patterns.length > 0 ? (

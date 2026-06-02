@@ -10,6 +10,7 @@ import {
   cycleAt,
   essenceAt,
   essenceTimeline,
+  personalMonth,
   personalYear,
   pinnacleAt,
   activeSlots,
@@ -84,6 +85,20 @@ export async function PerjalananView({
   };
   const essenceNow = essenceAt(essenceNames, age);
   const essenceFuture = essenceTimeline(essenceNames, age, age + 15).slice(1, 6);
+
+  // Duality (Hans Decoz): pair of (Essence reduced, Personal Year reduced)
+  // for the running year — the "two forces" the user is integrating.
+  const dualityEssence = essenceNow.essence.reduced;
+  const dualityPy = thisYearPy.reduced;
+
+  // 12-month Personal Month strip for the running year — deterministic.
+  // World Numerology prints this same row at the top of every Year Forecast.
+  const monthlyPMs = Array.from({ length: 12 }, (_, i) =>
+    personalMonth(profile.dob, { year: ctx.year, month: i + 1, day: 1 }).reduced,
+  );
+  const monthShort = Array.from({ length: 12 }, (_, i) =>
+    new Intl.DateTimeFormat(locale, { month: 'short' }).format(new Date(Date.UTC(2000, i, 1))),
+  );
 
   const activePinnacleSlot = slots.pinnacle;
   const activeChallengeSlot = slots.challenge;
@@ -183,6 +198,46 @@ export async function PerjalananView({
             meaning={firstSentence(essenceMeaning)}
             locale={locale}
           />
+        </div>
+      </section>
+
+      {/* DUALITY + 12-MONTH PERSONAL MONTH STRIP — both from WN's Year Forecast. */}
+      <section className="space-y-3">
+        <div className="border-border rounded-xl border bg-surface-1 p-4">
+          <p className="text-muted-foreground text-[11px] font-semibold uppercase tracking-wider">
+            {t('dualityTitle', { year: ctx.year })}
+          </p>
+          <p className="mt-1 font-mono text-2xl font-semibold tabular-nums">
+            {dualityEssence}
+            <span className="text-muted-foreground mx-1.5 text-base font-normal">+</span>
+            {dualityPy}
+          </p>
+          <p className="text-muted-foreground mt-1 text-xs">{t('dualityHint')}</p>
+        </div>
+
+        <div className="border-border space-y-2 rounded-xl border bg-surface-1 p-4">
+          <p className="text-muted-foreground text-[11px] font-semibold uppercase tracking-wider">
+            {t('monthlyStripTitle', { year: ctx.year })}
+          </p>
+          <div className="grid grid-cols-6 gap-1.5 sm:grid-cols-12">
+            {monthlyPMs.map((pm, i) => {
+              const month = i + 1;
+              const isCurrent = month === ctx.month;
+              return (
+                <div
+                  key={month}
+                  className={`flex flex-col items-center rounded-lg px-1 py-2 text-center ${isCurrent ? 'bg-primary/15 ring-primary ring-1' : 'bg-surface-2/60'}`}
+                >
+                  <span className="text-muted-foreground text-[9px] font-medium uppercase tracking-wider">
+                    {monthShort[i]}
+                  </span>
+                  <span className="mt-0.5 font-mono text-base font-semibold tabular-nums">
+                    {pm}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
 

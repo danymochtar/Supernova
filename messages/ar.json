@@ -286,9 +286,9 @@
     "settingsLink": "الإعدادات والملف الشخصي",
     "meaningComingSoon": "شرح هذا الرقم قيد التحضير. في هذه الأثناء، الرقم في البطاقة هو حساب حتمي — يمكنك سؤال الذكاء الاصطناعي في صفحة \"Tanya AI\" للحصول على سياق أعمق.",
     "age": "العمر",
-    "minorTitle": "Minor Numbers",
+    "minorTitle": "أرقام اسم المناداة",
     "bridgeTitle": "Bridge Numbers",
-    "minorHint": "الجانب الاجتماعي لاسم مناداتك: كيف تبدو في حياتك اليومية.",
+    "minorHint": "الجانب الاجتماعي لاسم مناداتك: كيف تبدو في حياتك اليومية. (يختلف عن Minor لـ Decoz المشتق من الاسم الرسمي.)",
     "bridgeHint": "الفجوة بين رقمين أساسيين: مدى انسجام جانبيك.",
     "moreNumbersTitle": "أرقام إضافية",
     "moreNumbersHint": "الطبقة الثانية من تقليد ديكوز — توقيعات إضافية من اسمك عند الولادة.",
@@ -594,7 +594,9 @@
     "pairsTitle": "تفاصيل لكل زوج من الأرقام",
     "pairsSubtitle": "سرد قصير لكل زوج من الأرقام الجوهرية.",
     "narrativePending": "السرد قيد التحضير. حدّث الصفحة بعد قليل.",
-    "disclaimer": "النتيجة والأنماط محسوبة بشكل حتمي من أرقامكما (تقليد Pythagorean — Decoz, Millman) بعدسة خاصة بكل نوع علاقة. علم الأعداد أداة تأمل، لا تنبؤ."
+    "disclaimer": "النتيجة والأنماط محسوبة بشكل حتمي من أرقامكما (تقليد Pythagorean — Decoz, Millman) بعدسة خاصة بكل نوع علاقة. علم الأعداد أداة تأمل، لا تنبؤ.",
+    "monthlyPairTitle": "هذا الشهر والشهر القادم",
+    "monthlyPairPending": "يتم إنشاء السرد الزوجي..."
   },
   "talents": {
     "title": "Talents",
@@ -853,7 +855,10 @@
     "tabPerjalanan": "Journey",
     "tabPercintaan": "Love",
     "tabKeuangan": "Money",
-    "bioBorn": "وُلد"
+    "bioBorn": "وُلد",
+    "dualityTitle": "Duality {year}",
+    "dualityHint": "اقتران Essence + Personal Year — التياران اللذان تدمجهما هذا العام.",
+    "monthlyStripTitle": "Personal Month {year}"
   },
   "love": {
     "title": "الحب والعلاقات",

@@ -286,9 +286,9 @@
     "settingsLink": "設定とプロフィール",
     "meaningComingSoon": "この数字の解説は現在準備中です。今のところ、カードに表示されている数字は決定論的に計算されたものです — もっと深い文脈が知りたい場合は「AIに聞く」ページで質問してみてください。",
     "age": "年齢",
-    "minorTitle": "Minor Numbers",
+    "minorTitle": "呼び名の数",
     "bridgeTitle": "Bridge Numbers",
-    "minorHint": "呼び名から見える社交的な自分。日常での印象。",
+    "minorHint": "呼び名から見える社交的な自分。日常での印象。（Decozのマイナーは戸籍名から算出され、別物です。）",
     "bridgeHint": "二つのコア数の差。二面がどれだけ滑らかに統合するか。",
     "moreNumbersTitle": "その他の数",
     "moreNumbersHint": "Decoz 流派の第二層 — 出生名から導かれる追加の特徴。",
@@ -594,7 +594,9 @@
     "pairsTitle": "数字ペアごとの詳細",
     "pairsSubtitle": "コア数字の各ペアに、短いナラティブを用意したよ。",
     "narrativePending": "ナラティブ準備中。少し待って更新してみてね。",
-    "disclaimer": "スコアとパターンは、二人の数字からPythagoreanの伝統（Decoz、Millman）に基づき、関係性の種類のレンズを通して決定論的に計算されているよ。数秘術は予言ではなく、内省のためのツール。"
+    "disclaimer": "スコアとパターンは、二人の数字からPythagoreanの伝統（Decoz、Millman）に基づき、関係性の種類のレンズを通して決定論的に計算されているよ。数秘術は予言ではなく、内省のためのツール。",
+    "monthlyPairTitle": "今月と来月",
+    "monthlyPairPending": "ペアの物語を生成中..."
   },
   "talents": {
     "title": "Talents",
@@ -853,7 +855,10 @@
     "tabPerjalanan": "Journey",
     "tabPercintaan": "Love",
     "tabKeuangan": "Money",
-    "bioBorn": "生年月日"
+    "bioBorn": "生年月日",
+    "dualityTitle": "Duality {year}",
+    "dualityHint": "EssenceとPersonal Yearの組み合わせ — 今年あなたが統合する二つの流れ。",
+    "monthlyStripTitle": "Personal Month {year}"
   },
   "love": {
     "title": "恋愛",

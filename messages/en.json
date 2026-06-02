@@ -286,9 +286,9 @@
     "settingsLink": "Settings & profile",
     "meaningComingSoon": "We're still curating the description for this number. Meanwhile the number on the card is a deterministic calculation — you can ask the AI on \"Ask AI\" for deeper context.",
     "age": "Age",
-    "minorTitle": "Minor Numbers",
+    "minorTitle": "Call-Name Numbers",
     "bridgeTitle": "Bridge Numbers",
-    "minorHint": "The social side of your call-name: how you come across day to day.",
+    "minorHint": "The social side of your call-name: how you come across day to day. (Note: this differs from Decoz's \"Minor Numbers\" which derive from the legal short name.)",
     "bridgeHint": "The gap between two core numbers: how smoothly two sides of you integrate.",
     "moreNumbersTitle": "More Numbers",
     "moreNumbersHint": "Decoz second-tier — additional signatures from your birth name.",
@@ -594,7 +594,9 @@
     "pairsTitle": "Per-pair detail",
     "pairsSubtitle": "Short narratives for each core pair.",
     "narrativePending": "Narrative is being prepared. Refresh in a moment.",
-    "disclaimer": "Score & patterns are deterministically computed from your numbers (Pythagorean tradition — Decoz, Millman) with a per-relationship lens. Numerology is a tool for reflection, not prediction."
+    "disclaimer": "Score & patterns are deterministically computed from your numbers (Pythagorean tradition — Decoz, Millman) with a per-relationship lens. Numerology is a tool for reflection, not prediction.",
+    "monthlyPairTitle": "This month & next",
+    "monthlyPairPending": "Pair narrative is being generated..."
   },
   "talents": {
     "title": "Talents",
@@ -853,7 +855,10 @@
     "tabPerjalanan": "Journey",
     "tabPercintaan": "Love",
     "tabKeuangan": "Money",
-    "bioBorn": "Born"
+    "bioBorn": "Born",
+    "dualityTitle": "Duality {year}",
+    "dualityHint": "Essence + Personal Year pair — the two currents you're integrating this year.",
+    "monthlyStripTitle": "Personal Month {year}"
   },
   "love": {
     "title": "Love",

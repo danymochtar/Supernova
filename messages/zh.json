@@ -286,9 +286,9 @@
     "settingsLink": "设置与档案",
     "meaningComingSoon": "这个数字的解读我们还在准备中。在此期间，卡片上的数字是确定性的计算结果 —— 你可以到「Tanya AI」页面问 AI 来获得更深入的背景信息。",
     "age": "年龄",
-    "minorTitle": "Minor Numbers",
+    "minorTitle": "称呼数字",
     "bridgeTitle": "Bridge Numbers",
-    "minorHint": "你日常称呼名字的社交面：别人眼中的你。",
+    "minorHint": "你日常称呼名字的社交面 — 别人眼中的你。（与 Decoz 的 Minor 不同，后者来自法律姓名。）",
     "bridgeHint": "两个核心数字之间的差距：你的两面融合得有多顺。",
     "moreNumbersTitle": "更多数字",
     "moreNumbersHint": "Decoz 体系第二层 — 来自你出生名的额外标志。",
@@ -594,7 +594,9 @@
     "pairsTitle": "每对数字的细节",
     "pairsSubtitle": "每对核心数字的简短叙述。",
     "narrativePending": "叙述正在准备中。稍后刷新一下。",
-    "disclaimer": "分数与模式由你们的数字以确定性方式计算（Pythagorean 传统——Decoz、Millman），并根据关系类型套上对应的视角。数字命理是一种反思的工具，不是预言。"
+    "disclaimer": "分数与模式由你们的数字以确定性方式计算（Pythagorean 传统——Decoz、Millman），并根据关系类型套上对应的视角。数字命理是一种反思的工具，不是预言。",
+    "monthlyPairTitle": "本月与下月",
+    "monthlyPairPending": "配对叙述正在生成..."
   },
   "talents": {
     "title": "Talents",
@@ -853,7 +855,10 @@
     "tabPerjalanan": "Journey",
     "tabPercintaan": "Love",
     "tabKeuangan": "Money",
-    "bioBorn": "出生"
+    "bioBorn": "出生",
+    "dualityTitle": "Duality {year}",
+    "dualityHint": "Essence + Personal Year 配对 — 你今年正在融合的两股力量。",
+    "monthlyStripTitle": "Personal Month {year}"
   },
   "love": {
     "title": "爱情",
