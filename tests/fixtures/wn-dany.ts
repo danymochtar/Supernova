@@ -58,6 +58,22 @@ export const WN_DANY = {
     lifePathBirthday: 7, // |1 - 8|
   },
 
+  /** Decoz derivatives — values from PerProf "Specifics about you" page. */
+  derivatives: {
+    maturity: { compound: 6, reduced: 6 },
+    hiddenPassion: [1, 4],
+    balance: 8,
+    cornerstone: { letter: 'D', value: 4 },
+    subconsciousSelf: 9, // all 1-9 digits present in the name
+    rationalThought: 7, // Dany reduced (8) + day-of-month (17) = 25 → 7
+    planes: {
+      physical: { compound: 8, reduced: 8 },
+      mental: { compound: 15, reduced: 6 },
+      emotional: { compound: 17, reduced: 8 },
+      intuitive: { compound: 10, reduced: 1 },
+    },
+  },
+
   /** Personal Year 2026 from YearFore. */
   personalYear2026: 5,
   /** Per-month PYs for 2026 from YearFore p4. */

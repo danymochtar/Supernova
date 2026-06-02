@@ -95,4 +95,42 @@ describe('WN reference — Dany Mochtar (17 May 1995)', () => {
     expect(cycles.personalYear.reduced).toBe(WN_DANY.personalYear2026);
     expect(cycles.personalMonth.reduced).toBe(WN_DANY.personalMonths2026[6]);
   });
+
+  it('Maturity = 6/6', () => {
+    expect(core.maturity.compound).toBe(WN_DANY.derivatives.maturity.compound);
+    expect(core.maturity.reduced).toBe(WN_DANY.derivatives.maturity.reduced);
+  });
+
+  it('Hidden Passion = [1, 4]', () => {
+    expect(core.hiddenPassion).toEqual(WN_DANY.derivatives.hiddenPassion);
+  });
+
+  it('Balance = 8 (D + M initials)', () => {
+    expect(core.balance.reduced).toBe(WN_DANY.derivatives.balance);
+  });
+
+  it('Cornerstone = D (value 4)', () => {
+    expect(core.cornerstone?.letter).toBe(WN_DANY.derivatives.cornerstone.letter);
+    expect(core.cornerstone?.value).toBe(WN_DANY.derivatives.cornerstone.value);
+  });
+
+  it('Subconscious Self = 9 (all digits 1-9 present)', () => {
+    expect(core.subconsciousSelf).toBe(WN_DANY.derivatives.subconsciousSelf);
+  });
+
+  it('Rational Thought = 7', () => {
+    expect(core.rationalThought.reduced).toBe(WN_DANY.derivatives.rationalThought);
+  });
+
+  it('Planes of Expression — Physical 8, Mental 15/6, Emotional 17/8, Intuitive 10/1', () => {
+    const p = WN_DANY.derivatives.planes;
+    expect(core.planes.physical.compound).toBe(p.physical.compound);
+    expect(core.planes.physical.reduced).toBe(p.physical.reduced);
+    expect(core.planes.mental.compound).toBe(p.mental.compound);
+    expect(core.planes.mental.reduced).toBe(p.mental.reduced);
+    expect(core.planes.emotional.compound).toBe(p.emotional.compound);
+    expect(core.planes.emotional.reduced).toBe(p.emotional.reduced);
+    expect(core.planes.intuitive.compound).toBe(p.intuitive.compound);
+    expect(core.planes.intuitive.reduced).toBe(p.intuitive.reduced);
+  });
 });

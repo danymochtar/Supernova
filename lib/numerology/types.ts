@@ -42,6 +42,11 @@ export interface PeriodCycleSet {
   ageBoundaries: [number, number];
 }
 
+/** Derived second-tier numbers from Hans Decoz / WN tradition. Imported by
+ *  type-only so we don't pull a `cornerstone`/`planes` runtime dep here. */
+import type { Cornerstone } from './cornerstone';
+import type { Planes } from './planesOfExpression';
+
 export interface CoreProfile {
   lifePath: NumerologyResult;
   expression: NumerologyResult;
@@ -52,6 +57,15 @@ export interface CoreProfile {
   pinnacles: PinnacleSet;
   challenges: ChallengeSet;
   periodCycles: PeriodCycleSet;
+  // —— Decoz derivatives (added to align Supernova output with WN's
+  // Personal Profile report). All deterministic from name + DOB.
+  maturity: NumerologyResult;
+  hiddenPassion: number[];
+  balance: NumerologyResult;
+  cornerstone: Cornerstone | null;
+  subconsciousSelf: number;
+  rationalThought: NumerologyResult;
+  planes: Planes;
 }
 
 export interface PersonalCycles {
