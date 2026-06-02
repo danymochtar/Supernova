@@ -11,6 +11,7 @@ describe('Bridge Numbers', () => {
       expression: result(5),
       soulUrge: result(7),
       personality: result(7),
+      birthday: result(0),
     });
     expect(b.lifePathExpression.reduced).toBe(0);
     expect(b.soulUrgePersonality.reduced).toBe(0);
@@ -22,6 +23,7 @@ describe('Bridge Numbers', () => {
       expression: result(7),
       soulUrge: result(3),
       personality: result(8),
+      birthday: result(0),
     });
     expect(b.lifePathExpression.reduced).toBe(6); // |1 - 7|
     expect(b.soulUrgePersonality.reduced).toBe(5); // |3 - 8|
@@ -33,6 +35,7 @@ describe('Bridge Numbers', () => {
       expression: result(7),
       soulUrge: result(22), // master, single-digit form is 4
       personality: result(9),
+      birthday: result(0),
     });
     expect(b.lifePathExpression.reduced).toBe(5); // |2 - 7|
     expect(b.soulUrgePersonality.reduced).toBe(5); // |4 - 9|
@@ -48,6 +51,7 @@ describe('Bridge Numbers', () => {
       expression: result(9),
       soulUrge: result(2),
       personality: result(2),
+      birthday: result(0),
     });
     expect(b.lifePathExpression.reduced).toBe(4);
     expect(b.soulUrgePersonality.reduced).toBe(0);
@@ -59,6 +63,7 @@ describe('Bridge Numbers', () => {
       expression: result(9),
       soulUrge: result(9),
       personality: result(1),
+      birthday: result(0),
     });
     expect(b.lifePathExpression.reduced).toBe(8);
     expect(b.soulUrgePersonality.reduced).toBe(8);

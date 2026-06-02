@@ -14,14 +14,28 @@ function classify(token: string, indexInToken: number): LetterClass {
   return 'consonant';
 }
 
+/**
+ * Hans Decoz / World Numerology convention: each name-part is reduced
+ * to a single digit BEFORE the parts are summed across, AND master
+ * numbers (11/22/33) are preserved during that per-part reduction.
+ *
+ * For "Dany Mochtar" the Expression compound is 41 (Dany 17→8 + Mochtar
+ * 33-preserved = 41), not the 50 you'd get from a straight letter-by-
+ * letter sum. The reduced single digit usually coincides between both
+ * methods, but the compound — what we render as "41/5" — and the
+ * reduced-master cases diverge. We follow Decoz so our compound matches
+ * his Personal Profile output byte-for-byte.
+ */
 function sumByClass(fullName: string, want: LetterClass): number {
   let total = 0;
   for (const token of nameTokens(fullName)) {
+    let partSum = 0;
     for (let i = 0; i < token.length; i++) {
       if (classify(token, i) === want) {
-        total += LETTER_VALUES[token[i]!.toUpperCase()] ?? 0;
+        partSum += LETTER_VALUES[token[i]!.toUpperCase()] ?? 0;
       }
     }
+    if (partSum > 0) total += reducePreservingMasters(partSum);
   }
   return total;
 }
@@ -29,9 +43,11 @@ function sumByClass(fullName: string, want: LetterClass): number {
 function sumAllLetters(fullName: string): number {
   let total = 0;
   for (const token of nameTokens(fullName)) {
+    let partSum = 0;
     for (const ch of token) {
-      total += LETTER_VALUES[ch.toUpperCase()] ?? 0;
+      partSum += LETTER_VALUES[ch.toUpperCase()] ?? 0;
     }
+    if (partSum > 0) total += reducePreservingMasters(partSum);
   }
   return total;
 }

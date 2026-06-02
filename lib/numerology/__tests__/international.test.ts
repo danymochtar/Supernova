@@ -48,13 +48,13 @@ describe('international name fixtures (Pythagorean engine)', () => {
     it('Dr. Sabri Bin Basri reads as Sabri Bin Basri', () => {
       const cleaned = sanitizeNamePart('Dr. Sabri Bin Basri').cleaned;
       expect(cleaned).toBe('Sabri Bin Basri');
-      expect(expression(cleaned).compound).toBe(60);
+      expect(expression(cleaned).compound).toBe(51);
     });
 
     it('Drs. Hj. Sabri Bin Basri reads as Sabri Bin Basri', () => {
       const cleaned = sanitizeNamePart('Drs. Hj. Sabri Bin Basri').cleaned;
       expect(cleaned).toBe('Sabri Bin Basri');
-      expect(expression(cleaned).compound).toBe(60);
+      expect(expression(cleaned).compound).toBe(51);
     });
   });
 });

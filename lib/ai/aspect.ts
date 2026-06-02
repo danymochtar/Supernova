@@ -16,7 +16,7 @@ import { getCachedJson, setCachedJson } from '@/lib/db/repositories/numerologyCa
 // the version when the prompt schema changes.
 // v3: stronger un-AI voice (no em-dash, no negation framing, no English flexing).
 function cacheKey(aspectId: AspectId, year: number): string {
-  return `aspect-v3:${aspectId}:${year}`;
+  return `aspect-v4:${aspectId}:${year}`;
 }
 
 /** Read-only cache fetch — never generates. */

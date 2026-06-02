@@ -41,6 +41,9 @@ export interface Bridges {
   lifePathExpression: NumerologyResult;
   /** |SoulUrge − Personality|. Inner self ↔ outer presentation alignment. */
   soulUrgePersonality: NumerologyResult;
+  /** |LifePath − Birthday|. The third Decoz bridge — how easily your
+   *  fixed birth-day signature integrates with the broader life mission. */
+  lifePathBirthday: NumerologyResult;
 }
 
 /** Reduce a NumerologyResult to a single 1-9 digit. Master numbers
@@ -64,6 +67,7 @@ interface BridgeInput {
   expression: NumerologyResult;
   soulUrge: NumerologyResult;
   personality: NumerologyResult;
+  birthday: NumerologyResult;
 }
 
 export function bridges(core: BridgeInput): Bridges {
@@ -71,8 +75,10 @@ export function bridges(core: BridgeInput): Bridges {
   const ex = singleDigit(core.expression);
   const su = singleDigit(core.soulUrge);
   const ps = singleDigit(core.personality);
+  const bd = singleDigit(core.birthday);
   return {
     lifePathExpression: makeResult(Math.abs(lp - ex)),
     soulUrgePersonality: makeResult(Math.abs(su - ps)),
+    lifePathBirthday: makeResult(Math.abs(lp - bd)),
   };
 }

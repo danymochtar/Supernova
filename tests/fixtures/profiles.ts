@@ -36,15 +36,10 @@ export interface ReferenceProfile {
  * Computation notes for "Mary Smith" (1990-07-28):
  *  Life Path: m=7, d=28→10→1, y=1990→19→1; sum=7+1+1=9 → 9
  *  Birthday: 28 → 10 → 1
- *  Expression (M+A+R+Y + S+M+I+T+H = 4+1+9+7 + 1+4+9+2+8 = 21 + 24 = 45 → 9)
- *  Soul Urge (vowels = A in MARY (Y is vowel), I in SMITH = 1 + 7 + 9 = 17 → 8)
- *    Wait — for MARY, vowels are A and Y. A=1, Y=7. Sum=8.
- *    For SMITH, vowels are I=9. Sum=9.
- *    Total = 8 + 9 = 17 → 8.
- *  Personality (consonants = M+R + S+M+T+H = 4+9 + 1+4+2+8 = 13 + 15 = 28 → 1)
- *    Karmic debt: MARY consonants = 13 (compound) → would only be flagged if
- *    we passed the per-name compound; but Personality is computed across the
- *    entire name, so the full sum 28 is what matters.
+ *  WN/Decoz convention: per-name-part reduction (preserving 11/22/33) THEN sum.
+ *  Expression: MARY 4+1+9+7=21→3; SMITH 1+4+9+2+8=24→6. Per-part sum: 3+6=9.
+ *  Soul Urge (vowels): MARY A+Y=8 (single); SMITH I=9. Per-part sum: 8+9=17 → 8.
+ *  Personality (consonants): MARY M+R=13→4; SMITH S+M+T+H=15→6. Per-part sum: 4+6=10 → 1.
  *  Karmic lessons: digits present = {4(M),1(A,J,S),9(R,I),7(Y),2(B,T),8(H,Z)} = {1,2,4,7,8,9}; missing = {3,5,6}
  *  Pinnacles (Decoz; m=7, d=1, y=1):
  *    1st = 7+1=8; 2nd = 1+1=2; 3rd = 8+2=10→1; 4th = 7+1=8
@@ -61,9 +56,9 @@ export const referenceProfiles: ReferenceProfile[] = [
     dob: { year: 1990, month: 7, day: 28 },
     expected: {
       lifePath: { compound: 9, reduced: 9 },
-      expression: { compound: 45, reduced: 9 },
+      expression: { compound: 9, reduced: 9 },
       soulUrge: { compound: 17, reduced: 8 },
-      personality: { compound: 28, reduced: 1 },
+      personality: { compound: 10, reduced: 1 },
       birthday: { compound: 28, reduced: 1 },
       karmicLessons: [3, 5, 6],
       pinnacles: {
@@ -108,9 +103,12 @@ export const referenceProfiles: ReferenceProfile[] = [
     dob: { year: 1940, month: 10, day: 9 },
     expected: {
       lifePath: { compound: 15, reduced: 6 },
-      expression: { compound: 82, reduced: 1 },
-      soulUrge: { compound: 32, reduced: 5 },
-      personality: { compound: 50, reduced: 5 },
+      // WN per-part: JOHN 20→2; WINSTON 33→33 (master); LENNON 29→11 (master). 2+33+11=46.
+      expression: { compound: 46, reduced: 1 },
+      // Vowels: JOHN O=6; WINSTON I+O=15→6; LENNON E+O=11(master). 6+6+11=23.
+      soulUrge: { compound: 23, reduced: 5 },
+      // Consonants: JOHN J+H+N=14→5; WINSTON W+N+S+T+N=18→9; LENNON L+N+N+N=18→9. 5+9+9=23.
+      personality: { compound: 23, reduced: 5 },
       birthday: { compound: 9, reduced: 9 },
       karmicLessons: [4, 7],
       pinnacles: {
@@ -151,9 +149,13 @@ export const referenceProfiles: ReferenceProfile[] = [
     dob: { year: 1985, month: 3, day: 11 },
     expected: {
       lifePath: { compound: 19, reduced: 1, karmicDebt: 19 },
-      expression: { compound: 40, reduced: 4 },
-      soulUrge: { compound: 19, reduced: 1, karmicDebt: 19 },
-      personality: { compound: 21, reduced: 3 },
+      // WN per-part: YVONNE 32→5; TAN 8. Sum 5+8=13 (karmic 13!).
+      expression: { compound: 13, reduced: 4, karmicDebt: 13 },
+      // Vowels: YVONNE Y+O+E=18→9; TAN A=1. Sum 9+1=10. (Old straight-sum
+      // would give 19/karmic; per WN's per-part method, no karmic here.)
+      soulUrge: { compound: 10, reduced: 1 },
+      // Consonants: YVONNE V+N+N=14→5; TAN T+N=7. Sum 5+7=12.
+      personality: { compound: 12, reduced: 3 },
       birthday: { compound: 11, reduced: 11, isMaster: true },
       karmicLessons: [3, 8, 9],
       pinnacles: {
@@ -194,9 +196,13 @@ export const referenceProfiles: ReferenceProfile[] = [
     dob: { year: 2000, month: 2, day: 29 },
     expected: {
       lifePath: { compound: 15, reduced: 6 },
-      expression: { compound: 37, reduced: 1 },
-      soulUrge: { compound: 18, reduced: 9 },
-      personality: { compound: 19, reduced: 1, karmicDebt: 19 },
+      // WN per-part: BRYAN 24→6; LEE 13→4. Sum 6+4=10.
+      expression: { compound: 10, reduced: 1 },
+      // Vowels: BRYAN Y+A=8; LEE E+E=10→1. Sum 8+1=9.
+      soulUrge: { compound: 9, reduced: 9 },
+      // Consonants: BRYAN B+R+N=16→7; LEE L=3. Sum 7+3=10. (Old straight-sum
+      // gave 19/karmic; per WN's per-part method, no karmic.)
+      personality: { compound: 10, reduced: 1 },
       birthday: { compound: 29, reduced: 11, isMaster: true },
       karmicLessons: [4, 6, 8],
       pinnacles: {
@@ -237,8 +243,11 @@ export const referenceProfiles: ReferenceProfile[] = [
     dob: { year: 1992, month: 11, day: 22 },
     expected: {
       lifePath: { compound: 36, reduced: 9 },
-      expression: { compound: 42, reduced: 6 },
+      // WN per-part: DANY 17→8; PRATAMA 25→7. Sum 8+7=15.
+      expression: { compound: 15, reduced: 6 },
+      // Vowels: DANY A+Y=8; PRATAMA A+A+A=3. Sum 11 (master).
       soulUrge: { compound: 11, reduced: 11, isMaster: true },
+      // Consonants: DANY D+N=9; PRATAMA P+R+T+M=22 (master). Sum 9+22=31.
       personality: { compound: 31, reduced: 4 },
       birthday: { compound: 22, reduced: 22, isMaster: true },
       karmicLessons: [3, 6, 8],
