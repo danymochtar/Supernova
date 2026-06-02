@@ -211,3 +211,92 @@ export function TappableTransitChip({
     </>
   );
 }
+
+interface CycleRow {
+  slot: 1 | 2 | 3;
+  range: string;
+  reduced: number;
+  compound: number;
+  isMaster: boolean;
+  meaning: string | null;
+  isActive: boolean;
+}
+
+/**
+ * Period Cycle table — three rows (childhood / middle / late). Each row
+ * is tap-to-detail: modal shows the cycle slot + age range + reduced
+ * number + its meaning from content/meanings.
+ */
+export function PeriodCycleTable({
+  rows,
+  labels,
+}: {
+  rows: CycleRow[];
+  labels: {
+    cycle: string;
+    ageRange: string;
+    number: string;
+    now: string;
+    modalTitlePrefix: string;
+    comingSoon: string;
+  };
+}) {
+  const [active, setActive] = useState<CycleRow | null>(null);
+  return (
+    <>
+      <div className="border-border overflow-hidden rounded-xl border">
+        <table className="w-full text-sm">
+          <thead className="bg-muted/50 text-muted-foreground text-xs uppercase tracking-wide">
+            <tr>
+              <th className="px-4 py-2 text-left font-medium">{labels.cycle}</th>
+              <th className="px-4 py-2 text-left font-medium">{labels.ageRange}</th>
+              <th className="px-4 py-2 text-left font-medium">{labels.number}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row) => (
+              <tr
+                key={row.slot}
+                onClick={() => setActive(row)}
+                className={`press-soft hover:bg-muted/30 cursor-pointer border-t transition-colors ${row.isActive ? 'bg-primary/5' : ''}`}
+              >
+                <td className="px-4 py-3 font-medium">
+                  {row.slot}
+                  {row.isActive ? (
+                    <span className="text-primary ml-2 text-[10px] uppercase tracking-wider">
+                      {labels.now}
+                    </span>
+                  ) : null}
+                </td>
+                <td className="text-muted-foreground px-4 py-3 tabular-nums">{row.range}</td>
+                <td className="px-4 py-3 font-mono text-base font-semibold tabular-nums">
+                  {row.reduced}
+                  {row.isMaster ? (
+                    <span className="text-primary ml-1 text-[10px] font-semibold uppercase tracking-wider">
+                      master
+                    </span>
+                  ) : null}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <DetailModal
+        open={active !== null}
+        onClose={() => setActive(null)}
+        title={
+          active
+            ? `${labels.modalTitlePrefix} ${active.slot} · ${labels.ageRange.toLowerCase()} ${active.range}`
+            : ''
+        }
+        value={
+          active ? (
+            <span className="font-mono text-4xl font-semibold tabular-nums">{active.reduced}</span>
+          ) : null
+        }
+        body={active?.meaning ?? labels.comingSoon}
+      />
+    </>
+  );
+}

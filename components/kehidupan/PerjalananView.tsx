@@ -19,7 +19,7 @@ import { meaningFor } from '@/lib/numerology/meanings';
 import type { NumerologyResult } from '@/lib/numerology';
 import { CompoundReduced } from '@/components/numerology/CompoundReduced';
 import { Explainer } from '@/components/layout/Explainer';
-import { DualityCard, MonthlyPMStrip, TappableTransitChip } from '@/components/kehidupan/JourneyTappables';
+import { DualityCard, MonthlyPMStrip, PeriodCycleTable, TappableTransitChip } from '@/components/kehidupan/JourneyTappables';
 import {
   YearOutlookBody,
   YearOutlookBodyFallback,
@@ -363,35 +363,25 @@ export async function PerjalananView({
           <p className="text-muted-foreground text-sm">{t('cyclesSubtitle')}</p>
           <Explainer title={t('explainerLearnMore')} body={t('cycleExplainer')} />
         </div>
-        <div className="border-border overflow-hidden rounded-xl border">
-          <table className="w-full text-sm">
-            <thead className="bg-muted/50 text-muted-foreground text-xs uppercase tracking-wide">
-              <tr>
-                <th className="px-4 py-2 text-left font-medium">{tDash('cycle')}</th>
-                <th className="px-4 py-2 text-left font-medium">{tDash('ageRange')}</th>
-                <th className="px-4 py-2 text-left font-medium">{tDash('number')}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {cycleRows.map((row) => (
-                <tr key={row.slot} className={`border-t ${row.isActive ? 'bg-primary/5' : ''}`}>
-                  <td className="px-4 py-3 font-medium">
-                    {row.slot}
-                    {row.isActive ? (
-                      <span className="text-primary ml-2 text-[10px] uppercase tracking-wider">
-                        {tDash('now')}
-                      </span>
-                    ) : null}
-                  </td>
-                  <td className="text-muted-foreground px-4 py-3 tabular-nums">{row.range}</td>
-                  <td className="px-4 py-3">
-                    <CompoundReduced result={row.cycle} locale={locale} size="sm" />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <PeriodCycleTable
+          rows={cycleRows.map((row) => ({
+            slot: row.slot,
+            range: row.range,
+            reduced: row.cycle.reduced,
+            compound: row.cycle.compound,
+            isMaster: row.cycle.isMaster,
+            isActive: row.isActive,
+            meaning: meaningFor('cycle', row.cycle, locale),
+          }))}
+          labels={{
+            cycle: tDash('cycle'),
+            ageRange: tDash('ageRange'),
+            number: tDash('number'),
+            now: tDash('now'),
+            modalTitlePrefix: tDash('cycle'),
+            comingSoon: t('comingSoon'),
+          }}
+        />
       </section>
 
       {/* Essence Cycle */}
