@@ -289,7 +289,20 @@
     "minorTitle": "Minor Numbers",
     "bridgeTitle": "Bridge Numbers",
     "minorHint": "你日常称呼名字的社交面：别人眼中的你。",
-    "bridgeHint": "两个核心数字之间的差距：你的两面融合得有多顺。"
+    "bridgeHint": "两个核心数字之间的差距：你的两面融合得有多顺。",
+    "moreNumbersTitle": "更多数字",
+    "moreNumbersHint": "Decoz 体系第二层 — 来自你出生名的额外标志。",
+    "maturity": "Maturity",
+    "hiddenPassion": "Hidden Passion",
+    "balance": "Balance",
+    "cornerstone": "Cornerstone",
+    "subconsciousSelf": "Subconscious Self",
+    "rationalThought": "Rational Thought",
+    "planes": "Planes of Expression",
+    "physical": "Physical",
+    "mental": "Mental",
+    "emotional": "Emotional",
+    "intuitive": "Intuitive"
   },
   "reading": {
     "title": "每日解读",

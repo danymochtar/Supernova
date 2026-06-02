@@ -289,7 +289,20 @@
     "minorTitle": "Minor Numbers",
     "bridgeTitle": "Bridge Numbers",
     "minorHint": "الجانب الاجتماعي لاسم مناداتك: كيف تبدو في حياتك اليومية.",
-    "bridgeHint": "الفجوة بين رقمين أساسيين: مدى انسجام جانبيك."
+    "bridgeHint": "الفجوة بين رقمين أساسيين: مدى انسجام جانبيك.",
+    "moreNumbersTitle": "أرقام إضافية",
+    "moreNumbersHint": "الطبقة الثانية من تقليد ديكوز — توقيعات إضافية من اسمك عند الولادة.",
+    "maturity": "Maturity",
+    "hiddenPassion": "Hidden Passion",
+    "balance": "Balance",
+    "cornerstone": "Cornerstone",
+    "subconsciousSelf": "Subconscious Self",
+    "rationalThought": "Rational Thought",
+    "planes": "Planes of Expression",
+    "physical": "Physical",
+    "mental": "Mental",
+    "emotional": "Emotional",
+    "intuitive": "Intuitive"
   },
   "reading": {
     "title": "قراءة اليوم",

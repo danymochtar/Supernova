@@ -289,7 +289,20 @@
     "minorTitle": "Minor Numbers",
     "bridgeTitle": "Bridge Numbers",
     "minorHint": "呼び名から見える社交的な自分。日常での印象。",
-    "bridgeHint": "二つのコア数の差。二面がどれだけ滑らかに統合するか。"
+    "bridgeHint": "二つのコア数の差。二面がどれだけ滑らかに統合するか。",
+    "moreNumbersTitle": "その他の数",
+    "moreNumbersHint": "Decoz 流派の第二層 — 出生名から導かれる追加の特徴。",
+    "maturity": "Maturity",
+    "hiddenPassion": "Hidden Passion",
+    "balance": "Balance",
+    "cornerstone": "Cornerstone",
+    "subconsciousSelf": "Subconscious Self",
+    "rationalThought": "Rational Thought",
+    "planes": "Planes of Expression",
+    "physical": "Physical",
+    "mental": "Mental",
+    "emotional": "Emotional",
+    "intuitive": "Intuitive"
   },
   "reading": {
     "title": "今日のリーディング",

@@ -1,4 +1,6 @@
 import { bridges, formatNumerology, type MinorNumbers, type NumerologyResult } from '@/lib/numerology';
+import type { Cornerstone } from '@/lib/numerology/cornerstone';
+import type { Planes } from '@/lib/numerology/planesOfExpression';
 import type { Locale } from '@/lib/i18n/config';
 import { localizeEnglishPrompt } from './_localize';
 import { VOICE_ID, VOICE_EN } from './_voice';
@@ -18,6 +20,18 @@ export interface AboutMeInput {
    * will omit the minorNarrative card. */
   minor: MinorNumbers | null;
   karmicLessons: number[];
+  /** Decoz second-tier derivatives (added so the synthesis can subtly
+   *  weave Hidden Passion / Cornerstone / Planes signatures when
+   *  natural). Optional — when absent the prompt skips that block. */
+  derivatives?: {
+    maturity: NumerologyResult;
+    hiddenPassion: number[];
+    balance: NumerologyResult;
+    cornerstone: Cornerstone | null;
+    subconsciousSelf: number;
+    rationalThought: NumerologyResult;
+    planes: Planes;
+  } | null;
   preferredModel?: string | null;
 }
 
@@ -107,6 +121,20 @@ export function buildAboutMeUser(input: AboutMeInput): string {
   const km = input.karmicLessons.length ? input.karmicLessons.join(', ') : 'none';
   const includeKarmic = input.karmicLessons.length > 0;
   const br = bridges(input.core);
+  const d = input.derivatives;
+  const derivativesBlock = d
+    ? `
+
+Decoz second-tier signatures (use as flavor in the synthesis — do NOT name them explicitly in the output):
+- Maturity: ${r(d.maturity)} (the "real you" that emerges as mission and toolkit integrate)
+- Hidden Passion: ${d.hiddenPassion.join(', ') || 'none'} (what you're naturally drawn to without pushing)
+- Balance: ${r(d.balance)} (default settle-mode under stress)
+- Cornerstone: ${d.cornerstone ? `${d.cornerstone.letter} (value ${d.cornerstone.value})` : 'none'} (default opening move)
+- Subconscious Self: ${d.subconsciousSelf}/9 (stability under pressure; lower = fewer auto-resources)
+- Rational Thought: ${r(d.rationalThought)} (default analytical mode)
+- Planes of Expression — Physical ${r(d.planes.physical)}, Mental ${r(d.planes.mental)}, Emotional ${r(d.planes.emotional)}, Intuitive ${r(d.planes.intuitive)} (which "mode of being" the person naturally lives in; weighted distribution colors how they show up)
+These derivatives let you weave subtle character details that aren't in the five core numbers alone — e.g. a strong Intuitive plane + Hidden Passion 7 signals a thinker who trusts gut leaps. Lift one or two threads into the synthesis when they genuinely sharpen the portrait; do NOT enumerate them.`
+    : '';
   const minorBlock = input.minor
     ? `
 
@@ -131,7 +159,7 @@ Karmic Lessons: ${km}
 Bridge Numbers (gap between paired core numbers — informs how easily two facets integrate):
 - Life Path × Expression bridge: ${br.lifePathExpression.reduced} (talent ↔ mission alignment)
 - Soul Urge × Personality bridge: ${br.soulUrgePersonality.reduced} (inner self ↔ outer presentation alignment)
-Use these to write "bridgeNarrative" in plain human language — small bridges = smooth integration, large bridges = the person is stretched between two facets and growth lives in the gap. Also let them subtly color the opening synthesis tone. Do NOT mention bridge numbers literally in the output.${minorBlock}
+Use these to write "bridgeNarrative" in plain human language — small bridges = smooth integration, large bridges = the person is stretched between two facets and growth lives in the gap. Also let them subtly color the opening synthesis tone. Do NOT mention bridge numbers literally in the output.${minorBlock}${derivativesBlock}
 </profile>
 
 Return JSON. ${

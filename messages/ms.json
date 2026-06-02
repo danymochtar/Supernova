@@ -289,7 +289,20 @@
     "minorTitle": "Minor Numbers",
     "bridgeTitle": "Bridge Numbers",
     "minorHint": "Sisi sosial nama panggilanmu: bagaimana kamu tampil setiap hari.",
-    "bridgeHint": "Jurang antara dua nombor teras: betapa lancar dua sisi dirimu bersatu."
+    "bridgeHint": "Jurang antara dua nombor teras: betapa lancar dua sisi dirimu bersatu.",
+    "moreNumbersTitle": "Nombor tambahan",
+    "moreNumbersHint": "Lapis kedua tradisi Decoz daripada nama lahir kamu.",
+    "maturity": "Maturity",
+    "hiddenPassion": "Hidden Passion",
+    "balance": "Balance",
+    "cornerstone": "Cornerstone",
+    "subconsciousSelf": "Subconscious Self",
+    "rationalThought": "Rational Thought",
+    "planes": "Planes of Expression",
+    "physical": "Physical",
+    "mental": "Mental",
+    "emotional": "Emotional",
+    "intuitive": "Intuitive"
   },
   "reading": {
     "title": "Bacaan harian",

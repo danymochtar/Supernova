@@ -343,7 +343,20 @@
     "minorTitle": "Minor Numbers",
     "bridgeTitle": "Bridge Numbers",
     "minorHint": "Sisi sosial dari nama panggilanmu: gimana kamu muncul pas dipanggil sehari-hari.",
-    "bridgeHint": "Selisih antara dua angka inti: seberapa mulus dua sisi dirimu nyatu."
+    "bridgeHint": "Selisih antara dua angka inti: seberapa mulus dua sisi dirimu nyatu.",
+    "moreNumbersTitle": "Angka tambahan",
+    "moreNumbersHint": "Lapis kedua dari tradisi Decoz — signature ekstra dari nama akta kamu.",
+    "maturity": "Maturity",
+    "hiddenPassion": "Hidden Passion",
+    "balance": "Balance",
+    "cornerstone": "Cornerstone",
+    "subconsciousSelf": "Subconscious Self",
+    "rationalThought": "Rational Thought",
+    "planes": "Planes of Expression",
+    "physical": "Physical",
+    "mental": "Mental",
+    "emotional": "Emotional",
+    "intuitive": "Intuitive"
   },
   "reading": {
     "title": "Bacaan harian",

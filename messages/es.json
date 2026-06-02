@@ -289,7 +289,20 @@
     "minorTitle": "Minor Numbers",
     "bridgeTitle": "Bridge Numbers",
     "minorHint": "El lado social de tu apodo: cómo te perciben a diario.",
-    "bridgeHint": "La distancia entre dos números centrales: qué tan bien integras dos lados de ti."
+    "bridgeHint": "La distancia entre dos números centrales: qué tan bien integras dos lados de ti.",
+    "moreNumbersTitle": "Más números",
+    "moreNumbersHint": "Segunda capa Decoz — firmas adicionales de tu nombre de nacimiento.",
+    "maturity": "Maturity",
+    "hiddenPassion": "Hidden Passion",
+    "balance": "Balance",
+    "cornerstone": "Cornerstone",
+    "subconsciousSelf": "Subconscious Self",
+    "rationalThought": "Rational Thought",
+    "planes": "Planes of Expression",
+    "physical": "Physical",
+    "mental": "Mental",
+    "emotional": "Emotional",
+    "intuitive": "Intuitive"
   },
   "reading": {
     "title": "Lectura diaria",

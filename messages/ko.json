@@ -289,7 +289,20 @@
     "minorTitle": "Minor Numbers",
     "bridgeTitle": "Bridge Numbers",
     "minorHint": "애칭에서 드러나는 사회적 모습. 일상에서의 인상.",
-    "bridgeHint": "두 핵심 숫자 사이의 간극. 두 면이 얼마나 매끄럽게 통합되는지."
+    "bridgeHint": "두 핵심 숫자 사이의 간극. 두 면이 얼마나 매끄럽게 통합되는지.",
+    "moreNumbersTitle": "추가 숫자",
+    "moreNumbersHint": "Decoz 전통의 두 번째 층 — 본명에서 도출된 추가 시그니처.",
+    "maturity": "Maturity",
+    "hiddenPassion": "Hidden Passion",
+    "balance": "Balance",
+    "cornerstone": "Cornerstone",
+    "subconsciousSelf": "Subconscious Self",
+    "rationalThought": "Rational Thought",
+    "planes": "Planes of Expression",
+    "physical": "Physical",
+    "mental": "Mental",
+    "emotional": "Emotional",
+    "intuitive": "Intuitive"
   },
   "reading": {
     "title": "오늘의 리딩",

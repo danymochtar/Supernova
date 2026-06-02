@@ -289,7 +289,20 @@
     "minorTitle": "Minor Numbers",
     "bridgeTitle": "Bridge Numbers",
     "minorHint": "The social side of your call-name: how you come across day to day.",
-    "bridgeHint": "The gap between two core numbers: how smoothly two sides of you integrate."
+    "bridgeHint": "The gap between two core numbers: how smoothly two sides of you integrate.",
+    "moreNumbersTitle": "More Numbers",
+    "moreNumbersHint": "Decoz second-tier — additional signatures from your birth name.",
+    "maturity": "Maturity",
+    "hiddenPassion": "Hidden Passion",
+    "balance": "Balance",
+    "cornerstone": "Cornerstone",
+    "subconsciousSelf": "Subconscious Self",
+    "rationalThought": "Rational Thought",
+    "planes": "Planes of Expression",
+    "physical": "Physical",
+    "mental": "Mental",
+    "emotional": "Emotional",
+    "intuitive": "Intuitive"
   },
   "reading": {
     "title": "Daily reading",

@@ -8,6 +8,7 @@ import { meaningFor } from '@/lib/numerology/meanings';
 import { displayName } from '@/lib/profile/displayName';
 import { AboutMeAsync, AboutMeSkeleton } from '@/components/numerology/AboutMeAsync';
 import { AboutFunFactAsync, AboutFunFactSkeleton } from '@/components/numerology/AboutFunFactAsync';
+import { MoreNumbersWidget } from '@/components/numerology/MoreNumbersWidget';
 import { KarmicLessonsList } from '@/components/numerology/KarmicLessonsList';
 import { Widget } from '@/components/layout/Widget';
 import { Explainer } from '@/components/layout/Explainer';
@@ -57,6 +58,15 @@ export async function TentangView({
     },
     minor,
     karmicLessons: core.karmicLessons,
+    derivatives: {
+      maturity: core.maturity,
+      hiddenPassion: core.hiddenPassion,
+      balance: core.balance,
+      cornerstone: core.cornerstone,
+      subconsciousSelf: core.subconsciousSelf,
+      rationalThought: core.rationalThought,
+      planes: core.planes,
+    },
     preferredModel: profile.preferredModel,
   };
 
@@ -147,6 +157,34 @@ export async function TentangView({
           />
         </div>
       </Widget>
+
+      <MoreNumbersWidget
+        locale={locale}
+        derivatives={{
+          maturity: core.maturity,
+          hiddenPassion: core.hiddenPassion,
+          balance: core.balance,
+          cornerstone: core.cornerstone,
+          subconsciousSelf: core.subconsciousSelf,
+          rationalThought: core.rationalThought,
+          planes: core.planes,
+        }}
+        labels={{
+          title: t('moreNumbersTitle'),
+          hint: t('moreNumbersHint'),
+          maturity: t('maturity'),
+          hiddenPassion: t('hiddenPassion'),
+          balance: t('balance'),
+          cornerstone: t('cornerstone'),
+          subconsciousSelf: t('subconsciousSelf'),
+          rationalThought: t('rationalThought'),
+          planes: t('planes'),
+          physical: t('physical'),
+          mental: t('mental'),
+          emotional: t('emotional'),
+          intuitive: t('intuitive'),
+        }}
+      />
     </div>
   );
 }
