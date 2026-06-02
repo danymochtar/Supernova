@@ -454,7 +454,19 @@
     "personalYearExplainer": "El Personal Year (PY) es el tema central de tu vida durante los próximos 12 meses. Se mueve en un ciclo del 1 al 9 que se repite toda la vida — año 1 = empezar algo nuevo, año 5 = cambios y movimiento, año 9 = cierre antes de un nuevo ciclo. Se calcula sumando (mes + día de nacimiento + año actual). Si el compound es 13/14/16/19, hay un karmic debt que añade otra dimensión de aprendizaje.",
     "pinnacleExplainer": "Los Pinnacles = los cuatro grandes capítulos de tu vida, cada uno con un tema dominante durante varios años. El Pinnacle 1 dura hasta los (36 − Life Path) años; los siguientes vienen cada 9 años. Cada Pinnacle viene acompañado de un Challenge — la prueba o carencia principal de ese capítulo. El Pinnacle te dice qué está cocinando la vida; el Challenge te dice qué tienes que entrenar.",
     "cycleExplainer": "Los Period Cycle = tres grandes olas de vida. Ola 1 (Formative, ~nacimiento-28 años) viene del mes de nacimiento; Ola 2 (Productive, ~28-56) del día; Ola 3 (Harvest, ~56+) del año. Diferencia con los Pinnacles: los Pinnacles son el TEMA del capítulo, los Period Cycles son el TELÓN energético detrás.",
-    "essenceExplainer": "El Essence Cycle es la capa más personal — lee las letras de tu nombre. Cada letra \"vive\" tantos años como su valor pitagórico (D=4 → 4 años, Y=7 → 7 años, etc). Tres corrientes corren en paralelo: Physical (nombre, vinculado a lo físico y al trabajo), Mental (middle name, si lo hay — vinculado a la mente), Spiritual (apellido, al crecimiento interno y relaciones). Essence = suma de las letras activas. El karmic debt 13/14/16/19 se mantiene, no se reduce — es señal de un año que trae una lección especial."
+    "essenceExplainer": "El Essence Cycle es la capa más personal — lee las letras de tu nombre. Cada letra \"vive\" tantos años como su valor pitagórico (D=4 → 4 años, Y=7 → 7 años, etc). Tres corrientes corren en paralelo: Physical (nombre, vinculado a lo físico y al trabajo), Mental (middle name, si lo hay — vinculado a la mente), Spiritual (apellido, al crecimiento interno y relaciones). Essence = suma de las letras activas. El karmic debt 13/14/16/19 se mantiene, no se reduce — es señal de un año que trae una lección especial.",
+    "dualityTitle": "Duality {year}",
+    "dualityHint": "Par Essence + Personal Year — las dos corrientes que estás integrando este año.",
+    "monthlyStripTitle": "Personal Month {year}",
+    "dualityExplainerTitle": "Duality (Decoz)",
+    "dualityExplainerBody": "Duality {year} = the Essence + Personal Year pair. Essence comes from the letters of your birth name currently \"alive\" at this age (long-range, letter cycle), while Personal Year sets the calendar-year vibe. The pair shows the two currents you're integrating this year — one from your identity structure (Essence), one from the year's rhythm (PY). Aligned, the year feels solid; tugging, that's where the growth lives.",
+    "personalMonthLabel": "Personal Month",
+    "physicalTransitExplainerTitle": "Physical Transit",
+    "physicalTransitExplainerBody": "The letter from your first name currently active at this age, coloring the physical / action / immediate-environment level of life. Value {value} captures the energy's flavor. The letter lives for its numeric value (e.g. a 7-letter lives 7 years), then the next letter in the name takes over.",
+    "mentalTransitExplainerTitle": "Mental Transit",
+    "mentalTransitExplainerBody": "The letter from your middle name currently active, coloring how you think / analyze / approach in this period. Value {value} = the energy flavor. Lives for its numeric value, then shifts to the next letter.",
+    "spiritualTransitExplainerTitle": "Spiritual Transit",
+    "spiritualTransitExplainerBody": "The letter from your last name currently active, coloring your inner / meaning / spiritual layer. Value {value} = the flavor. Duration = the digit value (e.g. R=9 lives 9 years)."
   },
   "people": {
     "title": "People",
@@ -865,10 +877,7 @@
     "tabPerjalanan": "Journey",
     "tabPercintaan": "Love",
     "tabKeuangan": "Money",
-    "bioBorn": "Nació",
-    "dualityTitle": "Duality {year}",
-    "dualityHint": "Par Essence + Personal Year — las dos corrientes que estás integrando este año.",
-    "monthlyStripTitle": "Personal Month {year}"
+    "bioBorn": "Nació"
   },
   "love": {
     "title": "Amor",

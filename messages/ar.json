@@ -454,7 +454,19 @@
     "personalYearExplainer": "Personal Year (PY) هو الموضوع الرئيسي لحياتك خلال الـ 12 شهرًا القادمة. يتحرك في دورة من 1→9 تتكرر طوال حياتك — السنة 1 = بداية شيء جديد، السنة 5 = تغيير وحركة، السنة 9 = إنهاء قبل دورة جديدة. يُحسب من (الشهر + يوم الميلاد + السنة الحالية). إذا كان الرقم المركب 13/14/16/19، فهناك karmic debt يضيف بُعدًا من الدروس.",
     "pinnacleExplainer": "Pinnacle = أربعة فصول كبرى في حياتك، كل واحد يحمل موضوعًا مهيمنًا لسنوات. Pinnacle 1 يستمر حتى عمر (36 − Life Path)؛ ثم تتوالى البقية بفاصل 9 سنوات. كل Pinnacle يأتي مقترنًا بـ Challenge — النقص أو الاختبار الأساسي في ذلك الفصل. Pinnacle يخبرك بما تطبخه الحياة لك؛ Challenge يخبرك بما يجب أن تتدرب عليه.",
     "cycleExplainer": "Period Cycle = ثلاث موجات كبرى في الحياة. الموجة 1 (Formative، من الولادة حتى ~28) تُحدد من شهر الميلاد؛ الموجة 2 (Productive، ~28-56) من يوم الميلاد؛ الموجة 3 (Harvest، ~56+) من سنة الميلاد. الفرق عن Pinnacle: Pinnacle هو موضوع الفصل، أما Period Cycle فهو الخلفية الطاقية وراءه.",
-    "essenceExplainer": "Essence Cycle هو الطبقة الأكثر شخصية — يقرأ الأحرف الموجودة في اسمك. كل حرف \"ينبض بالحياة\" بمقدار قيمته في Pythagorean (D=4 → 4 سنوات، Y=7 → 7 سنوات، وهكذا). ثلاثة تيارات تجري بالتوازي: Physical (الاسم الأول، يرتبط بالجسد والعمل)، Mental (الاسم الأوسط، إن وُجد — يرتبط بالعقل)، Spiritual (الاسم الأخير، يرتبط بالنمو الداخلي والعلاقات). Essence = مجموع الأحرف النشطة. karmic debt 13/14/16/19 يبقى كما هو ولا يُبسَّط — إنه إشارة لسنة تحمل درسًا خاصًا."
+    "essenceExplainer": "Essence Cycle هو الطبقة الأكثر شخصية — يقرأ الأحرف الموجودة في اسمك. كل حرف \"ينبض بالحياة\" بمقدار قيمته في Pythagorean (D=4 → 4 سنوات، Y=7 → 7 سنوات، وهكذا). ثلاثة تيارات تجري بالتوازي: Physical (الاسم الأول، يرتبط بالجسد والعمل)، Mental (الاسم الأوسط، إن وُجد — يرتبط بالعقل)، Spiritual (الاسم الأخير، يرتبط بالنمو الداخلي والعلاقات). Essence = مجموع الأحرف النشطة. karmic debt 13/14/16/19 يبقى كما هو ولا يُبسَّط — إنه إشارة لسنة تحمل درسًا خاصًا.",
+    "dualityTitle": "Duality {year}",
+    "dualityHint": "اقتران Essence + Personal Year — التياران اللذان تدمجهما هذا العام.",
+    "monthlyStripTitle": "Personal Month {year}",
+    "dualityExplainerTitle": "Duality (Decoz)",
+    "dualityExplainerBody": "Duality {year} = the Essence + Personal Year pair. Essence comes from the letters of your birth name currently \"alive\" at this age (long-range, letter cycle), while Personal Year sets the calendar-year vibe. The pair shows the two currents you're integrating this year — one from your identity structure (Essence), one from the year's rhythm (PY). Aligned, the year feels solid; tugging, that's where the growth lives.",
+    "personalMonthLabel": "Personal Month",
+    "physicalTransitExplainerTitle": "Physical Transit",
+    "physicalTransitExplainerBody": "The letter from your first name currently active at this age, coloring the physical / action / immediate-environment level of life. Value {value} captures the energy's flavor. The letter lives for its numeric value (e.g. a 7-letter lives 7 years), then the next letter in the name takes over.",
+    "mentalTransitExplainerTitle": "Mental Transit",
+    "mentalTransitExplainerBody": "The letter from your middle name currently active, coloring how you think / analyze / approach in this period. Value {value} = the energy flavor. Lives for its numeric value, then shifts to the next letter.",
+    "spiritualTransitExplainerTitle": "Spiritual Transit",
+    "spiritualTransitExplainerBody": "The letter from your last name currently active, coloring your inner / meaning / spiritual layer. Value {value} = the flavor. Duration = the digit value (e.g. R=9 lives 9 years)."
   },
   "people": {
     "title": "People",
@@ -865,10 +877,7 @@
     "tabPerjalanan": "Journey",
     "tabPercintaan": "Love",
     "tabKeuangan": "Money",
-    "bioBorn": "وُلد",
-    "dualityTitle": "Duality {year}",
-    "dualityHint": "اقتران Essence + Personal Year — التياران اللذان تدمجهما هذا العام.",
-    "monthlyStripTitle": "Personal Month {year}"
+    "bioBorn": "وُلد"
   },
   "love": {
     "title": "الحب والعلاقات",

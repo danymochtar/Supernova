@@ -454,7 +454,19 @@
     "personalYearExplainer": "Personal Year（PY）は、これから12ヶ月のあなたの人生のメインテーマ。1→9のサイクルを一生繰り返します — 1年目 = 新しい何かのスタート、5年目 = 変化と動き、9年目 = 新しいサイクル前の締めくくり。（誕生月 + 誕生日 + 現在の年）から計算されます。compoundが13/14/16/19の場合、karmic debtが加わって学びの次元が深まります。",
     "pinnacleExplainer": "Pinnacle = あなたの人生の4つの大きな章。それぞれ何年にもわたって支配的なテーマを運んできます。Pinnacle 1は（36 − Life Path）歳まで続き、その後は9年ごとに切り替わり。各PinnacleはChallengeとペアでやってきます — その章での主な弱点や試練です。Pinnacleは人生が何を料理しているかを教え、Challengeは何を鍛えるべきかを教えてくれます。",
     "cycleExplainer": "Period Cycle = 人生の3つの大きな波。波1（Formative、〜誕生〜28歳）は誕生月から、波2（Productive、〜28〜56歳）は誕生日から、波3（Harvest、〜56歳〜）は誕生年から決まります。Pinnacleとの違い: Pinnacleは章のテーマ、Period Cycleはその背後にあるエネルギーのバックドロップです。",
-    "essenceExplainer": "Essence Cycleは一番パーソナルなレイヤー — あなたの名前の文字を読み取ります。各文字はPythagorean値の分だけ「生きる」（D=4 → 4年、Y=7 → 7年、など）。3つの流れが並行して進みます: Physical（ファーストネーム、身体と仕事に関係）、Mental（ミドルネーム、あれば — 思考に関係）、Spiritual（ラストネーム、内面の成長と人間関係に関係）。Essence = アクティブな文字の合計値。karmic debt 13/14/16/19はそのまま残り、reduceされません — それは特別な学びをもたらす年のサインです。"
+    "essenceExplainer": "Essence Cycleは一番パーソナルなレイヤー — あなたの名前の文字を読み取ります。各文字はPythagorean値の分だけ「生きる」（D=4 → 4年、Y=7 → 7年、など）。3つの流れが並行して進みます: Physical（ファーストネーム、身体と仕事に関係）、Mental（ミドルネーム、あれば — 思考に関係）、Spiritual（ラストネーム、内面の成長と人間関係に関係）。Essence = アクティブな文字の合計値。karmic debt 13/14/16/19はそのまま残り、reduceされません — それは特別な学びをもたらす年のサインです。",
+    "dualityTitle": "Duality {year}",
+    "dualityHint": "EssenceとPersonal Yearの組み合わせ — 今年あなたが統合する二つの流れ。",
+    "monthlyStripTitle": "Personal Month {year}",
+    "dualityExplainerTitle": "Duality (Decoz)",
+    "dualityExplainerBody": "Duality {year} = the Essence + Personal Year pair. Essence comes from the letters of your birth name currently \"alive\" at this age (long-range, letter cycle), while Personal Year sets the calendar-year vibe. The pair shows the two currents you're integrating this year — one from your identity structure (Essence), one from the year's rhythm (PY). Aligned, the year feels solid; tugging, that's where the growth lives.",
+    "personalMonthLabel": "Personal Month",
+    "physicalTransitExplainerTitle": "Physical Transit",
+    "physicalTransitExplainerBody": "The letter from your first name currently active at this age, coloring the physical / action / immediate-environment level of life. Value {value} captures the energy's flavor. The letter lives for its numeric value (e.g. a 7-letter lives 7 years), then the next letter in the name takes over.",
+    "mentalTransitExplainerTitle": "Mental Transit",
+    "mentalTransitExplainerBody": "The letter from your middle name currently active, coloring how you think / analyze / approach in this period. Value {value} = the energy flavor. Lives for its numeric value, then shifts to the next letter.",
+    "spiritualTransitExplainerTitle": "Spiritual Transit",
+    "spiritualTransitExplainerBody": "The letter from your last name currently active, coloring your inner / meaning / spiritual layer. Value {value} = the flavor. Duration = the digit value (e.g. R=9 lives 9 years)."
   },
   "people": {
     "title": "People",
@@ -865,10 +877,7 @@
     "tabPerjalanan": "Journey",
     "tabPercintaan": "Love",
     "tabKeuangan": "Money",
-    "bioBorn": "生年月日",
-    "dualityTitle": "Duality {year}",
-    "dualityHint": "EssenceとPersonal Yearの組み合わせ — 今年あなたが統合する二つの流れ。",
-    "monthlyStripTitle": "Personal Month {year}"
+    "bioBorn": "生年月日"
   },
   "love": {
     "title": "恋愛",

@@ -17,10 +17,7 @@
     "tabPerjalanan": "Journey",
     "tabPercintaan": "Love",
     "tabKeuangan": "Money",
-    "bioBorn": "Lahir",
-    "dualityTitle": "Duality {year}",
-    "dualityHint": "Pasangan Essence + Personal Year — dua arus yang lo lagi padu tahun ini.",
-    "monthlyStripTitle": "Personal Month {year}"
+    "bioBorn": "Lahir"
   },
   "love": {
     "title": "Percintaan",
@@ -511,7 +508,19 @@
     "personalYearExplainer": "Personal Year (PY) adalah tema utama hidup kamu sepanjang 12 bulan ke depan. Dia bergerak dalam siklus 1→9 yang berulang seumur hidup — tahun 1 = mulai sesuatu yang baru, tahun 5 = perubahan & gerak, tahun 9 = penyelesaian sebelum siklus baru. Dihitung dari (bulan + tanggal lahir + tahun sekarang). Jika compound-nya 13/14/16/19, ada karmic debt yang menambah dimensi pelajaran.",
     "pinnacleExplainer": "Pinnacle = empat babak besar hidup kamu, masing-masing membawa tema dominan selama bertahun-tahun. Pinnacle 1 berlangsung sampai usia (36 − Life Path); berikutnya selang 9 tahun. Tiap Pinnacle datang berpasangan dengan Challenge — kekurangan/ujian utama di babak tersebut. Pinnacle ngasih tau apa yang dimasak hidup; Challenge ngasih tau apa yang harus dilatih.",
     "cycleExplainer": "Period Cycle = tiga gelombang besar hidup. Gelombang 1 (Formative, ~lahir-28 tahun) ditentukan dari bulan lahir; Gelombang 2 (Productive, ~28-56) dari tanggal lahir; Gelombang 3 (Harvest, ~56+) dari tahun lahir. Beda dari Pinnacle: Pinnacle adalah TEMA babak, Period Cycle adalah BACKDROP energetik di belakangnya.",
-    "essenceExplainer": "Essence Cycle adalah lapisan paling personal — dia ngebaca huruf-huruf di nama kamu. Tiap huruf \"hidup\" sebanyak nilai Pythagorean-nya (D=4 → 4 tahun, Y=7 → 7 tahun, dst). Tiga aliran berjalan paralel: Physical (nama depan, hubungannya ke fisik & kerja), Mental (middle name, kalo ada — ke pikiran), Spiritual (nama belakang, ke inner growth & relasi). Essence = jumlah huruf aktif. Karmic debt 13/14/16/19 dipertahankan, gak di-reduce — itu sinyal tahun yang membawa pelajaran khusus."
+    "essenceExplainer": "Essence Cycle adalah lapisan paling personal — dia ngebaca huruf-huruf di nama kamu. Tiap huruf \"hidup\" sebanyak nilai Pythagorean-nya (D=4 → 4 tahun, Y=7 → 7 tahun, dst). Tiga aliran berjalan paralel: Physical (nama depan, hubungannya ke fisik & kerja), Mental (middle name, kalo ada — ke pikiran), Spiritual (nama belakang, ke inner growth & relasi). Essence = jumlah huruf aktif. Karmic debt 13/14/16/19 dipertahankan, gak di-reduce — itu sinyal tahun yang membawa pelajaran khusus.",
+    "dualityTitle": "Duality {year}",
+    "dualityHint": "Pasangan Essence + Personal Year — dua arus yang lo lagi padu tahun ini.",
+    "monthlyStripTitle": "Personal Month {year}",
+    "dualityExplainerTitle": "Duality (Decoz)",
+    "dualityExplainerBody": "Duality {year} = pasangan Essence + Personal Year. Essence muncul dari huruf-huruf nama akta kamu yang lagi \"hidup\" di usia ini (jangka panjang, cycle huruf), sementara Personal Year nge-set vibe tahun kalender. Pasangannya nunjukin dua arus yang lagi kamu padu tahun ini — satu dari struktur identitas (Essence), satu dari ritme tahun (PY). Kalau dua-duanya searah, tahun terasa solid; kalau tarik-menarik, di situ growth-nya.",
+    "personalMonthLabel": "Personal Month",
+    "physicalTransitExplainerTitle": "Physical Transit",
+    "physicalTransitExplainerBody": "Letter dari nama depan kamu yang lagi aktif di usia ini, mempengaruhi level fisik / aksi nyata / lingkungan dekat. Nilai {value} ngegambarin warna energinya. Letter ini hidup sepanjang nilai numeriknya (mis. letter 7 hidup 7 tahun) lalu berganti ke letter berikutnya di nama.",
+    "mentalTransitExplainerTitle": "Mental Transit",
+    "mentalTransitExplainerBody": "Letter dari nama tengah kamu yang lagi aktif, mempengaruhi pikiran / cara mikir / pendekatan analitis di periode ini. Nilai {value} = warna energi-nya. Hidup selama angka itu, lalu pindah ke huruf berikutnya.",
+    "spiritualTransitExplainerTitle": "Spiritual Transit",
+    "spiritualTransitExplainerBody": "Letter dari nama belakang yang lagi aktif, mempengaruhi level batin / makna / spiritualitas. Nilai {value} = warna energinya. Durasi = nilai angka itu (mis. R = 9 hidup 9 tahun)."
   },
   "people": {
     "title": "People",

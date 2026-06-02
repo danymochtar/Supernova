@@ -454,7 +454,19 @@
     "personalYearExplainer": "Personal Year (PY) adalah tema utama hidup kamu sepanjang 12 bulan akan datang. Ia bergerak dalam kitaran 1→9 yang berulang seumur hidup — tahun 1 = mula sesuatu yang baru, tahun 5 = perubahan & gerak, tahun 9 = penutup sebelum kitaran baru. Dikira dari (bulan + tarikh lahir + tahun semasa). Kalau compound-nya 13/14/16/19, ada karmic debt yang menambah dimensi pengajaran.",
     "pinnacleExplainer": "Pinnacle = empat babak besar hidup kamu, setiap satu membawa tema dominan selama bertahun-tahun. Pinnacle 1 berlangsung sampai usia (36 − Life Path); seterusnya berselang 9 tahun. Setiap Pinnacle datang berpasangan dengan Challenge — kekurangan/ujian utama dalam babak itu. Pinnacle bagitau apa yang hidup tengah masak; Challenge bagitau apa yang kena latih.",
     "cycleExplainer": "Period Cycle = tiga gelombang besar hidup. Gelombang 1 (Formative, ~lahir-28 tahun) ditentukan dari bulan lahir; Gelombang 2 (Productive, ~28-56) dari tarikh lahir; Gelombang 3 (Harvest, ~56+) dari tahun lahir. Beza dengan Pinnacle: Pinnacle adalah TEMA babak, Period Cycle adalah BACKDROP energetik di belakangnya.",
-    "essenceExplainer": "Essence Cycle adalah lapisan paling personal — ia membaca huruf-huruf dalam nama kamu. Setiap huruf \"hidup\" seberapa banyak nilai Pythagorean-nya (D=4 → 4 tahun, Y=7 → 7 tahun, dsb). Tiga aliran berjalan selari: Physical (nama depan, kaitan dengan fizikal & kerja), Mental (middle name, kalau ada — kaitan dengan fikiran), Spiritual (nama belakang, kaitan dengan inner growth & hubungan). Essence = jumlah huruf aktif. Karmic debt 13/14/16/19 dikekalkan, tak di-reduce — itu isyarat tahun yang bawa pengajaran khusus."
+    "essenceExplainer": "Essence Cycle adalah lapisan paling personal — ia membaca huruf-huruf dalam nama kamu. Setiap huruf \"hidup\" seberapa banyak nilai Pythagorean-nya (D=4 → 4 tahun, Y=7 → 7 tahun, dsb). Tiga aliran berjalan selari: Physical (nama depan, kaitan dengan fizikal & kerja), Mental (middle name, kalau ada — kaitan dengan fikiran), Spiritual (nama belakang, kaitan dengan inner growth & hubungan). Essence = jumlah huruf aktif. Karmic debt 13/14/16/19 dikekalkan, tak di-reduce — itu isyarat tahun yang bawa pengajaran khusus.",
+    "dualityTitle": "Duality {year}",
+    "dualityHint": "Gandingan Essence + Personal Year — dua arus yang sedang kamu satukan tahun ini.",
+    "monthlyStripTitle": "Personal Month {year}",
+    "dualityExplainerTitle": "Duality (Decoz)",
+    "dualityExplainerBody": "Duality {year} = the Essence + Personal Year pair. Essence comes from the letters of your birth name currently \"alive\" at this age (long-range, letter cycle), while Personal Year sets the calendar-year vibe. The pair shows the two currents you're integrating this year — one from your identity structure (Essence), one from the year's rhythm (PY). Aligned, the year feels solid; tugging, that's where the growth lives.",
+    "personalMonthLabel": "Personal Month",
+    "physicalTransitExplainerTitle": "Physical Transit",
+    "physicalTransitExplainerBody": "The letter from your first name currently active at this age, coloring the physical / action / immediate-environment level of life. Value {value} captures the energy's flavor. The letter lives for its numeric value (e.g. a 7-letter lives 7 years), then the next letter in the name takes over.",
+    "mentalTransitExplainerTitle": "Mental Transit",
+    "mentalTransitExplainerBody": "The letter from your middle name currently active, coloring how you think / analyze / approach in this period. Value {value} = the energy flavor. Lives for its numeric value, then shifts to the next letter.",
+    "spiritualTransitExplainerTitle": "Spiritual Transit",
+    "spiritualTransitExplainerBody": "The letter from your last name currently active, coloring your inner / meaning / spiritual layer. Value {value} = the flavor. Duration = the digit value (e.g. R=9 lives 9 years)."
   },
   "people": {
     "title": "People",
@@ -865,10 +877,7 @@
     "tabPerjalanan": "Journey",
     "tabPercintaan": "Love",
     "tabKeuangan": "Money",
-    "bioBorn": "Lahir",
-    "dualityTitle": "Duality {year}",
-    "dualityHint": "Gandingan Essence + Personal Year — dua arus yang sedang kamu satukan tahun ini.",
-    "monthlyStripTitle": "Personal Month {year}"
+    "bioBorn": "Lahir"
   },
   "love": {
     "title": "Percintaan",

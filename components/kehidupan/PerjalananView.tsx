@@ -19,6 +19,7 @@ import { meaningFor } from '@/lib/numerology/meanings';
 import type { NumerologyResult } from '@/lib/numerology';
 import { CompoundReduced } from '@/components/numerology/CompoundReduced';
 import { Explainer } from '@/components/layout/Explainer';
+import { DualityCard, MonthlyPMStrip, TappableTransitChip } from '@/components/kehidupan/JourneyTappables';
 import {
   YearOutlookBody,
   YearOutlookBodyFallback,
@@ -98,6 +99,9 @@ export async function PerjalananView({
   );
   const monthShort = Array.from({ length: 12 }, (_, i) =>
     new Intl.DateTimeFormat(locale, { month: 'short' }).format(new Date(Date.UTC(2000, i, 1))),
+  );
+  const monthLong = Array.from({ length: 12 }, (_, i) =>
+    new Intl.DateTimeFormat(locale, { month: 'long' }).format(new Date(Date.UTC(2000, i, 1))),
   );
 
   const activePinnacleSlot = slots.pinnacle;
@@ -201,44 +205,29 @@ export async function PerjalananView({
         </div>
       </section>
 
-      {/* DUALITY + 12-MONTH PERSONAL MONTH STRIP — both from WN's Year Forecast. */}
+      {/* DUALITY + 12-MONTH PERSONAL MONTH STRIP — both from WN's Year
+        * Forecast. Each cell is tap-to-detail (modal with meaning). */}
       <section className="space-y-3">
-        <div className="border-border rounded-xl border bg-surface-1 p-4">
-          <p className="text-muted-foreground text-[11px] font-semibold uppercase tracking-wider">
-            {t('dualityTitle', { year: ctx.year })}
-          </p>
-          <p className="mt-1 font-mono text-2xl font-semibold tabular-nums">
-            {dualityEssence}
-            <span className="text-muted-foreground mx-1.5 text-base font-normal">+</span>
-            {dualityPy}
-          </p>
-          <p className="text-muted-foreground mt-1 text-xs">{t('dualityHint')}</p>
-        </div>
-
-        <div className="border-border space-y-2 rounded-xl border bg-surface-1 p-4">
-          <p className="text-muted-foreground text-[11px] font-semibold uppercase tracking-wider">
-            {t('monthlyStripTitle', { year: ctx.year })}
-          </p>
-          <div className="grid grid-cols-6 gap-1.5 sm:grid-cols-12">
-            {monthlyPMs.map((pm, i) => {
-              const month = i + 1;
-              const isCurrent = month === ctx.month;
-              return (
-                <div
-                  key={month}
-                  className={`flex flex-col items-center rounded-lg px-1 py-2 text-center ${isCurrent ? 'bg-primary/15 ring-primary ring-1' : 'bg-surface-2/60'}`}
-                >
-                  <span className="text-muted-foreground text-[9px] font-medium uppercase tracking-wider">
-                    {monthShort[i]}
-                  </span>
-                  <span className="mt-0.5 font-mono text-base font-semibold tabular-nums">
-                    {pm}
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        <DualityCard
+          title={t('dualityTitle', { year: ctx.year })}
+          hint={t('dualityHint')}
+          essence={dualityEssence}
+          py={dualityPy}
+          explainerTitle={t('dualityExplainerTitle')}
+          explainerBody={t('dualityExplainerBody', { year: ctx.year })}
+        />
+        <MonthlyPMStrip
+          title={t('monthlyStripTitle', { year: ctx.year })}
+          currentMonth={ctx.month}
+          monthLabel={t('personalMonthLabel')}
+          cells={monthlyPMs.map((pm, i) => ({
+            month: i + 1,
+            shortLabel: monthShort[i]!,
+            longLabel: monthLong[i]!,
+            pm,
+            meaning: meaningFor('personalMonth', { compound: pm, reduced: pm, isMaster: false }, locale),
+          }))}
+        />
       </section>
 
       {/* PERSONAL YEAR */}
@@ -415,7 +404,7 @@ export async function PerjalananView({
 
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           {essenceNow.physical ? (
-            <TransitChip
+            <TappableTransitChip
               label={t('physicalTransit')}
               hint={t('fromFirstName', { name: profile.firstName })}
               letter={essenceNow.physical.letter}
@@ -423,10 +412,12 @@ export async function PerjalananView({
               rangeStart={essenceNow.physical.rangeStart}
               rangeEnd={essenceNow.physical.rangeEnd}
               ageLabel={t('age')}
+              explainerTitle={t('physicalTransitExplainerTitle')}
+              explainerBody={t('physicalTransitExplainerBody', { value: essenceNow.physical?.value ?? 0 })}
             />
           ) : null}
           {essenceNow.mental ? (
-            <TransitChip
+            <TappableTransitChip
               label={t('mentalTransit')}
               hint={t('fromMiddleName', { name: profile.middleName ?? '' })}
               letter={essenceNow.mental.letter}
@@ -434,10 +425,12 @@ export async function PerjalananView({
               rangeStart={essenceNow.mental.rangeStart}
               rangeEnd={essenceNow.mental.rangeEnd}
               ageLabel={t('age')}
+              explainerTitle={t('mentalTransitExplainerTitle')}
+              explainerBody={t('mentalTransitExplainerBody', { value: essenceNow.mental?.value ?? 0 })}
             />
           ) : null}
           {essenceNow.spiritual ? (
-            <TransitChip
+            <TappableTransitChip
               label={t('spiritualTransit')}
               hint={t('fromLastName', { name: profile.lastName ?? '' })}
               letter={essenceNow.spiritual.letter}
@@ -445,6 +438,8 @@ export async function PerjalananView({
               rangeStart={essenceNow.spiritual.rangeStart}
               rangeEnd={essenceNow.spiritual.rangeEnd}
               ageLabel={t('age')}
+              explainerTitle={t('spiritualTransitExplainerTitle')}
+              explainerBody={t('spiritualTransitExplainerBody', { value: essenceNow.spiritual?.value ?? 0 })}
             />
           ) : null}
         </div>
@@ -523,38 +518,6 @@ function SummaryRow({
         </div>
       </div>
       {meaning ? <p className="text-muted-foreground text-xs leading-relaxed">{meaning}</p> : null}
-    </div>
-  );
-}
-
-function TransitChip({
-  label,
-  hint,
-  letter,
-  value,
-  rangeStart,
-  rangeEnd,
-  ageLabel,
-}: {
-  label: string;
-  hint: string;
-  letter: string;
-  value: number;
-  rangeStart: number;
-  rangeEnd: number;
-  ageLabel: string;
-}) {
-  return (
-    <div className="border-border rounded-xl border bg-surface-1 p-4">
-      <p className="text-muted-foreground text-[10px] font-semibold uppercase tracking-[0.18em]">{label}</p>
-      <div className="mt-1 flex items-baseline gap-2">
-        <span className="font-serif text-3xl font-semibold tracking-tight">{letter}</span>
-        <span className="text-muted-foreground font-mono text-sm tabular-nums">= {value}</span>
-      </div>
-      <p className="text-muted-foreground mt-1 text-xs tabular-nums">
-        {ageLabel} {rangeStart}–{rangeEnd}
-      </p>
-      <p className="text-muted-foreground mt-1 truncate text-[10px]">{hint}</p>
     </div>
   );
 }

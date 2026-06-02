@@ -454,7 +454,19 @@
     "personalYearExplainer": "Personal Year (PY) is the main theme of your life for the next 12 months. It moves through a 1→9 cycle that repeats over your lifetime — year 1 = start something new, year 5 = change & movement, year 9 = completion before a fresh cycle. Computed from (birth month + birth day + current year). When the compound is 13/14/16/19 there's a karmic debt adding a layer of lessons.",
     "pinnacleExplainer": "Pinnacle = the four big chapters of your life, each carrying a dominant theme for many years. Pinnacle 1 runs until age (36 − Life Path); each subsequent one spans 9 years. Each Pinnacle pairs with a Challenge — the central tension or growth edge of that chapter. Pinnacle tells you what life is cooking; Challenge tells you what to train.",
     "cycleExplainer": "Period Cycle = three big waves of life. Wave 1 (Formative, ~birth-28) is set by your birth month; Wave 2 (Productive, ~28-56) by your birth day; Wave 3 (Harvest, ~56+) by your birth year. Different from Pinnacle: Pinnacle is the THEME of a chapter, Period Cycle is the energetic BACKDROP behind it.",
-    "essenceExplainer": "Essence Cycle is the most personal layer — it reads the letters of your name. Each letter \"lives\" for as many years as its Pythagorean value (D=4 → 4 years, Y=7 → 7 years, etc.). Three streams run in parallel: Physical (first name, your body & work), Mental (middle name if any, your mind), Spiritual (last name, inner growth & relationships). Essence = sum of currently-active letters. Karmic debts 13/14/16/19 are preserved, not reduced — they signal years carrying a specific lesson."
+    "essenceExplainer": "Essence Cycle is the most personal layer — it reads the letters of your name. Each letter \"lives\" for as many years as its Pythagorean value (D=4 → 4 years, Y=7 → 7 years, etc.). Three streams run in parallel: Physical (first name, your body & work), Mental (middle name if any, your mind), Spiritual (last name, inner growth & relationships). Essence = sum of currently-active letters. Karmic debts 13/14/16/19 are preserved, not reduced — they signal years carrying a specific lesson.",
+    "dualityTitle": "Duality {year}",
+    "dualityHint": "Essence + Personal Year pair — the two currents you're integrating this year.",
+    "monthlyStripTitle": "Personal Month {year}",
+    "dualityExplainerTitle": "Duality (Decoz)",
+    "dualityExplainerBody": "Duality {year} = the Essence + Personal Year pair. Essence comes from the letters of your birth name currently \"alive\" at this age (long-range, letter cycle), while Personal Year sets the calendar-year vibe. The pair shows the two currents you're integrating this year — one from your identity structure (Essence), one from the year's rhythm (PY). Aligned, the year feels solid; tugging, that's where the growth lives.",
+    "personalMonthLabel": "Personal Month",
+    "physicalTransitExplainerTitle": "Physical Transit",
+    "physicalTransitExplainerBody": "The letter from your first name currently active at this age, coloring the physical / action / immediate-environment level of life. Value {value} captures the energy's flavor. The letter lives for its numeric value (e.g. a 7-letter lives 7 years), then the next letter in the name takes over.",
+    "mentalTransitExplainerTitle": "Mental Transit",
+    "mentalTransitExplainerBody": "The letter from your middle name currently active, coloring how you think / analyze / approach in this period. Value {value} = the energy flavor. Lives for its numeric value, then shifts to the next letter.",
+    "spiritualTransitExplainerTitle": "Spiritual Transit",
+    "spiritualTransitExplainerBody": "The letter from your last name currently active, coloring your inner / meaning / spiritual layer. Value {value} = the flavor. Duration = the digit value (e.g. R=9 lives 9 years)."
   },
   "people": {
     "title": "People",
@@ -865,10 +877,7 @@
     "tabPerjalanan": "Journey",
     "tabPercintaan": "Love",
     "tabKeuangan": "Money",
-    "bioBorn": "Born",
-    "dualityTitle": "Duality {year}",
-    "dualityHint": "Essence + Personal Year pair — the two currents you're integrating this year.",
-    "monthlyStripTitle": "Personal Month {year}"
+    "bioBorn": "Born"
   },
   "love": {
     "title": "Love",
