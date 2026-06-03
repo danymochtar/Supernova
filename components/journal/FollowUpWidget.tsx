@@ -3,7 +3,7 @@
 import { useOptimistic, useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { ArrowUp, CalendarPlus, Check, ChevronDown, ListTodo, MessageCircle, X } from 'lucide-react';
+import { ArrowUp, CalendarPlus, Check, ChevronDown, HelpCircle, ListTodo, MessageCircle, X } from 'lucide-react';
 import type { Locale } from '@/lib/i18n/config';
 import type { RespondActionItemResult } from '@/app/[locale]/journal/actions';
 import { Modal } from '@/components/layout/Modal';
@@ -11,6 +11,10 @@ import { Modal } from '@/components/layout/Modal';
 export interface OpenActionItemLite {
   id: string;
   title: string;
+  /** 'action' = a concrete next step; 'question' = a clarifier the AI is
+   *  asking before it suggests an action. Defaults to 'action' for any
+   *  legacy row that didn't carry the field. */
+  kind: 'action' | 'question';
   /** ISO timestamp of when the parent entry was created. */
   entryAddedAt: string;
   entryId: string;
@@ -161,6 +165,7 @@ export function FollowUpWidget({ locale, items, respondAction }: Props) {
       <ul className="space-y-1.5">
         {optimisticItems.map((item) => {
           const open = openId === item.id;
+          const isQuestion = item.kind === 'question';
           return (
             <li
               key={item.id}
@@ -174,18 +179,33 @@ export function FollowUpWidget({ locale, items, respondAction }: Props) {
                     setDraft('');
                   }}
                   aria-expanded={open}
-                  aria-label={t('respond')}
+                  aria-label={isQuestion ? t('answer') : t('respond')}
                   className="press-soft flex min-w-0 flex-1 items-start gap-2 text-left"
                 >
-                  <ChevronDown
-                    className={`text-muted-foreground mt-0.5 h-4 w-4 shrink-0 transition-transform ios-ease ${open ? 'rotate-180' : ''}`}
-                    aria-hidden
-                  />
+                  {isQuestion ? (
+                    <HelpCircle
+                      className="mt-0.5 h-4 w-4 shrink-0 text-amber-600 dark:text-amber-400"
+                      aria-hidden
+                    />
+                  ) : (
+                    <ChevronDown
+                      className={`text-muted-foreground mt-0.5 h-4 w-4 shrink-0 transition-transform ios-ease ${open ? 'rotate-180' : ''}`}
+                      aria-hidden
+                    />
+                  )}
                   <div className="min-w-0 flex-1 space-y-0.5">
                     <p className="text-sm leading-snug text-neutral-800 dark:text-neutral-200">
                       {item.title}
                     </p>
                     <p className="text-muted-foreground flex items-center gap-1.5 text-[10px] uppercase tracking-wider">
+                      {isQuestion ? (
+                        <>
+                          <span className="font-semibold text-amber-700 dark:text-amber-400">
+                            {t('questionLabel')}
+                          </span>
+                          <span aria-hidden>·</span>
+                        </>
+                      ) : null}
                       <span className="tabular-nums">
                         {item.daysAgo === 0
                           ? t('today')
@@ -207,39 +227,46 @@ export function FollowUpWidget({ locale, items, respondAction }: Props) {
                     ) : null}
                   </div>
                 </button>
-                <a
-                  href={`/api/journal/ics?entryId=${item.entryId}&itemId=${item.id}`}
-                  download
-                  aria-label={t('addToCalendar')}
-                  title={t('addToCalendar')}
-                  className="press-soft text-muted-foreground hover:text-primary hover:bg-muted/40 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg transition-colors"
-                >
-                  <CalendarPlus className="h-3.5 w-3.5" aria-hidden />
-                </a>
+                {/* Questions aren't calendar-able — hide the ICS download. */}
+                {isQuestion ? null : (
+                  <a
+                    href={`/api/journal/ics?entryId=${item.entryId}&itemId=${item.id}`}
+                    download
+                    aria-label={t('addToCalendar')}
+                    title={t('addToCalendar')}
+                    className="press-soft text-muted-foreground hover:text-primary hover:bg-muted/40 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg transition-colors"
+                  >
+                    <CalendarPlus className="h-3.5 w-3.5" aria-hidden />
+                  </a>
+                )}
               </div>
 
               {open ? (
                 <div className="border-border/60 space-y-2.5 border-t px-3 py-3">
-                  <div className="flex gap-2">
-                    <button
-                      type="button"
-                      onClick={() => close(item, 'done')}
-                      disabled={pending}
-                      className="press-soft inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-emerald-500/15 px-3 py-2 text-xs font-medium text-emerald-700 transition-colors hover:bg-emerald-500/25 disabled:opacity-50 dark:text-emerald-300"
-                    >
-                      <Check className="h-3.5 w-3.5" aria-hidden />
-                      {t('done')}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => close(item, 'skip')}
-                      disabled={pending}
-                      className="press-soft text-muted-foreground hover:bg-muted/60 inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-fill-1 px-3 py-2 text-xs font-medium transition-colors disabled:opacity-50"
-                    >
-                      <X className="h-3.5 w-3.5" aria-hidden />
-                      {t('skip')}
-                    </button>
-                  </div>
+                  {/* Questions: no Done/Skip — the answer IS the resolution.
+                   * Actions: keep the existing Done/Skip pair. */}
+                  {isQuestion ? null : (
+                    <div className="flex gap-2">
+                      <button
+                        type="button"
+                        onClick={() => close(item, 'done')}
+                        disabled={pending}
+                        className="press-soft inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-emerald-500/15 px-3 py-2 text-xs font-medium text-emerald-700 transition-colors hover:bg-emerald-500/25 disabled:opacity-50 dark:text-emerald-300"
+                      >
+                        <Check className="h-3.5 w-3.5" aria-hidden />
+                        {t('done')}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => close(item, 'skip')}
+                        disabled={pending}
+                        className="press-soft text-muted-foreground hover:bg-muted/60 inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-fill-1 px-3 py-2 text-xs font-medium transition-colors disabled:opacity-50"
+                      >
+                        <X className="h-3.5 w-3.5" aria-hidden />
+                        {t('skip')}
+                      </button>
+                    </div>
+                  )}
                   <form
                     onSubmit={(e) => {
                       e.preventDefault();
@@ -252,7 +279,7 @@ export function FollowUpWidget({ locale, items, respondAction }: Props) {
                       value={draft}
                       onChange={(e) => setDraft(e.target.value)}
                       maxLength={280}
-                      placeholder={t('replyPlaceholder')}
+                      placeholder={isQuestion ? t('answerPlaceholder') : t('replyPlaceholder')}
                       className="border-border focus:ring-primary min-w-0 flex-1 rounded-lg border bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2"
                     />
                     <button

@@ -176,6 +176,7 @@ export default async function DashboardPage({
     return {
       id: it.id,
       title: it.title,
+      kind: it.kind,
       entryId: it.entryId,
       entryAddedAt: it.entryAddedAt.toISOString(),
       entryEmotion: it.entryEmotion,

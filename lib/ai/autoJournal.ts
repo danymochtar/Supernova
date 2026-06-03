@@ -171,6 +171,7 @@ export async function autoJournalFromChat(
     const nowMs = Date.now();
     const openFollowUps = openItems.map((it) => ({
       title: it.title,
+      kind: it.kind,
       note: it.note,
       daysAgo: Math.max(0, Math.floor((nowMs - it.entryAddedAt.getTime()) / 86_400_000)),
     }));

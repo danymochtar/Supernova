@@ -858,7 +858,10 @@
     "replyPlaceholder": "짧은 답장…",
     "replySend": "보내기",
     "popupTitle": "다음은 어떻게 할까요?",
-    "chatItOut": "먼저 얘기해 보기"
+    "chatItOut": "먼저 얘기해 보기",
+    "questionLabel": "먼저 질문",
+    "answer": "답하기",
+    "answerPlaceholder": "짧은 답…"
   },
   "digest": {
     "title": "최근 {days}일 패턴",

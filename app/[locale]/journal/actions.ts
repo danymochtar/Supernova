@@ -107,6 +107,7 @@ export async function addToJournalAction(input: { turnIds: string[] }): Promise<
   const now = Date.now();
   const openFollowUps = openItems.map((it) => ({
     title: it.title,
+    kind: it.kind,
     note: it.note,
     daysAgo: Math.max(0, Math.floor((now - it.entryAddedAt.getTime()) / 86_400_000)),
   }));

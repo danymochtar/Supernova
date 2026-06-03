@@ -58,6 +58,9 @@ const PRONOUN_REGISTER_ID: Record<UserPronoun, string> = {
 export interface OpenFollowUp {
   /** The follow-up's title as it appears in the dashboard widget. */
   title: string;
+  /** 'action' = a pending step. 'question' = a still-unanswered clarifier
+   *  from a previous entry. Both block re-proposing the same ground. */
+  kind: 'action' | 'question';
   /** User's short reply on the item, if any (e.g. "udah subscribe gym kemarin"). */
   note: string | null;
   /** Days since the parent entry — used to weight relevance in the prompt. */
@@ -139,9 +142,18 @@ Aturan untuk "theme":
 - Lowercase, satu kata.
 
 Aturan untuk "actionItems":
-- Array 0-3 item. Tiap item: { "title": "..." }, 1 kalimat pendek (max 12 kata), kalimat aksi konkret yang BERANGKAT DARI obrolan, bukan generic self-help.
-- Contoh bagus: "Ngobrol sama Sabri soal jadwal Sabah minggu depan", "Block 30 menit Sabtu sore buat journaling karier".
-- Contoh buruk (terlalu generic, jangan): "Self-care lebih banyak", "Refleksi diri".
+- Array 0-3 item. Tiap item WAJIB punya: { "title": "...", "kind": "action" | "question" } — max 12 kata di title.
+- "kind": "action" — kalau next step-nya udah jelas, konkret, dan langsung berangkat dari obrolan. Title = kalimat aksi yang bisa langsung dikerjain.
+  Contoh bagus: "Ngobrol sama Sabri soal jadwal Sabah minggu depan", "Block 30 menit Sabtu sore buat journaling karier".
+  Contoh buruk (terlalu generic, jangan): "Self-care lebih banyak", "Refleksi diri".
+- "kind": "question" — kalau next step-nya BELUM jelas dan kamu butuh info lebih dulu sebelum nyaranin aksi. Title = pertanyaan klarifikasi (diakhirin "?"), bukan aksi.
+  Pake "question" kalau salah satu ini true:
+    • Aksi yang masuk akal tergantung info yang user belum kasih (misal "subscribe gym" — udah ada gym yang dilirik atau masih nimbang?).
+    • Ada beberapa arah yang sama-sama masuk akal (misal pilih duluin yang mana antara 4 hal).
+    • Niat user belum jelas dari obrolan (misal mau bertahan atau resign).
+    • Aksi konkret bakalan terdengar maksa atau nebak.
+  Contoh bagus: "Sebenernya udah ada gym yang kamu lirik, atau masih nimbang?", "Yang paling bikin gelisah dari 4 hal itu yang mana?", "Tidur cepet emang nyambung sama beban kerjaan, atau ada faktor lain?".
+- BIAS: kalau ragu antara action vs question, pilih "question". Lebih baik nanya dulu daripada ngarang aksi yang nggak nyambung sama hidup user.
 - WAJIB cek <open_followups> di user message. JANGAN bikin item yang overlap dengan yang udah ada di sana — apalagi kalau reply-nya nunjukin udah selesai ("udah", "sudah", "selesai", "done"), lagi dijalanin, atau dipilih buat dilewat. Item baru harus genuinely beda, bukan ngulang.
 - Kalau gak ada action item natural yang muncul dari entri, kasih array kosong []. Lebih baik kosong daripada di-stretch.
 
@@ -151,7 +163,7 @@ Output WAJIB JSON valid, tanpa teks lain:
   "reframe": "...",
   "emotion": "...",
   "theme": "...",
-  "actionItems": [{ "title": "..." }, ...]
+  "actionItems": [{ "title": "...", "kind": "action" | "question" }, ...]
 }`;
   }
   return localizeEnglishPrompt(`You're processing a private journal entry for the user. The entry has multiple layers: a first-person narrative in the user's voice, a CBT-style reframe in Supernova's voice, plus extracted metadata (emotion, theme, action items).
@@ -184,9 +196,18 @@ Rules for "theme":
 - One word category ("career", "relationship", "family", "health", "money", "self", "spiritual", "creativity", etc.). Lowercase.
 
 Rules for "actionItems":
-- Array of 0-3 items. Each: { "title": "..." }, one short sentence (max 12 words), concrete action GROUNDED in the chat — not generic self-help.
-- Good: "Message Sabri about the Sabah trip schedule", "Block 30 minutes Saturday afternoon for career journaling".
-- Bad (too generic): "Do more self-care", "Reflect on yourself".
+- Array of 0-3 items. Each REQUIRES: { "title": "...", "kind": "action" | "question" } — max 12 words in title.
+- "kind": "action" — when the next step is clear, concrete, and grounded in the chat. Title = an action sentence the user can just go do.
+  Good: "Message Sabri about the Sabah trip schedule", "Block 30 minutes Saturday afternoon for career journaling".
+  Bad (too generic): "Do more self-care", "Reflect on yourself".
+- "kind": "question" — when the next step ISN'T clear and you need info from the user before suggesting an action. Title = a clarifying question (ending in "?"), not an action.
+  Use "question" when any of these is true:
+    • The reasonable action depends on info the user hasn't shared (e.g. "subscribe to a gym" — do they already have one in mind, or are they still weighing options?).
+    • Several directions are equally plausible (e.g. which of 4 stressors to tackle first).
+    • The user's intent isn't clear from the chat (e.g. stay vs leave).
+    • A concrete action would feel pushy or like guessing.
+  Good: "Do you already have a gym in mind, or still weighing options?", "Which of the four is weighing on you most today?", "Is sleeping earlier really about workload, or something else?".
+- BIAS: when unsure between action vs question, choose "question". Better to ask first than fabricate an action that doesn't match the user's life.
 - MUST check <open_followups> in the user message. Do NOT generate an item that overlaps with anything listed there — especially if the reply note implies it's done ("already", "did it", "sent", "subscribed", "selesai", "udah"), already in progress, or explicitly skipped. New items must be genuinely new ground, not a repeat.
 - Empty array [] when nothing actionable surfaces naturally. Better empty than stretched.
 
@@ -196,7 +217,7 @@ Output MUST be valid JSON, nothing else:
   "reframe": "...",
   "emotion": "...",
   "theme": "...",
-  "actionItems": [{ "title": "..." }, ...]
+  "actionItems": [{ "title": "...", "kind": "action" | "question" }, ...]
 }`, locale);
 }
 
@@ -221,7 +242,7 @@ export function buildJournalUser(input: JournalSynthInput): string {
 
 <open_followups>
 ${input.openFollowUps
-  .map((f) => `- "${f.title}" (${f.daysAgo}d ago)${f.note ? ` — reply: "${f.note}"` : ''}`)
+  .map((f) => `- [${f.kind}] "${f.title}" (${f.daysAgo}d ago)${f.note ? ` — reply: "${f.note}"` : ''}`)
   .join('\n')}
 </open_followups>
 

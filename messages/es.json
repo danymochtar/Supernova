@@ -858,7 +858,10 @@
     "replyPlaceholder": "Respuesta corta…",
     "replySend": "Enviar",
     "popupTitle": "¿Qué sigue con esto?",
-    "chatItOut": "Hablarlo antes"
+    "chatItOut": "Hablarlo antes",
+    "questionLabel": "Pregunta primero",
+    "answer": "Responder",
+    "answerPlaceholder": "Respuesta breve…"
   },
   "digest": {
     "title": "Patrón de los últimos {days} días",

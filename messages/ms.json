@@ -858,7 +858,10 @@
     "replyPlaceholder": "Balas ringkas…",
     "replySend": "Hantar",
     "popupTitle": "Mahu buat apa seterusnya?",
-    "chatItOut": "Bualkan dulu"
+    "chatItOut": "Bualkan dulu",
+    "questionLabel": "Soalan dulu",
+    "answer": "Jawab",
+    "answerPlaceholder": "Jawapan ringkas…"
   },
   "digest": {
     "title": "Pola {days} hari terakhir",

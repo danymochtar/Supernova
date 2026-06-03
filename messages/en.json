@@ -858,7 +858,10 @@
     "replyPlaceholder": "Quick reply…",
     "replySend": "Send",
     "popupTitle": "What's next for this?",
-    "chatItOut": "Talk it through"
+    "chatItOut": "Talk it through",
+    "questionLabel": "Quick question",
+    "answer": "Answer",
+    "answerPlaceholder": "Quick answer…"
   },
   "digest": {
     "title": "Last {days}-day pattern",

@@ -858,7 +858,10 @@
     "replyPlaceholder": "短い返信…",
     "replySend": "送信",
     "popupTitle": "このあとどうする？",
-    "chatItOut": "先に話す"
+    "chatItOut": "先に話す",
+    "questionLabel": "まず質問",
+    "answer": "答える",
+    "answerPlaceholder": "短い答え…"
   },
   "digest": {
     "title": "過去{days}日間のパターン",

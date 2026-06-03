@@ -175,7 +175,10 @@
     "replyPlaceholder": "Balas singkat…",
     "replySend": "Kirim",
     "popupTitle": "Mau diapain lanjutannya?",
-    "chatItOut": "Curhatin dulu"
+    "chatItOut": "Curhatin dulu",
+    "questionLabel": "Tanya dulu",
+    "answer": "Jawab",
+    "answerPlaceholder": "Jawab singkat…"
   },
   "digest": {
     "title": "Pola {days} hari terakhir",

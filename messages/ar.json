@@ -858,7 +858,10 @@
     "replyPlaceholder": "رد قصير…",
     "replySend": "إرسال",
     "popupTitle": "ما الخطوة التالية لهذا؟",
-    "chatItOut": "تحدث عنه أولاً"
+    "chatItOut": "تحدث عنه أولاً",
+    "questionLabel": "سؤال أولاً",
+    "answer": "أجب",
+    "answerPlaceholder": "إجابة قصيرة…"
   },
   "digest": {
     "title": "نمط آخر {days} يوم",

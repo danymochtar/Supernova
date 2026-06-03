@@ -9,10 +9,17 @@ export interface JournalSourceSnapshot {
   createdAt: string; // ISO
 }
 
+export type ActionItemKind = 'action' | 'question';
+
 export interface JournalActionItem {
   /** Stable id so the client can toggle a specific item. cuid-style. */
   id: string;
   title: string;
+  /** 'action' = a concrete next step grounded in the chat. 'question' =
+   *  the AI didn't have enough to suggest a step, so the title is a
+   *  clarifying question the user should answer before any action is
+   *  proposed. Defaults to 'action' for backwards compat. */
+  kind: ActionItemKind;
   completed: boolean;
   /** ISO timestamp set when the user marks the item done. Null otherwise. */
   completedAt: string | null;
@@ -64,6 +71,7 @@ function decodeActionItems(v: Prisma.JsonValue): JournalActionItem[] {
       return {
         id: it.id,
         title: it.title,
+        kind: it.kind === 'question' ? 'question' : 'action',
         completed: Boolean(it.completed),
         completedAt: typeof it.completedAt === 'string' ? it.completedAt : null,
         skipped: Boolean(it.skipped),
@@ -104,7 +112,7 @@ export interface CreateJournalInput {
   /** Curhat capability tag derived from the source turns' topic. */
   category?: string | null;
   /** Raw action item drafts from the AI; the repo assigns ids + timestamps. */
-  actionItemDrafts?: Array<{ title: string }>;
+  actionItemDrafts?: Array<{ title: string; kind?: ActionItemKind }>;
 }
 
 export async function createJournalEntry(input: CreateJournalInput): Promise<JournalEntryView> {
@@ -112,6 +120,7 @@ export async function createJournalEntry(input: CreateJournalInput): Promise<Jou
   const items: JournalActionItem[] = (input.actionItemDrafts ?? []).map((d) => ({
     id: randomUUID(),
     title: d.title,
+    kind: d.kind ?? 'action',
     completed: false,
     completedAt: null,
     skipped: false,
@@ -234,6 +243,7 @@ export interface OpenActionItem {
   /** The action item itself. */
   id: string;
   title: string;
+  kind: ActionItemKind;
   createdAt: string;
   /** Reply the user left without closing the item yet, if any. */
   note: string | null;
@@ -332,6 +342,7 @@ export async function listOpenActionItems(
       out.push({
         id: it.id,
         title: it.title,
+        kind: it.kind,
         createdAt: it.createdAt,
         note: it.note,
         entryId: row.id,

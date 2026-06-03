@@ -858,7 +858,10 @@
     "replyPlaceholder": "简短回复…",
     "replySend": "发送",
     "popupTitle": "接下来要怎么做？",
-    "chatItOut": "先聊一下"
+    "chatItOut": "先聊一下",
+    "questionLabel": "先问一下",
+    "answer": "回答",
+    "answerPlaceholder": "简短回答…"
   },
   "digest": {
     "title": "最近 {days} 天的模式",

@@ -6,8 +6,13 @@ import {
 } from '@/lib/ai/prompts/journal';
 import { logUsage } from '@/lib/db/repositories/usage';
 
+export type JournalActionItemKind = 'action' | 'question';
+
 export interface JournalActionItemDraft {
   title: string;
+  /** 'action' is a concrete next step; 'question' is a clarifying question
+   *  the AI asks because the next step isn't clear yet. */
+  kind: JournalActionItemKind;
 }
 
 export interface JournalSynthResult {
@@ -43,7 +48,9 @@ function parseJournalJson(raw: string): Omit<JournalSynthResult, 'inputTokens' |
         if (!it || typeof it !== 'object') return null;
         const title = (it as { title?: unknown }).title;
         if (typeof title !== 'string' || !title.trim()) return null;
-        return { title: title.trim() };
+        const rawKind = (it as { kind?: unknown }).kind;
+        const kind: JournalActionItemKind = rawKind === 'question' ? 'question' : 'action';
+        return { title: title.trim(), kind };
       })
       .filter((it): it is JournalActionItemDraft => it !== null)
       .slice(0, 3);
