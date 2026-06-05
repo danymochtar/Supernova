@@ -354,6 +354,8 @@
     "errorInvalid": "消息太短或太长了。",
     "errorNoProfile": "请先完成引导设置。",
     "errorGeneric": "发送失败。你的消息已保存——再试一次吧。",
+    "toolSearchingWeb": "正在搜索网页…",
+    "toolFetchingWeb": "正在抓取页面…",
     "journalAdd": "添加到 Jurnal",
     "journalSelectCount": "已选 {n} 条",
     "journalCancel": "取消",

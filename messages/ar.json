@@ -354,6 +354,8 @@
     "errorInvalid": "الرسالة قصيرة جدًا أو طويلة جدًا.",
     "errorNoProfile": "أكمل onboarding أولًا.",
     "errorGeneric": "فشل الإرسال. رسالتك محفوظة — حاول إرسالها مرة أخرى.",
+    "toolSearchingWeb": "جارٍ البحث في الويب…",
+    "toolFetchingWeb": "جارٍ جلب الصفحة…",
     "journalAdd": "أضف إلى Jurnal",
     "journalSelectCount": "تم اختيار {n}",
     "journalCancel": "إلغاء",

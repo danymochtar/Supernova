@@ -354,6 +354,8 @@
     "errorInvalid": "Mesej terlalu pendek atau panjang.",
     "errorNoProfile": "Selesaikan onboarding dulu.",
     "errorGeneric": "Gagal hantar. Mesej kamu disimpan — cuba hantar semula.",
+    "toolSearchingWeb": "Mencari di web…",
+    "toolFetchingWeb": "Mengambil dari halaman…",
     "journalAdd": "Tambah ke Jurnal",
     "journalSelectCount": "{n} dipilih",
     "journalCancel": "Batal",

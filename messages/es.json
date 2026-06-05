@@ -354,6 +354,8 @@
     "errorInvalid": "El mensaje es muy corto o muy largo.",
     "errorNoProfile": "Termina el onboarding primero.",
     "errorGeneric": "No se pudo enviar. Tu mensaje está guardado — intenta enviarlo de nuevo.",
+    "toolSearchingWeb": "Buscando en la web…",
+    "toolFetchingWeb": "Cargando la página…",
     "journalAdd": "Añadir al Diario",
     "journalSelectCount": "{n} seleccionados",
     "journalCancel": "Cancelar",

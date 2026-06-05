@@ -354,6 +354,8 @@
     "errorInvalid": "메시지가 너무 짧거나 길어요.",
     "errorNoProfile": "먼저 온보딩을 완료해 주세요.",
     "errorGeneric": "전송 실패. 메시지는 저장됐어요 — 다시 시도해 보세요.",
+    "toolSearchingWeb": "웹 검색 중…",
+    "toolFetchingWeb": "페이지 가져오는 중…",
     "journalAdd": "Jurnal에 추가",
     "journalSelectCount": "{n}개 선택됨",
     "journalCancel": "취소",

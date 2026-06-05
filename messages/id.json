@@ -441,6 +441,8 @@
     "errorInvalid": "Pesan terlalu pendek atau panjang.",
     "errorNoProfile": "Selesaikan onboarding dulu.",
     "errorGeneric": "Gagal kirim. Pesan kamu disimpen — coba kirim ulang.",
+    "toolSearchingWeb": "Mencari di web…",
+    "toolFetchingWeb": "Ngambil dari halaman…",
     "journalAdd": "Tambah ke Jurnal",
     "journalSelectCount": "{n} dipilih",
     "journalCancel": "Batal",

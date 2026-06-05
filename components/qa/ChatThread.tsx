@@ -96,11 +96,14 @@ export interface ChatTurn {
 }
 
 interface Frame {
-  type: 'text' | 'done' | 'error';
+  type: 'text' | 'done' | 'error' | 'tool';
   delta?: string;
   message?: string;
   status?: number;
   inner?: string;
+  /** On `tool`: name of the server-side tool Claude started using
+   *  (`web_search`, `web_fetch`). Drives the "searching the web" hint. */
+  name?: string;
   /** On `done`: the just-persisted QaHistory id, so the client can
    * swap its optimistic placeholder for a real DB id and the new
    * turn becomes journalable without a page refresh. */
@@ -150,6 +153,10 @@ export function ChatThread({
     question: string;
     answer: string;
     attachments?: ChatTurnAttachment[];
+    /** Localized label like "Searching the web…" shown while a server-
+     *  side tool (web_search / web_fetch) is running and no text has
+     *  arrived yet. Cleared the moment the first text delta lands. */
+    toolHint?: string;
   } | null>(null);
   const [input, setInput] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -401,7 +408,21 @@ export function ChatThread({
               question: optimisticQuestion,
               answer: answerSoFar,
               attachments: optimisticAttachments.length ? optimisticAttachments : undefined,
+              // First text delta means the model has stopped tool-calling
+              // and started writing the answer — drop the hint.
+              toolHint: undefined,
             });
+          } else if (frame.type === 'tool' && frame.name) {
+            const label =
+              frame.name === 'web_fetch'
+                ? t('toolFetchingWeb')
+                : t('toolSearchingWeb');
+            setPending((prev) => ({
+              question: prev?.question ?? optimisticQuestion,
+              answer: prev?.answer ?? '',
+              attachments: prev?.attachments,
+              toolHint: label,
+            }));
           } else if (frame.type === 'error') {
             console.error('[chat] stream error frame', {
               message: frame.message,
@@ -594,6 +615,7 @@ export function ChatThread({
                 question={pending.question}
                 answer={pending.answer}
                 attachments={pending.attachments}
+                toolHint={pending.toolHint}
                 onOpenImage={(src, name) => setViewingImage({ src, name })}
                 streaming
               />
@@ -941,6 +963,7 @@ function Pair({
   question,
   answer,
   streaming,
+  toolHint,
   onLongPress,
   pressed,
   selectMode,
@@ -953,6 +976,10 @@ function Pair({
   question: string;
   answer: string;
   streaming?: boolean;
+  /** When set and the answer is still empty, replaces the typing dots
+   *  with a labeled hint (e.g. "Mencari di web…"). Lets the user see
+   *  *why* the reply is taking longer than usual. */
+  toolHint?: string;
   /** Fires on a tap-and-hold on touch, or a right-click on desktop. The
    *  ChatThread parent opens an action sheet (reply / journal / delete)
    *  in response — chat-app convention, replaces the per-message icon row.
@@ -1099,11 +1126,18 @@ function Pair({
           {renderInlineMd(answer)}
           {streaming ? (
             answer.length === 0 ? (
-              <span className="inline-flex items-center gap-1 py-0.5" aria-label="typing">
-                <span className="bg-muted-foreground/50 h-1.5 w-1.5 animate-bounce rounded-full [animation-delay:-0.3s]" />
-                <span className="bg-muted-foreground/50 h-1.5 w-1.5 animate-bounce rounded-full [animation-delay:-0.15s]" />
-                <span className="bg-muted-foreground/50 h-1.5 w-1.5 animate-bounce rounded-full" />
-              </span>
+              toolHint ? (
+                <span className="text-muted-foreground inline-flex items-center gap-1.5 py-0.5 text-xs italic">
+                  <span className="bg-muted-foreground/60 h-1 w-1 animate-pulse rounded-full" />
+                  {toolHint}
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1 py-0.5" aria-label="typing">
+                  <span className="bg-muted-foreground/50 h-1.5 w-1.5 animate-bounce rounded-full [animation-delay:-0.3s]" />
+                  <span className="bg-muted-foreground/50 h-1.5 w-1.5 animate-bounce rounded-full [animation-delay:-0.15s]" />
+                  <span className="bg-muted-foreground/50 h-1.5 w-1.5 animate-bounce rounded-full" />
+                </span>
+              )
             ) : (
               <span className="bg-muted-foreground/60 ml-1 inline-block h-3 w-1.5 animate-pulse align-middle" />
             )

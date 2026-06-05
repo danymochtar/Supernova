@@ -354,6 +354,8 @@
     "errorInvalid": "メッセージが短すぎるか長すぎるみたい。",
     "errorNoProfile": "まずはオンボーディングを終わらせてね。",
     "errorGeneric": "送信に失敗。メッセージは保存されてるから、もう一度送ってみて。",
+    "toolSearchingWeb": "ウェブを検索中…",
+    "toolFetchingWeb": "ページを取得中…",
     "journalAdd": "ジャーナルに追加",
     "journalSelectCount": "{n} 件選択中",
     "journalCancel": "キャンセル",

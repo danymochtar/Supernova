@@ -238,7 +238,22 @@ export async function POST(req: Request) {
       try {
         const sdkStream = anthropic().messages.stream({
           model: modelId,
-          max_tokens: 900,
+          max_tokens: 1500,
+          // Anthropic-hosted web search + fetch. Server-side tools — Claude
+          // decides when to use them; results never enter the request prompt
+          // (dynamic filtering on the _20260209 versions trims them before
+          // they reach the context window). Without these the model
+          // correctly says "I can't browse"; with them it answers questions
+          // that depend on current info ("hotel termurah dimana", "harga
+          // dolar hari ini", "berita X") without that disclaimer.
+          //
+          // Cast: SDK 0.32 only types custom tools — the runtime API accepts
+          // these server-tool definitions verbatim. Same workaround as the
+          // `document` content block cast above.
+          tools: [
+            { type: 'web_search_20260209', name: 'web_search' },
+            { type: 'web_fetch_20260209', name: 'web_fetch' },
+          ] as unknown as Anthropic.Tool[],
           system: [
             {
               type: 'text',
@@ -258,6 +273,17 @@ export async function POST(req: Request) {
             const delta = event.delta.text;
             collected.push(delta);
             controller.enqueue(frame({ type: 'text', delta }));
+          } else if (event.type === 'content_block_start') {
+            // SDK 0.32 doesn't type the server_tool_use block — runtime
+            // shape is { type: 'server_tool_use', name: 'web_search' | ... }.
+            // Surface a "searching the web" indicator so the UI can show
+            // the user *why* the reply is taking longer than usual. The
+            // client may render it or ignore it — frame shape is forward-
+            // compatible.
+            const block = event.content_block as { type: string; name?: string };
+            if (block.type === 'server_tool_use' && typeof block.name === 'string') {
+              controller.enqueue(frame({ type: 'tool', name: block.name }));
+            }
           }
         }
 

@@ -354,6 +354,8 @@
     "errorInvalid": "Message is too short or too long.",
     "errorNoProfile": "Finish onboarding first.",
     "errorGeneric": "Couldn't send. Your message is kept — try again.",
+    "toolSearchingWeb": "Searching the web…",
+    "toolFetchingWeb": "Fetching the page…",
     "journalAdd": "Add to Journal",
     "journalSelectCount": "{n} selected",
     "journalCancel": "Cancel",
