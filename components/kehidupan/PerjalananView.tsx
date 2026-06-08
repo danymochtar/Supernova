@@ -16,6 +16,7 @@ import {
   activeSlots,
 } from '@/lib/numerology';
 import { meaningFor } from '@/lib/numerology/meanings';
+import { personalMonthDetail } from '@/lib/numerology/personalMonthDetail';
 import type { NumerologyResult } from '@/lib/numerology';
 import { CompoundReduced } from '@/components/numerology/CompoundReduced';
 import { Explainer } from '@/components/layout/Explainer';
@@ -219,13 +220,19 @@ export async function PerjalananView({
         <MonthlyPMStrip
           title={t('monthlyStripTitle', { year: ctx.year })}
           currentMonth={ctx.month}
-          monthLabel={t('personalMonthLabel')}
+          labels={{
+            monthLabel: t('personalMonthLabel'),
+            essenceLabel: t('personalMonthEssenceLabel'),
+            personalTipsLabel: t('personalMonthPersonalLabel'),
+            moneyTipsLabel: t('personalMonthMoneyLabel'),
+            loveTipsLabel: t('personalMonthLoveLabel'),
+          }}
           cells={monthlyPMs.map((pm, i) => ({
             month: i + 1,
             shortLabel: monthShort[i]!,
             longLabel: monthLong[i]!,
             pm,
-            meaning: meaningFor('personalMonth', { compound: pm, reduced: pm, isMaster: false }, locale),
+            detail: personalMonthDetail(pm, locale),
           }))}
         />
       </section>

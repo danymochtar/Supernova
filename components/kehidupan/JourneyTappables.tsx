@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Modal } from '@/components/layout/Modal';
+import type { PersonalMonthDetail } from '@/lib/numerology/personalMonthDetail';
 
 interface DetailModalProps {
   open: boolean;
@@ -89,7 +90,23 @@ interface MonthCell {
   shortLabel: string;
   longLabel: string;
   pm: number;
-  meaning: string | null;
+  /** Elaborated detail rendered as separate Essence / Personal / Money /
+   *  Love sections in the modal. Null when PM is out of the 1-9 range
+   *  (shouldn't happen — PM always reduces to a single digit). */
+  detail: PersonalMonthDetail | null;
+}
+
+interface MonthlyPMLabels {
+  /** Modal heading prefix (e.g. "Personal Month"). */
+  monthLabel: string;
+  /** Section heading for the elaborated essence paragraph. */
+  essenceLabel: string;
+  /** Section heading for personal practice tips. */
+  personalTipsLabel: string;
+  /** Section heading for money/career tips. */
+  moneyTipsLabel: string;
+  /** Section heading for love/relationship tips. */
+  loveTipsLabel: string;
 }
 
 /**
@@ -100,12 +117,12 @@ export function MonthlyPMStrip({
   title,
   cells,
   currentMonth,
-  monthLabel,
+  labels,
 }: {
   title: string;
   cells: MonthCell[];
   currentMonth: number;
-  monthLabel: string; // e.g. "Personal Month" prefix in the modal title
+  labels: MonthlyPMLabels;
 }) {
   const [active, setActive] = useState<MonthCell | null>(null);
   return (
@@ -135,18 +152,55 @@ export function MonthlyPMStrip({
           })}
         </div>
       </div>
-      <DetailModal
+      <Modal
         open={active !== null}
         onClose={() => setActive(null)}
-        title={active ? `${monthLabel} · ${active.longLabel}` : ''}
-        value={
+        title={
           active ? (
-            <span className="font-mono text-4xl font-semibold tabular-nums">{active.pm}</span>
-          ) : null
+            <h3 className="font-serif text-xl font-semibold tracking-tight">
+              {labels.monthLabel} · {active.longLabel}
+            </h3>
+          ) : (
+            ''
+          )
         }
-        body={active?.meaning ?? null}
-      />
+      >
+        {active ? (
+          <div className="space-y-4">
+            <div>
+              <span className="font-mono text-4xl font-semibold tabular-nums">{active.pm}</span>
+            </div>
+            {active.detail ? (
+              <div className="space-y-4">
+                {/* Essence runs as a lead paragraph in body color — sets the
+                 *  texture. The three tip sections that follow are
+                 *  labeled and sit in the muted track so the user can
+                 *  scan to whichever angle they need. */}
+                <p className="whitespace-pre-line text-sm leading-relaxed text-foreground">
+                  {active.detail.essence}
+                </p>
+                <Section heading={labels.personalTipsLabel} body={active.detail.personalTips} />
+                <Section heading={labels.moneyTipsLabel} body={active.detail.moneyTips} />
+                <Section heading={labels.loveTipsLabel} body={active.detail.loveTips} />
+              </div>
+            ) : (
+              <p className="text-muted-foreground text-sm italic">—</p>
+            )}
+          </div>
+        ) : null}
+      </Modal>
     </>
+  );
+}
+
+function Section({ heading, body }: { heading: string; body: string }) {
+  return (
+    <div className="space-y-1">
+      <p className="text-muted-foreground text-[11px] font-semibold uppercase tracking-wider">
+        {heading}
+      </p>
+      <p className="whitespace-pre-line text-sm leading-relaxed text-foreground/85">{body}</p>
+    </div>
   );
 }
 
