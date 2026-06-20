@@ -120,6 +120,18 @@
     "synastryComplementDisclaimer": "占星补充 — 不影响上方的命理分数。",
     "synastryPartialHint": "添加月亮和上升星座以查看完整合盘。",
     "synastryPartialHintLink": "编辑资料",
+    "funfactLabel": "Life Path {lifePath} × {sign}",
+    "element": {
+      "fire": "火",
+      "earth": "土",
+      "air": "风",
+      "water": "水"
+    },
+    "modality": {
+      "cardinal": "基本",
+      "fixed": "固定",
+      "mutable": "变动"
+    },
     "pair": {
       "sun-sun": "太阳 ↔ 太阳 · 核心自我",
       "moon-moon": "月亮 ↔ 月亮 · 情感世界",

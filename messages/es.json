@@ -120,6 +120,18 @@
     "synastryComplementDisclaimer": "Complemento astrológico — no afecta la puntuación numerológica de arriba.",
     "synastryPartialHint": "Añade Luna y Ascendente para una sinastría completa.",
     "synastryPartialHintLink": "Editar perfil",
+    "funfactLabel": "Life Path {lifePath} × {sign}",
+    "element": {
+      "fire": "Fuego",
+      "earth": "Tierra",
+      "air": "Aire",
+      "water": "Agua"
+    },
+    "modality": {
+      "cardinal": "Cardinal",
+      "fixed": "Fijo",
+      "mutable": "Mutable"
+    },
     "pair": {
       "sun-sun": "Sol ↔ Sol · Núcleo del yo",
       "moon-moon": "Luna ↔ Luna · Mundo emocional",

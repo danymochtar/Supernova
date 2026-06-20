@@ -120,6 +120,18 @@
     "synastryComplementDisclaimer": "점성 보완 — 위의 수비학 점수에는 영향이 없어요.",
     "synastryPartialHint": "달과 상승을 추가하면 전체 시너스트리를 볼 수 있어요.",
     "synastryPartialHintLink": "프로필 편집",
+    "funfactLabel": "Life Path {lifePath} × {sign}",
+    "element": {
+      "fire": "불",
+      "earth": "흙",
+      "air": "공기",
+      "water": "물"
+    },
+    "modality": {
+      "cardinal": "활동궁",
+      "fixed": "고정궁",
+      "mutable": "변통궁"
+    },
     "pair": {
       "sun-sun": "태양 ↔ 태양 · 핵심 자아",
       "moon-moon": "달 ↔ 달 · 감정 세계",

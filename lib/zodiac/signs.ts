@@ -158,6 +158,64 @@ export function sunSignFromDob(dob: BirthDateInput): ZodiacSign {
   return 'aries';
 }
 
+/**
+ * Tailwind class tokens for an element — drives the Person hero card's
+ * gradient + ring + glyph tint. Each element has its own warm/cool
+ * temperature so the four hero variants read distinct at a glance.
+ */
+export interface ElementTokens {
+  /** `from-... to-...` gradient classes for the card background. */
+  gradient: string;
+  /** `ring-...` class for the soft outer ring. */
+  ring: string;
+  /** `border-...` class for the outer border. */
+  border: string;
+  /** Color class for the big glyph itself (text-...). */
+  glyph: string;
+  /** Small chip/badge classes used elsewhere if needed. */
+  chip: string;
+}
+
+export const ELEMENT_TOKENS: Record<Element, ElementTokens> = {
+  // Fire — warm coral/amber. Energy outward, expressive.
+  fire: {
+    gradient: 'from-orange-100/70 to-rose-100/40 dark:from-orange-900/30 dark:to-rose-900/15',
+    ring: 'ring-orange-300/40 dark:ring-orange-700/30',
+    border: 'border-orange-300/60 dark:border-orange-800/40',
+    glyph: 'text-orange-700 dark:text-orange-300',
+    chip: 'bg-orange-500/15 text-orange-700 dark:text-orange-300',
+  },
+  // Earth — sage / olive. Grounded, durable.
+  earth: {
+    gradient: 'from-emerald-100/70 to-amber-50/60 dark:from-emerald-900/30 dark:to-amber-900/15',
+    ring: 'ring-emerald-300/40 dark:ring-emerald-700/30',
+    border: 'border-emerald-300/60 dark:border-emerald-800/40',
+    glyph: 'text-emerald-700 dark:text-emerald-300',
+    chip: 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300',
+  },
+  // Air — sky / lavender. Light, mental.
+  air: {
+    gradient: 'from-sky-100/70 to-violet-100/40 dark:from-sky-900/30 dark:to-violet-900/15',
+    ring: 'ring-sky-300/40 dark:ring-sky-700/30',
+    border: 'border-sky-300/60 dark:border-sky-800/40',
+    glyph: 'text-sky-700 dark:text-sky-300',
+    chip: 'bg-sky-500/15 text-sky-700 dark:text-sky-300',
+  },
+  // Water — aqua / deep teal. Deep, emotional.
+  water: {
+    gradient: 'from-cyan-100/70 to-indigo-100/40 dark:from-cyan-900/30 dark:to-indigo-900/15',
+    ring: 'ring-cyan-300/40 dark:ring-cyan-700/30',
+    border: 'border-cyan-300/60 dark:border-cyan-800/40',
+    glyph: 'text-cyan-700 dark:text-cyan-300',
+    chip: 'bg-cyan-500/15 text-cyan-700 dark:text-cyan-300',
+  },
+};
+
+/** Convenience: tokens for the sign's element. */
+export function tokensForSign(sign: ZodiacSign): ElementTokens {
+  return ELEMENT_TOKENS[ELEMENT[sign]];
+}
+
 /** Prisma enum string ↔ our lowercase sign id. Both directions. */
 export function fromPrismaEnum(value: string | null | undefined): ZodiacSign | null {
   if (!value) return null;

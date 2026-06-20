@@ -120,6 +120,18 @@
     "synastryComplementDisclaimer": "Pelengkap astrologi — tidak menjejaskan skor numerologi di atas.",
     "synastryPartialHint": "Tambahkan Moon & Rising untuk synastry lengkap.",
     "synastryPartialHintLink": "Edit profil",
+    "funfactLabel": "Life Path {lifePath} × {sign}",
+    "element": {
+      "fire": "Api",
+      "earth": "Bumi",
+      "air": "Udara",
+      "water": "Air"
+    },
+    "modality": {
+      "cardinal": "Kardinal",
+      "fixed": "Tetap",
+      "mutable": "Mutable"
+    },
     "pair": {
       "sun-sun": "Sun ↔ Sun · Diri teras",
       "moon-moon": "Moon ↔ Moon · Dunia emosi",

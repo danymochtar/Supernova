@@ -1,12 +1,15 @@
 export {
   ELEMENT,
+  ELEMENT_TOKENS,
   GLYPH,
   MODALITY,
   ZODIAC_SIGNS,
   fromPrismaEnum,
   sunSignFromDob,
   toPrismaEnum,
+  tokensForSign,
   type Element,
+  type ElementTokens,
   type Modality,
   type ZodiacSign,
 } from './signs';
@@ -21,4 +24,9 @@ export {
   type SynastryResult,
 } from './synastry';
 
-export { synastryBlurb, zodiacMeaning, type ZodiacMeaning } from './content';
+export {
+  lifePathSignFunfact,
+  synastryBlurb,
+  zodiacMeaning,
+  type ZodiacMeaning,
+} from './content';

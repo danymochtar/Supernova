@@ -120,6 +120,18 @@
     "synastryComplementDisclaimer": "占星術の補足 — 上記の数秘スコアには影響しません。",
     "synastryPartialHint": "月と上昇を追加して完全なシナストリーを表示。",
     "synastryPartialHintLink": "プロフィール編集",
+    "funfactLabel": "Life Path {lifePath} × {sign}",
+    "element": {
+      "fire": "火",
+      "earth": "土",
+      "air": "風",
+      "water": "水"
+    },
+    "modality": {
+      "cardinal": "活動",
+      "fixed": "不動",
+      "mutable": "柔軟"
+    },
     "pair": {
       "sun-sun": "太陽 ↔ 太陽 · コアな自己",
       "moon-moon": "月 ↔ 月 · 感情の世界",

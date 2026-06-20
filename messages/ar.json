@@ -120,6 +120,18 @@
     "synastryComplementDisclaimer": "مكمّل تنجيمي — لا يؤثر على درجة علم الأعداد أعلاه.",
     "synastryPartialHint": "أضف القمر والطالع للتطابق الكامل.",
     "synastryPartialHintLink": "تحرير الملف الشخصي",
+    "funfactLabel": "Life Path {lifePath} × {sign}",
+    "element": {
+      "fire": "نار",
+      "earth": "تراب",
+      "air": "هواء",
+      "water": "ماء"
+    },
+    "modality": {
+      "cardinal": "كاردينالي",
+      "fixed": "ثابت",
+      "mutable": "متغير"
+    },
     "pair": {
       "sun-sun": "شمس ↔ شمس · الذات الأساسية",
       "moon-moon": "قمر ↔ قمر · العالم العاطفي",

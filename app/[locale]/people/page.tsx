@@ -8,6 +8,7 @@ import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { listPeople, type PersonView } from '@/lib/db/repositories/person';
 import { ageAt, buildCoreProfile, contextFromInstant } from '@/lib/numerology';
 import { compatibilityScore } from '@/lib/compatibility/score';
+import { GLYPH, sunSignFromDob, tokensForSign } from '@/lib/zodiac/signs';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { displayName } from '@/lib/profile/displayName';
 import { deletePersonFormAction } from './actions';
@@ -137,8 +138,8 @@ export default async function PeoplePage({
               <div className="border-border divide-border/60 overflow-hidden rounded-2xl border bg-surface-2 divide-y">
                 {group.rows.map((p) => {
                   const age = ageAt(p.dob, ctx);
-                  const initials = `${p.firstName.charAt(0)}${p.lastName?.charAt(0) ?? ''}`.toUpperCase()
-                    || p.firstName.slice(0, 2).toUpperCase();
+                  const sun = sunSignFromDob(p.dob);
+                  const tok = tokensForSign(sun);
                   const primary = displayName(p);
                   // Surface the full legal name as subline only when it
                   // differs from the display name — keeps identification
@@ -153,10 +154,10 @@ export default async function PeoplePage({
                         className="press-soft flex flex-1 items-center gap-3 px-4 py-3"
                       >
                         <div
-                          className="from-primary/30 to-accent/30 text-foreground flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br font-serif text-sm font-semibold"
+                          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br ring-1 ${tok.gradient} ${tok.ring}`}
                           aria-hidden
                         >
-                          {initials}
+                          <span className={`font-serif text-xl ${tok.glyph}`}>{GLYPH[sun]}</span>
                         </div>
                         <div className="min-w-0 flex-1">
                           <p className="truncate font-medium">{primary}</p>

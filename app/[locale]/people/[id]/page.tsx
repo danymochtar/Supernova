@@ -8,7 +8,16 @@ import { getPerson } from '@/lib/db/repositories/person';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { ZodiacSection } from '@/components/people/ZodiacSection';
-import { ZODIAC_SIGNS, type ZodiacSign } from '@/lib/zodiac/signs';
+import {
+  ELEMENT,
+  GLYPH,
+  MODALITY,
+  ZODIAC_SIGNS,
+  sunSignFromDob,
+  tokensForSign,
+  type ZodiacSign,
+} from '@/lib/zodiac/signs';
+import { lifePathSignFunfact } from '@/lib/zodiac/content';
 import {
   ageAt,
   bridges,
@@ -75,7 +84,6 @@ export default async function PersonDetailPage({
 
   const minor = minorNumbers(person.nickname);
   const bridge = bridges(them);
-  const initials = `${person.firstName.charAt(0)}${person.lastName?.charAt(0) ?? ''}`.toUpperCase();
 
   // Family Tree overlay — only meaningful when this Person is a parent. We
   // surface (a) reduced numbers present in both charts and (b) parent core
@@ -108,35 +116,96 @@ export default async function PersonDetailPage({
     <main className="container max-w-2xl px-4 sm:px-6">
       <TopBar title={theirName} backHref={`/${locale}/people`} />
       <div className="space-y-6 pb-6 sm:pb-10">
-        {/* Identity hero — gradient brand card matching the talents/journey
-         * hero language. Bigger avatar, name in serif, relationship as
-         * eyebrow + age/DOB on the meta line. */}
-        <section className="border-primary/40 from-primary/10 ring-primary/20 overflow-hidden rounded-3xl border-2 bg-gradient-to-br to-accent/15 p-6 ring-1 dark:to-accent/15">
-          <div className="flex items-center gap-4">
-            <div
-              className="from-primary/40 to-accent/40 ring-primary/20 flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-gradient-to-br font-serif text-xl font-semibold tracking-tight ring-1"
-              aria-hidden
-            >
-              {initials}
-            </div>
-            <div className="min-w-0 flex-1 space-y-1">
-              <p className="text-primary text-[11px] font-semibold uppercase tracking-[0.18em]">
-                {tRelLabel(person.relationship)}
-              </p>
-              <p className="font-serif truncate text-xl font-semibold leading-tight tracking-tight sm:text-2xl">
-                {theirName}
-              </p>
-              <p className="text-muted-foreground text-xs">
-                {t('age', { age })}
-                {' · '}
-                <span className="tabular-nums">
-                  {person.dob.year}-{String(person.dob.month).padStart(2, '0')}-
-                  {String(person.dob.day).padStart(2, '0')}
-                </span>
-              </p>
-            </div>
-          </div>
-        </section>
+        {/* Identity hero — element-tinted gradient + big Sun glyph as the
+         * avatar. The element (fire/earth/air/water) is intrinsic to the
+         * person's Sun, so the hero ornament naturally varies across the
+         * People list without needing a per-person color choice. */}
+        {(() => {
+          const sunSign = sunSignFromDob(person.dob);
+          const tokens = tokensForSign(sunSign);
+          const element = ELEMENT[sunSign];
+          const modality = MODALITY[sunSign];
+          const funfact = lifePathSignFunfact(them.lifePath.reduced, sunSign, locale);
+          return (
+            <>
+              <section
+                className={`overflow-hidden rounded-3xl border-2 bg-gradient-to-br p-6 ring-1 ${tokens.gradient} ${tokens.ring} ${tokens.border}`}
+              >
+                <div className="relative flex items-center gap-4">
+                  {/* Big glyph in the avatar slot. Decorative second glyph
+                   * sits behind it at low opacity for an ornament feel. */}
+                  <div className="relative h-20 w-20 shrink-0">
+                    <span
+                      aria-hidden
+                      className={`absolute -right-2 -top-2 font-serif text-6xl opacity-15 ${tokens.glyph}`}
+                    >
+                      {GLYPH[sunSign]}
+                    </span>
+                    <div
+                      className={`relative flex h-20 w-20 items-center justify-center rounded-full bg-white/40 ring-1 backdrop-blur-sm dark:bg-black/20 ${tokens.ring}`}
+                      aria-label={tZodiac(`sign.${sunSign}`)}
+                    >
+                      <span className={`font-serif text-4xl ${tokens.glyph}`}>
+                        {GLYPH[sunSign]}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="min-w-0 flex-1 space-y-1">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] opacity-80">
+                      {tRelLabel(person.relationship)}
+                    </p>
+                    <p className="font-serif truncate text-xl font-semibold leading-tight tracking-tight sm:text-2xl">
+                      {theirName}
+                    </p>
+                    <p className="text-muted-foreground text-xs">
+                      <span className="capitalize">{tZodiac(`sign.${sunSign}`)}</span>
+                      {' · '}
+                      {t('age', { age })}
+                      {' · '}
+                      <span className="tabular-nums">
+                        {person.dob.year}-{String(person.dob.month).padStart(2, '0')}-
+                        {String(person.dob.day).padStart(2, '0')}
+                      </span>
+                    </p>
+                    <div className="flex flex-wrap gap-1.5 pt-1">
+                      <span className={`rounded-full px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider ${tokens.chip}`}>
+                        {tZodiac(`element.${element}`)}
+                      </span>
+                      <span className={`rounded-full px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider ${tokens.chip}`}>
+                        {tZodiac(`modality.${modality}`)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* FUNFACT — Life Path × Sun combo. One punchy line that
+               * captures the cross of the deepest core number with the
+               * person's archetypal sign. Static lookup, no AI. */}
+              {funfact ? (
+                <section
+                  className={`relative overflow-hidden rounded-2xl border bg-surface-1 p-4 ${tokens.border}`}
+                >
+                  <span
+                    aria-hidden
+                    className={`absolute -right-4 -bottom-6 font-serif text-8xl opacity-[0.06] ${tokens.glyph}`}
+                  >
+                    {GLYPH[sunSign]}
+                  </span>
+                  <div className="relative space-y-1">
+                    <p className="text-muted-foreground text-[10px] font-semibold uppercase tracking-[0.18em]">
+                      {tZodiac('funfactLabel', {
+                        lifePath: them.lifePath.reduced,
+                        sign: tZodiac(`sign.${sunSign}`),
+                      })}
+                    </p>
+                    <p className="text-sm leading-relaxed text-foreground/90">{funfact}</p>
+                  </div>
+                </section>
+              ) : null}
+            </>
+          );
+        })()}
 
         {/* Compat at-a-glance — soft brand gradient + heart icon. Score
          * + band + chevron only; patterns live on the /compatibility

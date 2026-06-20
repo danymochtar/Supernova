@@ -120,6 +120,18 @@
     "synastryComplementDisclaimer": "Astrological complement — does not affect the numerology score above.",
     "synastryPartialHint": "Add Moon & Rising for full synastry.",
     "synastryPartialHintLink": "Edit profile",
+    "funfactLabel": "Life Path {lifePath} × {sign}",
+    "element": {
+      "fire": "Fire",
+      "earth": "Earth",
+      "air": "Air",
+      "water": "Water"
+    },
+    "modality": {
+      "cardinal": "Cardinal",
+      "fixed": "Fixed",
+      "mutable": "Mutable"
+    },
     "pair": {
       "sun-sun": "Sun ↔ Sun · Core self",
       "moon-moon": "Moon ↔ Moon · Emotional world",
