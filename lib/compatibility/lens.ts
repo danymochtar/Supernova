@@ -84,6 +84,7 @@ const CORE_LENS: RelationshipLens = {
     'oldSoul',
     'complementaryKarmic',
     'bridgeFit',
+    'zodiacSynastry',
   ]),
 };
 

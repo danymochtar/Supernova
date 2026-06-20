@@ -117,7 +117,7 @@
     "missingHint": "未入力 — プロフィールを編集して追加。",
     "sectionTitleOnPerson": "{name} の星座",
     "synastryTitle": "星座シナストリー",
-    "synastryComplementDisclaimer": "占星術の補足 — 上記の数秘スコアには影響しません。",
+    "synastryComplementDisclaimer": "星座のレゾナンスはスコアに反映 — 上限あり（最大 ±3）。",
     "synastryPartialHint": "月と上昇を追加して完全なシナストリーを表示。",
     "synastryPartialHintLink": "プロフィール編集",
     "funfactLabel": "Life Path {lifePath} × {sign}",
@@ -665,7 +665,8 @@
       "complementaryKarmic": "互いの先生になる（core ↔ karmic lesson）",
       "bridgeSync": "Bridgeが調和（内面の風景が似ている）",
       "bridgeComplement": "Bridgeが補完（一方は統合、もう一方は引き伸ばされている）",
-      "mutualBridgeStretch": "二人とも多くの面で引き伸ばされている"
+      "mutualBridgeStretch": "二人とも多くの面で引き伸ばされている",
+      "zodiacSynastry": "星座のレゾナンス"
     },
     "crossLabel": "あなた {me} × 相手 {them}",
     "band": {

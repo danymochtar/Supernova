@@ -117,7 +117,7 @@
     "missingHint": "Not set — edit the profile to add.",
     "sectionTitleOnPerson": "{name}'s zodiac",
     "synastryTitle": "Zodiac Synastry",
-    "synastryComplementDisclaimer": "Astrological complement — does not affect the numerology score above.",
+    "synastryComplementDisclaimer": "Zodiac resonance contributes — small bounded effect (max ±3) on the score above.",
     "synastryPartialHint": "Add Moon & Rising for full synastry.",
     "synastryPartialHintLink": "Edit profile",
     "funfactLabel": "Life Path {lifePath} × {sign}",
@@ -665,7 +665,8 @@
       "complementaryKarmic": "Natural teachers (core ↔ karmic lesson)",
       "bridgeSync": "Bridges in sync (similar internal landscape)",
       "bridgeComplement": "Bridge complement (one integrated, one stretched)",
-      "mutualBridgeStretch": "Both stretched across multiple bridges"
+      "mutualBridgeStretch": "Both stretched across multiple bridges",
+      "zodiacSynastry": "Zodiac resonance"
     },
     "crossLabel": "Your {me} × Their {them}",
     "band": {

@@ -117,7 +117,7 @@
     "missingHint": "미입력 — 프로필을 편집해 추가하세요.",
     "sectionTitleOnPerson": "{name}의 별자리",
     "synastryTitle": "별자리 시너스트리",
-    "synastryComplementDisclaimer": "점성 보완 — 위의 수비학 점수에는 영향이 없어요.",
+    "synastryComplementDisclaimer": "별자리 공명이 점수에 반영돼요 — 제한적 효과 (최대 ±3).",
     "synastryPartialHint": "달과 상승을 추가하면 전체 시너스트리를 볼 수 있어요.",
     "synastryPartialHintLink": "프로필 편집",
     "funfactLabel": "Life Path {lifePath} × {sign}",
@@ -665,7 +665,8 @@
       "complementaryKarmic": "서로의 스승 (core ↔ karmic lesson)",
       "bridgeSync": "Bridge가 조화로움 (내면의 풍경이 비슷함)",
       "bridgeComplement": "Bridge가 보완적 (한쪽은 통합, 한쪽은 늘어남)",
-      "mutualBridgeStretch": "둘 다 여러 면에서 늘어나 있음"
+      "mutualBridgeStretch": "둘 다 여러 면에서 늘어나 있음",
+      "zodiacSynastry": "별자리 공명"
     },
     "crossLabel": "{me} 당신 × {them} 상대",
     "band": {

@@ -117,7 +117,7 @@
     "missingHint": "غير محدد — حرّر الملف الشخصي للإضافة.",
     "sectionTitleOnPerson": "برج {name}",
     "synastryTitle": "تطابق الأبراج",
-    "synastryComplementDisclaimer": "مكمّل تنجيمي — لا يؤثر على درجة علم الأعداد أعلاه.",
+    "synastryComplementDisclaimer": "صدى الأبراج يُحتسب — تأثير محدود (بحد أقصى ±3) على الدرجة أعلاه.",
     "synastryPartialHint": "أضف القمر والطالع للتطابق الكامل.",
     "synastryPartialHintLink": "تحرير الملف الشخصي",
     "funfactLabel": "Life Path {lifePath} × {sign}",
@@ -665,7 +665,8 @@
       "complementaryKarmic": "تتعلّمان من بعضكما (core ↔ karmic lesson)",
       "bridgeSync": "Bridge منسجم (مشهد داخلي متشابه)",
       "bridgeComplement": "Bridge متكامل (أحدكما مندمج، الآخر مشدود)",
-      "mutualBridgeStretch": "كلاكما مشدود في جوانب كثيرة"
+      "mutualBridgeStretch": "كلاكما مشدود في جوانب كثيرة",
+      "zodiacSynastry": "صدى الأبراج"
     },
     "crossLabel": "{me} أنت × {them} هم",
     "band": {

@@ -146,7 +146,14 @@ export default async function PeoplePage({
                   // in reach without making the row read formal.
                   const hasFullName = p.fullName.trim() !== primary;
                   const them = buildCoreProfile(p.fullName, p.dob);
-                  const compat = compatibilityScore(me, them, p.relationship);
+                  const compat = compatibilityScore(me, them, p.relationship, {
+                    meDob: profile.dob,
+                    meMoon: profile.moonSign,
+                    meRising: profile.risingSign,
+                    themDob: p.dob,
+                    themMoon: p.moonSign,
+                    themRising: p.risingSign,
+                  });
                   return (
                     <div key={p.id} className="flex items-stretch hover:bg-muted/30 transition-colors">
                       <Link

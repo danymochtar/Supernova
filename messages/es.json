@@ -117,7 +117,7 @@
     "missingHint": "Sin definir — edita el perfil para añadir.",
     "sectionTitleOnPerson": "Zodiaco de {name}",
     "synastryTitle": "Sinastría zodiacal",
-    "synastryComplementDisclaimer": "Complemento astrológico — no afecta la puntuación numerológica de arriba.",
+    "synastryComplementDisclaimer": "La resonancia zodiacal cuenta — efecto pequeño y acotado (máx ±3) en la puntuación de arriba.",
     "synastryPartialHint": "Añade Luna y Ascendente para una sinastría completa.",
     "synastryPartialHintLink": "Editar perfil",
     "funfactLabel": "Life Path {lifePath} × {sign}",
@@ -665,7 +665,8 @@
       "complementaryKarmic": "Maestros mutuos (core ↔ karmic lesson)",
       "bridgeSync": "Bridges alineados (paisaje interno similar)",
       "bridgeComplement": "Bridges complementarios (uno integrado, uno estirado)",
-      "mutualBridgeStretch": "Ambos estirados en varios lados"
+      "mutualBridgeStretch": "Ambos estirados en varios lados",
+      "zodiacSynastry": "Resonancia zodiacal"
     },
     "crossLabel": "{me} tú × {them} el otro",
     "band": {

@@ -75,7 +75,14 @@ export default async function PersonDetailPage({
   const ctx = contextFromInstant(new Date(), userProfile.timezone);
   const age = ageAt(person.dob, ctx);
 
-  const score = compatibilityScore(me, them, person.relationship);
+  const score = compatibilityScore(me, them, person.relationship, {
+    meDob: userProfile.dob,
+    meMoon: userProfile.moonSign,
+    meRising: userProfile.risingSign,
+    themDob: person.dob,
+    themMoon: person.moonSign,
+    themRising: person.risingSign,
+  });
 
   // Display name = nickname when present, otherwise firstName. Drives all
   // UI prose + AI prompts so the model addresses people by their call

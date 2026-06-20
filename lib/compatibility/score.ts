@@ -1,6 +1,8 @@
 import type { Relationship } from '@prisma/client';
 import { bridges, type NumerologyResult } from '@/lib/numerology';
 import { lensFor, pickResult, type CoreKey, type Lane } from './lens';
+import { zodiacModifier, type ZodiacInputs } from './zodiacModifier';
+export type { ZodiacInputs } from './zodiacModifier';
 
 /**
  * Pythagorean compatibility score for a single digit pair, 0-100.
@@ -119,6 +121,14 @@ export function compatibilityScore(
   me: CoreLite,
   them: CoreLite,
   relationship: Relationship,
+  /**
+   * Optional zodiac inputs. When provided AND the lens enables
+   * `'zodiacSynastry'`, a small bounded modifier is computed from the
+   * (me, them) synastry pairs and applied to the running score. Call
+   * sites that don't carry zodiac data (e.g. unit tests, prior callers)
+   * keep working unchanged — the modifier is just skipped.
+   */
+  zodiac?: ZodiacInputs,
 ): OverallScore {
   const lens = lensFor(relationship);
 
@@ -279,6 +289,19 @@ export function compatibilityScore(
       // Both equally stretched → compound exhaustion
       modifiers.push({ reason: 'mutualBridgeStretch', delta: -1 });
       overall -= 1;
+    }
+  }
+
+  if (lens.enabledModifiers.has('zodiacSynastry') && zodiac) {
+    // Astrology synastry as a small bounded signal alongside the
+    // numerology lanes. Magnitude capped at ±3 inside zodiacModifier,
+    // applied additively the same way every other modifier here is.
+    // Returns null when the tally lands on zero — keeps the modifier
+    // list on the breakdown UI tidy.
+    const z = zodiacModifier(zodiac);
+    if (z) {
+      modifiers.push({ reason: 'zodiacSynastry', delta: z.delta });
+      overall += z.delta;
     }
   }
 

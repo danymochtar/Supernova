@@ -173,7 +173,7 @@
     "missingHint": "Belum diisi — edit profil untuk menambah.",
     "sectionTitleOnPerson": "Zodiak {name}",
     "synastryTitle": "Synastry Zodiak",
-    "synastryComplementDisclaimer": "Pelengkap astrologi — tidak mempengaruhi score numerologi di atas.",
+    "synastryComplementDisclaimer": "Resonansi zodiak ikut ngitung — kontribusi terbatas (max ±3) ke score di atas.",
     "synastryPartialHint": "Tambahkan Moon & Rising untuk synastry lengkap.",
     "synastryPartialHintLink": "Edit profil",
     "funfactLabel": "Life Path {lifePath} × {sign}",
@@ -752,7 +752,8 @@
       "complementaryKarmic": "Saling jadi guru (core ↔ karmic lesson)",
       "bridgeSync": "Bridge selaras (lanskap internal mirip)",
       "bridgeComplement": "Bridge complement (satu integrated, satu stretched)",
-      "mutualBridgeStretch": "Dua-duanya stretched di banyak sisi"
+      "mutualBridgeStretch": "Dua-duanya stretched di banyak sisi",
+      "zodiacSynastry": "Resonansi zodiak"
     },
     "crossLabel": "{me} kamu × {them} mereka",
     "band": {

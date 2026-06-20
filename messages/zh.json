@@ -117,7 +117,7 @@
     "missingHint": "未填写 — 编辑资料添加。",
     "sectionTitleOnPerson": "{name} 的星座",
     "synastryTitle": "星座合盘",
-    "synastryComplementDisclaimer": "占星补充 — 不影响上方的命理分数。",
+    "synastryComplementDisclaimer": "星座共鸣已计入 — 对上方分数有小幅限定影响（最多 ±3）。",
     "synastryPartialHint": "添加月亮和上升星座以查看完整合盘。",
     "synastryPartialHintLink": "编辑资料",
     "funfactLabel": "Life Path {lifePath} × {sign}",
@@ -665,7 +665,8 @@
       "complementaryKarmic": "互为老师（core ↔ karmic lesson）",
       "bridgeSync": "Bridge 同步（内在景观相似）",
       "bridgeComplement": "Bridge 互补（一方整合，一方拉伸）",
-      "mutualBridgeStretch": "两人在多个维度都处于拉伸状态"
+      "mutualBridgeStretch": "两人在多个维度都处于拉伸状态",
+      "zodiacSynastry": "星座共鸣"
     },
     "crossLabel": "{me} 你 × {them} 对方",
     "band": {

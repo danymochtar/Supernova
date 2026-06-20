@@ -80,7 +80,14 @@ export default async function CompatibilityPage({
   const theirName = displayName(person);
   const myName = displayName(userProfile);
 
-  const score = compatibilityScore(me, them, person.relationship);
+  const score = compatibilityScore(me, them, person.relationship, {
+    meDob: userProfile.dob,
+    meMoon: userProfile.moonSign,
+    meRising: userProfile.risingSign,
+    themDob: person.dob,
+    themMoon: person.moonSign,
+    themRising: person.risingSign,
+  });
   const patterns = detectPatterns(me, them, locale, person.relationship);
 
   // Per-pair narrative labels — pre-resolved here so the Suspense
