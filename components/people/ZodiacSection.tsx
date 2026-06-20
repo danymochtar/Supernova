@@ -24,9 +24,10 @@ interface Labels {
   classification: string;
   /** Hint shown when moon or rising hasn't been entered. */
   missingHint: string;
-  /** Display function for a sign id → localized name. Falls through to
-   *  English when the locale pack hasn't been translated. */
-  signName: (sign: ZodiacSign) => string;
+  /** Localized name per sign id. Pre-computed on the server because this
+   *  component is `'use client'` — function props can't cross the
+   *  server→client boundary in Next.js 14 (they aren't serializable). */
+  signNames: Record<ZodiacSign, string>;
 }
 
 interface Props {
@@ -75,7 +76,7 @@ export function ZodiacSection({ dob, moonSign, risingSign, locale, labels }: Pro
                       {row.label}
                     </p>
                     <p className="text-sm font-medium capitalize">
-                      {labels.signName(row.sign)}
+                      {labels.signNames[row.sign]}
                     </p>
                   </div>
                   <span className="text-muted-foreground text-xs">
@@ -106,7 +107,7 @@ export function ZodiacSection({ dob, moonSign, risingSign, locale, labels }: Pro
         title={
           active ? (
             <h3 className="font-serif text-xl font-semibold tracking-tight capitalize">
-              {labels.signName(active.sign)}
+              {labels.signNames[active.sign]}
             </h3>
           ) : (
             ''

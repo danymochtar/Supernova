@@ -259,10 +259,9 @@ export default async function PersonDetailPage({
             inLove: tZodiac('inLoveLabel'),
             classification: tZodiac('classificationLabel'),
             missingHint: tZodiac('missingHint'),
-            signName: (sign: ZodiacSign) =>
-              (ZODIAC_SIGNS as readonly ZodiacSign[]).includes(sign)
-                ? tZodiac(`sign.${sign}`)
-                : sign,
+            signNames: Object.fromEntries(
+              ZODIAC_SIGNS.map((s) => [s, tZodiac(`sign.${s}`)]),
+            ) as Record<ZodiacSign, string>,
           }}
         />
 
