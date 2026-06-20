@@ -1,0 +1,34 @@
+{
+  "element": {
+    "fire": {
+      "title": "Fire",
+      "body": "Active, outward, expansive energy. A natural drive to move first, take initiative, light up the room. More action than deliberation."
+    },
+    "earth": {
+      "title": "Earth",
+      "body": "Stable, grounded, material energy. Builds what's tangible and lasting — finances, structure, routine, the body. More foundation than leap."
+    },
+    "air": {
+      "title": "Air",
+      "body": "Mental, social, idea-driven energy. Moves through thought, conversation, concepts. More reflection and connection than deep feeling."
+    },
+    "water": {
+      "title": "Water",
+      "body": "Emotional, intuitive, deep energy. Lives in feeling and sensing. More felt-sense than hard logic."
+    }
+  },
+  "modality": {
+    "cardinal": {
+      "title": "Cardinal",
+      "body": "The starter. Kickoff energy — begins seasons, ideas, movements. Strong as an initiator; the follow-through is the work."
+    },
+    "fixed": {
+      "title": "Fixed",
+      "body": "The keeper. Steady energy — preserves, deepens, completes. Strong in consistency; can resist when big change is needed."
+    },
+    "mutable": {
+      "title": "Mutable",
+      "body": "The adapter. Flexible energy — bridges, adjusts, transitions. Versatile; can look inconsistent in a short window."
+    }
+  }
+}

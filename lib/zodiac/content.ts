@@ -11,8 +11,10 @@ import idSynastry from '@/content/zodiac/synastry.id.json';
 import enSynastry from '@/content/zodiac/synastry.en.json';
 import idFunfact from '@/content/zodiac/lifePathFunfact.id.json';
 import enFunfact from '@/content/zodiac/lifePathFunfact.en.json';
+import idClassification from '@/content/zodiac/classification.id.json';
+import enClassification from '@/content/zodiac/classification.en.json';
 
-import type { ZodiacSign } from './signs';
+import type { Element, Modality, ZodiacSign } from './signs';
 import type { PairCategory, SynastryClassification } from './synastry';
 
 export interface ZodiacMeaning {
@@ -32,6 +34,16 @@ type SynastryPack = Record<PairCategory, Record<SynastryClassification, string>>
  * of the harmony system in `lib/zodiac`.
  */
 type FunfactPack = Record<string, Record<ZodiacSign, string>>;
+export interface ClassificationMeaning {
+  title: string;
+  body: string;
+}
+/** Explainers for the 4 elements and 3 modalities — used by the chip
+ *  tap-to-detail modal on the Person hero. */
+type ClassificationPack = {
+  element: Record<Element, ClassificationMeaning>;
+  modality: Record<Modality, ClassificationMeaning>;
+};
 
 const MEANING_PACKS: Partial<Record<Locale, MeaningPack>> = {
   id: idMeanings as MeaningPack,
@@ -46,6 +58,11 @@ const SYNASTRY_PACKS: Partial<Record<Locale, SynastryPack>> = {
 const FUNFACT_PACKS: Partial<Record<Locale, FunfactPack>> = {
   id: idFunfact as FunfactPack,
   en: enFunfact as FunfactPack,
+};
+
+const CLASSIFICATION_PACKS: Partial<Record<Locale, ClassificationPack>> = {
+  id: idClassification as ClassificationPack,
+  en: enClassification as ClassificationPack,
 };
 
 /** Per-sign blurb (keyword + element + modality + essence + in-love). */
@@ -78,4 +95,19 @@ export function lifePathSignFunfact(
   const pack = FUNFACT_PACKS[locale] ?? FUNFACT_PACKS.id!;
   const key = String(lpReduced);
   return pack[key]?.[sign] ?? null;
+}
+
+/**
+ * Title + body for one of the 4 elements or 3 modalities — drives the
+ * tap-to-detail modal behind the element/modality chips on the Person
+ * hero. ID fallback for un-translated locales.
+ */
+export function elementMeaning(value: Element, locale: Locale): ClassificationMeaning {
+  const pack = CLASSIFICATION_PACKS[locale] ?? CLASSIFICATION_PACKS.id!;
+  return pack.element[value];
+}
+
+export function modalityMeaning(value: Modality, locale: Locale): ClassificationMeaning {
+  const pack = CLASSIFICATION_PACKS[locale] ?? CLASSIFICATION_PACKS.id!;
+  return pack.modality[value];
 }

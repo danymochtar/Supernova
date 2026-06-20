@@ -1,0 +1,34 @@
+{
+  "element": {
+    "fire": {
+      "title": "Api",
+      "body": "Energi aktif, outward, ekspansif. Punya dorongan natural buat gerak duluan, ambil inisiatif, dan menyalakan energi sekitar. Lebih banyak action daripada deliberation."
+    },
+    "earth": {
+      "title": "Bumi",
+      "body": "Energi stabil, grounded, material. Membangun yang nyata dan bertahan lama — keuangan, struktur, rutinitas, fisik. Lebih banyak pondasi daripada lompatan."
+    },
+    "air": {
+      "title": "Udara",
+      "body": "Energi mental, sosial, ide. Bergerak lewat pikiran, percakapan, dan konsep. Lebih banyak refleksi dan koneksi daripada perasaan dalam."
+    },
+    "water": {
+      "title": "Air",
+      "body": "Energi emosional, intuitif, dalam. Hidup di lapisan perasaan dan sense. Lebih banyak rasa dan kepekaan daripada logika kasar."
+    }
+  },
+  "modality": {
+    "cardinal": {
+      "title": "Kardinal",
+      "body": "Pemula. Energi pemicu — yang mulai musim, ide, gerakan. Cocok jadi inisiator; risiko follow-through kalau nggak hati-hati."
+    },
+    "fixed": {
+      "title": "Tetap",
+      "body": "Penjaga. Energi stabil — yang mempertahankan, memperdalam, menyelesaikan. Kuat di konsistensi; bisa kaku saat perubahan besar dibutuhkan."
+    },
+    "mutable": {
+      "title": "Mutable",
+      "body": "Penyesuai. Energi fleksibel — yang menjembatani, beradaptasi, men-transisi. Versatile; bisa terlihat nggak konsisten kalau dilihat di waktu singkat."
+    }
+  }
+}

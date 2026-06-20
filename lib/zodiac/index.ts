@@ -25,8 +25,11 @@ export {
 } from './synastry';
 
 export {
+  elementMeaning,
   lifePathSignFunfact,
+  modalityMeaning,
   synastryBlurb,
   zodiacMeaning,
+  type ClassificationMeaning,
   type ZodiacMeaning,
 } from './content';

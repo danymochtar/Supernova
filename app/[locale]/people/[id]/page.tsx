@@ -8,6 +8,7 @@ import { getPerson } from '@/lib/db/repositories/person';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { ZodiacSection } from '@/components/people/ZodiacSection';
+import { ElementModalityChips } from '@/components/people/ElementModalityChips';
 import {
   ELEMENT,
   GLYPH,
@@ -17,7 +18,7 @@ import {
   tokensForSign,
   type ZodiacSign,
 } from '@/lib/zodiac/signs';
-import { lifePathSignFunfact } from '@/lib/zodiac/content';
+import { elementMeaning, lifePathSignFunfact, modalityMeaning } from '@/lib/zodiac/content';
 import {
   ageAt,
   bridges,
@@ -167,14 +168,11 @@ export default async function PersonDetailPage({
                         {String(person.dob.day).padStart(2, '0')}
                       </span>
                     </p>
-                    <div className="flex flex-wrap gap-1.5 pt-1">
-                      <span className={`rounded-full px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider ${tokens.chip}`}>
-                        {tZodiac(`element.${element}`)}
-                      </span>
-                      <span className={`rounded-full px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider ${tokens.chip}`}>
-                        {tZodiac(`modality.${modality}`)}
-                      </span>
-                    </div>
+                    <ElementModalityChips
+                      element={elementMeaning(element, locale)}
+                      modality={modalityMeaning(modality, locale)}
+                      chipClass={tokens.chip}
+                    />
                   </div>
                 </div>
               </section>
