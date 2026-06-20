@@ -33,3 +33,5 @@ export {
   type ClassificationMeaning,
   type ZodiacMeaning,
 } from './content';
+
+export { computeMoonAndRising, type BirthChartResult } from './birthChart';

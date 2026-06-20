@@ -107,7 +107,7 @@
   },
   "zodiac": {
     "placementsLabel": "Zodiaco (opcional)",
-    "placementsHint": "El Sol se deriva de la fecha de nacimiento. Luna y Ascendente son opcionales — sáltalo si no lo sabes.",
+    "placementsHint": "El Sol se deriva de la fecha de nacimiento. Ingresa la hora de nacimiento para Moon & Rising — sáltalo si no la sabes.",
     "sunLabel": "Sun",
     "moonLabel": "Moon",
     "risingLabel": "Rising",
@@ -158,7 +158,10 @@
       "capricorn": "Capricornio",
       "aquarius": "Acuario",
       "pisces": "Piscis"
-    }
+    },
+    "birthChartHint": "Ingresa hora de nacimiento + zona horaria para auto-calcular Moon & Rising. Sáltalo si no la sabes.",
+    "birthTimeLabel": "Hora de nacimiento",
+    "birthTimezoneLabel": "Zona horaria de nacimiento"
   },
   "home": {
     "cta": "Empieza ahora",

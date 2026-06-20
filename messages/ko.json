@@ -107,7 +107,7 @@
   },
   "zodiac": {
     "placementsLabel": "별자리 (선택)",
-    "placementsHint": "태양은 생년월일에서 자동 계산. 달과 상승은 선택 — 모르면 건너뛰세요.",
+    "placementsHint": "태양은 생년월일에서 자동 계산. 출생 시간을 입력하면 Moon과 Rising이 자동 계산 — 모르면 건너뛰세요.",
     "sunLabel": "Sun",
     "moonLabel": "Moon",
     "risingLabel": "Rising",
@@ -158,7 +158,10 @@
       "capricorn": "염소자리",
       "aquarius": "물병자리",
       "pisces": "물고기자리"
-    }
+    },
+    "birthChartHint": "출생 시간 + 타임존을 입력하면 Moon과 Rising이 자동 계산. 모르면 건너뛰세요.",
+    "birthTimeLabel": "출생 시간",
+    "birthTimezoneLabel": "출생 타임존"
   },
   "home": {
     "cta": "지금 시작하기",

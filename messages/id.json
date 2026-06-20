@@ -163,7 +163,7 @@
   },
   "zodiac": {
     "placementsLabel": "Zodiak (opsional)",
-    "placementsHint": "Sun otomatis dari tanggal lahir. Moon & Rising opsional — lewati kalau nggak tahu.",
+    "placementsHint": "Sun otomatis dari tanggal lahir. Isi jam lahir untuk Moon & Rising — lewati kalau nggak tahu.",
     "sunLabel": "Sun",
     "moonLabel": "Moon",
     "risingLabel": "Rising",
@@ -214,7 +214,10 @@
       "capricorn": "Capricorn",
       "aquarius": "Aquarius",
       "pisces": "Pisces"
-    }
+    },
+    "birthChartHint": "Isi jam lahir + timezone untuk hitung Moon & Rising otomatis. Lewati kalau nggak tahu.",
+    "birthTimeLabel": "Jam lahir",
+    "birthTimezoneLabel": "Timezone saat lahir"
   },
   "followUp": {
     "title": "Follow-up dari jurnal",

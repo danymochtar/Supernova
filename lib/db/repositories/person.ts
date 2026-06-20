@@ -12,11 +12,15 @@ export interface PersonInput {
   dob: BirthDate;
   relationship: Relationship;
   notes?: string | null;
-  /** Optional Moon placement (zodiac sign). Sun is derived from DOB at
-   *  read time, not stored. Null = "user hasn't entered this". */
+  /** Computed cache for the person's Moon sign. Caller resolves this
+   *  via `computeMoonAndRising` from `birthTime` + `birthTimezone`
+   *  before passing in — the repo stores it verbatim. */
   moonSign?: ZodiacSign | null;
-  /** Optional Rising placement. Same semantics as moonSign. */
   risingSign?: ZodiacSign | null;
+  /** Local "HH:MM" birth time in `birthTimezone`. */
+  birthTime?: string | null;
+  /** IANA timezone of the birth instant. */
+  birthTimezone?: string | null;
 }
 
 export interface PersonView {
@@ -32,6 +36,8 @@ export interface PersonView {
   notes: string | null;
   moonSign: ZodiacSign | null;
   risingSign: ZodiacSign | null;
+  birthTime: string | null;
+  birthTimezone: string | null;
   createdAt: Date;
 }
 
@@ -67,6 +73,8 @@ function toView(row: Person): PersonView {
     notes: row.notes,
     moonSign: fromPrismaEnum(row.moonSign),
     risingSign: fromPrismaEnum(row.risingSign),
+    birthTime: row.birthTime,
+    birthTimezone: row.birthTimezone,
     createdAt: row.createdAt,
   };
 }
@@ -120,6 +128,8 @@ export async function createPerson(userId: string, input: PersonInput): Promise<
       notes: input.notes ?? null,
       moonSign: asPrismaSign(input.moonSign),
       risingSign: asPrismaSign(input.risingSign),
+      birthTime: input.birthTime ?? null,
+      birthTimezone: input.birthTimezone ?? null,
     } satisfies Prisma.PersonUncheckedCreateInput,
   });
   return toView(row);
@@ -146,6 +156,8 @@ export async function updatePerson(
       notes: input.notes?.trim() || null,
       moonSign: asPrismaSign(input.moonSign),
       risingSign: asPrismaSign(input.risingSign),
+      birthTime: input.birthTime ?? null,
+      birthTimezone: input.birthTimezone ?? null,
     },
   });
   if (result.count === 0) return null;

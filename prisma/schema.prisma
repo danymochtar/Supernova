@@ -179,11 +179,19 @@ model Profile {
   reminderEnabled Boolean  @default(false)
   reminderTime    String?
   // Optional astrology placements — supplements the People feature's
-  // synastry card. Sun is derived from `dob`; only Moon and Rising are
-  // stored because they require birth time / place the user might not
-  // know. Null = "user hasn't entered this".
+  // synastry card. Sun is derived from `dob`. Moon and Rising are
+  // computed server-side from `dob + birthTime + birthTimezone` (the
+  // tz → lat/lon approximation in `lib/zodiac/birthChart.ts`); the
+  // resulting sign is cached in these columns so reads don't re-run
+  // the ephemeris. Null when the user hasn't entered birthTime.
   moonSign        ZodiacSign?
   risingSign      ZodiacSign?
+  // Optional birth-time inputs that feed the Moon + Rising computation.
+  // birthTime is "HH:MM" (24-hour, local to birthTimezone). birthTimezone
+  // is an IANA name and defaults to the user's profile `timezone` on the
+  // form so most users don't have to change it.
+  birthTime       String?
+  birthTimezone   String?
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
@@ -221,9 +229,13 @@ model Person {
   relationship Relationship
   notes        String?
   // Optional zodiac placements — same purpose / null semantics as the
-  // matching fields on Profile. Sun is derived from `dob`.
+  // matching fields on Profile. Sun is derived from `dob`. Moon and
+  // Rising are computed from (dob + birthTime + birthTimezone) at
+  // form-submit time and cached here.
   moonSign     ZodiacSign?
   risingSign   ZodiacSign?
+  birthTime    String?
+  birthTimezone String?
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
 

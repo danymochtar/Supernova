@@ -13,20 +13,44 @@ import {
 } from '@/lib/db/repositories/person';
 import { deleteCachedByKeyContains } from '@/lib/db/repositories/numerologyCache';
 import { deletePersonVibes } from '@/lib/db/repositories/personDailyVibe';
+import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { displayName } from '@/lib/profile/displayName';
 import { profileFormSchema, type ProfileFormError } from '@/lib/profile/validate';
 import { RELATIONSHIPS } from '@/lib/people/relationships';
-import { ZODIAC_SIGNS, type ZodiacSign } from '@/lib/zodiac/signs';
+import { computeMoonAndRising } from '@/lib/zodiac/birthChart';
 
 /**
- * Coerce a FormData value to a ZodiacSign (lowercase id) or null. Empty
- * string and unknown values become null — the field is optional.
+ * Pull birthTime + birthTimezone from FormData and resolve Moon + Rising
+ * via the ephemeris. Returns nulls for everything when birthTime isn't
+ * provided — the read path uses null to mean "user hasn't entered this".
  */
-function parseZodiacSign(raw: FormDataEntryValue | null): ZodiacSign | null {
-  if (typeof raw !== 'string') return null;
-  const lower = raw.trim().toLowerCase();
-  return (ZODIAC_SIGNS as readonly string[]).includes(lower) ? (lower as ZodiacSign) : null;
+function deriveBirthChart(
+  formData: FormData,
+  dob: { year: number; month: number; day: number },
+  fallbackTimezone: string,
+): {
+  birthTime: string | null;
+  birthTimezone: string | null;
+  moonSign: 'aries' | 'taurus' | 'gemini' | 'cancer' | 'leo' | 'virgo' | 'libra' | 'scorpio' | 'sagittarius' | 'capricorn' | 'aquarius' | 'pisces' | null;
+  risingSign: 'aries' | 'taurus' | 'gemini' | 'cancer' | 'leo' | 'virgo' | 'libra' | 'scorpio' | 'sagittarius' | 'capricorn' | 'aquarius' | 'pisces' | null;
+} {
+  const rawTime = formData.get('birthTime');
+  const birthTime = typeof rawTime === 'string' && rawTime.trim() ? rawTime.trim() : null;
+  const rawTz = formData.get('birthTimezone');
+  const birthTimezone = typeof rawTz === 'string' && rawTz.trim() ? rawTz.trim() : null;
+  if (!birthTime) {
+    return { birthTime: null, birthTimezone: null, moonSign: null, risingSign: null };
+  }
+  const tz = birthTimezone ?? fallbackTimezone;
+  const { moon, rising } = computeMoonAndRising({
+    year: dob.year,
+    month: dob.month,
+    day: dob.day,
+    birthTime,
+    timezone: tz,
+  });
+  return { birthTime, birthTimezone: tz, moonSign: moon, risingSign: rising };
 }
 
 // Per-user cap on the number of Person rows. Was 1 in the locked plan as a
@@ -97,6 +121,13 @@ export async function createPersonAction(formData: FormData): Promise<PersonActi
 
   const localeChecked: Locale = isLocale(parsed.data.locale) ? parsed.data.locale : 'id';
 
+  const userTimezone = (await getProfileByUserId(session.user.id))?.timezone ?? 'Asia/Jakarta';
+  const chart = deriveBirthChart(
+    formData,
+    { year: dob.year, month: dob.month, day: dob.day },
+    userTimezone,
+  );
+
   await createPerson(session.user.id, {
     firstName: parsed.data.firstName,
     middleName: parsed.data.middleName || null,
@@ -105,8 +136,10 @@ export async function createPersonAction(formData: FormData): Promise<PersonActi
     dob: { year: dob.year, month: dob.month, day: dob.day },
     relationship: parsed.data.relationship,
     notes: parsed.data.notes?.trim() || null,
-    moonSign: parseZodiacSign(formData.get('moonSign')),
-    risingSign: parseZodiacSign(formData.get('risingSign')),
+    birthTime: chart.birthTime,
+    birthTimezone: chart.birthTimezone,
+    moonSign: chart.moonSign,
+    risingSign: chart.risingSign,
   });
 
   revalidatePath(`/${localeChecked}/people`);
@@ -152,6 +185,14 @@ export async function updatePersonAction(formData: FormData): Promise<PersonActi
 
   const localeChecked: Locale = isLocale(parsed.data.locale) ? parsed.data.locale : 'id';
 
+  const userTimezone =
+    (await getProfileByUserId(session.user.id))?.timezone ?? 'Asia/Jakarta';
+  const chart = deriveBirthChart(
+    formData,
+    { year: dob.year, month: dob.month, day: dob.day },
+    userTimezone,
+  );
+
   await updatePerson(session.user.id, id, {
     firstName: parsed.data.firstName,
     middleName: parsed.data.middleName || null,
@@ -160,8 +201,10 @@ export async function updatePersonAction(formData: FormData): Promise<PersonActi
     dob: { year: dob.year, month: dob.month, day: dob.day },
     relationship: parsed.data.relationship,
     notes: parsed.data.notes?.trim() || null,
-    moonSign: parseZodiacSign(formData.get('moonSign')),
-    risingSign: parseZodiacSign(formData.get('risingSign')),
+    birthTime: chart.birthTime,
+    birthTimezone: chart.birthTimezone,
+    moonSign: chart.moonSign,
+    risingSign: chart.risingSign,
   });
 
   // Invalidate every AI body that bakes in this person's name/DOB. Cache keys

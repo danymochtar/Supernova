@@ -10,13 +10,7 @@ import {
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { isValidTimezone } from '@/lib/timezones';
 import { parseProfileForm, type ProfileFormError } from '@/lib/profile/validate';
-import { ZODIAC_SIGNS, type ZodiacSign } from '@/lib/zodiac/signs';
-
-function parseZodiacSign(raw: FormDataEntryValue | null): ZodiacSign | null {
-  if (typeof raw !== 'string') return null;
-  const lower = raw.trim().toLowerCase();
-  return (ZODIAC_SIGNS as readonly string[]).includes(lower) ? (lower as ZodiacSign) : null;
-}
+import { computeMoonAndRising } from '@/lib/zodiac/birthChart';
 
 export type UpdateProfileResult =
   | { ok: true }
@@ -44,6 +38,28 @@ export async function updateProfileAction(formData: FormData): Promise<UpdatePro
 
   const localeChecked: Locale = isLocale(parsed.data.locale) ? parsed.data.locale : 'id';
 
+  // Resolve birth-chart inputs and compute Moon + Rising on submit.
+  // birthTime blank → clear everything (user removed the time).
+  const rawBirthTime = formData.get('birthTime');
+  const birthTime = typeof rawBirthTime === 'string' && rawBirthTime.trim() ? rawBirthTime.trim() : null;
+  const rawBirthTz = formData.get('birthTimezone');
+  const birthTimezone = typeof rawBirthTz === 'string' && rawBirthTz.trim()
+    ? rawBirthTz.trim()
+    : parsed.data.timezone;
+  let moonSign: ReturnType<typeof computeMoonAndRising>['moon'] = null;
+  let risingSign: ReturnType<typeof computeMoonAndRising>['rising'] = null;
+  if (birthTime) {
+    const chart = computeMoonAndRising({
+      year: parsed.data.dob.year,
+      month: parsed.data.dob.month,
+      day: parsed.data.dob.day,
+      birthTime,
+      timezone: birthTimezone,
+    });
+    moonSign = chart.moon;
+    risingSign = chart.rising;
+  }
+
   await updateProfile(session.user.id, {
     firstName: parsed.data.firstName,
     middleName: parsed.data.middleName,
@@ -52,8 +68,10 @@ export async function updateProfileAction(formData: FormData): Promise<UpdatePro
     dob: parsed.data.dob,
     timezone: parsed.data.timezone,
     locale: localeChecked,
-    moonSign: parseZodiacSign(formData.get('moonSign')),
-    risingSign: parseZodiacSign(formData.get('risingSign')),
+    birthTime,
+    birthTimezone: birthTime ? birthTimezone : null,
+    moonSign,
+    risingSign,
   });
 
   revalidatePath(`/${localeChecked}/dashboard`);

@@ -107,7 +107,7 @@
   },
   "zodiac": {
     "placementsLabel": "Zodiac (optional)",
-    "placementsHint": "Sun is auto-derived from DOB. Moon & Rising are optional — skip if you don't know.",
+    "placementsHint": "Sun is auto-derived from DOB. Enter birth time for Moon & Rising — skip if you don't know.",
     "sunLabel": "Sun",
     "moonLabel": "Moon",
     "risingLabel": "Rising",
@@ -158,7 +158,10 @@
       "capricorn": "Capricorn",
       "aquarius": "Aquarius",
       "pisces": "Pisces"
-    }
+    },
+    "birthChartHint": "Enter birth time + timezone to auto-compute Moon & Rising. Skip if you don't know.",
+    "birthTimeLabel": "Birth time",
+    "birthTimezoneLabel": "Birth timezone"
   },
   "home": {
     "cta": "Get started",

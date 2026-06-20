@@ -13,9 +13,15 @@ export interface ProfileInput {
   dob: BirthDate;
   timezone: string;
   locale: Locale;
-  /** Optional Moon / Rising placements — same semantics as on Person. */
+  /** Computed cache for Moon / Rising — caller resolves via
+   *  `computeMoonAndRising` from `birthTime` + `birthTimezone`. */
   moonSign?: ZodiacSign | null;
   risingSign?: ZodiacSign | null;
+  /** Local "HH:MM" birth time in `birthTimezone`. */
+  birthTime?: string | null;
+  /** IANA timezone of the birth instant — defaults to `timezone` on
+   *  the form when not explicitly set. */
+  birthTimezone?: string | null;
 }
 
 export type Theme = 'light' | 'dark' | 'auto';
@@ -41,9 +47,11 @@ export interface ProfileView {
   autoJournal: boolean;
   reminderEnabled: boolean;
   reminderTime: string | null;
-  /** Optional Moon placement for the user — same semantics as Person.moonSign. */
+  /** Optional Moon placement for the user — computed cache. */
   moonSign: ZodiacSign | null;
   risingSign: ZodiacSign | null;
+  birthTime: string | null;
+  birthTimezone: string | null;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -79,6 +87,8 @@ export async function createProfile(userId: string, input: ProfileInput): Promis
       locale: input.locale,
       moonSign: input.moonSign ? (toPrismaEnum(input.moonSign) as PrismaZodiacSign) : null,
       risingSign: input.risingSign ? (toPrismaEnum(input.risingSign) as PrismaZodiacSign) : null,
+      birthTime: input.birthTime ?? null,
+      birthTimezone: input.birthTimezone ?? null,
     },
   });
   return toView(row);
@@ -104,6 +114,8 @@ export async function updateProfile(userId: string, input: ProfileInput): Promis
       ...(input.risingSign !== undefined
         ? { risingSign: input.risingSign ? (toPrismaEnum(input.risingSign) as PrismaZodiacSign) : null }
         : {}),
+      ...(input.birthTime !== undefined ? { birthTime: input.birthTime ?? null } : {}),
+      ...(input.birthTimezone !== undefined ? { birthTimezone: input.birthTimezone ?? null } : {}),
     },
   });
   // Invalidate any cached numerology artifacts that depend on name+dob (e.g.
@@ -148,6 +160,8 @@ function toView(row: ProfileRow): ProfileView {
     reminderTime: row.reminderTime,
     moonSign: fromPrismaEnum(row.moonSign),
     risingSign: fromPrismaEnum(row.risingSign),
+    birthTime: row.birthTime,
+    birthTimezone: row.birthTimezone,
     createdAt: row.createdAt,
     updatedAt: row.updatedAt,
   };

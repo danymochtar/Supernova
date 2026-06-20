@@ -107,7 +107,7 @@
   },
   "zodiac": {
     "placementsLabel": "Zodiak (pilihan)",
-    "placementsHint": "Sun dikira automatik dari tarikh lahir. Moon & Rising pilihan — langkau jika tak tahu.",
+    "placementsHint": "Sun dikira automatik dari tarikh lahir. Isi masa lahir untuk Moon & Rising — langkau jika tak tahu.",
     "sunLabel": "Sun",
     "moonLabel": "Moon",
     "risingLabel": "Rising",
@@ -146,10 +146,22 @@
       "neutral": "Neutral"
     },
     "sign": {
-      "aries": "Aries", "taurus": "Taurus", "gemini": "Gemini", "cancer": "Cancer",
-      "leo": "Leo", "virgo": "Virgo", "libra": "Libra", "scorpio": "Scorpio",
-      "sagittarius": "Sagittarius", "capricorn": "Capricorn", "aquarius": "Aquarius", "pisces": "Pisces"
-    }
+      "aries": "Aries",
+      "taurus": "Taurus",
+      "gemini": "Gemini",
+      "cancer": "Cancer",
+      "leo": "Leo",
+      "virgo": "Virgo",
+      "libra": "Libra",
+      "scorpio": "Scorpio",
+      "sagittarius": "Sagittarius",
+      "capricorn": "Capricorn",
+      "aquarius": "Aquarius",
+      "pisces": "Pisces"
+    },
+    "birthChartHint": "Isi masa lahir + timezone untuk kira Moon & Rising automatik. Langkau jika tak tahu.",
+    "birthTimeLabel": "Masa lahir",
+    "birthTimezoneLabel": "Timezone semasa lahir"
   },
   "home": {
     "cta": "Mula sekarang",

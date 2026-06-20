@@ -5,7 +5,8 @@ import { useTranslations } from 'next-intl';
 import type { Locale } from '@/lib/i18n/config';
 import type { PersonActionResult, createPersonAction, updatePersonAction } from '@/app/[locale]/people/actions';
 import { RELATIONSHIPS } from '@/lib/people/relationships';
-import { GLYPH, sunSignFromDob, ZODIAC_SIGNS, type ZodiacSign } from '@/lib/zodiac/signs';
+import { GLYPH, sunSignFromDob } from '@/lib/zodiac/signs';
+import { TIMEZONES } from '@/lib/timezones';
 
 const ERROR_KEY: Record<Exclude<PersonActionResult, { ok: true }>['error'], string> = {
   unauth: 'errorGeneric',
@@ -31,12 +32,15 @@ interface Props {
     dob: { year: number; month: number; day: number };
     relationship: (typeof RELATIONSHIPS)[number];
     notes: string | null;
-    moonSign: ZodiacSign | null;
-    risingSign: ZodiacSign | null;
+    birthTime: string | null;
+    birthTimezone: string | null;
   };
+  /** Default IANA timezone for the birth-time picker — defaults to the
+   *  user's own profile timezone so most users don't have to change it. */
+  defaultBirthTimezone: string;
 }
 
-export function AddPersonForm({ locale, action, edit }: Props) {
+export function AddPersonForm({ locale, action, edit, defaultBirthTimezone }: Props) {
   const t = useTranslations('peopleForm');
   const tRel = useTranslations('people.relationship');
   const tZodiac = useTranslations('zodiac');
@@ -151,24 +155,43 @@ export function AddPersonForm({ locale, action, edit }: Props) {
 
       <fieldset className="space-y-3">
         <legend className="text-sm font-medium">{tZodiac('placementsLabel')}</legend>
-        <p className="text-muted-foreground text-xs">{tZodiac('placementsHint')}</p>
+        <p className="text-muted-foreground text-xs">{tZodiac('birthChartHint')}</p>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          <ZodiacSelect
-            id="moonSign"
-            name="moonSign"
-            label={tZodiac('moonLabel')}
-            defaultValue={edit?.moonSign ?? ''}
-            placeholder={tZodiac('signPlaceholder')}
-            tSign={(s) => tZodiac(`sign.${s}`)}
-          />
-          <ZodiacSelect
-            id="risingSign"
-            name="risingSign"
-            label={tZodiac('risingLabel')}
-            defaultValue={edit?.risingSign ?? ''}
-            placeholder={tZodiac('signPlaceholder')}
-            tSign={(s) => tZodiac(`sign.${s}`)}
-          />
+          <div className="space-y-1">
+            <label
+              htmlFor="birthTime"
+              className="text-muted-foreground text-xs font-medium uppercase tracking-wider"
+            >
+              {tZodiac('birthTimeLabel')}
+            </label>
+            <input
+              id="birthTime"
+              name="birthTime"
+              type="time"
+              defaultValue={edit?.birthTime ?? ''}
+              className="border-border focus:ring-primary w-full rounded-lg border bg-transparent px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
+            />
+          </div>
+          <div className="space-y-1">
+            <label
+              htmlFor="birthTimezone"
+              className="text-muted-foreground text-xs font-medium uppercase tracking-wider"
+            >
+              {tZodiac('birthTimezoneLabel')}
+            </label>
+            <select
+              id="birthTimezone"
+              name="birthTimezone"
+              defaultValue={edit?.birthTimezone ?? defaultBirthTimezone}
+              className="border-border focus:ring-primary w-full rounded-lg border bg-transparent px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
+            >
+              {TIMEZONES.map((tz) => (
+                <option key={tz.value} value={tz.value}>
+                  {tz.label}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </fieldset>
 
@@ -223,47 +246,5 @@ export function AddPersonForm({ locale, action, edit }: Props) {
 
       {error ? <p className="text-sm text-red-600">{error}</p> : null}
     </form>
-  );
-}
-
-/**
- * Small native-select wrapper for a single zodiac placement field.
- * Renders an empty default option (= null = "not entered") plus the 12
- * signs with their unicode glyph for quick visual scan.
- */
-function ZodiacSelect({
-  id,
-  name,
-  label,
-  defaultValue,
-  placeholder,
-  tSign,
-}: {
-  id: string;
-  name: string;
-  label: string;
-  defaultValue: string;
-  placeholder: string;
-  tSign: (sign: ZodiacSign) => string;
-}) {
-  return (
-    <div className="space-y-1">
-      <label htmlFor={id} className="text-muted-foreground text-xs font-medium uppercase tracking-wider">
-        {label}
-      </label>
-      <select
-        id={id}
-        name={name}
-        defaultValue={defaultValue}
-        className="border-border focus:ring-primary w-full rounded-lg border bg-transparent px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
-      >
-        <option value="">{placeholder}</option>
-        {ZODIAC_SIGNS.map((sign) => (
-          <option key={sign} value={sign}>
-            {GLYPH[sign]} {tSign(sign)}
-          </option>
-        ))}
-      </select>
-    </div>
   );
 }

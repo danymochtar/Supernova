@@ -26,7 +26,11 @@ export default async function NewPersonPage({ params }: { params: { locale: stri
       <TopBar title={t('title')} backHref={`/${locale}/people`} />
       <div className="space-y-6 pb-6 sm:pb-10">
         <p className="text-muted-foreground text-sm">{t('subtitle')}</p>
-        <AddPersonForm locale={locale} action={createPersonAction} />
+        <AddPersonForm
+          locale={locale}
+          action={createPersonAction}
+          defaultBirthTimezone={profile.timezone}
+        />
       </div>
     </main>
   );

@@ -107,7 +107,7 @@
   },
   "zodiac": {
     "placementsLabel": "星座(任意)",
-    "placementsHint": "太陽は生年月日から自動算出。月星座と上昇星座は任意 — わからなければスキップ。",
+    "placementsHint": "太陽は生年月日から自動算出。出生時間を入れると Moon と Rising が自動計算 — わからなければスキップ。",
     "sunLabel": "Sun",
     "moonLabel": "Moon",
     "risingLabel": "Rising",
@@ -158,7 +158,10 @@
       "capricorn": "山羊座",
       "aquarius": "水瓶座",
       "pisces": "魚座"
-    }
+    },
+    "birthChartHint": "出生時間 + タイムゾーンで Moon と Rising が自動計算。わからなければスキップ。",
+    "birthTimeLabel": "出生時間",
+    "birthTimezoneLabel": "出生タイムゾーン"
   },
   "home": {
     "cta": "今すぐはじめる",

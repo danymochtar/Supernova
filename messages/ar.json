@@ -107,7 +107,7 @@
   },
   "zodiac": {
     "placementsLabel": "الأبراج (اختياري)",
-    "placementsHint": "تُحسب الشمس من تاريخ الميلاد. القمر والطالع اختياريان — تخطَّ إن لم تعرف.",
+    "placementsHint": "تُحسب الشمس من تاريخ الميلاد. أدخل وقت الميلاد لـ Moon و Rising — تخطَّ إن لم تعرف.",
     "sunLabel": "Sun",
     "moonLabel": "Moon",
     "risingLabel": "Rising",
@@ -158,7 +158,10 @@
       "capricorn": "الجدي",
       "aquarius": "الدلو",
       "pisces": "الحوت"
-    }
+    },
+    "birthChartHint": "أدخل وقت الميلاد + المنطقة الزمنية لحساب Moon و Rising تلقائيًا. تخطَّ إن لم تعرف.",
+    "birthTimeLabel": "وقت الميلاد",
+    "birthTimezoneLabel": "المنطقة الزمنية للميلاد"
   },
   "home": {
     "cta": "ابدأ الآن",
