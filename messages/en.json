@@ -652,7 +652,10 @@
       "FAMILY": "Family sees beneath the mask, so Personality matters less. We weight life direction (Life Path), deepest yearning (Soul Urge), and the give-and-receive dynamic between Expression and Soul Urge.",
       "FRIEND": "Friendship lives in Expression (how you both show up) and Personality (vibe). Soul Urge isn't scored — friendships rarely reach the deepest layer.",
       "COLLEAGUE": "At work, Expression (work style) and Personality (professional vibe) dominate. Life Path is scored through cross with Expression — does your work support each other's mission.",
-      "OTHER": "General lens: all core components scored with balanced weights."
+      "OTHER": "General lens: all core components scored with balanced weights.",
+      "BEST_FRIEND": "As best friends, you often share a depth of trust that runs deeper than family. The three pillars — Life Path, Expression, Soul Urge — still carry the weight, with the Expression × Soul Urge cross capturing the “I read what you need before you say it” read.",
+      "BUSINESS_PARTNER": "As business partners, you’re evaluated on the same weights as any other pairing — Life Path and Expression lead because they shape shared mission and execution style. The cross lanes catch whether ‘my output feeds your soul’s pull’ and vice versa.",
+      "ACQUAINTANCE": "As acquaintances, the same three-pillar weights apply — but read this as a rough compass rather than a detailed map. The cross + bridge dynamics that surface are usually why you feel either drawn or complementary without being close."
     },
     "modifiersTitle": "Modifiers",
     "modifier": {

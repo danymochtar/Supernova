@@ -652,7 +652,10 @@
       "FAMILY": "가족은 가면 너머를 보기 때문에, Personality의 비중은 낮아요. 계산에 들어가는 것은 삶의 방향(Life Path), 가장 깊은 갈망(Soul Urge), 그리고 Expression과 Soul Urge 사이의 주고받는 역학이에요.",
       "FRIEND": "우정은 Expression(드러나는 방식) 레이어와 Personality(바이브)에서 일어나요. Soul Urge는 계산에 넣지 않아요 — 우정은 가장 깊은 갈망까지 닿는 경우가 드무니까요.",
       "COLLEAGUE": "직장에서는 Expression(일하는 스타일)과 Personality(프로페셔널한 바이브)가 중요해요. Life Path는 Expression과의 교차로 계산해요 — 서로의 일이 상대의 미션을 받쳐주는가를 보는 거죠.",
-      "OTHER": "일반 렌즈: 모든 코어 컴포넌트를 균형 잡힌 가중치로 계산해요."
+      "OTHER": "일반 렌즈: 모든 코어 컴포넌트를 균형 잡힌 가중치로 계산해요.",
+      "BEST_FRIEND": "절친으로서, 가족보다도 더 깊은 신뢰가 종종 자리합니다. 3대 축 — Life Path, Expression, Soul Urge — 가 중심 가중치를 지니며, Expression × Soul Urge 크로스는 “말하기 전에 알아채는” 결을 잡아냅니다.",
+      "BUSINESS_PARTNER": "비즈니스 파트너로서, 다른 관계와 동일한 가중치로 평가됩니다 — Life Path와 Expression이 공유된 미션과 실행 스타일을 좌우하므로 가장 큰 비중을 차지합니다. 크로스 레인은 ‘내 결과가 상대의 영혼적 갈망을 채우는가’를 포착해요.",
+      "ACQUAINTANCE": "지인으로서, 3대 축의 가중치는 동일해요 — 다만 정밀한 지도보다는 대략의 나침반으로 읽어 주세요. 표면화되는 크로스와 브리지 역학이, 가깝지 않아도 서로 끌리거나 보완되는 이유를 설명해요."
     },
     "modifiersTitle": "조정 요소",
     "modifier": {

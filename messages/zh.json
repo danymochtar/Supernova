@@ -652,7 +652,10 @@
       "FAMILY": "家人能看到面具背后，所以 Personality 的作用比较小。计算的是人生方向（Life Path）、最深的渴望（Soul Urge），以及 Expression 和 Soul Urge 之间给予与接收的动态。",
       "FRIEND": "友情发生在 Expression（你们呈现的方式）和 Personality（vibe）这两层。Soul Urge 不计算——友情很少触及最深的渴望。",
       "COLLEAGUE": "在职场重要的是 Expression（工作风格）和 Personality（职业 vibe）。Life Path 通过与 Expression 的交叉来计算——看你们的工作是否互相支持彼此的使命。",
-      "OTHER": "通用视角：所有核心维度以均衡权重计算。"
+      "OTHER": "通用视角：所有核心维度以均衡权重计算。",
+      "BEST_FRIEND": "作为挚友，你们之间的信任深度常常超过家人。三大支柱——Life Path、Expression、Soul Urge——仍是核心权重，Expression × Soul Urge 的交叉车道捕捉“你没开口我就懂你”的默契。",
+      "BUSINESS_PARTNER": "作为生意伙伴，评估使用与其他关系相同的权重——Life Path 和 Expression 因决定使命共识与执行方式而占主导。交叉车道捕捉“我的输出是否服务你内在的渴望”，反之亦然。",
+      "ACQUAINTANCE": "作为熟人，三大支柱的权重不变——但把它当作粗略指南而非精细地图。出现的交叉与 bridge 动态通常解释了为什么你们感到合拍或互补，即使并不亲近。"
     },
     "modifiersTitle": "调节因子",
     "modifier": {

@@ -652,7 +652,10 @@
       "FAMILY": "Keluarga nampak di sebalik topeng, jadi Personality kurang berperanan. Yang dikira adalah arah hidup (Life Path), kerinduan terdalam (Soul Urge), dan dinamik beri-terima antara Expression dan Soul Urge.",
       "FRIEND": "Persahabatan berlaku di lapisan Expression (cara kamu muncul) dan Personality (vibe). Soul Urge tak dikira — persahabatan jarang menyentuh kerinduan terdalam.",
       "COLLEAGUE": "Di tempat kerja, yang penting adalah Expression (gaya kerja) dan Personality (vibe profesional). Life Path dikira melalui silang dengan Expression — adakah kerja kamu menyokong misi satu sama lain.",
-      "OTHER": "Lensa umum: semua komponen inti dikira dengan pemberat seimbang."
+      "OTHER": "Lensa umum: semua komponen inti dikira dengan pemberat seimbang.",
+      "BEST_FRIEND": "Sebagai sahabat rapat, kepercayaan kamu sering lebih mendalam daripada keluarga. Tiga tunggak — Life Path, Expression, Soul Urge — kekal menjadi tumpuan, dengan silang Expression × Soul Urge yang menangkap “saya tahu apa yang kamu perlu sebelum kamu cakap”.",
+      "BUSINESS_PARTNER": "Sebagai rakan kongsi perniagaan, kamu dinilai dengan pemberat sama seperti hubungan lain — Life Path dan Expression menonjol kerana keduanya menentukan misi bersama dan gaya eksekusi. Lajur silang menangkap sama ada output saya menyokong dorongan jiwa kamu dan sebaliknya.",
+      "ACQUAINTANCE": "Sebagai kenalan, pemberat tiga tunggak tetap sama — tetapi anggap ini sebagai kompas kasar dan bukan peta terperinci. Dinamik silang dan bridge yang muncul biasanya sebab kenapa kamu rasa terikat atau saling melengkapi tanpa perlu rapat."
     },
     "modifiersTitle": "Pengubah",
     "modifier": {

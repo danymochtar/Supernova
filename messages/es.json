@@ -652,7 +652,10 @@
       "FAMILY": "La familia ve detrás de la máscara, así que Personality pesa menos. Lo que se calcula es la dirección de vida (Life Path), el anhelo más profundo (Soul Urge) y la dinámica de dar-recibir entre Expression y Soul Urge.",
       "FRIEND": "La amistad pasa en la capa de Expression (cómo aparecen) y Personality (la vibra). El Soul Urge no se cuenta — la amistad rara vez toca el anhelo más profundo.",
       "COLLEAGUE": "En el trabajo lo que importa es Expression (estilo de trabajar) y Personality (vibra profesional). El Life Path se considera cruzado con Expression — si su trabajo apoya la misión del otro.",
-      "OTHER": "Lente general: todos los componentes centrales se calculan con peso equilibrado."
+      "OTHER": "Lente general: todos los componentes centrales se calculan con peso equilibrado.",
+      "BEST_FRIEND": "Como mejores amigos, suelen compartir una profundidad de confianza que va más allá de la familia. Los tres pilares — Life Path, Expression, Soul Urge — siguen siendo el peso central, con el cruce Expression × Soul Urge captando el “sé lo que necesitas antes de que lo digas”.",
+      "BUSINESS_PARTNER": "Como socios de negocio, se evalúan con los mismos pesos que cualquier otra relación — Life Path y Expression lideran porque determinan la misión compartida y el estilo de ejecución. Los carriles cruzados captan si “mi salida alimenta el impulso de tu alma” y viceversa.",
+      "ACQUAINTANCE": "Como conocidos, los mismos pesos de tres pilares aplican — pero léelo como una brújula aproximada en lugar de un mapa detallado. Las dinámicas cruzadas + bridge que emergen suelen ser por qué se sienten atraídos o complementarios sin ser cercanos."
     },
     "modifiersTitle": "Modificadores",
     "modifier": {

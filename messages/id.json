@@ -739,7 +739,10 @@
       "FAMILY": "Keluarga melihat di balik topeng, jadi Personality kurang berperan. Yang dihitung adalah arah hidup (Life Path), kerinduan terdalam (Soul Urge), dan dinamika memberi-menerima antara Expression dan Soul Urge.",
       "FRIEND": "Pertemanan terjadi di lapisan Expression (cara kalian muncul) dan Personality (vibe). Soul Urge tidak dihitung — pertemanan jarang menyentuh kerinduan terdalam.",
       "COLLEAGUE": "Di tempat kerja yang penting Expression (gaya bekerja) dan Personality (vibe profesional). Life Path dihitung lewat silang dengan Expression — apakah kerja kalian mendukung misi satu sama lain.",
-      "OTHER": "Lensa umum: semua komponen inti dihitung dengan bobot seimbang."
+      "OTHER": "Lensa umum: semua komponen inti dihitung dengan bobot seimbang.",
+      "BEST_FRIEND": "Sebagai sahabat dekat, kalian punya lapisan kepercayaan yang sering lebih dalam dari keluarga. Bobot tetap di tiga pilar — Life Path, Expression, Soul Urge — dengan dinamika silang Expression × Soul Urge sebagai mata yang menangkap “gw ngerti lo butuh apa, sebelum lo ngomong”.",
+      "BUSINESS_PARTNER": "Sebagai partner bisnis, kalian dievaluasi pakai bobot yang sama dengan relasi lain — Life Path & Expression menonjol karena keduanya menentukan kesepahaman misi & cara eksekusi. Dinamika silang nangkep apakah ‘output gw kepake buat dorongan jiwa lo’ dan sebaliknya.",
+      "ACQUAINTANCE": "Sebagai kenalan, bobotnya tetap sama tiga pilar — tapi rasakan ini sebagai compass kasar daripada peta detail. Dinamika silang & bridge yang muncul biasanya jadi alasan kenapa kalian kerasa nyambung atau saling melengkapi tanpa harus dekat."
     },
     "modifiersTitle": "Pengubah",
     "modifier": {

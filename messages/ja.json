@@ -652,7 +652,10 @@
       "FAMILY": "家族は仮面の奥を見るから、Personalityはあまり重みを持たない。計算に入るのは、人生の方向性（Life Path）、最も深い憧れ（Soul Urge）、そしてExpressionとSoul Urgeの間の与え合いダイナミクス。",
       "FRIEND": "友情はExpression（現れ方）とPersonality（vibe）の層で起こる。Soul Urgeは計算に入らない — 友情が最も深い憧れに触れることはあまりないから。",
       "COLLEAGUE": "職場で大事なのはExpression（働き方）とPersonality（プロフェッショナルなvibe）。Life PathはExpressionとのクロスで計算されるよ — お互いの仕事が使命を支え合っているかどうか。",
-      "OTHER": "一般的なレンズ：すべてのコアコンポーネントがバランスよく重み付けされるよ。"
+      "OTHER": "一般的なレンズ：すべてのコアコンポーネントがバランスよく重み付けされるよ。",
+      "BEST_FRIEND": "親友として、信頼の深さは家族以上に及ぶことがあります。3つの柱（Life Path、Expression、Soul Urge）が中心の重みを担い、Expression × Soul Urge のクロスが「言われる前にわかる」を捉えます。",
+      "BUSINESS_PARTNER": "ビジネスパートナーとして、評価の重みは他の関係と同じ — Life Path と Expression が、共有ミッションと実行スタイルを決めるため最も重要です。クロスは「私のアウトプットが相手の魂の渇きを満たすか」を捉えます。",
+      "ACQUAINTANCE": "知り合いとして、3つの柱の重みは同じ — ただしこれは詳細な地図ではなく、おおまかな羅針盤として読んでください。クロスとブリッジの動きが、なぜ親しくなくても合うと感じるかを示します。"
     },
     "modifiersTitle": "モディファイア",
     "modifier": {
