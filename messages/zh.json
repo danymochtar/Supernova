@@ -161,7 +161,11 @@
     },
     "birthChartHint": "填写出生时间 + 时区可自动计算 Moon 和 Rising。不知道就跳过。",
     "birthTimeLabel": "出生时间",
-    "birthTimezoneLabel": "出生时区"
+    "birthTimezoneLabel": "出生时区",
+    "birthCityLabel": "出生城市",
+    "birthCityPlaceholder": "输入城市 — 例如 Jakarta、Surabaya…",
+    "birthCityHint": "从建议中选择以获得准确的 Rising。",
+    "birthCityEmpty": "无匹配 — 尝试其他关键词。"
   },
   "home": {
     "cta": "现在开始",

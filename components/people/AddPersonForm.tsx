@@ -6,7 +6,7 @@ import type { Locale } from '@/lib/i18n/config';
 import type { PersonActionResult, createPersonAction, updatePersonAction } from '@/app/[locale]/people/actions';
 import { RELATIONSHIPS } from '@/lib/people/relationships';
 import { GLYPH, sunSignFromDob } from '@/lib/zodiac/signs';
-import { TIMEZONES } from '@/lib/timezones';
+import { BirthCityCombobox } from '@/components/people/BirthCityCombobox';
 
 const ERROR_KEY: Record<Exclude<PersonActionResult, { ok: true }>['error'], string> = {
   unauth: 'errorGeneric',
@@ -33,14 +33,14 @@ interface Props {
     relationship: (typeof RELATIONSHIPS)[number];
     notes: string | null;
     birthTime: string | null;
+    birthCity: string | null;
+    birthLat: number | null;
+    birthLon: number | null;
     birthTimezone: string | null;
   };
-  /** Default IANA timezone for the birth-time picker — defaults to the
-   *  user's own profile timezone so most users don't have to change it. */
-  defaultBirthTimezone: string;
 }
 
-export function AddPersonForm({ locale, action, edit, defaultBirthTimezone }: Props) {
+export function AddPersonForm({ locale, action, edit }: Props) {
   const t = useTranslations('peopleForm');
   const tRel = useTranslations('people.relationship');
   const tZodiac = useTranslations('zodiac');
@@ -172,26 +172,16 @@ export function AddPersonForm({ locale, action, edit, defaultBirthTimezone }: Pr
               className="border-border focus:ring-primary w-full rounded-lg border bg-transparent px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
             />
           </div>
-          <div className="space-y-1">
-            <label
-              htmlFor="birthTimezone"
-              className="text-muted-foreground text-xs font-medium uppercase tracking-wider"
-            >
-              {tZodiac('birthTimezoneLabel')}
-            </label>
-            <select
-              id="birthTimezone"
-              name="birthTimezone"
-              defaultValue={edit?.birthTimezone ?? defaultBirthTimezone}
-              className="border-border focus:ring-primary w-full rounded-lg border bg-transparent px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
-            >
-              {TIMEZONES.map((tz) => (
-                <option key={tz.value} value={tz.value}>
-                  {tz.label}
-                </option>
-              ))}
-            </select>
-          </div>
+          <BirthCityCombobox
+            defaultLabel={edit?.birthCity ?? null}
+            defaultLat={edit?.birthLat ?? null}
+            defaultLon={edit?.birthLon ?? null}
+            defaultTimezone={edit?.birthTimezone ?? null}
+            label={tZodiac('birthCityLabel')}
+            placeholder={tZodiac('birthCityPlaceholder')}
+            hint={tZodiac('birthCityHint')}
+            emptyText={tZodiac('birthCityEmpty')}
+          />
         </div>
       </fieldset>
 

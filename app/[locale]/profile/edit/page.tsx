@@ -31,6 +31,9 @@ export default async function EditProfilePage({ params }: { params: { locale: st
             dob: profile.dob,
             timezone: profile.timezone,
             birthTime: profile.birthTime,
+            birthCity: profile.birthCity,
+            birthLat: profile.birthLat,
+            birthLon: profile.birthLon,
             birthTimezone: profile.birthTimezone,
           }}
           timezones={TIMEZONES}

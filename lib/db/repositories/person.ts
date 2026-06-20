@@ -21,6 +21,11 @@ export interface PersonInput {
   birthTime?: string | null;
   /** IANA timezone of the birth instant. */
   birthTimezone?: string | null;
+  /** Display label for the chosen city ("Surabaya, Jawa Timur, Indonesia"). */
+  birthCity?: string | null;
+  /** Precise birth-place coordinates, sourced from the city picker. */
+  birthLat?: number | null;
+  birthLon?: number | null;
 }
 
 export interface PersonView {
@@ -38,6 +43,9 @@ export interface PersonView {
   risingSign: ZodiacSign | null;
   birthTime: string | null;
   birthTimezone: string | null;
+  birthCity: string | null;
+  birthLat: number | null;
+  birthLon: number | null;
   createdAt: Date;
 }
 
@@ -75,6 +83,9 @@ function toView(row: Person): PersonView {
     risingSign: fromPrismaEnum(row.risingSign),
     birthTime: row.birthTime,
     birthTimezone: row.birthTimezone,
+    birthCity: row.birthCity,
+    birthLat: row.birthLat,
+    birthLon: row.birthLon,
     createdAt: row.createdAt,
   };
 }
@@ -130,6 +141,9 @@ export async function createPerson(userId: string, input: PersonInput): Promise<
       risingSign: asPrismaSign(input.risingSign),
       birthTime: input.birthTime ?? null,
       birthTimezone: input.birthTimezone ?? null,
+      birthCity: input.birthCity ?? null,
+      birthLat: input.birthLat ?? null,
+      birthLon: input.birthLon ?? null,
     } satisfies Prisma.PersonUncheckedCreateInput,
   });
   return toView(row);
@@ -158,6 +172,9 @@ export async function updatePerson(
       risingSign: asPrismaSign(input.risingSign),
       birthTime: input.birthTime ?? null,
       birthTimezone: input.birthTimezone ?? null,
+      birthCity: input.birthCity ?? null,
+      birthLat: input.birthLat ?? null,
+      birthLon: input.birthLon ?? null,
     },
   });
   if (result.count === 0) return null;

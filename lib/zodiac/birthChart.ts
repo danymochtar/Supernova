@@ -118,6 +118,12 @@ interface BirthInput {
   birthTime: string;
   /** IANA timezone of the birth instant. */
   timezone: string;
+  /** Optional precise birth-place coordinates. When supplied, they
+   *  override the timezone-center approximation — this is what the
+   *  city picker on the form passes through, and what produces an
+   *  accurate Ascendant. */
+  lat?: number;
+  lon?: number;
 }
 
 export interface BirthChartResult {
@@ -141,7 +147,11 @@ export function computeMoonAndRising(input: BirthInput): BirthChartResult {
   if (!Number.isFinite(hour) || hour < 0 || hour > 23) return { moon: null, rising: null };
   if (!Number.isFinite(minute) || minute < 0 || minute > 59) return { moon: null, rising: null };
 
-  const { lat, lon } = approxLatLon(input.timezone);
+  // Precise coords from the city picker win; fall back to the
+  // timezone-center map when no city was selected.
+  const approx = approxLatLon(input.timezone);
+  const lat = typeof input.lat === 'number' && Number.isFinite(input.lat) ? input.lat : approx.lat;
+  const lon = typeof input.lon === 'number' && Number.isFinite(input.lon) ? input.lon : approx.lon;
 
   try {
     // The library's `month` is 0-indexed (Jan = 0) despite the API

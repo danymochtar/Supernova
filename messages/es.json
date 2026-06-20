@@ -161,7 +161,11 @@
     },
     "birthChartHint": "Ingresa hora de nacimiento + zona horaria para auto-calcular Moon & Rising. Sáltalo si no la sabes.",
     "birthTimeLabel": "Hora de nacimiento",
-    "birthTimezoneLabel": "Zona horaria de nacimiento"
+    "birthTimezoneLabel": "Zona horaria de nacimiento",
+    "birthCityLabel": "Ciudad de nacimiento",
+    "birthCityPlaceholder": "Escribe una ciudad — p. ej. Jakarta, Surabaya…",
+    "birthCityHint": "Elige una sugerencia para un Ascendente preciso.",
+    "birthCityEmpty": "Sin resultados — intenta otra palabra clave."
   },
   "home": {
     "cta": "Empieza ahora",

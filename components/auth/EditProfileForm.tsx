@@ -3,6 +3,7 @@
 import { useState, useTransition } from 'react';
 import { useTranslations } from 'next-intl';
 import type { UpdateProfileResult, updateProfileAction } from '@/app/[locale]/profile/edit/actions';
+import { BirthCityCombobox } from '@/components/people/BirthCityCombobox';
 
 interface Props {
   initial: {
@@ -13,6 +14,9 @@ interface Props {
     dob: { year: number; month: number; day: number };
     timezone: string;
     birthTime: string | null;
+    birthCity: string | null;
+    birthLat: number | null;
+    birthLon: number | null;
     birthTimezone: string | null;
   };
   timezones: { value: string; label: string }[];
@@ -184,26 +188,16 @@ export function EditProfileForm({ initial, timezones, action }: Props) {
               className="border-border focus:ring-primary w-full rounded-lg border bg-transparent px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
             />
           </div>
-          <div className="space-y-1">
-            <label
-              htmlFor="birthTimezone"
-              className="text-muted-foreground text-xs font-medium uppercase tracking-wider"
-            >
-              {tZodiac('birthTimezoneLabel')}
-            </label>
-            <select
-              id="birthTimezone"
-              name="birthTimezone"
-              defaultValue={initial.birthTimezone ?? initial.timezone}
-              className="border-border focus:ring-primary w-full rounded-lg border bg-transparent px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
-            >
-              {timezones.map((tz) => (
-                <option key={tz.value} value={tz.value}>
-                  {tz.label}
-                </option>
-              ))}
-            </select>
-          </div>
+          <BirthCityCombobox
+            defaultLabel={initial.birthCity}
+            defaultLat={initial.birthLat}
+            defaultLon={initial.birthLon}
+            defaultTimezone={initial.birthTimezone}
+            label={tZodiac('birthCityLabel')}
+            placeholder={tZodiac('birthCityPlaceholder')}
+            hint={tZodiac('birthCityHint')}
+            emptyText={tZodiac('birthCityEmpty')}
+          />
         </div>
       </fieldset>
 

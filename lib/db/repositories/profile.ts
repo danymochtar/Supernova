@@ -22,6 +22,11 @@ export interface ProfileInput {
   /** IANA timezone of the birth instant — defaults to `timezone` on
    *  the form when not explicitly set. */
   birthTimezone?: string | null;
+  /** Display label for the chosen city. */
+  birthCity?: string | null;
+  /** Precise birth-place coords. */
+  birthLat?: number | null;
+  birthLon?: number | null;
 }
 
 export type Theme = 'light' | 'dark' | 'auto';
@@ -52,6 +57,9 @@ export interface ProfileView {
   risingSign: ZodiacSign | null;
   birthTime: string | null;
   birthTimezone: string | null;
+  birthCity: string | null;
+  birthLat: number | null;
+  birthLon: number | null;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -89,6 +97,9 @@ export async function createProfile(userId: string, input: ProfileInput): Promis
       risingSign: input.risingSign ? (toPrismaEnum(input.risingSign) as PrismaZodiacSign) : null,
       birthTime: input.birthTime ?? null,
       birthTimezone: input.birthTimezone ?? null,
+      birthCity: input.birthCity ?? null,
+      birthLat: input.birthLat ?? null,
+      birthLon: input.birthLon ?? null,
     },
   });
   return toView(row);
@@ -116,6 +127,9 @@ export async function updateProfile(userId: string, input: ProfileInput): Promis
         : {}),
       ...(input.birthTime !== undefined ? { birthTime: input.birthTime ?? null } : {}),
       ...(input.birthTimezone !== undefined ? { birthTimezone: input.birthTimezone ?? null } : {}),
+      ...(input.birthCity !== undefined ? { birthCity: input.birthCity ?? null } : {}),
+      ...(input.birthLat !== undefined ? { birthLat: input.birthLat ?? null } : {}),
+      ...(input.birthLon !== undefined ? { birthLon: input.birthLon ?? null } : {}),
     },
   });
   // Invalidate any cached numerology artifacts that depend on name+dob (e.g.
@@ -162,6 +176,9 @@ function toView(row: ProfileRow): ProfileView {
     risingSign: fromPrismaEnum(row.risingSign),
     birthTime: row.birthTime,
     birthTimezone: row.birthTimezone,
+    birthCity: row.birthCity,
+    birthLat: row.birthLat,
+    birthLon: row.birthLon,
     createdAt: row.createdAt,
     updatedAt: row.updatedAt,
   };

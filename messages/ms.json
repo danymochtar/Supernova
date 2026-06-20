@@ -161,7 +161,11 @@
     },
     "birthChartHint": "Isi masa lahir + timezone untuk kira Moon & Rising automatik. Langkau jika tak tahu.",
     "birthTimeLabel": "Masa lahir",
-    "birthTimezoneLabel": "Timezone semasa lahir"
+    "birthTimezoneLabel": "Timezone semasa lahir",
+    "birthCityLabel": "Kota lahir",
+    "birthCityPlaceholder": "Taip bandar — cth Jakarta, Surabaya…",
+    "birthCityHint": "Pilih bandar dari cadangan untuk Rising yang tepat.",
+    "birthCityEmpty": "Tiada hasil — cuba kata kunci lain."
   },
   "home": {
     "cta": "Mula sekarang",

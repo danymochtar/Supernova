@@ -217,7 +217,11 @@
     },
     "birthChartHint": "Isi jam lahir + timezone untuk hitung Moon & Rising otomatis. Lewati kalau nggak tahu.",
     "birthTimeLabel": "Jam lahir",
-    "birthTimezoneLabel": "Timezone saat lahir"
+    "birthTimezoneLabel": "Timezone saat lahir",
+    "birthCityLabel": "Kota lahir",
+    "birthCityPlaceholder": "Ketik kota — misal Jakarta, Surabaya…",
+    "birthCityHint": "Pilih kota dari saran biar Rising-nya akurat.",
+    "birthCityEmpty": "Nggak ada hasil — coba kata kunci lain."
   },
   "followUp": {
     "title": "Follow-up dari jurnal",

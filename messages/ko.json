@@ -161,7 +161,11 @@
     },
     "birthChartHint": "출생 시간 + 타임존을 입력하면 Moon과 Rising이 자동 계산. 모르면 건너뛰세요.",
     "birthTimeLabel": "출생 시간",
-    "birthTimezoneLabel": "출생 타임존"
+    "birthTimezoneLabel": "출생 타임존",
+    "birthCityLabel": "출생 도시",
+    "birthCityPlaceholder": "도시명 입력 — 예: Jakarta, Surabaya…",
+    "birthCityHint": "정확한 Rising을 위해 제안에서 선택하세요.",
+    "birthCityEmpty": "일치하는 결과 없음 — 다른 키워드를 시도해 보세요."
   },
   "home": {
     "cta": "지금 시작하기",

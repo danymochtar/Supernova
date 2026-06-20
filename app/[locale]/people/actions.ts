@@ -32,15 +32,32 @@ function deriveBirthChart(
 ): {
   birthTime: string | null;
   birthTimezone: string | null;
+  birthCity: string | null;
+  birthLat: number | null;
+  birthLon: number | null;
   moonSign: 'aries' | 'taurus' | 'gemini' | 'cancer' | 'leo' | 'virgo' | 'libra' | 'scorpio' | 'sagittarius' | 'capricorn' | 'aquarius' | 'pisces' | null;
   risingSign: 'aries' | 'taurus' | 'gemini' | 'cancer' | 'leo' | 'virgo' | 'libra' | 'scorpio' | 'sagittarius' | 'capricorn' | 'aquarius' | 'pisces' | null;
 } {
   const rawTime = formData.get('birthTime');
   const birthTime = typeof rawTime === 'string' && rawTime.trim() ? rawTime.trim() : null;
+  const rawCity = formData.get('birthCity');
+  const birthCity = typeof rawCity === 'string' && rawCity.trim() ? rawCity.trim() : null;
+  const rawLat = formData.get('birthLat');
+  const rawLon = formData.get('birthLon');
   const rawTz = formData.get('birthTimezone');
+  const birthLat = typeof rawLat === 'string' && rawLat.trim() ? Number(rawLat) : null;
+  const birthLon = typeof rawLon === 'string' && rawLon.trim() ? Number(rawLon) : null;
   const birthTimezone = typeof rawTz === 'string' && rawTz.trim() ? rawTz.trim() : null;
   if (!birthTime) {
-    return { birthTime: null, birthTimezone: null, moonSign: null, risingSign: null };
+    return {
+      birthTime: null,
+      birthTimezone: null,
+      birthCity: null,
+      birthLat: null,
+      birthLon: null,
+      moonSign: null,
+      risingSign: null,
+    };
   }
   const tz = birthTimezone ?? fallbackTimezone;
   const { moon, rising } = computeMoonAndRising({
@@ -49,8 +66,18 @@ function deriveBirthChart(
     day: dob.day,
     birthTime,
     timezone: tz,
+    lat: birthLat ?? undefined,
+    lon: birthLon ?? undefined,
   });
-  return { birthTime, birthTimezone: tz, moonSign: moon, risingSign: rising };
+  return {
+    birthTime,
+    birthTimezone: tz,
+    birthCity,
+    birthLat,
+    birthLon,
+    moonSign: moon,
+    risingSign: rising,
+  };
 }
 
 // Per-user cap on the number of Person rows. Was 1 in the locked plan as a
@@ -138,6 +165,9 @@ export async function createPersonAction(formData: FormData): Promise<PersonActi
     notes: parsed.data.notes?.trim() || null,
     birthTime: chart.birthTime,
     birthTimezone: chart.birthTimezone,
+    birthCity: chart.birthCity,
+    birthLat: chart.birthLat,
+    birthLon: chart.birthLon,
     moonSign: chart.moonSign,
     risingSign: chart.risingSign,
   });
@@ -203,6 +233,9 @@ export async function updatePersonAction(formData: FormData): Promise<PersonActi
     notes: parsed.data.notes?.trim() || null,
     birthTime: chart.birthTime,
     birthTimezone: chart.birthTimezone,
+    birthCity: chart.birthCity,
+    birthLat: chart.birthLat,
+    birthLon: chart.birthLon,
     moonSign: chart.moonSign,
     risingSign: chart.risingSign,
   });

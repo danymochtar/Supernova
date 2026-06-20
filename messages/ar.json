@@ -161,7 +161,11 @@
     },
     "birthChartHint": "أدخل وقت الميلاد + المنطقة الزمنية لحساب Moon و Rising تلقائيًا. تخطَّ إن لم تعرف.",
     "birthTimeLabel": "وقت الميلاد",
-    "birthTimezoneLabel": "المنطقة الزمنية للميلاد"
+    "birthTimezoneLabel": "المنطقة الزمنية للميلاد",
+    "birthCityLabel": "مدينة الميلاد",
+    "birthCityPlaceholder": "اكتب مدينة — مثل Jakarta أو Surabaya…",
+    "birthCityHint": "اختر من الاقتراحات للحصول على طالع دقيق.",
+    "birthCityEmpty": "لا توجد نتائج — جرّب كلمة أخرى."
   },
   "home": {
     "cta": "ابدأ الآن",

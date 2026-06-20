@@ -161,7 +161,11 @@
     },
     "birthChartHint": "Enter birth time + timezone to auto-compute Moon & Rising. Skip if you don't know.",
     "birthTimeLabel": "Birth time",
-    "birthTimezoneLabel": "Birth timezone"
+    "birthTimezoneLabel": "Birth timezone",
+    "birthCityLabel": "Birth city",
+    "birthCityPlaceholder": "Type a city — e.g. Jakarta, Surabaya…",
+    "birthCityHint": "Pick from the suggestions for accurate Rising.",
+    "birthCityEmpty": "No matches — try another keyword."
   },
   "home": {
     "cta": "Get started",

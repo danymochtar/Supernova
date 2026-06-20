@@ -42,6 +42,12 @@ export async function updateProfileAction(formData: FormData): Promise<UpdatePro
   // birthTime blank → clear everything (user removed the time).
   const rawBirthTime = formData.get('birthTime');
   const birthTime = typeof rawBirthTime === 'string' && rawBirthTime.trim() ? rawBirthTime.trim() : null;
+  const rawCity = formData.get('birthCity');
+  const birthCity = typeof rawCity === 'string' && rawCity.trim() ? rawCity.trim() : null;
+  const rawLat = formData.get('birthLat');
+  const rawLon = formData.get('birthLon');
+  const birthLat = typeof rawLat === 'string' && rawLat.trim() ? Number(rawLat) : null;
+  const birthLon = typeof rawLon === 'string' && rawLon.trim() ? Number(rawLon) : null;
   const rawBirthTz = formData.get('birthTimezone');
   const birthTimezone = typeof rawBirthTz === 'string' && rawBirthTz.trim()
     ? rawBirthTz.trim()
@@ -55,6 +61,8 @@ export async function updateProfileAction(formData: FormData): Promise<UpdatePro
       day: parsed.data.dob.day,
       birthTime,
       timezone: birthTimezone,
+      lat: birthLat ?? undefined,
+      lon: birthLon ?? undefined,
     });
     moonSign = chart.moon;
     risingSign = chart.rising;
@@ -70,6 +78,9 @@ export async function updateProfileAction(formData: FormData): Promise<UpdatePro
     locale: localeChecked,
     birthTime,
     birthTimezone: birthTime ? birthTimezone : null,
+    birthCity: birthTime ? birthCity : null,
+    birthLat: birthTime ? birthLat : null,
+    birthLon: birthTime ? birthLon : null,
     moonSign,
     risingSign,
   });

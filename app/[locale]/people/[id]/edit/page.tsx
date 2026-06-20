@@ -32,7 +32,6 @@ export default async function EditPersonPage({
         <AddPersonForm
           locale={locale}
           action={updatePersonAction}
-          defaultBirthTimezone={profile.timezone}
           edit={{
             id: person.id,
             firstName: person.firstName,
@@ -43,6 +42,9 @@ export default async function EditPersonPage({
             relationship: person.relationship,
             notes: person.notes,
             birthTime: person.birthTime,
+            birthCity: person.birthCity,
+            birthLat: person.birthLat,
+            birthLon: person.birthLon,
             birthTimezone: person.birthTimezone,
           }}
         />

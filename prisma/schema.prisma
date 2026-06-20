@@ -186,11 +186,15 @@ model Profile {
   // the ephemeris. Null when the user hasn't entered birthTime.
   moonSign        ZodiacSign?
   risingSign      ZodiacSign?
-  // Optional birth-time inputs that feed the Moon + Rising computation.
-  // birthTime is "HH:MM" (24-hour, local to birthTimezone). birthTimezone
-  // is an IANA name and defaults to the user's profile `timezone` on the
-  // form so most users don't have to change it.
+  // Optional birth-chart inputs that feed the Moon + Rising
+  // computation. birthTime is "HH:MM" (24-hour, local to birthTimezone).
+  // birthCity is the display name ("Jakarta, Indonesia"). birthLat /
+  // birthLon are the precise coords used by the Ascendant solver.
+  // birthTimezone is resolved from the city at form-submit time.
   birthTime       String?
+  birthCity       String?
+  birthLat        Float?
+  birthLon        Float?
   birthTimezone   String?
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
@@ -235,6 +239,9 @@ model Person {
   moonSign     ZodiacSign?
   risingSign   ZodiacSign?
   birthTime    String?
+  birthCity    String?
+  birthLat     Float?
+  birthLon     Float?
   birthTimezone String?
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt

@@ -161,7 +161,11 @@
     },
     "birthChartHint": "出生時間 + タイムゾーンで Moon と Rising が自動計算。わからなければスキップ。",
     "birthTimeLabel": "出生時間",
-    "birthTimezoneLabel": "出生タイムゾーン"
+    "birthTimezoneLabel": "出生タイムゾーン",
+    "birthCityLabel": "出生都市",
+    "birthCityPlaceholder": "都市名を入力 — 例: Jakarta、Surabaya…",
+    "birthCityHint": "Rising を正確にするには候補から選んでください。",
+    "birthCityEmpty": "一致なし — 別のキーワードをお試しください。"
   },
   "home": {
     "cta": "今すぐはじめる",
