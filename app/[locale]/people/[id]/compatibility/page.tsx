@@ -17,6 +17,9 @@ import {
 import { CompoundReduced } from '@/components/numerology/CompoundReduced';
 import { TopBar } from '@/components/layout/TopBar';
 import { PairMonthlyForecastAsync } from '@/components/people/PairMonthlyForecastAsync';
+import { ZodiacSynastryCard } from '@/components/people/ZodiacSynastryCard';
+import { ZODIAC_SIGNS, type ZodiacSign } from '@/lib/zodiac/signs';
+import type { PairCategory, SynastryClassification } from '@/lib/zodiac/synastry';
 
 // AI narratives generation can take 15-25s on cold cache.
 export const maxDuration = 60;
@@ -60,6 +63,7 @@ export default async function CompatibilityPage({
   const t = await getTranslations({ locale, namespace: 'compatibility' });
   const tDash = await getTranslations({ locale, namespace: 'dashboard' });
   const tRel = await getTranslations({ locale, namespace: 'people.relationship' });
+  const tZodiac = await getTranslations({ locale, namespace: 'zodiac' });
 
   const session = await getSession();
   if (!session) redirect(`/${locale}/login`);
@@ -228,6 +232,47 @@ export default async function CompatibilityPage({
             </div>
           </section>
         ) : null}
+
+        {/* ZODIAC SYNASTRY — pure display complement, does NOT feed the
+         * score above. Sun-Sun always renders; Moon / Rising / crosses
+         * render only when both sides have entered the placement. */}
+        <ZodiacSynastryCard
+          user={{
+            dob: userProfile.dob,
+            moonSign: userProfile.moonSign,
+            risingSign: userProfile.risingSign,
+          }}
+          person={{
+            id: person.id,
+            dob: person.dob,
+            moonSign: person.moonSign,
+            risingSign: person.risingSign,
+          }}
+          locale={locale}
+          labels={{
+            sectionTitle: tZodiac('synastryTitle'),
+            complementDisclaimer: tZodiac('synastryComplementDisclaimer'),
+            partialHint: tZodiac('synastryPartialHint'),
+            partialHintLinkText: tZodiac('synastryPartialHintLink'),
+            category: {
+              'sun-sun': tZodiac('pair.sun-sun'),
+              'moon-moon': tZodiac('pair.moon-moon'),
+              'rising-rising': tZodiac('pair.rising-rising'),
+              'sun-moon': tZodiac('pair.sun-moon'),
+              'sun-rising': tZodiac('pair.sun-rising'),
+            } as Record<PairCategory, string>,
+            classification: {
+              harmony: tZodiac('classification.harmony'),
+              magnetic: tZodiac('classification.magnetic'),
+              tension: tZodiac('classification.tension'),
+              neutral: tZodiac('classification.neutral'),
+            } as Record<SynastryClassification, string>,
+            signName: (sign: ZodiacSign) =>
+              (ZODIAC_SIGNS as readonly ZodiacSign[]).includes(sign)
+                ? tZodiac(`sign.${sign}`)
+                : sign,
+          }}
+        />
 
         {/* Per-pair narratives — AI-generated, covers same + cross lanes.
          * Suspense-wrapped so the score + patterns + modifiers above

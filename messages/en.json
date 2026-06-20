@@ -105,6 +105,49 @@
     "aboutMe": "About you",
     "karmic": "Karmic Lessons"
   },
+  "zodiac": {
+    "placementsLabel": "Zodiac (optional)",
+    "placementsHint": "Sun is auto-derived from DOB. Moon & Rising are optional — skip if you don't know.",
+    "sunLabel": "Sun",
+    "moonLabel": "Moon",
+    "risingLabel": "Rising",
+    "signPlaceholder": "— pick a sign —",
+    "inLoveLabel": "In love",
+    "classificationLabel": "Element & modality",
+    "missingHint": "Not set — edit the profile to add.",
+    "sectionTitleOnPerson": "{name}'s zodiac",
+    "synastryTitle": "Zodiac Synastry",
+    "synastryComplementDisclaimer": "Astrological complement — does not affect the numerology score above.",
+    "synastryPartialHint": "Add Moon & Rising for full synastry.",
+    "synastryPartialHintLink": "Edit profile",
+    "pair": {
+      "sun-sun": "Sun ↔ Sun · Core self",
+      "moon-moon": "Moon ↔ Moon · Emotional world",
+      "rising-rising": "Rising ↔ Rising · First impression",
+      "sun-moon": "Sun ↔ Moon · You × their inner",
+      "sun-rising": "Sun ↔ Rising · You × their surface"
+    },
+    "classification": {
+      "harmony": "Harmonious",
+      "magnetic": "Magnetic",
+      "tension": "Tension",
+      "neutral": "Neutral"
+    },
+    "sign": {
+      "aries": "Aries",
+      "taurus": "Taurus",
+      "gemini": "Gemini",
+      "cancer": "Cancer",
+      "leo": "Leo",
+      "virgo": "Virgo",
+      "libra": "Libra",
+      "scorpio": "Scorpio",
+      "sagittarius": "Sagittarius",
+      "capricorn": "Capricorn",
+      "aquarius": "Aquarius",
+      "pisces": "Pisces"
+    }
+  },
   "home": {
     "cta": "Get started",
     "ctaSub": "Free. Just an email.",

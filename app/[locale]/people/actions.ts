@@ -17,6 +17,17 @@ import { isLocale, type Locale } from '@/lib/i18n/config';
 import { displayName } from '@/lib/profile/displayName';
 import { profileFormSchema, type ProfileFormError } from '@/lib/profile/validate';
 import { RELATIONSHIPS } from '@/lib/people/relationships';
+import { ZODIAC_SIGNS, type ZodiacSign } from '@/lib/zodiac/signs';
+
+/**
+ * Coerce a FormData value to a ZodiacSign (lowercase id) or null. Empty
+ * string and unknown values become null — the field is optional.
+ */
+function parseZodiacSign(raw: FormDataEntryValue | null): ZodiacSign | null {
+  if (typeof raw !== 'string') return null;
+  const lower = raw.trim().toLowerCase();
+  return (ZODIAC_SIGNS as readonly string[]).includes(lower) ? (lower as ZodiacSign) : null;
+}
 
 // Per-user cap on the number of Person rows. Was 1 in the locked plan as a
 // soft gate on free tier; user removed it for the MVP.
@@ -94,6 +105,8 @@ export async function createPersonAction(formData: FormData): Promise<PersonActi
     dob: { year: dob.year, month: dob.month, day: dob.day },
     relationship: parsed.data.relationship,
     notes: parsed.data.notes?.trim() || null,
+    moonSign: parseZodiacSign(formData.get('moonSign')),
+    risingSign: parseZodiacSign(formData.get('risingSign')),
   });
 
   revalidatePath(`/${localeChecked}/people`);
@@ -147,6 +160,8 @@ export async function updatePersonAction(formData: FormData): Promise<PersonActi
     dob: { year: dob.year, month: dob.month, day: dob.day },
     relationship: parsed.data.relationship,
     notes: parsed.data.notes?.trim() || null,
+    moonSign: parseZodiacSign(formData.get('moonSign')),
+    risingSign: parseZodiacSign(formData.get('risingSign')),
   });
 
   // Invalidate every AI body that bakes in this person's name/DOB. Cache keys

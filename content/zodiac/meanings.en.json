@@ -1,0 +1,86 @@
+{
+  "aries": {
+    "keyword": "Pioneer & drive",
+    "element": "Fire",
+    "modality": "Cardinal",
+    "essence": "Move-first, bold, direct energy. Most alive when there's a new challenge in front of you. Natural drive to start what doesn't yet exist — but interest can fade once it's up and running.",
+    "inLove": "As a partner, needs room to stay independent and prefers someone not easily threatened by the intensity. Romantic in pursuit mode; consistency takes conscious work."
+  },
+  "taurus": {
+    "keyword": "Stability & senses",
+    "element": "Earth",
+    "modality": "Fixed",
+    "essence": "Slow, patient, sensual. Builds tangible foundations — money, comfort, home. Loves good routines and quality things. Hard to move once they've taken a position.",
+    "inLove": "Loyal and physically present — affection via touch, food, calm togetherness. Watch for possessiveness when feeling insecure."
+  },
+  "gemini": {
+    "keyword": "Ideas & communication",
+    "element": "Air",
+    "modality": "Mutable",
+    "essence": "Quick mind, wide curiosity, loves to talk. Easily bored if topic or person can't keep pace. Versatile — can do many things at once though sometimes nothing finishes.",
+    "inLove": "Needs mental stimulation — a partner you can debate and laugh with. Emotional consistency is conscious work; not the auto-clingy type."
+  },
+  "cancer": {
+    "keyword": "Sensitivity & home",
+    "element": "Water",
+    "modality": "Cardinal",
+    "essence": "Emotional, protective, memorial. Lives in the world of feeling — reads a mood shift before others notice. Rooted in family and home; a place that feels safe means everything.",
+    "inLove": "Loves through caretaking — cooking, remembering small things, showing up on a hard day. Sensitive to rejection; needs a partner who doesn't frighten the soft parts."
+  },
+  "leo": {
+    "keyword": "Light & expression",
+    "element": "Fire",
+    "modality": "Fixed",
+    "essence": "Warm, proud, expressive. Most full when truly seen and appreciated. Generous with those close — has the gift of making people feel special. Crashes when feeling overlooked.",
+    "inLove": "Grand-gesture romantic; needs to be admired and seen as special. A partner who can appreciate without competing is a perfect fit."
+  },
+  "virgo": {
+    "keyword": "Precision & service",
+    "element": "Earth",
+    "modality": "Mutable",
+    "essence": "Analytical, practical, loves to fix and refine. Expresses love through small, well-aimed actions. Can get stuck overthinking detail; often feels not-enough even when the work is clean.",
+    "inLove": "Acts-of-service love — meds when sick, remembered food allergies. Learning to accept the not-yet-perfect — including themselves — is the work."
+  },
+  "libra": {
+    "keyword": "Balance & relationship",
+    "element": "Air",
+    "modality": "Cardinal",
+    "essence": "Harmonious, aesthetic, relational. Most clearly themselves with a partner — not from weakness, but because partnership is the native mode. Watch for people-pleasing — own needs tend to land last.",
+    "inLove": "Classic romantic — quality time, beautiful settings, deep talks. Decision-making is hard; a partner clear about their own needs helps a lot."
+  },
+  "scorpio": {
+    "keyword": "Intensity & depth",
+    "element": "Water",
+    "modality": "Fixed",
+    "essence": "Deep, intense, all-or-nothing. Lives at the emotional layers most people avoid. Fiercely loyal once you're inside the inner circle. Doesn't forget the feel of betrayal.",
+    "inLove": "Total commitment or nothing. Needs a partner brave enough for the hard truths. Jealousy can show up — trust work is the long lesson."
+  },
+  "sagittarius": {
+    "keyword": "Adventurer & meaning",
+    "element": "Fire",
+    "modality": "Mutable",
+    "essence": "Optimistic, exploratory, meaning-seeker. Needs freedom to move — physical, mental, philosophical. Honest enough to read as blunt; no harm meant, small talk just feels off.",
+    "inLove": "A partner with their own full life — not one whose needs spill entirely into the relationship. Doesn't do feeling caged."
+  },
+  "capricorn": {
+    "keyword": "Ambition & discipline",
+    "element": "Earth",
+    "modality": "Cardinal",
+    "essence": "Strategic, persistent, long-game focus. Builds slowly but surely — the success celebrated at 40 tastes better than the one at 25. Can read as cold; really it's self-protective.",
+    "inLove": "Slow to open, but once committed — fully. A partner who sees the softness behind the work-wall is lucky for both sides."
+  },
+  "aquarius": {
+    "keyword": "Visionary & different",
+    "element": "Air",
+    "modality": "Fixed",
+    "essence": "Independent, experimental, caring at scale. Often feels different from those around them — not coincidence, the lens really is unconventional. Can seem emotionally cool while caring deeply.",
+    "inLove": "Friendship as the foundation. A partner who helps them commit without forcing convention is the right fit."
+  },
+  "pisces": {
+    "keyword": "Empathy & imagination",
+    "element": "Water",
+    "modality": "Mutable",
+    "essence": "Soft, intuitive, artistic. Lives in feeling and imagination — creative, spiritual, internal compass. Learning to limit absorption of other people's emotions is a lifelong lesson.",
+    "inLove": "Romantic in the poetic sense — sees a partner at their best version. Needs a partner who helps hold the boundaries, not one who exploits the softness."
+  }
+}

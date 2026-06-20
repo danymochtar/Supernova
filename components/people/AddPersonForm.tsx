@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useMemo, useState, useTransition } from 'react';
 import { useTranslations } from 'next-intl';
 import type { Locale } from '@/lib/i18n/config';
 import type { PersonActionResult, createPersonAction, updatePersonAction } from '@/app/[locale]/people/actions';
 import { RELATIONSHIPS } from '@/lib/people/relationships';
+import { GLYPH, sunSignFromDob, ZODIAC_SIGNS, type ZodiacSign } from '@/lib/zodiac/signs';
 
 const ERROR_KEY: Record<Exclude<PersonActionResult, { ok: true }>['error'], string> = {
   unauth: 'errorGeneric',
@@ -30,12 +31,15 @@ interface Props {
     dob: { year: number; month: number; day: number };
     relationship: (typeof RELATIONSHIPS)[number];
     notes: string | null;
+    moonSign: ZodiacSign | null;
+    risingSign: ZodiacSign | null;
   };
 }
 
 export function AddPersonForm({ locale, action, edit }: Props) {
   const t = useTranslations('peopleForm');
   const tRel = useTranslations('people.relationship');
+  const tZodiac = useTranslations('zodiac');
   const [error, setError] = useState<string | null>(null);
   const [relationship, setRelationship] = useState<(typeof RELATIONSHIPS)[number]>(
     edit?.relationship ?? 'PARTNER',
@@ -45,6 +49,20 @@ export function AddPersonForm({ locale, action, edit }: Props) {
   const dobStr = edit
     ? `${edit.dob.year}-${String(edit.dob.month).padStart(2, '0')}-${String(edit.dob.day).padStart(2, '0')}`
     : '';
+
+  // Live Sun preview tied to the DOB input. Recomputes on every keystroke
+  // — pure function, no debounce needed. The preview is a small read-only
+  // line; the actual Sun value is re-derived server-side from `dob`.
+  const [dobInput, setDobInput] = useState(dobStr);
+  const sunPreview = useMemo(() => {
+    if (!dobInput) return null;
+    const [yStr, mStr, dStr] = dobInput.split('-');
+    const year = Number(yStr);
+    const month = Number(mStr);
+    const day = Number(dStr);
+    if (!year || !month || !day) return null;
+    return sunSignFromDob({ year, month, day });
+  }, [dobInput]);
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -120,10 +138,39 @@ export function AddPersonForm({ locale, action, edit }: Props) {
           type="date"
           required
           defaultValue={dobStr}
+          onChange={(e) => setDobInput(e.target.value)}
           max={new Date().toISOString().slice(0, 10)}
           className="border-border focus:ring-primary w-full rounded-lg border bg-transparent px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
         />
+        {sunPreview ? (
+          <p className="text-muted-foreground text-xs">
+            {tZodiac('sunLabel')} · {GLYPH[sunPreview]} {tZodiac(`sign.${sunPreview}`)}
+          </p>
+        ) : null}
       </div>
+
+      <fieldset className="space-y-3">
+        <legend className="text-sm font-medium">{tZodiac('placementsLabel')}</legend>
+        <p className="text-muted-foreground text-xs">{tZodiac('placementsHint')}</p>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <ZodiacSelect
+            id="moonSign"
+            name="moonSign"
+            label={tZodiac('moonLabel')}
+            defaultValue={edit?.moonSign ?? ''}
+            placeholder={tZodiac('signPlaceholder')}
+            tSign={(s) => tZodiac(`sign.${s}`)}
+          />
+          <ZodiacSelect
+            id="risingSign"
+            name="risingSign"
+            label={tZodiac('risingLabel')}
+            defaultValue={edit?.risingSign ?? ''}
+            placeholder={tZodiac('signPlaceholder')}
+            tSign={(s) => tZodiac(`sign.${s}`)}
+          />
+        </div>
+      </fieldset>
 
       <div className="space-y-2">
         <label htmlFor="relationship" className="text-sm font-medium">
@@ -176,5 +223,47 @@ export function AddPersonForm({ locale, action, edit }: Props) {
 
       {error ? <p className="text-sm text-red-600">{error}</p> : null}
     </form>
+  );
+}
+
+/**
+ * Small native-select wrapper for a single zodiac placement field.
+ * Renders an empty default option (= null = "not entered") plus the 12
+ * signs with their unicode glyph for quick visual scan.
+ */
+function ZodiacSelect({
+  id,
+  name,
+  label,
+  defaultValue,
+  placeholder,
+  tSign,
+}: {
+  id: string;
+  name: string;
+  label: string;
+  defaultValue: string;
+  placeholder: string;
+  tSign: (sign: ZodiacSign) => string;
+}) {
+  return (
+    <div className="space-y-1">
+      <label htmlFor={id} className="text-muted-foreground text-xs font-medium uppercase tracking-wider">
+        {label}
+      </label>
+      <select
+        id={id}
+        name={name}
+        defaultValue={defaultValue}
+        className="border-border focus:ring-primary w-full rounded-lg border bg-transparent px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
+      >
+        <option value="">{placeholder}</option>
+        {ZODIAC_SIGNS.map((sign) => (
+          <option key={sign} value={sign}>
+            {GLYPH[sign]} {tSign(sign)}
+          </option>
+        ))}
+      </select>
+    </div>
   );
 }

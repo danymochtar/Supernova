@@ -105,6 +105,40 @@
     "aboutMe": "عنك",
     "karmic": "Karmic Lessons"
   },
+  "zodiac": {
+    "placementsLabel": "الأبراج (اختياري)",
+    "placementsHint": "تُحسب الشمس من تاريخ الميلاد. القمر والطالع اختياريان — تخطَّ إن لم تعرف.",
+    "sunLabel": "الشمس",
+    "moonLabel": "القمر",
+    "risingLabel": "الطالع",
+    "signPlaceholder": "— اختر برجًا —",
+    "inLoveLabel": "في الحب",
+    "classificationLabel": "العنصر والنمط",
+    "missingHint": "غير محدد — حرّر الملف الشخصي للإضافة.",
+    "sectionTitleOnPerson": "برج {name}",
+    "synastryTitle": "تطابق الأبراج",
+    "synastryComplementDisclaimer": "مكمّل تنجيمي — لا يؤثر على درجة علم الأعداد أعلاه.",
+    "synastryPartialHint": "أضف القمر والطالع للتطابق الكامل.",
+    "synastryPartialHintLink": "تحرير الملف الشخصي",
+    "pair": {
+      "sun-sun": "شمس ↔ شمس · الذات الأساسية",
+      "moon-moon": "قمر ↔ قمر · العالم العاطفي",
+      "rising-rising": "طالع ↔ طالع · الانطباع الأول",
+      "sun-moon": "شمس ↔ قمر · أنت × داخله",
+      "sun-rising": "شمس ↔ طالع · أنت × مظهره"
+    },
+    "classification": {
+      "harmony": "انسجام",
+      "magnetic": "جاذبية",
+      "tension": "توتر",
+      "neutral": "محايد"
+    },
+    "sign": {
+      "aries": "الحمل", "taurus": "الثور", "gemini": "الجوزاء", "cancer": "السرطان",
+      "leo": "الأسد", "virgo": "العذراء", "libra": "الميزان", "scorpio": "العقرب",
+      "sagittarius": "القوس", "capricorn": "الجدي", "aquarius": "الدلو", "pisces": "الحوت"
+    }
+  },
   "home": {
     "cta": "ابدأ الآن",
     "ctaSub": "مجاناً. كل ما تحتاجه هو بريد إلكتروني.",

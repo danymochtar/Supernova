@@ -3,6 +3,7 @@
 import { useState, useTransition } from 'react';
 import { useTranslations } from 'next-intl';
 import type { UpdateProfileResult, updateProfileAction } from '@/app/[locale]/profile/edit/actions';
+import { GLYPH, ZODIAC_SIGNS, type ZodiacSign } from '@/lib/zodiac/signs';
 
 interface Props {
   initial: {
@@ -12,6 +13,8 @@ interface Props {
     nickname: string | null;
     dob: { year: number; month: number; day: number };
     timezone: string;
+    moonSign: ZodiacSign | null;
+    risingSign: ZodiacSign | null;
   };
   timezones: { value: string; label: string }[];
   action: typeof updateProfileAction;
@@ -30,6 +33,7 @@ const ERROR_KEY: Record<Exclude<UpdateProfileResult, { ok: true }>['error'], str
 export function EditProfileForm({ initial, timezones, action }: Props) {
   const t = useTranslations('editProfile');
   const tWelcome = useTranslations('welcome');
+  const tZodiac = useTranslations('zodiac');
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
@@ -161,6 +165,49 @@ export function EditProfileForm({ initial, timezones, action }: Props) {
           ))}
         </select>
       </div>
+
+      <fieldset className="space-y-3">
+        <legend className="text-sm font-medium">{tZodiac('placementsLabel')}</legend>
+        <p className="text-muted-foreground text-xs">{tZodiac('placementsHint')}</p>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <div className="space-y-1">
+            <label htmlFor="moonSign" className="text-muted-foreground text-xs font-medium uppercase tracking-wider">
+              {tZodiac('moonLabel')}
+            </label>
+            <select
+              id="moonSign"
+              name="moonSign"
+              defaultValue={initial.moonSign ?? ''}
+              className="border-border focus:ring-primary w-full rounded-lg border bg-transparent px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
+            >
+              <option value="">{tZodiac('signPlaceholder')}</option>
+              {ZODIAC_SIGNS.map((s) => (
+                <option key={s} value={s}>
+                  {GLYPH[s]} {tZodiac(`sign.${s}`)}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="space-y-1">
+            <label htmlFor="risingSign" className="text-muted-foreground text-xs font-medium uppercase tracking-wider">
+              {tZodiac('risingLabel')}
+            </label>
+            <select
+              id="risingSign"
+              name="risingSign"
+              defaultValue={initial.risingSign ?? ''}
+              className="border-border focus:ring-primary w-full rounded-lg border bg-transparent px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
+            >
+              <option value="">{tZodiac('signPlaceholder')}</option>
+              {ZODIAC_SIGNS.map((s) => (
+                <option key={s} value={s}>
+                  {GLYPH[s]} {tZodiac(`sign.${s}`)}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+      </fieldset>
 
       <input type="hidden" name="locale" value="id" />
 

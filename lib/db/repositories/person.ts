@@ -1,7 +1,8 @@
-import type { Person, Prisma, Relationship } from '@prisma/client';
+import type { Person, Prisma, Relationship, ZodiacSign as PrismaZodiacSign } from '@prisma/client';
 import { prisma } from '@/lib/db/prisma';
 import { relationshipPriority } from '@/lib/compatibility/lens';
 import type { BirthDate } from '@/lib/numerology/types';
+import { fromPrismaEnum, toPrismaEnum, type ZodiacSign } from '@/lib/zodiac/signs';
 
 export interface PersonInput {
   firstName: string;
@@ -11,6 +12,11 @@ export interface PersonInput {
   dob: BirthDate;
   relationship: Relationship;
   notes?: string | null;
+  /** Optional Moon placement (zodiac sign). Sun is derived from DOB at
+   *  read time, not stored. Null = "user hasn't entered this". */
+  moonSign?: ZodiacSign | null;
+  /** Optional Rising placement. Same semantics as moonSign. */
+  risingSign?: ZodiacSign | null;
 }
 
 export interface PersonView {
@@ -24,6 +30,8 @@ export interface PersonView {
   dob: BirthDate;
   relationship: Relationship;
   notes: string | null;
+  moonSign: ZodiacSign | null;
+  risingSign: ZodiacSign | null;
   createdAt: Date;
 }
 
@@ -57,8 +65,15 @@ function toView(row: Person): PersonView {
     dob: toBirthDate(row.dob),
     relationship: row.relationship,
     notes: row.notes,
+    moonSign: fromPrismaEnum(row.moonSign),
+    risingSign: fromPrismaEnum(row.risingSign),
     createdAt: row.createdAt,
   };
+}
+
+/** Translate our lowercase sign id → Prisma's uppercase enum, or null. */
+function asPrismaSign(sign: ZodiacSign | null | undefined): PrismaZodiacSign | null {
+  return sign ? (toPrismaEnum(sign) as PrismaZodiacSign) : null;
 }
 
 export async function listPeople(userId: string): Promise<PersonView[]> {
@@ -103,6 +118,8 @@ export async function createPerson(userId: string, input: PersonInput): Promise<
       dob: toDateUTC(input.dob),
       relationship: input.relationship,
       notes: input.notes ?? null,
+      moonSign: asPrismaSign(input.moonSign),
+      risingSign: asPrismaSign(input.risingSign),
     } satisfies Prisma.PersonUncheckedCreateInput,
   });
   return toView(row);
@@ -127,6 +144,8 @@ export async function updatePerson(
       dob: toDateUTC(input.dob),
       relationship: input.relationship,
       notes: input.notes?.trim() || null,
+      moonSign: asPrismaSign(input.moonSign),
+      risingSign: asPrismaSign(input.risingSign),
     },
   });
   if (result.count === 0) return null;

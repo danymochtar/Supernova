@@ -7,6 +7,8 @@ import { getSession } from '@/lib/auth/requireSession';
 import { getPerson } from '@/lib/db/repositories/person';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { isLocale, type Locale } from '@/lib/i18n/config';
+import { ZodiacSection } from '@/components/people/ZodiacSection';
+import { ZODIAC_SIGNS, type ZodiacSign } from '@/lib/zodiac/signs';
 import {
   ageAt,
   bridges,
@@ -47,6 +49,7 @@ export default async function PersonDetailPage({
   const tDash = await getTranslations({ locale, namespace: 'dashboard' });
   const tCompat = await getTranslations({ locale, namespace: 'compatibility' });
   const tRel = await getTranslations({ locale, namespace: 'relationshipProfile' });
+  const tZodiac = await getTranslations({ locale, namespace: 'zodiac' });
 
   const session = await getSession();
   if (!session) redirect(`/${locale}/login`);
@@ -170,6 +173,29 @@ export default async function PersonDetailPage({
             <p className="whitespace-pre-wrap">{person.notes}</p>
           </section>
         ) : null}
+
+        {/* ZODIAC — optional supplementary lens; pure display, does not
+         * feed the compatibility score. Sun is always shown (derived from
+         * DOB); Moon / Rising render only when the user has entered them. */}
+        <ZodiacSection
+          dob={person.dob}
+          moonSign={person.moonSign}
+          risingSign={person.risingSign}
+          locale={locale}
+          labels={{
+            sectionTitle: tZodiac('sectionTitleOnPerson', { name: theirName }),
+            sun: tZodiac('sunLabel'),
+            moon: tZodiac('moonLabel'),
+            rising: tZodiac('risingLabel'),
+            inLove: tZodiac('inLoveLabel'),
+            classification: tZodiac('classificationLabel'),
+            missingHint: tZodiac('missingHint'),
+            signName: (sign: ZodiacSign) =>
+              (ZODIAC_SIGNS as readonly ZodiacSign[]).includes(sign)
+                ? tZodiac(`sign.${sign}`)
+                : sign,
+          }}
+        />
 
         {/* AI body split into two flat cards: portrait ("Ringkasan profil")
          * + relational dynamics ("Profil hubungan…"). Suspense-wrapped so

@@ -127,6 +127,25 @@ enum SummaryKind {
   MONTHLY
 }
 
+// Twelve western tropical zodiac signs. Stored as the optional Moon
+// and Rising placements on Profile + Person — Sun is NOT stored; it's
+// derived from DOB on demand by `lib/zodiac/signs.ts#sunSignFromDob`
+// (pure function, no stale-data class of bug if DOB is later corrected).
+enum ZodiacSign {
+  ARIES
+  TAURUS
+  GEMINI
+  CANCER
+  LEO
+  VIRGO
+  LIBRA
+  SCORPIO
+  SAGITTARIUS
+  CAPRICORN
+  AQUARIUS
+  PISCES
+}
+
 model Profile {
   id              String   @id @default(cuid())
   userId          String   @unique
@@ -159,6 +178,12 @@ model Profile {
   // Local-time reminder ("HH:mm" in user's timezone) — delivery via web push.
   reminderEnabled Boolean  @default(false)
   reminderTime    String?
+  // Optional astrology placements — supplements the People feature's
+  // synastry card. Sun is derived from `dob`; only Moon and Rising are
+  // stored because they require birth time / place the user might not
+  // know. Null = "user hasn't entered this".
+  moonSign        ZodiacSign?
+  risingSign      ZodiacSign?
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
@@ -195,6 +220,10 @@ model Person {
   dob          DateTime     @db.Date
   relationship Relationship
   notes        String?
+  // Optional zodiac placements — same purpose / null semantics as the
+  // matching fields on Profile. Sun is derived from `dob`.
+  moonSign     ZodiacSign?
+  risingSign   ZodiacSign?
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
 

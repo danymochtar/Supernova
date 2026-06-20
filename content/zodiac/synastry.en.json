@@ -1,0 +1,32 @@
+{
+  "sun-sun": {
+    "harmony": "Your core selves resonate — what matters to you matters to them. Easier to read each other's moves without explaining.",
+    "magnetic": "A strong pull — you see opposite sides of the world, and that makes you curious. A polarity pair that can complete or wear thin, depending on the conscious work.",
+    "tension": "How you carry yourselves in the world pulls opposite ways. There's a lot to learn from the side that isn't natural to either of you — but it takes routine compromise to stop wearing each other out.",
+    "neutral": "Your core selves don't boost or drag each other. Comfortable running parallel, without high intensity or major friction."
+  },
+  "moon-moon": {
+    "harmony": "Your ways of feeling and self-soothing when down are similar. You calm each other without saying it — same emotional language.",
+    "magnetic": "Your emotional needs complement each other: one wants closeness, the other wants room. Works when you're honest about what you need — without that, easy to misread.",
+    "tension": "Your emotion-regulation styles differ sharply. What soothes one of you can grate on the other. Big lesson: don't assume your partner needs the same comfort you do.",
+    "neutral": "Your emotional worlds are separate but not in conflict. You don't automatically understand each other, but you don't bother each other either — explicit communication is the key."
+  },
+  "rising-rising": {
+    "harmony": "How you present in the world looks similar — what someone expects from seeing one of you, they get from the other. Easy to be a team that faces the world the same way.",
+    "magnetic": "Your outer presentation is opposite — they're drawn precisely because you radiate what they don't express. Real first-glance chemistry.",
+    "tension": "Your first impressions can misread each other. Takes longer to really see the real version — don't rush conclusions from the first touch.",
+    "neutral": "How you present lives on its own track. Not a natural fit, not a clash — what matters is substance, not packaging."
+  },
+  "sun-moon": {
+    "harmony": "How you show up in the outer world matches what they need emotionally. They feel safe around you without much explanation.",
+    "magnetic": "What you radiate is the opposite of what's usually around them — curious, sometimes confused. A strong pull that needs extra awareness.",
+    "tension": "How you exist in the world can disturb how they regulate emotion. Nobody's fault — just two frequencies that don't auto-tune.",
+    "neutral": "Your way of being and their emotional needs run parallel — no boost or drag. Emotional connection takes conscious effort."
+  },
+  "sun-rising": {
+    "harmony": "Who you really are matches what they expect from a first impression. Consistent — what they see early matches what they get inside.",
+    "magnetic": "Your core self is the opposite of what they usually look for at the surface. Curiosity rises precisely because of the mismatch.",
+    "tension": "The outer version they expect from a partner drifts from your inner version. Misalignment risk — early honesty about who you really are helps a lot.",
+    "neutral": "Your real self and their surface expectations neither contradict nor naturally match. The relationship grows more through substance than initial vibe."
+  }
+}

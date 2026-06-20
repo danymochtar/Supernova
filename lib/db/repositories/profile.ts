@@ -1,8 +1,9 @@
-import type { Profile as ProfileRow } from '@prisma/client';
+import type { Profile as ProfileRow, ZodiacSign as PrismaZodiacSign } from '@prisma/client';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { DEFAULT_LOCALE } from '@/lib/i18n/locales';
 import { prisma } from '@/lib/db/prisma';
 import type { BirthDate } from '@/lib/numerology/types';
+import { fromPrismaEnum, toPrismaEnum, type ZodiacSign } from '@/lib/zodiac/signs';
 
 export interface ProfileInput {
   firstName: string;
@@ -12,6 +13,9 @@ export interface ProfileInput {
   dob: BirthDate;
   timezone: string;
   locale: Locale;
+  /** Optional Moon / Rising placements — same semantics as on Person. */
+  moonSign?: ZodiacSign | null;
+  risingSign?: ZodiacSign | null;
 }
 
 export type Theme = 'light' | 'dark' | 'auto';
@@ -37,6 +41,9 @@ export interface ProfileView {
   autoJournal: boolean;
   reminderEnabled: boolean;
   reminderTime: string | null;
+  /** Optional Moon placement for the user — same semantics as Person.moonSign. */
+  moonSign: ZodiacSign | null;
+  risingSign: ZodiacSign | null;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -70,6 +77,8 @@ export async function createProfile(userId: string, input: ProfileInput): Promis
       dob: toDateUTC(input.dob),
       timezone: input.timezone,
       locale: input.locale,
+      moonSign: input.moonSign ? (toPrismaEnum(input.moonSign) as PrismaZodiacSign) : null,
+      risingSign: input.risingSign ? (toPrismaEnum(input.risingSign) as PrismaZodiacSign) : null,
     },
   });
   return toView(row);
@@ -86,6 +95,15 @@ export async function updateProfile(userId: string, input: ProfileInput): Promis
       dob: toDateUTC(input.dob),
       timezone: input.timezone,
       locale: input.locale,
+      // Zodiac fields are passed when present; `undefined` means
+      // "don't touch" (Prisma omits the column from the UPDATE).
+      // Explicit `null` clears the value back to "not set".
+      ...(input.moonSign !== undefined
+        ? { moonSign: input.moonSign ? (toPrismaEnum(input.moonSign) as PrismaZodiacSign) : null }
+        : {}),
+      ...(input.risingSign !== undefined
+        ? { risingSign: input.risingSign ? (toPrismaEnum(input.risingSign) as PrismaZodiacSign) : null }
+        : {}),
     },
   });
   // Invalidate any cached numerology artifacts that depend on name+dob (e.g.
@@ -128,9 +146,25 @@ function toView(row: ProfileRow): ProfileView {
     autoJournal: row.autoJournal,
     reminderEnabled: row.reminderEnabled,
     reminderTime: row.reminderTime,
+    moonSign: fromPrismaEnum(row.moonSign),
+    risingSign: fromPrismaEnum(row.risingSign),
     createdAt: row.createdAt,
     updatedAt: row.updatedAt,
   };
+}
+
+/** Update only the optional zodiac placements. Sun is never stored. */
+export async function updateZodiacPlacements(
+  userId: string,
+  placements: { moonSign: ZodiacSign | null; risingSign: ZodiacSign | null },
+): Promise<void> {
+  await prisma.profile.update({
+    where: { userId },
+    data: {
+      moonSign: placements.moonSign ? (toPrismaEnum(placements.moonSign) as PrismaZodiacSign) : null,
+      risingSign: placements.risingSign ? (toPrismaEnum(placements.risingSign) as PrismaZodiacSign) : null,
+    },
+  });
 }
 
 export interface PreferenceUpdate {

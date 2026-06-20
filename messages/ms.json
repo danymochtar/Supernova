@@ -105,6 +105,40 @@
     "aboutMe": "Tentang kamu",
     "karmic": "Karmic Lessons"
   },
+  "zodiac": {
+    "placementsLabel": "Zodiak (pilihan)",
+    "placementsHint": "Sun dikira automatik dari tarikh lahir. Moon & Rising pilihan — langkau jika tak tahu.",
+    "sunLabel": "Sun",
+    "moonLabel": "Moon",
+    "risingLabel": "Rising",
+    "signPlaceholder": "— pilih sign —",
+    "inLoveLabel": "Dalam cinta",
+    "classificationLabel": "Elemen & Modaliti",
+    "missingHint": "Belum diisi — edit profil untuk tambah.",
+    "sectionTitleOnPerson": "Zodiak {name}",
+    "synastryTitle": "Synastry Zodiak",
+    "synastryComplementDisclaimer": "Pelengkap astrologi — tidak menjejaskan skor numerologi di atas.",
+    "synastryPartialHint": "Tambahkan Moon & Rising untuk synastry lengkap.",
+    "synastryPartialHintLink": "Edit profil",
+    "pair": {
+      "sun-sun": "Sun ↔ Sun · Diri teras",
+      "moon-moon": "Moon ↔ Moon · Dunia emosi",
+      "rising-rising": "Rising ↔ Rising · Tanggapan pertama",
+      "sun-moon": "Sun ↔ Moon · Kamu × dalamannya",
+      "sun-rising": "Sun ↔ Rising · Kamu × permukaannya"
+    },
+    "classification": {
+      "harmony": "Harmoni",
+      "magnetic": "Magnetik",
+      "tension": "Tegang",
+      "neutral": "Neutral"
+    },
+    "sign": {
+      "aries": "Aries", "taurus": "Taurus", "gemini": "Gemini", "cancer": "Cancer",
+      "leo": "Leo", "virgo": "Virgo", "libra": "Libra", "scorpio": "Scorpio",
+      "sagittarius": "Sagittarius", "capricorn": "Capricorn", "aquarius": "Aquarius", "pisces": "Pisces"
+    }
+  },
   "home": {
     "cta": "Mula sekarang",
     "ctaSub": "Percuma. Cuma perlu email.",

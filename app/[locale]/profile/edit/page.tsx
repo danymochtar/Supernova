@@ -30,6 +30,8 @@ export default async function EditProfilePage({ params }: { params: { locale: st
             nickname: profile.nickname,
             dob: profile.dob,
             timezone: profile.timezone,
+            moonSign: profile.moonSign,
+            risingSign: profile.risingSign,
           }}
           timezones={TIMEZONES}
           action={updateProfileAction}

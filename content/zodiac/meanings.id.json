@@ -1,0 +1,86 @@
+{
+  "aries": {
+    "keyword": "Pelopor & dorongan",
+    "element": "Api",
+    "modality": "Kardinal",
+    "essence": "Energi gerak duluan, berani, langsung. Hidup paling hidup ketika ada tantangan baru di depan. Punya dorongan natural buat mulai sesuatu yang belum ada — tapi gampang ilang minat begitu hal itu sudah berjalan.",
+    "inLove": "Sebagai pasangan, butuh ruang buat tetap mandiri dan suka pasangan yang nggak gampang merasa terancam sama energinya. Romantis di mode pengejaran; konsisten butuh kerja sadar."
+  },
+  "taurus": {
+    "keyword": "Stabilitas & rasa",
+    "element": "Bumi",
+    "modality": "Tetap",
+    "essence": "Pelan, sabar, sensual. Membangun pondasi yang nyata — keuangan, kenyamanan, rumah. Suka rutinitas yang enak dan barang berkualitas. Susah dipindahin sekali sudah punya posisi.",
+    "inLove": "Pasangan yang setia dan hadir secara fisik — afeksi lewat sentuhan, makanan, kebersamaan tenang. Hati-hati possessive kalau merasa nggak aman."
+  },
+  "gemini": {
+    "keyword": "Ide & komunikasi",
+    "element": "Udara",
+    "modality": "Mutable",
+    "essence": "Pikiran cepat, rasa ingin tahu lebar, suka ngobrol. Gampang bosan kalau topik atau orang nggak bisa nyusul kecepatannya. Versatile — bisa banyak hal sekaligus walau kadang nggak ada yang tuntas.",
+    "inLove": "Butuh stimulasi mental — pasangan harus bisa diajak debat dan ketawa. Konsistensi emosional kerja sadar; bukan tipe yang otomatis nempel."
+  },
+  "cancer": {
+    "keyword": "Kepekaan & rumah",
+    "element": "Air",
+    "modality": "Kardinal",
+    "essence": "Emosional, protektif, memorial. Hidup di dunia perasaan — yang lain belum sadar suasana berubah, ini udah baca. Mengakar di keluarga dan rumah; tempat yang terasa aman adalah segalanya.",
+    "inLove": "Cinta lewat merawat — masak, ingat detail kecil, hadir di hari berat. Sensitif pada penolakan, butuh pasangan yang nggak nakut-nakuti rentannya."
+  },
+  "leo": {
+    "keyword": "Cahaya & ekspresi",
+    "element": "Api",
+    "modality": "Tetap",
+    "essence": "Hangat, bangga, ekspresif. Hidup paling penuh saat dilihat dan dihargai secara tulus. Generous ke orang dekat — punya kapasitas membuat orang merasa khusus. Jatuh kalau merasa diabaikan.",
+    "inLove": "Romantis grand-gesture; butuh dikagumi dan dilihat istimewa. Pasangan yang bisa appreciate tanpa kompetisi — cocok banget."
+  },
+  "virgo": {
+    "keyword": "Ketelitian & melayani",
+    "element": "Bumi",
+    "modality": "Mutable",
+    "essence": "Analitis, praktis, suka memperbaiki. Mengekspresikan cinta lewat tindakan kecil yang sangat tepat. Bisa terjebak overthinking detail; gampang kerasa nggak cukup walau hasilnya rapi.",
+    "inLove": "Cinta lewat acts of service — bawain obat saat sakit, ingat alergi makanan. Belajar nerima yang \"belum sempurna\" termasuk dirinya sendiri."
+  },
+  "libra": {
+    "keyword": "Keseimbangan & relasi",
+    "element": "Udara",
+    "modality": "Kardinal",
+    "essence": "Harmonis, estetik, relasional. Hidup paling jelas saat ada partner — bukan karena lemah, tapi karena natural-nya berpasangan. Hati-hati people-pleasing — kebutuhan sendiri sering diakhirin.",
+    "inLove": "Romantis klasik — quality time, suasana indah, percakapan dalam. Susah memutuskan; pasangan yang clear soal kebutuhan sendiri bantu banyak."
+  },
+  "scorpio": {
+    "keyword": "Intensitas & kedalaman",
+    "element": "Air",
+    "modality": "Tetap",
+    "essence": "Dalam, intens, semua-atau-tidak. Hidup di lapisan emosi yang banyak orang nggak mau sentuh. Loyal sekali sudah masuk lingkar dalam. Susah lupa rasa dikhianatin.",
+    "inLove": "Komitmen total atau nggak sama sekali. Butuh pasangan yang berani jujur soal yang sulit. Cemburu bisa muncul — kerja kepercayaan adalah pelajaran panjang."
+  },
+  "sagittarius": {
+    "keyword": "Petualang & makna",
+    "element": "Api",
+    "modality": "Mutable",
+    "essence": "Optimis, eksploratif, pencari makna. Butuh kebebasan untuk gerak — fisik, mental, filosofis. Jujur sampai bisa kerasa kasar; bukan niat menyakiti, sekedar nggak nyaman berbasa-basi.",
+    "inLove": "Pasangan yang juga punya hidup sendiri — bukan yang kebutuhannya kebawa semua ke hubungan. Nggak suka ngerasa kekurung."
+  },
+  "capricorn": {
+    "keyword": "Ambisi & disiplin",
+    "element": "Bumi",
+    "modality": "Kardinal",
+    "essence": "Strategis, gigih, fokus jangka panjang. Membangun pelan tapi pasti — sukses yang dirayakan di usia 40 lebih nikmat daripada yang di 25. Bisa kelihatan dingin; sebenarnya self-protective.",
+    "inLove": "Lambat membuka, tapi sekali commit — sungguh-sungguh. Pasangan yang bisa lihat sisi lembut di balik tembok karier — keberuntungan untuk dua sisi."
+  },
+  "aquarius": {
+    "keyword": "Visioner & beda",
+    "element": "Udara",
+    "modality": "Tetap",
+    "essence": "Independen, eksperimental, peduli skala besar. Sering merasa beda dari sekitar — bukan kebetulan, memang lensanya nggak konvensional. Bisa terkesan emosi dingin walau sebenarnya peduli mendalam.",
+    "inLove": "Butuh persahabatan jadi pondasi. Pasangan yang ngebantu commit tanpa harus jadi konvensional — perfect match."
+  },
+  "pisces": {
+    "keyword": "Empati & imajinasi",
+    "element": "Air",
+    "modality": "Mutable",
+    "essence": "Lembut, intuitif, artistik. Hidup di dunia perasaan dan imajinasi — kreatif, spiritual, kompas internal. Belajar membatasi diri dari serapan emosi orang lain adalah pelajaran seumur hidup.",
+    "inLove": "Romantis dalam arti puisi — lihat pasangan di versi terbaiknya. Butuh pasangan yang ngebantu pegang batas, bukan yang ngeksploitasi kelembutan."
+  }
+}

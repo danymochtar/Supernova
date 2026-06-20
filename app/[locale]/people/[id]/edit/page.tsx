@@ -41,6 +41,8 @@ export default async function EditPersonPage({
             dob: person.dob,
             relationship: person.relationship,
             notes: person.notes,
+            moonSign: person.moonSign,
+            risingSign: person.risingSign,
           }}
         />
       </div>

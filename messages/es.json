@@ -105,6 +105,40 @@
     "aboutMe": "Sobre ti",
     "karmic": "Karmic Lessons"
   },
+  "zodiac": {
+    "placementsLabel": "Zodiaco (opcional)",
+    "placementsHint": "El Sol se deriva de la fecha de nacimiento. Luna y Ascendente son opcionales — sáltalo si no lo sabes.",
+    "sunLabel": "Sol",
+    "moonLabel": "Luna",
+    "risingLabel": "Ascendente",
+    "signPlaceholder": "— elige un signo —",
+    "inLoveLabel": "En el amor",
+    "classificationLabel": "Elemento y modalidad",
+    "missingHint": "Sin definir — edita el perfil para añadir.",
+    "sectionTitleOnPerson": "Zodiaco de {name}",
+    "synastryTitle": "Sinastría zodiacal",
+    "synastryComplementDisclaimer": "Complemento astrológico — no afecta la puntuación numerológica de arriba.",
+    "synastryPartialHint": "Añade Luna y Ascendente para una sinastría completa.",
+    "synastryPartialHintLink": "Editar perfil",
+    "pair": {
+      "sun-sun": "Sol ↔ Sol · Núcleo del yo",
+      "moon-moon": "Luna ↔ Luna · Mundo emocional",
+      "rising-rising": "Asc ↔ Asc · Primera impresión",
+      "sun-moon": "Sol ↔ Luna · Tú × su interior",
+      "sun-rising": "Sol ↔ Asc · Tú × su superficie"
+    },
+    "classification": {
+      "harmony": "Armonía",
+      "magnetic": "Magnético",
+      "tension": "Tensión",
+      "neutral": "Neutro"
+    },
+    "sign": {
+      "aries": "Aries", "taurus": "Tauro", "gemini": "Géminis", "cancer": "Cáncer",
+      "leo": "Leo", "virgo": "Virgo", "libra": "Libra", "scorpio": "Escorpio",
+      "sagittarius": "Sagitario", "capricorn": "Capricornio", "aquarius": "Acuario", "pisces": "Piscis"
+    }
+  },
   "home": {
     "cta": "Empieza ahora",
     "ctaSub": "Gratis. Solo necesitas un correo.",

@@ -10,6 +10,13 @@ import {
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { isValidTimezone } from '@/lib/timezones';
 import { parseProfileForm, type ProfileFormError } from '@/lib/profile/validate';
+import { ZODIAC_SIGNS, type ZodiacSign } from '@/lib/zodiac/signs';
+
+function parseZodiacSign(raw: FormDataEntryValue | null): ZodiacSign | null {
+  if (typeof raw !== 'string') return null;
+  const lower = raw.trim().toLowerCase();
+  return (ZODIAC_SIGNS as readonly string[]).includes(lower) ? (lower as ZodiacSign) : null;
+}
 
 export type UpdateProfileResult =
   | { ok: true }
@@ -45,6 +52,8 @@ export async function updateProfileAction(formData: FormData): Promise<UpdatePro
     dob: parsed.data.dob,
     timezone: parsed.data.timezone,
     locale: localeChecked,
+    moonSign: parseZodiacSign(formData.get('moonSign')),
+    risingSign: parseZodiacSign(formData.get('risingSign')),
   });
 
   revalidatePath(`/${localeChecked}/dashboard`);

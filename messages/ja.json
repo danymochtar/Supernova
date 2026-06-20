@@ -105,6 +105,40 @@
     "aboutMe": "あなたについて",
     "karmic": "Karmic Lessons"
   },
+  "zodiac": {
+    "placementsLabel": "星座(任意)",
+    "placementsHint": "太陽は生年月日から自動算出。月星座と上昇星座は任意 — わからなければスキップ。",
+    "sunLabel": "太陽",
+    "moonLabel": "月",
+    "risingLabel": "上昇",
+    "signPlaceholder": "— 星座を選択 —",
+    "inLoveLabel": "恋愛では",
+    "classificationLabel": "エレメント・モード",
+    "missingHint": "未入力 — プロフィールを編集して追加。",
+    "sectionTitleOnPerson": "{name} の星座",
+    "synastryTitle": "星座シナストリー",
+    "synastryComplementDisclaimer": "占星術の補足 — 上記の数秘スコアには影響しません。",
+    "synastryPartialHint": "月と上昇を追加して完全なシナストリーを表示。",
+    "synastryPartialHintLink": "プロフィール編集",
+    "pair": {
+      "sun-sun": "太陽 ↔ 太陽 · コアな自己",
+      "moon-moon": "月 ↔ 月 · 感情の世界",
+      "rising-rising": "上昇 ↔ 上昇 · 第一印象",
+      "sun-moon": "太陽 ↔ 月 · あなた × 相手の内面",
+      "sun-rising": "太陽 ↔ 上昇 · あなた × 相手の見た目"
+    },
+    "classification": {
+      "harmony": "調和",
+      "magnetic": "引力",
+      "tension": "緊張",
+      "neutral": "中立"
+    },
+    "sign": {
+      "aries": "牡羊座", "taurus": "牡牛座", "gemini": "双子座", "cancer": "蟹座",
+      "leo": "獅子座", "virgo": "乙女座", "libra": "天秤座", "scorpio": "蠍座",
+      "sagittarius": "射手座", "capricorn": "山羊座", "aquarius": "水瓶座", "pisces": "魚座"
+    }
+  },
   "home": {
     "cta": "今すぐはじめる",
     "ctaSub": "無料。メールアドレスだけでOK。",
