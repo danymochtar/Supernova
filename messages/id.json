@@ -164,9 +164,9 @@
   "zodiac": {
     "placementsLabel": "Zodiak (opsional)",
     "placementsHint": "Sun otomatis dari tanggal lahir. Moon & Rising opsional — lewati kalau nggak tahu.",
-    "sunLabel": "Matahari",
-    "moonLabel": "Bulan",
-    "risingLabel": "Ascendant",
+    "sunLabel": "Sun",
+    "moonLabel": "Moon",
+    "risingLabel": "Rising",
     "signPlaceholder": "— pilih sign —",
     "inLoveLabel": "Di cinta",
     "classificationLabel": "Element & Modalitas",

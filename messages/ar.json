@@ -108,9 +108,9 @@
   "zodiac": {
     "placementsLabel": "الأبراج (اختياري)",
     "placementsHint": "تُحسب الشمس من تاريخ الميلاد. القمر والطالع اختياريان — تخطَّ إن لم تعرف.",
-    "sunLabel": "الشمس",
-    "moonLabel": "القمر",
-    "risingLabel": "الطالع",
+    "sunLabel": "Sun",
+    "moonLabel": "Moon",
+    "risingLabel": "Rising",
     "signPlaceholder": "— اختر برجًا —",
     "inLoveLabel": "في الحب",
     "classificationLabel": "العنصر والنمط",
@@ -133,11 +133,11 @@
       "mutable": "متغير"
     },
     "pair": {
-      "sun-sun": "شمس ↔ شمس · الذات الأساسية",
-      "moon-moon": "قمر ↔ قمر · العالم العاطفي",
-      "rising-rising": "طالع ↔ طالع · الانطباع الأول",
-      "sun-moon": "شمس ↔ قمر · أنت × داخله",
-      "sun-rising": "شمس ↔ طالع · أنت × مظهره"
+      "sun-sun": "Sun ↔ Sun · الذات الأساسية",
+      "moon-moon": "Moon ↔ Moon · العالم العاطفي",
+      "rising-rising": "Rising ↔ Rising · الانطباع الأول",
+      "sun-moon": "Sun ↔ Moon · أنت × داخله",
+      "sun-rising": "Sun ↔ Rising · أنت × مظهره"
     },
     "classification": {
       "harmony": "انسجام",
@@ -146,9 +146,18 @@
       "neutral": "محايد"
     },
     "sign": {
-      "aries": "الحمل", "taurus": "الثور", "gemini": "الجوزاء", "cancer": "السرطان",
-      "leo": "الأسد", "virgo": "العذراء", "libra": "الميزان", "scorpio": "العقرب",
-      "sagittarius": "القوس", "capricorn": "الجدي", "aquarius": "الدلو", "pisces": "الحوت"
+      "aries": "الحمل",
+      "taurus": "الثور",
+      "gemini": "الجوزاء",
+      "cancer": "السرطان",
+      "leo": "الأسد",
+      "virgo": "العذراء",
+      "libra": "الميزان",
+      "scorpio": "العقرب",
+      "sagittarius": "القوس",
+      "capricorn": "الجدي",
+      "aquarius": "الدلو",
+      "pisces": "الحوت"
     }
   },
   "home": {

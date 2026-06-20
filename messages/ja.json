@@ -108,9 +108,9 @@
   "zodiac": {
     "placementsLabel": "星座(任意)",
     "placementsHint": "太陽は生年月日から自動算出。月星座と上昇星座は任意 — わからなければスキップ。",
-    "sunLabel": "太陽",
-    "moonLabel": "月",
-    "risingLabel": "上昇",
+    "sunLabel": "Sun",
+    "moonLabel": "Moon",
+    "risingLabel": "Rising",
     "signPlaceholder": "— 星座を選択 —",
     "inLoveLabel": "恋愛では",
     "classificationLabel": "エレメント・モード",
@@ -133,11 +133,11 @@
       "mutable": "柔軟"
     },
     "pair": {
-      "sun-sun": "太陽 ↔ 太陽 · コアな自己",
-      "moon-moon": "月 ↔ 月 · 感情の世界",
-      "rising-rising": "上昇 ↔ 上昇 · 第一印象",
-      "sun-moon": "太陽 ↔ 月 · あなた × 相手の内面",
-      "sun-rising": "太陽 ↔ 上昇 · あなた × 相手の見た目"
+      "sun-sun": "Sun ↔ Sun · コアな自己",
+      "moon-moon": "Moon ↔ Moon · 感情の世界",
+      "rising-rising": "Rising ↔ Rising · 第一印象",
+      "sun-moon": "Sun ↔ Moon · あなた × 相手の内面",
+      "sun-rising": "Sun ↔ Rising · あなた × 相手の見た目"
     },
     "classification": {
       "harmony": "調和",
@@ -146,9 +146,18 @@
       "neutral": "中立"
     },
     "sign": {
-      "aries": "牡羊座", "taurus": "牡牛座", "gemini": "双子座", "cancer": "蟹座",
-      "leo": "獅子座", "virgo": "乙女座", "libra": "天秤座", "scorpio": "蠍座",
-      "sagittarius": "射手座", "capricorn": "山羊座", "aquarius": "水瓶座", "pisces": "魚座"
+      "aries": "牡羊座",
+      "taurus": "牡牛座",
+      "gemini": "双子座",
+      "cancer": "蟹座",
+      "leo": "獅子座",
+      "virgo": "乙女座",
+      "libra": "天秤座",
+      "scorpio": "蠍座",
+      "sagittarius": "射手座",
+      "capricorn": "山羊座",
+      "aquarius": "水瓶座",
+      "pisces": "魚座"
     }
   },
   "home": {

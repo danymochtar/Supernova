@@ -108,9 +108,9 @@
   "zodiac": {
     "placementsLabel": "Zodiaco (opcional)",
     "placementsHint": "El Sol se deriva de la fecha de nacimiento. Luna y Ascendente son opcionales — sáltalo si no lo sabes.",
-    "sunLabel": "Sol",
-    "moonLabel": "Luna",
-    "risingLabel": "Ascendente",
+    "sunLabel": "Sun",
+    "moonLabel": "Moon",
+    "risingLabel": "Rising",
     "signPlaceholder": "— elige un signo —",
     "inLoveLabel": "En el amor",
     "classificationLabel": "Elemento y modalidad",
@@ -133,11 +133,11 @@
       "mutable": "Mutable"
     },
     "pair": {
-      "sun-sun": "Sol ↔ Sol · Núcleo del yo",
-      "moon-moon": "Luna ↔ Luna · Mundo emocional",
-      "rising-rising": "Asc ↔ Asc · Primera impresión",
-      "sun-moon": "Sol ↔ Luna · Tú × su interior",
-      "sun-rising": "Sol ↔ Asc · Tú × su superficie"
+      "sun-sun": "Sun ↔ Sun · Núcleo del yo",
+      "moon-moon": "Moon ↔ Moon · Mundo emocional",
+      "rising-rising": "Rising ↔ Rising · Primera impresión",
+      "sun-moon": "Sun ↔ Moon · Tú × su interior",
+      "sun-rising": "Sun ↔ Rising · Tú × su superficie"
     },
     "classification": {
       "harmony": "Armonía",
@@ -146,9 +146,18 @@
       "neutral": "Neutro"
     },
     "sign": {
-      "aries": "Aries", "taurus": "Tauro", "gemini": "Géminis", "cancer": "Cáncer",
-      "leo": "Leo", "virgo": "Virgo", "libra": "Libra", "scorpio": "Escorpio",
-      "sagittarius": "Sagitario", "capricorn": "Capricornio", "aquarius": "Acuario", "pisces": "Piscis"
+      "aries": "Aries",
+      "taurus": "Tauro",
+      "gemini": "Géminis",
+      "cancer": "Cáncer",
+      "leo": "Leo",
+      "virgo": "Virgo",
+      "libra": "Libra",
+      "scorpio": "Escorpio",
+      "sagittarius": "Sagitario",
+      "capricorn": "Capricornio",
+      "aquarius": "Acuario",
+      "pisces": "Piscis"
     }
   },
   "home": {

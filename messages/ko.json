@@ -108,9 +108,9 @@
   "zodiac": {
     "placementsLabel": "별자리 (선택)",
     "placementsHint": "태양은 생년월일에서 자동 계산. 달과 상승은 선택 — 모르면 건너뛰세요.",
-    "sunLabel": "태양",
-    "moonLabel": "달",
-    "risingLabel": "상승",
+    "sunLabel": "Sun",
+    "moonLabel": "Moon",
+    "risingLabel": "Rising",
     "signPlaceholder": "— 별자리 선택 —",
     "inLoveLabel": "사랑에서",
     "classificationLabel": "원소·모드",
@@ -133,11 +133,11 @@
       "mutable": "변통궁"
     },
     "pair": {
-      "sun-sun": "태양 ↔ 태양 · 핵심 자아",
-      "moon-moon": "달 ↔ 달 · 감정 세계",
-      "rising-rising": "상승 ↔ 상승 · 첫인상",
-      "sun-moon": "태양 ↔ 달 · 당신 × 상대의 내면",
-      "sun-rising": "태양 ↔ 상승 · 당신 × 상대의 표면"
+      "sun-sun": "Sun ↔ Sun · 핵심 자아",
+      "moon-moon": "Moon ↔ Moon · 감정 세계",
+      "rising-rising": "Rising ↔ Rising · 첫인상",
+      "sun-moon": "Sun ↔ Moon · 당신 × 상대의 내면",
+      "sun-rising": "Sun ↔ Rising · 당신 × 상대의 표면"
     },
     "classification": {
       "harmony": "조화",
@@ -146,9 +146,18 @@
       "neutral": "중립"
     },
     "sign": {
-      "aries": "양자리", "taurus": "황소자리", "gemini": "쌍둥이자리", "cancer": "게자리",
-      "leo": "사자자리", "virgo": "처녀자리", "libra": "천칭자리", "scorpio": "전갈자리",
-      "sagittarius": "사수자리", "capricorn": "염소자리", "aquarius": "물병자리", "pisces": "물고기자리"
+      "aries": "양자리",
+      "taurus": "황소자리",
+      "gemini": "쌍둥이자리",
+      "cancer": "게자리",
+      "leo": "사자자리",
+      "virgo": "처녀자리",
+      "libra": "천칭자리",
+      "scorpio": "전갈자리",
+      "sagittarius": "사수자리",
+      "capricorn": "염소자리",
+      "aquarius": "물병자리",
+      "pisces": "물고기자리"
     }
   },
   "home": {
