@@ -1,5 +1,6 @@
 import { formatNumerology, type NumerologyResult } from '@/lib/numerology';
 import { combinationHarmony, type CombinationHarmony } from '@/lib/numerology/harmony';
+import { dailyIntent } from '@/lib/numerology/dailyIntents';
 import type { Locale } from '@/lib/i18n/config';
 import { localizeEnglishPrompt } from './_localize';
 import { VOICE_ID, VOICE_EN } from './_voice';
@@ -88,6 +89,17 @@ HARMONI PASANGAN APA ARTINYA:
 - Odd family (1,3,5,7) antar mereka — energi aktif yang reinforcing (ambisi + ekspresi + petualangan + refleksi).
 - Even family (2,4,6,8) antar mereka — energi reseptif yang reinforcing (kerja-sama + struktur + nurture + hasil).
 
+INTENT BLOCKS — bahan baku buat prosa + bullets:
+Kamu bakal lihat dua blok <intent> di user message (satu buat personalDay, satu buat personalMonth). Tiap blok punya: keywords, posture, dan lima CTA domain (money / career / love / social / self) + satu watch_out. Ini bahan curated, BUKAN script yang disalin mentah.
+
+Cara pakai:
+- keywords + posture ngebentuk tone paragraf pembuka. Jangan quote keyword secara literal — biar nuansanya yang ke-blend.
+- Lima CTA domain itu seed buat 3-5 bullet vibe di akhir. Tiap bullet HARUS bisa di-trace ke salah satu domain (money/career/love/social/self) di kedua blok, dipilih yang paling resonance sama konteks cycle hari ini. Reword pakai voice locale — JANGAN pernah copy verbatim. Boleh ambil sebagian dari personalDay, sebagian dari personalMonth, atau mix.
+- watch_out itu seed buat bullet "skip / hindari" (yang minus sign). Pilih salah satu dari dua blok, atau gabungin.
+- Saran praktis di paragraf 2 boleh ngambil dari satu-dua CTA juga, tapi inget: blend, jangan list per domain.
+
+Kalau intent block buat suatu cycle nggak muncul (digit unknown), abaikan — pakai harmony block + numerology profile aja kayak biasanya.
+
 WEAVING — STRUKTURAL, BUKAN SIDEBAR (PALING PENTING):
 Ketiga angka harus terasa hadir di prosa secara setara — bukan satu dominan + dua nempel sekilas. Tiap angka harus punya beat substantive (2-4 kalimat substansi atau satu image yang jelas) yang bisa di-trace pembaca teliti, walaupun nggak dilabelin.
 
@@ -166,6 +178,17 @@ WHAT THE HARMONIOUS PAIRS MEAN:
 - 9 universal — pairing with 9 (except 4) softens / broadens perspective.
 - Odd family (1, 3, 5, 7) among themselves — active energies reinforcing (drive + expression + adventure + reflection).
 - Even family (2, 4, 6, 8) among themselves — receptive energies reinforcing (cooperation + structure + nurturing + results).
+
+INTENT BLOCKS — the raw material for prose + bullets:
+You'll see two <intent> blocks in the user message (one for personalDay, one for personalMonth). Each carries: keywords, posture, and five domain CTAs (money / career / love / social / self) + one watch_out. This is curated material, NOT a script to copy verbatim.
+
+How to use it:
+- keywords + posture shape the tone of the opening paragraph. Don't quote keywords literally — let the nuance blend in.
+- The five domain CTAs are the seed for the 3-5 closing vibe bullets. Each bullet MUST be traceable to one of the domains (money/career/love/social/self) across the two blocks — pick the ones that resonate most with today's cycle context. Rephrase in the locale's voice — NEVER quote verbatim. You can pull some from personalDay, some from personalMonth, or mix.
+- watch_out seeds the "skip / avoid" bullet (the minus sign). Pick from either block, or combine.
+- The practical advice in paragraph 2 can also draw from one or two CTAs, but remember: blend, don't list by domain.
+
+If an intent block for a cycle is missing (unknown digit), ignore it — fall back to the harmony block + numerology profile as usual.
 
 WEAVING — STRUCTURAL, NOT SIDEBAR (THE MOST IMPORTANT THING):
 All three numbers must feel present in the prose AT EQUAL WEIGHT — not one dominant + two grazed in passing. Each number needs a substantive beat (2-4 sentences of substance, or one clear image) a careful reader can trace, even unlabeled.
@@ -261,6 +284,39 @@ ${lines.join('\n')}
   return { block, analysis };
 }
 
+/**
+ * Render a per-digit intent block from `content/dailyIntents/<locale>.json`.
+ * The block carries archetypal keywords + posture + five domain-tagged CTAs
+ * (money / career / love / social / self) + a "watch_out" pitfall — the
+ * curated raw material the AI weaves into prose + bullets. Master compounds
+ * (11/22/33) pass through unreduced because the packs ship master variants.
+ *
+ * For master Personal Day/Month, callers should pass `result.compound` (or
+ * the master form) so the lookup hits the master entry, not the reduced one.
+ */
+function buildIntentBlock(label: string, digit: number, locale: Locale): string {
+  const intent = dailyIntent(digit, locale);
+  if (!intent) return '';
+  return [
+    `<intent kind="${label}" digit="${digit}">`,
+    `keywords: ${intent.keywords.join(', ')}`,
+    `posture: ${intent.posture}`,
+    `money: ${intent.money}`,
+    `career: ${intent.career}`,
+    `love: ${intent.love}`,
+    `social: ${intent.social}`,
+    `self: ${intent.self}`,
+    `watch_out: ${intent.watch_out}`,
+    `</intent>`,
+  ].join('\n');
+}
+
+/** Pick the lookup key for a digit-keyed intent pack: master form when the
+ *  cycle is a master (11/22/33), otherwise the single-digit reduction. */
+function intentKey(n: NumerologyResult): number {
+  return n.isMaster ? n.compound : n.reduced;
+}
+
 export function buildUserPrompt(input: DailyPromptInput): string {
   const { core, cycles, active, karmicLessons } = input;
   const dateStr = `${input.todayLocal.year}-${String(input.todayLocal.month).padStart(2, '0')}-${String(input.todayLocal.day).padStart(2, '0')}`;
@@ -272,6 +328,12 @@ export function buildUserPrompt(input: DailyPromptInput): string {
     dayDigit,
     cycles.personalYear,
   );
+  const intentBlocks = [
+    buildIntentBlock('personalDay', intentKey(cycles.personalDay), input.locale),
+    buildIntentBlock('personalMonth', intentKey(cycles.personalMonth), input.locale),
+  ]
+    .filter(Boolean)
+    .join('\n\n');
 
   return `<profile>
 name: ${input.fullName}
@@ -305,6 +367,12 @@ Karmic Lessons: ${km}
 </profile>
 
 ${harmonyBlock}${
+    intentBlocks
+      ? `
+
+${intentBlocks}`
+      : ''
+  }${
     input.recentPatterns
       ? `
 
