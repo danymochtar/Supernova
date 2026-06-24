@@ -1,122 +1,422 @@
 {
   "1": {
-    "keywords": ["mula", "pelopor", "berani", "gerak dulu", "pimpin"],
-    "posture": "Hari ini ganjar yang ambil langkah dulu — pilih arah, jangan tunggu dijemput.",
-    "money": "Push pitch, ask, atau launch yang dah lama tergantung. Inisiatif dapat perhatian hari ini.",
-    "career": "Ambil tanggungjawab atas satu item yang tersekat. Step up di mana tiada siapa naik.",
-    "love": "Single? Buat first move. Pasangan? Cakap apa yang awak nak — bayangan tak sampai hari ini.",
-    "social": "Reach out dulu — call, jemputan, atau minta maaf. Jangan tunggu mereka.",
-    "self": "Salurkan energi tinggi ke satu aksi konkrit, bukan scrolling cemas.",
-    "watch_out": "Bila rasa terburu-buru, kurangkan tempo separuh — momentum hari ini suka potong selekoh."
+    "keywords": ["mula", "pelopor", "berani", "gerak dulu", "ambil arah", "pimpin", "percaya diri", "putus", "tuntut", "klaim"],
+    "imagery": [
+      "macam pintu yang terbuka dan kau yang masuk dulu",
+      "pagi yang berbau starting-pistol, semua menanti tembakan pertama",
+      "namamu tertulis di pasir sebelum orang lain sampai pantai"
+    ],
+    "posture": "Hari ini ganjar gerak dulu dan percaya pada diri — pilih arah, jalan; jalannya keras di bawah tapak kaki.",
+    "money": [
+      "Hantar pitch yang dari semalam kau gilap je",
+      "Sebut harga dulu sebelum mereka",
+      "Lancarkan yang kecil dulu, jangan tunggu yang besar sempurna"
+    ],
+    "career": [
+      "Klaim projek tersangkut tu jadi milik kau",
+      "Bercakap dulu di meeting, jangan terakhir",
+      "Ambil keputusan yang dari semalam team cuma pusing-pusingkan"
+    ],
+    "love": [
+      "Sebut benda yang dari semalam kau sindir je",
+      "Buat first move; jangan tunggu petanda",
+      "Minta apa yang kau nak dalam satu ayat jelas"
+    ],
+    "social": [
+      "Hantar mesej yang dari semalam kau draft",
+      "Jadi yang cadangkan tempatnya",
+      "Reach out kepada satu orang yang kau kagumi senyap"
+    ],
+    "self": [
+      "Mula projek sebelum rasa siap",
+      "Percaya feeling pertama yang datang masa bangun",
+      "Buat yang paling berat dulu masa bilik masih sunyi"
+    ],
+    "watch_out": "Hari ini sisi tajam kau lebih nampak — orang senang rasa dipaksa walhal kau cuma memimpin."
   },
   "2": {
-    "keywords": ["kerjasama", "dengar", "sabar", "detail", "diplomatik"],
-    "posture": "Hari ini pinta partnership, bukan solo push — perlahan, deliberate, hadir penuh.",
-    "money": "Kemas admin, hantar invoice, finalize deal yang perlu trust. Elak gerakan agresif.",
-    "career": "Kolaborasi, mediasi, bina alignment. Win hari ini datang melalui pintu orang lain.",
-    "love": "Lead dengan mendengar. Tanya satu soalan terbuka dan tahan keinginan untuk membaiki.",
-    "social": "Jadi orang yang hadir untuk moment orang lain, bukan jadi headline.",
-    "self": "Jaga 30 minit hening — recharge itu kerja.",
-    "watch_out": "Tergoda nak konfrontasi? Draft mesej dan endapkan sehari dulu."
+    "keywords": ["selaras", "dengar", "halus", "partner", "jaga", "kalibrasi", "harmoni", "sabar", "diplomatik", "reseptif"],
+    "imagery": [
+      "hari yang minta jahitan perlahan, bukan tetakan cepat",
+      "alat muzik kedua yang jumpa chord yang dimulakan alat pertama",
+      "teh yang lebih sedap kalau direndam seminit lagi"
+    ],
+    "posture": "Hari ini minta perkongsian dan kesabaran — kuasa kau di jeda, bukan di tolakan.",
+    "money": [
+      "Finalize deal yang perlu trust, bukan tekanan",
+      "Hantar invoice dengan cover line yang mesra",
+      "Nego perlahan; bilik sedia mendengar"
+    ],
+    "career": [
+      "Co-author dokumennya, jangan revise sendiri",
+      "Tengahi friksi antara dua rakan kerja",
+      "Bagi kredit lebih kuat daripada selesa"
+    ],
+    "love": [
+      "Tanya satu soalan terbuka, diam menunggu jawapan",
+      "Perasan benda kecil yang dia buat, sebut",
+      "Tahan diam; jangan terus isi"
+    ],
+    "social": [
+      "Hadir untuk moment orang lain",
+      "Hantar thank-you untuk kebaikan lama yang belum diucap",
+      "Jadi yang ingat butirannya"
+    ],
+    "self": [
+      "Jaga 30 minit hening yang betul-betul",
+      "Pilih jalan perlahan dengan sengaja",
+      "Biar satu benda siap esok, tidurkan malam ini"
+    ],
+    "watch_out": "Hari ini antena kau lebih luas — mood orang lain melekat lebih cepat dari biasa."
   },
   "3": {
-    "keywords": ["ekspresi", "kreatif", "sosial", "playful", "show"],
-    "posture": "Hari ini untuk ekspresi dan keceriaan — show range, bukan kerisauan.",
-    "money": "Pitch idea kreatif, jualan via konten, post yang awak ada. Karisma bagi ROI hari ini.",
-    "career": "Pimpin brainstorm atau presentation. Bawa bilik ikut visi awak.",
-    "love": "Playful — humor lebih melekat daripada serius. Compliment yang spesifik.",
-    "social": "Host, organize, kumpulkan. Hari ini suka bilik penuh orang yang awak suka.",
-    "self": "Buat sesuatu — tulis, lukis, masak, nyanyi. Output > consumption.",
-    "watch_out": "Tergoda over-promise? Sebut SATU benda yang BETUL akan awak deliver."
+    "keywords": ["ekspresi", "kreatif", "main", "delight", "perform", "charm", "cakap", "spark", "warna", "rangkai"],
+    "imagery": [
+      "hari studio yang lampunya hidup semua",
+      "idea datang macam kawanan burung, bukan barisan",
+      "perbualan yang bertukar jadi pintu"
+    ],
+    "posture": "Hari ini menyala dari dalam — luah, charm, cipta sesuatu; ringan itu strategi.",
+    "money": [
+      "Pitch angle kreatif yang spreadsheet terlepas",
+      "Jual via cerita, jangan via spek",
+      "Post yang dari semalam kau simpan dalam draft"
+    ],
+    "career": [
+      "Pimpin brainstorm, kuatkan suara",
+      "Volunteer sebagai presenter, jangan hadir saja",
+      "Pitch idea yang buat kau sikit gementar"
+    ],
+    "love": [
+      "Buat dia ketawa dulu sebelum buat point",
+      "Compliment satu benda spesifik, detail",
+      "Rancang delight kecil yang tak dijangka"
+    ],
+    "social": [
+      "Host gathering kecil yang dari semalam ditangguh",
+      "Hantar meme yang ada makna",
+      "Kenalkan dua orang yang patut saling kenal"
+    ],
+    "self": [
+      "Cipta sesuatu — tulis, lukis, masak, nyanyi",
+      "Pakai baju cerah yang tersembunyi di hujung almari",
+      "Pilih main daripada gilap, sejam saja"
+    ],
+    "watch_out": "Hari ini kata-kata kau berjalan lebih jauh dari niatnya — yang kau maksudkan gurau boleh berbunyi macam vonis."
   },
   "4": {
-    "keywords": ["bina", "disiplin", "struktur", "konsisten", "asas"],
-    "posture": "Hari ini ganjar kerja sabar dan berstruktur — hadir, buat reps.",
-    "money": "Audit perbelanjaan, set up auto-transfer, langsai satu hutang kecil. Gerakan asas.",
-    "career": "Tutup loop tiga item kecil. Tugas membosankan dapat respek besar hari ini.",
-    "love": "Hadir konsisten. Aksi kecil yang boleh diharap > satu gesture besar.",
-    "social": "Hormati kalendar — makan malam tetap, call mingguan. Routine itu sayang hari ini.",
-    "self": "Kemas meja, plan minggu, sediakan baju esok. Order beri ketenangan.",
-    "watch_out": "Bila hari rasa berat, buat SATU lagi tugas kecil — momentum sembuh dari slump."
+    "keywords": ["bina", "jaga", "struktur", "berpijak", "anchor", "stabil", "boleh diharap", "kaedah", "asas", "craft"],
+    "imagery": [
+      "hari untuk ledger yang rapi dan sudut yang siku-siku",
+      "tukang kayu yang ukur dua kali sebelum potong sekali",
+      "bata yang tak minta dilihat, tapi pegang dinding"
+    ],
+    "posture": "Hari ini ganjar sabar, ulangan, dan bata yang tak glamor — hadir, buat kerja kecil dengan jujur.",
+    "money": [
+      "Audit satu perbelanjaan rutin, potong",
+      "Bayar bil kecil yang sentiasa kau lepasi",
+      "Setup auto-transfer yang dari semalam kau tangguh"
+    ],
+    "career": [
+      "Tutup tiga loop kecil sebelum lunch",
+      "Document yang selama ini cuma di kepala kau",
+      "Habiskan tugas membosankan yang membebaskan dua tugas lain"
+    ],
+    "love": [
+      "Datang awal; jadi yang konsisten",
+      "Masak menu sederhana, jangan delivery",
+      "Pegang janji harian kecil tanpa dilabel"
+    ],
+    "social": [
+      "Hormati dinner tetap atau weekly call",
+      "Jadi kawan yang ingat appointment",
+      "Hantar follow-up yang group lupa"
+    ],
+    "self": [
+      "Kemas katil dan meja sebelum kerja",
+      "Plan esok sebelum tidur malam ini",
+      "Gerakkan badan ikut cara yang dari semalam kau janji"
+    ],
+    "watch_out": "Hari ini mudah terasa lebih berat dari sebenarnya — momentum tersembunyi dalam tugas kecil seterusnya, bukan dalam rehat."
   },
   "5": {
-    "keywords": ["perubahan", "pengembaraan", "kebebasan", "adaptif", "variasi"],
-    "posture": "Hari ini minta gerakan, kebaruan, gerakan adaptif — pecahkan rutin.",
-    "money": "Explore sudut pendapatan baru atau platform. Elak terikat kontrak jangka panjang.",
-    "career": "Pitch idea berani, ambil meeting luar org. Variasi > polish hari ini.",
-    "love": "Kejutkan dia — tempat baru, perbualan baru. Boring itu risiko sebenar.",
-    "social": "Cakap ya pada jemputan random. Bilik baru = nasib baru.",
-    "self": "Gerak fizikal — jalan jalan baru, cuba makanan baru. Badan perlu input lain.",
-    "watch_out": "Bila tergoda commit pada sesuatu kekal, tidurkan dulu — review hari Jumaat."
+    "keywords": ["perubahan", "gerak", "explore", "kebebasan", "variasi", "improv", "anjak", "merayau", "adapt", "sensori"],
+    "imagery": [
+      "hari tingkap kereta dibuka, route belum siap",
+      "pintu yang rupanya menuju ke suatu tempat",
+      "arus, bukan jalan raya"
+    ],
+    "posture": "Hari ini nak gerak, kebaruan, dan kesediaan untuk dialih — book detour, bukan highlight.",
+    "money": [
+      "Uji angle income baru yang kecil minggu ini",
+      "Pindah dana ke akaun yang dari semalam nak dibuka",
+      "Nego yang variabel, bukan yang tetap"
+    ],
+    "career": [
+      "Ambil meeting di luar circle biasa",
+      "Pitch versi berani, jangan edit yang selamat",
+      "Cuba tool yang dari semalam kau bookmark"
+    ],
+    "love": [
+      "Cadang tempat baru untuk next date",
+      "Tanya soalan yang kau tak pernah tanya",
+      "Jadi surprise, jangan jadi schedule"
+    ],
+    "social": [
+      "Kata ya pada undangan random",
+      "Jalan kaki ke tempat yang biasanya kau lalu je",
+      "Duduk di kerusi berbeza di bilik yang sama"
+    ],
+    "self": [
+      "Jalan pulang route lain",
+      "Makan satu benda baru hari ini",
+      "Gerakkan badan ikut cara yang ngagetin dia"
+    ],
+    "watch_out": "Hari ini selera untuk hal baru tinggi — apa pun kau commit kekal akan rasa berbeza menjelang Jumaat."
   },
   "6": {
-    "keywords": ["jaga", "rumah", "tanggungjawab", "harmoni", "indah"],
-    "posture": "Hari ini untuk menjaga — keluarga, rumah, orang-orang yang penting.",
-    "money": "Belanja untuk rumah, keluarga, dan alat yang permudahkan hidup. Elak spekulasi.",
-    "career": "Masuk peranan mentor. Bantu junior unstuck — favors berbunga.",
-    "love": "Bina ruang untuk hubungan — masak sama-sama, plan sesuatu, perdalam routine.",
-    "social": "Connect semula dengan keluarga. Hantar mesej yang dah lama awak tangguh.",
-    "self": "Cantikkan ruang — bunga, lilin, kemaskan. Estetik beri makan hari ini.",
-    "watch_out": "Bila tertarik nak baiki orang, tanya dulu adakah dia minta tolong."
+    "keywords": ["jaga", "rumah", "tanggungjawab", "harmoni", "indah", "membela", "host", "perbaiki", "hangat", "ambil berat"],
+    "imagery": [
+      "hari yang baunya halus macam masakan dan baju bersih",
+      "bilik yang dibersihkan sebab ada yang nak datang",
+      "bulatan yang dilukis sekeliling orang-orang yang kau sayang"
+    ],
+    "posture": "Hari ini tentang menjaga — rumah, keluarga, orang yang bergantung pada kestabilan kau.",
+    "money": [
+      "Belanja sesuatu yang buat rumah lebih lembut",
+      "Bayar bantuan yang ringankan rumah tangga",
+      "Tukar benda kecil yang dari semalam senyap-senyap rosak"
+    ],
+    "career": [
+      "Mentor orang yang tersangkut di benda yang kau dah selesai",
+      "Redakan friksi team, jangan elak",
+      "Improve shared doc yang tiada siapa pegang"
+    ],
+    "love": [
+      "Rancang malam yang berkisar dia, bukan kalendar kau",
+      "Masak sama-sama; menu tak penting, side-by-side yang penting",
+      "Sebut benda yang dia selalu buat yang ringankan hidup kau"
+    ],
+    "social": [
+      "Hantar mesej kepada ibu bapa atau adik beradik dulu",
+      "Host dinner kecil; jangan rumit",
+      "Hadir untuk kawan yang sedang senyap bergelut"
+    ],
+    "self": [
+      "Kemas satu penjuru yang dari semalam mengganggu",
+      "Bawa bunga; nyalakan lilin",
+      "Rehat di bilik yang indah, bukan yang cekap"
+    ],
+    "watch_out": "Hari ini dorongan untuk membaiki besar — tanya dulu mereka nak ditolong, jangan terus kau angkat."
   },
   "7": {
-    "keywords": ["refleksi", "belajar", "dalam", "introspektif", "tenang"],
-    "posture": "Hari ini minta berpaling ke dalam — refleksi, belajar, integrate. External push tidak menjadi.",
-    "money": "Baca, research, plan — jangan transact hari ini. Gerakan baik berlaku esok.",
-    "career": "Ambil kerusi senyap. Document, analyze, prep. Jangan paksa visibility.",
-    "love": "Beri ruang — awak dan dia. Kedalaman datang dari diam, bukan sentuhan berterusan.",
-    "social": "Skip perhimpunan besar. Satu perbualan tulen > lima perbualan permukaan.",
-    "self": "Journal, meditate, jalan sendiri. Hari ini untuk dialog batin.",
-    "watch_out": "Bila keputusan terasa dipaksa, tangguh 24 jam — kejelasan datang semalam."
+    "keywords": ["refleksi", "kaji", "dalam", "senyap", "tapis", "research", "interior", "tahan", "saring", "verify"],
+    "imagery": [
+      "hari yang langsir separuh ditarik",
+      "halaman yang kau perlukan ditandakan dalam buku kedua, bukan pertama",
+      "cuaca yang kau tengok dari tingkap, bukan kau lalui"
+    ],
+    "posture": "Hari ini minta berpaling ke dalam — baca, refleksi, verify; gerakan baik berlaku esok.",
+    "money": [
+      "Baca dulu sebelum trade; research hari ini compounding",
+      "Selesaikan pembukuan; jangan letak taruhan baru",
+      "Tidurkan tawaran; semak semula esok pagi"
+    ],
+    "career": [
+      "Ambil meja sunyi; document, jangan broadcast",
+      "Audit projek untuk benda yang tak disebut",
+      "Refine kerja sebelum ship"
+    ],
+    "love": [
+      "Dengar yang diucap di antara baris",
+      "Jalan kaki sama-sama tanpa perlu isi semua senyap",
+      "Tanya satu benda yang lebih dalam dari biasa"
+    ],
+    "social": [
+      "Skip gathering besar untuk satu perbualan sebenar",
+      "Tulis kepada kawan yang akan hargai mesej panjang",
+      "Pilih bangku, bukan bar"
+    ],
+    "self": [
+      "Journal satu halaman penuh sebelum buka phone",
+      "Jalan sendiri tanpa podcast",
+      "Baca buku yang dari semalam hampir kau ambil"
+    ],
+    "watch_out": "Hari ini kepastian itu pakaian — keputusan yang rasa dipaksa biasanya jernih esok pagi kalau kau tahan dulu."
   },
   "8": {
-    "keywords": ["drive", "ambisi", "hasil", "wang", "autoriti"],
-    "posture": "Hari ini hari pegang tanduk lembu — tegas dan kelihatan.",
-    "money": "Close deal, hantar invoice, minta kenaikan gaji. Hal wang ganjar keberanian hari ini.",
-    "career": "Promote kerja awak, push untuk title, buat ask strategik.",
-    "love": "Hadir berasaskan dan mampu — kuasa awak menarik hari ini, tapi pimpin dengan kehangatan.",
-    "social": "Berada dalam bilik. Networking dinners, moment awam — hari ini ganjar kehadiran.",
-    "self": "Gerak tegas. Pilih option dan commit, bukan tanya semua orang.",
-    "watch_out": "Bila ego naik, tanya: saya tengah bina sesuatu, atau cuba menang?"
+    "keywords": ["ambisi", "hasil", "duit", "autoriti", "tuai", "momentum", "tegas", "leverage", "berat", "promote"],
+    "imagery": [
+      "hari pegang tanduk lembu",
+      "gema dari aksi lama — macam di belakang kapal yang baru lalu",
+      "hujung musim tuai; petik yang dah masak"
+    ],
+    "posture": "Hari ini tegas dan kelihatan — buat move yang kau rancang, biar hasil yang bercakap.",
+    "money": [
+      "Tutup deal yang dari semalam kau pusing",
+      "Hantar invoice tanpa maaf dalam cover line",
+      "Minta kenaikan dengan nombor sudah sedia"
+    ],
+    "career": [
+      "Promote kerja kau kepada satu orang baru hari ini",
+      "Push untuk title, bukan hanya tanggungjawab",
+      "Buat strategic ask selagi bilik masih terbuka"
+    ],
+    "love": [
+      "Hadir berpijak dan mampu; biar kehangatan pimpin kekuatan",
+      "Buat plan, jangan apungkan idea",
+      "Minta maaf untuk benda lama jika hari ini bagi peluang"
+    ],
+    "social": [
+      "Berada dalam bilik — networking dinner, moment awam",
+      "Kenalkan diri dengan title yang kau memang nak",
+      "Reconnect dengan kontak yang dari semalam kau tangguh"
+    ],
+    "self": [
+      "Gerak tegas; pilih option dan commit",
+      "Pakai versi diri yang menyelesaikan benda",
+      "Tetapkan batas yang melindungi kerja"
+    ],
+    "watch_out": "Hari ini kau lebih transparan dari biasa — yang kau sembunyikan mudah dibaca; bukan hari untuk berhelah."
   },
   "9": {
-    "keywords": ["selesai", "lepas", "humanitarian", "tutup", "beri"],
-    "posture": "Hari ini minta penyelesaian dan pelepasan — tutup loop, kemudian lepaskan.",
-    "money": "Selesaikan bayaran tertunggak, henti langganan tersekat, derma atau beri. Bukan hari launch.",
-    "career": "Habiskan yang berbaki. Hantar draf separuh siap. Kosongkan inbox.",
-    "love": "Maafkan apa yang awak pegang. Perbualan yang tutup satu bab itu hadiahnya.",
-    "social": "Hubungi seseorang yang awak dah jauh — tutup atau hidupkan semula, dua-dua sembuh.",
-    "self": "Bersihkan kekacauan simbolik — email lama, kontak luput, buku separuh baca.",
-    "watch_out": "Bila gatal nak mula sesuatu baru, tulis dulu untuk minggu depan."
+    "keywords": ["siap", "lepas", "beri", "wrap", "maaf", "humanitarian", "lebih luas", "halus", "derma", "tutup"],
+    "imagery": [
+      "hari untuk tutup tab, bukan buka yang baru",
+      "ombak yang pulang ke laut",
+      "ikat benang sebelum mulakan jahitan seterusnya"
+    ],
+    "posture": "Hari ini minta penyelesaian dan pelepasan — tutup loop, pulangkan, lepaskan perlahan.",
+    "money": [
+      "Bayar hutang yang melekat atau settle invoice yang terbuka",
+      "Cancel langganan yang dah tak kau guna",
+      "Derma jumlah yang dari semalam menunggu alasan"
+    ],
+    "career": [
+      "Habiskan projek yang dah 80%",
+      "Hantar draf separuh siap, jangan gilap sampai mati",
+      "Kosongkan satu inbox; archive selebihnya"
+    ],
+    "love": [
+      "Maafkan benda kecil yang dari semalam kau pegang senyap",
+      "Ucapkan terima kasih yang tutupkan satu bulatan",
+      "Lepaskan rungutan lama tanpa perlu perbualan"
+    ],
+    "social": [
+      "Hubungi orang yang dah jauh dari kau",
+      "Pulangkan barang pinjaman yang dari semalam kau simpan",
+      "Beri tanpa harap balasan"
+    ],
+    "self": [
+      "Bersihkan kekecohan simbolik — email lama, kontak luput",
+      "Habiskan buku yang sebulan ini hampir siap",
+      "Menangis kalau datang; hari ini ending mahu air matanya"
+    ],
+    "watch_out": "Hari ini ending ada berat — yang dah senyap-senyap lemah kadang pilih hari ini untuk rebah, dan itu boleh jadi hadiah."
   },
   "11": {
-    "keywords": ["inspirasi", "visi", "salur", "sensitif", "intuitif"],
-    "posture": "Hari ini antena terbuka luas — intuisi mendarat lebih tajam.",
-    "money": "Percaya gerak hati pada taruhan kecil. Gerakan besar perlu pandangan kedua hari ini.",
-    "career": "Pimpin dengan visi dan inspirasi. Tugas awak menerangi jalan, bukan mengayuh.",
-    "love": "Dengar yang tidak disebut. Vulnerability itu pembuka.",
-    "social": "Inspire seseorang — kongsi idea, karya, framing yang dia perlu dengar.",
-    "self": "Bumikan tenaga tinggi dalam badan — makan, tidur, jalan. Jangan jalan atas asap.",
-    "watch_out": "Bila cemas mencanak, buat satu tugas biasa — basuh pinggan menenangkan saluran."
+    "keywords": ["inspire", "visi", "intuisi", "channel", "sensitif", "menerangi", "tune", "messenger", "halus", "transmit"],
+    "imagery": [
+      "hari antena lebih terbuka dari biasa",
+      "idea datang utuh, macam didikte",
+      "saat garpu tala jumpa nadanya"
+    ],
+    "posture": "Hari ini wayar-wayarnya live — intuisi mendarat lebih tajam, sensitiviti tinggi, dan inspirasi itu kerja kau.",
+    "money": [
+      "Percaya gerak hati untuk taruhan kecil; cari second eye untuk yang besar",
+      "Pitch versi visionary, bukan yang dicairkan",
+      "Pause pembelian yang rasa lebih cemas dari betul-betul mahu"
+    ],
+    "career": [
+      "Pimpin guna visi; pelaksanaan boleh esok",
+      "Share idea separuh terbentuk — ada yang perlu dengar",
+      "Lakar future state projek untuk team"
+    ],
+    "love": [
+      "Dengar yang tidak diucap kuat-kuat",
+      "Share benda yang rasa terlalu vulnerable untuk share",
+      "Pegang ruang, jangan terus bagi solusi"
+    ],
+    "social": [
+      "Inspire satu orang — share framing yang dia perlu",
+      "Hantar mesej yang dari semalam menggetar di kepala",
+      "Perhatikan sinkronisiti; hari ini terasa lebih kuat"
+    ],
+    "self": [
+      "Bumikan frekuensi tinggi ke badan — makan, tidur, jalan",
+      "Journal mimpi yang kau bawa dari bangun",
+      "Meditasi, walau sekejap; channel perlu maintenance"
+    ],
+    "watch_out": "Hari ini volume sistem saraf kau dinaikkan — yang nampak macam takut kadang cuma intensiti yang perlu tempat mendarat."
   },
   "22": {
-    "keywords": ["bina besar", "arkitek", "skala", "manifest"],
-    "posture": "Hari ini ganjar pembina gambar besar — sambung strategi ke batu konkrit seterusnya.",
-    "money": "Petakan permainan jangka panjang. Buat satu keputusan yang berbunga tahunan.",
-    "career": "Sambung dot yang orang lain tak nampak. Bawa strategi + execution ke satu bilik.",
-    "love": "Bina masa depan bersama — perbualan tentang matlamat, rumah, anak, visi.",
-    "social": "Pimpin bilik ke arah matlamat sama. Ambisi mantap awak menular.",
-    "self": "Pilih satu projek ambisius dan lindungi masa untuknya mingguan. Game panjang.",
-    "watch_out": "Bila perfectionism naik, hantar v0.1 — building > planning."
+    "keywords": ["bina besar", "manifest", "arkitek", "scale", "long game", "compound", "blueprint", "anchor visi", "rangkai", "bumikan mimpi"],
+    "imagery": [
+      "arkitek di meja lukisan, bukan di tapak projek",
+      "hari untuk letak satu bata untuk katedral",
+      "rangka yang dibina sekarang untuk pokok tahun depan"
+    ],
+    "posture": "Hari ini ganjar pembina gambar besar — sambungkan visi ke bata konkrit seterusnya.",
+    "money": [
+      "Buat satu keputusan yang compounding selama bertahun-tahun",
+      "Diversifikasi income stream yang dari semalam satu jalur",
+      "Labur dalam tool yang scale output kau, bukan jam kau"
+    ],
+    "career": [
+      "Connect strategy ke execution dalam meeting yang sama",
+      "Document roadmap jangka panjang, kemudian ship satu bahagian",
+      "Recruit orang yang membuka chapter seterusnya"
+    ],
+    "love": [
+      "Bercakap long game — rumah, bentuk hidup, visi",
+      "Bina ritual yang kau nak ulang bertahun-tahun",
+      "Rancang trip yang menambat chapter seterusnya"
+    ],
+    "social": [
+      "Pimpin bilik ke arah satu matlamat ambisius bersama",
+      "Recruit satu kolaborator untuk projek lebih besar",
+      "Mentor orang dengan kacamata jangka panjang"
+    ],
+    "self": [
+      "Pilih satu projek ambisius, lindungi masanya mingguan",
+      "Lakar tahun, kemudian lakar minggu, akhirnya ship hari",
+      "Labur di infrastruktur sendiri — tidur, badan, fikiran"
+    ],
+    "watch_out": "Hari ini mimpi boleh lumpuhkan pengerjaan — membina v0.1 yang kasar mengatasi merancang v1.0 yang sempurna."
   },
   "33": {
-    "keywords": ["ajar", "sembuh", "kasih besar", "khidmat", "mentor"],
-    "posture": "Hari ini untuk khidmat dan jaga — kasih awak pada skala mengubah bilik.",
-    "money": "Beri dengan murah hati di mana boleh. Wang mengalir lebih lancar bila dipegang ringan hari ini.",
-    "career": "Mentor, ajar, sembuh di kerja — kepimpinan lembut awak yang orang ingat.",
-    "love": "Pimpin dengan kehangatan tanpa syarat. Orang yang awak sayang dapat manfaat dari kehadiran penuh.",
-    "social": "Jadi orang yang pegang ruang — untuk perbualan berat, kesedihan, raikan.",
-    "self": "Isi telaga awak dulu — tak boleh tuang dari kosong. Belas diri itu kerja hari ini.",
-    "watch_out": "Bila tertarik nak selamatkan semua orang, sebut satu nama dan tuang penuh di situ."
+    "keywords": ["ajar", "sembuh", "khidmat", "kasih berskala", "mentor", "pegang", "tinggikan", "pandu", "compassion", "shepherd"],
+    "imagery": [
+      "hari untuk mencurah, percaya telaga akan isi semula",
+      "rumah api yang tetap menyala biar ada yang temui dermaga",
+      "bilik yang lebih hangat sebab ada yang masuk dengan halus"
+    ],
+    "posture": "Hari ini untuk khidmat dan jagaan dalam skala besar — kehangatan tanpa syarat kau yang ubah bilik.",
+    "money": [
+      "Beri dengan murah hati di tempat yang kau boleh; duit mengalir lebih lancar bila dipegang ringan",
+      "Pay it forward — bayarkan benda kecil untuk orang lain hari ini",
+      "Labur dalam cause, bukan hanya return"
+    ],
+    "career": [
+      "Mentor tanpa meter — beri jawapan utuh",
+      "Jadi yang tenang dalam meeting yang berat",
+      "Ajar benda yang berulang-ulang kau selesai"
+    ],
+    "love": [
+      "Pimpin dengan kehangatan tanpa syarat, walau di tempat yang tak diharap",
+      "Hadir penuh — phone jauh, kehadiran luas",
+      "Maafkan lebih awal sebelum diminta"
+    ],
+    "social": [
+      "Pegang ruang untuk duka atau raikan orang",
+      "Jadi kawan yang telefon, bukan setakat chat hari ini",
+      "Luaskan bulatan — jemput yang biasanya tertinggal"
+    ],
+    "self": [
+      "Isi telaga sendiri dulu — tak boleh mencurah dari kosong",
+      "Sebaik mungkin dengan diri sendiri macam pada yang kau layan",
+      "Rehat itu sebahagian daripada amalan hari ini, bukan jeda darinya"
+    ],
+    "watch_out": "Hari ini tarikan untuk menyelamatkan semua orang kuat — sebut satu nama dan curah penuh di situ jauh lebih penting daripada menyembur tipis ke mana-mana."
   }
 }

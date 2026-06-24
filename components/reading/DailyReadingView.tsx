@@ -2,7 +2,7 @@
 
 import { useState, type ReactNode } from 'react';
 import { ChevronDown, Sparkles } from 'lucide-react';
-import { parseReading } from '@/lib/ai/prompts/daily';
+import { parseReading, type ActionDomain } from '@/lib/ai/prompts/daily';
 import { renderInlineMd } from '@/components/qa/inlineMd';
 
 const STAIR_COLORS = [
@@ -11,6 +11,35 @@ const STAIR_COLORS = [
   'text-emerald-600 dark:text-emerald-400',
   'text-rose-500 dark:text-rose-400',
 ];
+
+/**
+ * Domain-color palette for the "Today's actions" list. Each CTA gets a
+ * left-border + dot in its life-area color — money/career/love/social/self
+ * — so the user can scan by domain without a text tag. Matches the
+ * `→ {domain}: …` lines emitted by the WN-voice daily prompt.
+ */
+const DOMAIN_COLOR: Record<ActionDomain, { dot: string; bar: string }> = {
+  money: {
+    dot: 'bg-emerald-500',
+    bar: 'border-emerald-500/60',
+  },
+  career: {
+    dot: 'bg-amber-500',
+    bar: 'border-amber-500/60',
+  },
+  love: {
+    dot: 'bg-rose-500',
+    bar: 'border-rose-500/60',
+  },
+  social: {
+    dot: 'bg-violet-500',
+    bar: 'border-violet-500/60',
+  },
+  self: {
+    dot: 'bg-sky-500',
+    bar: 'border-sky-500/60',
+  },
+};
 
 interface Props {
   body: string | null;
@@ -153,7 +182,31 @@ export function DailyReadingView({
           </div>
         ) : null}
 
-        {parsed.vibes.length > 0 ? (
+        {parsed.actions.length > 0 ? (
+          <ul className="space-y-2 pt-1 text-[14px] leading-snug">
+            {parsed.actions.map((a, i) => {
+              const palette = DOMAIN_COLOR[a.domain];
+              return (
+                <li
+                  key={i}
+                  className={`flex items-start gap-2.5 border-l-2 pl-3 ${palette.bar}`}
+                >
+                  <span
+                    aria-hidden
+                    className={`mt-2 inline-block h-1.5 w-1.5 shrink-0 rounded-full ${palette.dot}`}
+                  />
+                  <span className="text-neutral-800 dark:text-neutral-200">
+                    {renderInlineMd(a.text)}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+        ) : parsed.vibes.length > 0 ? (
+          // Fallback for legacy cached readings that still carry the old
+          // +/- vibe bullets. The cache-bust check in `dailyReading.ts`
+          // regenerates these on next load, but the render path here keeps
+          // them legible during the transitional window.
           <ul className="space-y-1.5 pt-1 text-[14px] leading-snug">
             {parsed.vibes.map((v, i) => (
               <li key={i} className="flex items-start gap-2">
@@ -173,6 +226,12 @@ export function DailyReadingView({
               </li>
             ))}
           </ul>
+        ) : null}
+
+        {parsed.awareness ? (
+          <p className="text-muted-foreground border-l-2 border-neutral-300/60 pl-3 text-[13px] italic leading-snug dark:border-neutral-700/60">
+            {renderInlineMd(parsed.awareness)}
+          </p>
         ) : null}
       </div>
     </section>

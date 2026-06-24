@@ -10,15 +10,26 @@ import arIntents from '@/content/dailyIntents/ar.json';
 
 /**
  * Per-digit intent dictionary for the daily reading. Each entry is the
- * raw material the AI weaves into the day's WN-style prose + CTAs:
+ * raw material the AI weaves into a WN-style prose reading + a closing
+ * positive-CTA list:
  *
- *   - keywords:  archetypal words for the title and opening texture.
- *   - posture:   one-line "energy of the day" through this digit's lens.
- *   - money / career / love / social / self: domain-specific calls to
- *     action. The prompt picks 3-4 of these (based on which digits
- *     dominate today) and lifts them into the bullet list at the bottom.
- *   - watch_out: the digit's typical pitfall, framed as a positive move
- *     ("when X rises, do Y") — never a prohibition.
+ *   - keywords: 8-10 archetypal words (title + opening texture seeds).
+ *   - imagery:  2-3 short WN-style sensory metaphors the model can graft
+ *               into the prose ("grab-the-bull-by-the-horns kind of day",
+ *               "in the wake of a ship", "a day for clean ledgers").
+ *   - posture:  one-line "energy of the day" through this digit's lens.
+ *   - money / career / love / social / self: arrays of 2-3 short positive
+ *               imperatives, ≤10 words each. The prompt picks the resonant
+ *               ones across the two intent blocks (day + month) and emits
+ *               them as `→ {domain}: {imperative}` lines under the prose,
+ *               always re-voiced in the locale's register — never quoted
+ *               verbatim. Mix of domains is required so the closing list
+ *               isn't all-money or all-self.
+ *   - watch_out: one-line awareness seed. Frame is observation about
+ *               today's pattern, not a prohibition. ❌ "Don't gamble."
+ *               ✅ "You may be more transparent than usual — what you
+ *               hide reads easily." The model emits this as the single
+ *               trailing `~ Awareness:` line.
  *
  * Keys cover 1-9 + the three master compounds (11/22/33). Master Personal
  * Day / Personal Month / Personal Year all stay in master form in the
@@ -27,12 +38,13 @@ import arIntents from '@/content/dailyIntents/ar.json';
  */
 export interface DailyIntent {
   keywords: string[];
+  imagery: string[];
   posture: string;
-  money: string;
-  career: string;
-  love: string;
-  social: string;
-  self: string;
+  money: string[];
+  career: string[];
+  love: string[];
+  social: string[];
+  self: string[];
   watch_out: string;
 }
 

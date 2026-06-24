@@ -83,13 +83,14 @@ export async function getOrGenerateDailyReading(
   const cached = await getReadingForLocalDay(userId, ctx.year, ctx.month, ctx.day);
   if (cached) {
     // Regenerate when (a) locale changed since cache, (b) the cached body
-    // lacks the new "# Title" + "+/- vibe bullet" format, or (c) the title /
-    // greeting leak raw numbers. Costs one extra LLM call but spares users a
-    // stale layout that doesn't match the rest of the dashboard.
+    // lacks the WN-voice "→ {domain}: …" closing-action format introduced
+    // in the v2 daily-reading prompt, or (c) the title / greeting leak
+    // raw numbers. Costs one extra LLM call but spares users a stale
+    // layout (old +/- vibe bullets) that no longer matches the new render.
     const stale =
       cached.locale !== profile.locale ||
       !cached.body.trimStart().startsWith('#') ||
-      !/^[+-]\s+\S/m.test(cached.body) ||
+      !/^→\s*(?:money|career|love|social|self)\s*:/im.test(cached.body) ||
       leaksNumbersInHead(cached.body);
     if (!stale) return cached.body;
     await deleteReadingForLocalDay(userId, ctx.year, ctx.month, ctx.day);

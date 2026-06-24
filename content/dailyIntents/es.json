@@ -1,122 +1,422 @@
 {
   "1": {
-    "keywords": ["iniciar", "liderar", "atreverse", "primer paso", "pionero"],
-    "posture": "Hoy recompensa al que se mueve primero — elige rumbo, no esperes que te escojan.",
-    "money": "Empuja ese pitch, ask o lanzamiento que tienes guardado. Hoy la iniciativa se nota.",
-    "career": "Hazte cargo de algo atascado. Da el paso donde nadie ha levantado la mano.",
-    "love": "¿Soltero? Da tú el primer paso. ¿En pareja? Di lo que quieres — hoy las indirectas no llegan.",
-    "social": "Acércate tú primero — la llamada, la disculpa, la invitación. No esperes a que vengan.",
-    "self": "Canaliza la energía alta en una acción concreta, no en scrolling ansioso.",
-    "watch_out": "Cuando suba la prisa, baja el ritmo a la mitad — el impulso de hoy corta curvas."
+    "keywords": ["iniciar", "liderar", "atreverse", "primer paso", "elegir rumbo", "pionero", "confiar en sí", "decidir", "reclamar", "plantarse"],
+    "imagery": [
+      "el día en que la puerta se abre y tú eres quien la cruza primero",
+      "una mañana con olor a pistolazo de salida — todos esperan el primer disparo",
+      "tu nombre escrito en la arena antes de que nadie llegue a la playa"
+    ],
+    "posture": "Hoy premia al que se mueve primero y confía en sí — elige rumbo y camina; el suelo se endurece bajo tus pies.",
+    "money": [
+      "Manda el pitch que llevas puliendo",
+      "Da tú el precio primero, antes que ellos",
+      "Lanza lo pequeño en vez de perfeccionar lo grande"
+    ],
+    "career": [
+      "Reclama como tuyo el proyecto que estaba atascado",
+      "Habla el primero en la reunión, no el último",
+      "Toma la decisión que el equipo lleva rodeando"
+    ],
+    "love": [
+      "Di en voz alta eso que llevas insinuando",
+      "Da el primer paso; no esperes la señal",
+      "Pide lo que quieres en una sola frase clara"
+    ],
+    "social": [
+      "Manda el mensaje que llevas redactando",
+      "Sé quien propone el lugar",
+      "Acércate a alguien que admiras en silencio"
+    ],
+    "self": [
+      "Empieza el proyecto antes de sentirte listo",
+      "Confía en el primer instinto con el que despertaste",
+      "Haz lo más pesado mientras la habitación está en silencio"
+    ],
+    "watch_out": "Hoy tus aristas están más afiladas — la gente puede sentirse empujada cuando tú solo crees estar liderando."
   },
   "2": {
-    "keywords": ["cooperar", "escuchar", "paciencia", "detalle", "diplomático"],
-    "posture": "Hoy pide compañía más que empuje en solitario — lento, deliberado, presente.",
-    "money": "Ordena admin, envía facturas, cierra un trato que necesita confianza. Evita movimientos agresivos.",
-    "career": "Colabora, media, alinea. Las victorias de hoy llegan por la puerta de otro.",
-    "love": "Lidera escuchando. Haz una pregunta abierta y resiste el impulso de arreglar.",
-    "social": "Sé quien aparece para el momento del otro, no el titular.",
-    "self": "Protege 30 minutos de silencio. Recargar es el trabajo.",
-    "watch_out": "¿Tentado de confrontar? Escribe el mensaje y duérmelo un día."
+    "keywords": ["alinear", "escuchar", "suavizar", "compañía", "cuidar", "calibrar", "armonizar", "paciencia", "diplomático", "receptivo"],
+    "imagery": [
+      "un día que pide puntada lenta, no tajo rápido",
+      "el segundo instrumento que encuentra el acorde que empezó el primero",
+      "un té que se vuelve mejor con un minuto más en reposo"
+    ],
+    "posture": "Hoy pide compañía y paciencia — tu fuerza está en la pausa, no en el empuje.",
+    "money": [
+      "Cierra el trato que pide confianza, no presión",
+      "Envía la factura con un encabezado cálido",
+      "Negocia con suavidad; hoy la sala escucha"
+    ],
+    "career": [
+      "Co-escribe el documento en vez de reescribirlo solo",
+      "Media la fricción entre dos colegas",
+      "Reparte el crédito más alto de lo que sientes cómodo"
+    ],
+    "love": [
+      "Haz una pregunta abierta y quédate en silencio para la respuesta",
+      "Nota la cosa pequeña que hizo y nómbrala",
+      "Sostén el silencio en lugar de rellenarlo"
+    ],
+    "social": [
+      "Aparece para el momento de otra persona",
+      "Manda una nota de gracias a una vieja amabilidad",
+      "Sé quien recuerda el detalle"
+    ],
+    "self": [
+      "Protege 30 minutos de silencio puro",
+      "Elige a propósito el camino más lento",
+      "Deja una cosa sin terminar y duerme sobre ella"
+    ],
+    "watch_out": "Hoy tus antenas están abiertas — los estados de ánimo ajenos se te pegan más rápido de lo habitual."
   },
   "3": {
-    "keywords": ["expresar", "crear", "social", "juguetón", "mostrar"],
-    "posture": "Hoy es para expresión y ligereza — muestra tu rango, no tu preocupación.",
-    "money": "Pitchea ideas creativas, vende con contenido, publica eso que tienes. El carisma rinde hoy.",
-    "career": "Lidera el brainstorm o la presentación. Lleva a la sala contigo.",
-    "love": "Sé juguetón — el humor entra mejor que la seriedad. Los cumplidos, específicos.",
-    "social": "Anfitriona, organiza, junta gente. Hoy ama la sala llena de tu gente.",
-    "self": "Haz algo — escribe, dibuja, cocina, canta. Output > consumo.",
-    "watch_out": "Si te tientas a prometer de más, nombra LA UNA cosa que sí entregarás."
+    "keywords": ["expresar", "crear", "jugar", "deleitar", "actuar", "encantar", "hablar", "chispa", "color", "tejer"],
+    "imagery": [
+      "un día con las luces del estudio encendidas",
+      "las ideas llegan en bandada, no en fila",
+      "una conversación que se vuelve puerta"
+    ],
+    "posture": "Hoy está encendido por dentro — expresa, encanta, crea; la ligereza es la estrategia.",
+    "money": [
+      "Pitchea el ángulo creativo que la hoja de cálculo se perdió",
+      "Vende con historia, no con specs",
+      "Publica eso que tienes guardado en borradores"
+    ],
+    "career": [
+      "Lidera la lluvia de ideas en voz alta",
+      "Ofrécete para presentar, no solo a asistir",
+      "Lanza la idea que te pone un poco nervioso"
+    ],
+    "love": [
+      "Hazle reír antes de hacer el punto",
+      "Halaga una sola cosa, con detalle",
+      "Planea un pequeño deleite inesperado"
+    ],
+    "social": [
+      "Organiza el encuentro pequeño que has postergado",
+      "Manda el meme que sí significa algo",
+      "Presenta a dos personas que deberían conocerse"
+    ],
+    "self": [
+      "Haz algo — escribe, dibuja, cocina, canta",
+      "Ponte la prenda brillante que tienes al fondo del armario",
+      "Elige jugar antes que pulir, durante una hora"
+    ],
+    "watch_out": "Hoy tus palabras viajan más lejos de lo que pretendes — lo que tú sentiste como broma, otro puede oírlo como veredicto."
   },
   "4": {
-    "keywords": ["construir", "disciplina", "estructura", "constancia", "cimientos"],
-    "posture": "Hoy recompensa trabajo paciente y estructurado — preséntate, haz las repeticiones.",
-    "money": "Audita gastos, programa una transferencia automática, salda una pequeña deuda. Movimientos de base.",
-    "career": "Cierra el bucle de tres pendientes pequeños. Las tareas aburridas reciben respeto desproporcionado hoy.",
-    "love": "Aparece con constancia. Pequeños actos confiables > un gesto grande.",
-    "social": "Honra la agenda — la cena fija, la llamada semanal. Hoy la rutina es amor.",
-    "self": "Ordena el escritorio, planifica la semana, prepara la ropa de mañana. El orden calma.",
-    "watch_out": "Si el día se siente pesado, haz UNA tarea pequeña más — el movimiento cura el bajón."
+    "keywords": ["construir", "cuidar", "estructura", "asentar", "ancla", "estable", "fiable", "método", "cimientos", "oficio"],
+    "imagery": [
+      "un día para libros contables limpios y esquinas en escuadra",
+      "el carpintero que mide dos veces y corta una",
+      "el ladrillo que no pide ser visto y aún así sostiene el muro"
+    ],
+    "posture": "Hoy premia paciencia, repetición y el ladrillo poco glamoroso — preséntate y haz el pequeño trabajo honesto.",
+    "money": [
+      "Audita un gasto recurrente y recórtalo",
+      "Paga la factura pequeña que has saltado",
+      "Configura la transferencia automática que llevas demorando"
+    ],
+    "career": [
+      "Cierra tres bucles pequeños antes de comer",
+      "Documenta eso que solo vive en tu cabeza",
+      "Termina la tarea aburrida que desbloquea otras dos"
+    ],
+    "love": [
+      "Llega antes; sé la persona estable",
+      "Cocina algo sencillo en vez de pedir delivery",
+      "Cumple la pequeña promesa diaria sin anunciarla"
+    ],
+    "social": [
+      "Honra la cena fija o la llamada semanal",
+      "Sé el amigo que recuerda la cita",
+      "Manda el seguimiento que el grupo olvidó"
+    ],
+    "self": [
+      "Haz la cama y ordena el escritorio antes del trabajo",
+      "Planea mañana antes de dormir esta noche",
+      "Mueve el cuerpo como llevas prometiéndote"
+    ],
+    "watch_out": "Hoy el día se siente más pesado que real — el impulso está escondido en la siguiente tarea pequeña, no en el descanso."
   },
   "5": {
-    "keywords": ["cambio", "aventura", "libertad", "adaptación", "variedad"],
-    "posture": "Hoy pide movimiento, novedad, adaptación — rompe la rutina.",
-    "money": "Explora un nuevo ángulo de ingreso o plataforma. Evita atarte a contratos largos.",
-    "career": "Lanza la idea audaz, agenda una reunión fuera de la org. Variedad > pulido hoy.",
-    "love": "Sorpréndele — lugar nuevo, tema nuevo. El aburrimiento es el riesgo real.",
-    "social": "Di sí a la invitación random. Sala nueva = suerte nueva.",
-    "self": "Mueve el cuerpo — camina calles nuevas, prueba comida nueva. El cuerpo necesita otro input.",
-    "watch_out": "Si te tienta comprometerte con algo permanente, duérmelo — revisa el viernes."
+    "keywords": ["cambio", "moverse", "explorar", "libertad", "variedad", "improvisar", "desplazar", "vagar", "adaptar", "sensorial"],
+    "imagery": [
+      "un día con las ventanillas bajadas y la ruta sin terminar",
+      "la puerta que en realidad llevaba a algún sitio",
+      "una corriente, no una carretera"
+    ],
+    "posture": "Hoy pide movimiento, novedad y disposición a ser desviado — reserva el rodeo, no el plato principal.",
+    "money": [
+      "Prueba esta semana un pequeño nuevo ángulo de ingreso",
+      "Mueve dinero a la cuenta que llevas queriendo abrir",
+      "Negocia lo variable, no lo fijo"
+    ],
+    "career": [
+      "Toma la reunión fuera de tu círculo habitual",
+      "Lanza la versión audaz, no la edición segura",
+      "Prueba la herramienta que tienes guardada"
+    ],
+    "love": [
+      "Sugiere un lugar nuevo para la próxima cita",
+      "Hazle una pregunta que nunca le habías hecho",
+      "Sé la sorpresa, no la agenda"
+    ],
+    "social": [
+      "Di sí a la invitación inesperada",
+      "Camina por donde sueles solo pasar en coche",
+      "Siéntate en otra silla en la misma sala"
+    ],
+    "self": [
+      "Vuelve a casa por otra ruta",
+      "Come hoy algo nuevo",
+      "Mueve el cuerpo de una forma que lo sorprenda"
+    ],
+    "watch_out": "Hoy tu apetito por lo nuevo es fuerte — cualquier cosa a la que te comprometas en firme sabe distinto el viernes."
   },
   "6": {
-    "keywords": ["cuidar", "hogar", "responsabilidad", "armonía", "belleza"],
-    "posture": "Hoy es para atender — familia, hogar, la gente que importa.",
-    "money": "Gasta en hogar, familia y herramientas que hacen la vida más amable. Nada de apuestas.",
-    "career": "Entra al rol de mentor. Ayuda a alguien junior a destrabarse — los favores componen.",
-    "love": "Haz espacio para la relación — cocinar juntos, planear algo, profundizar la rutina.",
-    "social": "Reconecta con la familia. Manda el mensaje que has venido posponiendo.",
-    "self": "Embellece el espacio — flores, velas, despejar lo acumulado. Hoy la estética nutre.",
-    "watch_out": "Si te jala arreglar a alguien, primero pregunta si quiere ayuda."
+    "keywords": ["cuidar", "hogar", "responsabilidad", "armonía", "belleza", "nutrir", "acoger", "remendar", "calidez", "atender"],
+    "imagery": [
+      "un día que huele un poco a cocina y a ropa limpia",
+      "el cuarto que se ordena porque alguien viene a verte",
+      "un círculo dibujado alrededor de las personas que quieres"
+    ],
+    "posture": "Hoy es para atender — al hogar, a la familia, a quienes cuentan con tu estabilidad.",
+    "money": [
+      "Gasta en algo que ablande la casa",
+      "Paga la ayuda que aliviana el hogar",
+      "Reemplaza la cosa pequeña que llevaba tiempo rota en silencio"
+    ],
+    "career": [
+      "Mentora a la persona atascada en lo que tú resolviste",
+      "Desactiva la fricción del equipo en vez de rodearla",
+      "Mejora el documento compartido que no tiene dueño"
+    ],
+    "love": [
+      "Planea una noche en torno a él, no a tu calendario",
+      "Cocinen juntos; el plato importa menos que el hombro a hombro",
+      "Nombra eso que él hace y te aligera la vida"
+    ],
+    "social": [
+      "Escribe primero a un padre o hermano",
+      "Organiza una cena pequeña; no la compliques",
+      "Aparece para el amigo que se está peleando en silencio"
+    ],
+    "self": [
+      "Ordena el rincón que llevaba molestándote",
+      "Trae flores; enciende la vela",
+      "Descansa en una habitación bonita, no solo eficiente"
+    ],
+    "watch_out": "Hoy tu impulso de reparar es fuerte — pregunta primero si quieren ayuda antes de cargarlo por ellos."
   },
   "7": {
-    "keywords": ["reflexión", "estudiar", "profundidad", "introspectivo", "silencio"],
-    "posture": "Hoy pide volverse hacia adentro — reflexionar, estudiar, integrar. Empujar afuera rebota.",
-    "money": "Lee, investiga, planea — no transacciones hoy. Los buenos movimientos llegan mañana.",
-    "career": "Toma el asiento silencioso. Documenta, analiza, prepara. No fuerces visibilidad.",
-    "love": "Deja espacio — el tuyo y el suyo. La profundidad viene del silencio, no del contacto constante.",
-    "social": "Salta el evento grande. Una conversación real > cinco superficiales.",
-    "self": "Journal, medita, camina solo. Hoy es para el diálogo interior.",
-    "watch_out": "Si una decisión se siente forzada, déjala 24 horas — la claridad llega de la noche."
+    "keywords": ["reflexión", "estudiar", "profundidad", "silencio", "discernir", "investigar", "interior", "esperar", "cribar", "verificar"],
+    "imagery": [
+      "un día con las cortinas a medio echar",
+      "la página que necesitabas estaba subrayada en el segundo libro, no en el primero",
+      "el clima que miras desde la ventana, no el que cruzas"
+    ],
+    "posture": "Hoy pide girar hacia adentro — leer, reflexionar, verificar; las buenas jugadas pasan mañana.",
+    "money": [
+      "Lee antes de operar; hoy la investigación capitaliza",
+      "Concilia la contabilidad en vez de poner apuestas nuevas",
+      "Duerme la oferta; revísala por la mañana"
+    ],
+    "career": [
+      "Toma el escritorio tranquilo; documenta, no anuncies",
+      "Audita el proyecto por lo que nadie está diciendo",
+      "Refina el trabajo antes de enviarlo"
+    ],
+    "love": [
+      "Escucha lo que se dice entre líneas",
+      "Caminen juntos sin llenar cada silencio",
+      "Haz una pregunta más profunda de lo habitual"
+    ],
+    "social": [
+      "Salta el evento grande por una conversación real",
+      "Escribe al amigo que disfrutaría el mensaje largo",
+      "Elige el banco antes que el bar"
+    ],
+    "self": [
+      "Llena una página entera del diario antes de mirar el teléfono",
+      "Camina solo sin podcast en el oído",
+      "Toma el libro que llevas casi cogiendo"
+    ],
+    "watch_out": "Hoy la certeza es un disfraz — lo que se siente como una decisión forzada suele aclararse por la mañana si esperas."
   },
   "8": {
-    "keywords": ["empuje", "ambición", "resultados", "dinero", "autoridad"],
-    "posture": "Hoy es día de agarrar el toro por los cuernos — decidido y visible.",
-    "money": "Cierra el trato, envía la factura, pide el aumento. Hoy el dinero premia la audacia.",
-    "career": "Promueve tu trabajo, empuja por el título, haz la petición estratégica.",
-    "love": "Aparece firme y capaz — hoy tu poder atrae, pero lidera con calidez.",
-    "social": "Estate en la sala. Cenas de networking, momentos públicos — hoy se premia la presencia.",
-    "self": "Muévete con decisión. Elige una opción y comprométete, no consultes a media humanidad.",
-    "watch_out": "Cuando el ego se enciende, pregúntate: ¿estoy construyendo o solo intentando ganar?"
+    "keywords": ["ambición", "resultados", "dinero", "autoridad", "cosecha", "impulso", "decidir", "apalancar", "peso", "promover"],
+    "imagery": [
+      "un día de agarrar el toro por los cuernos",
+      "ecos de acciones pasadas — como la estela de un barco",
+      "el final de la cosecha; recoge lo maduro"
+    ],
+    "posture": "Hoy es decisión y visibilidad — haz la jugada que llevas planeando y deja que los resultados hablen.",
+    "money": [
+      "Cierra el trato que llevas rodeando",
+      "Manda la factura sin disculpas en el encabezado",
+      "Pide el aumento con el número listo"
+    ],
+    "career": [
+      "Promociona tu trabajo hoy ante una persona nueva",
+      "Empuja por el título, no solo por la responsabilidad",
+      "Haz la petición estratégica mientras la sala está abierta"
+    ],
+    "love": [
+      "Aparece firme y capaz — que la calidez lidere la fuerza",
+      "Haz el plan, no flotes la idea",
+      "Si el día abre la puerta, pide perdón por aquello viejo"
+    ],
+    "social": [
+      "Está en la sala — cenas de networking, momentos públicos",
+      "Preséntate con el título que de verdad quieres",
+      "Reconecta con el contacto que llevas demorando"
+    ],
+    "self": [
+      "Muévete con decisión — elige una opción y comprométete",
+      "Lleva la versión de ti que termina las cosas",
+      "Pon el límite que protege el trabajo"
+    ],
+    "watch_out": "Hoy estás más transparente que de costumbre — lo que escondes se lee con facilidad; no es día para maniobras."
   },
   "9": {
-    "keywords": ["completar", "soltar", "humanitario", "cerrar", "dar"],
-    "posture": "Hoy pide completar y soltar — cierra los bucles, después déjalos ir.",
-    "money": "Salda pagos pendientes, cancela suscripciones atascadas, dona o regala. No es día de lanzamiento.",
-    "career": "Termina lo que quedó colgando. Manda el borrador a medias. Vacía la bandeja.",
-    "love": "Perdona lo que has estado guardando. La conversación que cierra un capítulo es el regalo.",
-    "social": "Contacta a alguien con quien te has distanciado — cerrar o reavivar, las dos sanan.",
-    "self": "Limpia el desorden simbólico — correos viejos, contactos vencidos, libros a medio leer.",
-    "watch_out": "Cuando suba el impulso de empezar algo nuevo, escríbelo para la próxima semana."
+    "keywords": ["completar", "soltar", "dar", "cerrar", "perdonar", "humanitario", "más amplio", "ablandar", "donar", "anudar"],
+    "imagery": [
+      "un día para cerrar pestañas, no abrir nuevas",
+      "la ola que regresa al mar",
+      "hacer el nudo antes de empezar la siguiente puntada"
+    ],
+    "posture": "Hoy pide completar y soltar — cierra bucles, devuelve cosas, suelta con suavidad.",
+    "money": [
+      "Salda la deuda pendiente o la factura aún abierta",
+      "Cancela la suscripción que ya no usas",
+      "Haz hoy la donación que llevaba esperando una excusa"
+    ],
+    "career": [
+      "Termina el proyecto que está al 80%",
+      "Manda el borrador a medias en vez de pulirlo hasta matarlo",
+      "Vacía una bandeja; archiva el resto"
+    ],
+    "love": [
+      "Perdona la cosa pequeña que llevas guardando en silencio",
+      "Di el gracias que cierra el bucle",
+      "Suelta el viejo agravio sin necesitar la conversación"
+    ],
+    "social": [
+      "Contacta a alguien con quien te has alejado",
+      "Devuelve la cosa prestada que llevas guardando",
+      "Da sin esperar reciprocidad"
+    ],
+    "self": [
+      "Limpia el desorden simbólico — correos viejos, contactos caducados",
+      "Termina el libro que llevas casi terminando un mes",
+      "Llora si llega; los finales de hoy quieren sus lágrimas"
+    ],
+    "watch_out": "Hoy los finales pesan — lo que llevaba debilitándose en silencio a veces escoge este día para caer, y puede ser un regalo."
   },
   "11": {
-    "keywords": ["inspirar", "visión", "canalizar", "sensible", "intuitivo"],
-    "posture": "Hoy las antenas están abiertas — las intuiciones aterrizan más afiladas.",
-    "money": "Confía en la corazonada para apuestas pequeñas. Los movimientos grandes hoy necesitan un segundo ojo.",
-    "career": "Lidera con visión e inspiración. Tu trabajo es alumbrar el camino, no marcharlo.",
-    "love": "Escucha lo no dicho. La vulnerabilidad es la llave.",
-    "social": "Inspira a alguien — comparte la idea, la obra, el encuadre que necesita oír.",
-    "self": "Aterriza la energía alta en cuerpo — comer, dormir, caminar. No corras sobre humo.",
-    "watch_out": "Si la ansiedad sube, haz una tarea mundana — lavar platos calma el canal."
+    "keywords": ["inspirar", "visión", "intuir", "canal", "sensible", "iluminar", "afinar", "mensajero", "sutil", "transmitir"],
+    "imagery": [
+      "un día con las antenas más abiertas de lo habitual",
+      "una idea que llega entera, como dictada",
+      "el momento en que un diapasón encuentra su nota"
+    ],
+    "posture": "Hoy los cables están vivos — la intuición aterriza más afilada, la sensibilidad sube y la inspiración es tu trabajo.",
+    "money": [
+      "Confía en la corazonada en apuestas pequeñas; busca un segundo ojo en las grandes",
+      "Lanza la versión visionaria, no la diluida",
+      "Pausa la compra que se siente más ansiedad que ganas reales"
+    ],
+    "career": [
+      "Lidera con visión; la implementación puede ser mañana",
+      "Comparte la idea a medio formar — alguien necesitaba oírla",
+      "Dibuja el estado futuro del proyecto para el equipo"
+    ],
+    "love": [
+      "Escucha lo que no se está diciendo en voz alta",
+      "Comparte eso que sientes demasiado vulnerable para compartir",
+      "Sostén el espacio en vez de ofrecer soluciones"
+    ],
+    "social": [
+      "Inspira a una persona — comparte el marco que necesita oír",
+      "Manda el mensaje que llevaba haciendo ping en tu cabeza",
+      "Las sincronicidades hoy son ruidosas — solo nótalas"
+    ],
+    "self": [
+      "Aterriza la frecuencia alta en el cuerpo — come, duerme, camina",
+      "Anota el sueño que recordabas al despertar",
+      "Medita, aunque sea breve; el canal pide mantenimiento"
+    ],
+    "watch_out": "Hoy el volumen de tu sistema nervioso está alto — lo que parece miedo a veces es solo intensidad sin sitio donde aterrizar."
   },
   "22": {
-    "keywords": ["construir en grande", "arquitecto maestro", "escalar", "manifestar"],
-    "posture": "Hoy recompensa al constructor de panorama amplio — conecta la estrategia con el próximo ladrillo concreto.",
-    "money": "Traza el juego de largo plazo. Toma una decisión que componga en años.",
-    "career": "Conecta los puntos que otros no ven. Junta estrategia y ejecución en una misma sala.",
-    "love": "Construyan futuro juntos — la conversación sobre metas, casa, hijos, visión.",
-    "social": "Lidera a una sala hacia un objetivo común. Tu ambición estable contagia.",
-    "self": "Elige un proyecto ambicioso y protégele tiempo semanal. Hoy es juego largo.",
-    "watch_out": "Cuando suba el perfeccionismo, lanza v0.1 — construir vence a planear."
+    "keywords": ["construir en grande", "manifestar", "arquitecto", "escalar", "largo plazo", "componer", "plano", "anclar visión", "tejer", "aterrizar el sueño"],
+    "imagery": [
+      "el arquitecto en su mesa de dibujo, no en la obra",
+      "un día para colocar un ladrillo de la catedral",
+      "el emparrado que se arma ahora para la vid del año que viene"
+    ],
+    "posture": "Hoy premia al constructor de panorama amplio — conecta la visión al próximo ladrillo concreto.",
+    "money": [
+      "Toma una decisión que componga durante años",
+      "Diversifica el ingreso que llevaba en una sola línea",
+      "Invierte en la herramienta que escala tu salida, no tus horas"
+    ],
+    "career": [
+      "Une estrategia y ejecución en la misma reunión",
+      "Documenta la hoja de ruta a largo plazo y publica un trozo",
+      "Recluta a la persona que abre el siguiente capítulo"
+    ],
+    "love": [
+      "Hablen del largo plazo — casa, forma de vida, visión",
+      "Construyan el ritual que quieran repetir durante años",
+      "Planea el viaje que ancla el próximo capítulo"
+    ],
+    "social": [
+      "Lidera una sala hacia un objetivo ambicioso común",
+      "Recluta a un colaborador para el proyecto grande",
+      "Mentora con la mirada larga"
+    ],
+    "self": [
+      "Elige un proyecto ambicioso y protege su tiempo semanal",
+      "Boceta el año, después la semana, después entrega el día",
+      "Invierte en tu propia infraestructura — sueño, cuerpo, mente"
+    ],
+    "watch_out": "Hoy el sueño puede paralizar el hacer — construir una v0.1 áspera le gana a planear una v1.0 perfecta."
   },
   "33": {
-    "keywords": ["enseñar", "sanar", "amor maestro", "servir", "mentor"],
-    "posture": "Hoy es para servicio y cuidado — tu amor a escala cambia una sala.",
-    "money": "Da con generosidad donde puedas. Hoy el dinero fluye más fácil cuando se sostiene ligero.",
-    "career": "Mentora, enseña, sana en el trabajo — recordarán tu liderazgo más suave.",
-    "love": "Lidera con calidez incondicional. La persona que amas se beneficia de tu presencia plena.",
-    "social": "Sé quien sostiene el espacio — para la conversación difícil, el duelo, la celebración.",
-    "self": "Llena tu propio pozo primero — no se vierte de vacío. Hoy la autocompasión es el trabajo.",
-    "watch_out": "Si te jala salvar a todos, nombra a una persona y vuélcate ahí del todo."
+    "keywords": ["enseñar", "sanar", "servir", "amor a escala", "mentor", "sostener", "elevar", "guiar", "compasión", "pastorear"],
+    "imagery": [
+      "un día para verter, confiando en que el pozo vuelve a llenarse",
+      "el faro que se queda encendido para que alguien llegue a puerto",
+      "una habitación que se vuelve más cálida porque alguien entró con suavidad"
+    ],
+    "posture": "Hoy es para servicio y cuidado a escala — tu calidez incondicional cambia una sala.",
+    "money": [
+      "Da con generosidad donde puedas; hoy el dinero fluye más fácil sostenido en suave",
+      "Pásalo — paga hoy una cosa pequeña por otro",
+      "Invierte en una causa, no solo en una rentabilidad"
+    ],
+    "career": [
+      "Mentora sin contador — da la respuesta entera",
+      "Sé la persona calmada en la reunión difícil",
+      "Enseña lo que llevas resolviendo una y otra vez"
+    ],
+    "love": [
+      "Lidera con calidez incondicional, incluso donde no se la han ganado",
+      "Aparece pleno — el teléfono lejos, la presencia ancha",
+      "Perdona antes de que te pidan perdón"
+    ],
+    "social": [
+      "Sostén espacio para el duelo o la celebración de alguien",
+      "Sé el amigo que llama, no solo el que escribe, hoy",
+      "Agranda un poco el círculo — invita al que se queda fuera"
+    ],
+    "self": [
+      "Llena tu propio pozo primero — no se vierte de vacío",
+      "Sé tan amable contigo como con aquellos a quienes sirves",
+      "Hoy el descanso es parte de la práctica, no una pausa de ella"
+    ],
+    "watch_out": "Hoy el impulso de salvar a todos es fuerte — nombrar a una persona y verterte ahí del todo importa más que rociar fino por todas partes."
   }
 }
