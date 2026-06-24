@@ -5,7 +5,6 @@ import { LOCALE_CODES } from '@/lib/i18n/locales';
 const STRING_FIELDS: Array<keyof DailyIntent> = ['posture', 'watch_out'];
 const ARRAY_FIELDS: Array<keyof DailyIntent> = [
   'keywords',
-  'imagery',
   'money',
   'career',
   'love',
@@ -15,7 +14,6 @@ const ARRAY_FIELDS: Array<keyof DailyIntent> = [
 
 const MIN_LENGTHS: Partial<Record<keyof DailyIntent, number>> = {
   keywords: 8,
-  imagery: 2,
   money: 2,
   career: 2,
   love: 2,
@@ -107,6 +105,16 @@ describe('dailyIntent', () => {
     for (const locale of LOCALE_CODES) {
       for (const key of ALL_KEYS) {
         expect(dailyIntent(key, locale), `${locale} key ${key}`).not.toBeNull();
+      }
+    }
+  });
+
+  it('no shipped pack carries a legacy `imagery` field (was removed to keep prose plain)', () => {
+    for (const locale of LOCALE_CODES) {
+      for (const key of ALL_KEYS) {
+        const intent = dailyIntent(key, locale);
+        expect(intent).not.toBeNull();
+        expect(intent, `${locale} ${key}`).not.toHaveProperty('imagery');
       }
     }
   });

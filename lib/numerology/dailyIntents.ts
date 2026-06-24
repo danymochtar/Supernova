@@ -10,19 +10,19 @@ import arIntents from '@/content/dailyIntents/ar.json';
 
 /**
  * Per-digit intent dictionary for the daily reading. Each entry is the
- * raw material the AI weaves into a WN-style prose reading + a closing
+ * raw material the AI weaves into a plain, practical reading + a closing
  * positive-CTA list:
  *
  *   - keywords: 8-10 archetypal words (title + opening texture seeds).
- *   - imagery:  2-3 short WN-style sensory metaphors the model can graft
- *               into the prose ("grab-the-bull-by-the-horns kind of day",
- *               "in the wake of a ship", "a day for clean ledgers").
- *   - posture:  one-line "energy of the day" through this digit's lens.
+ *   - posture:  one-line "energy of the day" — written plainly, NOT as a
+ *               literary metaphor. ✅ "Today rewards first moves and
+ *               self-trust." ❌ "Today is the door that swings open."
  *   - money / career / love / social / self: arrays of 2-3 short positive
- *               imperatives, ≤10 words each. The prompt picks the resonant
- *               ones across the two intent blocks (day + month) and emits
- *               them as `→ {domain}: {imperative}` lines under the prose,
- *               always re-voiced in the locale's register — never quoted
+ *               imperatives, ≤10 words each, expressed in everyday
+ *               language. The prompt picks the resonant ones across the
+ *               two intent blocks (day + month) and emits them as
+ *               `→ {domain}: {imperative}` lines under the prose, always
+ *               re-voiced in the locale's register — never quoted
  *               verbatim. Mix of domains is required so the closing list
  *               isn't all-money or all-self.
  *   - watch_out: one-line awareness seed. Frame is observation about
@@ -31,6 +31,13 @@ import arIntents from '@/content/dailyIntents/ar.json';
  *               hide reads easily." The model emits this as the single
  *               trailing `~ Awareness:` line.
  *
+ * Deliberately NO `imagery` field. Earlier prompt revisions seeded
+ * WN-style sensory metaphors ("in the wake of a ship", "benang yang
+ * ujungnya udah tinggal selangkah lagi"), but those landed as
+ * AI-flavored and inaccessible to readers across knowledge levels. The
+ * prompt now explicitly forbids "kayak…"-style analogies in prose; the
+ * dictionary stays plain on purpose.
+ *
  * Keys cover 1-9 + the three master compounds (11/22/33). Master Personal
  * Day / Personal Month / Personal Year all stay in master form in the
  * Decoz tradition, so we author full master variants instead of
@@ -38,7 +45,6 @@ import arIntents from '@/content/dailyIntents/ar.json';
  */
 export interface DailyIntent {
   keywords: string[];
-  imagery: string[];
   posture: string;
   money: string[];
   career: string[];

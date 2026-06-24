@@ -1,10 +1,16 @@
 {
   "1": {
-    "keywords": ["mula", "pelopor", "berani", "gerak dulu", "ambil arah", "pimpin", "percaya diri", "putus", "tuntut", "klaim"],
-    "imagery": [
-      "macam pintu yang terbuka dan kau yang masuk dulu",
-      "pagi yang berbau starting-pistol, semua menanti tembakan pertama",
-      "namamu tertulis di pasir sebelum orang lain sampai pantai"
+    "keywords": [
+      "mula",
+      "pelopor",
+      "berani",
+      "gerak dulu",
+      "ambil arah",
+      "pimpin",
+      "percaya diri",
+      "putus",
+      "tuntut",
+      "klaim"
     ],
     "posture": "Hari ini ganjar gerak dulu dan percaya pada diri — pilih arah, jalan; jalannya keras di bawah tapak kaki.",
     "money": [
@@ -35,11 +41,17 @@
     "watch_out": "Hari ini sisi tajam kau lebih nampak — orang senang rasa dipaksa walhal kau cuma memimpin."
   },
   "2": {
-    "keywords": ["selaras", "dengar", "halus", "partner", "jaga", "kalibrasi", "harmoni", "sabar", "diplomatik", "reseptif"],
-    "imagery": [
-      "hari yang minta jahitan perlahan, bukan tetakan cepat",
-      "alat muzik kedua yang jumpa chord yang dimulakan alat pertama",
-      "teh yang lebih sedap kalau direndam seminit lagi"
+    "keywords": [
+      "selaras",
+      "dengar",
+      "halus",
+      "partner",
+      "jaga",
+      "kalibrasi",
+      "harmoni",
+      "sabar",
+      "diplomatik",
+      "reseptif"
     ],
     "posture": "Hari ini minta perkongsian dan kesabaran — kuasa kau di jeda, bukan di tolakan.",
     "money": [
@@ -70,11 +82,17 @@
     "watch_out": "Hari ini antena kau lebih luas — mood orang lain melekat lebih cepat dari biasa."
   },
   "3": {
-    "keywords": ["ekspresi", "kreatif", "main", "delight", "perform", "charm", "cakap", "spark", "warna", "rangkai"],
-    "imagery": [
-      "hari studio yang lampunya hidup semua",
-      "idea datang macam kawanan burung, bukan barisan",
-      "perbualan yang bertukar jadi pintu"
+    "keywords": [
+      "ekspresi",
+      "kreatif",
+      "main",
+      "delight",
+      "perform",
+      "charm",
+      "cakap",
+      "spark",
+      "warna",
+      "rangkai"
     ],
     "posture": "Hari ini menyala dari dalam — luah, charm, cipta sesuatu; ringan itu strategi.",
     "money": [
@@ -105,11 +123,17 @@
     "watch_out": "Hari ini kata-kata kau berjalan lebih jauh dari niatnya — yang kau maksudkan gurau boleh berbunyi macam vonis."
   },
   "4": {
-    "keywords": ["bina", "jaga", "struktur", "berpijak", "anchor", "stabil", "boleh diharap", "kaedah", "asas", "craft"],
-    "imagery": [
-      "hari untuk ledger yang rapi dan sudut yang siku-siku",
-      "tukang kayu yang ukur dua kali sebelum potong sekali",
-      "bata yang tak minta dilihat, tapi pegang dinding"
+    "keywords": [
+      "bina",
+      "jaga",
+      "struktur",
+      "berpijak",
+      "anchor",
+      "stabil",
+      "boleh diharap",
+      "kaedah",
+      "asas",
+      "craft"
     ],
     "posture": "Hari ini ganjar sabar, ulangan, dan bata yang tak glamor — hadir, buat kerja kecil dengan jujur.",
     "money": [
@@ -140,11 +164,17 @@
     "watch_out": "Hari ini mudah terasa lebih berat dari sebenarnya — momentum tersembunyi dalam tugas kecil seterusnya, bukan dalam rehat."
   },
   "5": {
-    "keywords": ["perubahan", "gerak", "explore", "kebebasan", "variasi", "improv", "anjak", "merayau", "adapt", "sensori"],
-    "imagery": [
-      "hari tingkap kereta dibuka, route belum siap",
-      "pintu yang rupanya menuju ke suatu tempat",
-      "arus, bukan jalan raya"
+    "keywords": [
+      "perubahan",
+      "gerak",
+      "explore",
+      "kebebasan",
+      "variasi",
+      "improv",
+      "anjak",
+      "merayau",
+      "adapt",
+      "sensori"
     ],
     "posture": "Hari ini nak gerak, kebaruan, dan kesediaan untuk dialih — book detour, bukan highlight.",
     "money": [
@@ -175,11 +205,17 @@
     "watch_out": "Hari ini selera untuk hal baru tinggi — apa pun kau commit kekal akan rasa berbeza menjelang Jumaat."
   },
   "6": {
-    "keywords": ["jaga", "rumah", "tanggungjawab", "harmoni", "indah", "membela", "host", "perbaiki", "hangat", "ambil berat"],
-    "imagery": [
-      "hari yang baunya halus macam masakan dan baju bersih",
-      "bilik yang dibersihkan sebab ada yang nak datang",
-      "bulatan yang dilukis sekeliling orang-orang yang kau sayang"
+    "keywords": [
+      "jaga",
+      "rumah",
+      "tanggungjawab",
+      "harmoni",
+      "indah",
+      "membela",
+      "host",
+      "perbaiki",
+      "hangat",
+      "ambil berat"
     ],
     "posture": "Hari ini tentang menjaga — rumah, keluarga, orang yang bergantung pada kestabilan kau.",
     "money": [
@@ -210,11 +246,17 @@
     "watch_out": "Hari ini dorongan untuk membaiki besar — tanya dulu mereka nak ditolong, jangan terus kau angkat."
   },
   "7": {
-    "keywords": ["refleksi", "kaji", "dalam", "senyap", "tapis", "research", "interior", "tahan", "saring", "verify"],
-    "imagery": [
-      "hari yang langsir separuh ditarik",
-      "halaman yang kau perlukan ditandakan dalam buku kedua, bukan pertama",
-      "cuaca yang kau tengok dari tingkap, bukan kau lalui"
+    "keywords": [
+      "refleksi",
+      "kaji",
+      "dalam",
+      "senyap",
+      "tapis",
+      "research",
+      "interior",
+      "tahan",
+      "saring",
+      "verify"
     ],
     "posture": "Hari ini minta berpaling ke dalam — baca, refleksi, verify; gerakan baik berlaku esok.",
     "money": [
@@ -245,11 +287,17 @@
     "watch_out": "Hari ini kepastian itu pakaian — keputusan yang rasa dipaksa biasanya jernih esok pagi kalau kau tahan dulu."
   },
   "8": {
-    "keywords": ["ambisi", "hasil", "duit", "autoriti", "tuai", "momentum", "tegas", "leverage", "berat", "promote"],
-    "imagery": [
-      "hari pegang tanduk lembu",
-      "gema dari aksi lama — macam di belakang kapal yang baru lalu",
-      "hujung musim tuai; petik yang dah masak"
+    "keywords": [
+      "ambisi",
+      "hasil",
+      "duit",
+      "autoriti",
+      "tuai",
+      "momentum",
+      "tegas",
+      "leverage",
+      "berat",
+      "promote"
     ],
     "posture": "Hari ini tegas dan kelihatan — buat move yang kau rancang, biar hasil yang bercakap.",
     "money": [
@@ -280,11 +328,17 @@
     "watch_out": "Hari ini kau lebih transparan dari biasa — yang kau sembunyikan mudah dibaca; bukan hari untuk berhelah."
   },
   "9": {
-    "keywords": ["siap", "lepas", "beri", "wrap", "maaf", "humanitarian", "lebih luas", "halus", "derma", "tutup"],
-    "imagery": [
-      "hari untuk tutup tab, bukan buka yang baru",
-      "ombak yang pulang ke laut",
-      "ikat benang sebelum mulakan jahitan seterusnya"
+    "keywords": [
+      "siap",
+      "lepas",
+      "beri",
+      "wrap",
+      "maaf",
+      "humanitarian",
+      "lebih luas",
+      "halus",
+      "derma",
+      "tutup"
     ],
     "posture": "Hari ini minta penyelesaian dan pelepasan — tutup loop, pulangkan, lepaskan perlahan.",
     "money": [
@@ -315,11 +369,17 @@
     "watch_out": "Hari ini ending ada berat — yang dah senyap-senyap lemah kadang pilih hari ini untuk rebah, dan itu boleh jadi hadiah."
   },
   "11": {
-    "keywords": ["inspire", "visi", "intuisi", "channel", "sensitif", "menerangi", "tune", "messenger", "halus", "transmit"],
-    "imagery": [
-      "hari antena lebih terbuka dari biasa",
-      "idea datang utuh, macam didikte",
-      "saat garpu tala jumpa nadanya"
+    "keywords": [
+      "inspire",
+      "visi",
+      "intuisi",
+      "channel",
+      "sensitif",
+      "menerangi",
+      "tune",
+      "messenger",
+      "halus",
+      "transmit"
     ],
     "posture": "Hari ini wayar-wayarnya live — intuisi mendarat lebih tajam, sensitiviti tinggi, dan inspirasi itu kerja kau.",
     "money": [
@@ -350,11 +410,17 @@
     "watch_out": "Hari ini volume sistem saraf kau dinaikkan — yang nampak macam takut kadang cuma intensiti yang perlu tempat mendarat."
   },
   "22": {
-    "keywords": ["bina besar", "manifest", "arkitek", "scale", "long game", "compound", "blueprint", "anchor visi", "rangkai", "bumikan mimpi"],
-    "imagery": [
-      "arkitek di meja lukisan, bukan di tapak projek",
-      "hari untuk letak satu bata untuk katedral",
-      "rangka yang dibina sekarang untuk pokok tahun depan"
+    "keywords": [
+      "bina besar",
+      "manifest",
+      "arkitek",
+      "scale",
+      "long game",
+      "compound",
+      "blueprint",
+      "anchor visi",
+      "rangkai",
+      "bumikan mimpi"
     ],
     "posture": "Hari ini ganjar pembina gambar besar — sambungkan visi ke bata konkrit seterusnya.",
     "money": [
@@ -385,11 +451,17 @@
     "watch_out": "Hari ini mimpi boleh lumpuhkan pengerjaan — membina v0.1 yang kasar mengatasi merancang v1.0 yang sempurna."
   },
   "33": {
-    "keywords": ["ajar", "sembuh", "khidmat", "kasih berskala", "mentor", "pegang", "tinggikan", "pandu", "compassion", "shepherd"],
-    "imagery": [
-      "hari untuk mencurah, percaya telaga akan isi semula",
-      "rumah api yang tetap menyala biar ada yang temui dermaga",
-      "bilik yang lebih hangat sebab ada yang masuk dengan halus"
+    "keywords": [
+      "ajar",
+      "sembuh",
+      "khidmat",
+      "kasih berskala",
+      "mentor",
+      "pegang",
+      "tinggikan",
+      "pandu",
+      "compassion",
+      "shepherd"
     ],
     "posture": "Hari ini untuk khidmat dan jagaan dalam skala besar — kehangatan tanpa syarat kau yang ubah bilik.",
     "money": [

@@ -47,11 +47,10 @@ describe('buildUserPrompt — WN-voice intent blocks', () => {
     expect(out).toContain('<intent kind="personalMonth" digit="7">');
   });
 
-  it('renders the new v2 schema fields (keywords, imagery, posture, per-domain CTA bullets)', () => {
+  it('renders the v2 schema fields (keywords, posture, per-domain CTA bullets, watch_out)', () => {
     const out = buildUserPrompt(BASE);
     const day = out.split('<intent kind="personalDay"')[1]!.split('</intent>')[0]!;
     expect(day).toMatch(/keywords:.+/);
-    expect(day).toMatch(/imagery:.+/);
     expect(day).toMatch(/posture:.+/);
     // Per-domain CTAs render as a label line + 2-3 sub-bullets:
     //   money:
@@ -63,6 +62,11 @@ describe('buildUserPrompt — WN-voice intent blocks', () => {
     expect(day).toMatch(/social:\n {2}- /);
     expect(day).toMatch(/self:\n {2}- /);
     expect(day).toMatch(/watch_out:.+/);
+  });
+
+  it('no longer emits an imagery line (was removed to keep prose plain)', () => {
+    const out = buildUserPrompt(BASE);
+    expect(out).not.toMatch(/^imagery:/m);
   });
 
   it('uses the master compound for master personalDay (11 -> intent 11, not 2)', () => {

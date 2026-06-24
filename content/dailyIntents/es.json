@@ -1,10 +1,16 @@
 {
   "1": {
-    "keywords": ["iniciar", "liderar", "atreverse", "primer paso", "elegir rumbo", "pionero", "confiar en sí", "decidir", "reclamar", "plantarse"],
-    "imagery": [
-      "el día en que la puerta se abre y tú eres quien la cruza primero",
-      "una mañana con olor a pistolazo de salida — todos esperan el primer disparo",
-      "tu nombre escrito en la arena antes de que nadie llegue a la playa"
+    "keywords": [
+      "iniciar",
+      "liderar",
+      "atreverse",
+      "primer paso",
+      "elegir rumbo",
+      "pionero",
+      "confiar en sí",
+      "decidir",
+      "reclamar",
+      "plantarse"
     ],
     "posture": "Hoy premia al que se mueve primero y confía en sí — elige rumbo y camina; el suelo se endurece bajo tus pies.",
     "money": [
@@ -35,11 +41,17 @@
     "watch_out": "Hoy tus aristas están más afiladas — la gente puede sentirse empujada cuando tú solo crees estar liderando."
   },
   "2": {
-    "keywords": ["alinear", "escuchar", "suavizar", "compañía", "cuidar", "calibrar", "armonizar", "paciencia", "diplomático", "receptivo"],
-    "imagery": [
-      "un día que pide puntada lenta, no tajo rápido",
-      "el segundo instrumento que encuentra el acorde que empezó el primero",
-      "un té que se vuelve mejor con un minuto más en reposo"
+    "keywords": [
+      "alinear",
+      "escuchar",
+      "suavizar",
+      "compañía",
+      "cuidar",
+      "calibrar",
+      "armonizar",
+      "paciencia",
+      "diplomático",
+      "receptivo"
     ],
     "posture": "Hoy pide compañía y paciencia — tu fuerza está en la pausa, no en el empuje.",
     "money": [
@@ -70,11 +82,17 @@
     "watch_out": "Hoy tus antenas están abiertas — los estados de ánimo ajenos se te pegan más rápido de lo habitual."
   },
   "3": {
-    "keywords": ["expresar", "crear", "jugar", "deleitar", "actuar", "encantar", "hablar", "chispa", "color", "tejer"],
-    "imagery": [
-      "un día con las luces del estudio encendidas",
-      "las ideas llegan en bandada, no en fila",
-      "una conversación que se vuelve puerta"
+    "keywords": [
+      "expresar",
+      "crear",
+      "jugar",
+      "deleitar",
+      "actuar",
+      "encantar",
+      "hablar",
+      "chispa",
+      "color",
+      "tejer"
     ],
     "posture": "Hoy está encendido por dentro — expresa, encanta, crea; la ligereza es la estrategia.",
     "money": [
@@ -105,11 +123,17 @@
     "watch_out": "Hoy tus palabras viajan más lejos de lo que pretendes — lo que tú sentiste como broma, otro puede oírlo como veredicto."
   },
   "4": {
-    "keywords": ["construir", "cuidar", "estructura", "asentar", "ancla", "estable", "fiable", "método", "cimientos", "oficio"],
-    "imagery": [
-      "un día para libros contables limpios y esquinas en escuadra",
-      "el carpintero que mide dos veces y corta una",
-      "el ladrillo que no pide ser visto y aún así sostiene el muro"
+    "keywords": [
+      "construir",
+      "cuidar",
+      "estructura",
+      "asentar",
+      "ancla",
+      "estable",
+      "fiable",
+      "método",
+      "cimientos",
+      "oficio"
     ],
     "posture": "Hoy premia paciencia, repetición y el ladrillo poco glamoroso — preséntate y haz el pequeño trabajo honesto.",
     "money": [
@@ -140,11 +164,17 @@
     "watch_out": "Hoy el día se siente más pesado que real — el impulso está escondido en la siguiente tarea pequeña, no en el descanso."
   },
   "5": {
-    "keywords": ["cambio", "moverse", "explorar", "libertad", "variedad", "improvisar", "desplazar", "vagar", "adaptar", "sensorial"],
-    "imagery": [
-      "un día con las ventanillas bajadas y la ruta sin terminar",
-      "la puerta que en realidad llevaba a algún sitio",
-      "una corriente, no una carretera"
+    "keywords": [
+      "cambio",
+      "moverse",
+      "explorar",
+      "libertad",
+      "variedad",
+      "improvisar",
+      "desplazar",
+      "vagar",
+      "adaptar",
+      "sensorial"
     ],
     "posture": "Hoy pide movimiento, novedad y disposición a ser desviado — reserva el rodeo, no el plato principal.",
     "money": [
@@ -175,11 +205,17 @@
     "watch_out": "Hoy tu apetito por lo nuevo es fuerte — cualquier cosa a la que te comprometas en firme sabe distinto el viernes."
   },
   "6": {
-    "keywords": ["cuidar", "hogar", "responsabilidad", "armonía", "belleza", "nutrir", "acoger", "remendar", "calidez", "atender"],
-    "imagery": [
-      "un día que huele un poco a cocina y a ropa limpia",
-      "el cuarto que se ordena porque alguien viene a verte",
-      "un círculo dibujado alrededor de las personas que quieres"
+    "keywords": [
+      "cuidar",
+      "hogar",
+      "responsabilidad",
+      "armonía",
+      "belleza",
+      "nutrir",
+      "acoger",
+      "remendar",
+      "calidez",
+      "atender"
     ],
     "posture": "Hoy es para atender — al hogar, a la familia, a quienes cuentan con tu estabilidad.",
     "money": [
@@ -210,11 +246,17 @@
     "watch_out": "Hoy tu impulso de reparar es fuerte — pregunta primero si quieren ayuda antes de cargarlo por ellos."
   },
   "7": {
-    "keywords": ["reflexión", "estudiar", "profundidad", "silencio", "discernir", "investigar", "interior", "esperar", "cribar", "verificar"],
-    "imagery": [
-      "un día con las cortinas a medio echar",
-      "la página que necesitabas estaba subrayada en el segundo libro, no en el primero",
-      "el clima que miras desde la ventana, no el que cruzas"
+    "keywords": [
+      "reflexión",
+      "estudiar",
+      "profundidad",
+      "silencio",
+      "discernir",
+      "investigar",
+      "interior",
+      "esperar",
+      "cribar",
+      "verificar"
     ],
     "posture": "Hoy pide girar hacia adentro — leer, reflexionar, verificar; las buenas jugadas pasan mañana.",
     "money": [
@@ -245,11 +287,17 @@
     "watch_out": "Hoy la certeza es un disfraz — lo que se siente como una decisión forzada suele aclararse por la mañana si esperas."
   },
   "8": {
-    "keywords": ["ambición", "resultados", "dinero", "autoridad", "cosecha", "impulso", "decidir", "apalancar", "peso", "promover"],
-    "imagery": [
-      "un día de agarrar el toro por los cuernos",
-      "ecos de acciones pasadas — como la estela de un barco",
-      "el final de la cosecha; recoge lo maduro"
+    "keywords": [
+      "ambición",
+      "resultados",
+      "dinero",
+      "autoridad",
+      "cosecha",
+      "impulso",
+      "decidir",
+      "apalancar",
+      "peso",
+      "promover"
     ],
     "posture": "Hoy es decisión y visibilidad — haz la jugada que llevas planeando y deja que los resultados hablen.",
     "money": [
@@ -280,11 +328,17 @@
     "watch_out": "Hoy estás más transparente que de costumbre — lo que escondes se lee con facilidad; no es día para maniobras."
   },
   "9": {
-    "keywords": ["completar", "soltar", "dar", "cerrar", "perdonar", "humanitario", "más amplio", "ablandar", "donar", "anudar"],
-    "imagery": [
-      "un día para cerrar pestañas, no abrir nuevas",
-      "la ola que regresa al mar",
-      "hacer el nudo antes de empezar la siguiente puntada"
+    "keywords": [
+      "completar",
+      "soltar",
+      "dar",
+      "cerrar",
+      "perdonar",
+      "humanitario",
+      "más amplio",
+      "ablandar",
+      "donar",
+      "anudar"
     ],
     "posture": "Hoy pide completar y soltar — cierra bucles, devuelve cosas, suelta con suavidad.",
     "money": [
@@ -315,11 +369,17 @@
     "watch_out": "Hoy los finales pesan — lo que llevaba debilitándose en silencio a veces escoge este día para caer, y puede ser un regalo."
   },
   "11": {
-    "keywords": ["inspirar", "visión", "intuir", "canal", "sensible", "iluminar", "afinar", "mensajero", "sutil", "transmitir"],
-    "imagery": [
-      "un día con las antenas más abiertas de lo habitual",
-      "una idea que llega entera, como dictada",
-      "el momento en que un diapasón encuentra su nota"
+    "keywords": [
+      "inspirar",
+      "visión",
+      "intuir",
+      "canal",
+      "sensible",
+      "iluminar",
+      "afinar",
+      "mensajero",
+      "sutil",
+      "transmitir"
     ],
     "posture": "Hoy los cables están vivos — la intuición aterriza más afilada, la sensibilidad sube y la inspiración es tu trabajo.",
     "money": [
@@ -350,11 +410,17 @@
     "watch_out": "Hoy el volumen de tu sistema nervioso está alto — lo que parece miedo a veces es solo intensidad sin sitio donde aterrizar."
   },
   "22": {
-    "keywords": ["construir en grande", "manifestar", "arquitecto", "escalar", "largo plazo", "componer", "plano", "anclar visión", "tejer", "aterrizar el sueño"],
-    "imagery": [
-      "el arquitecto en su mesa de dibujo, no en la obra",
-      "un día para colocar un ladrillo de la catedral",
-      "el emparrado que se arma ahora para la vid del año que viene"
+    "keywords": [
+      "construir en grande",
+      "manifestar",
+      "arquitecto",
+      "escalar",
+      "largo plazo",
+      "componer",
+      "plano",
+      "anclar visión",
+      "tejer",
+      "aterrizar el sueño"
     ],
     "posture": "Hoy premia al constructor de panorama amplio — conecta la visión al próximo ladrillo concreto.",
     "money": [
@@ -385,11 +451,17 @@
     "watch_out": "Hoy el sueño puede paralizar el hacer — construir una v0.1 áspera le gana a planear una v1.0 perfecta."
   },
   "33": {
-    "keywords": ["enseñar", "sanar", "servir", "amor a escala", "mentor", "sostener", "elevar", "guiar", "compasión", "pastorear"],
-    "imagery": [
-      "un día para verter, confiando en que el pozo vuelve a llenarse",
-      "el faro que se queda encendido para que alguien llegue a puerto",
-      "una habitación que se vuelve más cálida porque alguien entró con suavidad"
+    "keywords": [
+      "enseñar",
+      "sanar",
+      "servir",
+      "amor a escala",
+      "mentor",
+      "sostener",
+      "elevar",
+      "guiar",
+      "compasión",
+      "pastorear"
     ],
     "posture": "Hoy es para servicio y cuidado a escala — tu calidez incondicional cambia una sala.",
     "money": [

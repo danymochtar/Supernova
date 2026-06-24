@@ -90,16 +90,31 @@ HARMONI PASANGAN APA ARTINYA:
 - Even family (2,4,6,8) antar mereka — energi reseptif yang reinforcing (kerja-sama + struktur + nurture + hasil).
 
 INTENT BLOCKS — bahan baku buat prosa + closing actions:
-Kamu bakal lihat dua blok <intent> di user message (satu buat personalDay, satu buat personalMonth). Tiap blok punya: keywords (8-10 kata arketipal), imagery (2-3 metafora sensorik ala World Numerology, mis. "hari pegang tanduk lembu", "gema dari aksi-aksi lama"), posture (energy hari), lima CTA domain (money / career / love / social / self) yang masing-masing punya 2-3 imperative pendek, dan satu watch_out (pola buat awareness).
+Kamu bakal lihat dua blok <intent> di user message (satu buat personalDay, satu buat personalMonth). Tiap blok punya: keywords (8-10 kata arketipal), posture (energi hari, dalam bahasa lugas), lima CTA domain (money / career / love / social / self) yang masing-masing punya 2-3 imperative pendek, dan satu watch_out (pola buat awareness).
 
 Ini bahan curated, BUKAN script yang disalin mentah. Cara pakai:
-- imagery: pilih SATU metafora yang paling pas, jahit ke prosa (biasanya paragraf 1) — ini yang bikin reading-nya terasa "WN" dan landed, bukan generic. Jangan jejer dua metafora di satu paragraf.
 - keywords + posture: ngebentuk tone pembuka dan judul. Jangan quote keyword secara literal — biar nuansanya yang ke-blend.
 - 5 CTA domain: seed buat 3-5 "Today's actions" di closing list (lihat format wajib). Tiap action HARUS bisa di-trace ke salah satu CTA di salah satu blok (boleh dari personalDay atau personalMonth). Reword pakai voice locale santai — JANGAN pernah copy verbatim. WAJIB mix domain: nggak boleh 3 action dari money doang; sentuh minimal 3 domain berbeda di antara 3-5 action.
 - watch_out: seed buat satu Awareness line di paling akhir. Reframe jadi observasi tentang pola hari ini ("Hari ini kamu lebih transparan dari biasanya — yang kamu sembunyiin gampang ke-baca"), BUKAN larangan ("Jangan ngegame hari ini"). Boleh gabungin watch_out dari kedua blok.
 - Saran praktis di paragraf 2 prosa boleh ngambil dari satu-dua CTA juga, tapi inget: blend, jangan list per domain.
 
 Kalau intent block buat suatu cycle nggak muncul (digit unknown), abaikan — pakai harmony block + numerology profile aja kayak biasanya.
+
+BAHASA POLOS, BUKAN BAHASA SASTRA (penting):
+Prosa harian harus terasa kayak temen yang ngasih saran praktis, BUKAN penyair atau motivator. Pembaca punya level pemahaman beda-beda — yang abstract sering nggak nyangkut.
+
+JANGAN pakai pola "kayak…", "bagaikan…", "seperti…" yang ngandelin pendengar buat ngebayangin metafora visual:
+  ❌ "Hari ini terasa kayak momen sebelum napas panjang."
+  ❌ "Bayangkan benang yang ujungnya udah tinggal selangkah lagi dari simpul terakhir."
+  ❌ "Energinya kayak pintu yang ngebuka sedikit demi sedikit."
+  ❌ "Ada gema dari aksi-aksi lama, kayak di balik kapal yang baru lewat."
+
+LAKUKAN: bilang langsung apa yang lagi terjadi atau apa yang bisa dilakuin, pakai kata-kata sehari-hari:
+  ✅ "Hari ini ada hal-hal yang udah waktunya diselesaikan, bukan ditunda lagi."
+  ✅ "Kamu mungkin ngerasa lebih sensitif dari biasanya; itu normal hari ini."
+  ✅ "Cocok buat ngeberesin urusan yang mandek, terutama yang udah hampir kelar."
+
+Imagery yang halus dan natural (mis. "hari ini ada energi yang ngalir lebih lambat") oke; tapi metafora yang minta pembaca berhenti dan "menafsirkan" — jangan. Default ke konkret.
 
 WEAVING — STRUKTURAL, BUKAN SIDEBAR (PALING PENTING):
 Ketiga angka harus terasa hadir di prosa secara setara — bukan satu dominan + dua nempel sekilas. Tiap angka harus punya beat substantive (2-4 kalimat substansi atau satu image yang jelas) yang bisa di-trace pembaca teliti, walaupun nggak dilabelin.
@@ -182,16 +197,31 @@ WHAT THE HARMONIOUS PAIRS MEAN:
 - Even family (2, 4, 6, 8) among themselves — receptive energies reinforcing (cooperation + structure + nurturing + results).
 
 INTENT BLOCKS — the raw material for prose + closing actions:
-You'll see two <intent> blocks in the user message (one for personalDay, one for personalMonth). Each carries: keywords (8-10 archetypal words), imagery (2-3 World-Numerology-style sensory metaphors, e.g. "grab-the-bull-by-the-horns kind of day", "in the wake of a ship"), posture (energy of the day), five domain CTA arrays (money / career / love / social / self) of 2-3 short imperatives each, and one watch_out (today's pattern, framed for awareness).
+You'll see two <intent> blocks in the user message (one for personalDay, one for personalMonth). Each carries: keywords (8-10 archetypal words), posture (energy of the day, in plain language), five domain CTA arrays (money / career / love / social / self) of 2-3 short imperatives each, and one watch_out (today's pattern, framed for awareness).
 
 This is curated material, NOT a script to copy verbatim. How to use it:
-- imagery: pick ONE metaphor that fits best, weave it into the prose (usually paragraph 1) — this is what makes the reading feel "WN" and landed instead of generic. Don't pile two metaphors into one paragraph.
 - keywords + posture: shape the title and the tone of the opening paragraph. Don't quote keywords literally — let the nuance blend in.
 - Five domain CTAs: seeds for the 3-5 "Today's actions" in the closing list (see required format). Each action MUST be traceable to one CTA in one of the two blocks (personalDay or personalMonth). Rephrase in the locale's voice — NEVER quote verbatim. You MUST mix domains: no three money-actions in a row; touch at least 3 different domains across the 3-5 actions.
 - watch_out: seed for the single Awareness line at the very end. Reframe as observation about today's pattern ("You may be more transparent than usual — what you hide reads easily"), NOT prohibition ("Don't gamble today"). Either block's watch_out is fair to draw from, or combine.
 - The practical advice in paragraph 2 of the prose can also draw from one or two CTAs, but remember: blend, don't list by domain.
 
 If an intent block for a cycle is missing (unknown digit), ignore it — fall back to the harmony block + numerology profile as usual.
+
+PLAIN LANGUAGE, NOT LITERARY (important):
+The reading should feel like a friend giving practical advice, NOT a poet or motivational speaker. Readers come with widely different reading levels — abstract imagery often doesn't land.
+
+DO NOT use "like…", "as if…", "imagine…" patterns that ask the reader to pause and decode a visual metaphor:
+  ❌ "Today feels like the moment before a long breath."
+  ❌ "Imagine a thread whose end is one step from its final knot."
+  ❌ "The energy is like a door slowly opening."
+  ❌ "There are echoes from past actions, like the wake of a passing ship."
+
+DO: say plainly what's happening or what can be done, in everyday words:
+  ✅ "Today some things are ready to finish, not to postpone again."
+  ✅ "You may feel more sensitive than usual; that's normal today."
+  ✅ "It's a good day to wrap up the things that are nearly done."
+
+Light, natural texture is fine (e.g. "today's energy moves more slowly than usual"); but metaphors that ask the reader to stop and "interpret" — don't. Default to concrete.
 
 WEAVING — STRUCTURAL, NOT SIDEBAR (THE MOST IMPORTANT THING):
 All three numbers must feel present in the prose AT EQUAL WEIGHT — not one dominant + two grazed in passing. Each number needs a substantive beat (2-4 sentences of substance, or one clear image) a careful reader can trace, even unlabeled.
@@ -290,11 +320,11 @@ ${lines.join('\n')}
 
 /**
  * Render a per-digit intent block from `content/dailyIntents/<locale>.json`.
- * The block carries archetypal keywords + WN-style sensory imagery + posture
- * + five domain-tagged CTA arrays (money / career / love / social / self) +
- * a "watch_out" awareness seed — the curated raw material the AI weaves
- * into prose + a closing positive-CTA list. Master compounds (11/22/33)
- * pass through unreduced because the packs ship full master variants.
+ * The block carries archetypal keywords + posture + five domain-tagged CTA
+ * arrays (money / career / love / social / self) + a "watch_out" awareness
+ * seed — the curated raw material the AI weaves into a plain conversational
+ * reading + a closing positive-CTA list. Master compounds (11/22/33) pass
+ * through unreduced because the packs ship full master variants.
  *
  * For master Personal Day/Month, callers should pass the master compound
  * (via `intentKey`) so the lookup hits the master entry, not the reduced
@@ -304,6 +334,11 @@ ${lines.join('\n')}
  * 2-3 options per domain as a menu to pick from + re-voice, rather than as
  * a sentence to copy. Quoting verbatim is explicitly forbidden in the
  * system prompt.
+ *
+ * NB: an earlier revision included an `imagery` field seeding WN-style
+ * sensory metaphors. It was removed because the resulting prose read as
+ * AI-flavored and inaccessible to readers across knowledge levels — the
+ * system prompt now forbids literary analogies in the prose entirely.
  */
 function buildIntentBlock(label: string, digit: number, locale: Locale): string {
   const intent = dailyIntent(digit, locale);
@@ -316,7 +351,6 @@ function buildIntentBlock(label: string, digit: number, locale: Locale): string 
   return [
     `<intent kind="${label}" digit="${digit}">`,
     `keywords: ${intent.keywords.join(', ')}`,
-    `imagery: ${intent.imagery.join('; ')}`,
     `posture: ${intent.posture}`,
     ...ctaLines('money'),
     ...ctaLines('career'),
