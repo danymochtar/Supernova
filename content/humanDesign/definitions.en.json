@@ -1,0 +1,27 @@
+{
+  "SINGLE": {
+    "name": "Single Definition",
+    "headline": "Fully connected energy — the most stable",
+    "body": "All your defined centers connect into one whole. That means your energy is more stable and consistent than any other definition type. You don't need others to feel energetically complete — you can work solo and decide solo."
+  },
+  "SPLIT": {
+    "name": "Split Definition",
+    "headline": "Two energy parts, bridged by others",
+    "body": "Your energy is divided into two parts that don't connect to each other. On your own, the parts operate separately. Around someone who has the bridging gate, you feel more whole. Worth noticing — this isn't a deficit, it's how you draw people into your life."
+  },
+  "TRIPLE_SPLIT": {
+    "name": "Triple Split Definition",
+    "headline": "Three energy parts, takes longer to integrate",
+    "body": "Your energy is divided into three groups that don't connect — rarer, and it takes longer to resolve. Group environments where varied energies bridge you suit you well. Solo work is fine, but your processing may take longer."
+  },
+  "QUAD_SPLIT": {
+    "name": "Quad Split Definition",
+    "headline": "Four parts — the most complex, the rarest",
+    "body": "Four separate energy groups — the rarest combination. Be more patient with yourself when making decisions. The energy of others helps bridge, but you also need solo time to integrate what's coming in."
+  },
+  "NONE": {
+    "name": "No Definition",
+    "headline": "Reflector — all centers open",
+    "body": "As a Reflector, all 9 of your centers are open — no center is fixed-defined. That's what makes you a mirror of the environment. You take in the energy around you and reflect it back. It's a unique strength no other type has."
+  }
+}

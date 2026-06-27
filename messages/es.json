@@ -953,7 +953,9 @@
     "tabPerjalanan": "Journey",
     "tabPercintaan": "Love",
     "tabKeuangan": "Money",
-    "bioBorn": "Nació"
+    "bioBorn": "Nació",
+    "tabDesainManusia": "Diseño Humano",
+    "editBirth": "Editar datos de nacimiento"
   },
   "love": {
     "title": "Amor",
@@ -1011,5 +1013,14 @@
     "keuangan": "Dinero",
     "karier": "Carrera",
     "relationship": "Relación"
+  },
+  "humanDesign": {
+    "title": "Diseño Humano",
+    "subtitle": "Tu Tipo, Estrategia y Autoridad según el Diseño Humano de Ra Uru Hu.",
+    "emptyTitle": "Aún no se puede calcular",
+    "emptyNeedsBirthTime": "El Diseño Humano necesita una hora de nacimiento precisa. Añádela en tu perfil para calcular la carta.",
+    "emptyNeedsCity": "El Diseño Humano necesita una ciudad de nacimiento específica (para coordenadas precisas). Elige tu ciudad de nacimiento en el perfil.",
+    "emptyCta": "Completar datos de nacimiento",
+    "footerNote": "La carta se recalcula cuando actualizas tus datos de nacimiento."
   }
 }

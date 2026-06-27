@@ -1,0 +1,42 @@
+{
+  "EMOTIONAL": {
+    "name": "Emotional",
+    "headline": "Don't decide at the peak — sleep on it",
+    "body": "Your authority is the emotional wave. You need time to feel a decision from several moods — when you're up, when you're down, when you're neutral. Golden rule: don't take a big decision at the peak (excited or angry). Sleep on it at least one night. A few days if you can. Stable clarity comes after the wave settles."
+  },
+  "SACRAL": {
+    "name": "Sacral",
+    "headline": "Gut voice: \"uh-huh\" or \"uh-uh\"",
+    "body": "Your authority is the sacral — the gut that says yes/no before the head thinks. When a choice arrives, notice the body's automatic response: does energy light up, or does something pull back? That's the answer. To practice: have a friend offer binary choices (this or that, here or there) and listen for what comes out spontaneously. Your sacral is smarter than your head about your decisions."
+  },
+  "SPLENIC": {
+    "name": "Splenic",
+    "headline": "The intuition that arrives once — don't miss it",
+    "body": "Spleen authority is an intuition that comes quickly — once, quietly, in the moment. Not a voice in your head, not analysis — more like a felt sense that appears as the situation unfolds. The catch: spleen doesn't repeat. Catch it the first time and you're protected. Miss it and you walk on without it."
+  },
+  "EGO": {
+    "name": "Ego (Heart)",
+    "headline": "What do I want? What can I commit to?",
+    "body": "Your authority is the heart center — what you want and what you can commit to. The way to decide is simple: ask, \"Do I want this? Can I commit?\" Don't shop for outside validation. Heart energy comes in bursts — say yes when you want, and say no honestly when you don't. Healthy ego isn't selfish — it's honest about capacity."
+  },
+  "SELF_PROJECTED": {
+    "name": "Self-Projected (G)",
+    "headline": "Speak it out loud — listen to yourself",
+    "body": "Your authority is in the G center — identity and direction. The best way to decide: talk the situation through, out loud, to someone you trust (or to yourself in a room). When you hear your own voice, you'll know whether it fits who you are. The other person's response doesn't matter — what matters is what you hear yourself say."
+  },
+  "MENTAL": {
+    "name": "Mental (Outer Authority)",
+    "headline": "Talk it through — don't decide alone",
+    "body": "As a Mental Projector, you don't have a stable internal authority — your energy is designed to think out loud with people you trust before deciding. Don't ask them to choose for you; just let yourself hear yourself as you explain the situation to them. The clarity comes from you, but it comes through the conversation. Strategy: wait for the invitation, then talk."
+  },
+  "LUNAR": {
+    "name": "Lunar (Reflector)",
+    "headline": "Give it one lunar cycle",
+    "body": "As a Reflector, you have no consistent inner authority — your energy shifts with the environment. For big decisions, give yourself one lunar cycle (about 28 days). During that time, notice how you feel across different moods and around different people. Your certainty comes from the pattern — not from one moment."
+  },
+  "NONE": {
+    "name": "No Fixed Authority",
+    "headline": "Edge case — usually lunar",
+    "body": "Your chart falls in a rare configuration where the standard inner authority doesn't apply cleanly. Use the Reflector strategy (lunar cycle) or the Mental strategy (talk it through) as guidance, and watch your own body patterns over time."
+  }
+}

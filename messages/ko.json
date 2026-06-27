@@ -953,7 +953,9 @@
     "tabPerjalanan": "Journey",
     "tabPercintaan": "Love",
     "tabKeuangan": "Money",
-    "bioBorn": "생년월일"
+    "bioBorn": "생년월일",
+    "tabDesainManusia": "휴먼 디자인",
+    "editBirth": "출생 데이터 편집"
   },
   "love": {
     "title": "연애",
@@ -1011,5 +1013,14 @@
     "keuangan": "금전",
     "karier": "커리어",
     "relationship": "관계"
+  },
+  "humanDesign": {
+    "title": "휴먼 디자인",
+    "subtitle": "Ra Uru Hu의 휴먼 디자인 시스템에 따른 당신의 타입, 전략, 권위.",
+    "emptyTitle": "아직 계산할 수 없음",
+    "emptyNeedsBirthTime": "휴먼 디자인에는 정확한 출생 시간이 필요해. 프로필에 추가하면 계산할 수 있어.",
+    "emptyNeedsCity": "휴먼 디자인에는 출생 도시(정확한 위경도)가 필요해. 프로필에서 도시를 선택해줘.",
+    "emptyCta": "출생 데이터 완성",
+    "footerNote": "출생 데이터를 업데이트하면 차트가 다시 계산돼."
   }
 }

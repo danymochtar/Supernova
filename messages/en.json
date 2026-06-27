@@ -953,7 +953,18 @@
     "tabPerjalanan": "Journey",
     "tabPercintaan": "Love",
     "tabKeuangan": "Money",
-    "bioBorn": "Born"
+    "tabDesainManusia": "Design",
+    "bioBorn": "Born",
+    "editBirth": "Edit birth data"
+  },
+  "humanDesign": {
+    "title": "Human Design",
+    "subtitle": "Your Type, Strategy, and Authority according to Ra Uru Hu's Human Design system.",
+    "emptyTitle": "Not computable yet",
+    "emptyNeedsBirthTime": "Human Design needs an accurate birth time. Add it on your profile so we can compute the chart.",
+    "emptyNeedsCity": "Human Design needs a specific birth city (for precise lat/lon coordinates). Pick your birth city in your profile.",
+    "emptyCta": "Complete birth data",
+    "footerNote": "The chart recomputes when your birth data is updated."
   },
   "love": {
     "title": "Love",

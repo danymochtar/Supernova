@@ -11,6 +11,8 @@ import { isLocale, type Locale } from '@/lib/i18n/config';
 import { isValidTimezone } from '@/lib/timezones';
 import { parseProfileForm, type ProfileFormError } from '@/lib/profile/validate';
 import { computeMoonAndRising } from '@/lib/zodiac/birthChart';
+import { computeHumanDesign } from '@/lib/humanDesign/chart';
+import type { HumanDesignChart } from '@/lib/humanDesign/types';
 
 export type UpdateProfileResult =
   | { ok: true }
@@ -54,6 +56,7 @@ export async function updateProfileAction(formData: FormData): Promise<UpdatePro
     : parsed.data.timezone;
   let moonSign: ReturnType<typeof computeMoonAndRising>['moon'] = null;
   let risingSign: ReturnType<typeof computeMoonAndRising>['rising'] = null;
+  let hdChart: HumanDesignChart | null = null;
   if (birthTime) {
     const chart = computeMoonAndRising({
       year: parsed.data.dob.year,
@@ -66,6 +69,28 @@ export async function updateProfileAction(formData: FormData): Promise<UpdatePro
     });
     moonSign = chart.moon;
     risingSign = chart.rising;
+
+    // Human Design needs precise lat/lon (the city picker provides them).
+    // Without a city, the timezone-center approximation used by the
+    // Ascendant compute would push Design Sun across gate boundaries —
+    // not accurate enough to claim "this is your HD chart". So we only
+    // compute HD when we have real coordinates.
+    if (
+      typeof birthLat === 'number' &&
+      Number.isFinite(birthLat) &&
+      typeof birthLon === 'number' &&
+      Number.isFinite(birthLon)
+    ) {
+      hdChart = computeHumanDesign({
+        year: parsed.data.dob.year,
+        month: parsed.data.dob.month,
+        day: parsed.data.dob.day,
+        birthTime,
+        timezone: birthTimezone,
+        lat: birthLat,
+        lon: birthLon,
+      });
+    }
   }
 
   await updateProfile(session.user.id, {
@@ -83,6 +108,14 @@ export async function updateProfileAction(formData: FormData): Promise<UpdatePro
     birthLon: birthTime ? birthLon : null,
     moonSign,
     risingSign,
+    hdType: hdChart?.type ?? null,
+    hdStrategy: hdChart?.strategy ?? null,
+    hdAuthority: hdChart?.authority ?? null,
+    hdProfileConscious: hdChart?.profile.conscious ?? null,
+    hdProfileUnconscious: hdChart?.profile.unconscious ?? null,
+    hdDefinition: hdChart?.definition ?? null,
+    hdIncarnationCross: hdChart?.incarnationCross.name ?? null,
+    hdChart: hdChart ?? null,
   });
 
   revalidatePath(`/${localeChecked}/dashboard`);

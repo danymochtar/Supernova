@@ -7,6 +7,7 @@ import { KehidupanTabs, type KehidupanTab } from '@/components/kehidupan/Kehidup
 import { TentangView } from '@/components/kehidupan/TentangView';
 import { PerjalananView } from '@/components/kehidupan/PerjalananView';
 import { AspectView } from '@/components/kehidupan/AspectView';
+import { HumanDesignView } from '@/components/humanDesign/HumanDesignView';
 import { CurhatShortcut } from '@/components/curhat/CurhatShortcut';
 import { categoryForKehidupanTab } from '@/lib/curhat/categories';
 
@@ -35,7 +36,12 @@ export default async function KehidupanPage({
   // the ?tab= query param.
   const raw = searchParams.tab;
   const tab: KehidupanTab =
-    raw === 'perjalanan' || raw === 'percintaan' || raw === 'keuangan' ? raw : 'tentang';
+    raw === 'perjalanan' ||
+    raw === 'percintaan' ||
+    raw === 'keuangan' ||
+    raw === 'desainManusia'
+      ? raw
+      : 'tentang';
 
   return (
     <main
@@ -56,6 +62,7 @@ export default async function KehidupanPage({
             perjalanan: t('tabPerjalanan'),
             percintaan: t('tabPercintaan'),
             keuangan: t('tabKeuangan'),
+            desainManusia: t('tabDesainManusia'),
           }}
         />
       </header>
@@ -66,6 +73,8 @@ export default async function KehidupanPage({
         <AspectView profile={profile} locale={locale} aspectId="love" />
       ) : tab === 'keuangan' ? (
         <AspectView profile={profile} locale={locale} aspectId="finance" />
+      ) : tab === 'desainManusia' ? (
+        <HumanDesignView profile={profile} locale={locale} />
       ) : (
         <TentangView profile={profile} locale={locale} />
       )}

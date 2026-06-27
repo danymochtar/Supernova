@@ -196,10 +196,69 @@ model Profile {
   birthLat        Float?
   birthLon        Float?
   birthTimezone   String?
+  // Human Design (Ra Uru Hu) chart derived from (dob + birthTime + lat +
+  // lon + timezone). All 8 columns are computed server-side by
+  // `computeHumanDesign()` and cached here so reads don't re-run the
+  // ephemeris. Null when birthTime / lat / lon are missing.
+  // - hdType: Generator / Manifesting Generator / Manifestor /
+  //   Projector / Reflector (the 5 HD types).
+  // - hdStrategy: Respond / Inform / Wait Invitation / Wait Lunar.
+  // - hdAuthority: which center drives decisions (Emotional / Sacral /
+  //   etc.) — 8 values including "None" for Mental authority edge case.
+  // - hdProfileConscious / hdProfileUnconscious: the two profile lines
+  //   1-6 (e.g. "5/1" = conscious 5, unconscious 1). Together = the
+  //   12 HD profiles.
+  // - hdDefinition: SINGLE / SPLIT / TRIPLE_SPLIT / QUAD_SPLIT / NONE.
+  // - hdIncarnationCross: canonical name like "Right Angle Cross of the
+  //   Sphinx", or null when not in our static lookup table.
+  // - hdChart: full computed chart (centers, channels, all 26 planetary
+  //   activations) as JSON — fuels the bodygraph + detail modals.
+  hdType                HDType?
+  hdStrategy            HDStrategy?
+  hdAuthority           HDAuthority?
+  hdProfileConscious    Int?
+  hdProfileUnconscious  Int?
+  hdDefinition          HDDefinition?
+  hdIncarnationCross    String?
+  hdChart               Json?
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
   @@map("profile")
+}
+
+enum HDType {
+  GENERATOR
+  MANIFESTING_GENERATOR
+  MANIFESTOR
+  PROJECTOR
+  REFLECTOR
+}
+
+enum HDStrategy {
+  RESPOND
+  INFORM
+  WAIT_INVITATION
+  WAIT_LUNAR
+}
+
+enum HDAuthority {
+  EMOTIONAL
+  SACRAL
+  SPLENIC
+  EGO
+  SELF_PROJECTED
+  MENTAL
+  LUNAR
+  NONE
+}
+
+enum HDDefinition {
+  SINGLE
+  SPLIT
+  TRIPLE_SPLIT
+  QUAD_SPLIT
+  NONE
 }
 
 model NumerologyCache {

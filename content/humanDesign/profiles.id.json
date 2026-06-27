@@ -1,0 +1,62 @@
+{
+  "1/3": {
+    "name": "Investigator / Martyr",
+    "headline": "Bangun fondasi lewat trial & error",
+    "body": "Profil kamu kombinasi peneliti dan eksperimen langsung. Garis 1 butuh fondasi — riset dalam, ngerti detil sebelum gerak. Garis 3 belajar dari nyobain langsung, sering lewat kesalahan. Banyak \"udah kucoba, ternyata gini hasilnya\" di hidup kamu. Itu bukan kegagalan — itu cara kamu belajar."
+  },
+  "1/4": {
+    "name": "Investigator / Opportunist",
+    "headline": "Riset + bawa lewat networking dekat",
+    "body": "Garis 1 ngebangun otoritas lewat studi yang dalam. Garis 4 nyebarinnya lewat jaringan akrab — temen, keluarga, lingkaran dalam. Perpindahan besar dalam hidup biasanya dateng lewat orang yang udah kamu kenal, bukan dari tiba-tiba."
+  },
+  "2/4": {
+    "name": "Hermit / Opportunist",
+    "headline": "Bakat alami yang ditarik keluar oleh lingkaran",
+    "body": "Kamu punya bakat natural yang muncul tanpa harus ngepush — orang lain sering ngeliatnya sebelum kamu sadar sendiri. Garis 4 narik kamu keluar dari hermit mode lewat undangan dari lingkaran dekat. Penting buat kamu punya waktu sendiri buat ngerefuel."
+  },
+  "2/5": {
+    "name": "Hermit / Heretic",
+    "headline": "Solusi praktis yang diproyeksiin orang",
+    "body": "Bakat natural (garis 2) + jadi orang yang dipanggil pas ada masalah praktis (garis 5). Orang punya ekspektasi tinggi ke kamu — kadang lebih tinggi dari yang adil. Bisa terasa berat, tapi pas kamu deliver, dampaknya jauh dan tahan lama."
+  },
+  "3/5": {
+    "name": "Martyr / Heretic",
+    "headline": "Eksperimen + solusi praktis yang ngeshift orang",
+    "body": "Garis 3 belajar lewat nyobain dan jatuh; garis 5 ngeproyeksiin solusi. Hidup kamu penuh trial-and-error, dan apa yang kamu temuin sering jadi kunci buat orang lain. Tapi orang juga sering proyeksiin yang macem-macem ke kamu — yang positif maupun yang gak fair."
+  },
+  "3/6": {
+    "name": "Martyr / Role Model",
+    "headline": "Tiga fase: nyobain, naik ke atap, jadi role model",
+    "body": "Profil ini paling jelas pola hidupnya: fase 1 (umur 0-30) nyobain banyak hal lewat trial-error; fase 2 (30-50) \"naik ke atap\" — observasi dari jarak; fase 3 (50+) turun lagi sebagai role model dengan kebijaksanaan dari fase 1 dan 2."
+  },
+  "4/6": {
+    "name": "Opportunist / Role Model",
+    "headline": "Pengaruh lewat jaringan dekat, hidup yang panjang",
+    "body": "Kamu mempengaruhi dunia lewat jaringan dekat — teman, keluarga, lingkaran inti. Garis 6 ngasih hidup kamu tiga fase yang jelas (lihat 3/6). Bedanya dari 3/6: kamu gak harus nyobain langsung sebanyak itu — kamu belajar lewat orang dekat dan jaringan kamu."
+  },
+  "4/1": {
+    "name": "Opportunist / Investigator",
+    "headline": "Fondasi dalam + jaringan akrab — tetap (fixed-fate)",
+    "body": "Profil tetap (fixed-fate) — kamu di sini buat tujuan spesifik. Garis 1 perlu fondasi yang dalem; garis 4 nyalurin lewat lingkaran dekat. Perpindahan hidup biasanya dateng lewat orang yang udah kenal kamu, dan kamu butuh studi dalam sebelum nyalurin."
+  },
+  "5/1": {
+    "name": "Heretic / Investigator",
+    "headline": "Pemberi solusi yang punya fondasi solid",
+    "body": "Orang ngeliat kamu sebagai pembawa solusi (garis 5), dan kamu emang punya fondasi dalem buat back it up (garis 1). Tapi ada hati-hati: proyeksi dari orang lain bisa berat. Pas kamu deliver yang real, kamu di-honor. Pas ekspektasi gak ketemu, kamu disalahin lebih cepet."
+  },
+  "5/2": {
+    "name": "Heretic / Hermit",
+    "headline": "Universal solution + waktu sendiri buat recharge",
+    "body": "Punya kombinasi pemberi solusi (garis 5) + butuh ruang sendiri (garis 2). Orang mengandalkan kamu, tapi kamu juga butuh hilang sebentar buat ngerefuel. Jangan ngerasa bersalah pas kamu ngambil waktu sendiri — itu yang bikin kamu bisa terus deliver."
+  },
+  "6/2": {
+    "name": "Role Model / Hermit",
+    "headline": "Tiga fase hidup + bakat natural yang dipanggil",
+    "body": "Profil tiga-fase (lihat 3/6) tapi dengan bakat natural di garis 2. Fase observasi (umur 30-50) jadi penting banget buat kamu — itu waktu kamu nge-refine bakat alami yang udah ada sejak awal."
+  },
+  "6/3": {
+    "name": "Role Model / Martyr",
+    "headline": "Role model yang masih nyobain — eksperimen-tial",
+    "body": "Profil tiga-fase (lihat 3/6) dengan garis 3 yang masih eksperimen. Bahkan di fase role model (50+), kamu tetep nyobain — itu yang bikin role model kamu otentik. Kamu role model bukan karena punya jawaban, tapi karena pengalaman trial-and-error kamu tulus."
+  }
+}

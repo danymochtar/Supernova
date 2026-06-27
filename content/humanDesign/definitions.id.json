@@ -1,0 +1,27 @@
+{
+  "SINGLE": {
+    "name": "Single Definition",
+    "headline": "Energi yang nyambung utuh — paling stabil",
+    "body": "Semua pusat yang aktif di tubuh kamu nyambung jadi satu kesatuan. Itu artinya energi kamu paling stabil dan konsisten dibanding tipe definisi lain. Kamu gak terlalu butuh orang lain buat ngerasa lengkap secara energetik — bisa solo work, bisa solo decide."
+  },
+  "SPLIT": {
+    "name": "Split Definition",
+    "headline": "Dua bagian energi, dijembatanin orang lain",
+    "body": "Energi kamu kebagi jadi dua bagian yang gak nyambung. Pas kamu sendiri, bagian-bagian itu beroperasi sendiri-sendiri. Pas kamu deket orang yang punya gate yang nyambungin, kamu ngerasa lebih utuh. Bagus buat sadari — ini bukan kekurangan, ini cara kamu narik orang ke dalam hidup kamu."
+  },
+  "TRIPLE_SPLIT": {
+    "name": "Triple Split Definition",
+    "headline": "Tiga bagian energi, butuh waktu konek",
+    "body": "Energi kamu kebagi jadi tiga grup yang gak nyambung — lebih jarang dan butuh waktu lebih buat ngeresolve. Cocoknya kamu di lingkungan group dimana energi beragam ngebantu nyambungin. Solo work bisa, tapi kamu mungkin butuh proses pikir lebih lama."
+  },
+  "QUAD_SPLIT": {
+    "name": "Quad Split Definition",
+    "headline": "Empat bagian — paling rumit, paling jarang",
+    "body": "Empat group energi terpisah — kombinasi paling rare. Butuh lebih sabar sama diri sendiri pas mau ngambil keputusan. Energi orang lain ngebantu nyambungin, tapi kamu juga butuh waktu sendiri buat ngeintegrasiin yang masuk."
+  },
+  "NONE": {
+    "name": "No Definition",
+    "headline": "Reflector — semua pusat terbuka",
+    "body": "Sebagai Reflector, semua 9 pusat kamu terbuka — gak ada pusat yang \"fixed\" defined. Itu yang bikin kamu cermin lingkungan. Kamu ngambil energi sekitar dan refleksiin balik. Itu kekuatan unik yang gak punya tipe lain."
+  }
+}

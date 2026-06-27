@@ -1,9 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import { Compass, Heart, Sparkles, Wallet } from 'lucide-react';
+import { Compass, Heart, Network, Sparkles, Wallet } from 'lucide-react';
 
-export type KehidupanTab = 'tentang' | 'perjalanan' | 'percintaan' | 'keuangan';
+export type KehidupanTab =
+  | 'tentang'
+  | 'perjalanan'
+  | 'percintaan'
+  | 'keuangan'
+  | 'desainManusia';
 
 interface Props {
   /** Current active tab. */
@@ -17,7 +22,7 @@ interface Props {
  * Segmented control switching between the Kehidupan sub-views. Uses
  * <Link> + a `?tab=` query param (not client state) so each view is its
  * own server render — deep-linkable, and only the active view's AI runs.
- * Horizontally scrollable since four labels overflow a mobile row.
+ * Horizontally scrollable since five labels overflow a mobile row.
  */
 export function KehidupanTabs({ active, basePath, labels }: Props) {
   const items: { key: KehidupanTab; icon: typeof Sparkles }[] = [
@@ -25,6 +30,7 @@ export function KehidupanTabs({ active, basePath, labels }: Props) {
     { key: 'perjalanan', icon: Compass },
     { key: 'percintaan', icon: Heart },
     { key: 'keuangan', icon: Wallet },
+    { key: 'desainManusia', icon: Network },
   ];
   return (
     <div className="no-scrollbar -mx-4 flex gap-2 overflow-x-auto px-4 sm:mx-0 sm:px-0">

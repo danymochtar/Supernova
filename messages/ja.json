@@ -953,7 +953,9 @@
     "tabPerjalanan": "Journey",
     "tabPercintaan": "Love",
     "tabKeuangan": "Money",
-    "bioBorn": "生年月日"
+    "bioBorn": "生年月日",
+    "tabDesainManusia": "ヒューマンデザイン",
+    "editBirth": "出生データを編集"
   },
   "love": {
     "title": "恋愛",
@@ -1011,5 +1013,14 @@
     "keuangan": "お金",
     "karier": "キャリア",
     "relationship": "人間関係"
+  },
+  "humanDesign": {
+    "title": "ヒューマンデザイン",
+    "subtitle": "Ra Uru Hu のヒューマンデザインに基づくあなたのタイプ・ストラテジー・オーソリティ。",
+    "emptyTitle": "まだ計算できません",
+    "emptyNeedsBirthTime": "ヒューマンデザインには正確な出生時刻が必要です。プロフィールに追加すると計算できます。",
+    "emptyNeedsCity": "ヒューマンデザインには出生地（緯度経度の精度のため）が必要です。プロフィールで都市を選んでください。",
+    "emptyCta": "出生データを完成させる",
+    "footerNote": "出生データを更新するとチャートが再計算されます。"
   }
 }

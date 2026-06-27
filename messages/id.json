@@ -17,7 +17,18 @@
     "tabPerjalanan": "Journey",
     "tabPercintaan": "Love",
     "tabKeuangan": "Money",
-    "bioBorn": "Lahir"
+    "tabDesainManusia": "Desain",
+    "bioBorn": "Lahir",
+    "editBirth": "Edit data lahir"
+  },
+  "humanDesign": {
+    "title": "Desain Manusia",
+    "subtitle": "Tipe, strategi, dan otoritas kamu menurut sistem Human Design oleh Ra Uru Hu.",
+    "emptyTitle": "Belum bisa dihitung",
+    "emptyNeedsBirthTime": "Desain Manusia butuh jam lahir yang akurat. Tambahin di profil kamu biar chart-nya bisa dihitung.",
+    "emptyNeedsCity": "Desain Manusia butuh kota lahir yang spesifik (buat koordinat lat/lon yang presisi). Pilih kota lahir kamu di profil.",
+    "emptyCta": "Lengkapi data lahir",
+    "footerNote": "Chart dihitung pas data lahir kamu di-update."
   },
   "love": {
     "title": "Percintaan",

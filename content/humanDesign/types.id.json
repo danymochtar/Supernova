@@ -1,0 +1,62 @@
+{
+  "GENERATOR": {
+    "name": "Generator",
+    "headline": "Energi tahan lama, paling bagus pas direspon",
+    "body": "Sebagai Generator, kamu punya energi sacral yang bisa nopang kerjaan seharian — asal arahnya bener. Kuncinya ada di nanggepin, bukan mulai dari nol. Kalau ada peluang dateng ke kamu dan perut kamu bilang ya, baru gerak. Kalau kamu paksa diri ke hal yang gak nyala di dalam, kelelahan dan frustrasi cepet dateng.",
+    "gifts": [
+      "Stamina kerja yang konsisten kalau passion-nya nyambung",
+      "Bisa nge-deep work jam-jaman tanpa burnout",
+      "Magnet alami — orang dan peluang dateng ke kamu",
+      "Kepuasan jangka panjang dari kerjaan yang sesuai"
+    ],
+    "shadow": "Frustrasi kronik. Itu sinyal — bukan ngeluh, tapi tanda kamu lagi maksa di jalur yang bukan punyamu."
+  },
+  "MANIFESTING_GENERATOR": {
+    "name": "Manifesting Generator",
+    "headline": "Generator yang multi-track, jalan paralel",
+    "body": "Versi Generator yang gerak lebih cepet dan paralel — bisa pegang beberapa hal sekaligus, lompat-lompat antar passion. Tetep harus respon dulu sebelum gerak, tapi sekali ya, gerak kamu cepet dan kreatif. Kasih kabar ke orang yang kena dampak sebelum lompat ke arah baru — biar mereka gak ketinggalan.",
+    "gifts": [
+      "Bisa pegang banyak proyek di banyak track",
+      "Cepet nemu shortcut, ngelewatin step yang kebanyakan",
+      "Energi yang adaptif — bisa pindah arah cepet kalau nyalanya geser",
+      "Kombinasi kreatif yang orang lain gak kepikiran"
+    ],
+    "shadow": "Frustrasi + kemarahan (anger). Frustrasi pas dipaksa lambat; anger pas orang gak ngerti kenapa kamu loncat-loncat."
+  },
+  "MANIFESTOR": {
+    "name": "Manifestor",
+    "headline": "Inisiator. Gerak duluan, kasih kabar di belakang.",
+    "body": "Sebagai Manifestor, kamu gak butuh respon dari luar buat mulai sesuatu — kamu yang inisiasi. Energinya intens tapi nggak konsisten kayak Generator; kerjanya burst-burst, ada periode kerja keras dan ada periode istirahat. Strategi penting kamu: kasih kabar ke orang yang kena dampak sebelum kamu gerak. Itu yang ngebedain manifestor sehat dari manifestor yang dimusuhin orang.",
+    "gifts": [
+      "Bisa mulai dari nol, bikin sesuatu yang sebelumnya nggak ada",
+      "Energi yang dorong orang lain ikutan gerak",
+      "Mandiri secara natural — gak harus nungguin sinyal",
+      "Bisa ngeshift situasi sendirian"
+    ],
+    "shadow": "Anger. Pas kebebasan kamu dibatasi, atau pas orang protes karena kamu gak kasih kabar."
+  },
+  "PROJECTOR": {
+    "name": "Projector",
+    "headline": "Pengamat tajem, paling bagus pas diundang",
+    "body": "Sebagai Projector, gift kamu di tempat lo bisa lihat sistem dan orang lebih jernih daripada mereka lihat diri sendiri. Energi kamu nggak buat ngerjain semua sendiri — kamu di sini buat ngarahin energi orang lain. Strategi kamu: tunggu invitation. Pas diundang ke proyek, percakapan, hubungan — energi kamu disambut dan saran kamu didengerin. Kalau kamu ngeshare tanpa diundang, biasanya pental.",
+    "gifts": [
+      "Bisa baca orang dan sistem dengan cepet dan akurat",
+      "Saran kamu valuable kalau ditanya",
+      "Efisien — gak perlu ngerjain semua, cukup arahin",
+      "Bisa jadi penasehat / guide alami"
+    ],
+    "shadow": "Bitterness. Pas kamu kerja keras kayak Generator tapi gak diundang, gak diakuin, dan kelelahan."
+  },
+  "REFLECTOR": {
+    "name": "Reflector",
+    "headline": "Cermin lingkungan, langka dan sensitif",
+    "body": "Sebagai Reflector (1% dari populasi), kamu kayak cermin yang nyerap dan mantulin energi sekitarnya. Semua 9 pusat di tubuh kamu open — artinya kamu hyper-sensitive ke siapa dan apa di sekitar kamu. Strategi kamu: tunggu 1 siklus lunar (28 hari) sebelum bikin keputusan besar. Itu kasih kamu waktu buat ngerasain pola energi sebelum commit. Lingkungan dan komunitas yang sehat itu wajib buat kamu.",
+    "gifts": [
+      "Bisa baca kesehatan komunitas atau tempat dengan tepat",
+      "Identitas yang fluid — bisa konekan ke siapa aja",
+      "Kebijaksanaan dari liat dari berbagai sudut",
+      "Lensa unik yang gak punya orang lain"
+    ],
+    "shadow": "Disappointment. Pas kamu di tempat yang gak sehat, atau pas keputusan besar dipaksa cepet."
+  }
+}

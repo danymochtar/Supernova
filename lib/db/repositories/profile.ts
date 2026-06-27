@@ -1,9 +1,24 @@
-import type { Profile as ProfileRow, ZodiacSign as PrismaZodiacSign } from '@prisma/client';
+import { Prisma } from '@prisma/client';
+import type {
+  HDAuthority as PrismaHDAuthority,
+  HDDefinition as PrismaHDDefinition,
+  HDStrategy as PrismaHDStrategy,
+  HDType as PrismaHDType,
+  Profile as ProfileRow,
+  ZodiacSign as PrismaZodiacSign,
+} from '@prisma/client';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { DEFAULT_LOCALE } from '@/lib/i18n/locales';
 import { prisma } from '@/lib/db/prisma';
 import type { BirthDate } from '@/lib/numerology/types';
 import { fromPrismaEnum, toPrismaEnum, type ZodiacSign } from '@/lib/zodiac/signs';
+import type {
+  HDAuthority,
+  HDDefinition,
+  HDStrategy,
+  HDType,
+  HumanDesignChart,
+} from '@/lib/humanDesign/types';
 
 export interface ProfileInput {
   firstName: string;
@@ -27,6 +42,16 @@ export interface ProfileInput {
   /** Precise birth-place coords. */
   birthLat?: number | null;
   birthLon?: number | null;
+  /** Computed Human Design chart fields. All optional — callers pass
+   *  these together (or all-null on birth-data clear). */
+  hdType?: HDType | null;
+  hdStrategy?: HDStrategy | null;
+  hdAuthority?: HDAuthority | null;
+  hdProfileConscious?: number | null;
+  hdProfileUnconscious?: number | null;
+  hdDefinition?: HDDefinition | null;
+  hdIncarnationCross?: string | null;
+  hdChart?: HumanDesignChart | null;
 }
 
 export type Theme = 'light' | 'dark' | 'auto';
@@ -60,6 +85,17 @@ export interface ProfileView {
   birthCity: string | null;
   birthLat: number | null;
   birthLon: number | null;
+  /** Cached Human Design chart fields — null until birth data is set
+   *  with precise lat/lon. The full bodygraph (centers, channels, all
+   *  26 planetary activations) lives in `hdChart`. */
+  hdType: HDType | null;
+  hdStrategy: HDStrategy | null;
+  hdAuthority: HDAuthority | null;
+  hdProfileConscious: number | null;
+  hdProfileUnconscious: number | null;
+  hdDefinition: HDDefinition | null;
+  hdIncarnationCross: string | null;
+  hdChart: HumanDesignChart | null;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -130,6 +166,18 @@ export async function updateProfile(userId: string, input: ProfileInput): Promis
       ...(input.birthCity !== undefined ? { birthCity: input.birthCity ?? null } : {}),
       ...(input.birthLat !== undefined ? { birthLat: input.birthLat ?? null } : {}),
       ...(input.birthLon !== undefined ? { birthLon: input.birthLon ?? null } : {}),
+      // HD fields. Same `undefined` = leave-alone semantics; `null`
+      // explicitly clears (used when the user removes birthTime).
+      ...(input.hdType !== undefined ? { hdType: (input.hdType as PrismaHDType | null) ?? null } : {}),
+      ...(input.hdStrategy !== undefined ? { hdStrategy: (input.hdStrategy as PrismaHDStrategy | null) ?? null } : {}),
+      ...(input.hdAuthority !== undefined ? { hdAuthority: (input.hdAuthority as PrismaHDAuthority | null) ?? null } : {}),
+      ...(input.hdProfileConscious !== undefined ? { hdProfileConscious: input.hdProfileConscious ?? null } : {}),
+      ...(input.hdProfileUnconscious !== undefined ? { hdProfileUnconscious: input.hdProfileUnconscious ?? null } : {}),
+      ...(input.hdDefinition !== undefined ? { hdDefinition: (input.hdDefinition as PrismaHDDefinition | null) ?? null } : {}),
+      ...(input.hdIncarnationCross !== undefined ? { hdIncarnationCross: input.hdIncarnationCross ?? null } : {}),
+      ...(input.hdChart !== undefined
+        ? { hdChart: input.hdChart ? (input.hdChart as unknown as Prisma.InputJsonValue) : Prisma.JsonNull }
+        : {}),
     },
   });
   // Invalidate any cached numerology artifacts that depend on name+dob (e.g.
@@ -179,6 +227,14 @@ function toView(row: ProfileRow): ProfileView {
     birthCity: row.birthCity,
     birthLat: row.birthLat,
     birthLon: row.birthLon,
+    hdType: (row.hdType as HDType | null) ?? null,
+    hdStrategy: (row.hdStrategy as HDStrategy | null) ?? null,
+    hdAuthority: (row.hdAuthority as HDAuthority | null) ?? null,
+    hdProfileConscious: row.hdProfileConscious ?? null,
+    hdProfileUnconscious: row.hdProfileUnconscious ?? null,
+    hdDefinition: (row.hdDefinition as HDDefinition | null) ?? null,
+    hdIncarnationCross: row.hdIncarnationCross ?? null,
+    hdChart: (row.hdChart as unknown as HumanDesignChart | null) ?? null,
     createdAt: row.createdAt,
     updatedAt: row.updatedAt,
   };

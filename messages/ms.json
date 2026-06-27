@@ -953,7 +953,9 @@
     "tabPerjalanan": "Journey",
     "tabPercintaan": "Love",
     "tabKeuangan": "Money",
-    "bioBorn": "Lahir"
+    "bioBorn": "Lahir",
+    "tabDesainManusia": "Reka Bentuk",
+    "editBirth": "Edit data lahir"
   },
   "love": {
     "title": "Percintaan",
@@ -1011,5 +1013,14 @@
     "keuangan": "Kewangan",
     "karier": "Kerjaya",
     "relationship": "Hubungan"
+  },
+  "humanDesign": {
+    "title": "Human Design",
+    "subtitle": "Type, Strategy, dan Authority kamu mengikut sistem Human Design oleh Ra Uru Hu.",
+    "emptyTitle": "Belum boleh dikira",
+    "emptyNeedsBirthTime": "Human Design perlu masa lahir yang tepat. Tambah di profil kamu supaya carta boleh dikira.",
+    "emptyNeedsCity": "Human Design perlu bandar lahir spesifik (untuk koordinat lat/lon yang tepat). Pilih bandar lahir kamu di profil.",
+    "emptyCta": "Lengkapkan data lahir",
+    "footerNote": "Carta dikira semula bila data lahir kamu dikemas kini."
   }
 }

@@ -1,0 +1,42 @@
+{
+  "EMOTIONAL": {
+    "name": "Emosi (Emotional)",
+    "headline": "Jangan putus pas lagi puncak — tidur dulu",
+    "body": "Otoritas kamu ada di gelombang emosi. Kamu butuh waktu buat ngerasain sesuatu dari berbagai mood — pas lagi up, pas lagi down, pas netral. Aturan emas: jangan ambil keputusan besar pas lagi puncak emosi (excited atau marah). Tidurin satu malam minimal. Kalau bisa, kasih beberapa hari. Klar yang stabil dateng setelah gelombangnya stabil."
+  },
+  "SACRAL": {
+    "name": "Sacral",
+    "headline": "Suara di perut: \"uh-huh\" atau \"uh-uh\"",
+    "body": "Otoritas kamu di sacral — perut yang bilang yes/no sebelum kepala mikir. Pas ada pilihan dateng, perhatiin response otomatis tubuh: ada energi yang nyala, atau ada yang ngerem? Itu jawabannya. Cara latihannya: minta temen ngajakin pilihan biner (mau makan ini atau itu, mau ke sini atau ke sana), dan dengerin yang spontan keluar. Sacral lebih pinter daripada kepala buat keputusan kamu."
+  },
+  "SPLENIC": {
+    "name": "Splenic",
+    "headline": "Intuisi yang nongol sekali, jangan dilewatin",
+    "body": "Otoritas spleen itu intuisi yang dateng cepet — sekali, halus, di saat itu juga. Bukan suara di kepala, bukan analisa — lebih kayak \"feeling\" yang muncul pas situasi nyata terjadi. Tantangan utamanya: intuisi spleen gak ngulang. Kalau kamu dengerin pas pertama kali, kamu selamet. Kalau kamu lewatin, kamu harus jalan tanpa dia."
+  },
+  "EGO": {
+    "name": "Ego (Heart)",
+    "headline": "Apa yang mau saya? Apa yang berani saya commit?",
+    "body": "Otoritas kamu di heart center — yang tau apa yang kamu mau dan apa yang sanggup kamu commit. Cara putusnya simple: tanya diri, \"Saya mau ini gak? Saya sanggup commit gak?\" Jangan minta-minta validasi luar. Energi heart datang dalam burst — bilang yes pas pengen, dan jujur bilang no kalau gak. Ego yang sehat itu bukan egois — itu jujur soal kapasitas."
+  },
+  "SELF_PROJECTED": {
+    "name": "Self-Projected (G)",
+    "headline": "Ngomong keras-keras, dengerin diri sendiri",
+    "body": "Otoritas kamu di G center — identitas dan arah hidup. Cara putus terbaik: bicara situasi keras-keras ke orang yang kamu percaya (atau ke diri sendiri di kamar). Pas kamu denger suara kamu keluar, kamu bakal tau ini cocok sama identitas kamu apa enggak. Yang penting bukan respon mereka — yang penting kamu denger sendiri kamu ngomong apa."
+  },
+  "MENTAL": {
+    "name": "Mental (Outer Authority)",
+    "headline": "Diskusi sama orang luar, jangan putus sendiri",
+    "body": "Sebagai Mental Projector, kamu gak punya otoritas internal yang stabil — energi kamu dirancang buat ngobrol sama orang luar sebelum putus. Bicarain sama lingkaran kecil orang yang kamu percaya. Bukan mereka yang putusin, tapi pas kamu denger diri sendiri jelasin situasi ke mereka, klarnya muncul. Strategi kamu: tunggu invitation, dan saat dipanggil, banyak ngobrol dulu."
+  },
+  "LUNAR": {
+    "name": "Lunar (Reflector)",
+    "headline": "Kasih waktu satu siklus bulan",
+    "body": "Sebagai Reflector, kamu gak punya pusat yang konsisten — energi kamu shift bareng lingkungan. Buat putus besar, kasih waktu satu siklus bulan (sekitar 28 hari). Selama itu, perhatiin kamu rasanya gimana di mood yang beda-beda, di sekitar orang yang beda-beda. Kepastian kamu dateng dari pola — bukan dari satu moment."
+  },
+  "NONE": {
+    "name": "Tanpa Otoritas Tetap",
+    "headline": "Edge case — biasanya lunar",
+    "body": "Profil kamu masuk kategori jarang dimana otoritas internal nggak ke-determine standar. Pakai strategi Reflector (tunggu siklus bulan) atau Mental (banyak ngobrol sebelum putus) sebagai panduan, dan perhatiin pola tubuh kamu sendiri seiring waktu."
+  }
+}

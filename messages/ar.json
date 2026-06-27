@@ -953,7 +953,9 @@
     "tabPerjalanan": "Journey",
     "tabPercintaan": "Love",
     "tabKeuangan": "Money",
-    "bioBorn": "وُلد"
+    "bioBorn": "وُلد",
+    "tabDesainManusia": "تصميم الإنسان",
+    "editBirth": "تعديل بيانات الميلاد"
   },
   "love": {
     "title": "الحب والعلاقات",
@@ -1011,5 +1013,14 @@
     "keuangan": "المال",
     "karier": "المسيرة المهنية",
     "relationship": "العلاقات"
+  },
+  "humanDesign": {
+    "title": "تصميم الإنسان",
+    "subtitle": "نوعك واستراتيجيتك وسلطتك وفق نظام Human Design لـ Ra Uru Hu.",
+    "emptyTitle": "لا يمكن الحساب بعد",
+    "emptyNeedsBirthTime": "تصميم الإنسان يحتاج إلى وقت ميلاد دقيق. أضفه في ملفك ليتم حساب المخطط.",
+    "emptyNeedsCity": "تصميم الإنسان يحتاج إلى مدينة ميلاد محددة (لإحداثيات دقيقة). اختر مدينة ميلادك في الملف الشخصي.",
+    "emptyCta": "أكمل بيانات الميلاد",
+    "footerNote": "يُعاد حساب المخطط عند تحديث بيانات ميلادك."
   }
 }

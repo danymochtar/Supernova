@@ -1,0 +1,62 @@
+{
+  "GENERATOR": {
+    "name": "Generator",
+    "headline": "Sustainable energy that fires up when responding",
+    "body": "As a Generator, your sacral has the stamina to power a full day of work — provided it's the right work. The key is responding, not initiating from nothing. When an opportunity shows up and something in your gut says yes, that's when to move. When you force yourself toward what doesn't light up inside, exhaustion and frustration arrive quickly.",
+    "gifts": [
+      "Consistent stamina when the work matches your passion",
+      "Deep focus for hours without burning out",
+      "Natural magnet — people and opportunities come to you",
+      "Long-term satisfaction from work that fits"
+    ],
+    "shadow": "Chronic frustration. That's the signal — not complaint, but evidence you're forcing a path that isn't yours."
+  },
+  "MANIFESTING_GENERATOR": {
+    "name": "Manifesting Generator",
+    "headline": "A Generator that moves in parallel, multi-track",
+    "body": "A faster, multi-track version of the Generator — you can hold several things at once and skip steps that others can't. You still need to respond before moving, but once it's yes, your movement is quick and inventive. Inform the people who'll be affected before you switch direction so they're not left behind.",
+    "gifts": [
+      "Can hold several projects on parallel tracks",
+      "Quick at finding shortcuts most people overlook",
+      "Adaptive energy — can switch directions when the spark shifts",
+      "Creative combinations others wouldn't put together"
+    ],
+    "shadow": "Frustration + anger. Frustration when forced to slow down; anger when others don't understand the jumps."
+  },
+  "MANIFESTOR": {
+    "name": "Manifestor",
+    "headline": "An initiator. Move first, inform after.",
+    "body": "As a Manifestor, you don't need outside response to start something — you initiate. Your energy is intense but not consistent the way a Generator's is; you work in bursts, with periods of action and periods of rest. Your key strategy: inform the people who'll be affected before you move. That's what separates a healthy Manifestor from one others push back against.",
+    "gifts": [
+      "Can start from nothing — make something that wasn't there",
+      "Energy that pulls others into motion with you",
+      "Naturally independent — no need to wait for signals",
+      "Can shift a whole situation alone"
+    ],
+    "shadow": "Anger. Triggered when your freedom is restricted, or when people resist you because you didn't inform first."
+  },
+  "PROJECTOR": {
+    "name": "Projector",
+    "headline": "A sharp observer, best when invited",
+    "body": "As a Projector, your gift is seeing systems and people more clearly than they see themselves. Your energy isn't meant to do everything yourself — you're here to direct the energy of others. Your strategy: wait for the invitation. When you're invited into a project, a conversation, a relationship, your energy is welcomed and your insight is heard. When you share uninvited, it usually bounces off.",
+    "gifts": [
+      "Read people and systems quickly and accurately",
+      "Your advice is valuable when it's asked for",
+      "Efficient — no need to do everything, just direct it",
+      "Natural advisor / guide"
+    ],
+    "shadow": "Bitterness. Triggered when you work like a Generator without invitation, go unrecognized, and burn out."
+  },
+  "REFLECTOR": {
+    "name": "Reflector",
+    "headline": "A mirror of the environment — rare and sensitive",
+    "body": "As a Reflector (1% of the population), you act like a mirror that absorbs and reflects the energy around you. All nine of your centers are open — meaning you're hyper-sensitive to who and what surrounds you. Your strategy: wait one full lunar cycle (28 days) before making major decisions. That gives you time to feel a pattern through before you commit. A healthy environment and community are non-negotiable for you.",
+    "gifts": [
+      "Can sense the health of a community or place accurately",
+      "Fluid identity — can connect with almost anyone",
+      "Wisdom from seeing many angles",
+      "A unique lens nobody else has"
+    ],
+    "shadow": "Disappointment. Triggered by being in unhealthy environments, or when big decisions are rushed."
+  }
+}

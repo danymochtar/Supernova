@@ -1,0 +1,62 @@
+{
+  "1/3": {
+    "name": "Investigator / Martyr",
+    "headline": "Build a foundation through trial and error",
+    "body": "Your profile combines deep research with hands-on experiment. Line 1 needs a foundation — careful study, knowing the details before moving. Line 3 learns by doing, often through mistakes. A lot of \"I tried that, here's what happened\" runs through your life. That isn't failure — that's how you learn."
+  },
+  "1/4": {
+    "name": "Investigator / Opportunist",
+    "headline": "Deep study + sharing through your inner circle",
+    "body": "Line 1 builds authority through deep study. Line 4 carries it through close networks — friends, family, the people who know you. Big life moves usually come through someone you already know, not from out of the blue."
+  },
+  "2/4": {
+    "name": "Hermit / Opportunist",
+    "headline": "Natural talent surfaced by your circle",
+    "body": "You have a natural talent that shows up without pushing — others often see it before you do. Line 4 pulls you out of hermit mode through invitations from your close network. Solo time to refuel is essential — protect it."
+  },
+  "2/5": {
+    "name": "Hermit / Heretic",
+    "headline": "Practical solutions that others project onto you",
+    "body": "Natural talent (line 2) plus the role of being called in when there's a practical problem (line 5). People hold high expectations of you — sometimes higher than fair. It can feel heavy, but when you deliver, the impact reaches further than you'd guess."
+  },
+  "3/5": {
+    "name": "Martyr / Heretic",
+    "headline": "Experiment + practical solutions that shift others",
+    "body": "Line 3 learns by trying and falling; line 5 projects solutions. Your life is full of trial and error, and what you discover often becomes the key for others. People project things onto you, fair and unfair — both come with the role."
+  },
+  "3/6": {
+    "name": "Martyr / Role Model",
+    "headline": "Three phases: experiment, observe, model",
+    "body": "This profile has the clearest life arc. Phase 1 (0-30) is hands-on trial and error. Phase 2 (30-50) is \"up on the roof\" — observing from a distance. Phase 3 (50+) descends as a role model carrying the wisdom of phases 1 and 2."
+  },
+  "4/6": {
+    "name": "Opportunist / Role Model",
+    "headline": "Influence through close networks, a long arc",
+    "body": "You influence the world through your close network — friends, family, inner circle. Line 6 gives you the three phases (see 3/6). The difference from 3/6: you don't have to experiment as much yourself — you learn through the people close to you."
+  },
+  "4/1": {
+    "name": "Opportunist / Investigator",
+    "headline": "Deep foundation + intimate network — a fixed fate",
+    "body": "A fixed-fate profile — you're here for a specific purpose. Line 1 needs a deep foundation; line 4 carries it through the inner circle. Life moves usually come through people who already know you, and you need deep study before passing it on."
+  },
+  "5/1": {
+    "name": "Heretic / Investigator",
+    "headline": "Solution-bringer with a solid foundation",
+    "body": "Others see you as a solution-bringer (line 5), and you do have the deep foundation to back it up (line 1). But watch out: projections from others can be heavy. When you deliver something real, you're honored. When expectations aren't met, you're blamed faster than fair."
+  },
+  "5/2": {
+    "name": "Heretic / Hermit",
+    "headline": "Universal solver + solo time to refuel",
+    "body": "A solution-bringer (line 5) who also needs space (line 2). People lean on you, and you also need to disappear briefly to refuel. Don't feel guilty about solo time — it's what lets you keep delivering."
+  },
+  "6/2": {
+    "name": "Role Model / Hermit",
+    "headline": "Three phases + natural talent that gets called out",
+    "body": "Three-phase profile (see 3/6), with natural talent at line 2. The observation phase (30-50) becomes especially important for you — that's when you refine the natural talent that was there from the start."
+  },
+  "6/3": {
+    "name": "Role Model / Martyr",
+    "headline": "A role model who's still experimenting",
+    "body": "Three-phase profile (see 3/6) with the line 3 still experimenting. Even in the role-model phase (50+), you keep trying things — that's what makes your role-modeling authentic. You're not a role model because you have the answers; you're one because your trial and error is honest."
+  }
+}

@@ -24,11 +24,14 @@ export function isCategory(value: unknown): value is Category {
 }
 
 /** Map a Kehidupan sub-tab to its curhat category. "tentang" (self-portrait)
- *  reads as the general "pribadi" bucket; the rest map by name. */
+ *  and "desainManusia" (Human Design) both read as the general "pribadi"
+ *  bucket since they're about the user's own identity / inner makeup. The
+ *  rest map by name. */
 export function categoryForKehidupanTab(
-  tab: 'tentang' | 'perjalanan' | 'percintaan' | 'keuangan',
+  tab: 'tentang' | 'perjalanan' | 'percintaan' | 'keuangan' | 'desainManusia',
 ): Category {
-  return tab === 'tentang' ? 'pribadi' : tab;
+  if (tab === 'tentang' || tab === 'desainManusia') return 'pribadi';
+  return tab;
 }
 
 /**
