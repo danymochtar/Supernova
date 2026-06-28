@@ -30,7 +30,7 @@ CREATE INDEX IF NOT EXISTS "design_story_userId_idx"
 DO $$ BEGIN
   ALTER TABLE "design_story"
     ADD CONSTRAINT "design_story_userId_fkey"
-    FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 EXCEPTION
   WHEN duplicate_object THEN null;
 END $$;
