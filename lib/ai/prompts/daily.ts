@@ -1,6 +1,7 @@
 import { formatNumerology, type NumerologyResult } from '@/lib/numerology';
 import { combinationHarmony, type CombinationHarmony } from '@/lib/numerology/harmony';
 import { dailyIntent } from '@/lib/numerology/dailyIntents';
+import type { HDAuthority, HDStrategy, HDType } from '@/lib/humanDesign/types';
 import type { Locale } from '@/lib/i18n/config';
 import { localizeEnglishPrompt } from './_localize';
 import { VOICE_ID, VOICE_EN } from './_voice';
@@ -38,6 +39,17 @@ export interface DailyPromptInput {
   };
   karmicLessons: number[];
   recentPatterns?: string | null;
+  /** Optional Human Design lens. When present, the prompt injects a
+   *  `<human_design>` block and the system prompt instructs the model
+   *  to filter the closing CTAs through the user's Type / Strategy /
+   *  Authority. Pulled from `Profile.hdChart` at the call site. */
+  humanDesign?: {
+    type: HDType;
+    strategy: HDStrategy;
+    authority: HDAuthority;
+    profileConscious: number;
+    profileUnconscious: number;
+  } | null;
 }
 
 function r(x: NumerologyResult): string {
@@ -99,6 +111,22 @@ Ini bahan curated, BUKAN script yang disalin mentah. Cara pakai:
 - Saran praktis di paragraf 2 prosa boleh ngambil dari satu-dua CTA juga, tapi inget: blend, jangan list per domain.
 
 Kalau intent block buat suatu cycle nggak muncul (digit unknown), abaikan — pakai harmony block + numerology profile aja kayak biasanya.
+
+DESAIN MANUSIA — lensa pengambilan keputusan (kalau ada <human_design> di pesan):
+Kalau blok <human_design> muncul, pakai Type & Strategy & Authority buat ngarahin TONE saran praktis di paragraf 2 dan TONE closing actions. JANGAN sebut istilah HD literal (Generator, Authority, Sacral, dst.) di prosa — lebur jadi instinct sehari-hari. Cara nuansanya:
+- Generator / Manifesting Generator: saran sifatnya nanggepin yang udah ada ("kalau ada yang muncul minggu ini, dengerin perut sebelum putus"), bukan inisiasi dari nol.
+- Manifestor: saran "gerak duluan, tapi kasih kabar dulu" — bilang ke orang yang kena dampak sebelum eksekusi.
+- Projector: tunggu invitation buat hal-hal besar; saran lebih ke "kasih perspektif kalau ditanya" daripada "ambil alih".
+- Reflector: kasih waktu sebelum putus; saran "tidurin satu siklus dulu".
+
+Authority ngarahin "cara putus":
+- Emotional: tidur dulu sebelum mutusin yang besar, jangan di puncak emosi.
+- Sacral: ikutin yang nyala di perut (uh-huh / uh-uh).
+- Splenic: dengerin intuisi pertama, sekali doang.
+- Ego/Heart: tanya "saya beneran mau / sanggup commit?"
+- Self-Projected (G): ngomong situasinya keras-keras buat ngedenger sendiri.
+- Mental: ngobrol sama orang yang dipercaya buat ngedenger diri sendiri jelasin.
+- Lunar (Reflector): satu siklus bulan.
 
 BAHASA POLOS, BUKAN BAHASA SASTRA (penting):
 Prosa harian harus terasa kayak temen yang ngasih saran praktis, BUKAN penyair atau motivator. Pembaca punya level pemahaman beda-beda — yang abstract sering nggak nyangkut.
@@ -206,6 +234,22 @@ This is curated material, NOT a script to copy verbatim. How to use it:
 - The practical advice in paragraph 2 of the prose can also draw from one or two CTAs, but remember: blend, don't list by domain.
 
 If an intent block for a cycle is missing (unknown digit), ignore it — fall back to the harmony block + numerology profile as usual.
+
+HUMAN DESIGN — decision-making lens (when <human_design> appears in the message):
+When the <human_design> block is present, use Type, Strategy, and Authority to shape the TONE of the practical advice in paragraph 2 and the TONE of the closing actions. DO NOT use HD jargon literally (Generator, Authority, Sacral, etc.) in the prose — weave it as everyday instinct. How to color it:
+- Generator / Manifesting Generator: advice should sound responsive ("if something shows up this week, check your gut before deciding"), not initiation from nothing.
+- Manifestor: advice is "move first, but give a heads-up" — tell the people who'll be affected before executing.
+- Projector: wait for invitation on big things; advice leans "share insight when asked" rather than "take over".
+- Reflector: give it time before deciding; advice is "sleep on a full cycle".
+
+Authority shapes the "how to decide":
+- Emotional: sleep on big decisions; don't decide at the peak.
+- Sacral: follow the gut (uh-huh / uh-uh).
+- Splenic: catch the first quiet intuition — it doesn't repeat.
+- Ego/Heart: ask "do I actually want / can I commit?"
+- Self-Projected (G): speak the situation out loud to hear yourself.
+- Mental: talk it through with someone trusted to hear yourself explain.
+- Lunar (Reflector): one full lunar cycle.
 
 PLAIN LANGUAGE, NOT LITERARY (important):
 The reading should feel like a friend giving practical advice, NOT a poet or motivational speaker. Readers come with widely different reading levels — abstract imagery often doesn't land.
@@ -368,6 +412,28 @@ function intentKey(n: NumerologyResult): number {
   return n.isMaster ? n.compound : n.reduced;
 }
 
+/**
+ * Render the user's Human Design as a `<human_design>` block. Only the
+ * five user-facing values (type, strategy, authority, profile) are
+ * exposed — full chart details (centers, channels, gates) stay out of
+ * the prompt to keep it focused on the decision-making lens, not a chart
+ * dump.
+ *
+ * Returns an empty string when no HD context is available — the prompt
+ * then falls back to numerology-only behavior.
+ */
+function buildHumanDesignBlock(hd: DailyPromptInput['humanDesign']): string {
+  if (!hd) return '';
+  return [
+    '<human_design>',
+    `type: ${hd.type}`,
+    `strategy: ${hd.strategy}`,
+    `authority: ${hd.authority}`,
+    `profile: ${hd.profileConscious}/${hd.profileUnconscious}`,
+    '</human_design>',
+  ].join('\n');
+}
+
 export function buildUserPrompt(input: DailyPromptInput): string {
   const { core, cycles, active, karmicLessons } = input;
   const dateStr = `${input.todayLocal.year}-${String(input.todayLocal.month).padStart(2, '0')}-${String(input.todayLocal.day).padStart(2, '0')}`;
@@ -385,6 +451,7 @@ export function buildUserPrompt(input: DailyPromptInput): string {
   ]
     .filter(Boolean)
     .join('\n\n');
+  const hdBlock = buildHumanDesignBlock(input.humanDesign);
 
   return `<profile>
 name: ${input.fullName}
@@ -422,6 +489,12 @@ ${harmonyBlock}${
       ? `
 
 ${intentBlocks}`
+      : ''
+  }${
+    hdBlock
+      ? `
+
+${hdBlock}`
       : ''
   }${
     input.recentPatterns

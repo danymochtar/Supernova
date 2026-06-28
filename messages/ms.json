@@ -1021,6 +1021,7 @@
     "emptyNeedsBirthTime": "Human Design perlu masa lahir yang tepat. Tambah di profil kamu supaya carta boleh dikira.",
     "emptyNeedsCity": "Human Design perlu bandar lahir spesifik (untuk koordinat lat/lon yang tepat). Pilih bandar lahir kamu di profil.",
     "emptyCta": "Lengkapkan data lahir",
-    "footerNote": "Carta dikira semula bila data lahir kamu dikemas kini."
+    "footerNote": "Carta dikira semula bila data lahir kamu dikemas kini.",
+    "storyTitle": "Cerita Reka Bentuk Kamu"
   }
 }

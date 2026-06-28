@@ -1,6 +1,7 @@
 import type Anthropic from '@anthropic-ai/sdk';
 import type { Locale } from '@/lib/i18n/config';
 import type { Prisma } from '@prisma/client';
+import type { HDAuthority, HDStrategy, HDType } from '@/lib/humanDesign/types';
 import { anthropic, model } from '@/lib/ai/client';
 import {
   buildSystemPrompt,
@@ -42,6 +43,15 @@ interface ProfileLike {
   timezone: string;
   locale: Locale;
   preferredModel: string | null;
+  /** Optional Human Design fields. Populated by `computeHumanDesign()`
+   *  at profile-edit time when birth time + lat/lon are available. The
+   *  daily-reading flow uses these to inject an HD lens into the prompt
+   *  and to detect cache staleness when the user's chart changes. */
+  hdType?: HDType | null;
+  hdStrategy?: HDStrategy | null;
+  hdAuthority?: HDAuthority | null;
+  hdProfileConscious?: number | null;
+  hdProfileUnconscious?: number | null;
 }
 
 function dayTitleFor(reduced: number, locale: Locale): string {
@@ -83,14 +93,16 @@ export async function getOrGenerateDailyReading(
   const cached = await getReadingForLocalDay(userId, ctx.year, ctx.month, ctx.day);
   if (cached) {
     // Regenerate when (a) locale changed since cache, (b) the cached body
-    // lacks the WN-voice "→ {domain}: …" closing-action format introduced
-    // in the v2 daily-reading prompt, or (c) the title / greeting leak
-    // raw numbers. Costs one extra LLM call but spares users a stale
-    // layout (old +/- vibe bullets) that no longer matches the new render.
+    // lacks the WN-voice "→ {domain}: …" closing-action format, (c) the
+    // title / greeting leak raw numbers, or (d) the user's HD type has
+    // shifted since cache (covers: birth data added, birth data cleared,
+    // birth data updated → new type). Costs one extra LLM call but
+    // spares users a stale layout or a stale HD lens.
     const stale =
       cached.locale !== profile.locale ||
       !cached.body.trimStart().startsWith('#') ||
       !/^→\s*(?:money|career|love|social|self)\s*:/im.test(cached.body) ||
+      (cached.hdTypeAtCache ?? null) !== (profile.hdType ?? null) ||
       leaksNumbersInHead(cached.body);
     if (!stale) return cached.body;
     await deleteReadingForLocalDay(userId, ctx.year, ctx.month, ctx.day);
@@ -144,6 +156,22 @@ export async function getOrGenerateDailyReading(
     },
     karmicLessons: core.karmicLessons,
     recentPatterns,
+    // Inject Human Design lens when available. The prompt's system
+    // instructions filter the closing CTAs through the user's Type /
+    // Strategy / Authority — a Projector's social CTA leans "wait for
+    // invitation" instead of "reach out first", etc. Profile.hdChart
+    // is populated by computeHumanDesign() at profile-edit time.
+    humanDesign:
+      profile.hdType && profile.hdStrategy && profile.hdAuthority &&
+      profile.hdProfileConscious && profile.hdProfileUnconscious
+        ? {
+            type: profile.hdType,
+            strategy: profile.hdStrategy,
+            authority: profile.hdAuthority,
+            profileConscious: profile.hdProfileConscious,
+            profileUnconscious: profile.hdProfileUnconscious,
+          }
+        : null,
   };
 
   const modelId = model('daily', profile.preferredModel);
@@ -182,6 +210,7 @@ export async function getOrGenerateDailyReading(
       contextSnapshot: promptInput as unknown as Prisma.InputJsonValue,
       inputTokens,
       outputTokens,
+      hdTypeAtCache: profile.hdType ?? null,
     });
     await logUsage({
       userId,

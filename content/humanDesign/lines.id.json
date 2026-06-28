@@ -1,0 +1,26 @@
+{
+  "1": {
+    "name": "Investigator",
+    "body": "Garis fondasi — perlu tau, riset, ngedalemin. Insecurity-nya datang kalau gak punya basis yang kuat; kekuatannya pas udah ngeyakini sesuatu lewat studi mendalam."
+  },
+  "2": {
+    "name": "Hermit",
+    "body": "Bakat natural yang muncul tanpa effort, tapi butuh waktu sendiri buat ngerefuel. Orang lain ngeliat bakat itu sebelum si Hermit sadar; saat dipanggil pas yang tepat, baru keluar."
+  },
+  "3": {
+    "name": "Martyr",
+    "body": "Belajar lewat trial dan error langsung. Banyak \"udah kucoba, ternyata gini\" — itu bukan gagal, itu cara nyari pengetahuan yang akurat lewat pengalaman."
+  },
+  "4": {
+    "name": "Opportunist",
+    "body": "Jalanin hidup lewat jaringan dekat — temen, keluarga, lingkaran inti. Peluang dan info datang lewat orang yang udah dikenal, bukan dari sekedar publish ke luar."
+  },
+  "5": {
+    "name": "Heretic",
+    "body": "Pemberi solusi yang diproyeksiin orang. Ekspektasi tinggi datang dari luar — kadang fair, kadang gak. Pas deliver yang real, dampaknya jauh."
+  },
+  "6": {
+    "name": "Role Model",
+    "body": "Tiga fase hidup: trial-error (0-30), naik ke atap buat observasi (30-50), turun jadi role model (50+). Bukan punya jawaban, tapi punya kebijaksanaan dari pengalaman."
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "1": {
+    "name": "Investigator",
+    "body": "The foundation line — needs to know, research, go deep. Insecurity shows up without a solid base; the strength is conviction earned through deep study."
+  },
+  "2": {
+    "name": "Hermit",
+    "body": "Natural talent that surfaces without effort, but needs solo time to refuel. Others see the talent before the Hermit does; when called at the right moment, it comes out."
+  },
+  "3": {
+    "name": "Martyr",
+    "body": "Learns through direct trial and error. Lots of \"I tried that, here's what happened\" — that's not failure, that's how this line finds accurate knowledge through experience."
+  },
+  "4": {
+    "name": "Opportunist",
+    "body": "Lives life through close networks — friends, family, inner circle. Opportunities and information arrive through people you already know, not from broadcasting outward."
+  },
+  "5": {
+    "name": "Heretic",
+    "body": "A solution-bringer that others project onto. High expectations come from outside — sometimes fair, sometimes not. When the delivery is real, the impact reaches far."
+  },
+  "6": {
+    "name": "Role Model",
+    "body": "Three life phases: trial-error (0–30), up on the roof to observe (30–50), back down as role model (50+). Not having the answers, but holding the wisdom of experience."
+  }
+}

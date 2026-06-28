@@ -964,7 +964,8 @@
     "emptyNeedsBirthTime": "Human Design needs an accurate birth time. Add it on your profile so we can compute the chart.",
     "emptyNeedsCity": "Human Design needs a specific birth city (for precise lat/lon coordinates). Pick your birth city in your profile.",
     "emptyCta": "Complete birth data",
-    "footerNote": "The chart recomputes when your birth data is updated."
+    "footerNote": "The chart recomputes when your birth data is updated.",
+    "storyTitle": "Your Design Story"
   },
   "love": {
     "title": "Love",

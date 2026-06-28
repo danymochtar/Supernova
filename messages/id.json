@@ -28,7 +28,8 @@
     "emptyNeedsBirthTime": "Desain Manusia butuh jam lahir yang akurat. Tambahin di profil kamu biar chart-nya bisa dihitung.",
     "emptyNeedsCity": "Desain Manusia butuh kota lahir yang spesifik (buat koordinat lat/lon yang presisi). Pilih kota lahir kamu di profil.",
     "emptyCta": "Lengkapi data lahir",
-    "footerNote": "Chart dihitung pas data lahir kamu di-update."
+    "footerNote": "Chart dihitung pas data lahir kamu di-update.",
+    "storyTitle": "Cerita Desain Kamu"
   },
   "love": {
     "title": "Percintaan",

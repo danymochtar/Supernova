@@ -31,6 +31,7 @@ model User {
   readings  DailyReading[]
   qa        QaHistory[]
   feedback  DailyFeedback[]
+  designStories DesignStory[]
   push      PushSubscription[]
   rate      RateLimit[]
   usage     AiUsage[]
@@ -344,11 +345,36 @@ model DailyReading {
   body            String
   inputTokens     Int      @default(0)
   outputTokens    Int      @default(0)
+  // Snapshot of the user's HDType at the moment this reading was
+  // generated. Drives a staleness check: if Profile.hdType differs at
+  // read time, the reading is regenerated so the HD lens reflects the
+  // current chart. Null when birth data was missing at cache time.
+  hdTypeAtCache   HDType?
   createdAt       DateTime @default(now())
 
   @@unique([userId, date])
   @@index([userId])
   @@map("daily_reading")
+}
+
+model DesignStory {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  locale    String
+  // Stable hash of the HD fields this story was generated from. When
+  // the user's HD chart changes (birth data edit → recompute), the hash
+  // changes and the story regenerates on next load.
+  chartHash String
+  body      String
+  inputTokens  Int    @default(0)
+  outputTokens Int    @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, locale])
+  @@index([userId])
+  @@map("design_story")
 }
 
 model QaHistory {

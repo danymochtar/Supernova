@@ -1,0 +1,110 @@
+{
+  "HEAD_defined": {
+    "name": "Head Center (Defined)",
+    "headline": "A consistent source of inspiration",
+    "body": "You have a stable pattern of inspiration and questions. Ideas and curiosities come from within; you're not easily pulled into thinking about something just because outside pressure says so."
+  },
+  "HEAD_undefined": {
+    "name": "Head Center (Undefined / Open)",
+    "headline": "A magnet for other people's questions and inspirations",
+    "body": "You amplify the mental pressure around you. Other people's questions feel like yours, even when they're not.",
+    "gift": "The wisdom to know which questions are worth answering and which to let go. You can read what others are obsessing over.",
+    "shadow": "Flooded by questions that aren't yours — overthinking things that don't actually matter."
+  },
+  "AJNA_defined": {
+    "name": "Ajna Center (Defined)",
+    "headline": "A fixed, reliable way of thinking",
+    "body": "How you process ideas and build concepts is consistent — your thinking pattern is available on demand. That's why people come to you to think things through."
+  },
+  "AJNA_undefined": {
+    "name": "Ajna Center (Undefined / Open)",
+    "headline": "Flexible mind — doesn't need to always be sure",
+    "body": "Your thinking shifts. Mental certainty isn't your strength — what's stable is the ability to see many angles.",
+    "gift": "Can hold multiple perspectives without fixing on one. Great for brainstorming and seeing what others miss because they're too certain.",
+    "shadow": "Pretending to be certain, or doubling down to look like you have an answer when the underlying knowledge isn't stable."
+  },
+  "THROAT_defined": {
+    "name": "Throat Center (Defined)",
+    "headline": "Can access expression and manifestation on demand",
+    "body": "You can speak when you want, manifest through voice and language. Which channel reaches your Throat determines how you most naturally express."
+  },
+  "THROAT_undefined": {
+    "name": "Throat Center (Undefined / Open)",
+    "headline": "Your voice is strongest when invited",
+    "body": "You don't always have easy access to speaking. Your voice is most natural and lands best when others draw you out, not when you push yourself to be heard.",
+    "gift": "A voice that resonates at the right moment. Can stay silent in peace when energy isn't ready to come out.",
+    "shadow": "Forcing yourself to speak for attention, then feeling rejected because the timing wasn't right."
+  },
+  "G_defined": {
+    "name": "G Center (Defined)",
+    "headline": "A stable identity and direction",
+    "body": "You know who you are and where you're going. That sense of self doesn't shake easily with the environment."
+  },
+  "G_undefined": {
+    "name": "G Center (Undefined / Open)",
+    "headline": "Fluid identity — needs the right place",
+    "body": "Your identity and sense of direction shifts with place and people. That's not a weakness — it pulls you toward the right environment.",
+    "gift": "Can connect with many identities. When you're in the right place, the right identity emerges naturally.",
+    "shadow": "Forcing a specific identity in a place that doesn't fit, or feeling lost because the environment is holding you back."
+  },
+  "HEART_defined": {
+    "name": "Heart / Ego Center (Defined)",
+    "headline": "Willpower available on commitment",
+    "body": "You can promise and follow through. Your will energy is consistent — when you commit to something, you can see it through."
+  },
+  "HEART_undefined": {
+    "name": "Heart / Ego Center (Undefined / Open)",
+    "headline": "Will that comes in bursts — don't force consistency",
+    "body": "Your commitment energy comes and goes. When it's there, it's strong. When it's not, don't force it.",
+    "gift": "Can learn self-worth that doesn't come from proving anything. Knows when to say yes and when to say no.",
+    "shadow": "Overpromising and burning out trying to prove yourself. Or feeling you always have to 'prove worth' that doesn't actually need proving."
+  },
+  "SACRAL_defined": {
+    "name": "Sacral Center (Defined)",
+    "headline": "A stable engine of work energy",
+    "body": "You have consistent stamina for work, as long as the direction fits. Your sacral responds yes/no for your decisions."
+  },
+  "SACRAL_undefined": {
+    "name": "Sacral Center (Undefined / Open)",
+    "headline": "Energy that needs guarding — not endless",
+    "body": "You amplify other people's energy when you're near them, but your own reserves aren't unlimited.",
+    "gift": "Sensitive to others' energy — can sense when they're tired. Knows when to stop, unlike a Generator who can keep pushing.",
+    "shadow": "Forcing yourself to push like a Generator until burnout. Forgetting to stop because the surrounding energy is still running."
+  },
+  "SOLAR_PLEXUS_defined": {
+    "name": "Solar Plexus Center (Defined)",
+    "headline": "Have your own emotional wave",
+    "body": "Your moods rise and fall in a consistent pattern. Learn the wave — it's your decision-making authority."
+  },
+  "SOLAR_PLEXUS_undefined": {
+    "name": "Solar Plexus Center (Undefined / Open)",
+    "headline": "Sensitive to others' emotions",
+    "body": "You absorb emotions from those around you. Other people's mood can feel like your own — that's what gets confusing.",
+    "gift": "An empath who can read a room without being asked. Knows how to soothe others because you feel them.",
+    "shadow": "Extreme conflict avoidance — fleeing uncomfortable emotions you think are yours but are actually borrowed."
+  },
+  "SPLEEN_defined": {
+    "name": "Spleen Center (Defined)",
+    "headline": "Consistent survival intuition",
+    "body": "Your instincts are live — when danger is near, you sense it. Your physical immunity is relatively strong too."
+  },
+  "SPLEEN_undefined": {
+    "name": "Spleen Center (Undefined / Open)",
+    "headline": "Tend to hold onto unhealthy things longer than you should",
+    "body": "You tend to hang onto situations or relationships that have expired, out of fear of change. You're also more sensitive to your physical health.",
+    "gift": "Can read with precision what's healthy and what isn't. When you trust that pattern, you choose what's good for you.",
+    "shadow": "Gripping on to what no longer fits — relationships, jobs, habits — out of fear of letting go."
+  },
+  "ROOT_defined": {
+    "name": "Root Center (Defined)",
+    "headline": "A stable, managed source of pressure",
+    "body": "You can handle pressure at your own pace. The pressure to act is consistently present — you set the tempo, not the other way."
+  },
+  "ROOT_undefined": {
+    "name": "Root Center (Undefined / Open)",
+    "headline": "Vulnerable to pressure to rush",
+    "body": "You absorb pressure from around you and easily rush. When others panic, you tend to follow without noticing.",
+    "gift": "Can learn which pressure is actually yours and which is borrowed. Once you can tell, you can work at the right tempo.",
+    "shadow": "Constantly rushing — as if there's a deadline that isn't real. An unhealthy adrenaline addiction."
+  }
+}

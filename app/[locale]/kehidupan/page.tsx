@@ -74,7 +74,7 @@ export default async function KehidupanPage({
       ) : tab === 'keuangan' ? (
         <AspectView profile={profile} locale={locale} aspectId="finance" />
       ) : tab === 'desainManusia' ? (
-        <HumanDesignView profile={profile} locale={locale} />
+        <HumanDesignView profile={profile} userId={session.user.id} locale={locale} />
       ) : (
         <TentangView profile={profile} locale={locale} />
       )}

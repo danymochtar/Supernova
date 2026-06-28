@@ -1,9 +1,12 @@
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import { Network, Settings2 } from 'lucide-react';
+import { Suspense } from 'react';
 import type { Locale } from '@/lib/i18n/config';
 import type { ProfileView } from '@/lib/db/repositories/profile';
 import { HumanDesignHero } from './HumanDesignHero';
+import { Bodygraph } from './Bodygraph';
+import { DesignStoryCard } from './DesignStoryCard';
 
 /**
  * "Desain Manusia" tab on the Kehidupan page — renders the user's full
@@ -17,9 +20,11 @@ import { HumanDesignHero } from './HumanDesignHero';
  */
 export async function HumanDesignView({
   profile,
+  userId,
   locale,
 }: {
   profile: ProfileView;
+  userId: string;
   locale: Locale;
 }) {
   const t = await getTranslations({ locale, namespace: 'humanDesign' });
@@ -57,7 +62,16 @@ export async function HumanDesignView({
         <p className="text-muted-foreground text-sm">{t('subtitle')}</p>
       </header>
 
+      {/* AI-synthesized story renders behind a Suspense boundary so
+        * a slow Claude call doesn't block the hero + bodygraph from
+        * appearing. The cached row returns instantly on the common path. */}
+      <Suspense fallback={null}>
+        <DesignStoryCard profile={profile} userId={userId} locale={locale} />
+      </Suspense>
+
       <HumanDesignHero chart={chart} locale={locale} />
+
+      <Bodygraph chart={chart} locale={locale} />
 
       <p className="text-muted-foreground px-1 text-[12px]">
         {t('footerNote')}{' '}

@@ -1,0 +1,110 @@
+{
+  "HEAD_defined": {
+    "name": "Head Center (Defined)",
+    "headline": "Sumber inspirasi yang konsisten",
+    "body": "Kamu punya pola berpikir dan tanya yang stabil. Ide dan pertanyaan dateng dari dalam, gak gampang ke-influence sama tekanan dari luar buat mikirin sesuatu."
+  },
+  "HEAD_undefined": {
+    "name": "Head Center (Undefined / Open)",
+    "headline": "Magnet buat pertanyaan dan inspirasi orang lain",
+    "body": "Kamu nge-amplify tekanan mental dari sekitar. Pertanyaan orang lain berasa kayak pertanyaan kamu, padahal bukan.",
+    "gift": "Kebijaksanaan buat ngerti pertanyaan mana yang worth dijawab, mana yang harus dilepas. Bisa baca apa yang lagi jadi obsesi orang lain.",
+    "shadow": "Kebanjiran pertanyaan yang sebenarnya bukan punya kamu — overthink hal-hal yang sebenernya gak relevan."
+  },
+  "AJNA_defined": {
+    "name": "Ajna Center (Defined)",
+    "headline": "Cara berpikir yang tetap dan bisa diandalkan",
+    "body": "Cara kamu memproses ide dan menyusun konsep konsisten — pola pikir kamu bisa diakses kapan aja. Itu yang bikin kamu jadi tempat orang konsultasi soal mikir."
+  },
+  "AJNA_undefined": {
+    "name": "Ajna Center (Undefined / Open)",
+    "headline": "Pikiran fleksibel — gak harus selalu yakin",
+    "body": "Cara kamu mikir geser-geser. Kepastian mental bukan strength kamu — yang stabil itu kemampuan ngeliat banyak sudut.",
+    "gift": "Bisa nge-hold banyak perspektif tanpa fix di satu. Cocok buat brainstorming + ngelihat hal yang orang lain lewatin karena terlalu yakin.",
+    "shadow": "Pretending to be certain, atau ngotot demi keliatan punya jawaban — padahal pengetahuannya gak stabil di situ."
+  },
+  "THROAT_defined": {
+    "name": "Throat Center (Defined)",
+    "headline": "Bisa mengakses ekspresi & manifestasi kapan aja",
+    "body": "Kamu bisa ngomong kapan kamu mau, manifestin sesuatu lewat suara dan bahasa. Channel ke Throat yang aktif nentuin bagaimana kamu paling natural ngomong."
+  },
+  "THROAT_undefined": {
+    "name": "Throat Center (Undefined / Open)",
+    "headline": "Suara kamu paling kuat pas dipanggil",
+    "body": "Bukan setiap saat kamu enak ngomong. Suara kamu paling natural dan nempel pas orang ngajak kamu ngomong, bukan pas kamu maksa muncul.",
+    "gift": "Suara yang ngeresonansi pas momen yang tepat. Bisa nyilent dengan damai pas energi belum minta keluar.",
+    "shadow": "Maksa diri ngomong buat dapet perhatian, terus berasa kepental karena timing-nya emang gak pas."
+  },
+  "G_defined": {
+    "name": "G Center (Defined)",
+    "headline": "Identitas dan arah hidup yang stabil",
+    "body": "Kamu tau siapa kamu dan ke mana kamu mau jalan. Itu sense of self gak ke-shake gampang sama lingkungan."
+  },
+  "G_undefined": {
+    "name": "G Center (Undefined / Open)",
+    "headline": "Identitas yang fluid, butuh tempat yang tepat",
+    "body": "Identitas dan rasa arah kamu shift bareng tempat dan orang. Itu bukan kelemahan — itu narik kamu ke environment yang cocok.",
+    "gift": "Bisa konekan ke macam-macam identitas. Saat kamu di tempat yang tepat, identitas yang muncul juga yang tepat.",
+    "shadow": "Maksain identitas tertentu pas berada di tempat yang gak cocok, atau bingung soal arah karena di environment yang ngehambat."
+  },
+  "HEART_defined": {
+    "name": "Heart / Ego Center (Defined)",
+    "headline": "Will power yang bisa dikomit on demand",
+    "body": "Kamu bisa janji dan tepatin. Energi will kamu konsisten — pas kamu komit ke sesuatu, kamu sanggup follow through."
+  },
+  "HEART_undefined": {
+    "name": "Heart / Ego Center (Undefined / Open)",
+    "headline": "Will yang ber-burst — jangan paksa selalu konsisten",
+    "body": "Energi komitmen kamu burst-burst. Pas ada, kuat banget. Pas gak ada, jangan dipaksa.",
+    "gift": "Bisa belajar self-worth yang bukan dari pembuktian. Tau kapan ngomong yes dan kapan ngomong no.",
+    "shadow": "Overpromising lalu burnout buat membuktikan diri. Atau, ngerasa terus harus 'prove worth' yang sebenernya gak butuh dibuktiin."
+  },
+  "SACRAL_defined": {
+    "name": "Sacral Center (Defined)",
+    "headline": "Mesin energi kerja yang stabil",
+    "body": "Kamu punya stamina kerja yang konsisten asal arahnya cocok. Sacral kamu yang ngerespon yes/no buat keputusan."
+  },
+  "SACRAL_undefined": {
+    "name": "Sacral Center (Undefined / Open)",
+    "headline": "Energi yang butuh dijaga — bukan endless",
+    "body": "Kamu nge-amplify energi orang lain pas dekat-dekat, tapi cadangan kamu sendiri bukan tanpa batas.",
+    "gift": "Sensitif sama energi orang lain — bisa baca kapan mereka tired. Tau kapan harus berhenti, beda dari Generator yang bisa pushing terus.",
+    "shadow": "Maksa diri terus seperti Generator, sampe burnout. Lupa kapan harus berhenti karena energi sekitar masih lari."
+  },
+  "SOLAR_PLEXUS_defined": {
+    "name": "Solar Plexus Center (Defined)",
+    "headline": "Punya gelombang emosi sendiri",
+    "body": "Mood kamu naik turun dalam pola yang konsisten. Pelajari gelombangnya — itu otoritas pengambilan keputusan kamu."
+  },
+  "SOLAR_PLEXUS_undefined": {
+    "name": "Solar Plexus Center (Undefined / Open)",
+    "headline": "Sensitif sama emosi orang lain",
+    "body": "Kamu nyerap emosi dari sekitar. Mood orang lain berasa kayak mood kamu — itu yang sering bikin bingung.",
+    "gift": "Empath yang bisa baca mood ruangan tanpa harus ditanya. Tau cara nge-soothe orang lain karena ngerasin.",
+    "shadow": "Conflict avoidance ekstrim — ngehindarin segala emosi yang gak nyaman padahal itu energi pinjeman, bukan punya kamu."
+  },
+  "SPLEEN_defined": {
+    "name": "Spleen Center (Defined)",
+    "headline": "Intuisi survival yang konsisten",
+    "body": "Insting kamu hidup — pas ada bahaya, kamu tau. Imun fisik kamu juga relatif kuat."
+  },
+  "SPLEEN_undefined": {
+    "name": "Spleen Center (Undefined / Open)",
+    "headline": "Belajar pegang sesuatu yang gak sehat lebih lama dari yang seharusnya",
+    "body": "Kamu cenderung nahan situasi atau hubungan yang udah expired, karena takut perubahan. Sensitivity ke kesehatan kamu lebih tinggi.",
+    "gift": "Bisa baca dengan presisi mana yang sehat dan mana yang gak. Pas kamu trust pattern itu, kamu pilih yang baik buat kamu.",
+    "shadow": "Pegang erat hal yang gak lagi cocok karena takut ngelepas — relationship, job, kebiasaan yang udah expired."
+  },
+  "ROOT_defined": {
+    "name": "Root Center (Defined)",
+    "headline": "Sumber tekanan yang stabil dan terkelola",
+    "body": "Kamu bisa handle pressure dengan ritme sendiri. Tekanan buat gerak hadir konsisten — kamu nge-set tempo, bukan ditekan."
+  },
+  "ROOT_undefined": {
+    "name": "Root Center (Undefined / Open)",
+    "headline": "Rentan terhadap tekanan buat buru-buru",
+    "body": "Kamu nyerap tekanan dari sekitar dan gampang rush. Pas orang sekitar lagi panik, kamu ikut panik tanpa sadar.",
+    "gift": "Bisa belajar yang mana tekanan beneran punya kamu dan yang mana cuma kepinjem. Pas tau, kamu bisa kerja dengan tempo yang bener.",
+    "shadow": "Selalu rush — kayak ada deadline padahal gak ada. Adrenaline addiction yang gak sehat."
+  }
+}

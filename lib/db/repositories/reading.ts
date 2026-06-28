@@ -1,5 +1,6 @@
-import type { DailyReading, Prisma } from '@prisma/client';
+import type { DailyReading, HDType as PrismaHDType, Prisma } from '@prisma/client';
 import type { Locale } from '@/lib/i18n/config';
+import type { HDType } from '@/lib/humanDesign/types';
 import { prisma } from '@/lib/db/prisma';
 
 /** Date stored at UTC midnight so the unique (userId, date) key is stable. */
@@ -39,6 +40,9 @@ export interface CreateReadingInput {
   contextSnapshot: Prisma.InputJsonValue;
   inputTokens: number;
   outputTokens: number;
+  /** Snapshot of the user's HD type at generation time. Used by the
+   *  cache-bust gate to regenerate readings when the chart changes. */
+  hdTypeAtCache?: HDType | null;
 }
 
 export async function createReading(input: CreateReadingInput): Promise<DailyReading> {
@@ -51,6 +55,7 @@ export async function createReading(input: CreateReadingInput): Promise<DailyRea
       contextSnapshot: input.contextSnapshot,
       inputTokens: input.inputTokens,
       outputTokens: input.outputTokens,
+      hdTypeAtCache: (input.hdTypeAtCache as PrismaHDType | null) ?? null,
     },
   });
 }
