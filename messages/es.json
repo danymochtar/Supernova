@@ -165,7 +165,10 @@
     "birthCityLabel": "Ciudad de nacimiento",
     "birthCityPlaceholder": "Escribe una ciudad — p. ej. Jakarta, Surabaya…",
     "birthCityHint": "Elige una sugerencia para un Ascendente preciso.",
-    "birthCityEmpty": "Sin resultados — intenta otra palabra clave."
+    "birthCityEmpty": "Sin resultados — intenta otra palabra clave.",
+    "sunRole": "Tu personalidad esencial",
+    "moonRole": "Tu lado emocional",
+    "risingRole": "Cómo te ven los demás"
   },
   "home": {
     "cta": "Empieza ahora",

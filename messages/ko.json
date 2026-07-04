@@ -165,7 +165,10 @@
     "birthCityLabel": "출생 도시",
     "birthCityPlaceholder": "도시명 입력 — 예: Jakarta, Surabaya…",
     "birthCityHint": "정확한 Rising을 위해 제안에서 선택하세요.",
-    "birthCityEmpty": "일치하는 결과 없음 — 다른 키워드를 시도해 보세요."
+    "birthCityEmpty": "일치하는 결과 없음 — 다른 키워드를 시도해 보세요.",
+    "sunRole": "너의 핵심 성격",
+    "moonRole": "너의 감정적 면",
+    "risingRole": "다른 사람이 보는 너"
   },
   "home": {
     "cta": "지금 시작하기",

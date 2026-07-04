@@ -165,7 +165,10 @@
     "birthCityLabel": "Birth city",
     "birthCityPlaceholder": "Type a city — e.g. Jakarta, Surabaya…",
     "birthCityHint": "Pick from the suggestions for accurate Rising.",
-    "birthCityEmpty": "No matches — try another keyword."
+    "birthCityEmpty": "No matches — try another keyword.",
+    "sunRole": "Your core personality",
+    "moonRole": "Your emotional side",
+    "risingRole": "How others see you"
   },
   "home": {
     "cta": "Get started",

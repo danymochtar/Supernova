@@ -165,7 +165,10 @@
     "birthCityLabel": "出生城市",
     "birthCityPlaceholder": "输入城市 — 例如 Jakarta、Surabaya…",
     "birthCityHint": "从建议中选择以获得准确的 Rising。",
-    "birthCityEmpty": "无匹配 — 尝试其他关键词。"
+    "birthCityEmpty": "无匹配 — 尝试其他关键词。",
+    "sunRole": "你的核心人格",
+    "moonRole": "你的情感面",
+    "risingRole": "别人眼中的你"
   },
   "home": {
     "cta": "现在开始",

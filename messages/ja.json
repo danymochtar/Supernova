@@ -165,7 +165,10 @@
     "birthCityLabel": "出生都市",
     "birthCityPlaceholder": "都市名を入力 — 例: Jakarta、Surabaya…",
     "birthCityHint": "Rising を正確にするには候補から選んでください。",
-    "birthCityEmpty": "一致なし — 別のキーワードをお試しください。"
+    "birthCityEmpty": "一致なし — 別のキーワードをお試しください。",
+    "sunRole": "あなたの核となる人格",
+    "moonRole": "あなたの感情面",
+    "risingRole": "他人から見たあなた"
   },
   "home": {
     "cta": "今すぐはじめる",
