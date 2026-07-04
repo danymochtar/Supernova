@@ -27,8 +27,6 @@ const TYPE_PRESENTATION: Record<
     surface: string;
     /** Badge (chip) classes — matches the label chip inside the card. */
     badge: string;
-    /** Strength meter fill classes (base + gradient). */
-    meterFill: string;
   }
 > = {
   TWIN_FLAME: {
@@ -39,7 +37,6 @@ const TYPE_PRESENTATION: Record<
       'border-rose-300/60 bg-gradient-to-br from-rose-100/70 via-white to-orange-100/60 dark:border-rose-500/30 dark:from-rose-950/40 dark:via-neutral-950 dark:to-orange-950/30',
     badge:
       'bg-gradient-to-r from-rose-500 to-orange-500 text-white shadow-sm',
-    meterFill: 'bg-gradient-to-r from-rose-500 via-orange-500 to-amber-500',
   },
   SOULMATE: {
     icon: Sparkles,
@@ -49,7 +46,6 @@ const TYPE_PRESENTATION: Record<
       'border-violet-300/60 bg-gradient-to-br from-violet-100/70 via-white to-indigo-100/60 dark:border-violet-500/30 dark:from-violet-950/40 dark:via-neutral-950 dark:to-indigo-950/30',
     badge:
       'bg-gradient-to-r from-violet-500 to-indigo-500 text-white shadow-sm',
-    meterFill: 'bg-gradient-to-r from-violet-500 via-indigo-500 to-blue-500',
   },
   KARMIC: {
     icon: Link2,
@@ -58,7 +54,6 @@ const TYPE_PRESENTATION: Record<
     surface:
       'border-amber-300/60 bg-gradient-to-br from-amber-100/70 via-white to-yellow-100/50 dark:border-amber-500/30 dark:from-amber-950/40 dark:via-neutral-950 dark:to-yellow-950/25',
     badge: 'bg-amber-600 text-white shadow-sm',
-    meterFill: 'bg-gradient-to-r from-amber-500 to-yellow-500',
   },
   NEUTRAL: {
     icon: HeartHandshake,
@@ -67,7 +62,6 @@ const TYPE_PRESENTATION: Record<
     surface:
       'border-border bg-white dark:bg-neutral-950',
     badge: 'bg-neutral-800 text-white dark:bg-neutral-100 dark:text-neutral-900',
-    meterFill: 'bg-neutral-500',
   },
 };
 
@@ -145,23 +139,6 @@ export function KoneksiSection({ reading, meName, themName }: Props) {
           soulUrge={reading.b.soulUrge}
           isMasterDay={reading.b.isMasterDay}
         />
-      </div>
-
-      {/* Strength meter */}
-      <div className="space-y-1.5">
-        <div className="flex items-baseline justify-between text-[11px] font-semibold uppercase tracking-wider">
-          <span className="text-muted-foreground">Kekuatan koneksi</span>
-          <span className="text-foreground tabular-nums">
-            {reading.strength}
-            <span className="text-muted-foreground">/100</span>
-          </span>
-        </div>
-        <div className="bg-border/40 h-1.5 w-full overflow-hidden rounded-full">
-          <div
-            className={`h-full rounded-full transition-[width] duration-500 ${t.meterFill}`}
-            style={{ width: `${reading.strength}%` }}
-          />
-        </div>
       </div>
 
       {/* Signal chips */}

@@ -86,9 +86,8 @@ export default async function PeoplePage({
       className="container max-w-3xl space-y-6 px-4 pb-6 sm:px-6 sm:pb-10"
       style={{ paddingTop: 'calc(env(safe-area-inset-top) + 1.5rem)' }}
     >
-      <header className="space-y-1 pt-2">
+      <header className="pt-2">
         <h1 className="font-serif text-2xl font-semibold tracking-tight">{t('title')}</h1>
-        <p className="text-muted-foreground text-sm">{t('subtitle')}</p>
       </header>
 
       {people.length > 0 ? (

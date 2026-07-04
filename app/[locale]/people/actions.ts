@@ -18,6 +18,10 @@ import { isLocale, type Locale } from '@/lib/i18n/config';
 import { displayName } from '@/lib/profile/displayName';
 import { profileFormSchema, type ProfileFormError } from '@/lib/profile/validate';
 import { RELATIONSHIPS } from '@/lib/people/relationships';
+import {
+  SUGGESTED_BIRTH_TIME,
+  guessBirthCityFromName,
+} from '@/lib/people/smartDefaults';
 import { computeMoonAndRising } from '@/lib/zodiac/birthChart';
 
 /**
@@ -29,6 +33,16 @@ function deriveBirthChart(
   formData: FormData,
   dob: { year: number; month: number; day: number },
   fallbackTimezone: string,
+  /** Full name — feeds the name→city guess when the form submits no
+   *  city. Optional to keep back-compat with existing callers; without
+   *  it the guess falls back to null and only the locale hint fires. */
+  fullNameForGuess?: string,
+  /** Active locale — feeds the "if id → Jakarta" fallback. */
+  activeLocale?: string,
+  /** True on create, false on edit. In edit mode we never override a
+   *  user's cleared-out field with a guess; the empty field is the
+   *  user's intent. */
+  allowSmartDefaults: boolean = true,
 ): {
   birthTime: string | null;
   birthTimezone: string | null;
@@ -39,15 +53,33 @@ function deriveBirthChart(
   risingSign: 'aries' | 'taurus' | 'gemini' | 'cancer' | 'leo' | 'virgo' | 'libra' | 'scorpio' | 'sagittarius' | 'capricorn' | 'aquarius' | 'pisces' | null;
 } {
   const rawTime = formData.get('birthTime');
-  const birthTime = typeof rawTime === 'string' && rawTime.trim() ? rawTime.trim() : null;
+  let birthTime = typeof rawTime === 'string' && rawTime.trim() ? rawTime.trim() : null;
   const rawCity = formData.get('birthCity');
-  const birthCity = typeof rawCity === 'string' && rawCity.trim() ? rawCity.trim() : null;
+  let birthCity = typeof rawCity === 'string' && rawCity.trim() ? rawCity.trim() : null;
   const rawLat = formData.get('birthLat');
   const rawLon = formData.get('birthLon');
   const rawTz = formData.get('birthTimezone');
-  const birthLat = typeof rawLat === 'string' && rawLat.trim() ? Number(rawLat) : null;
-  const birthLon = typeof rawLon === 'string' && rawLon.trim() ? Number(rawLon) : null;
-  const birthTimezone = typeof rawTz === 'string' && rawTz.trim() ? rawTz.trim() : null;
+  let birthLat = typeof rawLat === 'string' && rawLat.trim() ? Number(rawLat) : null;
+  let birthLon = typeof rawLon === 'string' && rawLon.trim() ? Number(rawLon) : null;
+  let birthTimezone = typeof rawTz === 'string' && rawTz.trim() ? rawTz.trim() : null;
+
+  // SERVER-SIDE SMART DEFAULTS (create only) — matches the client-side
+  // prefill in AddPersonForm.tsx. Belt-and-braces so a new person always
+  // gets moon+rising computed even if the client-side prefill didn't
+  // stick (browser autofill, uncontrolled input quirk, etc.).
+  if (allowSmartDefaults) {
+    if (!birthTime) birthTime = SUGGESTED_BIRTH_TIME;
+    if (birthLat == null || birthLon == null) {
+      const guess = guessBirthCityFromName(fullNameForGuess ?? '', activeLocale);
+      if (guess) {
+        birthCity = birthCity ?? guess.label;
+        birthLat = guess.lat;
+        birthLon = guess.lon;
+        birthTimezone = birthTimezone ?? guess.timezone;
+      }
+    }
+  }
+
   if (!birthTime) {
     return {
       birthTime: null,
@@ -149,10 +181,20 @@ export async function createPersonAction(formData: FormData): Promise<PersonActi
   const localeChecked: Locale = isLocale(parsed.data.locale) ? parsed.data.locale : 'id';
 
   const userTimezone = (await getProfileByUserId(session.user.id))?.timezone ?? 'Asia/Jakarta';
+  const fullNameForGuess = [
+    parsed.data.firstName,
+    parsed.data.middleName,
+    parsed.data.lastName,
+  ]
+    .filter(Boolean)
+    .join(' ');
   const chart = deriveBirthChart(
     formData,
     { year: dob.year, month: dob.month, day: dob.day },
     userTimezone,
+    fullNameForGuess,
+    localeChecked,
+    true,
   );
 
   await createPerson(session.user.id, {
@@ -221,6 +263,9 @@ export async function updatePersonAction(formData: FormData): Promise<PersonActi
     formData,
     { year: dob.year, month: dob.month, day: dob.day },
     userTimezone,
+    undefined,
+    localeChecked,
+    false,
   );
 
   await updatePerson(session.user.id, id, {
