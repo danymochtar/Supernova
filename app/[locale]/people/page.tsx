@@ -9,6 +9,7 @@ import { listPeople, type PersonView } from '@/lib/db/repositories/person';
 import { ageAt, buildCoreProfile, contextFromInstant } from '@/lib/numerology';
 import { compatibilityScore } from '@/lib/compatibility/score';
 import { analyzePair, personNumbers } from '@/lib/connection';
+import { backfillBirthCharts } from '@/lib/people/backfillBirthChart';
 import { computeCircleStats } from '@/lib/people/circleStats';
 import { PeopleInfographic } from '@/components/people/PeopleInfographic';
 import { GLYPH, sunSignFromDob, tokensForSign } from '@/lib/zodiac/signs';
@@ -52,7 +53,16 @@ export default async function PeoplePage({
   const profile = await getProfileByUserId(session.user.id);
   if (!profile) redirect(`/${locale}/welcome`);
 
-  const people = await listPeople(session.user.id);
+  const rawPeople = await listPeople(session.user.id);
+  // One-shot backfill for legacy rows saved before smart defaults
+  // shipped — applies noon + name/locale-guessed city so moon + rising
+  // stop rendering as "Belum diisi" without the user re-editing.
+  const people = await backfillBirthCharts(
+    session.user.id,
+    rawPeople,
+    locale,
+    profile.timezone,
+  );
   const atLimit = people.length >= PEOPLE_LIMIT;
   const editMode = searchParams.edit === '1';
   // Layout mode — persisted via URL param so it survives navigation and

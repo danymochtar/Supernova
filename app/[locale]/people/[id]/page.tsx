@@ -5,6 +5,7 @@ import { getTranslations } from 'next-intl/server';
 import { ChevronRight, ChevronDown, Pencil, HeartHandshake } from 'lucide-react';
 import { getSession } from '@/lib/auth/requireSession';
 import { getPerson } from '@/lib/db/repositories/person';
+import { backfillBirthCharts } from '@/lib/people/backfillBirthChart';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { ZodiacSection } from '@/components/people/ZodiacSection';
@@ -69,8 +70,19 @@ export default async function PersonDetailPage({
   const userProfile = await getProfileByUserId(session.user.id);
   if (!userProfile) redirect(`/${locale}/welcome`);
 
-  const person = await getPerson(session.user.id, params.id);
-  if (!person) notFound();
+  const rawPerson = await getPerson(session.user.id, params.id);
+  if (!rawPerson) notFound();
+  // Same one-shot backfill as the list — covers users who deep-link
+  // into a legacy Person before hitting the list page. backfillBirthCharts
+  // preserves array length + order, so index 0 is always defined; the
+  // `?? rawPerson` narrows the type without changing behaviour.
+  const backfilled = await backfillBirthCharts(
+    session.user.id,
+    [rawPerson],
+    locale,
+    userProfile.timezone,
+  );
+  const person = backfilled[0] ?? rawPerson;
 
   const me = buildCoreProfile(userProfile.fullName, userProfile.dob);
   const them = buildCoreProfile(person.fullName, person.dob);
