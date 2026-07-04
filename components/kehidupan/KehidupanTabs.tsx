@@ -1,13 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import { Compass, Heart, Network, Sparkles, Wallet } from 'lucide-react';
+import { Compass, Heart, Moon, Network, Sparkles, Wallet } from 'lucide-react';
 
 export type KehidupanTab =
   | 'tentang'
   | 'perjalanan'
   | 'percintaan'
   | 'keuangan'
+  | 'zodiak'
   | 'desainManusia';
 
 interface Props {
@@ -30,6 +31,7 @@ export function KehidupanTabs({ active, basePath, labels }: Props) {
     { key: 'perjalanan', icon: Compass },
     { key: 'percintaan', icon: Heart },
     { key: 'keuangan', icon: Wallet },
+    { key: 'zodiak', icon: Moon },
     { key: 'desainManusia', icon: Network },
   ];
   return (

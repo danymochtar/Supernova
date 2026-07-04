@@ -960,7 +960,11 @@
     "tabKeuangan": "Money",
     "bioBorn": "Lahir",
     "tabDesainManusia": "Reka Bentuk",
-    "editBirth": "Edit data lahir"
+    "editBirth": "Edit data lahir",
+    "tabZodiak": "Zodiak",
+    "zodiakSectionTitle": "Zodiak {name}",
+    "zodiakCompleteTitle": "Lengkapkan untuk Moon & Rising",
+    "zodiakCompleteHint": "Tambah masa lahir + bandar lahir di profil supaya Moon dan Rising boleh dikira."
   },
   "love": {
     "title": "Percintaan",

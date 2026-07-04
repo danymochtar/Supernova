@@ -960,7 +960,11 @@
     "tabKeuangan": "Money",
     "bioBorn": "وُلد",
     "tabDesainManusia": "تصميم الإنسان",
-    "editBirth": "تعديل بيانات الميلاد"
+    "editBirth": "تعديل بيانات الميلاد",
+    "tabZodiak": "الأبراج",
+    "zodiakSectionTitle": "أبراج {name}",
+    "zodiakCompleteTitle": "أكمل بيانات القمر والطالع",
+    "zodiakCompleteHint": "أضف وقت ومدينة ميلادك في الملف الشخصي لحساب القمر (جانبك العاطفي) والطالع (كيف يراك الآخرون)."
   },
   "love": {
     "title": "الحب والعلاقات",

@@ -23,14 +23,23 @@ export function isCategory(value: unknown): value is Category {
   return typeof value === 'string' && (CATEGORIES as readonly string[]).includes(value);
 }
 
-/** Map a Kehidupan sub-tab to its curhat category. "tentang" (self-portrait)
- *  and "desainManusia" (Human Design) both read as the general "pribadi"
- *  bucket since they're about the user's own identity / inner makeup. The
- *  rest map by name. */
+/** Map a Kehidupan sub-tab to its curhat category. "tentang"
+ *  (self-portrait), "zodiak" (astrology self), and "desainManusia"
+ *  (Human Design) all read as the general "pribadi" bucket since
+ *  they're about the user's own identity / inner makeup. The rest map
+ *  by name. */
 export function categoryForKehidupanTab(
-  tab: 'tentang' | 'perjalanan' | 'percintaan' | 'keuangan' | 'desainManusia',
+  tab:
+    | 'tentang'
+    | 'perjalanan'
+    | 'percintaan'
+    | 'keuangan'
+    | 'zodiak'
+    | 'desainManusia',
 ): Category {
-  if (tab === 'tentang' || tab === 'desainManusia') return 'pribadi';
+  if (tab === 'tentang' || tab === 'zodiak' || tab === 'desainManusia') {
+    return 'pribadi';
+  }
   return tab;
 }
 

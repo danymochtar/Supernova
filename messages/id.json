@@ -19,7 +19,11 @@
     "tabKeuangan": "Money",
     "tabDesainManusia": "Desain",
     "bioBorn": "Lahir",
-    "editBirth": "Edit data lahir"
+    "editBirth": "Edit data lahir",
+    "tabZodiak": "Zodiak",
+    "zodiakSectionTitle": "Zodiak {name}",
+    "zodiakCompleteTitle": "Isi lengkap buat Moon & Rising",
+    "zodiakCompleteHint": "Tambahin jam lahir + kota lahir di profil biar Moon (sisi emosional) sama Rising (cara orang lihat kamu) bisa dihitung."
   },
   "humanDesign": {
     "title": "Desain Manusia",

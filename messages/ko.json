@@ -960,7 +960,11 @@
     "tabKeuangan": "Money",
     "bioBorn": "생년월일",
     "tabDesainManusia": "휴먼 디자인",
-    "editBirth": "출생 데이터 편집"
+    "editBirth": "출생 데이터 편집",
+    "tabZodiak": "별자리",
+    "zodiakSectionTitle": "{name}의 별자리",
+    "zodiakCompleteTitle": "문과 라이징을 위해 채워봐",
+    "zodiakCompleteHint": "프로필에 출생 시간과 도시를 추가하면 문(감정 면)과 라이징(다른 사람이 보는 너)을 계산할 수 있어."
   },
   "love": {
     "title": "연애",

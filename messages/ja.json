@@ -960,7 +960,11 @@
     "tabKeuangan": "Money",
     "bioBorn": "生年月日",
     "tabDesainManusia": "ヒューマンデザイン",
-    "editBirth": "出生データを編集"
+    "editBirth": "出生データを編集",
+    "tabZodiak": "星座",
+    "zodiakSectionTitle": "{name} の星座",
+    "zodiakCompleteTitle": "ムーンとライジングのために情報を追加",
+    "zodiakCompleteHint": "プロフィールに出生時刻と出生地を追加すると、ムーン（感情面）とライジング（他人から見たあなた）が計算できます。"
   },
   "love": {
     "title": "恋愛",

@@ -960,7 +960,11 @@
     "tabKeuangan": "Money",
     "tabDesainManusia": "Design",
     "bioBorn": "Born",
-    "editBirth": "Edit birth data"
+    "editBirth": "Edit birth data",
+    "tabZodiak": "Zodiac",
+    "zodiakSectionTitle": "{name}'s Zodiac",
+    "zodiakCompleteTitle": "Fill in for Moon & Rising",
+    "zodiakCompleteHint": "Add your birth time + city on your profile so Moon (your emotional side) and Rising (how others see you) can be computed."
   },
   "humanDesign": {
     "title": "Human Design",

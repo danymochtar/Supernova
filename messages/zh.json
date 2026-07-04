@@ -960,7 +960,11 @@
     "tabKeuangan": "Money",
     "bioBorn": "出生",
     "tabDesainManusia": "人类图",
-    "editBirth": "编辑出生信息"
+    "editBirth": "编辑出生信息",
+    "tabZodiak": "星座",
+    "zodiakSectionTitle": "{name} 的星座",
+    "zodiakCompleteTitle": "完善月亮和上升的信息",
+    "zodiakCompleteHint": "在个人资料中添加出生时间和城市，才能计算你的月亮（情感面）和上升（别人眼中的你）。"
   },
   "love": {
     "title": "爱情",

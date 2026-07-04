@@ -960,7 +960,11 @@
     "tabKeuangan": "Money",
     "bioBorn": "Nació",
     "tabDesainManusia": "Diseño Humano",
-    "editBirth": "Editar datos de nacimiento"
+    "editBirth": "Editar datos de nacimiento",
+    "tabZodiak": "Zodíaco",
+    "zodiakSectionTitle": "Zodíaco de {name}",
+    "zodiakCompleteTitle": "Complétalo para Luna y Ascendente",
+    "zodiakCompleteHint": "Añade tu hora y ciudad de nacimiento en tu perfil para calcular la Luna (tu lado emocional) y el Ascendente (cómo te ven)."
   },
   "love": {
     "title": "Amor",
