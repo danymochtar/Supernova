@@ -1,0 +1,30 @@
+{
+  "sun": {
+    "name": "Matahari",
+    "theme": "Identitas, ego, vitalitas — inti dari siapa kamu."
+  },
+  "moon": {
+    "name": "Bulan",
+    "theme": "Emosi, kebutuhan, kebiasaan — sisi dalam yang perlu dirawat."
+  },
+  "mercury": {
+    "name": "Merkurius",
+    "theme": "Pikiran, komunikasi, cara belajar — bagaimana kamu memproses dunia."
+  },
+  "venus": {
+    "name": "Venus",
+    "theme": "Cinta, nilai, keindahan — apa yang kamu tarik dan hargai."
+  },
+  "mars": {
+    "name": "Mars",
+    "theme": "Aksi, dorongan, keinginan — cara kamu ngejar dan bertarung."
+  },
+  "jupiter": {
+    "name": "Yupiter",
+    "theme": "Pertumbuhan, makna, keberuntungan — di mana hidupmu meluas."
+  },
+  "saturn": {
+    "name": "Saturnus",
+    "theme": "Struktur, disiplin, tanggung jawab — pelajaran seumur hidup."
+  }
+}

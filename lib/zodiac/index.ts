@@ -3,6 +3,7 @@ export {
   ELEMENT_TOKENS,
   GLYPH,
   MODALITY,
+  RULER,
   ZODIAC_SIGNS,
   fromPrismaEnum,
   sunSignFromDob,
@@ -11,6 +12,7 @@ export {
   type Element,
   type ElementTokens,
   type Modality,
+  type Planet,
   type ZodiacSign,
 } from './signs';
 
@@ -28,10 +30,24 @@ export {
   elementMeaning,
   lifePathSignFunfact,
   modalityMeaning,
+  planetSignMeaning,
+  rulerMeaning,
+  shadowMeaning,
   synastryBlurb,
+  transitMoonBlurb,
   zodiacMeaning,
   type ClassificationMeaning,
+  type PlanetMeaning,
+  type RulerMeaning,
   type ZodiacMeaning,
 } from './content';
 
-export { computeMoonAndRising, type BirthChartResult } from './birthChart';
+export {
+  computeExtendedChart,
+  computeMoonAndRising,
+  transitMoonSign,
+  type BirthChartResult,
+  type ExtendedChartResult,
+} from './birthChart';
+
+export { computeChartBalance, type ChartBalance } from './chartBalance';

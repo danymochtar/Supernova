@@ -1,0 +1,102 @@
+{
+  "venus": {
+    "aries": {
+      "keyword": "Chase mode",
+      "essence": "Love in pursuit — falls fast, signals early. Wants someone brave enough to say no to games; hates drawn-out small talk."
+    },
+    "taurus": {
+      "keyword": "Sensual & loyal",
+      "essence": "Love through touch, food, and quiet time together. Slow to trust — but once attached, hard to unattach."
+    },
+    "gemini": {
+      "keyword": "Mind-connect",
+      "essence": "Attraction starts in conversation. Prizes wit and range; bored fast by anyone slow to keep up."
+    },
+    "cancer": {
+      "keyword": "Give & be held",
+      "essence": "Love through caretaking — cooking, remembering details, showing up on hard days. Needs safety before opening fully."
+    },
+    "leo": {
+      "keyword": "Grand & proud",
+      "essence": "Loves big gestures and being proud of a partner in public. Needs sincere admiration, not polite tolerance."
+    },
+    "virgo": {
+      "keyword": "Small acts",
+      "essence": "Love through detail — bringing medicine, remembering allergies. Rarely says it, always shows it through practical care."
+    },
+    "libra": {
+      "keyword": "Harmony & pair",
+      "essence": "Classic romance — beautiful dinners, deep talks, aesthetic settings. Struggles alone; \"we\" feels more natural than \"I\"."
+    },
+    "scorpio": {
+      "keyword": "All-in or nothing",
+      "essence": "Intense attraction, deep, a little secretive. Needs partners brave enough to speak hard truths — trust is slow and expensive."
+    },
+    "sagittarius": {
+      "keyword": "Adventure together",
+      "essence": "Loves partners who bring a new world — stories, ideas, places. Room to breathe = requirement, not preference."
+    },
+    "capricorn": {
+      "keyword": "Serious upfront",
+      "essence": "Doesn't play — if interested, thinks about where it's going. Affection through consistency, not grand drama."
+    },
+    "aquarius": {
+      "keyword": "Friends first",
+      "essence": "Attraction often starts from strong friendship. Needs space; hates partners who demand full merge."
+    },
+    "pisces": {
+      "keyword": "Poetic & feeling",
+      "essence": "Love in its most poetic form — sees a partner at their best potential. Needs someone who helps hold boundaries, not exploit softness."
+    }
+  },
+  "mars": {
+    "aries": {
+      "keyword": "Straight impact",
+      "essence": "Acts before overthinking — first instinct usually right. Angers fast, cools fast."
+    },
+    "taurus": {
+      "keyword": "Slow burn",
+      "essence": "Moves slow but hard to stop. Anger needs time to grow — once out, it's usually been stored a while."
+    },
+    "gemini": {
+      "keyword": "War of words",
+      "essence": "Acts through argument and idea — clever with persuasion. Restless; starts many projects at once."
+    },
+    "cancer": {
+      "keyword": "Side attack",
+      "essence": "Struggles head-on — trends passive-aggressive when upset. Fights for loved ones more than for the self."
+    },
+    "leo": {
+      "keyword": "Bold moves",
+      "essence": "Moves with style — wants to be seen doing it. Angered when unappreciated; the ego needs room."
+    },
+    "virgo": {
+      "keyword": "Precision",
+      "essence": "Acts through tidy plans and exact moves. Anger comes as detailed critique — not shouting."
+    },
+    "libra": {
+      "keyword": "Soft but firm",
+      "essence": "Avoids open conflict, but has subtle ways of winning. Best acting through collaboration, not solo."
+    },
+    "scorpio": {
+      "keyword": "Strategic & deep",
+      "essence": "Moves quietly, strikes precisely. Anger slow-burning, long-holding; revenge isn't the style but memory is."
+    },
+    "sagittarius": {
+      "keyword": "Optimistic burst",
+      "essence": "Big action with forward vision. Needs a purpose bigger than winning — rarely moves for petty stakes."
+    },
+    "capricorn": {
+      "keyword": "Long discipline",
+      "essence": "Slow, consistent, directed action — marathon not sprint. Controlled anger; when it slips, boundaries were already crossed hard."
+    },
+    "aquarius": {
+      "keyword": "Off the crowd",
+      "essence": "Moves in unconventional ways — quiet rebellion or open one. Cold anger, not explosive."
+    },
+    "pisces": {
+      "keyword": "Flow & fade",
+      "essence": "Rarely acts straight — often through intuition and evasion. Hard to anger head-on; more likely to retreat or dissolve."
+    }
+  }
+}

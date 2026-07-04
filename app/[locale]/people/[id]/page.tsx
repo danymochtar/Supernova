@@ -11,12 +11,19 @@ import { isLocale, type Locale } from '@/lib/i18n/config';
 import { ZodiacSection } from '@/components/people/ZodiacSection';
 import { ElementModalityChips } from '@/components/people/ElementModalityChips';
 import {
+  computeChartBalance,
+  computeExtendedChart,
+  transitMoonSign,
+} from '@/lib/zodiac';
+import {
   ELEMENT,
   GLYPH,
   MODALITY,
   ZODIAC_SIGNS,
   sunSignFromDob,
   tokensForSign,
+  type Element,
+  type Modality,
   type ZodiacSign,
 } from '@/lib/zodiac/signs';
 import { elementMeaning, lifePathSignFunfact, modalityMeaning } from '@/lib/zodiac/content';
@@ -283,28 +290,86 @@ export default async function PersonDetailPage({
 
         {/* ZODIAC — optional supplementary lens; pure display, does not
          * feed the compatibility score. Sun is always shown (derived from
-         * DOB); Moon / Rising render only when the user has entered them. */}
-        <ZodiacSection
-          dob={person.dob}
-          moonSign={person.moonSign}
-          risingSign={person.risingSign}
-          locale={locale}
-          labels={{
-            sectionTitle: tZodiac('sectionTitleOnPerson', { name: theirName }),
-            sun: tZodiac('sunLabel'),
-            moon: tZodiac('moonLabel'),
-            rising: tZodiac('risingLabel'),
-            sunRole: tZodiac('sunRole'),
-            moonRole: tZodiac('moonRole'),
-            risingRole: tZodiac('risingRole'),
-            inLove: tZodiac('inLoveLabel'),
-            classification: tZodiac('classificationLabel'),
-            missingHint: tZodiac('missingHint'),
-            signNames: Object.fromEntries(
-              ZODIAC_SIGNS.map((s) => [s, tZodiac(`sign.${s}`)]),
-            ) as Record<ZodiacSign, string>,
-          }}
-        />
+         * DOB); Moon / Rising / Venus / Mars render only when birth-time
+         * data is present. Venus + Mars are computed inline (not
+         * persisted) — same ephemeris call powers all four. */}
+        {(() => {
+          const personChart = computeExtendedChart({
+            year: person.dob.year,
+            month: person.dob.month,
+            day: person.dob.day,
+            birthTime: person.birthTime,
+            timezone: person.birthTimezone ?? userProfile.timezone,
+            lat: person.birthLat,
+            lon: person.birthLon,
+          });
+          const personBalance = computeChartBalance([
+            personChart.sun,
+            personChart.moon,
+            personChart.rising,
+            personChart.venus,
+            personChart.mars,
+          ]);
+          const personTransitMoon = transitMoonSign(new Date());
+          const personSignNames = Object.fromEntries(
+            ZODIAC_SIGNS.map((s) => [s, tZodiac(`sign.${s}`)]),
+          ) as Record<ZodiacSign, string>;
+          const personElementNames: Record<Element, string> = {
+            fire: tZodiac('element.fire'),
+            earth: tZodiac('element.earth'),
+            air: tZodiac('element.air'),
+            water: tZodiac('element.water'),
+          };
+          const personModalityNames: Record<Modality, string> = {
+            cardinal: tZodiac('modality.cardinal'),
+            fixed: tZodiac('modality.fixed'),
+            mutable: tZodiac('modality.mutable'),
+          };
+          return (
+            <ZodiacSection
+              dob={person.dob}
+              moonSign={personChart.moon ?? person.moonSign}
+              risingSign={personChart.rising ?? person.risingSign}
+              venusSign={personChart.venus}
+              marsSign={personChart.mars}
+              balance={personBalance}
+              transitMoon={personTransitMoon}
+              locale={locale}
+              labels={{
+                sectionTitle: tZodiac('sectionTitleOnPerson', { name: theirName }),
+                sun: tZodiac('sunLabel'),
+                moon: tZodiac('moonLabel'),
+                rising: tZodiac('risingLabel'),
+                venus: tZodiac('venusLabel'),
+                mars: tZodiac('marsLabel'),
+                sunRole: tZodiac('sunRole'),
+                moonRole: tZodiac('moonRole'),
+                risingRole: tZodiac('risingRole'),
+                venusRole: tZodiac('venusRole'),
+                marsRole: tZodiac('marsRole'),
+                inLove: tZodiac('inLoveLabel'),
+                classification: tZodiac('classificationLabel'),
+                missingHint: tZodiac('missingHint'),
+                missingPlanetHint: tZodiac('missingPlanetHint'),
+                shadowToggleOpen: tZodiac('shadowToggleOpen'),
+                shadowToggleClose: tZodiac('shadowToggleClose'),
+                balanceSectionTitle: tZodiac('balanceSectionTitle'),
+                balanceTotal: tZodiac('balanceTotal'),
+                balanceDominantElement: tZodiac('balanceDominantElement'),
+                balanceDominantModality: tZodiac('balanceDominantModality'),
+                balanceMissingElements: tZodiac('balanceMissingElements'),
+                chartRulerTitle: tZodiac('chartRulerTitle'),
+                chartRulerHint: tZodiac('chartRulerHint'),
+                chartRulerPlacement: tZodiac('chartRulerPlacement'),
+                transitMoonTitle: tZodiac('transitMoonTitle'),
+                transitMoonSubtitle: tZodiac('transitMoonSubtitle'),
+                signNames: personSignNames,
+                elementNames: personElementNames,
+                modalityNames: personModalityNames,
+              }}
+            />
+          );
+        })()}
 
         {/* AI body split into two flat cards: portrait ("Ringkasan profil")
          * + relational dynamics ("Profil hubungan…"). Suspense-wrapped so

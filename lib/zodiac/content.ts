@@ -13,8 +13,16 @@ import idFunfact from '@/content/zodiac/lifePathFunfact.id.json';
 import enFunfact from '@/content/zodiac/lifePathFunfact.en.json';
 import idClassification from '@/content/zodiac/classification.id.json';
 import enClassification from '@/content/zodiac/classification.en.json';
+import idPlanets from '@/content/zodiac/planets.id.json';
+import enPlanets from '@/content/zodiac/planets.en.json';
+import idShadow from '@/content/zodiac/shadow.id.json';
+import enShadow from '@/content/zodiac/shadow.en.json';
+import idRulers from '@/content/zodiac/rulers.id.json';
+import enRulers from '@/content/zodiac/rulers.en.json';
+import idTransitMoon from '@/content/zodiac/transitMoon.id.json';
+import enTransitMoon from '@/content/zodiac/transitMoon.en.json';
 
-import type { Element, Modality, ZodiacSign } from './signs';
+import type { Element, Modality, Planet, ZodiacSign } from './signs';
 import type { PairCategory, SynastryClassification } from './synastry';
 
 export interface ZodiacMeaning {
@@ -38,6 +46,25 @@ export interface ClassificationMeaning {
   title: string;
   body: string;
 }
+
+/** Venus / Mars per-sign copy — short "keyword + one-liner". */
+export interface PlanetMeaning {
+  keyword: string;
+  essence: string;
+}
+type PlanetPack = {
+  venus: Record<ZodiacSign, PlanetMeaning>;
+  mars: Record<ZodiacSign, PlanetMeaning>;
+};
+
+type ShadowPack = Record<ZodiacSign, string>;
+type TransitMoonPack = Record<ZodiacSign, string>;
+
+export interface RulerMeaning {
+  name: string;
+  theme: string;
+}
+type RulerPack = Record<Planet, RulerMeaning>;
 /** Explainers for the 4 elements and 3 modalities — used by the chip
  *  tap-to-detail modal on the Person hero. */
 type ClassificationPack = {
@@ -63,6 +90,26 @@ const FUNFACT_PACKS: Partial<Record<Locale, FunfactPack>> = {
 const CLASSIFICATION_PACKS: Partial<Record<Locale, ClassificationPack>> = {
   id: idClassification as ClassificationPack,
   en: enClassification as ClassificationPack,
+};
+
+const PLANET_PACKS: Partial<Record<Locale, PlanetPack>> = {
+  id: idPlanets as PlanetPack,
+  en: enPlanets as PlanetPack,
+};
+
+const SHADOW_PACKS: Partial<Record<Locale, ShadowPack>> = {
+  id: idShadow as ShadowPack,
+  en: enShadow as ShadowPack,
+};
+
+const RULER_PACKS: Partial<Record<Locale, RulerPack>> = {
+  id: idRulers as RulerPack,
+  en: enRulers as RulerPack,
+};
+
+const TRANSIT_MOON_PACKS: Partial<Record<Locale, TransitMoonPack>> = {
+  id: idTransitMoon as TransitMoonPack,
+  en: enTransitMoon as TransitMoonPack,
 };
 
 /** Per-sign blurb (keyword + element + modality + essence + in-love). */
@@ -110,4 +157,35 @@ export function elementMeaning(value: Element, locale: Locale): ClassificationMe
 export function modalityMeaning(value: Modality, locale: Locale): ClassificationMeaning {
   const pack = CLASSIFICATION_PACKS[locale] ?? CLASSIFICATION_PACKS.id!;
   return pack.modality[value];
+}
+
+/** Per-sign copy for Venus (love style) or Mars (drive & anger). */
+export function planetSignMeaning(
+  planet: 'venus' | 'mars',
+  sign: ZodiacSign,
+  locale: Locale,
+): PlanetMeaning {
+  const pack = PLANET_PACKS[locale] ?? PLANET_PACKS.id!;
+  return pack[planet][sign];
+}
+
+/** One-paragraph shadow / growth-edge blurb per sign. Used by the
+ *  "Sisi bayangan" toggle under each placement row. */
+export function shadowMeaning(sign: ZodiacSign, locale: Locale): string {
+  const pack = SHADOW_PACKS[locale] ?? SHADOW_PACKS.id!;
+  return pack[sign];
+}
+
+/** Ruler-planet display name + one-line theme. Fed by the classical
+ *  RULER map in signs.ts — pass the planet id from `RULER[risingSign]`. */
+export function rulerMeaning(planet: Planet, locale: Locale): RulerMeaning {
+  const pack = RULER_PACKS[locale] ?? RULER_PACKS.id!;
+  return pack[planet];
+}
+
+/** Vibe-of-today copy for the moon sign the Moon currently transits
+ *  through. Feeds the "Bulan hari ini" card at the bottom of Zodiak. */
+export function transitMoonBlurb(sign: ZodiacSign, locale: Locale): string {
+  const pack = TRANSIT_MOON_PACKS[locale] ?? TRANSIT_MOON_PACKS.id!;
+  return pack[sign];
 }

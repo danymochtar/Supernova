@@ -17,7 +17,7 @@
 
 import { Horoscope, Origin } from 'circular-natal-horoscope-js';
 
-import type { ZodiacSign } from './signs';
+import { sunSignFromDob, type ZodiacSign } from './signs';
 
 interface LatLon {
   lat: number;
@@ -132,6 +132,20 @@ export interface BirthChartResult {
 }
 
 /**
+ * Full birth-chart placements — Sun, Moon, Rising (Ascendant), Venus,
+ * Mars. Venus + Mars each require the same DOB/time/location as Moon, so
+ * the engine returns them together to keep the ephemeris construction to
+ * a single call.
+ */
+export interface ExtendedChartResult {
+  sun: ZodiacSign | null;
+  moon: ZodiacSign | null;
+  rising: ZodiacSign | null;
+  venus: ZodiacSign | null;
+  mars: ZodiacSign | null;
+}
+
+/**
  * Compute Moon and Ascendant signs from birth data. Returns `null` for
  * either field if the input can't be interpreted (invalid time string,
  * library throws). The compute call costs ~1ms and is pure, so callers
@@ -193,5 +207,135 @@ export function computeMoonAndRising(input: BirthInput): BirthChartResult {
     };
   } catch {
     return { moon: null, rising: null };
+  }
+}
+
+/**
+ * Compute the full set of placements exposed on the Zodiak view — Sun,
+ * Moon, Rising, Venus, Mars. Sun is derived from DOB alone (no time
+ * needed) so it always returns a sign when the date is valid; the rest
+ * need a valid birth time and coordinates.
+ *
+ * Failures on the time/library path degrade gracefully: only the
+ * time-dependent placements go null. Callers render partial data.
+ */
+export function computeExtendedChart(input: {
+  year: number;
+  month: number;
+  day: number;
+  birthTime: string | null;
+  timezone: string | null;
+  lat?: number | null;
+  lon?: number | null;
+}): ExtendedChartResult {
+  // Sun is a pure function of DOB — safe to compute regardless of the
+  // rest.
+  const sun = sunSignFromDob({ month: input.month, day: input.day });
+
+  if (!input.birthTime || !input.timezone) {
+    return { sun, moon: null, rising: null, venus: null, mars: null };
+  }
+  const m = input.birthTime.trim().match(/^(\d{1,2}):(\d{2})$/);
+  if (!m) return { sun, moon: null, rising: null, venus: null, mars: null };
+  const hour = Number(m[1]);
+  const minute = Number(m[2]);
+  if (!Number.isFinite(hour) || hour < 0 || hour > 23) {
+    return { sun, moon: null, rising: null, venus: null, mars: null };
+  }
+  if (!Number.isFinite(minute) || minute < 0 || minute > 59) {
+    return { sun, moon: null, rising: null, venus: null, mars: null };
+  }
+
+  const approx = approxLatLon(input.timezone);
+  const lat = typeof input.lat === 'number' && Number.isFinite(input.lat) ? input.lat : approx.lat;
+  const lon = typeof input.lon === 'number' && Number.isFinite(input.lon) ? input.lon : approx.lon;
+
+  try {
+    const origin = new (Origin as unknown as new (args: {
+      year: number;
+      month: number;
+      date: number;
+      hour: number;
+      minute: number;
+      latitude: number;
+      longitude: number;
+    }) => unknown)({
+      year: input.year,
+      month: input.month - 1,
+      date: input.day,
+      hour,
+      minute,
+      latitude: lat,
+      longitude: lon,
+    });
+    const horoscope = new (Horoscope as unknown as new (args: {
+      origin: unknown;
+      houseSystem?: string;
+      zodiac?: string;
+    }) => {
+      CelestialBodies: {
+        moon: { Sign: { label: string } };
+        venus: { Sign: { label: string } };
+        mars: { Sign: { label: string } };
+      };
+      Ascendant: { Sign: { label: string } };
+    })({
+      origin,
+      houseSystem: 'whole-sign',
+      zodiac: 'tropical',
+    });
+
+    return {
+      sun,
+      moon: normalizeSign(horoscope.CelestialBodies.moon?.Sign?.label),
+      rising: normalizeSign(horoscope.Ascendant?.Sign?.label),
+      venus: normalizeSign(horoscope.CelestialBodies.venus?.Sign?.label),
+      mars: normalizeSign(horoscope.CelestialBodies.mars?.Sign?.label),
+    };
+  } catch {
+    return { sun, moon: null, rising: null, venus: null, mars: null };
+  }
+}
+
+/**
+ * Zodiac sign the Moon transits through on a given calendar day (noon
+ * UTC as the reference instant). Feeds the "Bulan hari ini" transit
+ * card — refreshes daily. Location isn't meaningful for Moon-sign
+ * lookup (Moon changes sign every ~2.5 days regardless of viewer
+ * location), so we default to lat/lon = 0.
+ */
+export function transitMoonSign(date: Date): ZodiacSign | null {
+  try {
+    const origin = new (Origin as unknown as new (args: {
+      year: number;
+      month: number;
+      date: number;
+      hour: number;
+      minute: number;
+      latitude: number;
+      longitude: number;
+    }) => unknown)({
+      year: date.getUTCFullYear(),
+      month: date.getUTCMonth(),
+      date: date.getUTCDate(),
+      hour: 12,
+      minute: 0,
+      latitude: 0,
+      longitude: 0,
+    });
+    const horoscope = new (Horoscope as unknown as new (args: {
+      origin: unknown;
+      houseSystem?: string;
+      zodiac?: string;
+    }) => {
+      CelestialBodies: { moon: { Sign: { label: string } } };
+    })({
+      origin,
+      houseSystem: 'whole-sign',
+      zodiac: 'tropical',
+    });
+    return normalizeSign(horoscope.CelestialBodies.moon?.Sign?.label);
+  } catch {
+    return null;
   }
 }

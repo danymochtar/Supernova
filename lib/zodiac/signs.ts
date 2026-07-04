@@ -69,6 +69,33 @@ export const MODALITY: Record<ZodiacSign, Modality> = {
   pisces: 'mutable',
 };
 
+/**
+ * Classical + modern rulers per sign. Modern astrology uses the "outer"
+ * ruler (Uranus for Aquarius, Neptune for Pisces, Pluto for Scorpio)
+ * for depth work but keeps the classical ruler (Saturn / Jupiter / Mars)
+ * as the "day-to-day" ruler that's actually computable from a birth
+ * chart with only the personal planets. We surface the classical ruler
+ * as the "chart ruler" because our engine only computes Sun through
+ * Mars — using the modern ruler would leave Aquarius / Pisces / Scorpio
+ * risings without a rulership placement to display.
+ */
+export type Planet = 'sun' | 'moon' | 'mercury' | 'venus' | 'mars' | 'jupiter' | 'saturn';
+
+export const RULER: Record<ZodiacSign, Planet> = {
+  aries: 'mars',
+  taurus: 'venus',
+  gemini: 'mercury',
+  cancer: 'moon',
+  leo: 'sun',
+  virgo: 'mercury',
+  libra: 'venus',
+  scorpio: 'mars',
+  sagittarius: 'jupiter',
+  capricorn: 'saturn',
+  aquarius: 'saturn',
+  pisces: 'jupiter',
+};
+
 /** Unicode glyph for each sign — used as a small affordance on cards. */
 export const GLYPH: Record<ZodiacSign, string> = {
   aries: '♈',

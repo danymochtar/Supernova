@@ -1,0 +1,30 @@
+{
+  "sun": {
+    "name": "Sun",
+    "theme": "Identity, ego, vitality — the core of who you are."
+  },
+  "moon": {
+    "name": "Moon",
+    "theme": "Emotion, needs, habits — the inner world that needs tending."
+  },
+  "mercury": {
+    "name": "Mercury",
+    "theme": "Mind, communication, learning — how you process the world."
+  },
+  "venus": {
+    "name": "Venus",
+    "theme": "Love, values, beauty — what you attract and cherish."
+  },
+  "mars": {
+    "name": "Mars",
+    "theme": "Action, drive, desire — how you chase and fight."
+  },
+  "jupiter": {
+    "name": "Jupiter",
+    "theme": "Growth, meaning, luck — where your life expands."
+  },
+  "saturn": {
+    "name": "Saturn",
+    "theme": "Structure, discipline, responsibility — the long-life lesson."
+  }
+}

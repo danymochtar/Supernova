@@ -1,0 +1,102 @@
+{
+  "venus": {
+    "aries": {
+      "keyword": "Ngejar cepat",
+      "essence": "Cinta mode pengejaran — jatuh cepat, langsung ngasih tanda. Suka yang berani nolak main-main, benci basa-basi lama."
+    },
+    "taurus": {
+      "keyword": "Sensual & setia",
+      "essence": "Cinta lewat sentuhan, makanan, dan kenyamanan berdua. Butuh waktu percaya, tapi sekali nempel — susah lepas."
+    },
+    "gemini": {
+      "keyword": "Nyambung otak",
+      "essence": "Ketertarikan mulai dari obrolan. Suka orang yang witty, gampang bosan sama yang komunikasinya lambat."
+    },
+    "cancer": {
+      "keyword": "Ngasih & dirawat",
+      "essence": "Cinta lewat merawat — masak, ingat detail, hadir di hari berat. Butuh rasa aman sebelum benar-benar buka diri."
+    },
+    "leo": {
+      "keyword": "Grand & bangga",
+      "essence": "Suka gesture besar dan bangga sama pasangan di depan orang. Butuh diapresiasi tulus, bukan sekedar sopan."
+    },
+    "virgo": {
+      "keyword": "Tindakan kecil",
+      "essence": "Cinta lewat detail — bawain obat, ingat alergi makan. Susah bilang, gampang nunjukin lewat perhatian praktis."
+    },
+    "libra": {
+      "keyword": "Harmoni & partner",
+      "essence": "Romantis klasik — dinner cakep, obrolan dalam, tempat estetik. Susah sendiri; \"kita\" terasa lebih natural daripada \"aku\"."
+    },
+    "scorpio": {
+      "keyword": "All-in atau nol",
+      "essence": "Ketertarikan intens, dalam, sedikit rahasia. Butuh pasangan yang berani jujur soal sisi susah — kepercayaan pelan tapi mahal."
+    },
+    "sagittarius": {
+      "keyword": "Petualang bareng",
+      "essence": "Suka orang yang bawa dunia baru — cerita, ide, tempat. Ruang buat masing-masing gerak = syarat, bukan pilihan."
+    },
+    "capricorn": {
+      "keyword": "Serius sejak awal",
+      "essence": "Nggak main-main — kalau tertarik, mikirin arahnya ke mana. Afeksi lewat konsistensi, bukan drama besar."
+    },
+    "aquarius": {
+      "keyword": "Sahabat dulu",
+      "essence": "Ketertarikan sering mulai dari pertemanan yang kuat. Butuh ruang, benci pasangan yang minta melebur total."
+    },
+    "pisces": {
+      "keyword": "Puitis & merasa",
+      "essence": "Cinta di versi paling puitis — lihat pasangan di potensi terbaiknya. Butuh yang bantu pegang batas, bukan yang eksploitasi kelembutan."
+    }
+  },
+  "mars": {
+    "aries": {
+      "keyword": "Langsung tabrak",
+      "essence": "Aksi tanpa lama mikir — dorongan pertama biasanya tepat. Marah cepat, tapi juga cepat selesai."
+    },
+    "taurus": {
+      "keyword": "Slow burn",
+      "essence": "Gerak pelan tapi susah dihentikan. Marah butuh waktu tumbuh — kalau sudah keluar, biasanya sudah lama disimpan."
+    },
+    "gemini": {
+      "keyword": "Perang kata",
+      "essence": "Aksi lewat argumen dan ide — cerdas ngasih persuasi. Bosanan; suka mulai banyak project sekaligus."
+    },
+    "cancer": {
+      "keyword": "Nyerang lewat samping",
+      "essence": "Susah frontal — cenderung passive-aggressive kalau kesal. Bertarung buat orang yang disayang, bukan buat diri sendiri."
+    },
+    "leo": {
+      "keyword": "Aksi berani",
+      "essence": "Gerak dengan gaya — mau dilihat waktu bergerak. Marah kalau merasa nggak dihargai; egonya butuh ruang."
+    },
+    "virgo": {
+      "keyword": "Presisi",
+      "essence": "Aksi lewat rencana rapi dan tindakan tepat. Marah dalam bentuk kritik detail — bukan teriakan."
+    },
+    "libra": {
+      "keyword": "Halus tapi tegas",
+      "essence": "Nggak suka konflik terbuka, tapi punya cara halus buat menang. Aksi terbaik lewat kolaborasi, bukan solo."
+    },
+    "scorpio": {
+      "keyword": "Strategis & dalam",
+      "essence": "Gerak diam-diam, kalau menyerang — telak. Marah pelan tapi lama; balas dendam bukan gaya, tapi ingat."
+    },
+    "sagittarius": {
+      "keyword": "Ledakan optimis",
+      "essence": "Aksi besar dengan visi ke depan. Butuh tujuan yang lebih besar dari sekedar menang — jarang gerak buat hal remeh."
+    },
+    "capricorn": {
+      "keyword": "Disiplin panjang",
+      "essence": "Aksi pelan, konsisten, terarah — marathon bukan sprint. Marah terkontrol; kalau lepas, biasanya sudah sangat berbatas."
+    },
+    "aquarius": {
+      "keyword": "Beda dari rombongan",
+      "essence": "Gerak dengan cara yang nggak umum — memberontak halus atau frontal. Marah dingin, bukan meledak."
+    },
+    "pisces": {
+      "keyword": "Ngalir & tarik",
+      "essence": "Aksi jarang lurus — sering lewat intuisi dan menghindar. Susah marah frontal; cenderung mundur atau larut."
+    }
+  }
+}
