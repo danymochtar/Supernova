@@ -222,6 +222,17 @@ export default async function PersonDetailPage({
           );
         })()}
 
+        {/* KONEKSI — soul-connection type badge (Twin Flame / Soulmate /
+         *  Karmic / Neutral). Sits at headline position: the connection
+         *  archetype is the human answer to "who is this person to me?"
+         *  — compat score below quantifies the daily friction, but
+         *  koneksi is the framing lens. */}
+        <KoneksiSection
+          reading={connectionReading}
+          meName={myName}
+          themName={theirName}
+        />
+
         {/* Compat at-a-glance — soft brand gradient + heart icon. Score
          * + band + chevron only; patterns live on the /compatibility
          * detail page. */}
@@ -248,17 +259,6 @@ export default async function PersonDetailPage({
           </div>
           <ChevronRight className="text-muted-foreground h-4 w-4 shrink-0 transition group-hover:translate-x-0.5" aria-hidden />
         </Link>
-
-        {/* KONEKSI — soul-connection type badge (Twin Flame / Soulmate /
-         *  Karmic / Neutral) + strength meter + signal chips +
-         *  template explanation. Renders below the numerology compat
-         *  score; the two lenses are complementary (compat = daily
-         *  friction, connection = archetypal bond type). */}
-        <KoneksiSection
-          reading={connectionReading}
-          meName={myName}
-          themName={theirName}
-        />
 
         {person.notes ? (
           <section className="border-border rounded-xl border bg-amber-50/60 p-4 text-sm dark:border-amber-900/40 dark:bg-amber-950/20">
@@ -314,61 +314,82 @@ export default async function PersonDetailPage({
           />
         </Suspense>
 
+        {/* Family Tree — collapsed by default (same pattern as Detail
+         *  Angka below). Only surfaces when the parent-child comparison
+         *  has data to show; otherwise the whole accordion is hidden. */}
         {familyMatches ? (
-          <section className="space-y-3">
-            <h2 className="text-lg font-semibold">{t('familyTreeTitle')}</h2>
-            <Explainer
-              title={tDash('explainerLearnMore')}
-              body={familyCopy.hint ?? ''}
-            />
-            {familyMatches.shared.length === 0 && familyMatches.inheritedLessons.length === 0 ? (
-              <p className="text-muted-foreground text-sm italic">
-                {t('familyTreeEmpty', { name: theirName })}
-              </p>
-            ) : (
-              <div className="space-y-4">
-                {familyMatches.shared.length > 0 ? (
-                  <div className="border-border space-y-2 rounded-2xl border bg-emerald-50/40 p-4 dark:bg-emerald-950/15">
-                    <p className="text-muted-foreground text-[11px] font-semibold uppercase tracking-[0.18em]">
-                      {t('familyTreeSharedLabel')}
-                    </p>
-                    <ul className="space-y-2">
-                      {familyMatches.shared.map((n) => (
-                        <li key={n} className="flex items-start gap-3">
-                          <span className="bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 font-mono inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold tabular-nums">
-                            {n}
-                          </span>
-                          <p className="text-sm leading-relaxed text-neutral-800 dark:text-neutral-200">
-                            {familyCopy[`shared:${n}`] ?? ''}
-                          </p>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : null}
-
-                {familyMatches.inheritedLessons.length > 0 ? (
-                  <div className="border-border space-y-2 rounded-2xl border bg-amber-50/40 p-4 dark:bg-amber-950/15">
-                    <p className="text-muted-foreground text-[11px] font-semibold uppercase tracking-[0.18em]">
-                      {t('familyTreeInheritedLabel', { name: theirName })}
-                    </p>
-                    <ul className="space-y-2">
-                      {familyMatches.inheritedLessons.map((n) => (
-                        <li key={n} className="flex items-start gap-3">
-                          <span className="bg-amber-500/15 text-amber-800 dark:text-amber-300 font-mono inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold tabular-nums">
-                            {n}
-                          </span>
-                          <p className="text-sm leading-relaxed text-neutral-800 dark:text-neutral-200">
-                            {familyCopy[`inheritedLesson:${n}`] ?? ''}
-                          </p>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : null}
+          <details className="border-border group rounded-2xl border bg-surface-1">
+            <summary className="press-soft flex cursor-pointer list-none items-start justify-between gap-3 px-5 py-4 [&::-webkit-details-marker]:hidden">
+              <div className="min-w-0 flex-1 space-y-0.5">
+                <p className="text-sm font-semibold">{t('familyTreeTitle')}</p>
+                <p className="text-muted-foreground text-xs">
+                  {familyMatches.shared.length + familyMatches.inheritedLessons.length > 0
+                    ? t('familyTreeSummary', {
+                        shared: familyMatches.shared.length,
+                        inherited: familyMatches.inheritedLessons.length,
+                      })
+                    : t('familyTreeEmpty', { name: theirName })}
+                </p>
               </div>
-            )}
-          </section>
+              <ChevronDown
+                className="text-muted-foreground mt-1 h-4 w-4 shrink-0 transition-transform ios-ease group-open:rotate-180"
+                aria-hidden
+              />
+            </summary>
+            <div className="border-border/60 space-y-4 border-t px-5 py-5">
+              <Explainer
+                title={tDash('explainerLearnMore')}
+                body={familyCopy.hint ?? ''}
+              />
+              {familyMatches.shared.length === 0 && familyMatches.inheritedLessons.length === 0 ? (
+                <p className="text-muted-foreground text-sm italic">
+                  {t('familyTreeEmpty', { name: theirName })}
+                </p>
+              ) : (
+                <div className="space-y-4">
+                  {familyMatches.shared.length > 0 ? (
+                    <div className="border-border space-y-2 rounded-2xl border bg-emerald-50/40 p-4 dark:bg-emerald-950/15">
+                      <p className="text-muted-foreground text-[11px] font-semibold uppercase tracking-[0.18em]">
+                        {t('familyTreeSharedLabel')}
+                      </p>
+                      <ul className="space-y-2">
+                        {familyMatches.shared.map((n) => (
+                          <li key={n} className="flex items-start gap-3">
+                            <span className="bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 font-mono inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold tabular-nums">
+                              {n}
+                            </span>
+                            <p className="text-sm leading-relaxed text-neutral-800 dark:text-neutral-200">
+                              {familyCopy[`shared:${n}`] ?? ''}
+                            </p>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
+
+                  {familyMatches.inheritedLessons.length > 0 ? (
+                    <div className="border-border space-y-2 rounded-2xl border bg-amber-50/40 p-4 dark:bg-amber-950/15">
+                      <p className="text-muted-foreground text-[11px] font-semibold uppercase tracking-[0.18em]">
+                        {t('familyTreeInheritedLabel', { name: theirName })}
+                      </p>
+                      <ul className="space-y-2">
+                        {familyMatches.inheritedLessons.map((n) => (
+                          <li key={n} className="flex items-start gap-3">
+                            <span className="bg-amber-500/15 text-amber-800 dark:text-amber-300 font-mono inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold tabular-nums">
+                              {n}
+                            </span>
+                            <p className="text-sm leading-relaxed text-neutral-800 dark:text-neutral-200">
+                              {familyCopy[`inheritedLesson:${n}`] ?? ''}
+                            </p>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
+                </div>
+              )}
+            </div>
+          </details>
         ) : null}
 
         {/* Detail angka — collapsed by default. The full numerical ladder

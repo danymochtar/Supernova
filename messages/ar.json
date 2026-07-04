@@ -569,7 +569,25 @@
       "BUSINESS_PARTNER": "شريك عمل",
       "BEST_FRIEND": "صديق مقرب",
       "ACQUAINTANCE": "معرفة"
-    }
+    },
+    "familyTreeSummary": "{shared} أنماط مشتركة · {inherited} دروس موروثة",
+    "viewList": "قائمة",
+    "viewGrid": "شبكة",
+    "viewToggleLabel": "اختر التخطيط",
+    "heroInfoEyebrow": "دائرتك",
+    "heroInfoTagline": "أشخاص مهمون في حياتك",
+    "heroInfoConnectionTitle": "حسب الطاقة والنمط",
+    "heroInfoConnectionTwin": "شعلة توأم",
+    "heroInfoConnectionSoulmate": "توأم روح",
+    "heroInfoConnectionKarmic": "كارمي",
+    "heroInfoConnectionNeutral": "محايد",
+    "heroInfoElementTitle": "عناصر البروج",
+    "heroInfoElementFire": "نار",
+    "heroInfoElementEarth": "أرض",
+    "heroInfoElementAir": "هواء",
+    "heroInfoElementWater": "ماء",
+    "heroInfoTopLpLabel": "مسار الحياة الأكثر شيوعاً",
+    "heroInfoTopLpHint": "{count} أشخاص يتشاركون مسار الحياة {lp}"
   },
   "peopleForm": {
     "title": "إضافة شخص",

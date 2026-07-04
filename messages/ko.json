@@ -569,7 +569,25 @@
       "BUSINESS_PARTNER": "비즈니스 파트너",
       "BEST_FRIEND": "절친",
       "ACQUAINTANCE": "지인"
-    }
+    },
+    "familyTreeSummary": "{shared} 개의 공통 패턴 · {inherited} 개의 물려받은 교훈",
+    "viewList": "리스트",
+    "viewGrid": "그리드",
+    "viewToggleLabel": "레이아웃 선택",
+    "heroInfoEyebrow": "너의 서클",
+    "heroInfoTagline": "인생의 중요한 사람들",
+    "heroInfoConnectionTitle": "바이브 & 패턴별",
+    "heroInfoConnectionTwin": "트윈 플레임",
+    "heroInfoConnectionSoulmate": "소울메이트",
+    "heroInfoConnectionKarmic": "카르마",
+    "heroInfoConnectionNeutral": "중립",
+    "heroInfoElementTitle": "별자리 원소",
+    "heroInfoElementFire": "불",
+    "heroInfoElementEarth": "흙",
+    "heroInfoElementAir": "바람",
+    "heroInfoElementWater": "물",
+    "heroInfoTopLpLabel": "가장 흔한 라이프패스",
+    "heroInfoTopLpHint": "{count} 명이 라이프패스 {lp} 공유"
   },
   "peopleForm": {
     "title": "사람 추가하기",

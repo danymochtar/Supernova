@@ -569,7 +569,25 @@
       "BUSINESS_PARTNER": "Socio de negocios",
       "BEST_FRIEND": "Mejor amigo",
       "ACQUAINTANCE": "Conocido"
-    }
+    },
+    "familyTreeSummary": "{shared} patrones compartidos · {inherited} lecciones heredadas",
+    "viewList": "Lista",
+    "viewGrid": "Cuadrícula",
+    "viewToggleLabel": "Elegir disposición",
+    "heroInfoEyebrow": "Tu círculo",
+    "heroInfoTagline": "personas importantes en tu vida",
+    "heroInfoConnectionTitle": "Por vibra y patrón",
+    "heroInfoConnectionTwin": "Twin Flame",
+    "heroInfoConnectionSoulmate": "Soulmate",
+    "heroInfoConnectionKarmic": "Karmic",
+    "heroInfoConnectionNeutral": "Neutro",
+    "heroInfoElementTitle": "Elementos del zodíaco",
+    "heroInfoElementFire": "Fuego",
+    "heroInfoElementEarth": "Tierra",
+    "heroInfoElementAir": "Aire",
+    "heroInfoElementWater": "Agua",
+    "heroInfoTopLpLabel": "Life Path más común",
+    "heroInfoTopLpHint": "{count} personas comparten Life Path {lp}"
   },
   "peopleForm": {
     "title": "Añadir persona",

@@ -569,7 +569,25 @@
       "BUSINESS_PARTNER": "Business partner",
       "BEST_FRIEND": "Close friend",
       "ACQUAINTANCE": "Acquaintance"
-    }
+    },
+    "familyTreeSummary": "{shared} shared patterns · {inherited} inherited lessons",
+    "viewList": "List",
+    "viewGrid": "Grid",
+    "viewToggleLabel": "Choose layout",
+    "heroInfoEyebrow": "Your circle",
+    "heroInfoTagline": "people in your life",
+    "heroInfoConnectionTitle": "By vibe & pattern",
+    "heroInfoConnectionTwin": "Twin Flame",
+    "heroInfoConnectionSoulmate": "Soulmate",
+    "heroInfoConnectionKarmic": "Karmic",
+    "heroInfoConnectionNeutral": "Neutral",
+    "heroInfoElementTitle": "Zodiac elements",
+    "heroInfoElementFire": "Fire",
+    "heroInfoElementEarth": "Earth",
+    "heroInfoElementAir": "Air",
+    "heroInfoElementWater": "Water",
+    "heroInfoTopLpLabel": "Most common Life Path",
+    "heroInfoTopLpHint": "{count} people share Life Path {lp}"
   },
   "peopleForm": {
     "title": "Add a person",

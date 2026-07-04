@@ -569,7 +569,25 @@
       "BUSINESS_PARTNER": "生意伙伴",
       "BEST_FRIEND": "挚友",
       "ACQUAINTANCE": "熟人"
-    }
+    },
+    "familyTreeSummary": "{shared} 个共同模式 · {inherited} 个继承的课题",
+    "viewList": "列表",
+    "viewGrid": "网格",
+    "viewToggleLabel": "选择布局",
+    "heroInfoEyebrow": "你的圈子",
+    "heroInfoTagline": "生命中重要的人",
+    "heroInfoConnectionTitle": "按 vibe 和模式",
+    "heroInfoConnectionTwin": "双生火焰",
+    "heroInfoConnectionSoulmate": "灵魂伴侣",
+    "heroInfoConnectionKarmic": "业力",
+    "heroInfoConnectionNeutral": "中性",
+    "heroInfoElementTitle": "星座元素",
+    "heroInfoElementFire": "火",
+    "heroInfoElementEarth": "土",
+    "heroInfoElementAir": "风",
+    "heroInfoElementWater": "水",
+    "heroInfoTopLpLabel": "最常见的生命数字",
+    "heroInfoTopLpHint": "{count} 人共享生命数字 {lp}"
   },
   "peopleForm": {
     "title": "添加一个人",

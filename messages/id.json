@@ -672,7 +672,25 @@
       "BUSINESS_PARTNER": "Partner bisnis",
       "BEST_FRIEND": "Sahabat",
       "ACQUAINTANCE": "Kenalan"
-    }
+    },
+    "familyTreeSummary": "{shared} pola dibagi · {inherited} pelajaran diwarisi",
+    "viewList": "List",
+    "viewGrid": "Grid",
+    "viewToggleLabel": "Pilih tampilan",
+    "heroInfoEyebrow": "Lingkaran kamu",
+    "heroInfoTagline": "orang penting di hidup kamu",
+    "heroInfoConnectionTitle": "Berdasarkan vibe & pola",
+    "heroInfoConnectionTwin": "Twin Flame",
+    "heroInfoConnectionSoulmate": "Soulmate",
+    "heroInfoConnectionKarmic": "Karmic",
+    "heroInfoConnectionNeutral": "Netral",
+    "heroInfoElementTitle": "Elemen zodiak",
+    "heroInfoElementFire": "Api",
+    "heroInfoElementEarth": "Bumi",
+    "heroInfoElementAir": "Udara",
+    "heroInfoElementWater": "Air",
+    "heroInfoTopLpLabel": "Life Path paling umum",
+    "heroInfoTopLpHint": "{count} orang share Life Path {lp}"
   },
   "peopleForm": {
     "title": "Tambah orang",

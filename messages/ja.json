@@ -569,7 +569,25 @@
       "BUSINESS_PARTNER": "ビジネスパートナー",
       "BEST_FRIEND": "親友",
       "ACQUAINTANCE": "知人"
-    }
+    },
+    "familyTreeSummary": "{shared} 個の共通パターン · {inherited} 個の引き継がれた学び",
+    "viewList": "リスト",
+    "viewGrid": "グリッド",
+    "viewToggleLabel": "表示を選択",
+    "heroInfoEyebrow": "あなたのサークル",
+    "heroInfoTagline": "人生の大切な人たち",
+    "heroInfoConnectionTitle": "ヴァイブとパターン別",
+    "heroInfoConnectionTwin": "ツインフレーム",
+    "heroInfoConnectionSoulmate": "ソウルメイト",
+    "heroInfoConnectionKarmic": "カルマ",
+    "heroInfoConnectionNeutral": "ニュートラル",
+    "heroInfoElementTitle": "星座エレメント",
+    "heroInfoElementFire": "火",
+    "heroInfoElementEarth": "土",
+    "heroInfoElementAir": "風",
+    "heroInfoElementWater": "水",
+    "heroInfoTopLpLabel": "最も多いライフパス",
+    "heroInfoTopLpHint": "{count} 人がライフパス {lp} を共有"
   },
   "peopleForm": {
     "title": "人を追加",
