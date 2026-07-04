@@ -244,8 +244,9 @@ export default async function PeoplePage({
                     themMoon: p.moonSign,
                     themRising: p.risingSign,
                   });
-                  // Soul-connection classification — Twin Flame + Soulmate
-                  // get a small chip on the row; Karmic + Neutral stay quiet.
+                  // Soul-connection classification — Twin Flame, Soulmate,
+                  // and Karmic each get their own small chip on the row;
+                  // Neutral stays quiet.
                   const connection = analyzePair(
                     personNumbers(profile.dob, profile.fullName),
                     personNumbers(p.dob, p.fullName),
