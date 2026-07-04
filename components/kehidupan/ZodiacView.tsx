@@ -4,12 +4,15 @@ import { Moon, Settings2 } from 'lucide-react';
 import type { Locale } from '@/lib/i18n/config';
 import type { ProfileView } from '@/lib/db/repositories/profile';
 import {
+  RULER,
   ZODIAC_SIGNS,
   computeChartBalance,
   computeExtendedChart,
+  rulerMeaning,
   transitMoonSign,
   type Element,
   type Modality,
+  type Planet,
   type ZodiacSign,
 } from '@/lib/zodiac';
 import { ZodiacSection } from '@/components/people/ZodiacSection';
@@ -36,10 +39,6 @@ export async function ZodiacView({
 
   const displayName = profile.nickname?.trim() || profile.firstName;
 
-  // Compute the full chart on every render — pure ephemeris call, ~1ms,
-  // and the sub-second cost is negligible compared to the DB round-trip
-  // for the profile above. Venus + Mars are not persisted; recomputing
-  // is cheaper than a migration.
   const chart = computeExtendedChart({
     year: profile.dob.year,
     month: profile.dob.month,
@@ -58,8 +57,6 @@ export async function ZodiacView({
     chart.mars,
   ]);
 
-  // Transit moon — use the viewer's own "now" so the daily card shifts
-  // at midnight local. Date instantiation here is fine (server-only).
   const transitMoon = transitMoonSign(new Date());
 
   const signNames = Object.fromEntries(
@@ -77,12 +74,36 @@ export async function ZodiacView({
     mutable: tZodiac('modality.mutable'),
   };
 
+  // Ruler placement (server-side interpolation). We render "{planet} di
+  // {sign}" when we know both, otherwise fall back to the ruler-planet
+  // name alone.
+  const risingSign = chart.rising ?? profile.risingSign;
+  const rulerPlanet: Planet | null = risingSign ? RULER[risingSign] : null;
+  const placementByPlanet: Record<Planet, ZodiacSign | null> = {
+    sun: chart.sun,
+    moon: chart.moon ?? profile.moonSign,
+    venus: chart.venus,
+    mars: chart.mars,
+    mercury: null,
+    jupiter: null,
+    saturn: null,
+  };
+  const rulerSign = rulerPlanet ? placementByPlanet[rulerPlanet] : null;
+  const rulerCopy = rulerPlanet ? rulerMeaning(rulerPlanet, locale) : null;
+  const chartRulerPlacement =
+    rulerCopy && rulerSign
+      ? tZodiac('chartRulerPlacement', {
+          planet: rulerCopy.name,
+          sign: signNames[rulerSign],
+        })
+      : rulerCopy?.name ?? '';
+
   return (
     <div className="space-y-4">
       <ZodiacSection
         dob={profile.dob}
         moonSign={chart.moon ?? profile.moonSign}
-        risingSign={chart.rising ?? profile.risingSign}
+        risingSign={risingSign}
         venusSign={chart.venus}
         marsSign={chart.mars}
         balance={balance}
@@ -107,13 +128,32 @@ export async function ZodiacView({
           shadowToggleOpen: tZodiac('shadowToggleOpen'),
           shadowToggleClose: tZodiac('shadowToggleClose'),
           balanceSectionTitle: tZodiac('balanceSectionTitle'),
-          balanceTotal: tZodiac('balanceTotal'),
-          balanceDominantElement: tZodiac('balanceDominantElement'),
-          balanceDominantModality: tZodiac('balanceDominantModality'),
-          balanceMissingElements: tZodiac('balanceMissingElements'),
+          // ICU placeholders — MUST be interpolated at t() call time.
+          // next-intl parses `{count}`, `{element}` etc. during t() and
+          // returns the raw key path when values are missing; passing
+          // template + .replace()ing on the client doesn't work here.
+          balanceTotal: tZodiac('balanceTotal', { count: balance.total }),
+          balanceDominantElement: balance.dominantElement
+            ? tZodiac('balanceDominantElement', {
+                element: elementNames[balance.dominantElement],
+              })
+            : '',
+          balanceDominantModality: balance.dominantModality
+            ? tZodiac('balanceDominantModality', {
+                modality: modalityNames[balance.dominantModality],
+              })
+            : '',
+          balanceMissingElements:
+            balance.missingElements.length > 0
+              ? tZodiac('balanceMissingElements', {
+                  list: balance.missingElements
+                    .map((e) => elementNames[e])
+                    .join(', '),
+                })
+              : '',
           chartRulerTitle: tZodiac('chartRulerTitle'),
           chartRulerHint: tZodiac('chartRulerHint'),
-          chartRulerPlacement: tZodiac('chartRulerPlacement'),
+          chartRulerPlacement,
           transitMoonTitle: tZodiac('transitMoonTitle'),
           transitMoonSubtitle: tZodiac('transitMoonSubtitle'),
           signNames,

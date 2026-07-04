@@ -19,14 +19,16 @@ import {
   ELEMENT,
   GLYPH,
   MODALITY,
+  RULER,
   ZODIAC_SIGNS,
   sunSignFromDob,
   tokensForSign,
   type Element,
   type Modality,
+  type Planet,
   type ZodiacSign,
 } from '@/lib/zodiac/signs';
-import { elementMeaning, lifePathSignFunfact, modalityMeaning } from '@/lib/zodiac/content';
+import { elementMeaning, lifePathSignFunfact, modalityMeaning, rulerMeaning } from '@/lib/zodiac/content';
 import {
   ageAt,
   bridges,
@@ -325,11 +327,35 @@ export default async function PersonDetailPage({
             fixed: tZodiac('modality.fixed'),
             mutable: tZodiac('modality.mutable'),
           };
+          const personRising = personChart.rising ?? person.risingSign;
+          const personRulerPlanet: Planet | null = personRising ? RULER[personRising] : null;
+          const personPlacementByPlanet: Record<Planet, ZodiacSign | null> = {
+            sun: personChart.sun,
+            moon: personChart.moon ?? person.moonSign,
+            venus: personChart.venus,
+            mars: personChart.mars,
+            mercury: null,
+            jupiter: null,
+            saturn: null,
+          };
+          const personRulerSign = personRulerPlanet
+            ? personPlacementByPlanet[personRulerPlanet]
+            : null;
+          const personRulerCopy = personRulerPlanet
+            ? rulerMeaning(personRulerPlanet, locale)
+            : null;
+          const personChartRulerPlacement =
+            personRulerCopy && personRulerSign
+              ? tZodiac('chartRulerPlacement', {
+                  planet: personRulerCopy.name,
+                  sign: personSignNames[personRulerSign],
+                })
+              : personRulerCopy?.name ?? '';
           return (
             <ZodiacSection
               dob={person.dob}
               moonSign={personChart.moon ?? person.moonSign}
-              risingSign={personChart.rising ?? person.risingSign}
+              risingSign={personRising}
               venusSign={personChart.venus}
               marsSign={personChart.mars}
               balance={personBalance}
@@ -354,13 +380,28 @@ export default async function PersonDetailPage({
                 shadowToggleOpen: tZodiac('shadowToggleOpen'),
                 shadowToggleClose: tZodiac('shadowToggleClose'),
                 balanceSectionTitle: tZodiac('balanceSectionTitle'),
-                balanceTotal: tZodiac('balanceTotal'),
-                balanceDominantElement: tZodiac('balanceDominantElement'),
-                balanceDominantModality: tZodiac('balanceDominantModality'),
-                balanceMissingElements: tZodiac('balanceMissingElements'),
+                balanceTotal: tZodiac('balanceTotal', { count: personBalance.total }),
+                balanceDominantElement: personBalance.dominantElement
+                  ? tZodiac('balanceDominantElement', {
+                      element: personElementNames[personBalance.dominantElement],
+                    })
+                  : '',
+                balanceDominantModality: personBalance.dominantModality
+                  ? tZodiac('balanceDominantModality', {
+                      modality: personModalityNames[personBalance.dominantModality],
+                    })
+                  : '',
+                balanceMissingElements:
+                  personBalance.missingElements.length > 0
+                    ? tZodiac('balanceMissingElements', {
+                        list: personBalance.missingElements
+                          .map((e) => personElementNames[e])
+                          .join(', '),
+                      })
+                    : '',
                 chartRulerTitle: tZodiac('chartRulerTitle'),
                 chartRulerHint: tZodiac('chartRulerHint'),
-                chartRulerPlacement: tZodiac('chartRulerPlacement'),
+                chartRulerPlacement: personChartRulerPlacement,
                 transitMoonTitle: tZodiac('transitMoonTitle'),
                 transitMoonSubtitle: tZodiac('transitMoonSubtitle'),
                 signNames: personSignNames,

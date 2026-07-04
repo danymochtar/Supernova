@@ -170,20 +170,11 @@ export function ZodiacSection({
     { key: 'mars', label: labels.mars, role: labels.marsRole, sign: marsSign, needsBirthTime: true },
   ];
 
-  // Chart ruler = ruler-planet of Rising sign, then find that planet's
-  // own placement in the chart. Only surfaced when Rising is known.
+  // Chart ruler = ruler-planet of Rising sign. The placement text
+  // (`{planet} di {sign}`) is pre-formatted server-side via next-intl
+  // and arrives as `labels.chartRulerPlacement`; we only need the
+  // planet's life-theme copy for the card body here.
   const rulerPlanet: Planet | null = risingSign ? RULER[risingSign] : null;
-  const placementByPlanet: Record<Planet, ZodiacSign | null> = {
-    sun,
-    moon: moonSign,
-    venus: venusSign,
-    mars: marsSign,
-    // Placements we don't compute — surface planet meaning without a sign.
-    mercury: null,
-    jupiter: null,
-    saturn: null,
-  };
-  const rulerSign = rulerPlanet ? placementByPlanet[rulerPlanet] : null;
   const rulerCopy = rulerPlanet ? rulerMeaning(rulerPlanet, locale) : null;
 
   return (
@@ -235,12 +226,10 @@ export function ZodiacSection({
         ) : null}
 
         {/* Chart ruler card */}
-        {rulerPlanet && rulerCopy ? (
+        {rulerCopy && labels.chartRulerPlacement ? (
           <ChartRulerCard
-            planet={rulerPlanet}
-            rulerCopy={rulerCopy}
-            rulerSign={rulerSign}
-            signName={rulerSign ? labels.signNames[rulerSign] : null}
+            placement={labels.chartRulerPlacement}
+            theme={rulerCopy.theme}
             labels={labels}
           />
         ) : null}
@@ -427,7 +416,7 @@ function ChartBalanceCard({
           {labels.balanceSectionTitle}
         </p>
         <p className="text-[11px] text-muted-foreground">
-          {labels.balanceTotal.replace('{count}', String(total))}
+          {labels.balanceTotal}
         </p>
       </div>
 
@@ -492,23 +481,15 @@ function ChartBalanceCard({
       </div>
 
       {/* Insight lines */}
-      {balance.dominantElement ? (
+      {labels.balanceDominantElement ? (
         <p className="text-[12px] leading-relaxed text-foreground">
-          {labels.balanceDominantElement.replace(
-            '{element}',
-            labels.elementNames[balance.dominantElement],
-          )}
-          {balance.dominantModality
-            ? ` · ${labels.balanceDominantModality.replace('{modality}', labels.modalityNames[balance.dominantModality])}`
-            : ''}
+          {labels.balanceDominantElement}
+          {labels.balanceDominantModality ? ` · ${labels.balanceDominantModality}` : ''}
         </p>
       ) : null}
-      {balance.missingElements.length > 0 && balance.missingElements.length < 4 ? (
+      {labels.balanceMissingElements && balance.missingElements.length < 4 ? (
         <p className="text-[12px] italic leading-relaxed text-muted-foreground">
-          {labels.balanceMissingElements.replace(
-            '{list}',
-            balance.missingElements.map((e) => labels.elementNames[e]).join(', '),
-          )}
+          {labels.balanceMissingElements}
         </p>
       ) : null}
     </div>
@@ -516,16 +497,16 @@ function ChartBalanceCard({
 }
 
 function ChartRulerCard({
-  planet,
-  rulerCopy,
-  rulerSign,
-  signName,
+  placement,
+  theme,
   labels,
 }: {
-  planet: Planet;
-  rulerCopy: { name: string; theme: string };
-  rulerSign: ZodiacSign | null;
-  signName: string | null;
+  /** Server-formatted "{planet} di {sign}" string, or just the planet
+   *  name when the ruler's sign isn't known in this chart. */
+  placement: string;
+  /** Ruler-planet's life-theme copy — client-fetched because the theme
+   *  is planet-only, no ICU placeholders. */
+  theme: string;
   labels: Labels;
 }) {
   return (
@@ -536,19 +517,8 @@ function ChartRulerCard({
         </p>
         <p className="text-[11px] text-muted-foreground">{labels.chartRulerHint}</p>
       </div>
-      <p className="font-serif text-lg font-semibold leading-tight">
-        {rulerSign && signName
-          ? labels.chartRulerPlacement
-              .replace('{planet}', rulerCopy.name)
-              .replace('{sign}', signName)
-          : rulerCopy.name}
-      </p>
-      <p className="text-muted-foreground text-[13px] leading-relaxed">
-        {rulerCopy.theme}
-      </p>
-      {/* Guard against unused prop warnings on `planet` — the id is
-       *  useful when the parent wants to log or extend later. */}
-      <span className="hidden" aria-hidden data-planet={planet} />
+      <p className="font-serif text-lg font-semibold leading-tight">{placement}</p>
+      <p className="text-muted-foreground text-[13px] leading-relaxed">{theme}</p>
     </div>
   );
 }
