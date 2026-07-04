@@ -1,13 +1,14 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-import { Plus, HeartHandshake, ChevronRight, Pencil, Trash2 } from 'lucide-react';
+import { Plus, HeartHandshake, ChevronRight, Flame, Pencil, Sparkles, Trash2 } from 'lucide-react';
 import type { Relationship } from '@prisma/client';
 import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
 import { listPeople, type PersonView } from '@/lib/db/repositories/person';
 import { ageAt, buildCoreProfile, contextFromInstant } from '@/lib/numerology';
 import { compatibilityScore } from '@/lib/compatibility/score';
+import { analyzePair, personNumbers } from '@/lib/connection';
 import { GLYPH, sunSignFromDob, tokensForSign } from '@/lib/zodiac/signs';
 import { isLocale, type Locale } from '@/lib/i18n/config';
 import { displayName } from '@/lib/profile/displayName';
@@ -154,6 +155,15 @@ export default async function PeoplePage({
                     themMoon: p.moonSign,
                     themRising: p.risingSign,
                   });
+                  // Soul-connection classification — only surface a
+                  // badge on the list when it's Twin Flame or Soulmate
+                  // (the "cantik" remarks). Karmic + Neutral stay
+                  // quiet at the list level; the detail page tells
+                  // the full story.
+                  const connection = analyzePair(
+                    personNumbers(profile.dob, profile.fullName),
+                    personNumbers(p.dob, p.fullName),
+                  );
                   return (
                     <div key={p.id} className="flex items-stretch hover:bg-muted/30 transition-colors">
                       <Link
@@ -167,7 +177,26 @@ export default async function PeoplePage({
                           <span className={`font-serif text-xl ${tok.glyph}`}>{GLYPH[sun]}</span>
                         </div>
                         <div className="min-w-0 flex-1">
-                          <p className="truncate font-medium">{primary}</p>
+                          <p className="flex items-center gap-1.5 truncate font-medium">
+                            <span className="truncate">{primary}</span>
+                            {connection.primary === 'TWIN_FLAME' ? (
+                              <span
+                                className="from-rose-500 to-orange-500 inline-flex shrink-0 items-center gap-1 rounded-full bg-gradient-to-r px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white shadow-sm"
+                                title="Twin Flame"
+                              >
+                                <Flame className="h-2.5 w-2.5" aria-hidden />
+                                Twin
+                              </span>
+                            ) : connection.primary === 'SOULMATE' ? (
+                              <span
+                                className="from-violet-500 to-indigo-500 inline-flex shrink-0 items-center gap-1 rounded-full bg-gradient-to-r px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white shadow-sm"
+                                title="Soulmate"
+                              >
+                                <Sparkles className="h-2.5 w-2.5" aria-hidden />
+                                Soul
+                              </span>
+                            ) : null}
+                          </p>
                           <p className="text-muted-foreground truncate text-xs">
                             {t('ageShort', { age })}
                             {hasFullName ? ` · ${p.fullName}` : ''}

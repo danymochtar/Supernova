@@ -28,6 +28,8 @@ import {
 } from '@/lib/numerology';
 import { compareToParent } from '@/lib/numerology/familyTree';
 import { compatibilityScore } from '@/lib/compatibility/score';
+import { analyzePair, personNumbers } from '@/lib/connection';
+import { KoneksiSection } from '@/components/people/KoneksiSection';
 import {
   RelationshipProfileSection,
   RelationshipProfileFallback,
@@ -72,6 +74,14 @@ export default async function PersonDetailPage({
 
   const me = buildCoreProfile(userProfile.fullName, userProfile.dob);
   const them = buildCoreProfile(person.fullName, person.dob);
+
+  // Soul-connection reading (Karmic / Soulmate / Twin Flame / Netral).
+  // Pure math — computed inline every render, no cache needed at this
+  // volume (single call, ~microseconds).
+  const connectionReading = analyzePair(
+    personNumbers(userProfile.dob, userProfile.fullName),
+    personNumbers(person.dob, person.fullName),
+  );
   const ctx = contextFromInstant(new Date(), userProfile.timezone);
   const age = ageAt(person.dob, ctx);
 
@@ -238,6 +248,17 @@ export default async function PersonDetailPage({
           </div>
           <ChevronRight className="text-muted-foreground h-4 w-4 shrink-0 transition group-hover:translate-x-0.5" aria-hidden />
         </Link>
+
+        {/* KONEKSI — soul-connection type badge (Twin Flame / Soulmate /
+         *  Karmic / Neutral) + strength meter + signal chips +
+         *  template explanation. Renders below the numerology compat
+         *  score; the two lenses are complementary (compat = daily
+         *  friction, connection = archetypal bond type). */}
+        <KoneksiSection
+          reading={connectionReading}
+          meName={myName}
+          themName={theirName}
+        />
 
         {person.notes ? (
           <section className="border-border rounded-xl border bg-amber-50/60 p-4 text-sm dark:border-amber-900/40 dark:bg-amber-950/20">
