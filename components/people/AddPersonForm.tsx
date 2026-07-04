@@ -7,6 +7,10 @@ import type { PersonActionResult, createPersonAction, updatePersonAction } from 
 import { RELATIONSHIPS } from '@/lib/people/relationships';
 import { GLYPH, sunSignFromDob } from '@/lib/zodiac/signs';
 import { BirthCityCombobox } from '@/components/people/BirthCityCombobox';
+import {
+  SUGGESTED_BIRTH_TIME,
+  guessBirthCityFromName,
+} from '@/lib/people/smartDefaults';
 
 const ERROR_KEY: Record<Exclude<PersonActionResult, { ok: true }>['error'], string> = {
   unauth: 'errorGeneric',
@@ -49,6 +53,24 @@ export function AddPersonForm({ locale, action, edit }: Props) {
     edit?.relationship ?? 'PARTNER',
   );
   const [isPending, startTransition] = useTransition();
+
+  // Controlled name inputs so we can compute a birth-city suggestion
+  // from the full name whenever it changes. See lib/people/smartDefaults.ts
+  // for the guessing heuristic (Malay Islamic particles → KL; else, when
+  // the app locale is Indonesian → Jakarta; else null).
+  const [firstName, setFirstName] = useState(edit?.firstName ?? '');
+  const [middleName, setMiddleName] = useState(edit?.middleName ?? '');
+  const [lastName, setLastName] = useState(edit?.lastName ?? '');
+  const fullNameForGuess = [firstName, middleName, lastName]
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .join(' ');
+  const suggestedCity = useMemo(
+    // In edit mode we never suggest — the row already has whatever the
+    // user picked before. Only new persons get the auto-guess.
+    () => (edit ? null : guessBirthCityFromName(fullNameForGuess, locale)),
+    [edit, fullNameForGuess, locale],
+  );
 
   const dobStr = edit
     ? `${edit.dob.year}-${String(edit.dob.month).padStart(2, '0')}-${String(edit.dob.day).padStart(2, '0')}`
@@ -93,7 +115,8 @@ export function AddPersonForm({ locale, action, edit }: Props) {
             required
             minLength={1}
             maxLength={60}
-            defaultValue={edit?.firstName ?? ''}
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
             placeholder={t('firstNamePlaceholder')}
             className="border-border focus:ring-primary rounded-lg border bg-transparent px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
           />
@@ -101,7 +124,8 @@ export function AddPersonForm({ locale, action, edit }: Props) {
             name="middleName"
             type="text"
             maxLength={60}
-            defaultValue={edit?.middleName ?? ''}
+            value={middleName}
+            onChange={(e) => setMiddleName(e.target.value)}
             placeholder={t('middleNamePlaceholder')}
             className="border-border focus:ring-primary rounded-lg border bg-transparent px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
           />
@@ -109,7 +133,8 @@ export function AddPersonForm({ locale, action, edit }: Props) {
             name="lastName"
             type="text"
             maxLength={60}
-            defaultValue={edit?.lastName ?? ''}
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
             placeholder={t('lastNamePlaceholder')}
             className="border-border focus:ring-primary rounded-lg border bg-transparent px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
           />
@@ -168,15 +193,27 @@ export function AddPersonForm({ locale, action, edit }: Props) {
               id="birthTime"
               name="birthTime"
               type="time"
-              defaultValue={edit?.birthTime ?? ''}
+              // Noon (12:00) is the astrological convention for "birth
+              // time unknown" — Sun stays accurate, Moon/Rising get a
+              // reasonable midpoint estimate. Users can edit anytime.
+              defaultValue={edit?.birthTime ?? SUGGESTED_BIRTH_TIME}
               className="border-border focus:ring-primary w-full rounded-lg border bg-transparent px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
             />
+            {!edit ? (
+              <p className="text-muted-foreground text-[11px] italic">
+                {tZodiac('birthTimeSuggestion')}
+              </p>
+            ) : null}
           </div>
           <BirthCityCombobox
             defaultLabel={edit?.birthCity ?? null}
             defaultLat={edit?.birthLat ?? null}
             defaultLon={edit?.birthLon ?? null}
             defaultTimezone={edit?.birthTimezone ?? null}
+            suggested={suggestedCity}
+            suggestionHint={
+              suggestedCity ? tZodiac('birthCitySuggestion') : undefined
+            }
             label={tZodiac('birthCityLabel')}
             placeholder={tZodiac('birthCityPlaceholder')}
             hint={tZodiac('birthCityHint')}

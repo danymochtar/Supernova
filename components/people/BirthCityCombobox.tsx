@@ -21,6 +21,24 @@ interface Props {
   defaultLat?: number | null;
   defaultLon?: number | null;
   defaultTimezone?: string | null;
+  /** Optional soft suggestion — e.g., "Jakarta" guessed from name. If
+   *  the user hasn't picked or typed anything yet, we sync this into
+   *  the input as if they'd picked it themselves. Passing null clears
+   *  any previously-applied suggestion. The moment the user edits the
+   *  field, suggestions stop taking effect for the lifetime of the
+   *  component (tracked internally). */
+  suggested?: {
+    /** Stable id used for change detection — sync only when it flips. */
+    key: string;
+    label: string;
+    lat: number;
+    lon: number;
+    timezone: string;
+  } | null;
+  /** Optional short caption shown under the input when the current
+   *  value came from a suggestion — signals to the user that it's a
+   *  guess, not their input, and is worth verifying. */
+  suggestionHint?: string;
   /** Label / placeholder strings (i18n). */
   label: string;
   placeholder: string;
@@ -46,6 +64,8 @@ export function BirthCityCombobox({
   defaultLat,
   defaultLon,
   defaultTimezone,
+  suggested,
+  suggestionHint,
   label,
   placeholder,
   hint,
@@ -64,10 +84,45 @@ export function BirthCityCombobox({
         }
       : null,
   );
+  /** True once the user has typed into the input or picked a hit. Locks
+   *  out further auto-suggestions so we don't yank the field back after
+   *  they've made a choice. */
+  const [userTouched, setUserTouched] = useState(defaultLabel != null);
+  /** True when the currently-displayed value came from a suggestion (as
+   *  opposed to a real hit or edit-mode default). Drives the
+   *  `suggestionHint` copy. */
+  const [suggestionApplied, setSuggestionApplied] = useState(false);
+  const lastSuggestionKeyRef = useRef<string | null>(null);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const abortRef = useRef<AbortController | null>(null);
+
+  // Apply the `suggested` prop into the input whenever it flips — but
+  // only if the user hasn't taken over. The `lastSuggestionKeyRef`
+  // guard prevents re-syncing on every render.
+  useEffect(() => {
+    if (userTouched) return;
+    const nextKey = suggested?.key ?? null;
+    if (lastSuggestionKeyRef.current === nextKey) return;
+    lastSuggestionKeyRef.current = nextKey;
+    if (suggested) {
+      const hit: CityHit = {
+        name: suggested.label.split(',')[0]?.trim() ?? suggested.label,
+        label: suggested.label,
+        lat: suggested.lat,
+        lon: suggested.lon,
+        timezone: suggested.timezone,
+      };
+      setSelected(hit);
+      setQuery(hit.label);
+      setSuggestionApplied(true);
+    } else {
+      setSelected(null);
+      setQuery('');
+      setSuggestionApplied(false);
+    }
+  }, [suggested, userTouched]);
 
   // Fetch matches when the query changes (debounced).
   useEffect(() => {
@@ -107,11 +162,15 @@ export function BirthCityCombobox({
     setQuery(hit.label);
     setOpen(false);
     setHits([]);
+    setUserTouched(true);
+    setSuggestionApplied(false);
   }
 
   function onChangeQuery(value: string) {
     setQuery(value);
     setOpen(true);
+    setUserTouched(true);
+    setSuggestionApplied(false);
     // Clear the selection only if the user typed something that
     // doesn't match the current selection's label.
     if (selected && value !== selected.label) setSelected(null);
@@ -168,7 +227,11 @@ export function BirthCityCombobox({
           </ul>
         ) : null}
       </div>
-      {!selected ? <p className="text-muted-foreground text-xs">{hint}</p> : null}
+      {!selected ? (
+        <p className="text-muted-foreground text-xs">{hint}</p>
+      ) : suggestionApplied && suggestionHint ? (
+        <p className="text-muted-foreground text-xs italic">{suggestionHint}</p>
+      ) : null}
       {/* Hidden coords that travel with the form. The visible input
        *  named `birthCity` already carries the display label. */}
       <input type="hidden" name="birthLat" value={selected ? String(selected.lat) : ''} />

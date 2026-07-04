@@ -168,7 +168,9 @@
     "birthCityEmpty": "Tiada hasil — cuba kata kunci lain.",
     "sunRole": "Personaliti teras kamu",
     "moonRole": "Sisi emosi kamu",
-    "risingRole": "Cara orang melihat kamu"
+    "risingRole": "Cara orang melihat kamu",
+    "birthTimeSuggestion": "Default 12:00 — tengah hari (dipakai bila masa lahir tak diketahui).",
+    "birthCitySuggestion": "Tebakan automatik dari nama — tukar kalau salah."
   },
   "home": {
     "cta": "Mula sekarang",

@@ -236,7 +236,9 @@
     "birthCityLabel": "Kota lahir",
     "birthCityPlaceholder": "Ketik kota — misal Jakarta, Surabaya…",
     "birthCityHint": "Pilih kota dari saran biar Rising-nya akurat.",
-    "birthCityEmpty": "Nggak ada hasil — coba kata kunci lain."
+    "birthCityEmpty": "Nggak ada hasil — coba kata kunci lain.",
+    "birthTimeSuggestion": "Default 12:00 — noon (biasa dipake kalau jam lahir gak tau).",
+    "birthCitySuggestion": "Ini tebakan otomatis dari namanya — ganti kalau beda."
   },
   "followUp": {
     "title": "Follow-up dari jurnal",

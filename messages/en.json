@@ -168,7 +168,9 @@
     "birthCityEmpty": "No matches — try another keyword.",
     "sunRole": "Your core personality",
     "moonRole": "Your emotional side",
-    "risingRole": "How others see you"
+    "risingRole": "How others see you",
+    "birthTimeSuggestion": "Defaults to 12:00 — noon (the astrology fallback when birth time is unknown).",
+    "birthCitySuggestion": "Auto-guessed from the name — change if this isn't right."
   },
   "home": {
     "cta": "Get started",

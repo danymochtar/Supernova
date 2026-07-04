@@ -168,7 +168,9 @@
     "birthCityEmpty": "一致なし — 別のキーワードをお試しください。",
     "sunRole": "あなたの核となる人格",
     "moonRole": "あなたの感情面",
-    "risingRole": "他人から見たあなた"
+    "risingRole": "他人から見たあなた",
+    "birthTimeSuggestion": "デフォルトは 12:00 — 正午（出生時刻が不明な場合の一般的な既定値）。",
+    "birthCitySuggestion": "名前から自動推測しました — 違う場合は変更してください。"
   },
   "home": {
     "cta": "今すぐはじめる",

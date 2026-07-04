@@ -168,7 +168,9 @@
     "birthCityEmpty": "일치하는 결과 없음 — 다른 키워드를 시도해 보세요.",
     "sunRole": "너의 핵심 성격",
     "moonRole": "너의 감정적 면",
-    "risingRole": "다른 사람이 보는 너"
+    "risingRole": "다른 사람이 보는 너",
+    "birthTimeSuggestion": "기본값 12:00 — 정오 (출생 시간을 모를 때 관례).",
+    "birthCitySuggestion": "이름에서 자동 추측 — 다르면 변경해."
   },
   "home": {
     "cta": "지금 시작하기",

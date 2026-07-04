@@ -168,7 +168,9 @@
     "birthCityEmpty": "无匹配 — 尝试其他关键词。",
     "sunRole": "你的核心人格",
     "moonRole": "你的情感面",
-    "risingRole": "别人眼中的你"
+    "risingRole": "别人眼中的你",
+    "birthTimeSuggestion": "默认 12:00 — 正午（出生时间未知时的通用默认值）。",
+    "birthCitySuggestion": "根据名字自动推测 — 如果不对请更改。"
   },
   "home": {
     "cta": "现在开始",

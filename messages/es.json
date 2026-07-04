@@ -168,7 +168,9 @@
     "birthCityEmpty": "Sin resultados — intenta otra palabra clave.",
     "sunRole": "Tu personalidad esencial",
     "moonRole": "Tu lado emocional",
-    "risingRole": "Cómo te ven los demás"
+    "risingRole": "Cómo te ven los demás",
+    "birthTimeSuggestion": "Por defecto 12:00 — mediodía (el fallback astrológico cuando no se sabe la hora).",
+    "birthCitySuggestion": "Estimado automáticamente por el nombre — cámbialo si no es correcto."
   },
   "home": {
     "cta": "Empieza ahora",
