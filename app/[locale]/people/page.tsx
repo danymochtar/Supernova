@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-import { Plus, HeartHandshake, ChevronRight, Flame, LayoutGrid, LayoutList, Pencil, Sparkles, Trash2 } from 'lucide-react';
+import { Plus, HeartHandshake, ChevronRight, Flame, LayoutGrid, LayoutList, Link2, Pencil, Sparkles, Trash2 } from 'lucide-react';
 import type { Relationship } from '@prisma/client';
 import { getSession } from '@/lib/auth/requireSession';
 import { getProfileByUserId } from '@/lib/db/repositories/profile';
@@ -112,7 +112,16 @@ export default async function PeoplePage({
               water: t('heroInfoElementWater'),
             },
             topLifePathLabel: t('heroInfoTopLpLabel'),
-            topLifePathHint: t('heroInfoTopLpHint'),
+            // Interpolate at call time — next-intl parses ICU
+            // placeholders during t() and returns the raw key path if
+            // values are missing, so we can't defer substitution to
+            // the component's .replace() calls.
+            topLifePathHint: circleStats.topLifePath
+              ? t('heroInfoTopLpHint', {
+                  count: circleStats.topLifePath.count,
+                  lp: circleStats.topLifePath.value,
+                })
+              : '',
           }}
         />
       ) : null}
@@ -248,6 +257,14 @@ export default async function PeoplePage({
                       >
                         <Sparkles className="h-2.5 w-2.5" aria-hidden />
                         Soul
+                      </span>
+                    ) : connection.primary === 'KARMIC' ? (
+                      <span
+                        className="from-amber-500 to-amber-600 inline-flex shrink-0 items-center gap-1 rounded-full bg-gradient-to-r px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white shadow-sm"
+                        title="Karmic"
+                      >
+                        <Link2 className="h-2.5 w-2.5" aria-hidden />
+                        Karmic
                       </span>
                     ) : null;
 

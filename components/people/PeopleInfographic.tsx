@@ -27,7 +27,7 @@ interface Props {
     };
     /** "Life Path paling umum" — top LP label. */
     topLifePathLabel: string;
-    /** "x orang share LP {n}" — top LP subline (interpolated). */
+    /** Ready-rendered subline (already interpolated in the caller). */
     topLifePathHint: string;
   };
 }
@@ -219,11 +219,7 @@ export function PeopleInfographic({ stats, labels }: Props) {
               <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
                 {labels.topLifePathLabel}
               </p>
-              <p className="text-foreground text-[12px]">
-                {labels.topLifePathHint
-                  .replace('{count}', String(topLifePath.count))
-                  .replace('{lp}', String(topLifePath.value))}
-              </p>
+              <p className="text-foreground text-[12px]">{labels.topLifePathHint}</p>
             </div>
           </div>
         ) : null}
