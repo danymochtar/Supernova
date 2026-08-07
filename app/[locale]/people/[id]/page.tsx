@@ -49,6 +49,7 @@ import { meaningFor } from '@/lib/numerology/meanings';
 import idFamily from '@/content/family/id.json';
 import enFamily from '@/content/family/en.json';
 import { NumberCard } from '@/components/numerology/NumberCard';
+import { NumerologyPills } from '@/components/people/NumerologyPills';
 import { TopBar } from '@/components/layout/TopBar';
 import { Explainer } from '@/components/layout/Explainer';
 import { PersonVibeButton } from '@/components/people/PersonVibeButton';
@@ -141,14 +142,51 @@ export default async function PersonDetailPage({
     profileTitle: tRel('title', { name: theirName }),
   };
 
-  // Carousel cards for ringkasan profil — five core components, each with
-  // its own click-to-expand meaning (NumberCard handles that internally).
-  const profileCards = [
-    { key: 'lifePath' as const, label: tDash('lifePath'), result: them.lifePath },
-    { key: 'expression' as const, label: tDash('expression'), result: them.expression },
-    { key: 'soulUrge' as const, label: tDash('soulUrge'), result: them.soulUrge },
-    { key: 'personality' as const, label: tDash('personality'), result: them.personality },
-    { key: 'birthday' as const, label: tDash('birthday'), result: them.birthday },
+  // Hero pills — five core numbers surfaced inside the identity card at
+  // the top of the page. Tap opens the same meaning modal the collapsed
+  // "Detail angka" section used to house exclusively; the collapsed
+  // section now only carries the secondary minor + bridge numbers.
+  const heroPills = [
+    {
+      key: 'lifePath',
+      short: 'LP',
+      full: tDash('lifePath'),
+      result: them.lifePath,
+      type: 'lifePath' as const,
+      meaning: meaningFor('lifePath', them.lifePath, locale),
+    },
+    {
+      key: 'expression',
+      short: 'EX',
+      full: tDash('expression'),
+      result: them.expression,
+      type: 'expression' as const,
+      meaning: meaningFor('expression', them.expression, locale),
+    },
+    {
+      key: 'soulUrge',
+      short: 'SU',
+      full: tDash('soulUrge'),
+      result: them.soulUrge,
+      type: 'soulUrge' as const,
+      meaning: meaningFor('soulUrge', them.soulUrge, locale),
+    },
+    {
+      key: 'personality',
+      short: 'P',
+      full: tDash('personality'),
+      result: them.personality,
+      type: 'personality' as const,
+      meaning: meaningFor('personality', them.personality, locale),
+    },
+    {
+      key: 'birthday',
+      short: 'BD',
+      full: tDash('birthday'),
+      result: them.birthday,
+      type: 'birthday' as const,
+      meaning: meaningFor('birthday', them.birthday, locale),
+    },
   ];
 
   return (
@@ -212,6 +250,18 @@ export default async function PersonDetailPage({
                       chipClass={tokens.chip}
                     />
                   </div>
+                </div>
+
+                {/* Core numerology as inline pills — LP · EX · SU · P · BD.
+                 * Each pill opens a meaning modal on tap. Surfacing the
+                 * numbers here so the person's numerological "shape" is
+                 * visible above the fold, alongside the name + zodiac. */}
+                <div className="mt-4">
+                  <NumerologyPills
+                    pills={heroPills}
+                    locale={locale}
+                    comingSoonLabel={tDash('meaningComingSoon')}
+                  />
                 </div>
               </section>
 
@@ -510,9 +560,9 @@ export default async function PersonDetailPage({
           </details>
         ) : null}
 
-        {/* Detail angka — collapsed by default. The full numerical ladder
-         * (5 core + 3 minor + 2 bridge) lives behind one tap so the page
-         * reads as prose first, math second. */}
+        {/* Angka minor + bridge — collapsed by default. Secondary
+         * numbers only; the 5 core numbers live in the identity hero
+         * pills at the top of the page. */}
         <details className="border-border group rounded-2xl border bg-surface-1">
           <summary className="press-soft flex cursor-pointer list-none items-start justify-between gap-3 px-5 py-4 [&::-webkit-details-marker]:hidden">
             <div className="space-y-0.5">
@@ -525,24 +575,6 @@ export default async function PersonDetailPage({
             />
           </summary>
           <div className="border-border/60 space-y-4 border-t px-5 py-5">
-            {/* Core carousel — 5 cards, tap to expand meaning */}
-            <div className="-mx-5">
-              <div className="scroll-px-5 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                {profileCards.map((card) => (
-                  <div key={card.key} className="w-[78%] shrink-0 snap-start sm:w-[44%] md:w-[32%]">
-                    <NumberCard
-                      label={card.label}
-                      result={card.result}
-                      locale={locale}
-                      type={card.key}
-                      meaning={meaningFor(card.key, card.result, locale)}
-                      comingSoonLabel={tDash('meaningComingSoon')}
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-
             {minor ? (
               <div className="space-y-3">
                 <Explainer
